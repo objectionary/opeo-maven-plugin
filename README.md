@@ -19,9 +19,6 @@ seq > @
 Output:
 
 ```
-[] > org-eolang-ineo-A
-  [] > init
-    ^
 (org-eolang-ineo-A 42).init
 ```
 
