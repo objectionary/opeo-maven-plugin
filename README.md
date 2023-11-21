@@ -19,9 +19,10 @@ seq > @
 Output:
 
 ```
-+alias org.eolang.ineo.A
++alias org.eolang.ineo.jA
 
-(A 42).init
+jA 42 > x
+x.init
 ```
 
 Then, it can translate declarative EO code back to imperative EO code which 
