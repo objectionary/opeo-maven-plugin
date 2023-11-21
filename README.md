@@ -22,3 +22,6 @@ Output:
 (org-eolang-ineo-A 42).init
 ```
 
+Then, it can translate declarative EO code back to imperative EO code which 
+uses `opcode` atoms.
+
