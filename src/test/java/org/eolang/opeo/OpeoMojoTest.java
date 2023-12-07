@@ -23,8 +23,7 @@
  */
 package org.eolang.opeo;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -35,10 +34,9 @@ class OpeoMojoTest {
 
     @Test
     void createsMojoWithoutProblems() {
-        MatcherAssert.assertThat(
-            String.format("Can't create %s instance", OpeoMojo.class),
-            new OpeoMojo(),
-            Matchers.notNullValue()
+        Assertions.assertDoesNotThrow(
+            () -> new OpeoMojo().execute(),
+            String.format("Can't create %s instance and execute it", OpeoMojo.class)
         );
     }
 }

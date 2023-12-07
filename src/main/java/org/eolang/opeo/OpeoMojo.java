@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo;
 
+import com.jcabi.log.Logger;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -34,10 +35,10 @@ import org.apache.maven.plugins.annotations.Mojo;
  * @since 0.1
  */
 @Mojo(name = "decompile", defaultPhase = LifecyclePhase.PROCESS_CLASSES)
-public class OpeoMojo extends AbstractMojo {
+public final class OpeoMojo extends AbstractMojo {
 
     @Override
     public void execute() {
-        System.out.println("Hello World!");
+        Logger.info(this, "opeo-maven-plugin: started decompiling bytecode into EO");
     }
 }
