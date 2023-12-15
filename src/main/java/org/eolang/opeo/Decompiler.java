@@ -3,9 +3,11 @@ package org.eolang.opeo;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 public class Decompiler {
 
@@ -36,6 +38,7 @@ public class Decompiler {
             Opcodes.NEW, new NewHandler(),
             Opcodes.DUP, new DupHandler(),
             Opcodes.BIPUSH, new BipushHandler(),
+            Opcodes.INVOKESPECIAL, new InvokespecialHandler(),
             Opcodes.POP, new PopHandler(),
             Opcodes.RETURN, new ReturnHandler()
         );
@@ -68,6 +71,19 @@ public class Decompiler {
         );
     }
 
+    /**
+     * Pops n arguments from the stack.
+     * @param n Number of arguments to pop.
+     * @return List of arguments.
+     */
+    private List<String> popArguments(final int n) {
+        final List<String> arguments = new LinkedList<>();
+        for (int index = 0; index < n; index++) {
+            arguments.add(0, String.valueOf(this.stack.pop()));
+        }
+        return arguments;
+    }
+
     private class NewHandler implements InstructionHandler {
         @Override
         public void handle(Instruction instruction) {
@@ -98,10 +114,28 @@ public class Decompiler {
 
     private class ReturnHandler implements InstructionHandler {
         @Override
-        public void handle(Instruction instruction) {
+        public void handle(final Instruction instruction) {
             Decompiler.this.result.add("return");
         }
     }
+
+    private class InvokespecialHandler implements InstructionHandler {
+        @Override
+        public void handle(final Instruction instruction) {
+            final String type = (String) instruction.operand(0);
+            final String method = (String) instruction.operand(1);
+            final String descriptor = (String) instruction.operand(2);
+            if (!method.equals("<init>")) {
+                throw new UnsupportedOperationException(
+                    String.format("Instruction %s is not supported yet", instruction)
+                );
+            }
+            final List<String> args = Decompiler.this.popArguments(
+                Type.getArgumentCount(descriptor));
+            Decompiler.this.result.push(String.format("%s.new %s", type, String.join(", ", args)));
+        }
+    }
+
 
     private class UnimplementedHandler implements InstructionHandler {
         @Override

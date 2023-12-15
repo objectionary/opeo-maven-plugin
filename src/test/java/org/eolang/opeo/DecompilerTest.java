@@ -58,7 +58,7 @@ final class DecompilerTest {
                 new Instruction(Opcodes.RETURN)
             ),
             Matchers.equalTo(
-                "new B(new A(42));\nreturn;\n"
+                "B.new (A.new 42);\nreturn;\n"
             )
         );
     }
