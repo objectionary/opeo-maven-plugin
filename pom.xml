@@ -125,6 +125,11 @@ SOFTWARE.
       <version>1.4.14</version>
     </dependency>
     <dependency>
+      <groupId>org.eolang</groupId>
+      <artifactId>jeo-maven-plugin</artifactId>
+      <version>0.2.3</version>
+    </dependency>
+    <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-log</artifactId>
       <!-- version from the parent pom -->
