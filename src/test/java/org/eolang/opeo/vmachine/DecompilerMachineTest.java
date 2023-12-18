@@ -44,7 +44,7 @@ final class DecompilerMachineTest {
      * </p>
      */
     @Test
-    public void decompilesNewInstructions() {
+    void decompilesNewInstructions() {
         MatcherAssert.assertThat(
             "Can't decompile bytecode instructions for 'new B(new A(42));'",
             new DecompilerMachine().decompile(
@@ -73,7 +73,7 @@ final class DecompilerMachineTest {
      * </p>
      */
     @Test
-    public void decompilesNewInstructionsEachWithParam() {
+    void decompilesNewInstructionsEachWithParam() {
         MatcherAssert.assertThat(
             "Can't decompile new instructions for 'new D(new C(43), 44, 45);'",
             new DecompilerMachine().decompile(
@@ -94,6 +94,4 @@ final class DecompilerMachineTest {
             )
         );
     }
-
-
 }

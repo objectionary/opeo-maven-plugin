@@ -22,6 +22,6 @@
  * SOFTWARE.
  */
 /**
- * Test cases for {@link org.eolang.opeo.vmachine}
+ * Test cases for {@link org.eolang.opeo.vmachine}.
  */
 package org.eolang.opeo.vmachine;

@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Object reference.
  * @since 0.1
  */
-public class ObjectReference {
+public final class ObjectReference {
 
     /**
      * Global object reference counter.

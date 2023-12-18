@@ -76,7 +76,7 @@ public final class Constructor implements AstNode {
     }
 
     @Override
-    public String id() {
+    public String identifier() {
         return this.reference;
     }
 }

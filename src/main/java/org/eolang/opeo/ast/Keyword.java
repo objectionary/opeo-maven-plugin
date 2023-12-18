@@ -50,7 +50,7 @@ public final class Keyword implements AstNode {
     }
 
     @Override
-    public String id() {
+    public String identifier() {
         return UUID.randomUUID().toString();
     }
 }

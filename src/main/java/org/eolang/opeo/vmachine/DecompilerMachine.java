@@ -87,9 +87,9 @@ final class DecompilerMachine {
      * @param instructions Instructions to decompile.
      * @return Decompiled code.
      */
-    String decompile(Instruction... instructions) {
+    String decompile(final Instruction... instructions) {
         Arrays.stream(instructions)
-            .forEach(inst -> this.handler(inst.opcode()).handle(inst));
+            .forEach(inst -> this.handler(inst.code()).handle(inst));
         return this.root.print();
     }
 
@@ -104,12 +104,12 @@ final class DecompilerMachine {
 
     /**
      * Pops n arguments from the stack.
-     * @param n Number of arguments to pop.
+     * @param number Number of arguments to pop.
      * @return List of arguments.
      */
-    private List<AstNode> popArguments(final int n) {
+    private List<AstNode> popArguments(final int number) {
         final List<AstNode> arguments = new LinkedList<>();
-        for (int index = 0; index < n; index++) {
+        for (int index = 0; index < number; ++index) {
             final Object arg = this.stack.pop();
             final AstNode node = this.root.child(String.valueOf(arg))
                 .orElseGet(() -> new Literal(arg));
@@ -119,42 +119,69 @@ final class DecompilerMachine {
         return arguments;
     }
 
-
+    /**
+     * Instruction handler.
+     * @since 0.1
+     */
     private interface InstructionHandler {
+        /**
+         * Handle instruction.
+         * @param instruction Instruction to handle.
+         */
         void handle(Instruction instruction);
 
     }
 
+    /**
+     * New instruction handler.
+     * @since 0.1
+     */
     private class NewHandler implements InstructionHandler {
         @Override
-        public void handle(Instruction instruction) {
+        public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(
                 new ObjectReference((String) instruction.operand(0)).toString()
             );
         }
     }
 
+    /**
+     * Dup instruction handler.
+     * @since 0.1
+     */
     private class DupHandler implements InstructionHandler {
         @Override
-        public void handle(Instruction instruction) {
+        public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(DecompilerMachine.this.stack.peek());
         }
     }
 
+    /**
+     * Bipush instruction handler.
+     * @since 0.1
+     */
     private class BipushHandler implements InstructionHandler {
         @Override
-        public void handle(Instruction instruction) {
+        public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(instruction.operand(0));
         }
     }
 
+    /**
+     * Pop instruction handler.
+     * @since 0.1
+     */
     private class PopHandler implements InstructionHandler {
         @Override
-        public void handle(Instruction instruction) {
+        public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.pop();
         }
     }
 
+    /**
+     * Return instruction handler.
+     * @since 0.1
+     */
     private class ReturnHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
@@ -162,6 +189,10 @@ final class DecompilerMachine {
         }
     }
 
+    /**
+     * Invokespecial instruction handler.
+     * @since 0.1
+     */
     private class InvokespecialHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
@@ -183,6 +214,10 @@ final class DecompilerMachine {
         }
     }
 
+    /**
+     * Unimplemented instruction handler.
+     * @since 0.1
+     */
     private class UnimplementedHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
@@ -190,6 +225,4 @@ final class DecompilerMachine {
                 .append(new Keyword(String.format("Unimplemented %s", instruction)));
         }
     }
-
-
 }

@@ -54,11 +54,12 @@ public final class Root implements AstNode {
 
     /**
      * Find child by ID.
-     * @param id ID
+     * @param identifier ID
      * @return Child
      */
-    public Optional<AstNode> child(final String id) {
-        return this.children.stream().filter(node -> node.id().equals(id)).findFirst();
+    public Optional<AstNode> child(final String identifier) {
+        return this.children.stream()
+            .filter(node -> node.identifier().equals(identifier)).findFirst();
     }
 
     /**
@@ -78,7 +79,7 @@ public final class Root implements AstNode {
     }
 
     @Override
-    public String id() {
+    public String identifier() {
         return UUID.randomUUID().toString();
     }
 }
