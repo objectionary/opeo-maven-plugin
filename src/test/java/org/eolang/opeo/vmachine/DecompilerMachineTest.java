@@ -21,18 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo;
+package org.eolang.opeo.vmachine;
 
+import org.eolang.opeo.Instruction;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
 
 /**
- * Test case for {@link Decompiler}.
+ * Test case for {@link DecompilerMachine}.
  * @since 0.1
  */
-final class DecompilerTest {
+final class DecompilerMachineTest {
 
     /**
      * Test decompilation of new instructions.
@@ -46,7 +47,7 @@ final class DecompilerTest {
     public void decompilesNewInstructions() {
         MatcherAssert.assertThat(
             "Can't decompile new instructions",
-            new Decompiler().decompile(
+            new DecompilerMachine().decompile(
                 new Instruction(Opcodes.NEW, "B"),
                 new Instruction(Opcodes.DUP),
                 new Instruction(Opcodes.NEW, "A"),

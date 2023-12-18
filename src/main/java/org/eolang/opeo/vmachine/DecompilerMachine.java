@@ -1,39 +1,34 @@
-package org.eolang.opeo;
+package org.eolang.opeo.vmachine;
 
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import org.eolang.opeo.Instruction;
+import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Constructor;
+import org.eolang.opeo.ast.Keyword;
+import org.eolang.opeo.ast.Literal;
+import org.eolang.opeo.ast.Root;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
-public class Decompiler {
+public class DecompilerMachine {
 
     private final Deque<Object> stack;
-    private final Deque<String> result;
 
-    private final Map<String, String> heap;
+    private final Root root;
 
     private final Map<Integer, InstructionHandler> handlers;
 
-    private final AtomicInteger counter;
-
-    public Decompiler() {
-        this(new LinkedList<>(), new LinkedList<>(), Map.of(), new AtomicInteger(0));
+    public DecompilerMachine() {
+        this(new LinkedList<>());
     }
 
-    public Decompiler(
-        final Deque<Object> stack,
-        final Deque<String> result,
-        final Map<String, String> heap,
-        final AtomicInteger counter
-    ) {
+    public DecompilerMachine(final Deque<Object> stack) {
         this.stack = stack;
-        this.result = result;
-        this.heap = heap;
-        this.counter = counter;
+        this.root = new Root();
         this.handlers = Map.of(
             Opcodes.NEW, new NewHandler(),
             Opcodes.DUP, new DupHandler(),
@@ -47,28 +42,11 @@ public class Decompiler {
     public String decompile(Instruction... instructions) {
         Arrays.stream(instructions)
             .forEach(inst -> this.handler(inst.opcode()).handle(inst));
-        return String.join(";\n", this.result);
+        return this.root.print();
     }
 
     private InstructionHandler handler(final int opcode) {
         return this.handlers.getOrDefault(opcode, new UnimplementedHandler());
-    }
-
-    private interface InstructionHandler {
-        void handle(Instruction instruction);
-    }
-
-    /**
-     * Returns a reference to an object.
-     * @param type Object type.
-     * @return Reference.
-     */
-    private String reference(final String type) {
-        return String.format("%s%d%s",
-            "&",
-            this.counter.getAndIncrement(),
-            type.replace('/', '.')
-        );
     }
 
     /**
@@ -76,71 +54,86 @@ public class Decompiler {
      * @param n Number of arguments to pop.
      * @return List of arguments.
      */
-    private List<String> popArguments(final int n) {
-        final List<String> arguments = new LinkedList<>();
+    private List<AstNode> arguments(final int n) {
+        final List<AstNode> arguments = new LinkedList<>();
         for (int index = 0; index < n; index++) {
-            arguments.add(0, String.valueOf(this.stack.pop()));
+            final Object arg = this.stack.pop();
+            final AstNode node = this.root.child(String.valueOf(arg))
+                .orElseGet(() -> new Literal(arg));
+            this.root.disconnect(node);
+            arguments.add(node);
         }
         return arguments;
+    }
+
+
+    private interface InstructionHandler {
+        void handle(Instruction instruction);
+
     }
 
     private class NewHandler implements InstructionHandler {
         @Override
         public void handle(Instruction instruction) {
-            Decompiler.this.stack.push(Decompiler.this.reference((String) instruction.operand(0)));
+            DecompilerMachine.this.stack.push(
+                new ObjectReference((String) instruction.operand(0)).toString()
+            );
         }
     }
 
     private class DupHandler implements InstructionHandler {
         @Override
         public void handle(Instruction instruction) {
-            Decompiler.this.stack.push(Decompiler.this.stack.peek());
+            DecompilerMachine.this.stack.push(DecompilerMachine.this.stack.peek());
         }
     }
 
     private class BipushHandler implements InstructionHandler {
         @Override
         public void handle(Instruction instruction) {
-            Decompiler.this.stack.push(instruction.operand(0));
+            DecompilerMachine.this.stack.push(instruction.operand(0));
         }
     }
 
     private class PopHandler implements InstructionHandler {
         @Override
         public void handle(Instruction instruction) {
-            Decompiler.this.stack.pop();
+            DecompilerMachine.this.stack.pop();
         }
     }
 
     private class ReturnHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
-            Decompiler.this.result.add("return");
+            DecompilerMachine.this.root.append(new Keyword("return"));
         }
     }
 
     private class InvokespecialHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
-            final String type = (String) instruction.operand(0);
-            final String method = (String) instruction.operand(1);
-            final String descriptor = (String) instruction.operand(2);
-            if (!method.equals("<init>")) {
+            if (!instruction.operand(1).equals("<init>")) {
                 throw new UnsupportedOperationException(
                     String.format("Instruction %s is not supported yet", instruction)
                 );
             }
-            final List<String> args = Decompiler.this.popArguments(
-                Type.getArgumentCount(descriptor));
-            Decompiler.this.result.push(String.format("%s.new %s", type, String.join(", ", args)));
+            final List<AstNode> args = DecompilerMachine.this.arguments(
+                Type.getArgumentCount((String) instruction.operand(2))
+            );
+            final String type = (String) DecompilerMachine.this.stack.pop();
+            DecompilerMachine.this.root.append(
+                new Constructor((String) instruction.operand(0), type, args)
+            );
         }
     }
-
 
     private class UnimplementedHandler implements InstructionHandler {
         @Override
-        public void handle(Instruction instruction) {
-            Decompiler.this.result.add(String.format("Unimplemented %s", instruction));
+        public void handle(final Instruction instruction) {
+            DecompilerMachine.this.root
+                .append(new Keyword(String.format("Unimplemented %s", instruction)));
         }
     }
+
+
 }
