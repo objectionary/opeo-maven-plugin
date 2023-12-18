@@ -1,3 +1,26 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016-2023 Objectionary.com
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package org.eolang.opeo.vmachine;
 
 import java.util.Arrays;
@@ -14,19 +37,39 @@ import org.eolang.opeo.ast.Root;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
-public class DecompilerMachine {
+/**
+ * Decompiler machine.
+ * @since 0.1
+ */
+final class DecompilerMachine {
 
+    /**
+     * Operand Stack.
+     */
     private final Deque<Object> stack;
 
+    /**
+     * Output root.
+     */
     private final Root root;
 
+    /**
+     * Instruction handlers.
+     */
     private final Map<Integer, InstructionHandler> handlers;
 
-    public DecompilerMachine() {
+    /**
+     * Constructor.
+     */
+    DecompilerMachine() {
         this(new LinkedList<>());
     }
 
-    public DecompilerMachine(final Deque<Object> stack) {
+    /**
+     * Constructor.
+     * @param stack Operand stack.
+     */
+    private DecompilerMachine(final Deque<Object> stack) {
         this.stack = stack;
         this.root = new Root();
         this.handlers = Map.of(
@@ -39,12 +82,22 @@ public class DecompilerMachine {
         );
     }
 
-    public String decompile(Instruction... instructions) {
+    /**
+     * Decompile instructions.
+     * @param instructions Instructions to decompile.
+     * @return Decompiled code.
+     */
+    String decompile(Instruction... instructions) {
         Arrays.stream(instructions)
             .forEach(inst -> this.handler(inst.opcode()).handle(inst));
         return this.root.print();
     }
 
+    /**
+     * Get instruction handler.
+     * @param opcode Instruction opcode.
+     * @return Instruction handler.
+     */
     private InstructionHandler handler(final int opcode) {
         return this.handlers.getOrDefault(opcode, new UnimplementedHandler());
     }
