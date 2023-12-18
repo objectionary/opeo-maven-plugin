@@ -29,7 +29,7 @@ import lombok.ToString;
 /**
  * Instruction.
  * @since 0.1
- * @todo!sdds #~8:90min Use real source of opcode instructions.
+ * @todo #8:90min Use real source of opcode instructions.
  *  Currently we use this class as a source of instructions and their operands.
  *  We can use jeo plugin as a source of instructions and their operands instead.
  */
