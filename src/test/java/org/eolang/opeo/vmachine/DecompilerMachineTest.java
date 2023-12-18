@@ -46,7 +46,7 @@ final class DecompilerMachineTest {
     @Test
     public void decompilesNewInstructions() {
         MatcherAssert.assertThat(
-            "Can't decompile new instructions",
+            "Can't decompile bytecode instructions for 'new B(new A(42));'",
             new DecompilerMachine().decompile(
                 new Instruction(Opcodes.NEW, "B"),
                 new Instruction(Opcodes.DUP),
@@ -55,6 +55,37 @@ final class DecompilerMachineTest {
                 new Instruction(Opcodes.BIPUSH, 42),
                 new Instruction(Opcodes.INVOKESPECIAL, "A", "<init>", "(I)V"),
                 new Instruction(Opcodes.INVOKESPECIAL, "B", "<init>", "(LA;)V"),
+                new Instruction(Opcodes.POP),
+                new Instruction(Opcodes.RETURN)
+            ),
+            Matchers.equalTo(
+                "B.new (A.new 42);\nreturn;\n"
+            )
+        );
+    }
+
+    /**
+     * Test decompilation of new instructions.
+     * <p>
+     *     {@code
+     *       new D(new C(43), 44, 45);
+     *     }
+     * </p>
+     */
+    @Test
+    public void decompilesNewInstructionsEachWithParam() {
+        MatcherAssert.assertThat(
+            "Can't decompile new instructions for 'new D(new C(43), 44, 45);'",
+            new DecompilerMachine().decompile(
+                new Instruction(Opcodes.NEW, "D"),
+                new Instruction(Opcodes.DUP),
+                new Instruction(Opcodes.BIPUSH, 45),
+                new Instruction(Opcodes.BIPUSH, 44),
+                new Instruction(Opcodes.NEW, "C"),
+                new Instruction(Opcodes.DUP),
+                new Instruction(Opcodes.BIPUSH, 43),
+                new Instruction(Opcodes.INVOKESPECIAL, "C", "<init>", "(I)V"),
+                new Instruction(Opcodes.INVOKESPECIAL, "D", "<init>", "(LC;II)V"),
                 new Instruction(Opcodes.POP),
                 new Instruction(Opcodes.RETURN)
             ),
