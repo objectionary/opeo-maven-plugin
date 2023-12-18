@@ -54,7 +54,7 @@ public class DecompilerMachine {
      * @param n Number of arguments to pop.
      * @return List of arguments.
      */
-    private List<AstNode> arguments(final int n) {
+    private List<AstNode> popArguments(final int n) {
         final List<AstNode> arguments = new LinkedList<>();
         for (int index = 0; index < n; index++) {
             final Object arg = this.stack.pop();
@@ -117,12 +117,15 @@ public class DecompilerMachine {
                     String.format("Instruction %s is not supported yet", instruction)
                 );
             }
-            final List<AstNode> args = DecompilerMachine.this.arguments(
+            final List<AstNode> args = DecompilerMachine.this.popArguments(
                 Type.getArgumentCount((String) instruction.operand(2))
             );
-            final String type = (String) DecompilerMachine.this.stack.pop();
             DecompilerMachine.this.root.append(
-                new Constructor((String) instruction.operand(0), type, args)
+                new Constructor(
+                    (String) instruction.operand(0),
+                    (String) DecompilerMachine.this.stack.pop(),
+                    args
+                )
             );
         }
     }

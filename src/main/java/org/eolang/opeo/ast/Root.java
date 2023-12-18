@@ -15,7 +15,7 @@ public class Root implements AstNode {
 
     @Override
     public String print() {
-        return children.stream().map(AstNode::print).collect(Collectors.joining(";"));
+        return this.children.stream().map(AstNode::print).collect(Collectors.joining("\n"));
     }
 
     public Optional<AstNode> child(final String id) {

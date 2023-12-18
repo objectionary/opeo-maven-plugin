@@ -21,56 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.vmachine;
-
-import java.util.concurrent.atomic.AtomicInteger;
-
 /**
- * Object reference.
- * @since 0.1
+ * Provides the classes necessary to create a virtual machine for decompilation.
  */
-public class ObjectReference {
-
-    /**
-     * Global object reference counter.
-     */
-    private static final AtomicInteger GLOBAL = new AtomicInteger();
-
-    /**
-     * Object type.
-     */
-    private final String type;
-
-    /**
-     * Object reference counter.
-     */
-    private final AtomicInteger counter;
-
-    /**
-     * Constructor.
-     * @param type Object type
-     */
-    ObjectReference(final String type) {
-        this(type, ObjectReference.GLOBAL);
-    }
-
-    /**
-     * Constructor.
-     * @param type Object type
-     * @param counter Object reference counter
-     */
-    private ObjectReference(final String type, final AtomicInteger counter) {
-        this.type = type;
-        this.counter = counter;
-    }
-
-    @Override
-    public String toString() {
-        return String.format(
-            "%s%d%s",
-            "&",
-            this.counter.getAndIncrement(),
-            this.type.replace('/', '.')
-        );
-    }
-}
+package org.eolang.opeo.vmachine;
