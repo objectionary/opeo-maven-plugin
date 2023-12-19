@@ -31,7 +31,7 @@ import java.util.Map;
 import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Constructor;
-import org.eolang.opeo.ast.InstanceInvokation;
+import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Keyword;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Root;
@@ -231,7 +231,7 @@ final class DecompilerMachine {
             );
             final AstNode source = DecompilerMachine.this.popArguments(1).get(0);
             DecompilerMachine.this.root.append(
-                new InstanceInvokation(source, method, args)
+                new Invocation(source, method, args)
             );
         }
     }

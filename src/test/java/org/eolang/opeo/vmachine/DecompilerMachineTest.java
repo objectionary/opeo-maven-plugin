@@ -33,6 +33,7 @@ import org.objectweb.asm.Opcodes;
  * Test case for {@link DecompilerMachine}.
  * @since 0.1
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class DecompilerMachineTest {
 
     /**
@@ -119,7 +120,6 @@ final class DecompilerMachineTest {
         );
     }
 
-
     /**
      * Test decompilation of instance call instructions with arguments.
      * <p>
@@ -180,7 +180,5 @@ final class DecompilerMachineTest {
                 "(java/lang/StringBuilder.new (\"a\")).append \"b\""
             )
         );
-
-
     }
 }
