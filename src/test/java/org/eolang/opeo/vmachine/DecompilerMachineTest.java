@@ -96,7 +96,7 @@ final class DecompilerMachineTest {
     }
 
     /**
-     * Test decompilation of new instructions.
+     * Test decompilation of instance call instructions.
      * <p>
      *     {@code
      *       new A().bar();
@@ -115,6 +115,33 @@ final class DecompilerMachineTest {
             ),
             Matchers.equalTo(
                 "(A.new).bar"
+            )
+        );
+    }
+
+
+    /**
+     * Test decompilation of instance call instructions with arguments.
+     * <p>
+     *     {@code
+     *       new A(28).bar(29);
+     *     }
+     * </p>
+     */
+    @Test
+    void decompilesInstanceCallWithArguments() {
+        MatcherAssert.assertThat(
+            "Can't decompile method call instructions for 'new A(28).bar(29);'",
+            new DecompilerMachine().decompile(
+                new Instruction(Opcodes.BIPUSH, 28),
+                new Instruction(Opcodes.NEW, "A"),
+                new Instruction(Opcodes.DUP),
+                new Instruction(Opcodes.INVOKESPECIAL, "A", "<init>", "(I)V"),
+                new Instruction(Opcodes.BIPUSH, 29),
+                new Instruction(Opcodes.INVOKEVIRTUAL, "A", "bar", "(I)V")
+            ),
+            Matchers.equalTo(
+                "(A.new 28).bar 29"
             )
         );
     }

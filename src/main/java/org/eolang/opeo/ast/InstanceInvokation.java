@@ -27,9 +27,23 @@ public class InstanceInvokation implements AstNode {
             "(%s).%s%s",
             this.source.print(),
             this.method,
-            this.arguments.stream().map(AstNode::print)
-                .collect(Collectors.joining(" "))
+            this.args()
         );
+    }
+
+    /**
+     * Print arguments.
+     * @return Arguments
+     */
+    private String args() {
+        final String result;
+        if (this.arguments.isEmpty()) {
+            result = "";
+        } else {
+            result = this.arguments.stream().map(AstNode::print)
+                .collect(Collectors.joining(" ", " ", ""));
+        }
+        return result;
     }
 
     @Override
