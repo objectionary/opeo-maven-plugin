@@ -31,6 +31,7 @@ import java.util.Map;
 import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Constructor;
+import org.eolang.opeo.ast.InstanceInvokation;
 import org.eolang.opeo.ast.Keyword;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Root;
@@ -81,6 +82,7 @@ final class DecompilerMachine {
             Opcodes.DUP, new DupHandler(),
             Opcodes.BIPUSH, new BipushHandler(),
             Opcodes.INVOKESPECIAL, new InvokespecialHandler(),
+            Opcodes.INVOKEVIRTUAL, new InvokevirtualHandler(),
             Opcodes.POP, new PopHandler(),
             Opcodes.RETURN, new ReturnHandler()
         );
@@ -214,6 +216,25 @@ final class DecompilerMachine {
                     (String) DecompilerMachine.this.stack.pop(),
                     args
                 )
+            );
+        }
+    }
+
+    /**
+     * Invokevirtual instruction handler.
+     * @since 0.1
+     */
+    private class InvokevirtualHandler implements InstructionHandler {
+        @Override
+        public void handle(final Instruction instruction) {
+            final String method = (String) instruction.operand(1);
+            final String descriptor = (String) instruction.operand(2);
+            final List<AstNode> args = DecompilerMachine.this.popArguments(
+                Type.getArgumentCount(descriptor)
+            );
+            final AstNode source = DecompilerMachine.this.popArguments(1).get(0);
+            DecompilerMachine.this.root.append(
+                new InstanceInvokation(source, method, args)
             );
         }
     }

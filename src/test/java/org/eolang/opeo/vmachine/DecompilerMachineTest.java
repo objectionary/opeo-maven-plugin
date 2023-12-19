@@ -94,4 +94,28 @@ final class DecompilerMachineTest {
             )
         );
     }
+
+    /**
+     * Test decompilation of new instructions.
+     * <p>
+     *     {@code
+     *       new A().bar();
+     *     }
+     * </p>
+     */
+    @Test
+    void decompilesSimpleInstanceCall() {
+        MatcherAssert.assertThat(
+            "Can't decompile method call instructions for 'new A().bar();'",
+            new DecompilerMachine().decompile(
+                new Instruction(Opcodes.NEW, "A"),
+                new Instruction(Opcodes.DUP),
+                new Instruction(Opcodes.INVOKESPECIAL, "A", "<init>", "()V"),
+                new Instruction(Opcodes.INVOKEVIRTUAL, "A", "bar", "()V")
+            ),
+            Matchers.equalTo(
+                "(A.new).bar"
+            )
+        );
+    }
 }
