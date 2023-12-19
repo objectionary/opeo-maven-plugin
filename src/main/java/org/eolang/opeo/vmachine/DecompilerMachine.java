@@ -41,10 +41,6 @@ import org.objectweb.asm.Type;
 /**
  * Decompiler machine.
  * @since 0.1
- * @todo #8:30min Implement method invocation decompilation.
- *  Currently, the decompiler is able to decompile only
- *  constructor invocations. Now, we need to implement
- *  method invocation decompilation.
  */
 final class DecompilerMachine {
 
