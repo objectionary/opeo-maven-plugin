@@ -133,16 +133,54 @@ final class DecompilerMachineTest {
         MatcherAssert.assertThat(
             "Can't decompile method call instructions for 'new A(28).bar(29);'",
             new DecompilerMachine().decompile(
-                new Instruction(Opcodes.BIPUSH, 28),
                 new Instruction(Opcodes.NEW, "A"),
                 new Instruction(Opcodes.DUP),
+                new Instruction(Opcodes.BIPUSH, 28),
                 new Instruction(Opcodes.INVOKESPECIAL, "A", "<init>", "(I)V"),
                 new Instruction(Opcodes.BIPUSH, 29),
                 new Instruction(Opcodes.INVOKEVIRTUAL, "A", "bar", "(I)V")
             ),
             Matchers.equalTo(
-                "(A.new 28).bar 29"
+                "(A.new (28)).bar 29"
             )
         );
+    }
+
+    /**
+     * Test decompilation of instance call instructions with arguments.
+     * <p>
+     *     {@code
+     *       new StringBuilder('a').append('b');
+     *     }
+     * </p>
+     */
+    @Test
+    void decompilesStringBuilder() {
+        MatcherAssert.assertThat(
+            "Can't decompile StringBuilder instructions for 'new StringBuilder('a').append('b');",
+            new DecompilerMachine().decompile(
+                new Instruction(Opcodes.NEW, "java/lang/StringBuilder"),
+                new Instruction(Opcodes.DUP),
+                new Instruction(Opcodes.LDC, "a"),
+                new Instruction(
+                    Opcodes.INVOKESPECIAL,
+                    "java/lang/StringBuilder",
+                    "<init>",
+                    "(Ljava/lang/String;)V"
+                ),
+                new Instruction(Opcodes.LDC, "b"),
+                new Instruction(
+                    Opcodes.INVOKEVIRTUAL,
+                    "java/lang/StringBuilder",
+                    "append",
+                    "(Ljava/lang/String;)Ljava/lang/StringBuilder"
+                )
+            ),
+            Matchers.equalTo(
+                "(java/lang/StringBuilder.new (\"a\")).append \"b\""
+            )
+        );
+
+
     }
 }

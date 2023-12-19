@@ -46,7 +46,13 @@ public final class Literal implements AstNode {
 
     @Override
     public String print() {
-        return this.object.toString();
+        final String result;
+        if (this.object instanceof String) {
+            result = String.format("\"%s\"", this.object);
+        } else {
+            result = this.object.toString();
+        }
+        return result;
     }
 
     @Override

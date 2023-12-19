@@ -83,6 +83,7 @@ final class DecompilerMachine {
             Opcodes.BIPUSH, new BipushHandler(),
             Opcodes.INVOKESPECIAL, new InvokespecialHandler(),
             Opcodes.INVOKEVIRTUAL, new InvokevirtualHandler(),
+            Opcodes.LDC, new LdcHandler(),
             Opcodes.POP, new PopHandler(),
             Opcodes.RETURN, new ReturnHandler()
         );
@@ -240,6 +241,17 @@ final class DecompilerMachine {
     }
 
     /**
+     * Ldc instruction handler.
+     * @since 0.1
+     */
+    private class LdcHandler implements InstructionHandler {
+        @Override
+        public void handle(final Instruction instruction) {
+            DecompilerMachine.this.stack.push(instruction.operand(0));
+        }
+    }
+
+    /**
      * Unimplemented instruction handler.
      * @since 0.1
      */
@@ -250,4 +262,5 @@ final class DecompilerMachine {
                 .append(new Keyword(String.format("Unimplemented %s", instruction)));
         }
     }
+
 }
