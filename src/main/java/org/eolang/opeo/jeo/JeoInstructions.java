@@ -23,16 +23,28 @@
  */
 package org.eolang.opeo.jeo;
 
+import org.eolang.jeo.representation.xmir.XmlInstruction;
+import org.eolang.jeo.representation.xmir.XmlMethod;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.Instruction;
 
 /**
  * Class that represents the instructions provided by jeo maven plugin.
  * @since 0.1
  */
-public class JeoInstructions {
+public final class JeoInstructions {
 
+    private final XmlMethod method;
+
+    public JeoInstructions(final XmlMethod method) {
+        this.method = method;
+    }
     public Instruction[] instructions() {
-        return new Instruction[0];
+        return this.method.instructions().stream()
+            .filter(node -> node instanceof XmlInstruction)
+            .map(XmlInstruction.class::cast)
+            .map(JeoInstruction::new)
+            .toArray(Instruction[]::new);
     }
 
 }

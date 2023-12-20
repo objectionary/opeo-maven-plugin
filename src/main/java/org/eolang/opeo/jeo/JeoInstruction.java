@@ -23,26 +23,38 @@
  */
 package org.eolang.opeo.jeo;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.opeo.Instruction;
 
 /**
  * Class that represents the instruction provided by jeo maven plugin.
  * @since 0.1
  */
-public class JeoInstruction implements Instruction {
+public final class JeoInstruction implements Instruction {
+
+    private final XmlInstruction instruction;
+
+    public JeoInstruction(final XmlInstruction instruction) {
+        this.instruction = instruction;
+    }
+
     @Override
     public int opcode() {
-        return 0;
+        return this.instruction.opcode();
     }
 
     @Override
     public Object operand(final int index) {
-        return null;
+        return this.operands().get(index);
     }
 
     @Override
     public List<Object> operands() {
-        return null;
+        return Arrays.stream(this.instruction.operands()).collect(Collectors.toList());
     }
 }
