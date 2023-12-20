@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -48,6 +49,20 @@ public final class Invocation implements AstNode {
      * Arguments.
      */
     private final List<AstNode> arguments;
+
+    /**
+     * Constructor.
+     * @param source Source or target on which the invocation is performed
+     * @param method Method name
+     * @param args Arguments
+     */
+    public Invocation(
+        final AstNode source,
+        final String method,
+        final AstNode... args
+    ) {
+        this(source, method, Arrays.asList(args));
+    }
 
     /**
      * Constructor.
