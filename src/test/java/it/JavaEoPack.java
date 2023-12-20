@@ -26,7 +26,6 @@ package it;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import lombok.Data;
 import org.yaml.snakeyaml.Yaml;
 
 /**
@@ -35,39 +34,83 @@ import org.yaml.snakeyaml.Yaml;
  */
 final class JavaEoPack {
 
+    /**
+     * Raw YAML.
+     */
     private final String pack;
 
-    public JavaEoPack(final String yaml) {
+    /**
+     * Constructor.
+     * @param yaml Raw YAML.
+     */
+    JavaEoPack(final String yaml) {
         this.pack = yaml;
     }
 
-    public List<Program> java() {
-        final Yaml yaml = new Yaml();
-        final Map<String, Map<String, String>> map = yaml.load(this.pack);
-        return map.get("java").entrySet().stream().map(Program::new).collect(Collectors.toList());
+    /**
+     * Java programs.
+     * @return List of programs.
+     */
+    List<Program> java() {
+        return this.parse().get("java")
+            .entrySet().stream()
+            .map(Program::new)
+            .collect(Collectors.toList());
     }
 
-    public List<Program> eo() {
-        final Yaml yaml = new Yaml();
-        final Map<String, Map<String, String>> map = yaml.load(this.pack);
-        return map.get("java").entrySet().stream().map(Program::new).collect(Collectors.toList());
+    /**
+     * EO programs.
+     * @return List of programs.
+     */
+    List<Program> eo() {
+        return this.parse().get("eo")
+            .entrySet()
+            .stream().map(Program::new)
+            .collect(Collectors.toList());
     }
 
+    private Map<String, Map<String, String>> parse() {
+        return new Yaml().load(this.pack);
+    }
 
+    /**
+     * Program.
+     * @since 0.1
+     */
     static class Program {
+
+        /**
+         * Filename.
+         */
         private final String filename;
+
+        /**
+         * Source.
+         */
         private final String source;
 
+        /**
+         * Constructor.
+         * @param entry Entry.
+         */
         Program(final Map.Entry<String, String> entry) {
             this.filename = entry.getKey();
             this.source = entry.getValue();
         }
 
-        public String name() {
+        /**
+         * Program filename.
+         * @return Filename.
+         */
+        String name() {
             return this.filename;
         }
 
-        public String src() {
+        /**
+         * Program source.
+         * @return Source code.
+         */
+        String src() {
             return this.source;
         }
     }

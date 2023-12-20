@@ -74,9 +74,13 @@ final class TrasformationPacksTest {
             .map(JavaEoPack.Program::src)
             .collect(Collectors.toList());
         MatcherAssert.assertThat(
-            "Pack is not null",
-            pack,
-            Matchers.notNullValue()
+            String.format(
+                "Decompiled EO (number of files %d) doesn't match expected EO (number of files %d)",
+                decompiled.size(),
+                expected.size()
+            ),
+            decompiled,
+            Matchers.containsInAnyOrder(expected)
         );
     }
 
