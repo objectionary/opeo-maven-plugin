@@ -111,7 +111,7 @@ final class TrasformationPacksTest {
      */
     @Test
     @Disabled
-    void simpleDecompilationExample(@TempDir final Path where) throws Exception {
+    void decompilesSimpleExample(@TempDir final Path where) throws Exception {
         final XML decompiled = new JeoDecompiler(
             new BytecodeRepresentation(
                 TrasformationPacksTest.compile(
