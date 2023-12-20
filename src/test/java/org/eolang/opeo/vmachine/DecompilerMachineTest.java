@@ -23,7 +23,7 @@
  */
 package org.eolang.opeo.vmachine;
 
-import org.eolang.opeo.Instruction;
+import org.eolang.opeo.OpcodeInstruction;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -49,15 +49,15 @@ final class DecompilerMachineTest {
         MatcherAssert.assertThat(
             "Can't decompile bytecode instructions for 'new B(new A(42));'",
             new DecompilerMachine().decompile(
-                new Instruction(Opcodes.NEW, "B"),
-                new Instruction(Opcodes.DUP),
-                new Instruction(Opcodes.NEW, "A"),
-                new Instruction(Opcodes.DUP),
-                new Instruction(Opcodes.BIPUSH, 42),
-                new Instruction(Opcodes.INVOKESPECIAL, "A", "<init>", "(I)V"),
-                new Instruction(Opcodes.INVOKESPECIAL, "B", "<init>", "(LA;)V"),
-                new Instruction(Opcodes.POP),
-                new Instruction(Opcodes.RETURN)
+                new OpcodeInstruction(Opcodes.NEW, "B"),
+                new OpcodeInstruction(Opcodes.DUP),
+                new OpcodeInstruction(Opcodes.NEW, "A"),
+                new OpcodeInstruction(Opcodes.DUP),
+                new OpcodeInstruction(Opcodes.BIPUSH, 42),
+                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "A", "<init>", "(I)V"),
+                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "B", "<init>", "(LA;)V"),
+                new OpcodeInstruction(Opcodes.POP),
+                new OpcodeInstruction(Opcodes.RETURN)
             ),
             Matchers.allOf(
                 Matchers.containsString("B.new (A.new (42))"),
@@ -79,17 +79,17 @@ final class DecompilerMachineTest {
         MatcherAssert.assertThat(
             "Can't decompile new instructions for 'new D(new C(43), 44, 45);'",
             new DecompilerMachine().decompile(
-                new Instruction(Opcodes.NEW, "D"),
-                new Instruction(Opcodes.DUP),
-                new Instruction(Opcodes.BIPUSH, 45),
-                new Instruction(Opcodes.BIPUSH, 44),
-                new Instruction(Opcodes.NEW, "C"),
-                new Instruction(Opcodes.DUP),
-                new Instruction(Opcodes.BIPUSH, 43),
-                new Instruction(Opcodes.INVOKESPECIAL, "C", "<init>", "(I)V"),
-                new Instruction(Opcodes.INVOKESPECIAL, "D", "<init>", "(LC;II)V"),
-                new Instruction(Opcodes.POP),
-                new Instruction(Opcodes.RETURN)
+                new OpcodeInstruction(Opcodes.NEW, "D"),
+                new OpcodeInstruction(Opcodes.DUP),
+                new OpcodeInstruction(Opcodes.BIPUSH, 45),
+                new OpcodeInstruction(Opcodes.BIPUSH, 44),
+                new OpcodeInstruction(Opcodes.NEW, "C"),
+                new OpcodeInstruction(Opcodes.DUP),
+                new OpcodeInstruction(Opcodes.BIPUSH, 43),
+                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "C", "<init>", "(I)V"),
+                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "D", "<init>", "(LC;II)V"),
+                new OpcodeInstruction(Opcodes.POP),
+                new OpcodeInstruction(Opcodes.RETURN)
             ),
             Matchers.allOf(
                 Matchers.containsString("D.new (C.new (43)) (44) (45)"),
@@ -111,10 +111,10 @@ final class DecompilerMachineTest {
         MatcherAssert.assertThat(
             "Can't decompile method call instructions for 'new A().bar();'",
             new DecompilerMachine().decompile(
-                new Instruction(Opcodes.NEW, "A"),
-                new Instruction(Opcodes.DUP),
-                new Instruction(Opcodes.INVOKESPECIAL, "A", "<init>", "()V"),
-                new Instruction(Opcodes.INVOKEVIRTUAL, "A", "bar", "()V")
+                new OpcodeInstruction(Opcodes.NEW, "A"),
+                new OpcodeInstruction(Opcodes.DUP),
+                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "A", "<init>", "()V"),
+                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "A", "bar", "()V")
             ),
             Matchers.equalTo(
                 "(A.new).bar"
@@ -135,12 +135,12 @@ final class DecompilerMachineTest {
         MatcherAssert.assertThat(
             "Can't decompile method call instructions for 'new A(28).bar(29);'",
             new DecompilerMachine().decompile(
-                new Instruction(Opcodes.NEW, "A"),
-                new Instruction(Opcodes.DUP),
-                new Instruction(Opcodes.BIPUSH, 28),
-                new Instruction(Opcodes.INVOKESPECIAL, "A", "<init>", "(I)V"),
-                new Instruction(Opcodes.BIPUSH, 29),
-                new Instruction(Opcodes.INVOKEVIRTUAL, "A", "bar", "(I)V")
+                new OpcodeInstruction(Opcodes.NEW, "A"),
+                new OpcodeInstruction(Opcodes.DUP),
+                new OpcodeInstruction(Opcodes.BIPUSH, 28),
+                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "A", "<init>", "(I)V"),
+                new OpcodeInstruction(Opcodes.BIPUSH, 29),
+                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "A", "bar", "(I)V")
             ),
             Matchers.equalTo(
                 "(A.new (28)).bar 29"
@@ -161,17 +161,17 @@ final class DecompilerMachineTest {
         MatcherAssert.assertThat(
             "Can't decompile StringBuilder instructions for 'new StringBuilder('a').append('b');",
             new DecompilerMachine().decompile(
-                new Instruction(Opcodes.NEW, "java/lang/StringBuilder"),
-                new Instruction(Opcodes.DUP),
-                new Instruction(Opcodes.LDC, "a"),
-                new Instruction(
+                new OpcodeInstruction(Opcodes.NEW, "java/lang/StringBuilder"),
+                new OpcodeInstruction(Opcodes.DUP),
+                new OpcodeInstruction(Opcodes.LDC, "a"),
+                new OpcodeInstruction(
                     Opcodes.INVOKESPECIAL,
                     "java/lang/StringBuilder",
                     "<init>",
                     "(Ljava/lang/String;)V"
                 ),
-                new Instruction(Opcodes.LDC, "b"),
-                new Instruction(
+                new OpcodeInstruction(Opcodes.LDC, "b"),
+                new OpcodeInstruction(
                     Opcodes.INVOKEVIRTUAL,
                     "java/lang/StringBuilder",
                     "append",

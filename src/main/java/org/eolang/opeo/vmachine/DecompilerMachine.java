@@ -92,7 +92,7 @@ final class DecompilerMachine {
      */
     String decompile(final Instruction... instructions) {
         Arrays.stream(instructions)
-            .forEach(inst -> this.handler(inst.code()).handle(inst));
+            .forEach(inst -> this.handler(inst.opcode()).handle(inst));
         return this.root.print();
     }
 
@@ -189,7 +189,7 @@ final class DecompilerMachine {
         @Override
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.root.append(
-                new Opcode(instruction.code(), instruction.operands())
+                new Opcode(instruction.opcode(), instruction.operands())
             );
         }
     }
@@ -257,7 +257,7 @@ final class DecompilerMachine {
         @Override
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.root.append(
-                new Opcode(instruction.code(), instruction.operands())
+                new Opcode(instruction.opcode(), instruction.operands())
             );
         }
     }
