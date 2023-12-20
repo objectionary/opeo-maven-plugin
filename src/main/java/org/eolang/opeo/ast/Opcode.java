@@ -36,12 +36,12 @@ import org.xembly.Xembler;
  * Opcode output node.
  * @since 0.1
  */
-public class Opcode implements AstNode {
+public final class Opcode implements AstNode {
 
     /**
      * Opcode.
      */
-    private final int opcode;
+    private final int bytecode;
 
     /**
      * Opcode operands.
@@ -53,7 +53,7 @@ public class Opcode implements AstNode {
      * @param opcode Opcode
      * @param operands Opcode operands
      */
-    public Opcode(final int opcode, Object... operands) {
+    public Opcode(final int opcode, final Object... operands) {
         this(opcode, Arrays.asList(operands));
     }
 
@@ -63,18 +63,18 @@ public class Opcode implements AstNode {
      * @param operands Opcode operands
      */
     public Opcode(final int opcode, final List<Object> operands) {
-        this.opcode = opcode;
+        this.bytecode = opcode;
         this.operands = operands;
     }
 
     @Override
     public String print() {
-        return new XMIR(new Xembler(toXmir(), new Transformers.Node()).xmlQuietly()).toEO();
+        return new XMIR(new Xembler(this.toXmir(), new Transformers.Node()).xmlQuietly()).toEO();
     }
 
     @Override
     public Iterable<Directive> toXmir() {
-        return new DirectivesInstruction(this.opcode, this.operands.toArray());
+        return new DirectivesInstruction(this.bytecode, this.operands.toArray());
     }
 
     @Override

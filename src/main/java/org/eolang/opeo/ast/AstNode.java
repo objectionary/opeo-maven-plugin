@@ -23,9 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
-import com.jcabi.xml.XML;
 import org.xembly.Directive;
-import org.xembly.Directives;
 
 /**
  * Abstract syntax tree node.

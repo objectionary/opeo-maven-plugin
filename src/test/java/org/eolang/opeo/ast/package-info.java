@@ -21,29 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.ast;
-
-import com.jcabi.matchers.XhtmlMatchers;
-import org.hamcrest.MatcherAssert;
-import org.junit.jupiter.api.Test;
-import org.xembly.ImpossibleModificationException;
-import org.xembly.Transformers;
-import org.xembly.Xembler;
-
 /**
- * Test case for {@link Literal}.
+ * Test cases for the ast nodes.
  * @since 0.1
  */
-class LiteralTest {
-
-    @Test
-    void transformsToXmir() throws ImpossibleModificationException {
-        MatcherAssert.assertThat(
-            "We expect the following XML to be generated: <o base='string' data='bytes'>4E 65 6F</o>",
-            new Xembler(new Literal("Neo").toXmir(), new Transformers.Node()).xml(),
-            XhtmlMatchers.hasXPath(
-                "/o[@base='string' and @data='bytes' and text()='4E 65 6F']/text()"
-            )
-        );
-    }
-}
+package org.eolang.opeo.ast;

@@ -26,7 +26,6 @@ package org.eolang.opeo.ast;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.eolang.jeo.representation.directives.DirectivesMethod;
 import org.eolang.opeo.vmachine.ObjectReference;
 import org.xembly.Directive;
 import org.xembly.Directives;
