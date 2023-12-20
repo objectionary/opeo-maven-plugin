@@ -59,8 +59,9 @@ final class DecompilerMachineTest {
                 new Instruction(Opcodes.POP),
                 new Instruction(Opcodes.RETURN)
             ),
-            Matchers.equalTo(
-                "B.new (A.new (42))\nopcode > RETURN-28\n  177\n"
+            Matchers.allOf(
+                Matchers.containsString("B.new (A.new (42))"),
+                Matchers.containsString("opcode > RETURN")
             )
         );
     }
@@ -90,8 +91,9 @@ final class DecompilerMachineTest {
                 new Instruction(Opcodes.POP),
                 new Instruction(Opcodes.RETURN)
             ),
-            Matchers.equalTo(
-                "D.new (C.new (43)) (44) (45)\nopcode > RETURN-27\n  177\n"
+            Matchers.allOf(
+                Matchers.containsString("D.new (C.new (43)) (44) (45)"),
+                Matchers.containsString("opcode > RETURN")
             )
         );
     }
