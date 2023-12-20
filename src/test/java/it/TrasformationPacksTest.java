@@ -23,9 +23,21 @@
  */
 package it;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.tools.ToolProvider;
+import org.eolang.jeo.representation.bytecode.Bytecode;
 import org.eolang.jucs.ClasspathSource;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.condition.EnabledIf;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 
 /**
@@ -41,7 +53,8 @@ final class TrasformationPacksTest {
 
     @ParameterizedTest
     @ClasspathSource(value = "packs", glob = "**.yaml")
-    void checksPack(final String pack) {
+    @EnabledIf(value = "hasJavaCompiler", disabledReason = "Java compiler is not available")
+    void checksPack(final String pack, @TempDir Path where) throws IOException {
         //@checkstyle MethodBodyCommentsCheck (10 lines)
         // @todo #6:90min Implement primitive transformation test.
         //  Currently we just get the pack name from the test and check that it is not null.
@@ -50,10 +63,68 @@ final class TrasformationPacksTest {
         //  2. Transform bytecode into XMIR
         //  3. Compile expected EO into XMIR
         //  4. Compare XMIRs
+        final List<JavaEoPack.Program> java = new JavaEoPack(pack).java();
+        final List<Bytecode> compile = TrasformationPacksTest.compile(where, java);
         MatcherAssert.assertThat(
             "Pack is not null",
             pack,
             Matchers.notNullValue()
         );
+    }
+
+    /**
+     * Compile random java class into bytecode.
+     * @param where Where to compile.
+     * @param classpath Source Code.
+     * @return Bytecode.
+     */
+    private static List<Bytecode> compile(
+        final Path where,
+        List<JavaEoPack.Program> classpath
+    ) throws IOException {
+        List<Path> javafiles = new ArrayList<>(0);
+        for (final JavaEoPack.Program program : classpath) {
+            final Path path = where.resolve(program.name());
+            javafiles.add(path);
+            Files.write(
+                path,
+                program.src().getBytes(StandardCharsets.UTF_8)
+            );
+        }
+        final List<String> files = javafiles.stream()
+//            .map(Path::getFileName)
+            .map(Path::toString)
+            .collect(Collectors.toList());
+        ToolProvider.getSystemJavaCompiler().run(
+            System.in,
+            System.out,
+            System.err,
+            "-g:none",
+            "-source", "11",
+            "-target", "11",
+            files.get(0),
+            files.get(1),
+            files.get(2)
+        );
+        return Files.list(where).filter(p -> p.getFileName().toString().endsWith(".class")).map(p -> {
+            try {
+                return Files.readAllBytes(p);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }).map(Bytecode::new).collect(Collectors.toList());
+//        return new Bytecode(
+//            Files.readAllBytes())
+//        );
+    }
+
+    /**
+     * Check if java compiler is available.
+     * Don't care about PMD warning: this method is used in @EnabledIf annotation.
+     * @return True if java compiler is available.
+     */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    private static boolean hasJavaCompiler() {
+        return ToolProvider.getSystemJavaCompiler() != null;
     }
 }
