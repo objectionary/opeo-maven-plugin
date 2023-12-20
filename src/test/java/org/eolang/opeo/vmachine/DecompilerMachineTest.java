@@ -60,7 +60,7 @@ final class DecompilerMachineTest {
                 new Instruction(Opcodes.RETURN)
             ),
             Matchers.equalTo(
-                "B.new (A.new (42))\nreturn"
+                "B.new (A.new (42))\nopcode > RETURN-28\n  177\n"
             )
         );
     }
@@ -91,7 +91,7 @@ final class DecompilerMachineTest {
                 new Instruction(Opcodes.RETURN)
             ),
             Matchers.equalTo(
-                "D.new (C.new (43)) (44) (45)\nreturn"
+                "D.new (C.new (43)) (44) (45)\nopcode > RETURN-27\n  177\n"
             )
         );
     }

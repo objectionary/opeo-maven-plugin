@@ -27,7 +27,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import org.eolang.jeo.representation.directives.DirectivesInstruction;
+import org.eolang.parser.XMIR;
 import org.xembly.Directive;
+import org.xembly.Transformers;
+import org.xembly.Xembler;
 
 /**
  * Opcode output node.
@@ -45,10 +48,20 @@ public class Opcode implements AstNode {
      */
     private final List<Object> operands;
 
+    /**
+     * Constructor.
+     * @param opcode Opcode
+     * @param operands Opcode operands
+     */
     public Opcode(final int opcode, Object... operands) {
         this(opcode, Arrays.asList(operands));
     }
 
+    /**
+     * Constructor.
+     * @param opcode Opcode
+     * @param operands Opcode operands
+     */
     public Opcode(final int opcode, final List<Object> operands) {
         this.opcode = opcode;
         this.operands = operands;
@@ -56,7 +69,7 @@ public class Opcode implements AstNode {
 
     @Override
     public String print() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return new XMIR(new Xembler(toXmir(), new Transformers.Node()).xmlQuietly()).toEO();
     }
 
     @Override

@@ -32,7 +32,6 @@ import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.Invocation;
-import org.eolang.opeo.ast.Keyword;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Root;
@@ -189,7 +188,9 @@ final class DecompilerMachine {
     private class ReturnHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
-            DecompilerMachine.this.root.append(new Keyword("return"));
+            DecompilerMachine.this.root.append(
+                new Opcode(instruction.code(), instruction.operands())
+            );
         }
     }
 

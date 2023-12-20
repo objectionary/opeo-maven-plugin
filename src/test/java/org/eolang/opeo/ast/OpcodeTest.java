@@ -55,4 +55,17 @@ class OpcodeTest {
         );
     }
 
+    @Test
+    void prints() {
+        MatcherAssert.assertThat(
+            "We expect the following string to be printed: 'opcode > LDC-1\n  18\n  \"bye\"'",
+            new Opcode(Opcodes.LDC, "bye").print(),
+            Matchers.allOf(
+                Matchers.containsString("opcode > LDC"),
+                Matchers.containsString("18"),
+                Matchers.containsString("bye")
+            )
+        );
+    }
+
 }
