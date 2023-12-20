@@ -23,9 +23,12 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
  * Invocation output node.
@@ -52,6 +55,20 @@ public final class Invocation implements AstNode {
      * Constructor.
      * @param source Source or target on which the invocation is performed
      * @param method Method name
+     * @param args Arguments
+     */
+    public Invocation(
+        final AstNode source,
+        final String method,
+        final AstNode... args
+    ) {
+        this(source, method, Arrays.asList(args));
+    }
+
+    /**
+     * Constructor.
+     * @param source Source or target on which the invocation is performed
+     * @param method Method name
      * @param arguments Arguments
      */
     public Invocation(
@@ -72,6 +89,16 @@ public final class Invocation implements AstNode {
             this.method,
             this.args()
         );
+    }
+
+    @Override
+    public Iterable<Directive> toXmir() {
+        final Directives directives = new Directives();
+        directives.add("o")
+            .attr("base", String.format(".%s", this.method))
+            .append(this.source.toXmir());
+        this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
+        return directives.up();
     }
 
     @Override

@@ -23,6 +23,8 @@
  */
 package org.eolang.opeo.ast;
 
+import org.xembly.Directive;
+
 /**
  * Abstract syntax tree node.
  * @since 0.1
@@ -32,14 +34,14 @@ public interface AstNode {
     /**
      * Print ast node and all it's children.
      * @return String output.
-     * @todo #8:90min Print output in XMIR format.
-     *  Currently we just print decompilation output as a string.
-     *  We need to print the output into XMIR format directly.
-     *  By using EO XML we will be able to integrate
-     *  this code with other plugins and, which is also important,
-     *  we won't need to format the output manually.
      */
     String print();
+
+    /**
+     * Convert node to XMIR.
+     * @return XMIR XML.
+     */
+    Iterable<Directive> toXmir();
 
     /**
      * Node id.

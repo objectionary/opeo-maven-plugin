@@ -50,7 +50,7 @@ public final class ObjectReference {
      * Constructor.
      * @param type Object type
      */
-    ObjectReference(final String type) {
+    public ObjectReference(final String type) {
         this(type, ObjectReference.GLOBAL);
     }
 

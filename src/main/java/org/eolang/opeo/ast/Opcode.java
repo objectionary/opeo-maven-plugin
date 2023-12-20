@@ -23,30 +23,58 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
+import org.eolang.jeo.representation.directives.DirectivesInstruction;
+import org.eolang.parser.XMIR;
+import org.xembly.Directive;
+import org.xembly.Transformers;
+import org.xembly.Xembler;
 
 /**
- * Keyword output.
+ * Opcode output node.
  * @since 0.1
  */
-public final class Keyword implements AstNode {
+public final class Opcode implements AstNode {
 
     /**
-     * Keyword.
+     * Opcode.
      */
-    private final String word;
+    private final int bytecode;
+
+    /**
+     * Opcode operands.
+     */
+    private final List<Object> operands;
 
     /**
      * Constructor.
-     * @param word Keyword
+     * @param opcode Opcode
+     * @param operands Opcode operands
      */
-    public Keyword(final String word) {
-        this.word = word;
+    public Opcode(final int opcode, final Object... operands) {
+        this(opcode, Arrays.asList(operands));
+    }
+
+    /**
+     * Constructor.
+     * @param opcode Opcode
+     * @param operands Opcode operands
+     */
+    public Opcode(final int opcode, final List<Object> operands) {
+        this.bytecode = opcode;
+        this.operands = operands;
     }
 
     @Override
     public String print() {
-        return this.word;
+        return new XMIR(new Xembler(this.toXmir(), new Transformers.Node()).xmlQuietly()).toEO();
+    }
+
+    @Override
+    public Iterable<Directive> toXmir() {
+        return new DirectivesInstruction(this.bytecode, this.operands.toArray());
     }
 
     @Override

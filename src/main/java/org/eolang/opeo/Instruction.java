@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo;
 
+import java.util.Collections;
 import java.util.List;
 import lombok.ToString;
 
@@ -43,7 +44,7 @@ public final class Instruction {
     /**
      * Operands.
      */
-    private final List<Object> operands;
+    private final List<Object> arguments;
 
     /**
      * Constructor.
@@ -61,7 +62,7 @@ public final class Instruction {
      */
     private Instruction(final int code, final List<Object> args) {
         this.opcode = code;
-        this.operands = args;
+        this.arguments = args;
     }
 
     /**
@@ -78,6 +79,14 @@ public final class Instruction {
      * @return Operand
      */
     public Object operand(final int index) {
-        return this.operands.get(index);
+        return this.arguments.get(index);
+    }
+
+    /**
+     * Operands.
+     * @return Operands.
+     */
+    public List<Object> operands() {
+        return Collections.unmodifiableList(this.arguments);
     }
 }

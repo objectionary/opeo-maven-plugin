@@ -23,11 +23,14 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
  * Root node.
@@ -50,6 +53,21 @@ public final class Root implements AstNode {
     @Override
     public String print() {
         return this.children.stream().map(AstNode::print).collect(Collectors.joining("\n"));
+    }
+
+    @Override
+    public Iterable<Directive> toXmir() {
+        final Iterable<Directive> result;
+        if (this.children.isEmpty()) {
+            result = Collections.emptyList();
+        } else {
+            final Directives directives = new Directives();
+            directives.add("o").attr("base", "tuple");
+            this.children.stream().map(AstNode::toXmir).forEach(directives::append);
+            directives.up();
+            result = directives;
+        }
+        return result;
     }
 
     /**

@@ -23,8 +23,12 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.eolang.opeo.vmachine.ObjectReference;
+import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
  * Constructor output node.
@@ -50,6 +54,18 @@ public final class Constructor implements AstNode {
     /**
      * Constructor.
      * @param type Constructor type
+     * @param arguments Constructor arguments
+     */
+    public Constructor(
+        final String type,
+        final AstNode... arguments
+    ) {
+        this(type, new ObjectReference(type).toString(), Arrays.asList(arguments));
+    }
+
+    /**
+     * Constructor.
+     * @param type Constructor type
      * @param reference Object reference
      * @param arguments Constructor arguments
      */
@@ -70,6 +86,16 @@ public final class Constructor implements AstNode {
             this.type,
             this.args()
         );
+    }
+
+    @Override
+    public Iterable<Directive> toXmir() {
+        final Directives directives = new Directives();
+        directives.add("o")
+            .attr("base", ".new")
+            .add("o").attr("base", this.type).up();
+        this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
+        return directives.up();
     }
 
     @Override

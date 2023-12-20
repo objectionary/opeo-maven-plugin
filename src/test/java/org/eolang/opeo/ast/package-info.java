@@ -21,49 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.ast;
-
-import java.util.UUID;
-import org.eolang.jeo.representation.directives.DirectivesData;
-import org.xembly.Directive;
-
 /**
- * Literal output.
+ * Test cases for the ast nodes.
  * @since 0.1
  */
-public final class Literal implements AstNode {
-
-    /**
-     * Literal value.
-     */
-    private final Object object;
-
-    /**
-     * Constructor.
-     * @param value Literal value
-     */
-    public Literal(final Object value) {
-        this.object = value;
-    }
-
-    @Override
-    public Iterable<Directive> toXmir() {
-        return new DirectivesData(this.object);
-    }
-
-    @Override
-    public String print() {
-        final String result;
-        if (this.object instanceof String) {
-            result = String.format("\"%s\"", this.object);
-        } else {
-            result = this.object.toString();
-        }
-        return result;
-    }
-
-    @Override
-    public String identifier() {
-        return UUID.randomUUID().toString();
-    }
-}
+package org.eolang.opeo.ast;
