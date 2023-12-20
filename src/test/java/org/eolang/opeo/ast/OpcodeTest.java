@@ -23,37 +23,36 @@
  */
 package org.eolang.opeo.ast;
 
-import com.jcabi.xml.XML;
-import org.xembly.Directive;
-import org.xembly.Directives;
+import com.jcabi.matchers.XhtmlMatchers;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
+import org.objectweb.asm.Opcodes;
+import org.xembly.Transformers;
+import org.xembly.Xembler;
 
 /**
- * Abstract syntax tree node.
+ * Test case for {@link Opcode}.
  * @since 0.1
  */
-public interface AstNode {
+class OpcodeTest {
 
-    /**
-     * Print ast node and all it's children.
-     * @return String output.
-     * @todo #8:90min Print output in XMIR format.
-     *  Currently we just print decompilation output as a string.
-     *  We need to print the output into XMIR format directly.
-     *  By using EO XML we will be able to integrate
-     *  this code with other plugins and, which is also important,
-     *  we won't need to format the output manually.
-     */
-    String print();
+    @Test
+    void transformsToXml() {
+        MatcherAssert.assertThat(
+            String.format(
+                "We expect the following XML to be generated: %s",
+                "<o base='opcode' name='LDC-1'><o base='int' data='bytes'>00 00 00 00 00 00 00 12</o><o base='string' data='bytes'>68 65 6C 6C 6F</o></o>"
+            ),
+            new Xembler(
+                new Opcode(Opcodes.LDC, "hello").toXmir(),
+                new Transformers.Node()
+            ).xmlQuietly(),
+            Matchers.allOf(
+                XhtmlMatchers.hasXPath("./o[@base='opcode']/o[@base='int']"),
+                XhtmlMatchers.hasXPath("./o[@base='opcode']/o[@base='string']")
+            )
+        );
+    }
 
-    /**
-     * Convert node to XMIR.
-     * @return XMIR XML.
-     */
-    Iterable<Directive> toXmir();
-
-    /**
-     * Node id.
-     * @return Node id.
-     */
-    String identifier();
 }

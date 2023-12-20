@@ -25,6 +25,7 @@ package org.eolang.opeo.ast;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.xembly.Directive;
 
 /**
  * Constructor output node.
@@ -70,6 +71,11 @@ public final class Constructor implements AstNode {
             this.type,
             this.args()
         );
+    }
+
+    @Override
+    public Iterable<Directive> toXmir() {
+        return null;
     }
 
     @Override

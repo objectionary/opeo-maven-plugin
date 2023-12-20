@@ -24,6 +24,7 @@
 package org.eolang.opeo.ast;
 
 import java.util.UUID;
+import org.xembly.Directive;
 
 /**
  * Literal output.
@@ -42,6 +43,11 @@ public final class Literal implements AstNode {
      */
     public Literal(final Object value) {
         this.object = value;
+    }
+
+    @Override
+    public Iterable<Directive> toXmir() {
+        return null;
     }
 
     @Override

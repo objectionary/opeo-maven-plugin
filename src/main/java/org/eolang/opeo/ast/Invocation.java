@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.xembly.Directive;
 
 /**
  * Invocation output node.
@@ -72,6 +73,11 @@ public final class Invocation implements AstNode {
             this.method,
             this.args()
         );
+    }
+
+    @Override
+    public Iterable<Directive> toXmir() {
+        return null;
     }
 
     @Override

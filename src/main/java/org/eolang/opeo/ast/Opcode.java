@@ -23,37 +23,49 @@
  */
 package org.eolang.opeo.ast;
 
-import com.jcabi.xml.XML;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+import org.eolang.jeo.representation.directives.DirectivesInstruction;
 import org.xembly.Directive;
-import org.xembly.Directives;
 
 /**
- * Abstract syntax tree node.
+ * Opcode output node.
  * @since 0.1
  */
-public interface AstNode {
+public class Opcode implements AstNode {
 
     /**
-     * Print ast node and all it's children.
-     * @return String output.
-     * @todo #8:90min Print output in XMIR format.
-     *  Currently we just print decompilation output as a string.
-     *  We need to print the output into XMIR format directly.
-     *  By using EO XML we will be able to integrate
-     *  this code with other plugins and, which is also important,
-     *  we won't need to format the output manually.
+     * Opcode.
      */
-    String print();
+    private final int opcode;
 
     /**
-     * Convert node to XMIR.
-     * @return XMIR XML.
+     * Opcode operands.
      */
-    Iterable<Directive> toXmir();
+    private final List<Object> operands;
 
-    /**
-     * Node id.
-     * @return Node id.
-     */
-    String identifier();
+    public Opcode(final int opcode, Object... operands) {
+        this(opcode, Arrays.asList(operands));
+    }
+
+    public Opcode(final int opcode, final List<Object> operands) {
+        this.opcode = opcode;
+        this.operands = operands;
+    }
+
+    @Override
+    public String print() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Iterable<Directive> toXmir() {
+        return new DirectivesInstruction(this.opcode, this.operands.toArray());
+    }
+
+    @Override
+    public String identifier() {
+        return UUID.randomUUID().toString();
+    }
 }

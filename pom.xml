@@ -147,6 +147,12 @@ SOFTWARE.
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <!-- version from the parent pom -->
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
       <!-- version from the parent pom -->
       <scope>test</scope>
@@ -158,8 +164,8 @@ SOFTWARE.
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
+      <groupId>com.jcabi</groupId>
+      <artifactId>jcabi-matchers</artifactId>
       <!-- version from the parent pom -->
       <scope>test</scope>
     </dependency>

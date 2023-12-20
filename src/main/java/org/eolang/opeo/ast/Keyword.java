@@ -24,6 +24,7 @@
 package org.eolang.opeo.ast;
 
 import java.util.UUID;
+import org.xembly.Directive;
 
 /**
  * Keyword output.
@@ -47,6 +48,11 @@ public final class Keyword implements AstNode {
     @Override
     public String print() {
         return this.word;
+    }
+
+    @Override
+    public Iterable<Directive> toXmir() {
+        return null;
     }
 
     @Override

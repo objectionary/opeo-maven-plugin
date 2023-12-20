@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.xembly.Directive;
 
 /**
  * Root node.
@@ -50,6 +51,11 @@ public final class Root implements AstNode {
     @Override
     public String print() {
         return this.children.stream().map(AstNode::print).collect(Collectors.joining("\n"));
+    }
+
+    @Override
+    public Iterable<Directive> toXmir() {
+        return null;
     }
 
     /**
