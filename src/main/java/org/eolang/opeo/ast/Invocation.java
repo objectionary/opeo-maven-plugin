@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
  * Invocation output node.
@@ -92,7 +93,12 @@ public final class Invocation implements AstNode {
 
     @Override
     public Iterable<Directive> toXmir() {
-        return null;
+        final Directives directives = new Directives();
+        directives.add("o")
+            .attr("base", String.format(".%s", this.method))
+            .append(this.source.toXmir());
+        this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
+        return directives.up();
     }
 
     @Override

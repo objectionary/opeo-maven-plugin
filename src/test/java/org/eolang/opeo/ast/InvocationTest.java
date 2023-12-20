@@ -23,6 +23,9 @@
  */
 package org.eolang.opeo.ast;
 
+import com.jcabi.matchers.XhtmlMatchers;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Transformers;
@@ -36,15 +39,32 @@ class InvocationTest {
 
     @Test
     void transformsToXmir() throws ImpossibleModificationException {
-        final String xml = new Xembler(
-            new Invocation(
-                new Constructor("foo"),
-                "bar",
-                new Literal("baz")
-            ).toXmir(),
-            new Transformers.Node()
-        ).xml();
-        System.out.println(xml);
+        MatcherAssert.assertThat(
+            String.format(
+                "We expect the following XMIRl to be generated:%n%s%n",
+                String.join(
+                    "\n",
+                    "<o base='.bar'>",
+                    "  <o base='.new'>",
+                    "    <o base='foo'/>",
+                    "  </o>",
+                    "  <o base='string' data='bytes'>62 61 7A</o>",
+                    "</o>"
+                )
+            ),
+            new Xembler(
+                new Invocation(
+                    new Constructor("foo"),
+                    "bar",
+                    new Literal("baz")
+                ).toXmir(),
+                new Transformers.Node()
+            ).xml(),
+            XhtmlMatchers.hasXPaths(
+                "/o[@base='.bar']/o[@base='.new']/o[@base='foo']",
+                "/o[@base='.bar']/o[@base='string' and @data='bytes' and text()='62 61 7A']"
+            )
+        );
     }
 
 }
