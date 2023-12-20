@@ -29,8 +29,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.tools.ToolProvider;
 import org.eolang.jeo.representation.bytecode.Bytecode;
 import org.eolang.jucs.ClasspathSource;
@@ -82,41 +84,47 @@ final class TrasformationPacksTest {
         final Path where,
         List<JavaEoPack.Program> classpath
     ) throws IOException {
-        List<Path> javafiles = new ArrayList<>(0);
+        final List<String> saved = new ArrayList<>(0);
         for (final JavaEoPack.Program program : classpath) {
             final Path path = where.resolve(program.name());
-            javafiles.add(path);
+            saved.add(path.toString());
             Files.write(
                 path,
                 program.src().getBytes(StandardCharsets.UTF_8)
             );
         }
-        final List<String> files = javafiles.stream()
-//            .map(Path::getFileName)
-            .map(Path::toString)
-            .collect(Collectors.toList());
         ToolProvider.getSystemJavaCompiler().run(
             System.in,
             System.out,
             System.err,
-            "-g:none",
-            "-source", "11",
-            "-target", "11",
-            files.get(0),
-            files.get(1),
-            files.get(2)
+            Stream.concat(
+                Stream.of("-g:none", "-source", "11", "-target", "11"),
+                saved.stream()
+            ).toArray(String[]::new)
         );
-        return Files.list(where).filter(p -> p.getFileName().toString().endsWith(".class")).map(p -> {
-            try {
-                return Files.readAllBytes(p);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        }).map(Bytecode::new).collect(Collectors.toList());
-//        return new Bytecode(
-//            Files.readAllBytes())
-//        );
+        return Arrays.stream(where.toFile().listFiles())
+            .map(File::toPath)
+            .filter(p -> p.getFileName().toString().endsWith(".class"))
+            .map(TrasformationPacksTest::readBytectode)
+            .collect(Collectors.toList());
     }
+
+    /**
+     * Tries to read bytecode of a classfile.
+     * @param classfile Classfile with '.class' extension.
+     * @return Bytecode.
+     */
+    private static Bytecode readBytectode(final Path classfile) {
+        try {
+            return new Bytecode(Files.readAllBytes(classfile));
+        } catch (final IOException exception) {
+            throw new IllegalStateException(
+                String.format("Can't read classfile: %s", classfile),
+                exception
+            );
+        }
+    }
+
 
     /**
      * Check if java compiler is available.
