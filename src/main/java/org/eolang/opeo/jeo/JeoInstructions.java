@@ -25,7 +25,6 @@ package org.eolang.opeo.jeo;
 
 import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlMethod;
-import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.Instruction;
 
 /**
@@ -34,8 +33,15 @@ import org.eolang.opeo.Instruction;
  */
 public final class JeoInstructions {
 
+    /**
+     * Method.
+     */
     private final XmlMethod method;
 
+    /**
+     * Constructor
+     * @param method Method
+     */
     public JeoInstructions(final XmlMethod method) {
         this.method = method;
     }

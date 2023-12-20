@@ -28,6 +28,8 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import org.cactoos.map.MapEntry;
+import org.cactoos.map.MapOf;
 import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Constructor;
@@ -37,12 +39,13 @@ import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Root;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
+import org.xembly.Directive;
 
 /**
  * Decompiler machine.
  * @since 0.1
  */
-final class DecompilerMachine {
+public final class DecompilerMachine {
 
     /**
      * Operand Stack.
@@ -62,7 +65,7 @@ final class DecompilerMachine {
     /**
      * Constructor.
      */
-    DecompilerMachine() {
+    public DecompilerMachine() {
         this(new LinkedList<>());
     }
 
@@ -73,16 +76,33 @@ final class DecompilerMachine {
     private DecompilerMachine(final Deque<Object> stack) {
         this.stack = stack;
         this.root = new Root();
-        this.handlers = Map.of(
-            Opcodes.NEW, new NewHandler(),
-            Opcodes.DUP, new DupHandler(),
-            Opcodes.BIPUSH, new BipushHandler(),
-            Opcodes.INVOKESPECIAL, new InvokespecialHandler(),
-            Opcodes.INVOKEVIRTUAL, new InvokevirtualHandler(),
-            Opcodes.LDC, new LdcHandler(),
-            Opcodes.POP, new PopHandler(),
-            Opcodes.RETURN, new ReturnHandler()
+        this.handlers = new MapOf<>(
+            new MapEntry<>(Opcodes.ICONST_1, new IconstHandler()),
+            new MapEntry<>(Opcodes.ICONST_2, new IconstHandler()),
+            new MapEntry<>(Opcodes.ICONST_3, new IconstHandler()),
+            new MapEntry<>(Opcodes.ICONST_4, new IconstHandler()),
+            new MapEntry<>(Opcodes.ICONST_5, new IconstHandler()),
+            new MapEntry<>(Opcodes.ALOAD, new AloadHandler()),
+            new MapEntry<>(Opcodes.NEW, new NewHandler()),
+            new MapEntry<>(Opcodes.DUP, new DupHandler()),
+            new MapEntry<>(Opcodes.BIPUSH, new BipushHandler()),
+            new MapEntry<>(Opcodes.INVOKESPECIAL, new InvokespecialHandler()),
+            new MapEntry<>(Opcodes.INVOKEVIRTUAL, new InvokevirtualHandler()),
+            new MapEntry<>(Opcodes.LDC, new LdcHandler()),
+            new MapEntry<>(Opcodes.POP, new PopHandler()),
+            new MapEntry<>(Opcodes.RETURN, new ReturnHandler())
         );
+    }
+
+    /**
+     * Decompile instructions into directives.
+     * @param instructions Instructions to decompile.
+     * @return Decompiled instructions.
+     */
+    public Iterable<Directive> decompileToXmir(final Instruction... instructions) {
+        Arrays.stream(instructions)
+            .forEach(inst -> this.handler(inst.opcode()).handle(inst));
+        return this.root.toXmir();
     }
 
     /**
@@ -90,7 +110,7 @@ final class DecompilerMachine {
      * @param instructions Instructions to decompile.
      * @return Decompiled code.
      */
-    String decompile(final Instruction... instructions) {
+    public String decompile(final Instruction... instructions) {
         Arrays.stream(instructions)
             .forEach(inst -> this.handler(inst.opcode()).handle(inst));
         return this.root.print();
@@ -133,6 +153,22 @@ final class DecompilerMachine {
          */
         void handle(Instruction instruction);
 
+    }
+
+    /**
+     * Aload instruction handler.
+     */
+    private class AloadHandler implements InstructionHandler {
+
+        @Override
+        public void handle(final Instruction instruction) {
+            if (instruction.operand(0).equals(0)) {
+                DecompilerMachine.this.stack.push("this");
+            }
+            DecompilerMachine.this.root.append(
+                new Opcode(instruction.opcode(), instruction.operands())
+            );
+        }
     }
 
     /**
@@ -206,16 +242,22 @@ final class DecompilerMachine {
                     String.format("Instruction %s is not supported yet", instruction)
                 );
             }
-            final List<AstNode> args = DecompilerMachine.this.popArguments(
-                Type.getArgumentCount((String) instruction.operand(2))
-            );
-            DecompilerMachine.this.root.append(
-                new Constructor(
-                    (String) instruction.operand(0),
-                    (String) DecompilerMachine.this.stack.pop(),
-                    args
-                )
-            );
+            if (instruction.operand(0).equals("java/lang/Object")) {
+                DecompilerMachine.this.root.append(
+                    new Opcode(instruction.opcode(), instruction.operands())
+                );
+            } else {
+                final List<AstNode> args = DecompilerMachine.this.popArguments(
+                    Type.getArgumentCount((String) instruction.operand(2))
+                );
+                DecompilerMachine.this.root.append(
+                    new Constructor(
+                        (String) instruction.operand(0),
+                        (String) DecompilerMachine.this.stack.pop(),
+                        args
+                    )
+                );
+            }
         }
     }
 
@@ -259,6 +301,30 @@ final class DecompilerMachine {
             DecompilerMachine.this.root.append(
                 new Opcode(instruction.opcode(), instruction.operands())
             );
+        }
+    }
+
+    private class IconstHandler implements InstructionHandler {
+
+        @Override
+        public void handle(final Instruction instruction) {
+            switch (instruction.opcode()) {
+                case Opcodes.ICONST_1:
+                    DecompilerMachine.this.stack.push(1);
+                    break;
+                case Opcodes.ICONST_2:
+                    DecompilerMachine.this.stack.push(2);
+                    break;
+                case Opcodes.ICONST_3:
+                    DecompilerMachine.this.stack.push(3);
+                    break;
+                case Opcodes.ICONST_4:
+                    DecompilerMachine.this.stack.push(4);
+                    break;
+                case Opcodes.ICONST_5:
+                    DecompilerMachine.this.stack.push(5);
+                    break;
+            }
         }
     }
 

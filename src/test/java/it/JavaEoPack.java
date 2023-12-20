@@ -99,8 +99,17 @@ final class JavaEoPack {
          * @param entry Entry.
          */
         Program(final Map.Entry<String, String> entry) {
-            this.filename = entry.getKey();
-            this.source = entry.getValue();
+            this(entry.getKey(), entry.getValue());
+        }
+
+        /**
+         * Constructor.
+         * @param filename Filename.
+         * @param source Source.
+         */
+        Program(final String filename, final String source) {
+            this.filename = filename;
+            this.source = source;
         }
 
         /**

@@ -37,10 +37,13 @@ import java.util.stream.Stream;
 import javax.tools.ToolProvider;
 import org.eolang.jeo.representation.BytecodeRepresentation;
 import org.eolang.jeo.representation.bytecode.Bytecode;
+import org.eolang.jeo.representation.xmir.XmlProgram;
 import org.eolang.jucs.ClasspathSource;
+import org.eolang.opeo.jeo.JeoDecompiler;
 import org.eolang.parser.XMIR;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -87,6 +90,39 @@ final class TrasformationPacksTest {
             decompiled.size(),
             Matchers.equalTo(3)
         );
+    }
+
+    @Test
+    void simpleDecompilationExample(@TempDir final Path where) throws IOException {
+        final Bytecode bytecode = TrasformationPacksTest.compile(
+            where,
+            Arrays.asList(
+                new JavaEoPack.Program(
+                    "Simple.java",
+                    "public class Simple { public static void main(String[] args) { new StringBuilder(\"abc\").append(1); } }"
+                )
+            )
+        ).get(0);
+
+        new JeoDecompiler().decompile(new BytecodeRepresentation(bytecode).toEO());
+
+//        final List<String> decompiled = .stream()
+//            .map(BytecodeRepresentation::new)
+//            .map(BytecodeRepresentation::toEO)
+//            .map(XMIR::new)
+//            .map(XMIR::toEO)
+//            .collect(Collectors.toList());
+//        MatcherAssert.assertThat(
+//            "Decompiled EO doesn't match expected EO",
+//            decompiled,
+//            Matchers.contains(
+//                Matchers.allOf(
+//                    Matchers.containsString("Simple"),
+//                    Matchers.containsString("main"),
+//                    Matchers.containsString("Hello, world!")
+//                )
+//            )
+//        );
     }
 
     /**
