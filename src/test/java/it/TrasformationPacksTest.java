@@ -36,7 +36,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.tools.ToolProvider;
 import org.eolang.jeo.representation.BytecodeRepresentation;
-import org.eolang.jeo.representation.EoRepresentation;
 import org.eolang.jeo.representation.bytecode.Bytecode;
 import org.eolang.jucs.ClasspathSource;
 import org.eolang.parser.XMIR;
@@ -60,7 +59,7 @@ final class TrasformationPacksTest {
     @ParameterizedTest
     @ClasspathSource(value = "packs", glob = "**.yaml")
     @EnabledIf(value = "hasJavaCompiler", disabledReason = "Java compiler is not available")
-    void checksPack(final String pack, @TempDir Path where) throws IOException {
+    void checksPack(final String pack, @TempDir final Path where) throws IOException {
         final JavaEoPack jeopack = new JavaEoPack(pack);
         //@checkstyle MethodBodyCommentsCheck (10 lines)
         // @todo #6:90min Apply decompilation for packs test.
@@ -75,7 +74,7 @@ final class TrasformationPacksTest {
             .map(XMIR::new)
             .map(XMIR::toEO)
             .collect(Collectors.toList());
-        final List<String> expected = jeopack.eo()
+        final List<String> expected = jeopack.eolang()
             .stream()
             .map(JavaEoPack.Program::src)
             .collect(Collectors.toList());

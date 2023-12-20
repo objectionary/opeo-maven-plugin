@@ -62,13 +62,17 @@ final class JavaEoPack {
      * EO programs.
      * @return List of programs.
      */
-    List<Program> eo() {
+    List<Program> eolang() {
         return this.parse().get("eo")
             .entrySet()
             .stream().map(Program::new)
             .collect(Collectors.toList());
     }
 
+    /**
+     * Parse YAML.
+     * @return Map of programs.
+     */
     private Map<String, Map<String, String>> parse() {
         return new Yaml().load(this.pack);
     }
