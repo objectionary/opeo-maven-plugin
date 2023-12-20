@@ -23,47 +23,28 @@
  */
 package org.eolang.opeo.ast;
 
-import java.util.UUID;
-import org.eolang.jeo.representation.directives.DirectivesData;
-import org.xembly.Directive;
+import com.jcabi.matchers.XhtmlMatchers;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
+import org.xembly.ImpossibleModificationException;
+import org.xembly.Transformers;
+import org.xembly.Xembler;
 
 /**
- * Literal output.
+ * Test case for {@link Literal}.
  * @since 0.1
  */
-public final class Literal implements AstNode {
+class LiteralTest {
 
-    /**
-     * Literal value.
-     */
-    private final Object object;
-
-    /**
-     * Constructor.
-     * @param value Literal value
-     */
-    public Literal(final Object value) {
-        this.object = value;
-    }
-
-    @Override
-    public Iterable<Directive> toXmir() {
-        return new DirectivesData(this.object);
-    }
-
-    @Override
-    public String print() {
-        final String result;
-        if (this.object instanceof String) {
-            result = String.format("\"%s\"", this.object);
-        } else {
-            result = this.object.toString();
-        }
-        return result;
-    }
-
-    @Override
-    public String identifier() {
-        return UUID.randomUUID().toString();
+    @Test
+    void transformsToXmir() throws ImpossibleModificationException {
+        MatcherAssert.assertThat(
+            "We expect the following XML to be generated: <o base='string' data='bytes'>4E 65 6F</o>",
+            new Xembler(new Literal("Neo").toXmir(), new Transformers.Node()).xml(),
+            XhtmlMatchers.hasXPath(
+                "/o[@base='string' and @data='bytes' and text()='4E 65 6F']/text()"
+            )
+        );
     }
 }
