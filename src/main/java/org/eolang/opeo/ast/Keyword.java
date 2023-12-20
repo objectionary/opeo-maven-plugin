@@ -52,7 +52,7 @@ public final class Keyword implements AstNode {
 
     @Override
     public Iterable<Directive> toXmir() {
-        return null;
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override

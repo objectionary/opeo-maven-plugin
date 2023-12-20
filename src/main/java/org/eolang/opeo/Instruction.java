@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo;
 
+import java.util.Collections;
 import java.util.List;
 import lombok.ToString;
 
@@ -79,5 +80,13 @@ public final class Instruction {
      */
     public Object operand(final int index) {
         return this.operands.get(index);
+    }
+
+    /**
+     * Operands.
+     * @return Operands.
+     */
+    public List<Object> operands() {
+        return Collections.unmodifiableList(this.operands);
     }
 }

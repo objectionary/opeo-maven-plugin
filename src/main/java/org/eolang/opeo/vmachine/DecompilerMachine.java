@@ -34,6 +34,7 @@ import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Keyword;
 import org.eolang.opeo.ast.Literal;
+import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Root;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -254,8 +255,9 @@ final class DecompilerMachine {
     private class UnimplementedHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
-            DecompilerMachine.this.root
-                .append(new Keyword(String.format("Unimplemented %s", instruction)));
+            DecompilerMachine.this.root.append(
+                new Opcode(instruction.code(), instruction.operands())
+            );
         }
     }
 
