@@ -157,6 +157,7 @@ public final class DecompilerMachine {
 
     /**
      * Aload instruction handler.
+     * @since 0.1
      */
     private class AloadHandler implements InstructionHandler {
 
@@ -306,6 +307,10 @@ public final class DecompilerMachine {
         }
     }
 
+    /**
+     * Iconst instruction handler.
+     * @since 0.1
+     */
     private class IconstHandler implements InstructionHandler {
 
         @Override
@@ -326,6 +331,10 @@ public final class DecompilerMachine {
                 case Opcodes.ICONST_5:
                     DecompilerMachine.this.stack.push(5);
                     break;
+                default:
+                    throw new UnsupportedOperationException(
+                        String.format("Instruction %s is not supported yet", instruction)
+                    );
             }
         }
     }

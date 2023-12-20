@@ -21,45 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.jeo;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.eolang.jeo.representation.xmir.XmlInstruction;
-import org.eolang.opeo.Instruction;
-
 /**
- * Class that represents the instruction provided by jeo maven plugin.
- * @since 0.1
+ * Test cases for the {@link  org.eolang.opeo.jeo} package.
  */
-public final class JeoInstruction implements Instruction {
-
-    /**
-     * Jeo instruction.
-     */
-    private final XmlInstruction instruction;
-
-    /**
-     * Constructor.
-     * @param instruction Instruction.
-     */
-    public JeoInstruction(final XmlInstruction instruction) {
-        this.instruction = instruction;
-    }
-
-    @Override
-    public int opcode() {
-        return this.instruction.opcode();
-    }
-
-    @Override
-    public Object operand(final int index) {
-        return this.operands().get(index);
-    }
-
-    @Override
-    public List<Object> operands() {
-        return Arrays.stream(this.instruction.operands()).collect(Collectors.toList());
-    }
-}
+package org.eolang.opeo.jeo;

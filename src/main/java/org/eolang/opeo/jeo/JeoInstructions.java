@@ -39,12 +39,17 @@ public final class JeoInstructions {
     private final XmlMethod method;
 
     /**
-     * Constructor
-     * @param method Method
+     * Constructor.
+     * @param method Method.
      */
     public JeoInstructions(final XmlMethod method) {
         this.method = method;
     }
+
+    /**
+     * Parse instructions.
+     * @return Instructions array.
+     */
     public Instruction[] instructions() {
         return this.method.instructions().stream()
             .filter(node -> node instanceof XmlInstruction)
