@@ -30,12 +30,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.tools.ToolProvider;
+import org.eolang.jeo.representation.BytecodeRepresentation;
+import org.eolang.jeo.representation.EoRepresentation;
 import org.eolang.jeo.representation.bytecode.Bytecode;
 import org.eolang.jucs.ClasspathSource;
+import org.eolang.parser.XMIR;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.condition.EnabledIf;
@@ -57,16 +61,18 @@ final class TrasformationPacksTest {
     @ClasspathSource(value = "packs", glob = "**.yaml")
     @EnabledIf(value = "hasJavaCompiler", disabledReason = "Java compiler is not available")
     void checksPack(final String pack, @TempDir Path where) throws IOException {
-        //@checkstyle MethodBodyCommentsCheck (10 lines)
-        // @todo #6:90min Implement primitive transformation test.
-        //  Currently we just get the pack name from the test and check that it is not null.
-        //  We have to implement proper transformation test. It will consist of the following steps:
-        //  1. Compile java code into bytecode
-        //  2. Transform bytecode into XMIR
-        //  3. Compile expected EO into XMIR
-        //  4. Compare XMIRs
-        final List<JavaEoPack.Program> java = new JavaEoPack(pack).java();
-        final List<Bytecode> compile = TrasformationPacksTest.compile(where, java);
+        final JavaEoPack jeopack = new JavaEoPack(pack);
+        final List<String> decompiled = TrasformationPacksTest.compile(where, jeopack.java())
+            .stream()
+            .map(BytecodeRepresentation::new)
+            .map(BytecodeRepresentation::toEO)
+            .map(XMIR::new)
+            .map(XMIR::toEO)
+            .collect(Collectors.toList());
+        final List<String> expected = jeopack.eo()
+            .stream()
+            .map(JavaEoPack.Program::src)
+            .collect(Collectors.toList());
         MatcherAssert.assertThat(
             "Pack is not null",
             pack,
@@ -75,17 +81,17 @@ final class TrasformationPacksTest {
     }
 
     /**
-     * Compile random java class into bytecode.
+     * Compile java classes into bytecode.
      * @param where Where to compile.
-     * @param classpath Source Code.
+     * @param programs All java programs to compile.
      * @return Bytecode.
      */
     private static List<Bytecode> compile(
         final Path where,
-        List<JavaEoPack.Program> classpath
+        final List<? extends JavaEoPack.Program> programs
     ) throws IOException {
-        final List<String> saved = new ArrayList<>(0);
-        for (final JavaEoPack.Program program : classpath) {
+        final Collection<String> saved = new ArrayList<>(0);
+        for (final JavaEoPack.Program program : programs) {
             final Path path = where.resolve(program.name());
             saved.add(path.toString());
             Files.write(
@@ -124,7 +130,6 @@ final class TrasformationPacksTest {
             );
         }
     }
-
 
     /**
      * Check if java compiler is available.
