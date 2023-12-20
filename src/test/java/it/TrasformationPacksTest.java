@@ -23,6 +23,8 @@
  */
 package it;
 
+import com.jcabi.log.Logger;
+import com.jcabi.xml.XML;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -35,9 +37,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.tools.ToolProvider;
+import org.cactoos.io.ResourceOf;
+import org.cactoos.text.TextOf;
 import org.eolang.jeo.representation.BytecodeRepresentation;
 import org.eolang.jeo.representation.bytecode.Bytecode;
-import org.eolang.jeo.representation.xmir.XmlProgram;
 import org.eolang.jucs.ClasspathSource;
 import org.eolang.opeo.jeo.JeoDecompiler;
 import org.eolang.parser.XMIR;
@@ -74,55 +77,68 @@ final class TrasformationPacksTest {
             .stream()
             .map(BytecodeRepresentation::new)
             .map(BytecodeRepresentation::toEO)
+            .map(JeoDecompiler::new)
+            .map(JeoDecompiler::decompile)
             .map(XMIR::new)
             .map(XMIR::toEO)
             .collect(Collectors.toList());
         final List<String> expected = jeopack.eolang()
             .stream()
-            .map(JavaEoPack.Program::src)
+            .map(Program::src)
             .collect(Collectors.toList());
+        System.out.println(decompiled);
         MatcherAssert.assertThat(
             String.format(
                 "Decompiled EO (number of files %d) doesn't match expected EO (number of files %d)",
                 decompiled.size(),
                 expected.size()
             ),
-            decompiled.size(),
-            Matchers.equalTo(3)
+            decompiled,
+            Matchers.containsInAnyOrder(expected.toArray())
         );
     }
 
+    /**
+     * You can use this method to check how jeo + opeo decompile java bytecode into EO.
+     *  - "decompiled" variable contains XMIR representation of EO code.
+     * @param where Temporary directory where to compile java code.
+     * @throws IOException If fails.
+     */
     @Test
-    void simpleDecompilationExample(@TempDir final Path where) throws IOException {
-        final Bytecode bytecode = TrasformationPacksTest.compile(
-            where,
-            Arrays.asList(
-                new JavaEoPack.Program(
-                    "Simple.java",
-                    "public class Simple { public static void main(String[] args) { new StringBuilder(\"abc\").append(1); } }"
-                )
+    void simpleDecompilationExample(@TempDir final Path where) throws Exception {
+        final XML decompiled = new JeoDecompiler(
+            new BytecodeRepresentation(
+                TrasformationPacksTest.compile(
+                    where,
+                    new Program(
+                        "Simple.java",
+                        "public class Simple { public static void main(String[] args) { new StringBuilder(\"abc\").append(1); } }"
+                    )
+                ).get(0)
+            ).toEO()
+        ).decompile();
+        Logger.debug(this, "Decompiled XMIR example:%n%s%n", decompiled);
+        MatcherAssert.assertThat(
+            "Decompiled EO doesn't match expected EO",
+            new XMIR(decompiled).toEO(),
+            Matchers.equalTo(
+                new TextOf(new ResourceOf("simple.eo")).asString()
             )
-        ).get(0);
+        );
+    }
 
-        new JeoDecompiler().decompile(new BytecodeRepresentation(bytecode).toEO());
-
-//        final List<String> decompiled = .stream()
-//            .map(BytecodeRepresentation::new)
-//            .map(BytecodeRepresentation::toEO)
-//            .map(XMIR::new)
-//            .map(XMIR::toEO)
-//            .collect(Collectors.toList());
-//        MatcherAssert.assertThat(
-//            "Decompiled EO doesn't match expected EO",
-//            decompiled,
-//            Matchers.contains(
-//                Matchers.allOf(
-//                    Matchers.containsString("Simple"),
-//                    Matchers.containsString("main"),
-//                    Matchers.containsString("Hello, world!")
-//                )
-//            )
-//        );
+    /**
+     * Compile java classes into bytecode.
+     * @param where Where to compile.
+     * @param program All java programs to compile.
+     * @return Bytecode.
+     * @throws IOException If fails.
+     */
+    private static List<Bytecode> compile(
+        final Path where,
+        final Program... program
+    ) throws IOException {
+        return TrasformationPacksTest.compile(where, Arrays.asList(program));
     }
 
     /**
@@ -133,10 +149,10 @@ final class TrasformationPacksTest {
      */
     private static List<Bytecode> compile(
         final Path where,
-        final List<? extends JavaEoPack.Program> programs
+        final List<? extends Program> programs
     ) throws IOException {
         final Collection<String> saved = new ArrayList<>(0);
-        for (final JavaEoPack.Program program : programs) {
+        for (final Program program : programs) {
             final Path path = where.resolve(program.name());
             saved.add(path.toString());
             Files.write(

@@ -213,7 +213,9 @@ public final class DecompilerMachine {
     private class PopHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
-            DecompilerMachine.this.stack.pop();
+            if (!DecompilerMachine.this.stack.isEmpty()) {
+                DecompilerMachine.this.stack.pop();
+            }
         }
     }
 
