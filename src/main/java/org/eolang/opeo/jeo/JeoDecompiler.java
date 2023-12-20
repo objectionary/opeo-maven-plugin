@@ -10,18 +10,32 @@ import org.eolang.jeo.representation.xmir.XmlProgram;
 import org.eolang.opeo.Instruction;
 import org.eolang.opeo.vmachine.DecompilerMachine;
 import org.w3c.dom.Node;
-import org.xembly.Directive;
 import org.xembly.Transformers;
 import org.xembly.Xembler;
 
+/**
+ * Decompiler that gets jeo instructions and decompiles them into high-level EO constructs.
+ * @since 0.1
+ */
 public class JeoDecompiler {
 
+    /**
+     * Program in XMIR format received from jeo maven plugin.
+     */
     private final XML prog;
 
+    /**
+     * Constructor.
+     * @param prog Program in XMIR format received from jeo maven plugin.
+     */
     public JeoDecompiler(final XML prog) {
         this.prog = prog;
     }
 
+    /**
+     * Decompile program.
+     * @return EO program.
+     */
     public XML decompile() {
         final Node node = prog.node();
         final XmlProgram program = new XmlProgram(node);
@@ -32,15 +46,19 @@ public class JeoDecompiler {
         return new XMLDocument(node);
     }
 
+    /**
+     * Decompile method.
+     * @param method Method.
+     */
     private void decompile(final XmlMethod method) {
-        DecompilerMachine machine = new DecompilerMachine();
+        final DecompilerMachine machine = new DecompilerMachine();
         final Instruction[] instructions = new JeoInstructions(method).instructions();
-        final Iterable<Directive> directives = machine.decompileToXmir(
-            instructions
-        );
         final List<XmlNode> collect = new XmlNode(
-            new Xembler(directives, new Transformers.Node()).xmlQuietly()).children()
-            .collect(Collectors.toList());
+            new Xembler(
+                machine.decompileToXmir(instructions),
+                new Transformers.Node()
+            ).xmlQuietly()
+        ).children().collect(Collectors.toList());
         method.replaceInstructions(collect.toArray(XmlNode[]::new));
     }
 

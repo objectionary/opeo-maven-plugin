@@ -30,32 +30,173 @@ java:
     }
 eo:
   Application.eo: |
-    package com.example
-    [] > Application
-      [args...] > main
+    +package com.example
+    +alias org.eolang.jeo.opcode
+    +alias org.eolang.jeo.label
+    
+    [] > j$Application
+      33 > access
+      "java/lang/Object" > supername
+      * > interfaces
+      [] > new
+        1 > access
+        "()V" > descriptor
+        "" > signature
+        * > exceptions
         seq > @
-          (b.new (a.new 42)).bar
+          tuple
+            opcode > ALOAD-39
+              25
+              0
+            opcode > INVOKESPECIAL-3A
+              183
+              "java/lang/Object"
+              "<init>"
+              "()V"
+            opcode > RETURN-3B
+              177
+        tuple > trycatchblocks
+      [arg__[Ljava/lang/String;__0] > j$main
+        9 > access
+        "([Ljava/lang/String;)V" > descriptor
+        "" > signature
+        * > exceptions
+        seq > @
+          tuple
+            com/example/B
+            .new
+              com/example/A
+              .new
+                42
+            .bar
+            opcode > RETURN-3C
+              177
+        tuple > trycatchblocks
   A.eo: |
-    package com.example
-    [] > A
-      cage > x   
-      [xa] > new
+    +package com.example
+    +alias org.eolang.jeo.opcode
+    +alias org.eolang.jeo.label
+
+    [] > j$A
+      33 > access
+      "java/lang/Object" > supername
+      * > interfaces
+      field > j$x
+        18
+        "I"
+        ""
+        ""
+      [arg__I__0] > new
+        1 > access
+        "(I)V" > descriptor
+        "" > signature
+        * > exceptions
         seq > @
-          x.write xa 
-      [] > foo
+          tuple
+            opcode > ALOAD-22
+              25
+              0
+            opcode > INVOKESPECIAL-23
+              183
+              "java/lang/Object"
+              "<init>"
+              "()V"
+            opcode > ALOAD-24
+              25
+              0
+            opcode > ILOAD-25
+              21
+              1
+            opcode > PUTFIELD-26
+              181
+              "com/example/A"
+              "x"
+              "I"
+            opcode > RETURN-27
+              177
+        tuple > trycatchblocks
+      [] > j$foo
+        1 > access
+        "()I" > descriptor
+        "" > signature
+        * > exceptions
         seq > @
-          times 
-            x
-            2
+          tuple
+            opcode > ALOAD-28
+              25
+              0
+            opcode > GETFIELD-29
+              180
+              "com/example/A"
+              "x"
+              "I"
+            opcode > IMUL-2A
+              104
+            opcode > IRETURN-2B
+              172
+        tuple > trycatchblocks
   B.eo: |
-    package com.example
-    [] > B
-      cage > a
-      [aa] > new
+    +package com.example
+    +alias org.eolang.jeo.opcode
+    +alias org.eolang.jeo.label
+
+    [] > j$B
+      33 > access
+      "java/lang/Object" > supername
+      * > interfaces
+      field > j$a
+        18
+        "Lcom/example/A;"
+        ""
+        ""
+      [arg__Lcom/example/A;__0] > new
+        1 > access
+        "(Lcom/example/A;)V" > descriptor
+        "" > signature
+        * > exceptions
         seq > @
-          a.write aa
-      [] > bar
+          tuple
+            opcode > ALOAD-D
+              25
+              0
+            opcode > INVOKESPECIAL-E
+              183
+              "java/lang/Object"
+              "<init>"
+              "()V"
+            opcode > ALOAD-F
+              25
+              0
+            opcode > ALOAD-10
+              25
+              1
+            opcode > PUTFIELD-11
+              181
+              "com/example/B"
+              "a"
+              "Lcom/example/A;"
+            opcode > RETURN-12
+              177
+        tuple > trycatchblocks
+      [] > j$bar
+        1 > access
+        "()I" > descriptor
+        "" > signature
+        * > exceptions
         seq > @
-          plus
-            a.foo
-            1
+          tuple
+            opcode > ALOAD-13
+              25
+              0
+            opcode > GETFIELD-14
+              180
+              "com/example/B"
+              "a"
+              "Lcom/example/A;"
+            "this"
+            .foo
+            opcode > IADD-15
+              96
+            opcode > IRETURN-16
+              172
+        tuple > trycatchblocks
