@@ -32,6 +32,7 @@ import org.yaml.snakeyaml.Yaml;
  * Test pack that can parse java input and expected eo output.
  * @since 0.1
  */
+@SuppressWarnings("JTCOP.RuleCorrectTestName")
 final class JavaEoPack {
 
     /**
