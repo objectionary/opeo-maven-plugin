@@ -23,22 +23,21 @@
  */
 package org.eolang.opeo;
 
-import com.jcabi.log.Logger;
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
- * Compiles high-level EO representation into low-level representation.
- * The output of this mojo is consumed by the "jeo-maven-plugin":
- * <a href="https://github.com/objectionary/jeo-maven-plugin">link</a>
+ * Unit test for {@link CompileMojo}.
  *
  * @since 0.1
  */
-@Mojo(name = "compile", defaultPhase = LifecyclePhase.PROCESS_CLASSES)
-public final class CompileMojo extends AbstractMojo {
-    @Override
-    public void execute() {
-        Logger.info(this, "opeo-maven-plugin: started compiling EO into low-level representation");
+class CompileMojoTest {
+
+    @Test
+    void createsMojoWithoutProblems() {
+        Assertions.assertDoesNotThrow(
+            () -> new CompileMojo().execute(),
+            String.format("Can't create %s mojo instance and execute it", CompileMojo.class)
+        );
     }
 }
