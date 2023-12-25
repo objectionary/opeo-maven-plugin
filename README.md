@@ -74,14 +74,12 @@ Another way to use the plugin is to add it directly to your `pom.xml` file:
   <executions>
     <execution>
       <id>opeo-decompile</id>
-      <phase>generate-sources</phase>
       <goals>
         <goal>decompile</goal>
       </goals>
     </execution>
     <execution>
       <id>opeo-compile</id>
-      <phase>generate-sources</phase>
       <goals>
         <goal>compile</goal>
       </goals>
@@ -89,6 +87,8 @@ Another way to use the plugin is to add it directly to your `pom.xml` file:
   </executions>
 </plugin>
 ```
+
+The default phase for the both goals is `process-classes`.
 
 ## How to Contribute
 
