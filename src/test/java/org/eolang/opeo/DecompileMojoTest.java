@@ -23,22 +23,21 @@
  */
 package org.eolang.opeo;
 
-import com.jcabi.log.Logger;
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
- * Decompiles bytecode in EO representation into high-level EO representation.
- * The input for this mojo produced by the "jeo-maven-plugin":
- * <a href="https://github.com/objectionary/jeo-maven-plugin">link</a>
+ * Unit test for {@link DecompileMojo}.
+ *
  * @since 0.1
  */
-@Mojo(name = "decompile", defaultPhase = LifecyclePhase.PROCESS_CLASSES)
-public final class OpeoMojo extends AbstractMojo {
+class DecompileMojoTest {
 
-    @Override
-    public void execute() {
-        Logger.info(this, "opeo-maven-plugin: started decompiling bytecode into EO");
+    @Test
+    void createsMojoWithoutProblems() {
+        Assertions.assertDoesNotThrow(
+            () -> new DecompileMojo().execute(),
+            String.format("Can't create %s instance and execute it", DecompileMojo.class)
+        );
     }
 }
