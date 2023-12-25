@@ -70,7 +70,7 @@ Another way to use the plugin is to add it directly to your `pom.xml` file:
 <plugin>
   <groupId>org.eolang</groupId>
   <artifactId>opeo-maven-plugin</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <executions>
     <execution>
       <id>opeo-decompile</id>
