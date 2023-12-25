@@ -29,16 +29,16 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 
 /**
- * Decompiles bytecode in EO representation into high-level EO representation.
- * The input for this mojo produced by the "jeo-maven-plugin":
+ * Compiles high-level EO representation into low-level representation.
+ * The output of this mojo is consumed by the "jeo-maven-plugin":
  * <a href="https://github.com/objectionary/jeo-maven-plugin">link</a>
+ *
  * @since 0.1
  */
-@Mojo(name = "decompile", defaultPhase = LifecyclePhase.PROCESS_CLASSES)
-public final class OpeoMojo extends AbstractMojo {
-
+@Mojo(name = "compile", defaultPhase = LifecyclePhase.PROCESS_CLASSES)
+public final class CompileMojo extends AbstractMojo {
     @Override
     public void execute() {
-        Logger.info(this, "opeo-maven-plugin: started decompiling bytecode into EO");
+        Logger.info(this, "opeo-maven-plugin: started compiling EO into low-level representation");
     }
 }

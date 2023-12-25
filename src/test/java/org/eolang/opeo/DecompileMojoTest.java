@@ -21,10 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.eolang.opeo;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 /**
- * Package with opeo high-level classes.
- * The most important class is {@link org.eolang.opeo.DecompileMojo} which is the plugin
- * entry point.
+ * Unit test for {@link DecompileMojo}.
+ *
  * @since 0.1
  */
-package org.eolang.opeo;
+class DecompileMojoTest {
+
+    @Test
+    void createsMojoWithoutProblems() {
+        Assertions.assertDoesNotThrow(
+            () -> new DecompileMojo().execute(),
+            String.format("Can't create %s instance and execute it", DecompileMojo.class)
+        );
+    }
+}

@@ -27,16 +27,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit test for {@link OpeoMojo}.
+ * Unit test for {@link CompileMojo}.
+ *
  * @since 0.1
  */
-class OpeoMojoTest {
+class CompileMojoTest {
 
     @Test
     void createsMojoWithoutProblems() {
         Assertions.assertDoesNotThrow(
-            () -> new OpeoMojo().execute(),
-            String.format("Can't create %s instance and execute it", OpeoMojo.class)
+            () -> new CompileMojo().execute(),
+            String.format("Can't create %s mojo instance and execute it", CompileMojo.class)
         );
     }
 }

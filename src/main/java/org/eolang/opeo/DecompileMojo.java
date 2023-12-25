@@ -21,10 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.eolang.opeo;
+
+import com.jcabi.log.Logger;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+
 /**
- * Package with opeo high-level classes.
- * The most important class is {@link org.eolang.opeo.DecompileMojo} which is the plugin
- * entry point.
+ * Decompiles bytecode in EO representation into high-level EO representation.
+ * The input for this mojo produced by the "jeo-maven-plugin":
+ * <a href="https://github.com/objectionary/jeo-maven-plugin">link</a>
+ *
  * @since 0.1
  */
-package org.eolang.opeo;
+@Mojo(name = "decompile", defaultPhase = LifecyclePhase.PROCESS_CLASSES)
+public final class DecompileMojo extends AbstractMojo {
+
+    @Override
+    public void execute() {
+        Logger.info(this, "opeo-maven-plugin: started decompiling bytecode into EO");
+    }
+}
