@@ -23,11 +23,7 @@
  */
 //Check logs first.
 String log = new File(basedir, 'build.log').text;
-//assert log.contains("Application.class translated into Application.xmir")
-//assert log.contains("Foo.class translated into Foo.xmir")
-//assert log.contains("WithoutPackage.class translated into WithoutPackage.xmir")
+assert log.contains("opeo-maven-plugin: started decompiling bytecode into EO")
+assert log.contains("opeo-maven-plugin: started compiling EO into low-level representation")
 assert log.contains("BUILD SUCCESS")
-//Check that we have generated XMIR object file.
-//assert new File(basedir, 'target/generated-sources/xmir/org/eolang/jeo/Application.xmir').exists()
-//assert new File(basedir, 'target/generated-sources/eo/org/eolang/jeo/Application.eo').exists()
 true
