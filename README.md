@@ -37,9 +37,14 @@ x.init
 Then, it can translate declarative EO code back to imperative EO code which
 uses `opcode` atoms.
 
-## How to use
+## How to Use
 
-### Direct command
+The opeo-maven-plugin comprises two goals: `decompile` and `compile`. The decompile goal processes the output of
+the `jeo-maven-plugin`, converting it into high-level EO code. On the other hand, the compile goal processes the
+high-level EO code, transforming it back into low-level EO code that is compatible with the `jeo-maven-plugin`.
+Below, you will find examples demonstrating how to execute the plugin.
+
+### Direct Command
 
 To execute the `opeo-maven-plugin`, you need a minimum of **Maven 3.1.+** and **Java 11+** installed on your system.
 You can initiate the plugin from the command line with a single command. For instance, to transform the output generated
@@ -56,9 +61,9 @@ Subsequently, you can convert the high-level EO code back to low-level EO code, 
 mvn opeo:compile
 ```
 
-### Maven build
+### Maven Build
 
-Another way to use the plugin is to add it to your `pom.xml` file:
+Another way to use the plugin is to add it directly to your `pom.xml` file:
 
 ```xml
 
@@ -84,3 +89,17 @@ Another way to use the plugin is to add it to your `pom.xml` file:
   </executions>
 </plugin>
 ```
+
+## How to Contribute
+
+Fork repository, make changes, then send us
+a [pull request](https://www.yegor256.com/2014/04/15/github-guidelines.html).
+We will review your changes and apply them to the `master` branch shortly,
+provided they don't violate our quality standards. To avoid frustration,
+before sending us your pull request please run full Maven build:
+
+```bash
+$ mvn clean install -Pqulice
+```
+
+You will need [Maven 3.3+](https://maven.apache.org) and Java 11+ installed.
