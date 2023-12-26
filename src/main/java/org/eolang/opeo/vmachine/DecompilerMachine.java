@@ -86,11 +86,12 @@ public final class DecompilerMachine {
     /**
      * Constructor.
      * @param stack Operand stack.
+     * @param args Arguments provided to decompiler.
      */
-    private DecompilerMachine(final Deque<Object> stack, final Map<String, String> arguments) {
+    private DecompilerMachine(final Deque<Object> stack, final Map<String, String> args) {
         this.stack = stack;
         this.root = new Root();
-        this.arguments = arguments;
+        this.arguments = args;
         this.handlers = new MapOf<>(
             new MapEntry<>(Opcodes.ICONST_1, new IconstHandler()),
             new MapEntry<>(Opcodes.ICONST_2, new IconstHandler()),
@@ -132,6 +133,18 @@ public final class DecompilerMachine {
     }
 
     /**
+     * Do we add number to opcode name or not?
+     * if true then we add number to opcode name:
+     *  RETURN -> RETURN-1
+     * if false then we do not add number to opcode name:
+     *  RETURN -> RETURN
+     * @return Opcodes counting.
+     */
+    private boolean counting() {
+        return this.arguments.getOrDefault("counting", "true").equals("true");
+    }
+
+    /**
      * Get instruction handler.
      * @param opcode Instruction opcode.
      * @return Instruction handler.
@@ -146,15 +159,15 @@ public final class DecompilerMachine {
      * @return List of arguments.
      */
     private List<AstNode> popArguments(final int number) {
-        final List<AstNode> arguments = new LinkedList<>();
+        final List<AstNode> args = new LinkedList<>();
         for (int index = 0; index < number; ++index) {
             final Object arg = this.stack.pop();
             final AstNode node = this.root.child(String.valueOf(arg))
                 .orElseGet(() -> new Literal(arg));
             this.root.disconnect(node);
-            arguments.add(node);
+            args.add(node);
         }
-        return arguments;
+        return args;
     }
 
     /**
@@ -162,6 +175,7 @@ public final class DecompilerMachine {
      * @since 0.1
      */
     private interface InstructionHandler {
+
         /**
          * Handle instruction.
          * @param instruction Instruction to handle.
@@ -189,6 +203,7 @@ public final class DecompilerMachine {
                 )
             );
         }
+
     }
 
     /**
@@ -202,6 +217,7 @@ public final class DecompilerMachine {
                 new ObjectReference((String) instruction.operand(0)).toString()
             );
         }
+
     }
 
     /**
@@ -213,6 +229,7 @@ public final class DecompilerMachine {
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(DecompilerMachine.this.stack.peek());
         }
+
     }
 
     /**
@@ -224,6 +241,7 @@ public final class DecompilerMachine {
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(instruction.operand(0));
         }
+
     }
 
     /**
@@ -237,6 +255,7 @@ public final class DecompilerMachine {
                 DecompilerMachine.this.stack.pop();
             }
         }
+
     }
 
     /**
@@ -254,6 +273,7 @@ public final class DecompilerMachine {
                 )
             );
         }
+
     }
 
     /**
@@ -289,6 +309,7 @@ public final class DecompilerMachine {
                 );
             }
         }
+
     }
 
     /**
@@ -308,6 +329,7 @@ public final class DecompilerMachine {
                 new Invocation(source, method, args)
             );
         }
+
     }
 
     /**
@@ -319,6 +341,7 @@ public final class DecompilerMachine {
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(instruction.operand(0));
         }
+
     }
 
     /**
@@ -336,6 +359,7 @@ public final class DecompilerMachine {
                 )
             );
         }
+
     }
 
     /**
@@ -368,18 +392,6 @@ public final class DecompilerMachine {
                     );
             }
         }
-    }
 
-
-    /**
-     * Do we add number to opcode name or not?
-     * if true then we add number to opcode name:
-     *  RETURN -> RETURN-1
-     * if false then we do not add number to opcode name:
-     *  RETURN -> RETURN
-     * @return Opcodes counting.
-     */
-    private boolean counting() {
-        return this.arguments.getOrDefault("counting", "true").equals("true");
     }
 }

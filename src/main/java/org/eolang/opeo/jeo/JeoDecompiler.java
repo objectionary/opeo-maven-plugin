@@ -25,13 +25,11 @@ package org.eolang.opeo.jeo;
 
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.jeo.representation.xmir.XmlProgram;
-import org.eolang.opeo.Instruction;
 import org.eolang.opeo.vmachine.DecompilerMachine;
 import org.w3c.dom.Node;
 import org.xembly.Transformers;
