@@ -76,6 +76,11 @@ public class Compiler {
      * Compile high-level EO constructs into XMIRs for the jeo-maven-plugin.
      */
     void compile() {
+        //@checkstyle MethodBodyCommentsCheck (5 lines)
+        //@todo #33:90min Implement compilation of high-level EO constructs into XMIRs.
+        // Currently we print dummy messages in order to pass 'decompile-compile' integration test.
+        // Implement this class and don't forget to add unit tests.
+        // Also, you might need to change some checks in the 'decompile-compile' integration test.
         Logger.info(this, "Compiling EO sources from %s", this.xmirs);
         Logger.info(this, "Saving new compiled EO sources to %s", this.output);
         Logger.info(this, "Compiled app.eo (545 bytes)");

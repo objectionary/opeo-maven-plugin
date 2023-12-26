@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo;
 
-import com.jcabi.log.Logger;
 import java.io.File;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
