@@ -21,9 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-//Check logs first.
+// Check logs first.
 String log = new File(basedir, 'build.log').text;
-assert log.contains("opeo-maven-plugin: started decompiling bytecode into EO")
-assert log.contains("opeo-maven-plugin: started compiling EO into low-level representation")
+// Check decompilation ('decompile' goal.)
+assert log.contains("Decompiling EO sources from target/eo")
+assert log.contains("Saving new EO sources to target/eo-2")
+assert log.contains("Decompiled app.eo (545 bytes)")
+assert log.contains("Decompiled main.eo (545 bytes)")
+assert log.contains("Totally decompiled 2 EO sources")
+// Check compilation ('compile' goal.)
+assert log.contains("Compiling EO sources from target/eo")
+assert log.contains("Saving new EO sources to target/eo-2")
+assert log.contains("Compiled app.eo (545 bytes)")
+assert log.contains("Compiled main.eo (545 bytes)")
+assert log.contains("Totally compiled 2 EO sources")
+// Check success.
 assert log.contains("BUILD SUCCESS")
+
+
 true
