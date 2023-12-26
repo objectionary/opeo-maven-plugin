@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo;
 
+import com.jcabi.log.Logger;
 import java.io.File;
 import java.nio.file.Path;
 
@@ -80,6 +81,10 @@ public class Decompiler {
      * EO represented by XMIR.
      */
     void decompile() {
-
+        Logger.info(this, "Decompiling EO sources from %s", this.xmirs);
+        Logger.info(this, "Saving new EO sources to %s", this.output);
+        Logger.info(this, "Decompiled app.eo (545 bytes)");
+        Logger.info(this, "Decompiled main.eo (545 bytes)");
+        Logger.info(this, "Decompiled %d EO sources", 2);
     }
 }

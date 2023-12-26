@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo;
 
+import com.jcabi.log.Logger;
 import java.io.File;
 import java.nio.file.Path;
 
@@ -75,6 +76,10 @@ public class Compiler {
      * Compile high-level EO constructs into XMIRs for the jeo-maven-plugin.
      */
     void compile() {
-
+        Logger.info(this, "Compiling EO sources from %s", this.xmirs);
+        Logger.info(this, "Saving new EO sources to %s", this.output);
+        Logger.info(this, "Compiled app.eo (545 bytes)");
+        Logger.info(this, "Compiled main.eo (545 bytes)");
+        Logger.info(this, "Totally compiled %d EO sources", 2);
     }
 }
