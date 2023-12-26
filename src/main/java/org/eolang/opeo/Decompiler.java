@@ -82,11 +82,11 @@ public class Decompiler {
      */
     void decompile() {
         //@checkstyle MethodBodyCommentsCheck (5 lines)
-        //@todo #33:90min Implement decompilation of EO to high-level EO.
-        // Currently we print dummy messages in order to pass 'decompile-compile' integration test.
-        // We have to implement decompilation of EO to high-level EO.
-        // Don't forget to add unit tests. Also, you might need to change some checks in the
-        // 'decompile-compile' integration test.
+        // @todo #33:90min Implement decompilation of EO to high-level EO.
+        //  Currently we print dummy messages in order to pass 'decompile-compile' integration test.
+        //  We have to implement decompilation of EO to high-level EO.
+        //  Don't forget to add unit tests. Also, you might need to change some checks in the
+        //  'decompile-compile' integration test.
         Logger.info(this, "Decompiling EO sources from %s", this.xmirs);
         Logger.info(this, "Saving new decompiled EO sources to %s", this.output);
         Logger.info(this, "Decompiled app.eo (545 bytes)");
