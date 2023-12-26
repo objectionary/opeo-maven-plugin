@@ -45,15 +45,15 @@ eo:
         * > exceptions
         seq > @
           tuple
-            opcode > ALOAD-39
+            opcode > ALOAD
               25
               0
-            opcode > INVOKESPECIAL-3A
+            opcode > INVOKESPECIAL
               183
               "java/lang/Object"
               "<init>"
               "()V"
-            opcode > RETURN-3B
+            opcode > RETURN
               177
         tuple > trycatchblocks
       [arg__[Ljava/lang/String;__0] > j$main
@@ -69,9 +69,10 @@ eo:
               .new
                 42
             .bar
-            opcode > RETURN-3C
+            opcode > RETURN
               177
         tuple > trycatchblocks
+
   A.eo: |
     +package com.example
     +alias org.eolang.jeo.opcode
@@ -93,26 +94,26 @@ eo:
         * > exceptions
         seq > @
           tuple
-            opcode > ALOAD-22
+            opcode > ALOAD
               25
               0
-            opcode > INVOKESPECIAL-23
+            opcode > INVOKESPECIAL
               183
               "java/lang/Object"
               "<init>"
               "()V"
-            opcode > ALOAD-24
+            opcode > ALOAD
               25
               0
-            opcode > ILOAD-25
+            opcode > ILOAD
               21
               1
-            opcode > PUTFIELD-26
+            opcode > PUTFIELD
               181
               "com/example/A"
               "x"
               "I"
-            opcode > RETURN-27
+            opcode > RETURN
               177
         tuple > trycatchblocks
       [] > j$foo
@@ -122,19 +123,20 @@ eo:
         * > exceptions
         seq > @
           tuple
-            opcode > ALOAD-28
+            opcode > ALOAD
               25
               0
-            opcode > GETFIELD-29
+            opcode > GETFIELD
               180
               "com/example/A"
               "x"
               "I"
-            opcode > IMUL-2A
+            opcode > IMUL
               104
-            opcode > IRETURN-2B
+            opcode > IRETURN
               172
         tuple > trycatchblocks
+
   B.eo: |
     +package com.example
     +alias org.eolang.jeo.opcode
@@ -156,26 +158,26 @@ eo:
         * > exceptions
         seq > @
           tuple
-            opcode > ALOAD-D
+            opcode > ALOAD
               25
               0
-            opcode > INVOKESPECIAL-E
+            opcode > INVOKESPECIAL
               183
               "java/lang/Object"
               "<init>"
               "()V"
-            opcode > ALOAD-F
+            opcode > ALOAD
               25
               0
-            opcode > ALOAD-10
+            opcode > ALOAD
               25
               1
-            opcode > PUTFIELD-11
+            opcode > PUTFIELD
               181
               "com/example/B"
               "a"
               "Lcom/example/A;"
-            opcode > RETURN-12
+            opcode > RETURN
               177
         tuple > trycatchblocks
       [] > j$bar
@@ -185,18 +187,18 @@ eo:
         * > exceptions
         seq > @
           tuple
-            opcode > ALOAD-13
+            opcode > ALOAD
               25
               0
-            opcode > GETFIELD-14
+            opcode > GETFIELD
               180
               "com/example/B"
               "a"
               "Lcom/example/A;"
             "this"
             .foo
-            opcode > IADD-15
+            opcode > IADD
               96
-            opcode > IRETURN-16
+            opcode > IRETURN
               172
         tuple > trycatchblocks
