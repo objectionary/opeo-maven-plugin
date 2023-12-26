@@ -23,10 +23,11 @@
  */
 package org.eolang.opeo;
 
-import com.jcabi.log.Logger;
+import java.io.File;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
  * Compiles high-level EO representation into low-level representation.
@@ -37,8 +38,16 @@ import org.apache.maven.plugins.annotations.Mojo;
  */
 @Mojo(name = "compile", defaultPhase = LifecyclePhase.PROCESS_CLASSES)
 public final class CompileMojo extends AbstractMojo {
+
+    /**
+     * Project default target directory.
+     * @since 0.1.0
+     */
+    @Parameter(defaultValue = "${project.build.directory}/generated-sources")
+    private File generated;
+
     @Override
     public void execute() {
-        Logger.info(this, "opeo-maven-plugin: started compiling EO into low-level representation");
+        new Compiler(this.generated).compile();
     }
 }

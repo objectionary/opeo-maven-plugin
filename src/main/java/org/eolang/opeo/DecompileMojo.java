@@ -24,9 +24,11 @@
 package org.eolang.opeo;
 
 import com.jcabi.log.Logger;
+import java.io.File;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
  * Decompiles bytecode in EO representation into high-level EO representation.
@@ -38,8 +40,15 @@ import org.apache.maven.plugins.annotations.Mojo;
 @Mojo(name = "decompile", defaultPhase = LifecyclePhase.PROCESS_CLASSES)
 public final class DecompileMojo extends AbstractMojo {
 
+    /**
+     * Project default target directory.
+     * @since 0.1.0
+     */
+    @Parameter(defaultValue = "${project.build.directory}/generated-sources")
+    private File generated;
+
     @Override
     public void execute() {
-        Logger.info(this, "opeo-maven-plugin: started decompiling bytecode into EO");
+        new Decompiler(this.generated).decompile();
     }
 }

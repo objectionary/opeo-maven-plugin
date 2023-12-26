@@ -27,22 +27,21 @@ import java.io.File;
 import java.nio.file.Path;
 
 /**
- * Decompiler.
- * This class is a high level abstraction of the decompilation process.
- * The main purpose of this class it to get the output of the jeo-maven-plugin
- * and decompile it into high-level EO constructs.
- *
+ * Compiler of high-level eo constructs into XMIRs for the jeo-maven-plugin.
  * @since 0.1
  */
-public class Decompiler {
+public class Compiler {
 
     /**
-     * Path to the generated XMIRs by jeo-maven-plugin.
+     * Path to the generated XMIRs by opeo-maven-plugin.
+     * In other words, it is the folder of the high-level EO constructs that were decompiled
+     * on the previous step.
      */
     private final Path xmirs;
 
     /**
      * Path to the output directory.
+     * The output folder with XMIRs accepted by jeo-maven-plugin.
      */
     private final Path output;
 
@@ -50,7 +49,7 @@ public class Decompiler {
      * Constructor.
      * @param generated The default Maven 'generated-sources' directory.
      */
-    public Decompiler(final File generated) {
+    public Compiler(final File generated) {
         this(generated.toPath());
     }
 
@@ -58,28 +57,24 @@ public class Decompiler {
      * Constructor.
      * @param generated The default Maven 'generated-sources' directory.
      */
-    public Decompiler(final Path generated) {
+    public Compiler(final Path generated) {
         this(generated, generated);
     }
 
     /**
      * Constructor.
-     * @param xmirs Path to the generated XMIRs by jeo-maven-plugin.
+     * @param xmirs Path to the generated XMIRs by opeo-maven-plugin.
      * @param output Path to the output directory.
      */
-    public Decompiler(
-        final Path xmirs,
-        final Path output
-    ) {
+    public Compiler(final Path xmirs, final Path output) {
         this.xmirs = xmirs;
         this.output = output;
     }
 
     /**
-     * Decompile EO to high-level EO.
-     * EO represented by XMIR.
+     * Compile high-level EO constructs into XMIRs for the jeo-maven-plugin.
      */
-    void decompile() {
+    void compile() {
 
     }
 }
