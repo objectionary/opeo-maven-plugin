@@ -82,7 +82,7 @@ public class Decompiler {
      */
     void decompile() {
         Logger.info(this, "Decompiling EO sources from %s", this.xmirs);
-        Logger.info(this, "Saving new EO sources to %s", this.output);
+        Logger.info(this, "Saving new decompiled EO sources to %s", this.output);
         Logger.info(this, "Decompiled app.eo (545 bytes)");
         Logger.info(this, "Decompiled main.eo (545 bytes)");
         Logger.info(this, "Decompiled %d EO sources", 2);

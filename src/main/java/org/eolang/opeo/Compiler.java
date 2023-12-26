@@ -77,9 +77,9 @@ public class Compiler {
      */
     void compile() {
         Logger.info(this, "Compiling EO sources from %s", this.xmirs);
-        Logger.info(this, "Saving new EO sources to %s", this.output);
+        Logger.info(this, "Saving new compiled EO sources to %s", this.output);
         Logger.info(this, "Compiled app.eo (545 bytes)");
         Logger.info(this, "Compiled main.eo (545 bytes)");
-        Logger.info(this, "Totally compiled %d EO sources", 2);
+        Logger.info(this, "Compiled %d EO sources", 2);
     }
 }
