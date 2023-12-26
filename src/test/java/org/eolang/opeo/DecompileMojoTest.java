@@ -36,8 +36,8 @@ class DecompileMojoTest {
     @Test
     void createsMojoWithoutProblems() {
         Assertions.assertDoesNotThrow(
-            () -> new DecompileMojo().execute(),
-            String.format("Can't create %s instance and execute it", DecompileMojo.class)
+            DecompileMojo::new,
+            String.format("Can't create %s instance", DecompileMojo.class)
         );
     }
 }

@@ -58,7 +58,7 @@ public class Compiler {
      * @param generated The default Maven 'generated-sources' directory.
      */
     public Compiler(final Path generated) {
-        this(generated, generated);
+        this(generated.resolve("opeo-xmir"), generated.resolve("xmir"));
     }
 
     /**

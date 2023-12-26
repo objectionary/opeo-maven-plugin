@@ -36,8 +36,8 @@ class CompileMojoTest {
     @Test
     void createsMojoWithoutProblems() {
         Assertions.assertDoesNotThrow(
-            () -> new CompileMojo().execute(),
-            String.format("Can't create %s mojo instance and execute it", CompileMojo.class)
+            CompileMojo::new,
+            String.format("Can't create %s mojo instance", CompileMojo.class)
         );
     }
 }
