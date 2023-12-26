@@ -26,6 +26,7 @@ package org.eolang.opeo.jeo;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlNode;
@@ -72,14 +73,15 @@ public final class JeoDecompiler {
      * @param method Method.
      */
     private static void decompile(final XmlMethod method) {
-        final DecompilerMachine machine = new DecompilerMachine();
-        final Instruction[] instructions = new JeoInstructions(method).instructions();
-        final List<XmlNode> collect = new XmlNode(
-            new Xembler(
-                machine.decompileToXmir(instructions),
-                new Transformers.Node()
-            ).xmlQuietly()
-        ).children().collect(Collectors.toList());
-        method.replaceInstructions(collect.toArray(XmlNode[]::new));
+        method.replaceInstructions(
+            new XmlNode(
+                new Xembler(
+                    new DecompilerMachine(Map.of("counting", "false")).decompileToXmir(
+                        new JeoInstructions(method).instructions()
+                    ),
+                    new Transformers.Node()
+                ).xmlQuietly()
+            ).children().collect(Collectors.toList()).toArray(XmlNode[]::new)
+        );
     }
 }

@@ -13,15 +13,15 @@
     * > exceptions
     seq > @
       tuple
-        opcode > ALOAD-C
+        opcode > ALOAD
           25
           0
-        opcode > INVOKESPECIAL-D
+        opcode > INVOKESPECIAL
           183
           "java/lang/Object"
           "<init>"
           "()V"
-        opcode > RETURN-E
+        opcode > RETURN
           177
     tuple > trycatchblocks
   [arg__[Ljava/lang/String;__0] > j$main
@@ -36,6 +36,6 @@
           "abc"
         .append
           1
-        opcode > RETURN-F
+        opcode > RETURN
           177
     tuple > trycatchblocks

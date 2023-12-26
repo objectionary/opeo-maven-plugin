@@ -49,6 +49,16 @@ public final class Opcode implements AstNode {
     private final List<Object> operands;
 
     /**
+     * Opcodes counting.
+     * Do we add number to opcode name or not?
+     * if true then we add number to opcode name:
+     *   RETURN -> RETURN-1
+     * if false then we do not add number to opcode name:
+     *   RETURN -> RETURN
+     */
+    private final boolean counting;
+
+    /**
      * Constructor.
      * @param opcode Opcode
      * @param operands Opcode operands
@@ -63,8 +73,19 @@ public final class Opcode implements AstNode {
      * @param operands Opcode operands
      */
     public Opcode(final int opcode, final List<Object> operands) {
-        this.bytecode = opcode;
+        this(opcode, operands, true);
+    }
+
+    /**
+     * Constructor.
+     * @param bytecode Bytecode
+     * @param operands Opcode operands
+     * @param counting Opcodes counting
+     */
+    public Opcode(final int bytecode, final List<Object> operands, final boolean counting) {
+        this.bytecode = bytecode;
         this.operands = operands;
+        this.counting = counting;
     }
 
     @Override
@@ -74,7 +95,7 @@ public final class Opcode implements AstNode {
 
     @Override
     public Iterable<Directive> toXmir() {
-        return new DirectivesInstruction(this.bytecode, this.operands.toArray());
+        return new DirectivesInstruction(this.bytecode, this.counting, this.operands.toArray());
     }
 
     @Override

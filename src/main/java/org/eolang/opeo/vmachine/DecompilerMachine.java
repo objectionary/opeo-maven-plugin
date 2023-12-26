@@ -25,6 +25,7 @@ package org.eolang.opeo.vmachine;
 
 import java.util.Arrays;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -63,19 +64,33 @@ public final class DecompilerMachine {
     private final Map<Integer, InstructionHandler> handlers;
 
     /**
+     * Arguments provided to decompiler.
+     */
+    private final Map<String, String> arguments;
+
+    /**
      * Constructor.
      */
     public DecompilerMachine() {
-        this(new LinkedList<>());
+        this(new HashMap<>());
+    }
+
+    /**
+     * Constructor.
+     * @param args Arguments provided to decompiler.
+     */
+    public DecompilerMachine(final Map<String, String> args) {
+        this(new LinkedList<>(), args);
     }
 
     /**
      * Constructor.
      * @param stack Operand stack.
      */
-    private DecompilerMachine(final Deque<Object> stack) {
+    private DecompilerMachine(final Deque<Object> stack, final Map<String, String> arguments) {
         this.stack = stack;
         this.root = new Root();
+        this.arguments = arguments;
         this.handlers = new MapOf<>(
             new MapEntry<>(Opcodes.ICONST_1, new IconstHandler()),
             new MapEntry<>(Opcodes.ICONST_2, new IconstHandler()),
@@ -167,7 +182,11 @@ public final class DecompilerMachine {
                 DecompilerMachine.this.stack.push("this");
             }
             DecompilerMachine.this.root.append(
-                new Opcode(instruction.opcode(), instruction.operands())
+                new Opcode(
+                    instruction.opcode(),
+                    instruction.operands(),
+                    DecompilerMachine.this.counting()
+                )
             );
         }
     }
@@ -228,7 +247,11 @@ public final class DecompilerMachine {
         @Override
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.root.append(
-                new Opcode(instruction.opcode(), instruction.operands())
+                new Opcode(
+                    instruction.opcode(),
+                    instruction.operands(),
+                    DecompilerMachine.this.counting()
+                )
             );
         }
     }
@@ -247,7 +270,11 @@ public final class DecompilerMachine {
             }
             if (instruction.operand(0).equals("java/lang/Object")) {
                 DecompilerMachine.this.root.append(
-                    new Opcode(instruction.opcode(), instruction.operands())
+                    new Opcode(
+                        instruction.opcode(),
+                        instruction.operands(),
+                        DecompilerMachine.this.counting()
+                    )
                 );
             } else {
                 final List<AstNode> args = DecompilerMachine.this.popArguments(
@@ -302,7 +329,11 @@ public final class DecompilerMachine {
         @Override
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.root.append(
-                new Opcode(instruction.opcode(), instruction.operands())
+                new Opcode(
+                    instruction.opcode(),
+                    instruction.operands(),
+                    DecompilerMachine.this.counting()
+                )
             );
         }
     }
@@ -339,4 +370,16 @@ public final class DecompilerMachine {
         }
     }
 
+
+    /**
+     * Do we add number to opcode name or not?
+     * if true then we add number to opcode name:
+     *  RETURN -> RETURN-1
+     * if false then we do not add number to opcode name:
+     *  RETURN -> RETURN
+     * @return Opcodes counting.
+     */
+    private boolean counting() {
+        return this.arguments.getOrDefault("counting", "true").equals("true");
+    }
 }

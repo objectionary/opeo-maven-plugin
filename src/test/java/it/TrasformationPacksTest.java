@@ -60,17 +60,12 @@ import org.junit.jupiter.params.ParameterizedTest;
  * 3. Transform XMIR into EO code
  * 4. Compare EO code with expected EO code
  * @since 0.1
- * @todo #11:90min Enable tests in TrasformationPacksTest.
- *  Currently, tests in TrasformationPacksTest are disabled by the following reason:
- *  https://github.com/objectionary/jeo-maven-plugin/issues/354
- *  When the issue will be fixed, we should enable tests in TrasformationPacksTest.
  */
 final class TrasformationPacksTest {
 
     @ParameterizedTest
     @ClasspathSource(value = "packs", glob = "**.yaml")
     @EnabledIf(value = "hasJavaCompiler", disabledReason = "Java compiler is not available")
-    @Disabled
     void checksPack(final String pack, @TempDir final Path where) throws IOException {
         final JavaEoPack jeopack = new JavaEoPack(pack);
         //@checkstyle MethodBodyCommentsCheck (10 lines)
@@ -110,7 +105,6 @@ final class TrasformationPacksTest {
      * @throws IOException If fails.
      */
     @Test
-    @Disabled
     void decompilesSimpleExample(@TempDir final Path where) throws Exception {
         final XML decompiled = new JeoDecompiler(
             new BytecodeRepresentation(
