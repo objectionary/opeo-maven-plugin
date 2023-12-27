@@ -76,21 +76,25 @@ final class DecompilerMachineTest {
      */
     @Test
     void decompilesNewInstructionsEachWithParam() {
+        final String res = new DecompilerMachine().decompile(
+            new OpcodeInstruction(Opcodes.NEW, "D"),
+            new OpcodeInstruction(Opcodes.DUP),
+            new OpcodeInstruction(Opcodes.BIPUSH, 45),
+            new OpcodeInstruction(Opcodes.BIPUSH, 44),
+            new OpcodeInstruction(Opcodes.NEW, "C"),
+            new OpcodeInstruction(Opcodes.DUP),
+            new OpcodeInstruction(Opcodes.BIPUSH, 43),
+            new OpcodeInstruction(Opcodes.INVOKESPECIAL, "C", "<init>", "(I)V"),
+            new OpcodeInstruction(Opcodes.INVOKESPECIAL, "D", "<init>", "(LC;II)V"),
+            new OpcodeInstruction(Opcodes.POP),
+            new OpcodeInstruction(Opcodes.RETURN)
+        );
         MatcherAssert.assertThat(
-            "Can't decompile new instructions for 'new D(new C(43), 44, 45);'",
-            new DecompilerMachine().decompile(
-                new OpcodeInstruction(Opcodes.NEW, "D"),
-                new OpcodeInstruction(Opcodes.DUP),
-                new OpcodeInstruction(Opcodes.BIPUSH, 45),
-                new OpcodeInstruction(Opcodes.BIPUSH, 44),
-                new OpcodeInstruction(Opcodes.NEW, "C"),
-                new OpcodeInstruction(Opcodes.DUP),
-                new OpcodeInstruction(Opcodes.BIPUSH, 43),
-                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "C", "<init>", "(I)V"),
-                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "D", "<init>", "(LC;II)V"),
-                new OpcodeInstruction(Opcodes.POP),
-                new OpcodeInstruction(Opcodes.RETURN)
+            String.format(
+                "Can't decompile new instructions for 'new D(new C(43), 44, 45);', result: %n%s%n",
+                res
             ),
+            res,
             Matchers.allOf(
                 Matchers.containsString("D.new (C.new (43)) (44) (45)"),
                 Matchers.containsString("opcode > RETURN")

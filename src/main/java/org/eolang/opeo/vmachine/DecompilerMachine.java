@@ -37,6 +37,7 @@ import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
+import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Root;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -54,9 +55,9 @@ public final class DecompilerMachine {
     private final Deque<Object> stack;
 
     /**
-     * Output root.
+     * Output Stack.
      */
-    private final Root root;
+    private final Deque<AstNode> out;
 
     /**
      * Instruction handlers.
@@ -90,7 +91,7 @@ public final class DecompilerMachine {
      */
     private DecompilerMachine(final Deque<Object> stack, final Map<String, String> args) {
         this.stack = stack;
-        this.root = new Root();
+        this.out = new LinkedList<>();
         this.arguments = args;
         this.handlers = new MapOf<>(
             new MapEntry<>(Opcodes.ICONST_1, new IconstHandler()),
@@ -118,7 +119,7 @@ public final class DecompilerMachine {
     public Iterable<Directive> decompileToXmir(final Instruction... instructions) {
         Arrays.stream(instructions)
             .forEach(inst -> this.handler(inst.opcode()).handle(inst));
-        return this.root.toXmir();
+        return new Root(this.out).toXmir();
     }
 
     /**
@@ -129,7 +130,7 @@ public final class DecompilerMachine {
     public String decompile(final Instruction... instructions) {
         Arrays.stream(instructions)
             .forEach(inst -> this.handler(inst.opcode()).handle(inst));
-        return this.root.print();
+        return new Root(this.out).print();
     }
 
     /**
@@ -162,10 +163,10 @@ public final class DecompilerMachine {
         final List<AstNode> args = new LinkedList<>();
         for (int index = 0; index < number; ++index) {
             final Object arg = this.stack.pop();
-            final AstNode node = this.root.child(String.valueOf(arg))
-                .orElseGet(() -> new Literal(arg));
-            this.root.disconnect(node);
-            args.add(node);
+//            final AstNode node = this.out.child(String.valueOf(arg))
+//                .orElseGet(() -> new Literal(arg));
+//            this.out.disconnect(node);
+            args.add(this.out.pop());
         }
         return args;
     }
@@ -195,7 +196,7 @@ public final class DecompilerMachine {
             if (instruction.operand(0).equals(0)) {
                 DecompilerMachine.this.stack.push("this");
             }
-            DecompilerMachine.this.root.append(
+            DecompilerMachine.this.out.push(
                 new Opcode(
                     instruction.opcode(),
                     instruction.operands(),
@@ -213,8 +214,12 @@ public final class DecompilerMachine {
     private class NewHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
+            final String type = ((String) instruction.operand(0)).replace('/', '.');
             DecompilerMachine.this.stack.push(
-                new ObjectReference((String) instruction.operand(0)).toString()
+                new ObjectReference(type).toString()
+            );
+            DecompilerMachine.this.out.push(
+                new Reference()
             );
         }
 
@@ -228,6 +233,7 @@ public final class DecompilerMachine {
         @Override
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(DecompilerMachine.this.stack.peek());
+            DecompilerMachine.this.out.push(DecompilerMachine.this.out.peek());
         }
 
     }
@@ -240,6 +246,7 @@ public final class DecompilerMachine {
         @Override
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(instruction.operand(0));
+            DecompilerMachine.this.out.push(new Literal(instruction.operand(0)));
         }
 
     }
@@ -254,6 +261,9 @@ public final class DecompilerMachine {
             if (!DecompilerMachine.this.stack.isEmpty()) {
                 DecompilerMachine.this.stack.pop();
             }
+//            if (!DecompilerMachine.this.out.isEmpty()) {
+//                DecompilerMachine.this.out.pop();
+//            }
         }
 
     }
@@ -265,7 +275,7 @@ public final class DecompilerMachine {
     private class ReturnHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
-            DecompilerMachine.this.root.append(
+            DecompilerMachine.this.out.push(
                 new Opcode(
                     instruction.opcode(),
                     instruction.operands(),
@@ -289,7 +299,7 @@ public final class DecompilerMachine {
                 );
             }
             if (instruction.operand(0).equals("java/lang/Object")) {
-                DecompilerMachine.this.root.append(
+                DecompilerMachine.this.out.push(
                     new Opcode(
                         instruction.opcode(),
                         instruction.operands(),
@@ -300,13 +310,16 @@ public final class DecompilerMachine {
                 final List<AstNode> args = DecompilerMachine.this.popArguments(
                     Type.getArgumentCount((String) instruction.operand(2))
                 );
-                DecompilerMachine.this.root.append(
+                ((Reference) DecompilerMachine.this.out.pop()).link(
                     new Constructor(
                         (String) instruction.operand(0),
                         (String) DecompilerMachine.this.stack.pop(),
                         args
                     )
                 );
+//                DecompilerMachine.this.out.push(
+//
+//                );
             }
         }
 
@@ -325,7 +338,7 @@ public final class DecompilerMachine {
                 Type.getArgumentCount(descriptor)
             );
             final AstNode source = DecompilerMachine.this.popArguments(1).get(0);
-            DecompilerMachine.this.root.append(
+            DecompilerMachine.this.out.push(
                 new Invocation(source, method, args)
             );
         }
@@ -340,6 +353,7 @@ public final class DecompilerMachine {
         @Override
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(instruction.operand(0));
+            DecompilerMachine.this.out.push(new Literal(instruction.operand(0)));
         }
 
     }
@@ -351,7 +365,7 @@ public final class DecompilerMachine {
     private class UnimplementedHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
-            DecompilerMachine.this.root.append(
+            DecompilerMachine.this.out.push(
                 new Opcode(
                     instruction.opcode(),
                     instruction.operands(),
@@ -373,18 +387,23 @@ public final class DecompilerMachine {
             switch (instruction.opcode()) {
                 case Opcodes.ICONST_1:
                     DecompilerMachine.this.stack.push(1);
+                    DecompilerMachine.this.out.push(new Literal(1));
                     break;
                 case Opcodes.ICONST_2:
                     DecompilerMachine.this.stack.push(2);
+                    DecompilerMachine.this.out.push(new Literal(2));
                     break;
                 case Opcodes.ICONST_3:
                     DecompilerMachine.this.stack.push(3);
+                    DecompilerMachine.this.out.push(new Literal(3));
                     break;
                 case Opcodes.ICONST_4:
                     DecompilerMachine.this.stack.push(4);
+                    DecompilerMachine.this.out.push(new Literal(4));
                     break;
                 case Opcodes.ICONST_5:
                     DecompilerMachine.this.stack.push(5);
+                    DecompilerMachine.this.out.push(new Literal(5));
                     break;
                 default:
                     throw new UnsupportedOperationException(
