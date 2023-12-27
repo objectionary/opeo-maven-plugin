@@ -89,9 +89,9 @@ public final class Decompiler {
      * EO represented by XMIR.
      */
     void decompile() {
-        Logger.info(this, "Decompiling EO sources from %[file]s", this.xmirs);
-        Logger.info(this, "Saving new decompiled EO sources to %[file]s", this.output);
         try (Stream<Path> files = Files.walk(this.xmirs).filter(Files::isRegularFile)) {
+            Logger.info(this, "Decompiling EO sources from %[file]s", this.xmirs);
+            Logger.info(this, "Saving new decompiled EO sources to %[file]s", this.output);
             Logger.info(
                 this,
                 "Decompiled %d EO sources",
@@ -100,6 +100,15 @@ public final class Decompiler {
         } catch (final IOException exception) {
             throw new IllegalStateException(
                 String.format("Can't decompile files from '%s'", this.xmirs),
+                exception
+            );
+        } catch (final IllegalArgumentException exception) {
+            throw new IllegalStateException(
+                String.format(
+                    "Can't decompile files from '%s' directory and save them into '%s'",
+                    this.xmirs,
+                    this.output
+                ),
                 exception
             );
         }
