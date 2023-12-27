@@ -137,7 +137,7 @@ SOFTWARE.
     <dependency>
       <groupId>com.jcabi</groupId>
       <artifactId>jcabi-log</artifactId>
-      <!-- version from the parent pom -->
+      <version>0.24.0</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>

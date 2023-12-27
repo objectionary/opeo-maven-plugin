@@ -34,7 +34,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 import org.eolang.opeo.jeo.JeoDecompiler;
-import org.eolang.opeo.vmachine.DecompilerMachine;
 
 /**
  * Decompiler.
@@ -90,8 +89,8 @@ public final class Decompiler {
      * EO represented by XMIR.
      */
     void decompile() {
-        Logger.info(this, "Decompiling EO sources from %s", this.xmirs);
-        Logger.info(this, "Saving new decompiled EO sources to %s", this.output);
+        Logger.info(this, "Decompiling EO sources from %[file]s", this.xmirs);
+        Logger.info(this, "Saving new decompiled EO sources to %[file]s", this.output);
         try (final Stream<Path> files = Files.walk(this.xmirs).filter(Files::isRegularFile)) {
             Logger.info(
                 this,
@@ -104,8 +103,6 @@ public final class Decompiler {
                 exception
             );
         }
-        Logger.info(this, "Decompiled app.eo (545 bytes)");
-        Logger.info(this, "Decompiled main.eo (545 bytes)");
     }
 
     /**
@@ -116,10 +113,12 @@ public final class Decompiler {
         try {
             final XML decompiled = new JeoDecompiler(new XMLDocument(path)).decompile();
             Files.createDirectories(this.output);
+            final Path out = this.output.resolve(path.getFileName().toString());
             Files.write(
-                this.output.resolve(path.getFileName().toString()),
+                out,
                 decompiled.toString().getBytes(StandardCharsets.UTF_8)
             );
+            Logger.info(this, "Decompiled %[file]s (%[size]s)", out, Files.size(out));
         } catch (final FileNotFoundException exception) {
             throw new IllegalStateException(
                 String.format(
