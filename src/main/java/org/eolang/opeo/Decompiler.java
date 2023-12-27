@@ -91,7 +91,7 @@ public final class Decompiler {
     void decompile() {
         Logger.info(this, "Decompiling EO sources from %[file]s", this.xmirs);
         Logger.info(this, "Saving new decompiled EO sources to %[file]s", this.output);
-        try (final Stream<Path> files = Files.walk(this.xmirs).filter(Files::isRegularFile)) {
+        try (Stream<Path> files = Files.walk(this.xmirs).filter(Files::isRegularFile)) {
             Logger.info(
                 this,
                 "Decompiled %d EO sources",
