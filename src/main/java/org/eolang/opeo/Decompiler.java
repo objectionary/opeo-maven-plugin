@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.stream.Stream;
 import org.eolang.opeo.jeo.JeoDecompiler;
 
@@ -105,9 +106,10 @@ public final class Decompiler {
         } catch (final IllegalArgumentException exception) {
             throw new IllegalStateException(
                 String.format(
-                    "Can't decompile files from '%s' directory and save them into '%s'",
+                    "Can't decompile files from '%s' directory and save them into '%s', current directory is '%s'",
                     this.xmirs,
-                    this.output
+                    this.output,
+                    Paths.get("").toAbsolutePath()
                 ),
                 exception
             );
