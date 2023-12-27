@@ -81,8 +81,8 @@ public class Compiler {
         //  Currently we print dummy messages in order to pass 'decompile-compile' integration test.
         //  Implement this class and don't forget to add unit tests.
         //  Also, you might need to change some checks in the 'decompile-compile' integration test.
-        Logger.info(this, "Compiling EO sources from %s", this.xmirs);
-        Logger.info(this, "Saving new compiled EO sources to %s", this.output);
+        Logger.info(this, "Compiling EO sources from %[file]s", this.xmirs);
+        Logger.info(this, "Saving new compiled EO sources to %[file]s", this.output);
         Logger.info(this, "Compiled app.eo (545 bytes)");
         Logger.info(this, "Compiled main.eo (545 bytes)");
         Logger.info(this, "Compiled %d EO sources", 2);
