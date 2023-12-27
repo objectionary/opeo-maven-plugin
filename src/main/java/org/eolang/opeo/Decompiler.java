@@ -25,7 +25,11 @@ package org.eolang.opeo;
 
 import com.jcabi.log.Logger;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.stream.Stream;
+import org.eolang.opeo.vmachine.DecompilerMachine;
 
 /**
  * Decompiler.
@@ -35,7 +39,7 @@ import java.nio.file.Path;
  *
  * @since 0.1
  */
-public class Decompiler {
+public final class Decompiler {
 
     /**
      * Path to the generated XMIRs by jeo-maven-plugin.
@@ -83,8 +87,36 @@ public class Decompiler {
     void decompile() {
         Logger.info(this, "Decompiling EO sources from %s", this.xmirs);
         Logger.info(this, "Saving new decompiled EO sources to %s", this.output);
+        try (final Stream<Path> files = Files.walk(this.xmirs).filter(Files::isRegularFile)) {
+            Logger.info(
+                this,
+                "Decompiled %d EO sources",
+                files.filter(Decompiler::isXmir).peek(this::decompile).count()
+            );
+        } catch (final IOException exception) {
+            throw new IllegalStateException(
+                String.format("Can't decompile files from '%s'", this.xmirs),
+                exception
+            );
+        }
         Logger.info(this, "Decompiled app.eo (545 bytes)");
         Logger.info(this, "Decompiled main.eo (545 bytes)");
-        Logger.info(this, "Decompiled %d EO sources", 2);
+    }
+
+    /**
+     * Decompile XMIR to high-level EO.
+     * @param path Path to the XMIR file.
+     */
+    private void decompile(final Path path) {
+
+    }
+
+    /**
+     * Check if the file is XMIR.
+     * @param path Path to the file.
+     * @return True if the file is XMIR.
+     */
+    private static boolean isXmir(final Path path) {
+        return path.toString().endsWith(".xmir");
     }
 }

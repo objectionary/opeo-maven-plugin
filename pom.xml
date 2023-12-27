@@ -176,6 +176,21 @@ SOFTWARE.
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <build>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>false</filtering>
+        <includes>
+          <include>**/*.class</include>
+          <include>**/*.java</include>
+          <include>**/*.eo</include>
+          <include>**/*.yaml</include>
+          <include>**/*.xmir</include>
+        </includes>
+      </testResource>
+    </testResources>
+  </build>
   <profiles>
     <profile>
       <id>qulice</id>
