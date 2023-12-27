@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import org.cactoos.list.ListOf;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.eolang.opeo.Instruction;
@@ -119,7 +120,7 @@ public final class DecompilerMachine {
     public Iterable<Directive> decompileToXmir(final Instruction... instructions) {
         Arrays.stream(instructions)
             .forEach(inst -> this.handler(inst.opcode()).handle(inst));
-        return new Root(this.out).toXmir();
+        return new Root(new ListOf<>(this.out.descendingIterator())).toXmir();
     }
 
     /**
@@ -130,7 +131,7 @@ public final class DecompilerMachine {
     public String decompile(final Instruction... instructions) {
         Arrays.stream(instructions)
             .forEach(inst -> this.handler(inst.opcode()).handle(inst));
-        return new Root(this.out).print();
+        return new Root(new ListOf<>(this.out.descendingIterator())).print();
     }
 
     /**
