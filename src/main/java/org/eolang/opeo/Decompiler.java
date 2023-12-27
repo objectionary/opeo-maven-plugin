@@ -24,8 +24,17 @@
 package org.eolang.opeo;
 
 import com.jcabi.log.Logger;
+import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+import org.eolang.opeo.jeo.JeoDecompiler;
 
 /**
  * Decompiler.
@@ -35,7 +44,7 @@ import java.nio.file.Path;
  *
  * @since 0.1
  */
-public class Decompiler {
+public final class Decompiler {
 
     /**
      * Path to the generated XMIRs by jeo-maven-plugin.
@@ -81,16 +90,73 @@ public class Decompiler {
      * EO represented by XMIR.
      */
     void decompile() {
-        //@checkstyle MethodBodyCommentsCheck (5 lines)
-        // @todo #33:90min Implement decompilation of EO to high-level EO.
-        //  Currently we print dummy messages in order to pass 'decompile-compile' integration test.
-        //  We have to implement decompilation of EO to high-level EO.
-        //  Don't forget to add unit tests. Also, you might need to change some checks in the
-        //  'decompile-compile' integration test.
-        Logger.info(this, "Decompiling EO sources from %s", this.xmirs);
-        Logger.info(this, "Saving new decompiled EO sources to %s", this.output);
-        Logger.info(this, "Decompiled app.eo (545 bytes)");
-        Logger.info(this, "Decompiled main.eo (545 bytes)");
-        Logger.info(this, "Decompiled %d EO sources", 2);
+        try (Stream<Path> files = Files.walk(this.xmirs).filter(Files::isRegularFile)) {
+            Logger.info(this, "Decompiling EO sources from %[file]s", this.xmirs);
+            Logger.info(this, "Saving new decompiled EO sources to %[file]s", this.output);
+            Logger.info(
+                this,
+                "Decompiled %d EO sources",
+                files.filter(Decompiler::isXmir).peek(this::decompile).count()
+            );
+        } catch (final IOException exception) {
+            throw new IllegalStateException(
+                String.format("Can't decompile files from '%s'", this.xmirs),
+                exception
+            );
+        } catch (final IllegalArgumentException exception) {
+            throw new IllegalStateException(
+                String.format(
+                    "Can't decompile files from '%s' directory and save them into '%s', current directory is '%s'",
+                    this.xmirs,
+                    this.output,
+                    Paths.get("").toAbsolutePath()
+                ),
+                exception
+            );
+        }
+    }
+
+    /**
+     * Decompile XMIR to high-level EO.
+     * @param path Path to the XMIR file.
+     */
+    private void decompile(final Path path) {
+        try {
+            final XML decompiled = new JeoDecompiler(new XMLDocument(path)).decompile();
+            final Path out = this.output.resolve(this.xmirs.relativize(path));
+            Files.createDirectories(out.getParent());
+            Files.write(
+                out,
+                decompiled.toString().getBytes(StandardCharsets.UTF_8)
+            );
+            Logger.info(this, "Decompiled %[file]s (%[size]s)", out, Files.size(out));
+        } catch (final FileNotFoundException exception) {
+            throw new IllegalStateException(
+                String.format(
+                    "Can't find the file '%s' for decompilation in the '%s' folder",
+                    path,
+                    this.xmirs
+                ),
+                exception
+            );
+        } catch (final IOException exception) {
+            throw new IllegalStateException(
+                String.format(
+                    "Can't decompile file '%s' in the '%s' folder",
+                    path,
+                    this.xmirs
+                ),
+                exception
+            );
+        }
+    }
+
+    /**
+     * Check if the file is XMIR.
+     * @param path Path to the file.
+     * @return True if the file is XMIR.
+     */
+    private static boolean isXmir(final Path path) {
+        return path.toString().endsWith(".xmir");
     }
 }
