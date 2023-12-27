@@ -112,8 +112,8 @@ public final class Decompiler {
     private void decompile(final Path path) {
         try {
             final XML decompiled = new JeoDecompiler(new XMLDocument(path)).decompile();
-            Files.createDirectories(this.output);
-            final Path out = this.output.resolve(path.getFileName().toString());
+            final Path out = this.output.resolve(this.xmirs.relativize(path));
+            Files.createDirectories(out.getParent());
             Files.write(
                 out,
                 decompiled.toString().getBytes(StandardCharsets.UTF_8)
