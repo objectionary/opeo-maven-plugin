@@ -34,7 +34,7 @@ SOFTWARE.
   <packaging>maven-plugin</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>opeo-maven-plugin</name>
-  <url>https://github.com/objectionary/opeo-maven-plugin</url>
+  <url>https://objectionary.github.io/opeo-maven-plugin</url>
   <description>Bytecode decompiler to eolang and back</description>
   <inceptionYear>2023</inceptionYear>
   <organization>

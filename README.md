@@ -90,6 +90,9 @@ Another way to use the plugin is to add it directly to your `pom.xml` file:
 
 The default phase for the both goals is `process-classes`.
 
+More details about plugin usage you can find in our
+[Maven site](https://objectionary.github.io/opeo-maven-plugin).
+
 ## How to Contribute
 
 Fork repository, make changes, then send us
