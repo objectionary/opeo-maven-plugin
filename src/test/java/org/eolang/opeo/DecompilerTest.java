@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
@@ -41,16 +40,16 @@ class DecompilerTest {
 
     @Test
     void decompilesSeveralFiles(@TempDir final Path temp) throws Exception {
-        final Path input = temp.resolve("xmir").resolve("Bar.xmir");
+        final String name = "Bar.xmir";
+        final Path input = temp.resolve("xmir").resolve(name);
         Files.createDirectories(input.getParent());
         Files.write(input, new BytesOf(new ResourceOf("xmir/Bar.xmir")).asBytes());
         new Decompiler(temp).decompile();
         MatcherAssert.assertThat(
             "The decompiled file is missing",
-            temp.resolve("opeo-xmir").resolve("B.xmir").toFile(),
+            temp.resolve("opeo-xmir").resolve(name).toFile(),
             FileMatchers.anExistingFile()
         );
     }
-
 
 }

@@ -24,11 +24,16 @@
 package org.eolang.opeo;
 
 import com.jcabi.log.Logger;
+import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
+import org.eolang.opeo.jeo.JeoDecompiler;
 import org.eolang.opeo.vmachine.DecompilerMachine;
 
 /**
@@ -108,7 +113,32 @@ public final class Decompiler {
      * @param path Path to the XMIR file.
      */
     private void decompile(final Path path) {
-
+        try {
+            final XML decompiled = new JeoDecompiler(new XMLDocument(path)).decompile();
+            Files.createDirectories(this.output);
+            Files.write(
+                this.output.resolve(path.getFileName().toString()),
+                decompiled.toString().getBytes(StandardCharsets.UTF_8)
+            );
+        } catch (final FileNotFoundException exception) {
+            throw new IllegalStateException(
+                String.format(
+                    "Can't find the file '%s' for decompilation in the '%s' folder",
+                    path,
+                    this.xmirs
+                ),
+                exception
+            );
+        } catch (final IOException exception) {
+            throw new IllegalStateException(
+                String.format(
+                    "Can't decompile file '%s' in the '%s' folder",
+                    path,
+                    this.xmirs
+                ),
+                exception
+            );
+        }
     }
 
     /**
