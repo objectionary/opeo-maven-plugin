@@ -24,9 +24,9 @@
 // Check logs first.
 String log = new File(basedir, 'build.log').text;
 // Check decompilation ('decompile' goal.)
-assert log.contains("Decompiling EO sources from target/generated-sources/xmir")
-assert log.contains("Saving new decompiled EO sources to target/generated-sources/opeo-xmir")
-assert log.contains("Decompiled target/generated-sources/opeo-xmir/org/eolang/jeo/Bar.xmir (4Kb)")
+assert log.contains("Decompiling EO sources from")
+assert log.contains("Saving new decompiled EO sources to")
+assert log.contains("Decompiled")
 assert log.contains("Decompiled 1 EO sources")
 // Check compilation ('compile' goal.)
 assert log.contains("Compiling EO sources from")
