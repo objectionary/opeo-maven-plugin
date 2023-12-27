@@ -25,6 +25,7 @@ package org.eolang.opeo;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.hamcrest.MatcherAssert;
@@ -41,13 +42,18 @@ class DecompilerTest {
     @Test
     void decompilesSeveralFiles(@TempDir final Path temp) throws Exception {
         final String name = "Bar.xmir";
-        final Path input = temp.resolve("xmir").resolve(name);
+        final Path subpath = Paths.get("org").resolve("eolang").resolve("jeo");
+        final Path input = temp.resolve("xmir").resolve(subpath).resolve(name);
         Files.createDirectories(input.getParent());
         Files.write(input, new BytesOf(new ResourceOf("xmir/Bar.xmir")).asBytes());
         new Decompiler(temp).decompile();
+        final Path expected = temp.resolve("opeo-xmir").resolve(subpath).resolve(name);
         MatcherAssert.assertThat(
-            "The decompiled file is missing",
-            temp.resolve("opeo-xmir").resolve(name).toFile(),
+            String.format(
+                "The decompiled file is missing, expected path: %s",
+                expected
+            ),
+            expected.toFile(),
             FileMatchers.anExistingFile()
         );
     }
