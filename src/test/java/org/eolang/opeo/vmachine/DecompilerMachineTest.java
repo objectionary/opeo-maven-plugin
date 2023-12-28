@@ -209,7 +209,7 @@ final class DecompilerMachineTest {
                 new OpcodeInstruction(Opcodes.IADD)
             ),
             Matchers.equalTo(
-                "ths.foo(this.bar()) + 3"
+                "((this).foo (this).bar) + (3)"
             )
         );
     }

@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.vmachine;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
@@ -34,6 +33,7 @@ import org.cactoos.list.ListOf;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.eolang.opeo.Instruction;
+import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.Invocation;
@@ -59,7 +59,7 @@ public final class DecompilerMachine {
     /**
      * Local variables.
      */
-    private final List<Object> locals;
+    private final LocalVariables locals;
 
     /**
      * Instruction handlers.
@@ -84,7 +84,7 @@ public final class DecompilerMachine {
      */
     public DecompilerMachine(final Map<String, String> args) {
         this.stack = new LinkedList<>();
-        this.locals = new ArrayList<>(0);
+        this.locals = new LocalVariables();
         this.arguments = args;
         this.handlers = new MapOf<>(
             new MapEntry<>(Opcodes.ICONST_1, new IconstHandler()),
@@ -92,6 +92,7 @@ public final class DecompilerMachine {
             new MapEntry<>(Opcodes.ICONST_3, new IconstHandler()),
             new MapEntry<>(Opcodes.ICONST_4, new IconstHandler()),
             new MapEntry<>(Opcodes.ICONST_5, new IconstHandler()),
+            new MapEntry<>(Opcodes.IADD, new AddHandler()),
             new MapEntry<>(Opcodes.ALOAD, new AloadHandler()),
             new MapEntry<>(Opcodes.NEW, new NewHandler()),
             new MapEntry<>(Opcodes.DUP, new DupHandler()),
@@ -183,11 +184,7 @@ public final class DecompilerMachine {
         @Override
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(
-                new Opcode(
-                    instruction.opcode(),
-                    instruction.operands(),
-                    DecompilerMachine.this.counting()
-                )
+                DecompilerMachine.this.locals.variable((Integer) instruction.operands().get(0))
             );
         }
 
@@ -337,6 +334,27 @@ public final class DecompilerMachine {
             );
         }
 
+    }
+
+    private class AddHandler implements InstructionHandler {
+        @Override
+        public void handle(final Instruction instruction) {
+            switch (instruction.opcode()) {
+                case Opcodes.IADD:
+                    final AstNode right = DecompilerMachine.this.stack.pop();
+                    final AstNode left = DecompilerMachine.this.stack.pop();
+                    DecompilerMachine.this.stack.push(new Add(left, right));
+                    break;
+                default:
+                    DecompilerMachine.this.stack.push(
+                        new Opcode(
+                            instruction.opcode(),
+                            instruction.operands(),
+                            DecompilerMachine.this.counting()
+                        )
+                    );
+            }
+        }
     }
 
     /**
