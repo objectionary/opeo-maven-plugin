@@ -108,6 +108,7 @@ public final class DecompilerMachine {
             new MapEntry<>(Opcodes.BIPUSH, new BipushHandler()),
             new MapEntry<>(Opcodes.INVOKESPECIAL, new InvokespecialHandler()),
             new MapEntry<>(Opcodes.INVOKEVIRTUAL, new InvokevirtualHandler()),
+            new MapEntry<>(Opcodes.GETFIELD, new GetFieldHandler()),
             new MapEntry<>(Opcodes.LDC, new LdcHandler()),
             new MapEntry<>(Opcodes.POP, new PopHandler()),
             new MapEntry<>(Opcodes.RETURN, new ReturnHandler())
@@ -209,6 +210,19 @@ public final class DecompilerMachine {
             DecompilerMachine.this.stack.push(new Reference());
         }
 
+    }
+
+    /**
+     * Getfield instruction handler.
+     * @since 0.1
+     */
+    private class GetFieldHandler implements InstructionHandler {
+
+        @Override
+        public void handle(final Instruction instruction) {
+            final String variable = (String) instruction.operand(1);
+            final AstNode ref = DecompilerMachine.this.stack.pop();
+        }
     }
 
     /**
