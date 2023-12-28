@@ -83,9 +83,18 @@ public final class DecompilerMachine {
      * @param args Arguments provided to decompiler.
      */
     public DecompilerMachine(final Map<String, String> args) {
+        this(new LocalVariables(), args);
+    }
+
+    /**
+     * Constructor.
+     * @param locals Local variables.
+     * @param arguments Arguments provided to decompiler.
+     */
+    public DecompilerMachine(final LocalVariables locals, final Map<String, String> arguments) {
         this.stack = new LinkedList<>();
-        this.locals = new LocalVariables();
-        this.arguments = args;
+        this.locals = locals;
+        this.arguments = arguments;
         this.handlers = new MapOf<>(
             new MapEntry<>(Opcodes.ICONST_1, new IconstHandler()),
             new MapEntry<>(Opcodes.ICONST_2, new IconstHandler()),
