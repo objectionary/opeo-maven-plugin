@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.ast;
 
-import java.util.UUID;
 import org.eolang.jeo.representation.directives.DirectivesData;
 import org.xembly.Directive;
 
@@ -60,10 +59,5 @@ public final class Literal implements AstNode {
             result = this.object.toString();
         }
         return result;
-    }
-
-    @Override
-    public String identifier() {
-        return UUID.randomUUID().toString();
     }
 }

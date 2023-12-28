@@ -77,16 +77,6 @@ public final class Root implements AstNode {
     }
 
     /**
-     * Find child by ID.
-     * @param identifier ID
-     * @return Child
-     */
-    public Optional<AstNode> child(final String identifier) {
-        return this.children.stream()
-            .filter(node -> node.identifier().equals(identifier)).findFirst();
-    }
-
-    /**
      * Append child.
      * @param node Child
      */
@@ -100,10 +90,5 @@ public final class Root implements AstNode {
      */
     public void disconnect(final AstNode node) {
         this.children.remove(node);
-    }
-
-    @Override
-    public String identifier() {
-        return UUID.randomUUID().toString();
     }
 }

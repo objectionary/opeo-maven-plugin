@@ -97,9 +97,4 @@ public final class Opcode implements AstNode {
     public Iterable<Directive> toXmir() {
         return new DirectivesInstruction(this.bytecode, this.counting, this.operands.toArray());
     }
-
-    @Override
-    public String identifier() {
-        return UUID.randomUUID().toString();
-    }
 }

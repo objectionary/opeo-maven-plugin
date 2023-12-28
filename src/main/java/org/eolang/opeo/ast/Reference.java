@@ -28,9 +28,4 @@ public final class Reference implements AstNode {
     public Iterable<Directive> toXmir() {
         return this.ref.get().toXmir();
     }
-
-    @Override
-    public String identifier() {
-        return this.ref.get().identifier();
-    }
 }

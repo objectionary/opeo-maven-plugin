@@ -101,11 +101,6 @@ public final class Invocation implements AstNode {
         return directives.up();
     }
 
-    @Override
-    public String identifier() {
-        return UUID.randomUUID().toString();
-    }
-
     /**
      * Print arguments.
      * @return Arguments

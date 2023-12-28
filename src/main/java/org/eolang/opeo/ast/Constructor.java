@@ -42,11 +42,6 @@ public final class Constructor implements AstNode {
     private final String type;
 
     /**
-     * Object reference.
-     */
-    private final String reference;
-
-    /**
      * Constructor arguments.
      */
     private final List<AstNode> arguments;
@@ -60,22 +55,11 @@ public final class Constructor implements AstNode {
         final String type,
         final AstNode... arguments
     ) {
-        this(type, new ObjectReference(type).toString(), Arrays.asList(arguments));
+        this(type, Arrays.asList(arguments));
     }
 
-    /**
-     * Constructor.
-     * @param type Constructor type
-     * @param reference Object reference
-     * @param arguments Constructor arguments
-     */
-    public Constructor(
-        final String type,
-        final String reference,
-        final List<AstNode> arguments
-    ) {
+    public Constructor(final String type, final List<AstNode> arguments) {
         this.type = type;
-        this.reference = reference;
         this.arguments = arguments;
     }
 
@@ -96,11 +80,6 @@ public final class Constructor implements AstNode {
             .add("o").attr("base", this.type).up();
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
-    }
-
-    @Override
-    public String identifier() {
-        return this.reference;
     }
 
     /**

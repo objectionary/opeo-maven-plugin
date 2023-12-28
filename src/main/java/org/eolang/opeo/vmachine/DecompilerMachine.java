@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.vmachine;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
@@ -60,6 +61,9 @@ public final class DecompilerMachine {
      */
     private final Deque<AstNode> out;
 
+
+    private final List<Object> locals;
+
     /**
      * Instruction handlers.
      */
@@ -93,6 +97,7 @@ public final class DecompilerMachine {
     private DecompilerMachine(final Deque<Object> stack, final Map<String, String> args) {
         this.stack = stack;
         this.out = new LinkedList<>();
+        this.locals = new ArrayList<>(0);
         this.arguments = args;
         this.handlers = new MapOf<>(
             new MapEntry<>(Opcodes.ICONST_1, new IconstHandler()),
@@ -163,10 +168,6 @@ public final class DecompilerMachine {
     private List<AstNode> popArguments(final int number) {
         final List<AstNode> args = new LinkedList<>();
         for (int index = 0; index < number; ++index) {
-            final Object arg = this.stack.pop();
-//            final AstNode node = this.out.child(String.valueOf(arg))
-//                .orElseGet(() -> new Literal(arg));
-//            this.out.disconnect(node);
             args.add(this.out.pop());
         }
         return args;
@@ -311,16 +312,8 @@ public final class DecompilerMachine {
                 final List<AstNode> args = DecompilerMachine.this.popArguments(
                     Type.getArgumentCount((String) instruction.operand(2))
                 );
-                ((Reference) DecompilerMachine.this.out.pop()).link(
-                    new Constructor(
-                        (String) instruction.operand(0),
-                        (String) DecompilerMachine.this.stack.pop(),
-                        args
-                    )
-                );
-//                DecompilerMachine.this.out.push(
-//
-//                );
+                ((Reference) DecompilerMachine.this.out.pop())
+                    .link(new Constructor((String) instruction.operand(0), args));
             }
         }
 

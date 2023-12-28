@@ -42,10 +42,4 @@ public interface AstNode {
      * @return XMIR XML.
      */
     Iterable<Directive> toXmir();
-
-    /**
-     * Node id.
-     * @return Node id.
-     */
-    String identifier();
 }
