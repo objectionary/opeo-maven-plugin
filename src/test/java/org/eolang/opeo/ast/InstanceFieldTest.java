@@ -62,8 +62,9 @@ class InstanceFieldTest {
             ),
             actual,
             XhtmlMatchers.hasXPaths(
-                "./o[@name='method']/o[@base='$']",
-                "./o[@name='method']/o[@base='.bar']"
+                "./o[@name='method']",
+                "./o[@name='method']/o[@base='.bar']",
+                "./o[@name='method']/o[@base='.bar']/o[@base='$']"
             )
         );
     }
