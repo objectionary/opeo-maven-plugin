@@ -23,46 +23,32 @@
  */
 package org.eolang.opeo.ast;
 
-import org.xembly.Directive;
-import org.xembly.Directives;
+import com.jcabi.matchers.XhtmlMatchers;
+import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Test;
+import org.xembly.ImpossibleModificationException;
+import org.xembly.Xembler;
 
 /**
- * Add output node.
+ * Test case for {@link Add}.
  * @since 0.1
  */
-public final class Add implements AstNode {
+class AddTest {
 
-    /**
-     * Left operand.
-     */
-    private final AstNode left;
-
-    /**
-     * Right operand.
-     */
-    private final AstNode right;
-
-    /**
-     * Constructor.
-     * @param left Left operand
-     * @param right Right operand
-     */
-    public Add(final AstNode left, final AstNode right) {
-        this.left = left;
-        this.right = right;
-    }
-
-    @Override
-    public String print() {
-        return String.format("(%s) + (%s)", this.left.print(), this.right.print());
-    }
-
-    @Override
-    public Iterable<Directive> toXmir() {
-        return new Directives().add("o")
-            .attr("base", ".plus")
-            .append(this.left.toXmir())
-            .append(this.right.toXmir())
-            .up();
+    @Test
+    void toXmir() throws ImpossibleModificationException {
+        final String res = new Xembler(new Add(new Literal(1), new Literal(2)).toXmir()).xml();
+        MatcherAssert.assertThat(
+            String.format(
+                "Can't convert to correct XMIR, result is : %n%s%n",
+                res
+            ),
+            res,
+            XhtmlMatchers.hasXPaths(
+                "./o[@base='.plus']",
+                "./o[@base='.plus']/o[@base='int' and contains(text(),'1')]",
+                "./o[@base='.plus']/o[@base='int' and contains(text(),'2')]"
+            )
+        );
     }
 }

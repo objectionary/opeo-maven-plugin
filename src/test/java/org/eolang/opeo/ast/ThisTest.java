@@ -23,46 +23,26 @@
  */
 package org.eolang.opeo.ast;
 
-import org.xembly.Directive;
-import org.xembly.Directives;
+import com.jcabi.matchers.XhtmlMatchers;
+import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Test;
+import org.xembly.ImpossibleModificationException;
+import org.xembly.Xembler;
 
 /**
- * Add output node.
+ * Test case for {@link org.eolang.opeo.ast.This}
  * @since 0.1
  */
-public final class Add implements AstNode {
+class ThisTest {
 
-    /**
-     * Left operand.
-     */
-    private final AstNode left;
-
-    /**
-     * Right operand.
-     */
-    private final AstNode right;
-
-    /**
-     * Constructor.
-     * @param left Left operand
-     * @param right Right operand
-     */
-    public Add(final AstNode left, final AstNode right) {
-        this.left = left;
-        this.right = right;
+    @Test
+    void convertsToXmir() throws ImpossibleModificationException {
+        final String xml = new Xembler(new This().toXmir()).xml();
+        MatcherAssert.assertThat(
+            String.format("Can't convert to correct XMIR, actual result is : %n%s%n", xml),
+            xml,
+            XhtmlMatchers.hasXPath("/o[@base='$']")
+        );
     }
 
-    @Override
-    public String print() {
-        return String.format("(%s) + (%s)", this.left.print(), this.right.print());
-    }
-
-    @Override
-    public Iterable<Directive> toXmir() {
-        return new Directives().add("o")
-            .attr("base", ".plus")
-            .append(this.left.toXmir())
-            .append(this.right.toXmir())
-            .up();
-    }
 }
