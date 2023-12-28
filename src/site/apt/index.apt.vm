@@ -1,0 +1,37 @@
+  ---
+  OPEO Maven Plugin
+  ---
+  Volodya Lombrozo
+  ---
+  2023-12-27
+  ---
+
+OPEO Maven Plugin
+
+  This {{{http://github.com/objectionary/opeo-maven-plugin}README}} documentation explains it in details.
+
+  Use it like this:
+
++--
+<plugin>
+  <groupId>org.eolang</groupId>
+  <artifactId>opeo-maven-plugin</artifactId>
+  <version>0.0.2</version>
+  <executions>
+    <execution>
+      <id>opeo-decompile</id>
+      <goals>
+        <goal>decompile</goal>
+      </goals>
+    </execution>
+    <execution>
+      <id>opeo-compile</id>
+      <goals>
+        <goal>compile</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
++--
+
+  If any questions, submit a {{{http://github.com/objectionary/opeo-maven-plugin/issues}GitHub issue}}.
