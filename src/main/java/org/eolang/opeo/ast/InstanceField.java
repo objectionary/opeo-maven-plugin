@@ -60,9 +60,9 @@ public final class InstanceField implements AstNode {
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives()
-            .append(this.source.toXmir())
             .add("o")
             .attr("base", String.format(".%s", this.name))
+            .append(this.source.toXmir())
             .up();
     }
 }
