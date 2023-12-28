@@ -24,6 +24,7 @@
 package org.eolang.opeo.ast;
 
 import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
  * Access to a field.
@@ -58,6 +59,10 @@ public final class InstanceField implements AstNode {
 
     @Override
     public Iterable<Directive> toXmir() {
-        return null;
+        return new Directives()
+            .append(this.source.toXmir())
+            .add("o")
+            .attr("base", String.format(".%s", this.name))
+            .up();
     }
 }

@@ -27,6 +27,7 @@ import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.xembly.Directives;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
@@ -47,14 +48,23 @@ class InstanceFieldTest {
 
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
-        final String actual = new Xembler(new InstanceField(new This(), "bar").toXmir()).xml();
+        final String actual = new Xembler(
+            new Directives()
+                .add("o")
+                .attr("name", "method")
+                .append(new InstanceField(new This(), "bar").toXmir())
+                .up()
+        ).xml();
         MatcherAssert.assertThat(
             String.format(
                 "Can't convert to a field access construct, actual result is : %n%s%n",
                 actual
             ),
             actual,
-            XhtmlMatchers.hasXPath("/o[@base='this']/a[@name='bar']")
+            XhtmlMatchers.hasXPaths(
+                "./o[@name='method']/o[@base='$']",
+                "./o[@name='method']/o[@base='.bar']"
+            )
         );
     }
 }
