@@ -36,7 +36,7 @@ import org.xembly.Xembler;
 class AddTest {
 
     @Test
-    void toXmir() throws ImpossibleModificationException {
+    void convertsToXmir() throws ImpossibleModificationException {
         final String res = new Xembler(new Add(new Literal(1), new Literal(2)).toXmir()).xml();
         MatcherAssert.assertThat(
             String.format(
