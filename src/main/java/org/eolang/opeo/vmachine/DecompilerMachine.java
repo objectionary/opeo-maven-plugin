@@ -52,16 +52,13 @@ import org.xembly.Directive;
 public final class DecompilerMachine {
 
     /**
-     * Operand Stack.
-     */
-    private final Deque<Object> stack;
-
-    /**
      * Output Stack.
      */
-    private final Deque<AstNode> out;
+    private final Deque<AstNode> stack;
 
-
+    /**
+     * Local variables.
+     */
     private final List<Object> locals;
 
     /**
@@ -86,17 +83,7 @@ public final class DecompilerMachine {
      * @param args Arguments provided to decompiler.
      */
     public DecompilerMachine(final Map<String, String> args) {
-        this(new LinkedList<>(), args);
-    }
-
-    /**
-     * Constructor.
-     * @param stack Operand stack.
-     * @param args Arguments provided to decompiler.
-     */
-    private DecompilerMachine(final Deque<Object> stack, final Map<String, String> args) {
-        this.stack = stack;
-        this.out = new LinkedList<>();
+        this.stack = new LinkedList<>();
         this.locals = new ArrayList<>(0);
         this.arguments = args;
         this.handlers = new MapOf<>(
@@ -125,7 +112,7 @@ public final class DecompilerMachine {
     public Iterable<Directive> decompileToXmir(final Instruction... instructions) {
         Arrays.stream(instructions)
             .forEach(inst -> this.handler(inst.opcode()).handle(inst));
-        return new Root(new ListOf<>(this.out.descendingIterator())).toXmir();
+        return new Root(new ListOf<>(this.stack.descendingIterator())).toXmir();
     }
 
     /**
@@ -136,7 +123,7 @@ public final class DecompilerMachine {
     public String decompile(final Instruction... instructions) {
         Arrays.stream(instructions)
             .forEach(inst -> this.handler(inst.opcode()).handle(inst));
-        return new Root(new ListOf<>(this.out.descendingIterator())).print();
+        return new Root(new ListOf<>(this.stack.descendingIterator())).print();
     }
 
     /**
@@ -168,7 +155,7 @@ public final class DecompilerMachine {
     private List<AstNode> popArguments(final int number) {
         final List<AstNode> args = new LinkedList<>();
         for (int index = 0; index < number; ++index) {
-            args.add(this.out.pop());
+            args.add(this.stack.pop());
         }
         return args;
     }
@@ -195,10 +182,10 @@ public final class DecompilerMachine {
 
         @Override
         public void handle(final Instruction instruction) {
-            if (instruction.operand(0).equals(0)) {
-                DecompilerMachine.this.stack.push("this");
-            }
-            DecompilerMachine.this.out.push(
+//            if (instruction.operand(0).equals(0)) {
+//                DecompilerMachine.this.stack.push("this");
+//            }
+            DecompilerMachine.this.stack.push(
                 new Opcode(
                     instruction.opcode(),
                     instruction.operands(),
@@ -216,12 +203,9 @@ public final class DecompilerMachine {
     private class NewHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
-            final String type = ((String) instruction.operand(0)).replace('/', '.');
             DecompilerMachine.this.stack.push(
-                new ObjectReference(type).toString()
-            );
-            DecompilerMachine.this.out.push(
                 new Reference()
+                //type   final String type = ((String) instruction.operand(0)).replace('/', '.');
             );
         }
 
@@ -235,7 +219,6 @@ public final class DecompilerMachine {
         @Override
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(DecompilerMachine.this.stack.peek());
-            DecompilerMachine.this.out.push(DecompilerMachine.this.out.peek());
         }
 
     }
@@ -247,8 +230,7 @@ public final class DecompilerMachine {
     private class BipushHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
-            DecompilerMachine.this.stack.push(instruction.operand(0));
-            DecompilerMachine.this.out.push(new Literal(instruction.operand(0)));
+            DecompilerMachine.this.stack.push(new Literal(instruction.operand(0)));
         }
 
     }
@@ -259,13 +241,7 @@ public final class DecompilerMachine {
      */
     private class PopHandler implements InstructionHandler {
         @Override
-        public void handle(final Instruction instruction) {
-            if (!DecompilerMachine.this.stack.isEmpty()) {
-                DecompilerMachine.this.stack.pop();
-            }
-//            if (!DecompilerMachine.this.out.isEmpty()) {
-//                DecompilerMachine.this.out.pop();
-//            }
+        public void handle(final Instruction ignore) {
         }
 
     }
@@ -277,7 +253,7 @@ public final class DecompilerMachine {
     private class ReturnHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
-            DecompilerMachine.this.out.push(
+            DecompilerMachine.this.stack.push(
                 new Opcode(
                     instruction.opcode(),
                     instruction.operands(),
@@ -301,7 +277,7 @@ public final class DecompilerMachine {
                 );
             }
             if (instruction.operand(0).equals("java/lang/Object")) {
-                DecompilerMachine.this.out.push(
+                DecompilerMachine.this.stack.push(
                     new Opcode(
                         instruction.opcode(),
                         instruction.operands(),
@@ -312,7 +288,7 @@ public final class DecompilerMachine {
                 final List<AstNode> args = DecompilerMachine.this.popArguments(
                     Type.getArgumentCount((String) instruction.operand(2))
                 );
-                ((Reference) DecompilerMachine.this.out.pop())
+                ((Reference) DecompilerMachine.this.stack.pop())
                     .link(new Constructor((String) instruction.operand(0), args));
             }
         }
@@ -332,7 +308,7 @@ public final class DecompilerMachine {
                 Type.getArgumentCount(descriptor)
             );
             final AstNode source = DecompilerMachine.this.popArguments(1).get(0);
-            DecompilerMachine.this.out.push(
+            DecompilerMachine.this.stack.push(
                 new Invocation(source, method, args)
             );
         }
@@ -346,8 +322,7 @@ public final class DecompilerMachine {
     private class LdcHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
-            DecompilerMachine.this.stack.push(instruction.operand(0));
-            DecompilerMachine.this.out.push(new Literal(instruction.operand(0)));
+            DecompilerMachine.this.stack.push(new Literal(instruction.operand(0)));
         }
 
     }
@@ -359,7 +334,7 @@ public final class DecompilerMachine {
     private class UnimplementedHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
-            DecompilerMachine.this.out.push(
+            DecompilerMachine.this.stack.push(
                 new Opcode(
                     instruction.opcode(),
                     instruction.operands(),
@@ -380,24 +355,19 @@ public final class DecompilerMachine {
         public void handle(final Instruction instruction) {
             switch (instruction.opcode()) {
                 case Opcodes.ICONST_1:
-                    DecompilerMachine.this.stack.push(1);
-                    DecompilerMachine.this.out.push(new Literal(1));
+                    DecompilerMachine.this.stack.push(new Literal(1));
                     break;
                 case Opcodes.ICONST_2:
-                    DecompilerMachine.this.stack.push(2);
-                    DecompilerMachine.this.out.push(new Literal(2));
+                    DecompilerMachine.this.stack.push(new Literal(2));
                     break;
                 case Opcodes.ICONST_3:
-                    DecompilerMachine.this.stack.push(3);
-                    DecompilerMachine.this.out.push(new Literal(3));
+                    DecompilerMachine.this.stack.push(new Literal(3));
                     break;
                 case Opcodes.ICONST_4:
-                    DecompilerMachine.this.stack.push(4);
-                    DecompilerMachine.this.out.push(new Literal(4));
+                    DecompilerMachine.this.stack.push(new Literal(4));
                     break;
                 case Opcodes.ICONST_5:
-                    DecompilerMachine.this.stack.push(5);
-                    DecompilerMachine.this.out.push(new Literal(5));
+                    DecompilerMachine.this.stack.push(new Literal(5));
                     break;
                 default:
                     throw new UnsupportedOperationException(
