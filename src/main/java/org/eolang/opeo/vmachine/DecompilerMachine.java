@@ -182,9 +182,6 @@ public final class DecompilerMachine {
 
         @Override
         public void handle(final Instruction instruction) {
-//            if (instruction.operand(0).equals(0)) {
-//                DecompilerMachine.this.stack.push("this");
-//            }
             DecompilerMachine.this.stack.push(
                 new Opcode(
                     instruction.opcode(),
@@ -203,10 +200,7 @@ public final class DecompilerMachine {
     private class NewHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
-            DecompilerMachine.this.stack.push(
-                new Reference()
-                //type   final String type = ((String) instruction.operand(0)).replace('/', '.');
-            );
+            DecompilerMachine.this.stack.push(new Reference());
         }
 
     }

@@ -187,4 +187,30 @@ final class DecompilerMachineTest {
             )
         );
     }
+
+    /**
+     * Test decompilation of nested instance call instructions with arguments.
+     * <p>
+     *     {@code
+     *        foo(bar()) + 3;
+     *     }
+     * </p>
+     */
+    @Test
+    void decompilesNestedInstanceCallWithArguments() {
+        MatcherAssert.assertThat(
+            "Can't decompile method call instructions for 'foo(bar()) + 3;'",
+            new DecompilerMachine().decompile(
+                new OpcodeInstruction(Opcodes.ALOAD, 0),
+                new OpcodeInstruction(Opcodes.ALOAD, 0),
+                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "bar", "()I"),
+                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "foo", "(I)I"),
+                new OpcodeInstruction(Opcodes.ICONST_3),
+                new OpcodeInstruction(Opcodes.IADD)
+            ),
+            Matchers.equalTo(
+                "ths.foo(this.bar()) + 3"
+            )
+        );
+    }
 }
