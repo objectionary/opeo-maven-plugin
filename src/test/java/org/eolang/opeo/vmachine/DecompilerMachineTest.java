@@ -238,4 +238,30 @@ final class DecompilerMachineTest {
             )
         );
     }
+
+    /**
+     * Test decompilation of instance field access and method invocation.
+     * <p>
+     *     {@code
+     *       this.a.intValue() + 1;
+     *     }
+     * </p>
+     */
+    @Test
+    void decompilesFieldAccessAndMethodInvocation() {
+        MatcherAssert.assertThat(
+            "Can't decompile field access and method invocation instructions for 'this.a.intValue() + 1;'",
+            new DecompilerMachine().decompile(
+                new OpcodeInstruction(Opcodes.ALOAD, 0),
+                new OpcodeInstruction(Opcodes.GETFIELD, "App", "a", "Ljava/lang/Integer;"),
+                new OpcodeInstruction(Opcodes.ALOAD, 0),
+                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "intValue", "()I"),
+                new OpcodeInstruction(Opcodes.ICONST_1),
+                new OpcodeInstruction(Opcodes.IADD)
+            ),
+            Matchers.equalTo(
+                "((this.a).intValue) + (1)"
+            )
+        );
+    }
 }
