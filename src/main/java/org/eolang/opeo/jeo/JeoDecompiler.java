@@ -31,7 +31,7 @@ import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.jeo.representation.xmir.XmlProgram;
 import org.eolang.opeo.vmachine.DecompilerMachine;
-import org.objectweb.asm.Type;
+import org.eolang.opeo.vmachine.LocalVariables;
 import org.w3c.dom.Node;
 import org.xembly.Transformers;
 import org.xembly.Xembler;
@@ -72,17 +72,13 @@ public final class JeoDecompiler {
      * @param method Method.
      */
     private static void decompile(final XmlMethod method) {
-        final int modifiers = method.access();
-        final String descriptor = method.descriptor();
-        final Type[] args = Type.getArgumentTypes(descriptor);
-
-
         method.replaceInstructions(
             new XmlNode(
                 new Xembler(
-                    new DecompilerMachine(Map.of("counting", "false")).decompileToXmir(
-                        new JeoInstructions(method).instructions()
-                    ),
+                    new DecompilerMachine(
+                        new LocalVariables(method.access(), method.descriptor()),
+                        Map.of("counting", "false")
+                    ).decompileToXmir(new JeoInstructions(method).instructions()),
                     new Transformers.Node()
                 ).xmlQuietly()
             ).children().collect(Collectors.toList()).toArray(XmlNode[]::new)

@@ -21,56 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.vmachine;
+package org.eolang.opeo.ast;
 
+import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
+import org.xembly.ImpossibleModificationException;
+import org.xembly.Xembler;
 
 /**
- * Test for {@link LocalVariables}.
+ * Tests for {@link Variable}.
  * @since 0.1
  */
-class LocalVariablesTest {
+class VariableTest {
 
     @Test
-    void createsForEmptyStaticMethod() {
-        final int res = new LocalVariables(Opcodes.ACC_STATIC + Opcodes.ACC_PUBLIC, "()V").size();
+    void prints() {
+        final String actual = new Variable(Type.INT_TYPE, 0).print();
+        final String expected = "local0int";
         MatcherAssert.assertThat(
             String.format(
-                "Local variables size for static method with no arguments should be 0, but was %d",
-                res
+                "We expect the printed variable to be equal to '%s', but it wasn't, current value is '%s'",
+                expected,
+                actual
             ),
-            res,
-            Matchers.equalTo(0)
+            actual,
+            Matchers.equalTo(expected)
         );
     }
 
     @Test
-    void createsForEmptyInstanceMethod() {
+    void convertsToXmir() throws ImpossibleModificationException {
         MatcherAssert.assertThat(
-            "Local variables size for instance method with no arguments should contain 'this', but wasn't",
-            new LocalVariables(Opcodes.ACC_PUBLIC, "()V").size(),
-            Matchers.equalTo(1)
-        );
-    }
-
-    @Test
-    void createsForNonEmptyStaticMethod() {
-        MatcherAssert.assertThat(
-            "Local variables size for static method with arguments should be equal to arguments count from descriptor",
-            new LocalVariables(Opcodes.ACC_STATIC + Opcodes.ACC_PUBLIC, "(II)V").size(),
-            Matchers.equalTo(2)
-        );
-    }
-
-    @Test
-    void createsForNonEmptyInstanceMethod() {
-        MatcherAssert.assertThat(
-            "Local variables size for instance method with arguments should be equal to arguments count from descriptor + 1 for 'this'",
-            new LocalVariables(Opcodes.ACC_PUBLIC, "(II)V").size(),
-            Matchers.equalTo(3)
+            "We expect the xmir variable to be equal to <o base='local1'/>, but it wasn't",
+            new Xembler(new Variable(Type.INT_TYPE, 1).toXmir()).xml(),
+            XhtmlMatchers.hasXPath("./o[@base='local1']")
         );
     }
 }
