@@ -45,9 +45,7 @@ eo:
         * > exceptions
         seq > @
           tuple
-            opcode > ALOAD
-              25
-              0
+            $
             opcode > INVOKESPECIAL
               183
               "java/lang/Object"
@@ -94,17 +92,13 @@ eo:
         * > exceptions
         seq > @
           tuple
-            opcode > ALOAD
-              25
-              0
+            $
             opcode > INVOKESPECIAL
               183
               "java/lang/Object"
               "<init>"
               "()V"
-            opcode > ALOAD
-              25
-              0
+            $
             opcode > ILOAD
               21
               1
@@ -123,14 +117,13 @@ eo:
         * > exceptions
         seq > @
           tuple
-            opcode > ALOAD
-              25
-              0
+            $
             opcode > GETFIELD
               180
               "com/example/A"
               "x"
               "I"
+            2
             opcode > IMUL
               104
             opcode > IRETURN
@@ -158,20 +151,14 @@ eo:
         * > exceptions
         seq > @
           tuple
-            opcode > ALOAD
-              25
-              0
+            $
             opcode > INVOKESPECIAL
               183
               "java/lang/Object"
               "<init>"
               "()V"
-            opcode > ALOAD
-              25
-              0
-            opcode > ALOAD
-              25
-              1
+            $
+            local0
             opcode > PUTFIELD
               181
               "com/example/B"
@@ -187,18 +174,15 @@ eo:
         * > exceptions
         seq > @
           tuple
-            opcode > ALOAD
-              25
-              0
+            $
             opcode > GETFIELD
               180
               "com/example/B"
               "a"
               "Lcom/example/A;"
-            "this"
             .foo
-            opcode > IADD
-              96
+            .plus
+              1
             opcode > IRETURN
               172
         tuple > trycatchblocks

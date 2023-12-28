@@ -44,6 +44,13 @@ public final class LocalVariables {
 
     /**
      * Constructor.
+     */
+    public LocalVariables() {
+        this(List.of(new This()));
+    }
+
+    /**
+     * Constructor.
      * @param modifiers Method access modifiers.
      * @param descriptor Method descriptor.
      */
@@ -51,14 +58,19 @@ public final class LocalVariables {
         this(LocalVariables.fromMethod(modifiers, descriptor));
     }
 
-    public LocalVariables() {
-        this(List.of(new This()));
-    }
-
+    /**
+     * Constructor.
+     * @param variables Local variables.
+     */
     public LocalVariables(final List<AstNode> variables) {
         this.variables = variables;
     }
 
+    /**
+     * Get variable by index.
+     * @param index Index.
+     * @return Variable.
+     */
     public AstNode variable(final int index) {
         return this.variables.get(index);
     }
