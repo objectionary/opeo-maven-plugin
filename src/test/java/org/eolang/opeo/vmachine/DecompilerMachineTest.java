@@ -213,4 +213,29 @@ final class DecompilerMachineTest {
             )
         );
     }
+
+    /**
+     * Test decompilation of instance field access.
+     * <p>
+     *     {@code
+     *       this.a + this.b;
+     *     }
+     * </p>
+     */
+    @Test
+    void decompilesFieldAccess() {
+        MatcherAssert.assertThat(
+            "Can't decompile field access instructions for 'this.a + this.b;'",
+            new DecompilerMachine().decompile(
+                new OpcodeInstruction(Opcodes.ALOAD, 0),
+                new OpcodeInstruction(Opcodes.GETFIELD, "App", "a", "I"),
+                new OpcodeInstruction(Opcodes.ALOAD, 0),
+                new OpcodeInstruction(Opcodes.GETFIELD, "App", "b", "I"),
+                new OpcodeInstruction(Opcodes.IADD)
+            ),
+            Matchers.equalTo(
+                "(this.a) + (this.b)"
+            )
+        );
+    }
 }

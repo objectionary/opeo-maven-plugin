@@ -36,6 +36,7 @@ import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Constructor;
+import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
@@ -220,8 +221,12 @@ public final class DecompilerMachine {
 
         @Override
         public void handle(final Instruction instruction) {
-            final String variable = (String) instruction.operand(1);
-            final AstNode ref = DecompilerMachine.this.stack.pop();
+            DecompilerMachine.this.stack.push(
+                new InstanceField(
+                    DecompilerMachine.this.stack.pop(),
+                    (String) instruction.operand(1)
+                )
+            );
         }
     }
 
