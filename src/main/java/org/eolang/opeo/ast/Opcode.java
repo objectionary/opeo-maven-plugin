@@ -25,7 +25,6 @@ package org.eolang.opeo.ast;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import org.eolang.jeo.representation.directives.DirectivesInstruction;
 import org.eolang.parser.XMIR;
 import org.xembly.Directive;

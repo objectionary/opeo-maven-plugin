@@ -242,6 +242,7 @@ public final class DecompilerMachine {
     private class PopHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction ignore) {
+            // We ignore this instruction intentionally.
         }
 
     }
@@ -345,23 +346,25 @@ public final class DecompilerMachine {
 
     }
 
+    /**
+     * Add instruction handler.
+     * @since 0.1
+     */
     private class AddHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
-            switch (instruction.opcode()) {
-                case Opcodes.IADD:
-                    final AstNode right = DecompilerMachine.this.stack.pop();
-                    final AstNode left = DecompilerMachine.this.stack.pop();
-                    DecompilerMachine.this.stack.push(new Add(left, right));
-                    break;
-                default:
-                    DecompilerMachine.this.stack.push(
-                        new Opcode(
-                            instruction.opcode(),
-                            instruction.operands(),
-                            DecompilerMachine.this.counting()
-                        )
-                    );
+            if (instruction.opcode() == Opcodes.IADD) {
+                final AstNode right = DecompilerMachine.this.stack.pop();
+                final AstNode left = DecompilerMachine.this.stack.pop();
+                DecompilerMachine.this.stack.push(new Add(left, right));
+            } else {
+                DecompilerMachine.this.stack.push(
+                    new Opcode(
+                        instruction.opcode(),
+                        instruction.operands(),
+                        DecompilerMachine.this.counting()
+                    )
+                );
             }
         }
     }

@@ -30,7 +30,7 @@ import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
 /**
- * Test case for {@link org.eolang.opeo.ast.This}
+ * Test case for {@link org.eolang.opeo.ast.This}.
  * @since 0.1
  */
 class ThisTest {

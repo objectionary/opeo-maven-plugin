@@ -97,7 +97,7 @@ public final class LocalVariables {
         if ((modifiers & Opcodes.ACC_STATIC) == 0) {
             res.add(new This());
         }
-        for (int index = 0; index < size; index++) {
+        for (int index = 0; index < size; ++index) {
             res.add(new Variable(args[index], index));
         }
         return res;
