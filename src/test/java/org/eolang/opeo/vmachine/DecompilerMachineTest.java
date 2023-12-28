@@ -24,7 +24,6 @@
 package org.eolang.opeo.vmachine;
 
 import org.cactoos.text.TextOf;
-import org.eolang.opeo.Instruction;
 import org.eolang.opeo.OpcodeInstruction;
 import org.eolang.parser.XMIR;
 import org.hamcrest.MatcherAssert;
