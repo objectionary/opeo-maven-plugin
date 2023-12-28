@@ -25,7 +25,6 @@ package org.eolang.opeo.ast;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -99,11 +98,6 @@ public final class Invocation implements AstNode {
             .append(this.source.toXmir());
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
-    }
-
-    @Override
-    public String identifier() {
-        return UUID.randomUUID().toString();
     }
 
     /**

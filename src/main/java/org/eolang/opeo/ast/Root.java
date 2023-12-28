@@ -23,11 +23,9 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -41,13 +39,21 @@ public final class Root implements AstNode {
     /**
      * Children.
      */
-    private final List<AstNode> children;
+    private final Collection<AstNode> children;
 
     /**
      * Constructor.
      */
     public Root() {
-        this.children = new LinkedList<>();
+        this(new ArrayList<>(0));
+    }
+
+    /**
+     * Constructor.
+     * @param children Children.
+     */
+    public Root(final Collection<AstNode> children) {
+        this.children = children;
     }
 
     @Override
@@ -71,16 +77,6 @@ public final class Root implements AstNode {
     }
 
     /**
-     * Find child by ID.
-     * @param identifier ID
-     * @return Child
-     */
-    public Optional<AstNode> child(final String identifier) {
-        return this.children.stream()
-            .filter(node -> node.identifier().equals(identifier)).findFirst();
-    }
-
-    /**
      * Append child.
      * @param node Child
      */
@@ -88,16 +84,4 @@ public final class Root implements AstNode {
         this.children.add(node);
     }
 
-    /**
-     * Disconnect child.
-     * @param node Child
-     */
-    public void disconnect(final AstNode node) {
-        this.children.remove(node);
-    }
-
-    @Override
-    public String identifier() {
-        return UUID.randomUUID().toString();
-    }
 }

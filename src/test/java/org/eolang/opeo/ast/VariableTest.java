@@ -23,41 +23,41 @@
  */
 package org.eolang.opeo.ast;
 
-import org.eolang.jeo.representation.directives.DirectivesData;
-import org.xembly.Directive;
+import com.jcabi.matchers.XhtmlMatchers;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
+import org.objectweb.asm.Type;
+import org.xembly.ImpossibleModificationException;
+import org.xembly.Xembler;
 
 /**
- * Literal output.
+ * Tests for {@link Variable}.
  * @since 0.1
  */
-public final class Literal implements AstNode {
+class VariableTest {
 
-    /**
-     * Literal value.
-     */
-    private final Object object;
-
-    /**
-     * Constructor.
-     * @param value Literal value
-     */
-    public Literal(final Object value) {
-        this.object = value;
+    @Test
+    void prints() {
+        final String actual = new Variable(Type.INT_TYPE, 0).print();
+        final String expected = "local0int";
+        MatcherAssert.assertThat(
+            String.format(
+                "We expect the printed variable to be equal to '%s', but it wasn't, current value is '%s'",
+                expected,
+                actual
+            ),
+            actual,
+            Matchers.equalTo(expected)
+        );
     }
 
-    @Override
-    public Iterable<Directive> toXmir() {
-        return new DirectivesData(this.object);
-    }
-
-    @Override
-    public String print() {
-        final String result;
-        if (this.object instanceof String) {
-            result = String.format("\"%s\"", this.object);
-        } else {
-            result = this.object.toString();
-        }
-        return result;
+    @Test
+    void convertsToXmir() throws ImpossibleModificationException {
+        MatcherAssert.assertThat(
+            "We expect the xmir variable to be equal to <o base='local1'/>, but it wasn't",
+            new Xembler(new Variable(Type.INT_TYPE, 1).toXmir()).xml(),
+            XhtmlMatchers.hasXPath("./o[@base='local1']")
+        );
     }
 }

@@ -88,9 +88,10 @@ final class TrasformationPacksTest {
             .collect(Collectors.toList());
         MatcherAssert.assertThat(
             String.format(
-                "Decompiled EO (number of files %d) doesn't match expected EO (number of files %d)",
+                "Decompiled EO (number of files %d) doesn't match expected EO (number of files %d). Result: %n%s%n",
                 decompiled.size(),
-                expected.size()
+                expected.size(),
+                String.join("\n", decompiled)
             ),
             decompiled,
             Matchers.containsInAnyOrder(expected.toArray())

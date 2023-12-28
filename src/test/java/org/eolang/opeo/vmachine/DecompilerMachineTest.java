@@ -76,21 +76,25 @@ final class DecompilerMachineTest {
      */
     @Test
     void decompilesNewInstructionsEachWithParam() {
+        final String res = new DecompilerMachine().decompile(
+            new OpcodeInstruction(Opcodes.NEW, "D"),
+            new OpcodeInstruction(Opcodes.DUP),
+            new OpcodeInstruction(Opcodes.BIPUSH, 45),
+            new OpcodeInstruction(Opcodes.BIPUSH, 44),
+            new OpcodeInstruction(Opcodes.NEW, "C"),
+            new OpcodeInstruction(Opcodes.DUP),
+            new OpcodeInstruction(Opcodes.BIPUSH, 43),
+            new OpcodeInstruction(Opcodes.INVOKESPECIAL, "C", "<init>", "(I)V"),
+            new OpcodeInstruction(Opcodes.INVOKESPECIAL, "D", "<init>", "(LC;II)V"),
+            new OpcodeInstruction(Opcodes.POP),
+            new OpcodeInstruction(Opcodes.RETURN)
+        );
         MatcherAssert.assertThat(
-            "Can't decompile new instructions for 'new D(new C(43), 44, 45);'",
-            new DecompilerMachine().decompile(
-                new OpcodeInstruction(Opcodes.NEW, "D"),
-                new OpcodeInstruction(Opcodes.DUP),
-                new OpcodeInstruction(Opcodes.BIPUSH, 45),
-                new OpcodeInstruction(Opcodes.BIPUSH, 44),
-                new OpcodeInstruction(Opcodes.NEW, "C"),
-                new OpcodeInstruction(Opcodes.DUP),
-                new OpcodeInstruction(Opcodes.BIPUSH, 43),
-                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "C", "<init>", "(I)V"),
-                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "D", "<init>", "(LC;II)V"),
-                new OpcodeInstruction(Opcodes.POP),
-                new OpcodeInstruction(Opcodes.RETURN)
+            String.format(
+                "Can't decompile new instructions for 'new D(new C(43), 44, 45);', result: %n%s%n",
+                res
             ),
+            res,
             Matchers.allOf(
                 Matchers.containsString("D.new (C.new (43)) (44) (45)"),
                 Matchers.containsString("opcode > RETURN")
@@ -180,6 +184,32 @@ final class DecompilerMachineTest {
             ),
             Matchers.equalTo(
                 "(java/lang/StringBuilder.new (\"a\")).append \"b\""
+            )
+        );
+    }
+
+    /**
+     * Test decompilation of nested instance call instructions with arguments.
+     * <p>
+     *     {@code
+     *        foo(bar()) + 3;
+     *     }
+     * </p>
+     */
+    @Test
+    void decompilesNestedInstanceCallWithArguments() {
+        MatcherAssert.assertThat(
+            "Can't decompile method call instructions for 'foo(bar()) + 3;'",
+            new DecompilerMachine().decompile(
+                new OpcodeInstruction(Opcodes.ALOAD, 0),
+                new OpcodeInstruction(Opcodes.ALOAD, 0),
+                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "bar", "()I"),
+                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "foo", "(I)I"),
+                new OpcodeInstruction(Opcodes.ICONST_3),
+                new OpcodeInstruction(Opcodes.IADD)
+            ),
+            Matchers.equalTo(
+                "((this).foo (this).bar) + (3)"
             )
         );
     }

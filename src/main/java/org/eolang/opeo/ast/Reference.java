@@ -23,41 +23,51 @@
  */
 package org.eolang.opeo.ast;
 
-import org.eolang.jeo.representation.directives.DirectivesData;
+import java.util.concurrent.atomic.AtomicReference;
 import org.xembly.Directive;
 
 /**
- * Literal output.
+ * Object reference in the stack.
  * @since 0.1
  */
-public final class Literal implements AstNode {
+public final class Reference implements AstNode {
 
     /**
-     * Literal value.
+     * Object itself.
+     * The current reference connects with this object.
      */
-    private final Object object;
+    private final AtomicReference<AstNode> ref;
 
     /**
      * Constructor.
-     * @param value Literal value
      */
-    public Literal(final Object value) {
-        this.object = value;
+    public Reference() {
+        this(new AtomicReference<>());
     }
 
-    @Override
-    public Iterable<Directive> toXmir() {
-        return new DirectivesData(this.object);
+    /**
+     * Constructor.
+     * @param ref Object reference.
+     */
+    public Reference(final AtomicReference<AstNode> ref) {
+        this.ref = ref;
+    }
+
+    /**
+     * Link this reference with the given object.
+     * @param node Object to link with.
+     */
+    public void link(final AstNode node) {
+        this.ref.set(node);
     }
 
     @Override
     public String print() {
-        final String result;
-        if (this.object instanceof String) {
-            result = String.format("\"%s\"", this.object);
-        } else {
-            result = this.object.toString();
-        }
-        return result;
+        return this.ref.get().print();
+    }
+
+    @Override
+    public Iterable<Directive> toXmir() {
+        return this.ref.get().toXmir();
     }
 }

@@ -57,5 +57,4 @@ public final class JeoInstructions {
             .map(JeoInstruction::new)
             .toArray(Instruction[]::new);
     }
-
 }

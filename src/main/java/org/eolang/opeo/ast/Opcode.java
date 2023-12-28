@@ -25,7 +25,6 @@ package org.eolang.opeo.ast;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import org.eolang.jeo.representation.directives.DirectivesInstruction;
 import org.eolang.parser.XMIR;
 import org.xembly.Directive;
@@ -96,10 +95,5 @@ public final class Opcode implements AstNode {
     @Override
     public Iterable<Directive> toXmir() {
         return new DirectivesInstruction(this.bytecode, this.counting, this.operands.toArray());
-    }
-
-    @Override
-    public String identifier() {
-        return UUID.randomUUID().toString();
     }
 }

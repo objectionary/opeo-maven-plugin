@@ -23,41 +23,46 @@
  */
 package org.eolang.opeo.ast;
 
-import org.eolang.jeo.representation.directives.DirectivesData;
 import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
- * Literal output.
+ * Add output node.
  * @since 0.1
  */
-public final class Literal implements AstNode {
+public final class Add implements AstNode {
 
     /**
-     * Literal value.
+     * Left operand.
      */
-    private final Object object;
+    private final AstNode left;
+
+    /**
+     * Right operand.
+     */
+    private final AstNode right;
 
     /**
      * Constructor.
-     * @param value Literal value
+     * @param left Left operand
+     * @param right Right operand
      */
-    public Literal(final Object value) {
-        this.object = value;
-    }
-
-    @Override
-    public Iterable<Directive> toXmir() {
-        return new DirectivesData(this.object);
+    public Add(final AstNode left, final AstNode right) {
+        this.left = left;
+        this.right = right;
     }
 
     @Override
     public String print() {
-        final String result;
-        if (this.object instanceof String) {
-            result = String.format("\"%s\"", this.object);
-        } else {
-            result = this.object.toString();
-        }
-        return result;
+        return String.format("(%s) + (%s)", this.left.print(), this.right.print());
+    }
+
+    @Override
+    public Iterable<Directive> toXmir() {
+        return new Directives().add("o")
+            .attr("base", ".plus")
+            .append(this.left.toXmir())
+            .append(this.right.toXmir())
+            .up();
     }
 }
