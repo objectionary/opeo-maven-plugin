@@ -13,9 +13,7 @@
     * > exceptions
     seq > @
       tuple
-        opcode > ALOAD
-          25
-          0
+        $
         opcode > INVOKESPECIAL
           183
           "java/lang/Object"
