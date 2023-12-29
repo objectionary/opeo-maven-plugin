@@ -46,11 +46,7 @@ eo:
         seq > @
           tuple
             $
-            opcode > INVOKESPECIAL
-              183
-              "java/lang/Object"
-              "<init>"
-              "()V"
+            .super
             opcode > RETURN
               177
         tuple > trycatchblocks
@@ -93,11 +89,7 @@ eo:
         seq > @
           tuple
             $
-            opcode > INVOKESPECIAL
-              183
-              "java/lang/Object"
-              "<init>"
-              "()V"
+            .super
             $
             .x
             .write
@@ -142,11 +134,7 @@ eo:
         seq > @
           tuple
             $
-            opcode > INVOKESPECIAL
-              183
-              "java/lang/Object"
-              "<init>"
-              "()V"
+            .super
             $
             .a
             .write

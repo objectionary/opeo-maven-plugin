@@ -43,6 +43,7 @@ import org.eolang.opeo.ast.Mul;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Root;
+import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.WriteField;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -330,14 +331,16 @@ public final class DecompilerMachine {
                 final List<AstNode> args = DecompilerMachine.this.popArguments(
                     Type.getArgumentCount((String) instruction.operand(2))
                 );
-
                 DecompilerMachine.this.stack.push(
-                    new Opcode(
-                        instruction.opcode(),
-                        instruction.operands(),
-                        DecompilerMachine.this.counting()
-                    )
+                    new Super(DecompilerMachine.this.stack.pop(), args)
                 );
+//                DecompilerMachine.this.stack.push(
+//                    new Opcode(
+//                        instruction.opcode(),
+//                        instruction.operands(),
+//                        DecompilerMachine.this.counting()
+//                    )
+//                );
             } else {
                 final List<AstNode> args = DecompilerMachine.this.popArguments(
                     Type.getArgumentCount((String) instruction.operand(2))
