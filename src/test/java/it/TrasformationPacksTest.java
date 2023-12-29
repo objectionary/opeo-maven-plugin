@@ -94,7 +94,7 @@ final class TrasformationPacksTest {
                 String.join("\n", decompiled)
             ),
             decompiled,
-            Matchers.containsInAnyOrder(expected.toArray())
+            Matchers.containsInAnyOrder(expected.toArray(String[]::new))
         );
     }
 

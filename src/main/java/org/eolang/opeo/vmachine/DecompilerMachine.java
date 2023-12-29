@@ -248,7 +248,15 @@ public final class DecompilerMachine {
         public void handle(final Instruction instruction) {
             final AstNode value = DecompilerMachine.this.stack.pop();
             final AstNode target = DecompilerMachine.this.stack.pop();
-            DecompilerMachine.this.stack.push(new WriteField(target, value));
+            DecompilerMachine.this.stack.push(
+                new WriteField(
+                    new InstanceField(
+                        target,
+                        (String) instruction.operand(1)
+                    ),
+                    value
+                )
+            );
         }
     }
 

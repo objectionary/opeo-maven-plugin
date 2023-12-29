@@ -99,12 +99,9 @@ eo:
               "<init>"
               "()V"
             $
-            local0
-            opcode > PUTFIELD
-              181
-              "com/example/A"
-              "x"
-              "I"
+            .x
+            .write
+              local0
             opcode > RETURN
               177
         tuple > trycatchblocks
@@ -151,12 +148,9 @@ eo:
               "<init>"
               "()V"
             $
-            local0
-            opcode > PUTFIELD
-              181
-              "com/example/B"
-              "a"
-              "Lcom/example/A;"
+            .a
+            .write
+              local0
             opcode > RETURN
               177
         tuple > trycatchblocks
