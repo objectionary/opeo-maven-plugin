@@ -99,9 +99,7 @@ eo:
               "<init>"
               "()V"
             $
-            opcode > ILOAD
-              21
-              1
+            local0
             opcode > PUTFIELD
               181
               "com/example/A"
