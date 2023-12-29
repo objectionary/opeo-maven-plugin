@@ -334,13 +334,6 @@ public final class DecompilerMachine {
                 DecompilerMachine.this.stack.push(
                     new Super(DecompilerMachine.this.stack.pop(), args)
                 );
-//                DecompilerMachine.this.stack.push(
-//                    new Opcode(
-//                        instruction.opcode(),
-//                        instruction.operands(),
-//                        DecompilerMachine.this.counting()
-//                    )
-//                );
             } else {
                 final List<AstNode> args = DecompilerMachine.this.popArguments(
                     Type.getArgumentCount((String) instruction.operand(2))
