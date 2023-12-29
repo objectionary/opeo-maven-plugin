@@ -23,11 +23,14 @@
  */
 package org.eolang.opeo.vmachine;
 
+import org.cactoos.text.TextOf;
 import org.eolang.opeo.OpcodeInstruction;
+import org.eolang.parser.XMIR;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
+import org.xembly.Xembler;
 
 /**
  * Test case for {@link DecompilerMachine}.
@@ -210,6 +213,88 @@ final class DecompilerMachineTest {
             ),
             Matchers.equalTo(
                 "((this).foo (this).bar) + (3)"
+            )
+        );
+    }
+
+    /**
+     * Test decompilation of instance field access.
+     * <p>
+     *     {@code
+     *       this.a + this.b;
+     *     }
+     * </p>
+     */
+    @Test
+    void decompilesFieldAccess() {
+        MatcherAssert.assertThat(
+            "Can't decompile field access instructions for 'this.a + this.b;'",
+            new DecompilerMachine().decompile(
+                new OpcodeInstruction(Opcodes.ALOAD, 0),
+                new OpcodeInstruction(Opcodes.GETFIELD, "App", "a", "I"),
+                new OpcodeInstruction(Opcodes.ALOAD, 0),
+                new OpcodeInstruction(Opcodes.GETFIELD, "App", "b", "I"),
+                new OpcodeInstruction(Opcodes.IADD)
+            ),
+            Matchers.equalTo(
+                "(this.a) + (this.b)"
+            )
+        );
+    }
+
+    /**
+     * Test decompilation of instance field access and method invocation.
+     * <p>
+     *     {@code
+     *       this.a.intValue() + 1;
+     *     }
+     * </p>
+     */
+    @Test
+    void decompilesFieldAccessAndMethodInvocation() {
+        MatcherAssert.assertThat(
+            "Can't decompile field access and method invocation instructions for 'this.a.intValue() + 1;'",
+            new DecompilerMachine().decompile(
+                new OpcodeInstruction(Opcodes.ALOAD, 0),
+                new OpcodeInstruction(Opcodes.GETFIELD, "App", "a", "Ljava/lang/Integer;"),
+                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "intValue", "()I"),
+                new OpcodeInstruction(Opcodes.ICONST_1),
+                new OpcodeInstruction(Opcodes.IADD)
+            ),
+            Matchers.equalTo(
+                "((this.a).intValue) + (1)"
+            )
+        );
+    }
+
+    @Test
+    void decompilesFieldAccessAndMethodInvocationToEo() {
+        final String xml = new Xembler(
+            new DecompilerMachine().decompileToXmir(
+                new OpcodeInstruction(Opcodes.ALOAD, 0),
+                new OpcodeInstruction(Opcodes.GETFIELD, "App", "a", "Ljava/lang/Integer;"),
+                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "intValue", "()I"),
+                new OpcodeInstruction(Opcodes.ICONST_1),
+                new OpcodeInstruction(Opcodes.IADD)
+            )
+        ).xmlQuietly();
+        MatcherAssert.assertThat(
+            String.format(
+                "Can't decompile field access and method invocation into EO for 'this.a.intValue() + 1;', received XML: %n%s%n",
+                xml
+            ),
+            new XMIR(new TextOf(xml)).toEO(),
+            Matchers.equalTo(
+                String.join(
+                    "\n",
+                    "tuple",
+                    "  $",
+                    "  .a",
+                    "  .intValue",
+                    "  .plus",
+                    "    1",
+                    ""
+                )
             )
         );
     }

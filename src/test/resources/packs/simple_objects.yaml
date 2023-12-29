@@ -118,11 +118,7 @@ eo:
         seq > @
           tuple
             $
-            opcode > GETFIELD
-              180
-              "com/example/A"
-              "x"
-              "I"
+            .x
             2
             opcode > IMUL
               104
@@ -175,11 +171,7 @@ eo:
         seq > @
           tuple
             $
-            opcode > GETFIELD
-              180
-              "com/example/B"
-              "a"
-              "Lcom/example/A;"
+            .a
             .foo
             .plus
               1

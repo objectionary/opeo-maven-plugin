@@ -36,6 +36,7 @@ import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Constructor;
+import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
@@ -108,6 +109,7 @@ public final class DecompilerMachine {
             new MapEntry<>(Opcodes.BIPUSH, new BipushHandler()),
             new MapEntry<>(Opcodes.INVOKESPECIAL, new InvokespecialHandler()),
             new MapEntry<>(Opcodes.INVOKEVIRTUAL, new InvokevirtualHandler()),
+            new MapEntry<>(Opcodes.GETFIELD, new GetFieldHandler()),
             new MapEntry<>(Opcodes.LDC, new LdcHandler()),
             new MapEntry<>(Opcodes.POP, new PopHandler()),
             new MapEntry<>(Opcodes.RETURN, new ReturnHandler())
@@ -209,6 +211,23 @@ public final class DecompilerMachine {
             DecompilerMachine.this.stack.push(new Reference());
         }
 
+    }
+
+    /**
+     * Getfield instruction handler.
+     * @since 0.1
+     */
+    private class GetFieldHandler implements InstructionHandler {
+
+        @Override
+        public void handle(final Instruction instruction) {
+            DecompilerMachine.this.stack.push(
+                new InstanceField(
+                    DecompilerMachine.this.stack.pop(),
+                    (String) instruction.operand(1)
+                )
+            );
+        }
     }
 
     /**
