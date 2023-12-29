@@ -43,6 +43,8 @@ import org.eolang.opeo.ast.Mul;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Root;
+import org.eolang.opeo.ast.Super;
+import org.eolang.opeo.ast.WriteField;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -116,6 +118,7 @@ public final class DecompilerMachine {
             new MapEntry<>(Opcodes.INVOKESPECIAL, new InvokespecialHandler()),
             new MapEntry<>(Opcodes.INVOKEVIRTUAL, new InvokevirtualHandler()),
             new MapEntry<>(Opcodes.GETFIELD, new GetFieldHandler()),
+            new MapEntry<>(Opcodes.PUTFIELD, new PutFieldHnadler()),
             new MapEntry<>(Opcodes.LDC, new LdcHandler()),
             new MapEntry<>(Opcodes.POP, new PopHandler()),
             new MapEntry<>(Opcodes.RETURN, new ReturnHandler())
@@ -237,6 +240,28 @@ public final class DecompilerMachine {
     }
 
     /**
+     * Putfield instruction handler.
+     * @since 0.1
+     */
+    private class PutFieldHnadler implements InstructionHandler {
+
+        @Override
+        public void handle(final Instruction instruction) {
+            final AstNode value = DecompilerMachine.this.stack.pop();
+            final AstNode target = DecompilerMachine.this.stack.pop();
+            DecompilerMachine.this.stack.push(
+                new WriteField(
+                    new InstanceField(
+                        target,
+                        (String) instruction.operand(1)
+                    ),
+                    value
+                )
+            );
+        }
+    }
+
+    /**
      * Dup instruction handler.
      * @since 0.1
      */
@@ -303,12 +328,11 @@ public final class DecompilerMachine {
                 );
             }
             if (instruction.operand(0).equals("java/lang/Object")) {
+                final List<AstNode> args = DecompilerMachine.this.popArguments(
+                    Type.getArgumentCount((String) instruction.operand(2))
+                );
                 DecompilerMachine.this.stack.push(
-                    new Opcode(
-                        instruction.opcode(),
-                        instruction.operands(),
-                        DecompilerMachine.this.counting()
-                    )
+                    new Super(DecompilerMachine.this.stack.pop(), args)
                 );
             } else {
                 final List<AstNode> args = DecompilerMachine.this.popArguments(

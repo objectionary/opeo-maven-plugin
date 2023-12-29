@@ -14,11 +14,7 @@
     seq > @
       tuple
         $
-        opcode > INVOKESPECIAL
-          183
-          "java/lang/Object"
-          "<init>"
-          "()V"
+        .super
         opcode > RETURN
           177
     tuple > trycatchblocks
