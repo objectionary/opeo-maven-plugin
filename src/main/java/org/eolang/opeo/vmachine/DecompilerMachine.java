@@ -43,6 +43,7 @@ import org.eolang.opeo.ast.Mul;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Root;
+import org.eolang.opeo.ast.WriteField;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -116,6 +117,7 @@ public final class DecompilerMachine {
             new MapEntry<>(Opcodes.INVOKESPECIAL, new InvokespecialHandler()),
             new MapEntry<>(Opcodes.INVOKEVIRTUAL, new InvokevirtualHandler()),
             new MapEntry<>(Opcodes.GETFIELD, new GetFieldHandler()),
+            new MapEntry<>(Opcodes.PUTFIELD, new PutFieldHnadler()),
             new MapEntry<>(Opcodes.LDC, new LdcHandler()),
             new MapEntry<>(Opcodes.POP, new PopHandler()),
             new MapEntry<>(Opcodes.RETURN, new ReturnHandler())
@@ -233,6 +235,20 @@ public final class DecompilerMachine {
                     (String) instruction.operand(1)
                 )
             );
+        }
+    }
+
+    /**
+     * Putfield instruction handler.
+     * @since 0.1
+     */
+    private class PutFieldHnadler implements InstructionHandler {
+
+        @Override
+        public void handle(final Instruction instruction) {
+            final AstNode value = DecompilerMachine.this.stack.pop();
+            final AstNode target = DecompilerMachine.this.stack.pop();
+            DecompilerMachine.this.stack.push(new WriteField(target, value));
         }
     }
 
