@@ -23,10 +23,15 @@
  */
 package org.eolang.opeo.ast;
 
+import com.jcabi.matchers.XhtmlMatchers;
 import java.util.Arrays;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.xembly.Directive;
+import org.xembly.Directives;
+import org.xembly.ImpossibleModificationException;
+import org.xembly.Xembler;
 
 /**
  * Test case for {@link Super}.
@@ -36,13 +41,28 @@ class SuperTest {
 
     @Test
     void printsSuper() {
-        final AstNode target = new This();
-        final Literal arg = new Literal("hello, world!");
-        final AstNode node = new Super(target, arg);
         MatcherAssert.assertThat(
-            node.print(),
+            "Can't print 'super' statement, should be 'this.super \"hello, world!\"'",
+            new Super(new This(), new Literal("hello, world!")).print(),
             Matchers.equalTo(
                 "this.super \"hello, world!\""
+            )
+        );
+    }
+
+    @Test
+    void convertsToXmir() throws ImpossibleModificationException {
+        final String xmir = new Xembler(new Super(new This(), new Literal(1)).toXmir()).xml();
+        MatcherAssert.assertThat(
+            String.format(
+                "Can't convert 'super' statement to XMIR, result is wrong: %n%s%n",
+                xmir
+            ),
+            xmir,
+            XhtmlMatchers.hasXPaths(
+                "./o[@base='.super']",
+                "./o[@base='.super']/o[@base='$']",
+                "./o[@base='.super']/o[@base='int' and contains(text(), '1')]"
             )
         );
     }

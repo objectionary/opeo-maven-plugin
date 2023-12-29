@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
  * Super output node.
@@ -74,7 +75,12 @@ public final class Super implements AstNode {
 
     @Override
     public Iterable<Directive> toXmir() {
-        return null;
+        final Directives directives = new Directives();
+        directives.add("o")
+            .attr("base", ".super")
+            .append(this.instance.toXmir());
+        this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
+        return directives.up();
     }
 
     /**
