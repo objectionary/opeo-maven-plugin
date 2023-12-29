@@ -327,6 +327,10 @@ public final class DecompilerMachine {
                 );
             }
             if (instruction.operand(0).equals("java/lang/Object")) {
+                final List<AstNode> args = DecompilerMachine.this.popArguments(
+                    Type.getArgumentCount((String) instruction.operand(2))
+                );
+
                 DecompilerMachine.this.stack.push(
                     new Opcode(
                         instruction.opcode(),
