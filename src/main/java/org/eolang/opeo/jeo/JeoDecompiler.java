@@ -72,16 +72,18 @@ public final class JeoDecompiler {
      * @param method Method.
      */
     private static void decompile(final XmlMethod method) {
-        method.replaceInstructions(
-            new XmlNode(
-                new Xembler(
-                    new DecompilerMachine(
-                        new LocalVariables(method.access(), method.descriptor()),
-                        Map.of("counting", "false")
-                    ).decompileToXmir(new JeoInstructions(method).instructions()),
-                    new Transformers.Node()
-                ).xmlQuietly()
-            ).children().collect(Collectors.toList()).toArray(XmlNode[]::new)
-        );
+        if (!method.instructions().isEmpty()) {
+            method.replaceInstructions(
+                new XmlNode(
+                    new Xembler(
+                        new DecompilerMachine(
+                            new LocalVariables(method.access(), method.descriptor()),
+                            Map.of("counting", "false")
+                        ).decompileToXmir(new JeoInstructions(method).instructions()),
+                        new Transformers.Node()
+                    ).xmlQuietly()
+                ).children().collect(Collectors.toList()).toArray(XmlNode[]::new)
+            );
+        }
     }
 }
