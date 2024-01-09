@@ -130,6 +130,16 @@ public final class Decompiler {
                 decompiled.toString().getBytes(StandardCharsets.UTF_8)
             );
             Logger.info(this, "Decompiled %[file]s (%[size]s)", out, Files.size(out));
+        } catch (final IllegalArgumentException exception) {
+            throw new IllegalStateException(
+                String.format(
+                    "Can't decompile file '%s' in the '%s' folder and save it into '%s'",
+                    path,
+                    this.xmirs,
+                    this.output
+                ),
+                exception
+            );
         } catch (final FileNotFoundException exception) {
             throw new IllegalStateException(
                 String.format(
