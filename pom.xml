@@ -131,8 +131,13 @@ SOFTWARE.
     </dependency>
     <dependency>
       <groupId>org.eolang</groupId>
+      <artifactId>eo-parser</artifactId>
+      <version>0.34.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eolang</groupId>
       <artifactId>jeo-maven-plugin</artifactId>
-      <version>0.2.13</version>
+      <version>0.2.14</version>
     </dependency>
     <dependency>
       <groupId>com.jcabi</groupId>

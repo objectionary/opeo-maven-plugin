@@ -49,7 +49,6 @@ eo:
             .super
             opcode > RETURN
               177
-        tuple > trycatchblocks
       [arg__[Ljava/lang/String;__0] > j$main
         9 > access
         "([Ljava/lang/String;)V" > descriptor
@@ -65,7 +64,6 @@ eo:
             .bar
             opcode > RETURN
               177
-        tuple > trycatchblocks
 
   A.eo: |
     +package com.example
@@ -96,7 +94,6 @@ eo:
               local0
             opcode > RETURN
               177
-        tuple > trycatchblocks
       [] > j$foo
         1 > access
         "()I" > descriptor
@@ -110,7 +107,6 @@ eo:
               2
             opcode > IRETURN
               172
-        tuple > trycatchblocks
 
   B.eo: |
     +package com.example
@@ -141,7 +137,6 @@ eo:
               local0
             opcode > RETURN
               177
-        tuple > trycatchblocks
       [] > j$bar
         1 > access
         "()I" > descriptor
@@ -156,4 +151,3 @@ eo:
               1
             opcode > IRETURN
               172
-        tuple > trycatchblocks

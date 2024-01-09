@@ -17,7 +17,6 @@
         .super
         opcode > RETURN
           177
-    tuple > trycatchblocks
   [arg__[Ljava/lang/String;__0] > j$main
     9 > access
     "([Ljava/lang/String;)V" > descriptor
@@ -32,4 +31,3 @@
           1
         opcode > RETURN
           177
-    tuple > trycatchblocks
