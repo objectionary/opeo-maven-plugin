@@ -24,4 +24,4 @@
 /**
  * Provides the classes necessary to create a virtual machine for decompilation.
  */
-package org.eolang.opeo.vmachine;
+package org.eolang.opeo.decompilation;

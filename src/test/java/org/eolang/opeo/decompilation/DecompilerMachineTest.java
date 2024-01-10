@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.vmachine;
+package org.eolang.opeo.decompilation;
 
 import org.cactoos.text.TextOf;
 import org.eolang.opeo.OpcodeInstruction;

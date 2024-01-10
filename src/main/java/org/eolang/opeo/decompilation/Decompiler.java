@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.vmachine;
+package org.eolang.opeo.decompilation;
 
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
