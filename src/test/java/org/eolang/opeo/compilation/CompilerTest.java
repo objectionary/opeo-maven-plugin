@@ -73,10 +73,9 @@ final class CompilerTest {
             FileMatchers.anExistingFile()
         );
         MatcherAssert.assertThat(
-            "The compiled file is not equal to the original",
-            new BytesOf(output),
-            Matchers.equalTo(new BytesOf(before))
+            "The compiled file is not equal to the original, but should. This is because Bar.xmir is already a low-level xmir",
+            new BytesOf(output).asBytes(),
+            Matchers.equalTo(before)
         );
     }
-
 }

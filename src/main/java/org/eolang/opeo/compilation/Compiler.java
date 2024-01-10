@@ -24,14 +24,17 @@
 package org.eolang.opeo.compilation;
 
 import com.jcabi.log.Logger;
+import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 import org.eolang.jeo.representation.xmir.XmlProgram;
+import org.eolang.opeo.jeo.JeoDecompiler;
 
 /**
  * Compiler of high-level eo constructs into XMIRs for the jeo-maven-plugin.
@@ -117,11 +120,19 @@ public class Compiler {
      */
     private void compile(final Path xmir) {
         try {
-            ;
-            new XmlProgram(new XMLDocument(xmir)).top().methods();
-            Logger.info(this, "Compiled app.eo (545 bytes)");
-        } catch (final FileNotFoundException exception) {
-            throw new RuntimeException(exception);
+            final XML decompiled = new XMLDocument(xmir);
+            final Path out = this.output.resolve(this.xmirs.relativize(xmir));
+            Files.createDirectories(out.getParent());
+            Files.write(
+                out,
+                decompiled.toString().getBytes(StandardCharsets.UTF_8)
+            );
+            Logger.info(this, "Compiled %[file]s (%[size]s)", out, Files.size(out));
+        } catch (final IOException exception) {
+            throw new IllegalStateException(
+                String.format("Can't compile '%x'", xmir),
+                exception
+            );
         }
     }
 
