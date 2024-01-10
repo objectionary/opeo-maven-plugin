@@ -87,6 +87,15 @@ public class Compiler {
         //  Currently we print dummy messages in order to pass 'decompile-compile' integration test.
         //  Implement this class and don't forget to add unit tests.
         //  Also, you might need to change some checks in the 'decompile-compile' integration test.
+
+        if (!Files.exists(this.xmirs)) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "The input xmirs folder '%s' doesn't exist",
+                    this.xmirs
+                )
+            );
+        }
         Logger.info(this, "Compiling EO sources from %[file]s", this.xmirs);
         Logger.info(this, "Saving new compiled EO sources to %[file]s", this.output);
         try (Stream<Path> decompiled = Files.walk(this.xmirs).filter(Compiler::isXmir)) {
@@ -100,7 +109,6 @@ public class Compiler {
                 exception
             );
         }
-
     }
 
     /**
