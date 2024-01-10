@@ -205,7 +205,7 @@ public final class DecompilerMachine {
      * Aload instruction handler.
      * @since 0.1
      */
-    private class LoadHandler implements InstructionHandler {
+    private final class LoadHandler implements InstructionHandler {
 
         /**
          * Type of the variable.
@@ -236,7 +236,7 @@ public final class DecompilerMachine {
      * Store instruction handler.
      * @since 0.1
      */
-    private class StoreHandler implements InstructionHandler {
+    private final class StoreHandler implements InstructionHandler {
 
         /**
          * Type of the variable.

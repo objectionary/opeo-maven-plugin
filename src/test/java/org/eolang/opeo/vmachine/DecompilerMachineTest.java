@@ -31,7 +31,6 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
-import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
 /**

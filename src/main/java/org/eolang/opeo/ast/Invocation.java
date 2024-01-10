@@ -78,16 +78,6 @@ public final class Invocation implements AstNode {
         final String method,
         final List<AstNode> arguments
     ) {
-        if (Objects.isNull(source) || Objects.isNull(method) || Objects.isNull(arguments)) {
-            throw new IllegalArgumentException(
-                String.format(
-                    "Source, method and arguments must not be null, but they are source:'%s', method'%s' and arguments: '%s'",
-                    source,
-                    method,
-                    arguments
-                )
-            );
-        }
         this.source = source;
         this.method = method;
         this.arguments = arguments;
