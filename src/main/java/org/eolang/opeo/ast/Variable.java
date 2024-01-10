@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import lombok.ToString;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -38,6 +39,7 @@ import org.xembly.Directives;
  *  reconstruct the type of the variable during
  *  the compilation to bytecode.
  */
+@ToString
 public final class Variable implements AstNode {
     /**
      * The type of the variable.
@@ -62,6 +64,7 @@ public final class Variable implements AstNode {
         this.identifier = identifier;
     }
 
+    @ToString.Include
     @Override
     public String print() {
         return String.format("local%d%s", this.identifier, this.type.getClassName());
