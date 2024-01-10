@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo;
+package org.eolang.opeo.vmachine;
 
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
@@ -89,7 +89,7 @@ public final class Decompiler {
      * Decompile EO to high-level EO.
      * EO represented by XMIR.
      */
-    void decompile() {
+    public void decompile() {
         try (Stream<Path> files = Files.walk(this.xmirs).filter(Files::isRegularFile)) {
             Logger.info(this, "Decompiling EO sources from %[file]s", this.xmirs);
             Logger.info(this, "Saving new decompiled EO sources to %[file]s", this.output);

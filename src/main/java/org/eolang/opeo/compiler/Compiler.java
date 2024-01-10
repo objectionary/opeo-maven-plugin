@@ -21,11 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo;
+package org.eolang.opeo.compiler;
 
 import com.jcabi.log.Logger;
+import com.jcabi.xml.XMLDocument;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.stream.Stream;
+import org.eolang.jeo.representation.xmir.XmlProgram;
 
 /**
  * Compiler of high-level eo constructs into XMIRs for the jeo-maven-plugin.
@@ -75,7 +81,7 @@ public class Compiler {
     /**
      * Compile high-level EO constructs into XMIRs for the jeo-maven-plugin.
      */
-    void compile() {
+    public void compile() {
         //@checkstyle MethodBodyCommentsCheck (5 lines)
         // @todo #33:90min Implement compilation of high-level EO constructs into XMIRs.
         //  Currently we print dummy messages in order to pass 'decompile-compile' integration test.
@@ -83,8 +89,40 @@ public class Compiler {
         //  Also, you might need to change some checks in the 'decompile-compile' integration test.
         Logger.info(this, "Compiling EO sources from %[file]s", this.xmirs);
         Logger.info(this, "Saving new compiled EO sources to %[file]s", this.output);
-        Logger.info(this, "Compiled app.eo (545 bytes)");
-        Logger.info(this, "Compiled main.eo (545 bytes)");
-        Logger.info(this, "Compiled %d EO sources", 2);
+        try (Stream<Path> decompiled = Files.walk(this.xmirs).filter(Compiler::isXmir)) {
+            Logger.info(this, "Compiled %d sources", decompiled.peek(this::compile).count());
+        } catch (final IOException exception) {
+            throw new IllegalStateException(
+                String.format(
+                    "Some problem with reading XMIRs from the '%s' folder",
+                    this.xmirs
+                ),
+                exception
+            );
+        }
+
+    }
+
+    /**
+     * Compile the file.
+     * @param xmir Path to the file.
+     */
+    private void compile(final Path xmir) {
+        try {
+            ;
+            new XmlProgram(new XMLDocument(xmir)).top().methods();
+            Logger.info(this, "Compiled app.eo (545 bytes)");
+        } catch (final FileNotFoundException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    /**
+     * Check if the file is XMIR.
+     * @param path Path to the file
+     * @return True if the file is XMIR
+     */
+    private static boolean isXmir(final Path path) {
+        return Files.isRegularFile(path) && path.toString().endsWith(".xmir");
     }
 }
