@@ -22,6 +22,6 @@
  * SOFTWARE.
  */
 /**
- * Provides the classes necessary to create a virtual machine for decompilation.
+ * Test cases for {@link org.eolang.opeo.decompilation}.
  */
-package org.eolang.opeo.vmachine;
+package org.eolang.opeo.decompilation;

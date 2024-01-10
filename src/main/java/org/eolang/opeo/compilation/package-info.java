@@ -21,34 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo;
-
-import java.io.File;
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.eolang.opeo.compilation.Compiler;
-
 /**
- * Compiles high-level EO representation into low-level representation.
- * The output of this mojo is consumed by the "jeo-maven-plugin":
- * <a href="https://github.com/objectionary/jeo-maven-plugin">link</a>
- *
+ * Classes for compiling high-level EO programs to low-level EO suitable for jeo-maven-plugin.
  * @since 0.1
  */
-@Mojo(name = "compile", defaultPhase = LifecyclePhase.PROCESS_CLASSES)
-public final class CompileMojo extends AbstractMojo {
-
-    /**
-     * Project default target directory.
-     * @since 0.1.0
-     */
-    @Parameter(defaultValue = "${project.build.directory}/generated-sources")
-    private File generated;
-
-    @Override
-    public void execute() {
-        new Compiler(this.generated).compile();
-    }
-}
+package org.eolang.opeo.compilation;

@@ -21,11 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo;
+package org.eolang.opeo.compilation;
 
 import com.jcabi.log.Logger;
+import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.stream.Stream;
 
 /**
  * Compiler of high-level eo constructs into XMIRs for the jeo-maven-plugin.
@@ -75,16 +81,62 @@ public class Compiler {
     /**
      * Compile high-level EO constructs into XMIRs for the jeo-maven-plugin.
      */
-    void compile() {
-        //@checkstyle MethodBodyCommentsCheck (5 lines)
-        // @todo #33:90min Implement compilation of high-level EO constructs into XMIRs.
-        //  Currently we print dummy messages in order to pass 'decompile-compile' integration test.
-        //  Implement this class and don't forget to add unit tests.
-        //  Also, you might need to change some checks in the 'decompile-compile' integration test.
+    public void compile() {
+        //@checkstyle MethodBodyCommentsCheck (10 lines)
+        // @todo #37:90min Continue implement compilation of high-level EO constructs into XMIRs.
+        //  Currently we just copy input XMIR to output. We should provide real compilation instead.
+        //  Don't forget to add unit tests.
+        if (!Files.exists(this.xmirs)) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "The input xmirs folder '%s' doesn't exist",
+                    this.xmirs
+                )
+            );
+        }
         Logger.info(this, "Compiling EO sources from %[file]s", this.xmirs);
         Logger.info(this, "Saving new compiled EO sources to %[file]s", this.output);
-        Logger.info(this, "Compiled app.eo (545 bytes)");
-        Logger.info(this, "Compiled main.eo (545 bytes)");
-        Logger.info(this, "Compiled %d EO sources", 2);
+        try (Stream<Path> decompiled = Files.walk(this.xmirs).filter(Compiler::isXmir)) {
+            Logger.info(this, "Compiled %d sources", decompiled.peek(this::compile).count());
+        } catch (final IOException exception) {
+            throw new IllegalStateException(
+                String.format(
+                    "Some problem with reading XMIRs from the '%s' folder",
+                    this.xmirs
+                ),
+                exception
+            );
+        }
+    }
+
+    /**
+     * Compile the file.
+     * @param xmir Path to the file.
+     */
+    private void compile(final Path xmir) {
+        try {
+            final XML decompiled = new XMLDocument(xmir);
+            final Path out = this.output.resolve(this.xmirs.relativize(xmir));
+            Files.createDirectories(out.getParent());
+            Files.write(
+                out,
+                decompiled.toString().getBytes(StandardCharsets.UTF_8)
+            );
+            Logger.info(this, "Compiled %[file]s (%[size]s)", out, Files.size(out));
+        } catch (final IOException exception) {
+            throw new IllegalStateException(
+                String.format("Can't compile '%x'", xmir),
+                exception
+            );
+        }
+    }
+
+    /**
+     * Check if the file is XMIR.
+     * @param path Path to the file
+     * @return True if the file is XMIR
+     */
+    private static boolean isXmir(final Path path) {
+        return Files.isRegularFile(path) && path.toString().endsWith(".xmir");
     }
 }

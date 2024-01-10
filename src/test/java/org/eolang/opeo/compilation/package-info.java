@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 /**
- * Test cases for {@link org.eolang.opeo.vmachine}.
+ * Contains tests for classes in {@link org.eolang.opeo.compilation}.
+ * @since 0.1
  */
-package org.eolang.opeo.vmachine;
+package org.eolang.opeo.compilation;

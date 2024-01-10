@@ -21,56 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.vmachine;
+package org.eolang.opeo.decompilation;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import org.cactoos.bytes.BytesOf;
+import org.cactoos.io.ResourceOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.io.FileMatchers;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Object reference.
+ * Test case for {@link Decompiler}.
  * @since 0.1
  */
-public final class ObjectReference {
+class DecompilerTest {
 
-    /**
-     * Global object reference counter.
-     */
-    private static final AtomicInteger GLOBAL = new AtomicInteger();
-
-    /**
-     * Object type.
-     */
-    private final String type;
-
-    /**
-     * Object reference counter.
-     */
-    private final AtomicInteger counter;
-
-    /**
-     * Constructor.
-     * @param type Object type
-     */
-    public ObjectReference(final String type) {
-        this(type, ObjectReference.GLOBAL);
-    }
-
-    /**
-     * Constructor.
-     * @param type Object type
-     * @param counter Object reference counter
-     */
-    private ObjectReference(final String type, final AtomicInteger counter) {
-        this.type = type;
-        this.counter = counter;
-    }
-
-    @Override
-    public String toString() {
-        return String.format(
-            "%s%d%s",
-            "&",
-            this.counter.getAndIncrement(),
-            this.type.replace('/', '.')
+    @Test
+    void decompilesSeveralFiles(@TempDir final Path temp) throws Exception {
+        final String name = "Bar.xmir";
+        final Path subpath = Paths.get("org").resolve("eolang").resolve("jeo");
+        final Path input = temp.resolve("xmir").resolve(subpath).resolve(name);
+        Files.createDirectories(input.getParent());
+        Files.write(input, new BytesOf(new ResourceOf("xmir/Bar.xmir")).asBytes());
+        new Decompiler(temp).decompile();
+        final Path expected = temp.resolve("opeo-xmir").resolve(subpath).resolve(name);
+        MatcherAssert.assertThat(
+            String.format(
+                "The decompiled file is missing, expected path: %s",
+                expected
+            ),
+            expected.toFile(),
+            FileMatchers.anExistingFile()
         );
     }
+
 }
