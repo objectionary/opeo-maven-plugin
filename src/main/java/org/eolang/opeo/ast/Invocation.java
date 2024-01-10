@@ -25,7 +25,9 @@ package org.eolang.opeo.ast;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import lombok.ToString;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -33,6 +35,7 @@ import org.xembly.Directives;
  * Invocation output node.
  * @since 0.1
  */
+@ToString
 public final class Invocation implements AstNode {
 
     /**
@@ -92,6 +95,14 @@ public final class Invocation implements AstNode {
 
     @Override
     public Iterable<Directive> toXmir() {
+        if (Objects.isNull(this.source) || Objects.isNull(this.method)) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "Source and method must not be null, but they are %s",
+                    this
+                )
+            );
+        }
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", String.format(".%s", this.method))
