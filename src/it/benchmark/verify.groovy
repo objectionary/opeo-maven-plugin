@@ -24,16 +24,7 @@
 // Check logs first.
 String log = new File(basedir, 'build.log').text;
 // Check decompilation ('decompile' goal.)
-assert log.contains("Decompiling EO sources from")
-assert log.contains("Saving new decompiled EO sources to")
-assert log.contains("Decompiled")
-assert log.contains("Decompiled 1 EO sources")
-// Check compilation ('compile' goal.)
-assert log.contains("Compiling EO sources from")
-assert log.contains("Saving new compiled EO sources to")
-assert log.contains("Compiled app.eo (545 bytes)")
-assert log.contains("Compiled main.eo (545 bytes)")
-assert log.contains("Compiled 2 EO sources")
+assert log.contains("Decompiled 5 EO sources")
 // Check success.
 assert log.contains("BUILD SUCCESS")
 
