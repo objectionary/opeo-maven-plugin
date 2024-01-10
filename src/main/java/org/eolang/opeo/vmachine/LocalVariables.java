@@ -75,16 +75,6 @@ public final class LocalVariables {
      * @return Variable.
      */
     public AstNode variable(final int index) {
-        if (this.variables.size() <= index) {
-            throw new IllegalArgumentException(
-                String.format(
-                    "Local variables size is %d, but index is %d, all variables: %s",
-                    this.variables.size(),
-                    index,
-                    Arrays.deepToString(this.variables.entrySet().toArray())
-                )
-            );
-        }
         return this.variables.get(index);
     }
 
