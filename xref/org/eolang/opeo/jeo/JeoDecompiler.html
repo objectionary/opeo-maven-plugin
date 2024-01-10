@@ -80,21 +80,23 @@
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     * @param method Method.</em>
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> decompile(<strong class="jxr_keyword">final</strong> XmlMethod method) {
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>          method.replaceInstructions(
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>              <strong class="jxr_keyword">new</strong> XmlNode(
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>                  <strong class="jxr_keyword">new</strong> Xembler(
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>                      <strong class="jxr_keyword">new</strong> <a name="DecompilerMachine" href="../../../../org/eolang/opeo/vmachine/DecompilerMachine.html#DecompilerMachine">DecompilerMachine</a>(
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>                          <strong class="jxr_keyword">new</strong> <a name="LocalVariables" href="../../../../org/eolang/opeo/vmachine/LocalVariables.html#LocalVariables">LocalVariables</a>(method.access(), method.descriptor()),
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>                          Map.of(<span class="jxr_string">"counting"</span>, <span class="jxr_string">"false"</span>)
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>                      ).decompileToXmir(<strong class="jxr_keyword">new</strong> <a name="JeoInstructions" href="../../../../org/eolang/opeo/jeo/JeoInstructions.html#JeoInstructions">JeoInstructions</a>(method).instructions()),
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>                      <strong class="jxr_keyword">new</strong> Transformers.Node()
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>                  ).xmlQuietly()
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>              ).children().collect(Collectors.toList()).toArray(XmlNode[]::<strong class="jxr_keyword">new</strong>)
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>          );
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>      }
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>  }
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>          <strong class="jxr_keyword">if</strong> (!method.instructions().isEmpty()) {
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>              method.replaceInstructions(
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>                  <strong class="jxr_keyword">new</strong> XmlNode(
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>                      <strong class="jxr_keyword">new</strong> Xembler(
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>                          <strong class="jxr_keyword">new</strong> <a name="DecompilerMachine" href="../../../../org/eolang/opeo/vmachine/DecompilerMachine.html#DecompilerMachine">DecompilerMachine</a>(
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>                              <strong class="jxr_keyword">new</strong> <a name="LocalVariables" href="../../../../org/eolang/opeo/vmachine/LocalVariables.html#LocalVariables">LocalVariables</a>(method.access(), method.descriptor()),
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>                              Map.of(<span class="jxr_string">"counting"</span>, <span class="jxr_string">"false"</span>)
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>                          ).decompileToXmir(<strong class="jxr_keyword">new</strong> <a name="JeoInstructions" href="../../../../org/eolang/opeo/jeo/JeoInstructions.html#JeoInstructions">JeoInstructions</a>(method).instructions()),
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>                          <strong class="jxr_keyword">new</strong> Transformers.Node()
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>                      ).xmlQuietly()
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>                  ).children().collect(Collectors.toList()).toArray(XmlNode[]::<strong class="jxr_keyword">new</strong>)
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>              );
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          }
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>      }
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2023 <a href="https://github.com/objectionary/eo">EO</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2023&#x2013;2024 <a href="https://github.com/objectionary/eo">EO</a>. All rights reserved.</div>
 </body>
 </html>
