@@ -66,28 +66,17 @@ public final class LocalVariables {
      * @param variables Local variables.
      */
     public LocalVariables(final Map<Integer, AstNode> variables) {
-        this.variables = variables;
+        this.variables = new HashMap<>(variables);
     }
 
     /**
      * Get variable by index.
      * @param index Index.
-     * @return Variable.
-     */
-    public AstNode variable(final int index) {
-        return this.variables.get(index);
-    }
-
-    /**
-     * Create variable.
-     * @param index Index.
      * @param type Type.
      * @return Variable.
      */
     public AstNode variable(final int index, final Type type) {
-        final AstNode element = new Variable(type, index);
-        this.variables.put(index, element);
-        return element;
+        return this.variables.computeIfAbsent(index, key -> new Variable(type, key));
     }
 
     /**

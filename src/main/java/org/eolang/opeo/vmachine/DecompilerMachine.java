@@ -108,15 +108,16 @@ public final class DecompilerMachine {
             new MapEntry<>(Opcodes.ICONST_5, new IconstHandler()),
             new MapEntry<>(Opcodes.IADD, new AddHandler()),
             new MapEntry<>(Opcodes.IMUL, new MulHandler()),
-            new MapEntry<>(Opcodes.ILOAD, new LoadHandler()),
-            new MapEntry<>(Opcodes.LLOAD, new LoadHandler()),
-            new MapEntry<>(Opcodes.FLOAD, new LoadHandler()),
-            new MapEntry<>(Opcodes.DLOAD, new LoadHandler()),
-            new MapEntry<>(Opcodes.ALOAD, new LoadHandler()),
+            new MapEntry<>(Opcodes.ILOAD, new LoadHandler(Type.INT_TYPE)),
+            new MapEntry<>(Opcodes.LLOAD, new LoadHandler(Type.LONG_TYPE)),
+            new MapEntry<>(Opcodes.FLOAD, new LoadHandler(Type.FLOAT_TYPE)),
+            new MapEntry<>(Opcodes.DLOAD, new LoadHandler(Type.DOUBLE_TYPE)),
+            new MapEntry<>(Opcodes.ALOAD, new LoadHandler(Type.getType(Object.class))),
             new MapEntry<>(Opcodes.ISTORE, new StoreHandler(Type.INT_TYPE)),
             new MapEntry<>(Opcodes.LSTORE, new StoreHandler(Type.LONG_TYPE)),
             new MapEntry<>(Opcodes.FSTORE, new StoreHandler(Type.FLOAT_TYPE)),
             new MapEntry<>(Opcodes.DSTORE, new StoreHandler(Type.DOUBLE_TYPE)),
+            new MapEntry<>(Opcodes.ASTORE, new StoreHandler(Type.getType(Object.class))),
             new MapEntry<>(Opcodes.NEW, new NewHandler()),
             new MapEntry<>(Opcodes.DUP, new DupHandler()),
             new MapEntry<>(Opcodes.BIPUSH, new BipushHandler()),
@@ -206,10 +207,26 @@ public final class DecompilerMachine {
      */
     private class LoadHandler implements InstructionHandler {
 
+        /**
+         * Type of the variable.
+         */
+        private final Type type;
+
+        /**
+         * Constructor.
+         * @param type Type of the variable.
+         */
+        private LoadHandler(final Type type) {
+            this.type = type;
+        }
+
         @Override
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(
-                DecompilerMachine.this.locals.variable((Integer) instruction.operands().get(0))
+                DecompilerMachine.this.locals.variable(
+                    (Integer) instruction.operands().get(0),
+                    this.type
+                )
             );
         }
 
