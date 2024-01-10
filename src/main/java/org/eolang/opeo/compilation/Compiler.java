@@ -27,14 +27,11 @@ import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
-import org.eolang.jeo.representation.xmir.XmlProgram;
-import org.eolang.opeo.jeo.JeoDecompiler;
 
 /**
  * Compiler of high-level eo constructs into XMIRs for the jeo-maven-plugin.
@@ -85,12 +82,10 @@ public class Compiler {
      * Compile high-level EO constructs into XMIRs for the jeo-maven-plugin.
      */
     public void compile() {
-        //@checkstyle MethodBodyCommentsCheck (5 lines)
-        // @todo #33:90min Implement compilation of high-level EO constructs into XMIRs.
-        //  Currently we print dummy messages in order to pass 'decompile-compile' integration test.
-        //  Implement this class and don't forget to add unit tests.
-        //  Also, you might need to change some checks in the 'decompile-compile' integration test.
-
+        //@checkstyle MethodBodyCommentsCheck (10 lines)
+        // @todo #37:90min Continue implement compilation of high-level EO constructs into XMIRs.
+        //  Currently we just copy input XMIR to output. We should provide real compilation instead.
+        //  Don't forget to add unit tests.
         if (!Files.exists(this.xmirs)) {
             throw new IllegalArgumentException(
                 String.format(
