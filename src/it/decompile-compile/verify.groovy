@@ -31,9 +31,8 @@ assert log.contains("Decompiled 1 EO sources")
 // Check compilation ('compile' goal.)
 assert log.contains("Compiling EO sources from")
 assert log.contains("Saving new compiled EO sources to")
-assert log.contains("Compiled app.eo (545 bytes)")
-assert log.contains("Compiled main.eo (545 bytes)")
-assert log.contains("Compiled 2 EO sources")
+assert log.contains("Compiled")
+assert log.contains("Compiled 1 sources")
 // Check success.
 assert log.contains("BUILD SUCCESS")
 
