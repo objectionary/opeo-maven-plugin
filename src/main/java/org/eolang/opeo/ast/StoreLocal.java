@@ -35,7 +35,7 @@ public final class StoreLocal implements AstNode {
     /**
      * Local variable.
      */
-    private final Variable variable;
+    private final AstNode variable;
 
     /**
      * Value to store.
@@ -47,7 +47,7 @@ public final class StoreLocal implements AstNode {
      * @param variable Local variable
      * @param value Value to store
      */
-    public StoreLocal(final Variable variable, final AstNode value) {
+    public StoreLocal(final AstNode variable, final AstNode value) {
         this.variable = variable;
         this.value = value;
     }

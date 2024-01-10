@@ -25,7 +25,9 @@ package org.eolang.opeo.vmachine;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.ast.Variable;
@@ -41,13 +43,13 @@ public final class LocalVariables {
     /**
      * Local variables as ast nodes.
      */
-    private List<AstNode> variables;
+    private Map<Integer, AstNode> variables;
 
     /**
      * Constructor.
      */
     public LocalVariables() {
-        this(List.of(new This()));
+        this(Map.of(0, new This()));
     }
 
     /**
@@ -63,7 +65,7 @@ public final class LocalVariables {
      * Constructor.
      * @param variables Local variables.
      */
-    public LocalVariables(final List<AstNode> variables) {
+    public LocalVariables(final Map<Integer, AstNode> variables) {
         this.variables = variables;
     }
 
@@ -79,11 +81,23 @@ public final class LocalVariables {
                     "Local variables size is %d, but index is %d, all variables: %s",
                     this.variables.size(),
                     index,
-                    Arrays.deepToString(this.variables.toArray())
+                    Arrays.deepToString(this.variables.entrySet().toArray())
                 )
             );
         }
         return this.variables.get(index);
+    }
+
+    /**
+     * Create variable.
+     * @param index Index.
+     * @param type Type.
+     * @return Variable.
+     */
+    public AstNode variable(final int index, final Type type) {
+        final AstNode element = new Variable(type, index);
+        this.variables.put(index, element);
+        return element;
     }
 
     /**
@@ -101,7 +115,7 @@ public final class LocalVariables {
      * @param descriptor Method descriptor.
      * @return Local variables.
      */
-    private static List<AstNode> fromMethod(final int modifiers, final String descriptor) {
+    private static Map<Integer, AstNode> fromMethod(final int modifiers, final String descriptor) {
         final Type[] args = Type.getArgumentTypes(descriptor);
         final int size = args.length;
         final List<AstNode> res = new ArrayList<>(size);
@@ -111,7 +125,12 @@ public final class LocalVariables {
         for (int index = 0; index < size; ++index) {
             res.add(new Variable(args[index], index));
         }
-        return res;
+        final Map<Integer, AstNode> result = new HashMap<>(size);
+        final int rsize = res.size();
+        for (int index = 0; index < rsize; ++index) {
+            result.put(index, res.get(index));
+        }
+        return result;
     }
 
 }

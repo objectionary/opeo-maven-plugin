@@ -43,6 +43,7 @@ import org.eolang.opeo.ast.Mul;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Root;
+import org.eolang.opeo.ast.StoreLocal;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.WriteField;
 import org.objectweb.asm.Opcodes;
@@ -112,6 +113,10 @@ public final class DecompilerMachine {
             new MapEntry<>(Opcodes.FLOAD, new LoadHandler()),
             new MapEntry<>(Opcodes.DLOAD, new LoadHandler()),
             new MapEntry<>(Opcodes.ALOAD, new LoadHandler()),
+            new MapEntry<>(Opcodes.ISTORE, new StoreHandler(Type.INT_TYPE)),
+            new MapEntry<>(Opcodes.LSTORE, new StoreHandler(Type.LONG_TYPE)),
+            new MapEntry<>(Opcodes.FSTORE, new StoreHandler(Type.FLOAT_TYPE)),
+            new MapEntry<>(Opcodes.DSTORE, new StoreHandler(Type.DOUBLE_TYPE)),
             new MapEntry<>(Opcodes.NEW, new NewHandler()),
             new MapEntry<>(Opcodes.DUP, new DupHandler()),
             new MapEntry<>(Opcodes.BIPUSH, new BipushHandler()),
@@ -208,6 +213,39 @@ public final class DecompilerMachine {
             );
         }
 
+    }
+
+    /**
+     * Store instruction handler.
+     * @since 0.1
+     */
+    private class StoreHandler implements InstructionHandler {
+
+        /**
+         * Type of the variable.
+         */
+        private final Type type;
+
+        /**
+         * Constructor.
+         * @param type Type of the variable.
+         */
+        private StoreHandler(final Type type) {
+            this.type = type;
+        }
+
+        @Override
+        public void handle(final Instruction instruction) {
+            DecompilerMachine.this.stack.push(
+                new StoreLocal(
+                    DecompilerMachine.this.locals.variable(
+                        (Integer) instruction.operands().get(0),
+                        this.type
+                    ),
+                    DecompilerMachine.this.stack.pop()
+                )
+            );
+        }
     }
 
     /**
