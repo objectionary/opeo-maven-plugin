@@ -395,7 +395,7 @@ public final class DecompilerMachine {
             final List<AstNode> args = DecompilerMachine.this.popArguments(
                 Type.getArgumentCount(descriptor)
             );
-            final AstNode source = DecompilerMachine.this.popArguments(1).get(0);
+            final AstNode source = DecompilerMachine.this.stack.pop();
             DecompilerMachine.this.stack.push(
                 new Invocation(source, method, args)
             );
