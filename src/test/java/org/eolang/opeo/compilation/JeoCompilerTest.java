@@ -40,7 +40,7 @@ final class JeoCompilerTest {
     @Test
     void compilesSuccessfully() throws Exception {
         final XML expected = new XMLDocument(
-            new TextOf(new ResourceOf("opeo-xmir/B.xmir")).asString()
+            new TextOf(new ResourceOf("xmir/Bar.xmir")).asString()
         );
         MatcherAssert.assertThat(
             "The compiled program is not equal to the expected one, but should since we provided already compiled program",
