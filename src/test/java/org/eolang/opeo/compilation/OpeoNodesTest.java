@@ -191,26 +191,42 @@ final class OpeoNodesTest {
             return true;
         }
 
+        /**
+         * Get opcode name by opcode.
+         * @param opcode Opcode.
+         * @return Opcode name.
+         */
         private static String name(final int opcode) {
-            final Field[] fields = Arrays.stream(Opcodes.class.getFields())
+            return Arrays.stream(Opcodes.class.getFields())
+                .filter(field -> field.getType() == int.class)
                 .filter(field -> !field.getName().startsWith("T_"))
                 .filter(field -> !field.getName().startsWith("H_"))
                 .filter(field -> !field.getName().startsWith("F_"))
                 .filter(field -> !field.getName().startsWith("ACC"))
                 .filter(field -> !field.getName().startsWith("ASM"))
-                .toArray(Field[]::new);
-            for (final Field field : fields) {
-                if (field.getType() == int.class) {
-                    try {
-                        if (opcode == field.getInt(Opcodes.class)) {
-                            return field.getName();
-                        }
-                    } catch (final IllegalAccessException exception) {
-                        throw new RuntimeException(exception);
-                    }
-                }
+                .filter(field -> HasInstructions.sameOpcode(field, opcode))
+                .map(Field::getName)
+                .findFirst()
+                .orElseThrow(
+                    () -> new IllegalStateException(String.format("Unknown opcode: %d", opcode))
+                );
+        }
+
+        /**
+         * Check if field has the same opcode.
+         * @param field Field.
+         * @param opcode Opcode.
+         * @return True if field has the same opcode.
+         */
+        private static boolean sameOpcode(final Field field, int opcode) {
+            try {
+                return opcode == field.getInt(Opcodes.class);
+            } catch (final IllegalAccessException exception) {
+                throw new IllegalStateException(
+                    String.format("Cannot access opcode %d in field %s", opcode, field),
+                    exception
+                );
             }
-            throw new IllegalStateException(String.format("Unknown opcode: %d", opcode));
         }
 
         @Override
