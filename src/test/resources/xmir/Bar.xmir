@@ -105,7 +105,6 @@
                   </o>
                </o>
             </o>
-            <o base="tuple" name="trycatchblocks"/>
          </o>
       </o>
    </objects>

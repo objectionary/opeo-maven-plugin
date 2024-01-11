@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-01-10T14:01:31.518651Z"
+         ms="1704895291523"
+         name="j$B"
+         revision="0.0.0"
+         time="2024-01-10T14:01:31.518651Z"
+         version="0.0.0">
+   <listing>yv66vgAAADcAHAoAAgADBwAEDAAFAAYBABBqYXZhL2xhbmcvT2JqZWN0AQAGPGluaXQ+AQADKClWCQAIAAkHAAoMAAsADAEAFm9yZy9lb2xhbmcvYmVuY2htYXJrL0IBAAFmAQAYTG9yZy9lb2xhbmcvYmVuY2htYXJrL0Y7CwAOAA8HABAMABEAEgEAFm9yZy9lb2xhbmcvYmVuY2htYXJrL0YBAANmb28BAAMoKUkBABsoTG9yZy9lb2xhbmcvYmVuY2htYXJrL0Y7KVYBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQASTG9jYWxWYXJpYWJsZVRhYmxlAQAEdGhpcwEAGExvcmcvZW9sYW5nL2JlbmNobWFyay9COwEAA2JhcgEAClNvdXJjZUZpbGUBAAZCLmphdmEAIAAIAAIAAAABABIACwAMAAAAAgAAAAUAEwABABQAAABGAAIAAgAAAAoqtwABKiu1AAexAAAAAgAVAAAADgADAAAAHAAEAB0ACQAeABYAAAAWAAIAAAAKABcAGAAAAAAACgALAAwAAQAAABkAEgABABQAAAA2AAIAAQAAAAwqtAAHuQANAQAFYKwAAAACABUAAAAGAAEAAAAgABYAAAAMAAEAAAAMABcAGAAAAAEAGgAAAAIAGw==</listing>
+   <errors/>
+   <sheets/>
+   <license/>
+   <metas>
+      <meta>
+         <head>package</head>
+         <tail>org.eolang.benchmark</tail>
+         <part>org.eolang.benchmark</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.opcode</tail>
+         <part>org.eolang.jeo.opcode</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.label</tail>
+         <part>org.eolang.jeo.label</part>
+      </meta>
+   </metas>
+   <objects>
+      <o abstract="" name="j$B">
+         <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 20</o>
+         <o base="string" data="bytes" name="supername">6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>
+         <o base="tuple" data="tuple" name="interfaces"/>
+         <o base="field" name="j$f">
+            <o base="int" data="bytes">00 00 00 00 00 00 00 12</o>
+            <o base="string" data="bytes">4C 6F 72 67 2F 65 6F 6C 61 6E 67 2F 62 65 6E 63 68 6D 61 72 6B 2F 46 3B</o>
+            <o base="string" data="bytes"/>
+            <o base="string" data="bytes"/>
+         </o>
+         <o abstract="" name="new">
+            <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 00</o>
+            <o base="string" data="bytes" name="descriptor">28 4C 6F 72 67 2F 65 6F 6C 61 6E 67 2F 62 65 6E 63 68 6D 61 72 6B 2F 46 3B 29 56</o>
+            <o base="string" data="bytes" name="signature"/>
+            <o base="tuple" data="tuple" name="exceptions"/>
+            <o abstract="" name="arg__Lorg/eolang/benchmark/F;__0"/>
+            <o base="seq" name="@">
+               <o base="tuple">
+                  <o base=".super">
+                     <o base="$"/>
+                  </o>
+                  <o base=".write">
+                     <o base=".f">
+                        <o base="$"/>
+                     </o>
+                     <o base="local0"/>
+                  </o>
+                  <o base="opcode" name="RETURN">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B1</o>
+                  </o>
+               </o>
+            </o>
+         </o>
+         <o abstract="" name="j$bar">
+            <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 00</o>
+            <o base="string" data="bytes" name="descriptor">28 29 49</o>
+            <o base="string" data="bytes" name="signature"/>
+            <o base="tuple" data="tuple" name="exceptions"/>
+            <o base="seq" name="@">
+               <o base="tuple">
+                  <o base=".f">
+                     <o base="$"/>
+                  </o>
+                  <o base=".plus">
+                     <o base="opcode" name="INVOKEINTERFACE">
+                        <o base="int" data="bytes">00 00 00 00 00 00 00 B9</o>
+                        <o base="string" data="bytes">6F 72 67 2F 65 6F 6C 61 6E 67 2F 62 65 6E 63 68 6D 61 72 6B 2F 46</o>
+                        <o base="string" data="bytes">66 6F 6F</o>
+                        <o base="string" data="bytes">28 29 49</o>
+                     </o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 02</o>
+                  </o>
+                  <o base="opcode" name="IRETURN">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 AC</o>
+                  </o>
+               </o>
+            </o>
+         </o>
+      </o>
+   </objects>
+</program>

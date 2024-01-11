@@ -24,6 +24,11 @@
 package org.eolang.opeo.compilation;
 
 import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
+import org.eolang.jeo.representation.xmir.XmlMethod;
+import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.jeo.representation.xmir.XmlProgram;
+import org.w3c.dom.Node;
 
 /**
  * Compiler of high-level EO programs to low-level EO suitable for jeo-maven-plugin.
@@ -48,7 +53,17 @@ public final class JeoCompiler {
      * @return The low-level EO program suitable for jeo-maven-plugin.
      */
     public XML compile() {
-        return this.opeo;
+        final Node node = this.opeo.node();
+        new XmlProgram(node).top().methods().forEach(this::compile);
+        return new XMLDocument(node);
+    }
+
+    /**
+     * Compiles a single method.
+     * @param method The method to compile.
+     */
+    private void compile(final XmlMethod method) {
+        method.replaceInstructions(method.nodes().toArray(XmlNode[]::new));
     }
 
 }
