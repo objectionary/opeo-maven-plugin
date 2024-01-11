@@ -43,7 +43,7 @@ SOFTWARE.
       <plugin>
         <groupId>org.eolang</groupId>
         <artifactId>jeo-maven-plugin</artifactId>
-        <version>0.2.14</version>
+        <version>0.2.15</version>
         <executions>
           <execution>
             <id>bytecode-to-eo</id>
