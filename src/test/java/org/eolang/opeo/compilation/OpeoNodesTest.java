@@ -117,7 +117,7 @@ final class OpeoNodesTest {
      * Matcher for {@link List} of {@link XmlNode} to have specific instructions.
      * @since 0.1
      */
-    private static class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
+    private static final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
 
         /**
          * Expected opcodes.
@@ -133,7 +133,7 @@ final class OpeoNodesTest {
          * Constructor.
          * @param opcodes Expected opcodes.
          */
-        private HasInstructions(int... opcodes) {
+        private HasInstructions(final int... opcodes) {
             this(IntStream.of(opcodes).boxed().collect(Collectors.toList()));
         }
 
@@ -147,7 +147,19 @@ final class OpeoNodesTest {
         }
 
         @Override
-        protected boolean matchesSafely(final List<XmlNode> item) {
+        public void describeTo(final Description description) {
+            description.appendText(
+                String.format(
+                    "Expected to have %d opcodes, but got %d instead. %n%s%n",
+                    this.opcodes.size(),
+                    this.warnings.size(),
+                    String.join("\n", this.warnings)
+                )
+            );
+        }
+
+        @Override
+        public boolean matchesSafely(final List<XmlNode> item) {
             boolean result = true;
             final int size = item.size();
             for (int index = 0; index < size; ++index) {
@@ -159,45 +171,63 @@ final class OpeoNodesTest {
             return result;
         }
 
+        /**
+         * Check if node matches expected opcode.
+         * @param node Node.
+         * @param index Index.
+         * @return True if node matches expected opcode.
+         */
         private boolean matches(final XmlNode node, final int index) {
-            boolean result = true;
-            final Optional<String> obase = node.attribute("base");
-            if (obase.isPresent()) {
-                final String base = obase.get();
-                if (base.equals("opcode")) {
-                    final Optional<String> oname = node.attribute("name");
-                    if (oname.isPresent()) {
-                        final String expected = HasInstructions.name(this.opcodes.get(index));
-                        if (!oname.get().contains(expected)) {
-                            this.warnings.add(
-                                String.format(
-                                    "Expected to have opcode with name %s at index %d, but got %s instead",
-                                    expected,
-                                    index,
-                                    oname.get()
-                                )
-                            );
-                            result = false;
-                        }
-                    } else {
-                        this.warnings.add(
-                            String.format(
-                                "Expected to have opcode name at index %d, but got nothing instead",
-                                index
-                            )
-                        );
-                        result = false;
-                    }
+            final boolean result;
+            final String base = node.attribute("base").orElseThrow();
+            if (base.equals("opcode")) {
+                result = this.verifyName(node, index);
+            } else {
+                this.warnings.add(
+                    String.format(
+                        "Expected to have opcode at index %d, but got %s instead",
+                        index,
+                        base
+                    )
+                );
+                result = false;
+            }
+            return result;
+        }
+
+        /**
+         * Verify opcode name.
+         * @param node Node.
+         * @param index Index.
+         * @return True if opcode name is correct.
+         */
+        private boolean verifyName(final XmlNode node, final int index) {
+            final boolean result;
+            final Optional<String> oname = node.attribute("name");
+            if (oname.isPresent()) {
+                final String expected = HasInstructions.name(this.opcodes.get(index));
+                final String name = oname.get();
+                if (name.contains(expected)) {
+                    result = true;
                 } else {
                     this.warnings.add(
                         String.format(
-                            "Expected to have opcode at index %d, but got %s instead",
+                            "Expected to have opcode with name %s at index %d, but got %s instead",
+                            expected,
                             index,
-                            base
+                            name
                         )
                     );
                     result = false;
                 }
+            } else {
+                this.warnings.add(
+                    String.format(
+                        "Expected to have opcode name at index %d, but got nothing instead",
+                        index
+                    )
+                );
+                result = false;
             }
             return result;
         }
@@ -229,7 +259,7 @@ final class OpeoNodesTest {
          * @param opcode Opcode.
          * @return True if field has the same opcode.
          */
-        private static boolean sameOpcode(final Field field, int opcode) {
+        private static boolean sameOpcode(final Field field, final int opcode) {
             try {
                 return opcode == field.getInt(Opcodes.class);
             } catch (final IllegalAccessException exception) {
@@ -238,18 +268,6 @@ final class OpeoNodesTest {
                     exception
                 );
             }
-        }
-
-        @Override
-        public void describeTo(final Description description) {
-            description.appendText(
-                String.format(
-                    "Expected to have %d opcodes, but got %d instead. %n%s%n",
-                    this.opcodes.size(),
-                    this.warnings.size(),
-                    String.join("\n", this.warnings)
-                )
-            );
         }
     }
 }

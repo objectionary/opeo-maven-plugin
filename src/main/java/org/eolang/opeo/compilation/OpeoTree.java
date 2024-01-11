@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.compilation.ast;
+package org.eolang.opeo.compilation;
 
 /**
  * AST tree of the free EO program.
