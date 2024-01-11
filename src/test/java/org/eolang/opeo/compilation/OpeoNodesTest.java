@@ -25,6 +25,8 @@ package org.eolang.opeo.compilation;
 
 import java.util.List;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.ast.Add;
+import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -55,6 +57,36 @@ final class OpeoNodesTest {
             Matchers.equalTo(
                 "<o base=\"opcode\" name=\"POP\">\n   <o base=\"int\" data=\"bytes\">00 00 00 00 00 00 00 57</o>\n</o>\n"
             )
+        );
+    }
+
+    @Test
+    void convertsAddition() {
+        final List<XmlNode> nodes = new OpeoNodes(
+            new Add(new Literal(1), new Literal(2))
+        ).toJeoNodes();
+        MatcherAssert.assertThat(
+            String.format(
+                "We expect to retrieve 3 opcodes, but got something else instead: %n%s%n",
+                nodes
+            ),
+            nodes,
+            Matchers.hasSize(3)
+        );
+        MatcherAssert.assertThat(
+            "We expect the first node to be ICONST_1",
+            nodes.get(0).attribute("name").get(),
+            Matchers.containsString("ICONST_1")
+        );
+        MatcherAssert.assertThat(
+            "We expect the second node to be ICONST_2",
+            nodes.get(1).attribute("name").get(),
+            Matchers.containsString("ICONST_2")
+        );
+        MatcherAssert.assertThat(
+            "We expect the third node to be IADD",
+            nodes.get(2).attribute("name").get(),
+            Matchers.containsString("IADD")
         );
     }
 }

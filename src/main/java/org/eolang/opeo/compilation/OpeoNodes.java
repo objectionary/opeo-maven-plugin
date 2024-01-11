@@ -24,10 +24,14 @@
 package org.eolang.opeo.compilation;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Opcode;
+import org.objectweb.asm.Opcodes;
 import org.xembly.Xembler;
 
 /**
@@ -74,7 +78,78 @@ public final class OpeoNodes {
      * @return XML nodes.
      */
     List<XmlNode> toJeoNodes() {
-        return this.nodes;
+        return this.nodes.stream()
+            .map(OpeoNodes::opcodes)
+            .flatMap(List::stream)
+            .collect(Collectors.toList());
     }
 
+    /**
+     * Convert XmlNode into a list of opcodes.
+     * @param node XmlNode
+     * @return List of opcodes
+     */
+    private static List<XmlNode> opcodes(final XmlNode node) {
+        if (node.hasAttribute("base", ".plus")) {
+            final List<XmlNode> inner = node.children().collect(Collectors.toList());
+            final int first = new HexString(inner.get(0).text()).decodeAsInt();
+            final int second = new HexString(inner.get(1).text()).decodeAsInt();
+            final Opcode left;
+            switch (first) {
+                case 0:
+                    left = new Opcode(Opcodes.ICONST_0);
+                    break;
+                case 1:
+                    left = new Opcode(Opcodes.ICONST_1);
+                    break;
+                case 2:
+                    left = new Opcode(Opcodes.ICONST_2);
+                    break;
+                case 3:
+                    left = new Opcode(Opcodes.ICONST_3);
+                    break;
+                case 4:
+                    left = new Opcode(Opcodes.ICONST_4);
+                    break;
+                case 5:
+                    left = new Opcode(Opcodes.ICONST_5);
+                    break;
+                default:
+                    left = new Opcode(Opcodes.BIPUSH, first);
+                    break;
+            }
+            final Opcode right;
+            switch (second) {
+                case 0:
+                    right = new Opcode(Opcodes.ICONST_0);
+                    break;
+                case 1:
+                    right = new Opcode(Opcodes.ICONST_1);
+                    break;
+                case 2:
+                    right = new Opcode(Opcodes.ICONST_2);
+                    break;
+                case 3:
+                    right = new Opcode(Opcodes.ICONST_3);
+                    break;
+                case 4:
+                    right = new Opcode(Opcodes.ICONST_4);
+                    break;
+                case 5:
+                    right = new Opcode(Opcodes.ICONST_5);
+                    break;
+                default:
+                    right = new Opcode(Opcodes.BIPUSH, second);
+                    break;
+            }
+            return Stream.of(left, right, new Opcode(Opcodes.IADD))
+                .map(Opcode::toXmir)
+                .map(Xembler::new)
+                .map(Xembler::xmlQuietly)
+                .map(XmlNode::new)
+                .collect(Collectors.toList());
+        } else {
+            return Collections.singletonList(node);
+        }
+    }
 }
