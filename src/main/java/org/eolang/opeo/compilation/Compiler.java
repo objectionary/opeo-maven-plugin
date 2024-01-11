@@ -115,12 +115,12 @@ public class Compiler {
      */
     private void compile(final Path xmir) {
         try {
-            final XML decompiled = new XMLDocument(xmir);
+            final XML compiled = new JeoCompiler(new XMLDocument(xmir)).compile();
             final Path out = this.output.resolve(this.xmirs.relativize(xmir));
             Files.createDirectories(out.getParent());
             Files.write(
                 out,
-                decompiled.toString().getBytes(StandardCharsets.UTF_8)
+                compiled.toString().getBytes(StandardCharsets.UTF_8)
             );
             Logger.info(this, "Compiled %[file]s (%[size]s)", out, Files.size(out));
         } catch (final IOException exception) {
