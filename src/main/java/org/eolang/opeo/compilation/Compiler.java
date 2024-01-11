@@ -82,10 +82,6 @@ public class Compiler {
      * Compile high-level EO constructs into XMIRs for the jeo-maven-plugin.
      */
     public void compile() {
-        //@checkstyle MethodBodyCommentsCheck (10 lines)
-        // @todo #37:90min Continue implement compilation of high-level EO constructs into XMIRs.
-        //  Currently we just copy input XMIR to output. We should provide real compilation instead.
-        //  Don't forget to add unit tests.
         if (!Files.exists(this.xmirs)) {
             throw new IllegalArgumentException(
                 String.format(

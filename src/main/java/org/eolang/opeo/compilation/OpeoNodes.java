@@ -86,6 +86,12 @@ public final class OpeoNodes {
      */
     private static List<XmlNode> opcodes(final XmlNode node) {
         final List<XmlNode> result;
+        //@checkstyle MethodBodyCommentsCheck (10 lines)
+        // @todo #37:90min Parse AST from high-level XMIR.
+        //  Currently we apply naive algorithm to convert some parts of high-level representation
+        //  to bytecode instructions.
+        //  We should generate AST first and then compile it to bytecode instructions.
+        //  Don't forget to add unit tests.
         if (node.hasAttribute("base", ".plus")) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             result = Stream.of(
