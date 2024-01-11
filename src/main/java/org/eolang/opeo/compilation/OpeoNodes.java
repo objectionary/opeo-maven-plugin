@@ -45,7 +45,11 @@ public final class OpeoNodes {
      */
     private final List<XmlNode> nodes;
 
-    public OpeoNodes(AstNode... nodes) {
+    /**
+     * Constructor.
+     * @param nodes Opeo nodes.
+     */
+    public OpeoNodes(final AstNode... nodes) {
         this(
             Arrays.stream(nodes)
                 .map(AstNode::toXmir)
@@ -54,15 +58,6 @@ public final class OpeoNodes {
                 .map(XmlNode::new)
                 .collect(Collectors.toList())
         );
-    }
-
-
-    /**
-     * Constructor.
-     * @param nodes Opeo nodes.
-     */
-    public OpeoNodes(XmlNode... nodes) {
-        this(List.of(nodes));
     }
 
     /**
@@ -90,66 +85,55 @@ public final class OpeoNodes {
      * @return List of opcodes
      */
     private static List<XmlNode> opcodes(final XmlNode node) {
+        final List<XmlNode> result;
         if (node.hasAttribute("base", ".plus")) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final int first = new HexString(inner.get(0).text()).decodeAsInt();
-            final int second = new HexString(inner.get(1).text()).decodeAsInt();
-            final Opcode left;
-            switch (first) {
-                case 0:
-                    left = new Opcode(Opcodes.ICONST_0);
-                    break;
-                case 1:
-                    left = new Opcode(Opcodes.ICONST_1);
-                    break;
-                case 2:
-                    left = new Opcode(Opcodes.ICONST_2);
-                    break;
-                case 3:
-                    left = new Opcode(Opcodes.ICONST_3);
-                    break;
-                case 4:
-                    left = new Opcode(Opcodes.ICONST_4);
-                    break;
-                case 5:
-                    left = new Opcode(Opcodes.ICONST_5);
-                    break;
-                default:
-                    left = new Opcode(Opcodes.BIPUSH, first);
-                    break;
-            }
-            final Opcode right;
-            switch (second) {
-                case 0:
-                    right = new Opcode(Opcodes.ICONST_0);
-                    break;
-                case 1:
-                    right = new Opcode(Opcodes.ICONST_1);
-                    break;
-                case 2:
-                    right = new Opcode(Opcodes.ICONST_2);
-                    break;
-                case 3:
-                    right = new Opcode(Opcodes.ICONST_3);
-                    break;
-                case 4:
-                    right = new Opcode(Opcodes.ICONST_4);
-                    break;
-                case 5:
-                    right = new Opcode(Opcodes.ICONST_5);
-                    break;
-                default:
-                    right = new Opcode(Opcodes.BIPUSH, second);
-                    break;
-            }
-            return Stream.of(left, right, new Opcode(Opcodes.IADD))
+            result = Stream.of(
+                OpeoNodes.opcode(new HexString(inner.get(0).text()).decodeAsInt()),
+                OpeoNodes.opcode(new HexString(inner.get(1).text()).decodeAsInt()),
+                new Opcode(Opcodes.IADD)
+                )
                 .map(Opcode::toXmir)
                 .map(Xembler::new)
                 .map(Xembler::xmlQuietly)
                 .map(XmlNode::new)
                 .collect(Collectors.toList());
         } else {
-            return Collections.singletonList(node);
+            result = Collections.singletonList(node);
         }
+        return result;
+    }
+
+    /**
+     * Convert integer into an opcode.
+     * @param value Integer value.
+     * @return Opcode.
+     */
+    private static Opcode opcode(final int value) {
+        final Opcode res;
+        switch (value) {
+            case 0:
+                res = new Opcode(Opcodes.ICONST_0);
+                break;
+            case 1:
+                res = new Opcode(Opcodes.ICONST_1);
+                break;
+            case 2:
+                res = new Opcode(Opcodes.ICONST_2);
+                break;
+            case 3:
+                res = new Opcode(Opcodes.ICONST_3);
+                break;
+            case 4:
+                res = new Opcode(Opcodes.ICONST_4);
+                break;
+            case 5:
+                res = new Opcode(Opcodes.ICONST_5);
+                break;
+            default:
+                res = new Opcode(Opcodes.BIPUSH, value);
+                break;
+        }
+        return res;
     }
 }

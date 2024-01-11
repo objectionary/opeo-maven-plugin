@@ -32,6 +32,7 @@ import org.w3c.dom.Node;
 
 /**
  * Compiler of high-level EO programs to low-level EO suitable for jeo-maven-plugin.
+ * @since 0.1
  */
 public final class JeoCompiler {
 
@@ -54,7 +55,7 @@ public final class JeoCompiler {
      */
     public XML compile() {
         final Node node = this.opeo.node();
-        new XmlProgram(node).top().methods().forEach(this::compile);
+        new XmlProgram(node).top().methods().forEach(JeoCompiler::compile);
         return new XMLDocument(node);
     }
 
@@ -62,7 +63,7 @@ public final class JeoCompiler {
      * Compiles a single method.
      * @param method The method to compile.
      */
-    private void compile(final XmlMethod method) {
+    private static void compile(final XmlMethod method) {
         method.replaceInstructions(
             new OpeoNodes(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
         );
