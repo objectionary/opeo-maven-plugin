@@ -24,6 +24,7 @@
 package org.eolang.opeo.ast;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.eolang.jeo.representation.directives.DirectivesInstruction;
 import org.eolang.parser.XMIR;
@@ -64,6 +65,15 @@ public final class Opcode implements AstNode {
      */
     public Opcode(final int opcode, final Object... operands) {
         this(opcode, Arrays.asList(operands));
+    }
+
+    /**
+     * Constructor.
+     * @param opcode Opcode
+     * @param counting Opcodes counting
+     */
+    public Opcode(final int opcode, final boolean counting) {
+        this(opcode, Collections.emptyList(), counting);
     }
 
     /**
