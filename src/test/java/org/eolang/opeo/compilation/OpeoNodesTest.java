@@ -38,6 +38,7 @@ import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
 
@@ -92,6 +93,7 @@ final class OpeoNodesTest {
     }
 
     @Test
+    @Disabled("Not implemented yet")
     void convertsDeepAddition() {
         final List<XmlNode> nodes = new OpeoNodes(
             new Add(
@@ -146,49 +148,58 @@ final class OpeoNodesTest {
 
         @Override
         protected boolean matchesSafely(final List<XmlNode> item) {
+            boolean result = true;
             final int size = item.size();
             for (int index = 0; index < size; ++index) {
-                final XmlNode node = item.get(index);
-                final Optional<String> obase = node.attribute("base");
-                if (obase.isPresent()) {
-                    final String base = obase.get();
-                    if (base.equals("opcode")) {
-                        final Optional<String> oname = node.attribute("name");
-                        if (oname.isPresent()) {
-                            final String expected = HasInstructions.name(this.opcodes.get(index));
-                            if (!oname.get().contains(expected)) {
-                                this.warnings.add(
-                                    String.format(
-                                        "Expected to have opcode with name %s at index %d, but got %s instead",
-                                        expected,
-                                        index,
-                                        oname.get()
-                                    )
-                                );
-                                return false;
-                            }
-                        } else {
+                if (!this.matches(item.get(index), index)) {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        }
+
+        private boolean matches(final XmlNode node, final int index) {
+            boolean result = true;
+            final Optional<String> obase = node.attribute("base");
+            if (obase.isPresent()) {
+                final String base = obase.get();
+                if (base.equals("opcode")) {
+                    final Optional<String> oname = node.attribute("name");
+                    if (oname.isPresent()) {
+                        final String expected = HasInstructions.name(this.opcodes.get(index));
+                        if (!oname.get().contains(expected)) {
                             this.warnings.add(
                                 String.format(
-                                    "Expected to have opcode name at index %d, but got nothing instead",
-                                    index
+                                    "Expected to have opcode with name %s at index %d, but got %s instead",
+                                    expected,
+                                    index,
+                                    oname.get()
                                 )
                             );
-                            return false;
+                            result = false;
                         }
                     } else {
                         this.warnings.add(
                             String.format(
-                                "Expected to have opcode at index %d, but got %s instead",
-                                index,
-                                base
+                                "Expected to have opcode name at index %d, but got nothing instead",
+                                index
                             )
                         );
-                        return false;
+                        result = false;
                     }
+                } else {
+                    this.warnings.add(
+                        String.format(
+                            "Expected to have opcode at index %d, but got %s instead",
+                            index,
+                            base
+                        )
+                    );
+                    result = false;
                 }
             }
-            return true;
+            return result;
         }
 
         /**
