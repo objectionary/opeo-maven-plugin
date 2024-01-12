@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.List;
 import lombok.ToString;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -76,5 +77,10 @@ public final class Variable implements AstNode {
             .add("o")
             .attr("base", String.format("local%d", this.identifier))
             .up();
+    }
+
+    @Override
+    public List<Opcode> opcodes() {
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }

@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.List;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -68,5 +69,10 @@ public final class StoreLocal implements AstNode {
             .append(this.variable.toXmir())
             .append(this.value.toXmir())
             .up();
+    }
+
+    @Override
+    public List<Opcode> opcodes() {
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }

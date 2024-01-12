@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.List;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -42,6 +43,11 @@ public final class This implements AstNode {
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o").attr("base", "$").up();
+    }
+
+    @Override
+    public List<Opcode> opcodes() {
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
 }

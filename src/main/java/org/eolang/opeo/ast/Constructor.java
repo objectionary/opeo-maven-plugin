@@ -86,6 +86,11 @@ public final class Constructor implements AstNode {
         return directives.up();
     }
 
+    @Override
+    public List<Opcode> opcodes() {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
     /**
      * Print arguments.
      * @return Arguments string.

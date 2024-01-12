@@ -93,23 +93,21 @@ final class OpeoNodesTest {
     }
 
     @Test
-    @Disabled("Not implemented yet")
     void convertsDeepAddition() {
-        final List<XmlNode> nodes = new OpeoNodes(
-            new Add(
-                new Add(
-                    new Literal(1),
-                    new Literal(2)
-                ),
-                new Add(
-                    new Literal(3),
-                    new Literal(4)
-                )
-            )
-        ).toJeoNodes();
         MatcherAssert.assertThat(
             "We expect to retrieve 7 opcodes, but got something else instead",
-            nodes,
+            new OpeoNodes(
+                new Add(
+                    new Add(
+                        new Literal(1),
+                        new Literal(2)
+                    ),
+                    new Add(
+                        new Literal(3),
+                        new Literal(4)
+                    )
+                )
+            ).toJeoNodes(),
             new HasInstructions(
                 Opcodes.ICONST_1,
                 Opcodes.ICONST_2,

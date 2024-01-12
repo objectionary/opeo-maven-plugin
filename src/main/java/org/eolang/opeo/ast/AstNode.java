@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.List;
 import org.xembly.Directive;
 
 /**
@@ -42,4 +43,10 @@ public interface AstNode {
      * @return XMIR XML.
      */
     Iterable<Directive> toXmir();
+
+    /**
+     * Bytecode instructions.
+     * @return List of opcodes.
+     */
+    List<Opcode> opcodes();
 }

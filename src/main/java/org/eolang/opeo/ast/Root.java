@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -74,6 +75,11 @@ public final class Root implements AstNode {
             result = directives;
         }
         return result;
+    }
+
+    @Override
+    public List<Opcode> opcodes() {
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     /**

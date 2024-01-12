@@ -110,6 +110,10 @@ public final class OpeoNodes {
         return result;
     }
 
+
+
+
+
     /**
      * Convert integer into an opcode.
      * @param value Integer value.
