@@ -55,13 +55,15 @@ public final class Literal implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
+        final List<AstNode> result;
         if (this.object instanceof Integer) {
-            return Collections.singletonList(Literal.opcode((Integer) this.object));
+            result = Collections.singletonList(Literal.opcode((Integer) this.object));
         } else if (this.object instanceof String) {
-            return Collections.singletonList(Literal.opcode((String) this.object));
+            result = Collections.singletonList(Literal.opcode((String) this.object));
         } else {
             throw new UnsupportedOperationException("Not implemented yet");
         }
+        return result;
     }
 
     @Override

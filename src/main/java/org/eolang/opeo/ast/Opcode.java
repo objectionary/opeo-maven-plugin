@@ -28,10 +28,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.eolang.jeo.representation.directives.DirectivesInstruction;
-import org.eolang.jeo.representation.directives.DirectivesOperand;
 import org.eolang.parser.XMIR;
 import org.xembly.Directive;
-import org.xembly.Directives;
 import org.xembly.Transformers;
 import org.xembly.Xembler;
 

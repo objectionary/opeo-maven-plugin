@@ -24,10 +24,8 @@
 package org.eolang.opeo.compilation;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
@@ -35,14 +33,13 @@ import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
-import org.eolang.opeo.jeo.JeoInstruction;
-import org.objectweb.asm.Opcodes;
 import org.xembly.Xembler;
 
 /**
  * High-level representation of Opeo nodes.
  * @since 0.1
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class OpeoNodes {
 
     /**
@@ -110,25 +107,27 @@ public final class OpeoNodes {
      *  To check all correct transformation you can modify 'benchmark' integration test.
      */
     private static AstNode node(final XmlNode node) {
+        final AstNode result;
         if (node.hasAttribute("base", ".plus")) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode left = OpeoNodes.node(inner.get(0));
             final AstNode right = OpeoNodes.node(inner.get(1));
-            return new Add(left, right);
+            result = new Add(left, right);
         } else if (node.hasAttribute("base", "opcode")) {
             final XmlInstruction instruction = new XmlInstruction(node.node());
-            return new Opcode(instruction.opcode(), instruction.operands());
+            result = new Opcode(instruction.opcode(), instruction.operands());
         } else if (node.hasAttribute("base", "label")) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            return new Label(OpeoNodes.node(inner.get(0)));
+            result = new Label(OpeoNodes.node(inner.get(0)));
         } else if (node.hasAttribute("base", "int")) {
-            return new Literal(new HexString(node.text()).decodeAsInt());
+            result = new Literal(new HexString(node.text()).decodeAsInt());
         } else if (node.hasAttribute("base", "string")) {
-            return new Literal(new HexString(node.text()).decode());
+            result = new Literal(new HexString(node.text()).decode());
         } else {
             throw new IllegalArgumentException(
                 String.format("Can't recognize node: %n%s%n", node)
             );
         }
+        return result;
     }
 }
