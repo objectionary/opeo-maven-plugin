@@ -121,7 +121,12 @@ public final class Opcode implements AstNode {
     /**
      * Disable opcodes counting.
      * It is useful for tests.
+     * @todo #65:30min Remove public static method 'disableCounting()' from Opcode.
+     *  Currently it is used in tests. We should find another
+     *  way to disable opcodes counting in tests. When we find
+     *  the way to do it, we should remove this method.
      */
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
     public static void disableCounting() {
         Opcode.COUNTING.set(false);
     }

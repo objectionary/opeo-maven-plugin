@@ -30,7 +30,6 @@ import org.cactoos.text.TextOf;
 import org.eolang.opeo.ast.Opcode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -45,7 +44,6 @@ final class JeoCompilerTest {
         final XML expected = new XMLDocument(
             new TextOf(new ResourceOf("xmir/Bar.xmir")).asString()
         );
-        assertEquals(expected, new JeoCompiler(expected).compile());
         MatcherAssert.assertThat(
             "The compiled program is not equal to the expected one, but should since we provided already compiled program",
             new JeoCompiler(expected).compile(),
