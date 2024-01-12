@@ -89,13 +89,6 @@ public final class OpeoNodes {
      * @return List of opcodes
      */
     private static List<XmlNode> opcodes(final XmlNode node) {
-        final List<XmlNode> result;
-        //@checkstyle MethodBodyCommentsCheck (10 lines)
-        // @todo #37:90min Parse AST from high-level XMIR.
-        //  Currently we apply naive algorithm to convert some parts of high-level representation
-        //  to bytecode instructions.
-        //  We should generate AST first and then compile it to bytecode instructions.
-        //  Don't forget to add unit tests.
         return OpeoNodes.node(node).opcodes()
             .stream()
             .map(Opcode::toXmir)
@@ -105,6 +98,16 @@ public final class OpeoNodes {
             .collect(Collectors.toList());
     }
 
+    /**
+     * Convert XmlNode to AstNode.
+     * @param node XmlNode
+     * @return Ast node
+     * @todo #65:90min Add more nodes to the parser.
+     *  Currently we only support addition and integer literals.
+     *  We need to add support for multiplication and many other nodes.
+     *  You can check all the required nodes in the {@link org.eolang.opeo.ast} package.
+     *  To check all correct transformation you can modify 'benchmark' integration test.
+     */
     private static AstNode node(final XmlNode node) {
         if (node.hasAttribute("base", ".plus")) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
