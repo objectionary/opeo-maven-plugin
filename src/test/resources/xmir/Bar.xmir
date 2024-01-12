@@ -41,17 +41,17 @@
                   <o base="label">
                      <o base="string" data="bytes">38 63 33 33 31 33 39 37 2D 32 35 39 35 2D 34 66 35 64 2D 38 65 62 30 2D 33 62 30 63 34 62 35 34 36 35 66 32</o>
                   </o>
-                  <o base="opcode" name="ALOAD-51">
+                  <o base="opcode" name="ALOAD">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
                      <o base="int" data="bytes">00 00 00 00 00 00 00 00</o>
                   </o>
-                  <o base="opcode" name="INVOKESPECIAL-52">
+                  <o base="opcode" name="INVOKESPECIAL">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 B7</o>
                      <o base="string" data="bytes">6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>
                      <o base="string" data="bytes">3C 69 6E 69 74 3E</o>
                      <o base="string" data="bytes">28 29 56</o>
                   </o>
-                  <o base="opcode" name="RETURN-53">
+                  <o base="opcode" name="RETURN">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 B1</o>
                   </o>
                   <o base="label">
@@ -59,7 +59,6 @@
                   </o>
                </o>
             </o>
-            <o base="tuple" name="trycatchblocks"/>
          </o>
          <o abstract="" name="j$foo">
             <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 01</o>
@@ -72,11 +71,11 @@
                   <o base="label">
                      <o base="string" data="bytes">62 39 63 64 62 64 63 65 2D 38 35 38 65 2D 34 30 36 32 2D 61 38 39 30 2D 62 32 65 34 30 62 34 36 31 36 61 37</o>
                   </o>
-                  <o base="opcode" name="ILOAD-54">
+                  <o base="opcode" name="ILOAD">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 15</o>
                      <o base="int" data="bytes">00 00 00 00 00 00 00 01</o>
                   </o>
-                  <o base="opcode" name="IFLE-55">
+                  <o base="opcode" name="IFLE">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 9E</o>
                      <o base="label">
                         <o base="string" data="bytes">36 62 34 36 66 61 36 32 2D 32 66 30 65 2D 34 38 34 30 2D 39 34 62 32 2D 66 65 32 64 31 36 35 65 33 35 30 32</o>
@@ -85,19 +84,19 @@
                   <o base="label">
                      <o base="string" data="bytes">30 61 30 33 30 39 37 66 2D 30 66 66 65 2D 34 61 38 63 2D 39 64 34 34 2D 64 31 39 39 33 32 61 35 65 35 35 30</o>
                   </o>
-                  <o base="opcode" name="ICONST_1-56">
+                  <o base="opcode" name="ICONST_1">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 04</o>
                   </o>
-                  <o base="opcode" name="IRETURN-57">
+                  <o base="opcode" name="IRETURN">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 AC</o>
                   </o>
                   <o base="label">
                      <o base="string" data="bytes">36 62 34 36 66 61 36 32 2D 32 66 30 65 2D 34 38 34 30 2D 39 34 62 32 2D 66 65 32 64 31 36 35 65 33 35 30 32</o>
                   </o>
-                  <o base="opcode" name="ICONST_2-58">
+                  <o base="opcode" name="ICONST_2">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 05</o>
                   </o>
-                  <o base="opcode" name="IRETURN-59">
+                  <o base="opcode" name="IRETURN">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 AC</o>
                   </o>
                   <o base="label">

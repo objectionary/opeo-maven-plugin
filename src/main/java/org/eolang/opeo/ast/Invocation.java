@@ -112,7 +112,7 @@ public final class Invocation implements AstNode {
     }
 
     @Override
-    public List<Opcode> opcodes() {
+    public List<AstNode> opcodes() {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 

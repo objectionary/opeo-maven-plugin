@@ -71,8 +71,8 @@ public final class Add implements AstNode {
     }
 
     @Override
-    public List<Opcode> opcodes() {
-        final List<Opcode> res = new ArrayList<>(0);
+    public List<AstNode> opcodes() {
+        final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.left.opcodes());
         res.addAll(this.right.opcodes());
         res.add(new Opcode(Opcodes.IADD));

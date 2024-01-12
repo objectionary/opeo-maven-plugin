@@ -54,11 +54,11 @@ public final class Literal implements AstNode {
     }
 
     @Override
-    public List<Opcode> opcodes() {
+    public List<AstNode> opcodes() {
         if (this.object instanceof Integer) {
-            return Collections.singletonList(
-                Literal.opcode((Integer) this.object)
-            );
+            return Collections.singletonList(Literal.opcode((Integer) this.object));
+        } else if (this.object instanceof String) {
+            return Collections.singletonList(Literal.opcode((String) this.object));
         } else {
             throw new UnsupportedOperationException("Not implemented yet");
         }
@@ -73,6 +73,15 @@ public final class Literal implements AstNode {
             result = this.object.toString();
         }
         return result;
+    }
+
+    /**
+     * Convert string into an opcode.
+     * @param value String value.
+     * @return Opcode.
+     */
+    private static Opcode opcode(final String value) {
+        return new Opcode(Opcodes.LDC, value);
     }
 
     /**

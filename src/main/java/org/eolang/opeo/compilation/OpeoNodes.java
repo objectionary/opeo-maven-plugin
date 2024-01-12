@@ -32,6 +32,7 @@ import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.jeo.JeoInstruction;
@@ -91,7 +92,7 @@ public final class OpeoNodes {
     private static List<XmlNode> opcodes(final XmlNode node) {
         return OpeoNodes.node(node).opcodes()
             .stream()
-            .map(Opcode::toXmir)
+            .map(AstNode::toXmir)
             .map(Xembler::new)
             .map(Xembler::xmlQuietly)
             .map(XmlNode::new)
@@ -117,8 +118,13 @@ public final class OpeoNodes {
         } else if (node.hasAttribute("base", "opcode")) {
             final XmlInstruction instruction = new XmlInstruction(node.node());
             return new Opcode(instruction.opcode(), instruction.operands());
+        } else if (node.hasAttribute("base", "label")) {
+            final List<XmlNode> inner = node.children().collect(Collectors.toList());
+            return new Label(OpeoNodes.node(inner.get(0)));
         } else if (node.hasAttribute("base", "int")) {
             return new Literal(new HexString(node.text()).decodeAsInt());
+        } else if (node.hasAttribute("base", "string")) {
+            return new Literal(new HexString(node.text()).decode());
         } else {
             throw new IllegalArgumentException(
                 String.format("Can't recognize node: %n%s%n", node)

@@ -48,5 +48,5 @@ public interface AstNode {
      * Bytecode instructions.
      * @return List of opcodes.
      */
-    List<Opcode> opcodes();
+    List<AstNode> opcodes();
 }

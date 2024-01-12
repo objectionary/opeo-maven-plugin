@@ -34,6 +34,7 @@ import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
+import org.eolang.opeo.ast.OpcodeName;
 import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -212,7 +213,7 @@ final class OpeoNodesTest {
             final boolean result;
             final Optional<String> oname = node.attribute("name");
             if (oname.isPresent()) {
-                final String expected = HasInstructions.name(this.opcodes.get(index));
+                final String expected = new OpcodeName(this.opcodes.get(index)).simplified();
                 final String name = oname.get();
                 if (name.contains(expected)) {
                     result = true;
@@ -237,44 +238,6 @@ final class OpeoNodesTest {
                 result = false;
             }
             return result;
-        }
-
-        /**
-         * Get opcode name by opcode.
-         * @param opcode Opcode.
-         * @return Opcode name.
-         */
-        private static String name(final int opcode) {
-            return Arrays.stream(Opcodes.class.getFields())
-                .filter(field -> field.getType() == int.class)
-                .filter(field -> !field.getName().startsWith("T_"))
-                .filter(field -> !field.getName().startsWith("H_"))
-                .filter(field -> !field.getName().startsWith("F_"))
-                .filter(field -> !field.getName().startsWith("ACC"))
-                .filter(field -> !field.getName().startsWith("ASM"))
-                .filter(field -> HasInstructions.sameOpcode(field, opcode))
-                .map(Field::getName)
-                .findFirst()
-                .orElseThrow(
-                    () -> new IllegalStateException(String.format("Unknown opcode: %d", opcode))
-                );
-        }
-
-        /**
-         * Check if field has the same opcode.
-         * @param field Field.
-         * @param opcode Opcode.
-         * @return True if field has the same opcode.
-         */
-        private static boolean sameOpcode(final Field field, final int opcode) {
-            try {
-                return opcode == field.getInt(Opcodes.class);
-            } catch (final IllegalAccessException exception) {
-                throw new IllegalStateException(
-                    String.format("Cannot access opcode %d in field %s", opcode, field),
-                    exception
-                );
-            }
         }
     }
 }
