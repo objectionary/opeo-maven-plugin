@@ -1,0 +1,9 @@
+*.aux
+*.fdb_latexmk
+*.log
+article.pdf
+_eolang/
+*.bbl
+*.blg
+*.fls
+*.out
