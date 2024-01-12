@@ -1,8 +1,11 @@
-[![latexmk](https://github.com/yegor256/phi-paper/actions/workflows/latexmk.yml/badge.svg)](https://github.com/yegor256/phi-paper/actions/workflows/latexmk.yml)
+<img alt="logo" src="https://www.objectionary.com/cactus.svg" height="100px" />
 
-Auto-generated PDFs are here: 
+[![latexmk](https://github.com/objectionary/opeo-maven-plugin/actions/workflows/latexmk.yml/badge.svg)](https://github.com/objectionary/opeo-maven-plugin/actions/workflows/latexmk.yml)
 
-  * [main.pdf](https://github.com/yegor256/phi-paper/blob/gh-pages/main.pdf) — the paper itself
-  * [slidedeck.pdf](https://github.com/yegor256/phi-paper/blob/gh-pages/slidedeck.pdf) — illustated analysis of Related Works
+This paper explains how OPEO works.
+
+Auto-generated PDF is here: [article.pdf](https://github.com/objectionary/opeo-maven-plugin/blob/gh-pages/article.pdf)
 
 Feel free to contribute, via pull requests.
+
+
