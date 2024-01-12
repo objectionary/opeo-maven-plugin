@@ -108,8 +108,17 @@ final class OpeoNodesTest {
             )
         ).toJeoNodes();
         MatcherAssert.assertThat(
+            "We expect to retrieve 7 opcodes, but got something else instead",
             nodes,
-            new HasInstructions()
+            new HasInstructions(
+                Opcodes.ICONST_1,
+                Opcodes.ICONST_2,
+                Opcodes.IADD,
+                Opcodes.ICONST_3,
+                Opcodes.ICONST_4,
+                Opcodes.IADD,
+                Opcodes.IADD
+            )
         );
     }
 
