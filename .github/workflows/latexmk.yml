@@ -21,3 +21,4 @@ jobs:
           branch: gh-pages
           folder: gh-pages
           clean: false
+        if: github.ref == 'refs/heads/master'
