@@ -23,9 +23,11 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -88,7 +90,12 @@ public final class Constructor implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        final List<AstNode> res = new ArrayList<>(0);
+        res.add(new Opcode(Opcodes.NEW, this.type));
+        res.add(new Opcode(Opcodes.DUP));
+        this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
+        res.add(new Opcode(Opcodes.INVOKESPECIAL, this.type, "<init>", "V()"));
+        return res;
     }
 
     /**

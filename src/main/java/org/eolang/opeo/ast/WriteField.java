@@ -23,7 +23,9 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.ArrayList;
 import java.util.List;
+import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -69,6 +71,9 @@ public final class WriteField implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        final List<AstNode> res = new ArrayList<>(1);
+        res.addAll(this.value.opcodes());
+        res.add(new Opcode(Opcodes.PUTFIELD, this.target.print()));
+        return res;
     }
 }

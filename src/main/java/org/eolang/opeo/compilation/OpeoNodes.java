@@ -154,6 +154,22 @@ public final class OpeoNodes {
             result = new Variable(Type.INT_TYPE, 0);
         } else if (node.hasAttribute("base", "local1")) {
             result = new Variable(Type.INT_TYPE, 1);
+        } else if (node.hasAttribute("base", "local2")) {
+            result = new Variable(Type.INT_TYPE, 2);
+        } else if (node.hasAttribute("base", "local3")) {
+            result = new Variable(Type.INT_TYPE, 3);
+        } else if (node.hasAttribute("base", "local4")) {
+            result = new Variable(Type.INT_TYPE, 4);
+        } else if (node.hasAttribute("base", "local5")) {
+            result = new Variable(Type.INT_TYPE, 5);
+        } else if (node.hasAttribute("base", "local6")) {
+            result = new Variable(Type.INT_TYPE, 6);
+        } else if (node.hasAttribute("base", "local7")) {
+            result = new Variable(Type.INT_TYPE, 7);
+        } else if (node.hasAttribute("base", "local8")) {
+            result = new Variable(Type.INT_TYPE, 8);
+        } else if (node.hasAttribute("base", "local9")) {
+            result = new Variable(Type.INT_TYPE, 9);
         } else if (node.hasAttribute("base", ".write")) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode variable = OpeoNodes.node(inner.get(0));

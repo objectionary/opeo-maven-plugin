@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -73,6 +74,9 @@ public final class StoreLocal implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        final List<AstNode> res = new ArrayList<>(0);
+        res.addAll(this.value.opcodes());
+        res.addAll(this.variable.opcodes());
+        return res;
     }
 }
