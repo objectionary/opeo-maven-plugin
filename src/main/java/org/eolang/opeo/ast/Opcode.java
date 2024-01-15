@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.eolang.jeo.representation.directives.DirectivesInstruction;
 import org.eolang.parser.XMIR;
 import org.xembly.Directive;
@@ -37,6 +38,11 @@ import org.xembly.Xembler;
  * @since 0.1
  */
 public final class Opcode implements AstNode {
+
+    /**
+     * Opcodes counting.
+     */
+    private static final AtomicBoolean COUNTING = new AtomicBoolean(true);
 
     /**
      * Opcode.
@@ -82,7 +88,7 @@ public final class Opcode implements AstNode {
      * @param operands Opcode operands
      */
     public Opcode(final int opcode, final List<Object> operands) {
-        this(opcode, operands, true);
+        this(opcode, operands, Opcode.COUNTING.get());
     }
 
     /**
@@ -105,5 +111,23 @@ public final class Opcode implements AstNode {
     @Override
     public Iterable<Directive> toXmir() {
         return new DirectivesInstruction(this.bytecode, this.counting, this.operands.toArray());
+    }
+
+    @Override
+    public List<AstNode> opcodes() {
+        return List.of(this);
+    }
+
+    /**
+     * Disable opcodes counting.
+     * It is useful for tests.
+     * @todo #65:30min Remove public static method 'disableCounting()' from Opcode.
+     *  Currently it is used in tests. We should find another
+     *  way to disable opcodes counting in tests. When we find
+     *  the way to do it, we should remove this method.
+     */
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
+    public static void disableCounting() {
+        Opcode.COUNTING.set(false);
     }
 }

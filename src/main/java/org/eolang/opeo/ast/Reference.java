@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import org.xembly.Directive;
 
@@ -69,5 +70,10 @@ public final class Reference implements AstNode {
     @Override
     public Iterable<Directive> toXmir() {
         return this.ref.get().toXmir();
+    }
+
+    @Override
+    public List<AstNode> opcodes() {
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }

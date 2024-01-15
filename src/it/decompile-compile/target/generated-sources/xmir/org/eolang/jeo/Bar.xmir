@@ -59,7 +59,6 @@
                   </o>
                </o>
             </o>
-            <o base="tuple" name="trycatchblocks"/>
          </o>
          <o abstract="" name="j$foo">
             <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 01</o>
@@ -105,7 +104,6 @@
                   </o>
                </o>
             </o>
-            <o base="tuple" name="trycatchblocks"/>
          </o>
       </o>
    </objects>

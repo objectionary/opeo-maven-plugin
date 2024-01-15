@@ -28,6 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
+import org.eolang.opeo.ast.Opcode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.io.FileMatchers;
@@ -61,6 +62,7 @@ final class CompilerTest {
 
     @Test
     void compilesSingleHighLevelXmir(@TempDir final Path temp) throws Exception {
+        Opcode.disableCounting();
         final Path input = temp.resolve("opeo-xmir").resolve("Bar.xmir");
         Files.createDirectories(input.getParent());
         final byte[] before = new BytesOf(new ResourceOf("xmir/Bar.xmir")).asBytes();

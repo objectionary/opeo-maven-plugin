@@ -111,6 +111,11 @@ public final class Invocation implements AstNode {
         return directives.up();
     }
 
+    @Override
+    public List<AstNode> opcodes() {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
     /**
      * Print arguments.
      * @return Arguments

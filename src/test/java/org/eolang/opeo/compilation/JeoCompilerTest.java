@@ -27,6 +27,7 @@ import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.TextOf;
+import org.eolang.opeo.ast.Opcode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,7 @@ final class JeoCompilerTest {
 
     @Test
     void compilesSuccessfully() throws Exception {
+        Opcode.disableCounting();
         final XML expected = new XMLDocument(
             new TextOf(new ResourceOf("xmir/Bar.xmir")).asString()
         );

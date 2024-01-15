@@ -21,58 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.ast;
-
-import java.util.List;
-import org.xembly.Directive;
-import org.xembly.Directives;
+package org.eolang.opeo.compilation;
 
 /**
- * Store local variable.
+ * AST tree of the free EO program.
  * @since 0.1
  */
-public final class StoreLocal implements AstNode {
-
-    /**
-     * Local variable.
-     */
-    private final AstNode variable;
-
-    /**
-     * Value to store.
-     */
-    private final AstNode value;
-
-    /**
-     * Constructor.
-     * @param variable Local variable
-     * @param value Value to store
-     */
-    public StoreLocal(final AstNode variable, final AstNode value) {
-        this.variable = variable;
-        this.value = value;
-    }
-
-    @Override
-    public String print() {
-        return String.format(
-            "%s = %s",
-            this.variable.print(),
-            this.value.print()
-        );
-    }
-
-    @Override
-    public Iterable<Directive> toXmir() {
-        return new Directives().add("o")
-            .attr("base", ".write")
-            .append(this.variable.toXmir())
-            .append(this.value.toXmir())
-            .up();
-    }
-
-    @Override
-    public List<AstNode> opcodes() {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
+public final class OpeoTree {
 }

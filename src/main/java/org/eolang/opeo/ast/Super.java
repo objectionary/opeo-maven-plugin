@@ -23,9 +23,11 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -81,6 +83,20 @@ public final class Super implements AstNode {
             .append(this.instance.toXmir());
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
+    }
+
+    @Override
+    public List<AstNode> opcodes() {
+        final List<AstNode> res = new ArrayList<>(1);
+        res.addAll(this.instance.opcodes());
+        this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
+        //@checkstyle MethodBodyCommentsCheck (10 lines)
+        // @todo #65:90min Pass correct arguments to invokespecial instruction.
+        //  Currently we just pass default arguments to invokespecial instruction.
+        //  We need to pass correct arguments to invokespecial instruction.
+        //  But in order to implement this we need to save this arguments somewhere before.
+        res.add(new Opcode(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V"));
+        return res;
     }
 
     /**

@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.List;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -64,5 +65,10 @@ public final class InstanceField implements AstNode {
             .attr("base", String.format(".%s", this.name))
             .append(this.source.toXmir())
             .up();
+    }
+
+    @Override
+    public List<AstNode> opcodes() {
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }

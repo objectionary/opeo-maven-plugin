@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.List;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -64,5 +65,10 @@ public final class Mul implements AstNode {
             .append(this.left.toXmir())
             .append(this.right.toXmir())
             .up();
+    }
+
+    @Override
+    public List<AstNode> opcodes() {
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 }

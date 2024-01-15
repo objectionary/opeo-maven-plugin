@@ -23,7 +23,10 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.Collections;
+import java.util.List;
 import org.eolang.jeo.representation.directives.DirectivesData;
+import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 
 /**
@@ -51,6 +54,19 @@ public final class Literal implements AstNode {
     }
 
     @Override
+    public List<AstNode> opcodes() {
+        final List<AstNode> result;
+        if (this.object instanceof Integer) {
+            result = Collections.singletonList(Literal.opcode((Integer) this.object));
+        } else if (this.object instanceof String) {
+            result = Collections.singletonList(Literal.opcode((String) this.object));
+        } else {
+            throw new UnsupportedOperationException("Not implemented yet");
+        }
+        return result;
+    }
+
+    @Override
     public String print() {
         final String result;
         if (this.object instanceof String) {
@@ -59,5 +75,47 @@ public final class Literal implements AstNode {
             result = this.object.toString();
         }
         return result;
+    }
+
+    /**
+     * Convert string into an opcode.
+     * @param value String value.
+     * @return Opcode.
+     */
+    private static Opcode opcode(final String value) {
+        return new Opcode(Opcodes.LDC, value);
+    }
+
+    /**
+     * Convert integer into an opcode.
+     * @param value Integer value.
+     * @return Opcode.
+     */
+    private static Opcode opcode(final int value) {
+        final Opcode res;
+        switch (value) {
+            case 0:
+                res = new Opcode(Opcodes.ICONST_0);
+                break;
+            case 1:
+                res = new Opcode(Opcodes.ICONST_1);
+                break;
+            case 2:
+                res = new Opcode(Opcodes.ICONST_2);
+                break;
+            case 3:
+                res = new Opcode(Opcodes.ICONST_3);
+                break;
+            case 4:
+                res = new Opcode(Opcodes.ICONST_4);
+                break;
+            case 5:
+                res = new Opcode(Opcodes.ICONST_5);
+                break;
+            default:
+                res = new Opcode(Opcodes.BIPUSH, value);
+                break;
+        }
+        return res;
     }
 }
