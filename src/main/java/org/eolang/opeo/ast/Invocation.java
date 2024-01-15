@@ -23,11 +23,13 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.ToString;
+import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -113,7 +115,10 @@ public final class Invocation implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        final List<AstNode> res = new ArrayList<>(0);
+        this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
+        res.add(new Opcode(Opcodes.INVOKEVIRTUAL, "V", this.method, "V()"));
+        return res;
     }
 
     /**
