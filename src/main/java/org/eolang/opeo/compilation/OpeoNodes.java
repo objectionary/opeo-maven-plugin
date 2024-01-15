@@ -31,6 +31,7 @@ import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
@@ -151,6 +152,8 @@ public final class OpeoNodes {
             //  Currently we just treat all the variables as local variable with index 0
             //  and type int. We need to handle local variables correctly.
             result = new Variable(Type.INT_TYPE, 0);
+        } else if (node.hasAttribute("base", "local1")) {
+            result = new Variable(Type.INT_TYPE, 1);
         } else if (node.hasAttribute("base", ".write")) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode variable = OpeoNodes.node(inner.get(0));
@@ -160,6 +163,19 @@ public final class OpeoNodes {
             } else {
                 result = new WriteField(variable, value);
             }
+        } else if (node.hasAttribute("base", ".new")) {
+            final List<XmlNode> inner = node.children().collect(Collectors.toList());
+            final String type = inner.get(0).text();
+            final List<AstNode> arguments;
+            if (inner.size() > 1) {
+                arguments = inner.subList(1, inner.size())
+                    .stream()
+                    .map(OpeoNodes::node)
+                    .collect(Collectors.toList());
+            } else {
+                arguments = Collections.emptyList();
+            }
+            result = new Constructor(type, arguments);
         } else {
             throw new IllegalArgumentException(
                 String.format("Can't recognize node: %n%s%n", node)
