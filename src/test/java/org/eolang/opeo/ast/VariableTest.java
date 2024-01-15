@@ -84,8 +84,11 @@ class VariableTest {
 
     /**
      * Types arguments.
+     * Don't remove this method, it's used by {@link #convertsType(Type, String)}.
      * @return Arguments.
+     * @checkstyle UnusedPrivateMethod (10 lines)
      */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Stream<Arguments> typesArguments() {
         return Stream.of(
             Arguments.of(Type.INT_TYPE, "I"),
