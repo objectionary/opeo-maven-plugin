@@ -24,14 +24,17 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
@@ -93,6 +96,20 @@ class VariableTest {
         );
     }
 
+    @ParameterizedTest(name = "[{index}] {0} => {1}")
+    @MethodSource("loads")
+    void transformsToBytecodeInstructions(final Type type, final int expected) {
+        MatcherAssert.assertThat(
+            "Can't correctly transform variable to bytecode instructions. It should be exactly 1 instruction",
+            new Variable(type, 0).opcodes().stream().map(AstNode::toXmir)
+                .map(Xembler::new)
+                .map(Xembler::xmlQuietly)
+                .map(XmlNode::new)
+                .collect(Collectors.toList()),
+            new HasInstructions(expected)
+        );
+    }
+
     /**
      * Types arguments.
      * Don't remove this method, it's used by {@link #convertsType(Type, String)}.
@@ -112,6 +129,26 @@ class VariableTest {
             Arguments.of(Type.SHORT_TYPE, "S"),
             Arguments.of(Type.VOID_TYPE, "V"),
             Arguments.of(Type.getType("Ljava/lang/String;"), "Ljava/lang/String;")
+        );
+    }
+
+    /**
+     * Arguments for {@link #transformsToBytecodeInstructions(Type, int)} ()}.
+     * Don't remove this method, it's used by {@link #transformsToBytecodeInstructions(Type, int)}}.
+     * @return Arguments.
+     */
+    private static Stream<Arguments> loads() {
+        return Stream.of(
+            Arguments.of(Type.INT_TYPE, Opcodes.ILOAD),
+            Arguments.of(Type.BOOLEAN_TYPE, Opcodes.ILOAD),
+            Arguments.of(Type.BYTE_TYPE, Opcodes.ILOAD),
+            Arguments.of(Type.CHAR_TYPE, Opcodes.ILOAD),
+            Arguments.of(Type.DOUBLE_TYPE, Opcodes.DLOAD),
+            Arguments.of(Type.FLOAT_TYPE, Opcodes.FLOAD),
+            Arguments.of(Type.LONG_TYPE, Opcodes.LLOAD),
+            Arguments.of(Type.SHORT_TYPE, Opcodes.ILOAD),
+            Arguments.of(Type.VOID_TYPE, Opcodes.ALOAD),
+            Arguments.of(Type.getType("Ljava/lang/String;"), Opcodes.ALOAD)
         );
     }
 }
