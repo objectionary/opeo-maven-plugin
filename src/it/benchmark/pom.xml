@@ -64,6 +64,12 @@ SOFTWARE.
               <goal>decompile</goal>
             </goals>
           </execution>
+          <execution>
+            <id>opeo-compile</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
         </executions>
       </plugin>
     </plugins>

@@ -34,9 +34,11 @@ import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
+import org.eolang.opeo.ast.StoreLocal;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.ast.Variable;
+import org.eolang.opeo.ast.WriteField;
 import org.objectweb.asm.Type;
 import org.xembly.Xembler;
 
@@ -149,6 +151,15 @@ public final class OpeoNodes {
             //  Currently we just treat all the variables as local variable with index 0
             //  and type int. We need to handle local variables correctly.
             result = new Variable(Type.INT_TYPE, 0);
+        } else if (node.hasAttribute("base", ".write")) {
+            final List<XmlNode> inner = node.children().collect(Collectors.toList());
+            final AstNode variable = OpeoNodes.node(inner.get(0));
+            final AstNode value = OpeoNodes.node(inner.get(1));
+            if (variable instanceof Variable) {
+                result = new StoreLocal(variable, value);
+            } else {
+                result = new WriteField(variable, value);
+            }
         } else {
             throw new IllegalArgumentException(
                 String.format("Can't recognize node: %n%s%n", node)
