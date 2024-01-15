@@ -24,9 +24,14 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.eolang.opeo.compilation.HasInstructions;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.objectweb.asm.Opcodes;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
@@ -41,9 +46,7 @@ class SuperTest {
         MatcherAssert.assertThat(
             "Can't print 'super' statement, should be 'this.super \"hello, world!\"'",
             new Super(new This(), new Literal("hello, world!")).print(),
-            Matchers.equalTo(
-                "this.super \"hello, world!\""
-            )
+            Matchers.equalTo("this.super \"hello, world!\"")
         );
     }
 
@@ -60,6 +63,26 @@ class SuperTest {
                 "./o[@base='.super']",
                 "./o[@base='.super']/o[@base='$']",
                 "./o[@base='.super']/o[@base='int' and contains(text(), '1')]"
+            )
+        );
+    }
+
+    @Test
+    void convertsToOpcodes() {
+        MatcherAssert.assertThat(
+            "Can't convert 'super' statement to opcodes with correct arguments",
+            new Super(new This(), new Literal(1))
+                .opcodes()
+                .stream()
+                .map(AstNode::toXmir)
+                .map(Xembler::new)
+                .map(Xembler::xmlQuietly)
+                .map(XmlNode::new)
+                .collect(Collectors.toList()),
+            new HasInstructions(
+                Opcodes.ALOAD,
+                Opcodes.ICONST_1,
+                Opcodes.INVOKESPECIAL
             )
         );
     }
