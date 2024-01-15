@@ -109,7 +109,12 @@ public final class OpeoNodes {
      * Convert XmlNode to AstNode.
      * @param node XmlNode
      * @return Ast node
+     * @checkstyle CyclomaticComplexityCheck (200 lines)
+     * @checkstyle ExecutableStatementCountCheck (200 lines)
+     * @checkstyle JavaNCSSCheck (200 lines)
+     * @checkstyle NestedIfDepthCheck (200 lines)
      */
+    @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     private static AstNode node(final XmlNode node) {
         final AstNode result;
         if (node.hasAttribute("base", ".plus")) {
@@ -190,7 +195,7 @@ public final class OpeoNodes {
             result = new Constructor(type, arguments);
         } else if (node.attribute("base").isPresent()) {
             final String other = node.attribute("base").get();
-            if (other.startsWith(".")) {
+            if (!other.isEmpty() && other.charAt(0) == '.') {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode target = OpeoNodes.node(inner.get(0));
                 final List<AstNode> arguments;
