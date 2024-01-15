@@ -32,6 +32,7 @@ import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Constructor;
+import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
@@ -192,6 +193,26 @@ public final class OpeoNodes {
                 arguments = Collections.emptyList();
             }
             result = new Constructor(type, arguments);
+        } else if (node.attribute("base").isPresent()) {
+            final String other = node.attribute("base").get();
+            if (other.startsWith(".")) {
+                final List<XmlNode> inner = node.children().collect(Collectors.toList());
+                final AstNode target = OpeoNodes.node(inner.get(0));
+                final List<AstNode> arguments;
+                if (inner.size() > 1) {
+                    arguments = inner.subList(1, inner.size())
+                        .stream()
+                        .map(OpeoNodes::node)
+                        .collect(Collectors.toList());
+                } else {
+                    arguments = Collections.emptyList();
+                }
+                result = new Invocation(target, other.substring(1), arguments);
+            } else {
+                throw new IllegalArgumentException(
+                    String.format("Can't recognize node: %n%s%n", node)
+                );
+            }
         } else {
             throw new IllegalArgumentException(
                 String.format("Can't recognize node: %n%s%n", node)
