@@ -89,10 +89,27 @@ public final class Variable implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
+        final List<AstNode> result;
         if (this.type.equals(Type.INT_TYPE)) {
-            return List.of(new Opcode(Opcodes.ILOAD, this.identifier));
+            result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
+        } else if (this.type.equals(Type.DOUBLE_TYPE)) {
+            result = List.of(new Opcode(Opcodes.DLOAD, this.identifier));
+        } else if (this.type.equals(Type.LONG_TYPE)) {
+            result = List.of(new Opcode(Opcodes.LLOAD, this.identifier));
+        } else if (this.type.equals(Type.FLOAT_TYPE)) {
+            result = List.of(new Opcode(Opcodes.FLOAD, this.identifier));
+        } else if (this.type.equals(Type.BOOLEAN_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
+        } else if (this.type.equals(Type.CHAR_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
+        } else if (this.type.equals(Type.BYTE_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
+        } else if (this.type.equals(Type.SHORT_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
+        } else {
+            result = List.of(new Opcode(Opcodes.ALOAD, this.identifier));
         }
-        throw new UnsupportedOperationException("Not implemented yet");
+        return result;
     }
 
     /**
