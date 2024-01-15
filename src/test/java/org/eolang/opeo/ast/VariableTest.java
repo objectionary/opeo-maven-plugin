@@ -137,6 +137,7 @@ class VariableTest {
      * Don't remove this method, it's used by {@link #transformsToBytecodeInstructions(Type, int)}}.
      * @return Arguments.
      */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Stream<Arguments> loads() {
         return Stream.of(
             Arguments.of(Type.INT_TYPE, Opcodes.ILOAD),

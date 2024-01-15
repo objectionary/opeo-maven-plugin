@@ -55,8 +55,12 @@ public final class Variable implements AstNode {
      */
     private final int identifier;
 
+    /**
+     * Constructor.
+     * @param node The XML node that represents variable.
+     */
     public Variable(final XmlNode node) {
-        this(Variable.type(node), Variable.identifier(node));
+        this(Variable.vtype(node), Variable.videntifier(node));
     }
 
     /**
@@ -117,7 +121,7 @@ public final class Variable implements AstNode {
      * @param node The XML node that represents variable.
      * @return The identifier.
      */
-    private static int identifier(final XmlNode node) {
+    private static int videntifier(final XmlNode node) {
         return Integer.parseInt(
             node.attribute("base").orElseThrow(
                 () -> new IllegalArgumentException(
@@ -135,7 +139,7 @@ public final class Variable implements AstNode {
      * @param node The XML node that represents variable.
      * @return The type.
      */
-    private static Type type(final XmlNode node) {
+    private static Type vtype(final XmlNode node) {
         return Type.getType(node.attribute("scope")
             .orElseThrow(
                 () -> new IllegalArgumentException(

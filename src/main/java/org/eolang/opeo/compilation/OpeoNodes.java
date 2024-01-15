@@ -26,7 +26,6 @@ package org.eolang.opeo.compilation;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
@@ -42,7 +41,6 @@ import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.ast.Variable;
 import org.eolang.opeo.ast.WriteField;
-import org.objectweb.asm.Type;
 import org.xembly.Xembler;
 
 /**
@@ -129,32 +127,30 @@ public final class OpeoNodes {
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     private static AstNode node(final XmlNode node) {
         final AstNode result;
-        final Optional<String> base = node.attribute("base");
-        if (base.isEmpty()) {
-            throw new IllegalArgumentException(
+        final String base = node.attribute("base").orElseThrow(
+            () -> new IllegalArgumentException(
                 String.format(
                     "Can't recognize node: %n%s%n'base' attribute should be present",
                     node
                 )
-            );
-        }
-        final String attribute = base.get();
-        if (".plus".equals(attribute)) {
+            )
+        );
+        if (".plus".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode left = OpeoNodes.node(inner.get(0));
             final AstNode right = OpeoNodes.node(inner.get(1));
             result = new Add(left, right);
-        } else if ("opcode".equals(attribute)) {
+        } else if ("opcode".equals(base)) {
             final XmlInstruction instruction = new XmlInstruction(node.node());
             result = new Opcode(instruction.opcode(), instruction.operands());
-        } else if ("label".equals(attribute)) {
+        } else if ("label".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             result = new Label(OpeoNodes.node(inner.get(0)));
-        } else if ("int".equals(attribute)) {
+        } else if ("int".equals(base)) {
             result = new Literal(new HexString(node.text()).decodeAsInt());
-        } else if ("string".equals(attribute)) {
+        } else if ("string".equals(base)) {
             result = new Literal(new HexString(node.text()).decode());
-        } else if (".super".equals(attribute)) {
+        } else if (".super".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode instance = OpeoNodes.node(inner.get(0));
             final List<AstNode> arguments;
@@ -167,11 +163,11 @@ public final class OpeoNodes {
                 arguments = Collections.emptyList();
             }
             result = new Super(instance, arguments);
-        } else if ("$".equals(attribute)) {
+        } else if ("$".equals(base)) {
             result = new This();
-        } else if (attribute.contains("local")) {
+        } else if (base.contains("local")) {
             result = new Variable(node);
-        } else if (".write".equals(attribute)) {
+        } else if (".write".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode variable = OpeoNodes.node(inner.get(0));
             final AstNode value = OpeoNodes.node(inner.get(1));
@@ -180,7 +176,7 @@ public final class OpeoNodes {
             } else {
                 result = new WriteField(variable, value);
             }
-        } else if (".new".equals(attribute)) {
+        } else if (".new".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final String type = inner.get(0).text();
             final List<AstNode> arguments;
@@ -193,7 +189,7 @@ public final class OpeoNodes {
                 arguments = Collections.emptyList();
             }
             result = new Constructor(type, arguments);
-        } else if (!attribute.isEmpty() && attribute.charAt(0) == '.') {
+        } else if (!base.isEmpty() && base.charAt(0) == '.') {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode target = OpeoNodes.node(inner.get(0));
             final List<AstNode> arguments;
@@ -205,7 +201,7 @@ public final class OpeoNodes {
             } else {
                 arguments = Collections.emptyList();
             }
-            result = new Invocation(target, attribute.substring(1), arguments);
+            result = new Invocation(target, base.substring(1), arguments);
         } else {
             throw new IllegalArgumentException(
                 String.format("Can't recognize node: %n%s%n", node)
