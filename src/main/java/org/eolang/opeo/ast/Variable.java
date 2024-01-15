@@ -33,13 +33,6 @@ import org.xembly.Directives;
 /**
  * A variable.
  * @since 0.1
- * @todo #44:90min Use type of the variable.
- *  Currently, the type of the variable is not used.
- *  It should be used to generate the correct XMIR.
- *  For example, if the type is "int", then the XMIR
- *  should contain this information to be able to
- *  reconstruct the type of the variable during
- *  the compilation to bytecode.
  */
 @ToString
 public final class Variable implements AstNode {
