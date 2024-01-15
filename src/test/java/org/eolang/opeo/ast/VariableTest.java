@@ -25,6 +25,7 @@ package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import java.util.stream.Stream;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -79,6 +80,16 @@ class VariableTest {
             ),
             xml,
             XhtmlMatchers.hasXPath(String.format("./o[@scope='%s']", expected))
+        );
+    }
+
+    @Test
+    void createsVariableFromXmir() throws ImpossibleModificationException {
+        final Variable original = new Variable(Type.FLOAT_TYPE, 2);
+        MatcherAssert.assertThat(
+            "Can't correctly create variable from XMIR. We expect the variable to be equal to the original, but it wasn't",
+            new Variable(new XmlNode(new Xembler(original.toXmir()).xml())),
+            Matchers.equalTo(original)
         );
     }
 
