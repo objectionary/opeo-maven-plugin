@@ -113,6 +113,10 @@ public final class OpeoNodes {
      * @checkstyle ExecutableStatementCountCheck (200 lines)
      * @checkstyle JavaNCSSCheck (200 lines)
      * @checkstyle NestedIfDepthCheck (200 lines)
+     * @todo #77:90min Refactor OpeoNodes.node() method.
+     *  The parsing method OpeoNodes.node() looks overcomplicated and violates many
+     *  code quality standards. We should refactor the method and remove all
+     *  the checkstyle and PMD "suppressions" from the method.
      */
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     private static AstNode node(final XmlNode node) {
