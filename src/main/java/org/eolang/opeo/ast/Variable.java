@@ -77,6 +77,7 @@ public final class Variable implements AstNode {
         return new Directives()
             .add("o")
             .attr("base", String.format("local%d", this.identifier))
+            .attr("scope", this.type.getDescriptor())
             .up();
     }
 
