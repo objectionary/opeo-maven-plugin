@@ -23,7 +23,9 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.Collections;
 import java.util.List;
+import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -47,7 +49,7 @@ public final class This implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return Collections.singletonList(new Opcode(Opcodes.ALOAD, 0));
     }
 
 }
