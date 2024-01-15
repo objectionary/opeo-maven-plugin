@@ -24,6 +24,7 @@
 package org.eolang.opeo.compilation;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
@@ -33,6 +34,8 @@ import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
+import org.eolang.opeo.ast.Super;
+import org.eolang.opeo.ast.This;
 import org.xembly.Xembler;
 
 /**
@@ -123,6 +126,21 @@ public final class OpeoNodes {
             result = new Literal(new HexString(node.text()).decodeAsInt());
         } else if (node.hasAttribute("base", "string")) {
             result = new Literal(new HexString(node.text()).decode());
+        } else if (node.hasAttribute("base", ".super")) {
+            final List<XmlNode> inner = node.children().collect(Collectors.toList());
+            final AstNode instance = OpeoNodes.node(inner.get(0));
+            final List<AstNode> arguments;
+            if (inner.size() > 1) {
+                arguments = inner.subList(1, inner.size())
+                    .stream()
+                    .map(OpeoNodes::node)
+                    .collect(Collectors.toList());
+            } else {
+                arguments = Collections.emptyList();
+            }
+            result = new Super(instance, arguments);
+        } else if (node.hasAttribute("base", "$")) {
+            result = new This();
         } else {
             throw new IllegalArgumentException(
                 String.format("Can't recognize node: %n%s%n", node)
