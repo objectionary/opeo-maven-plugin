@@ -37,6 +37,7 @@ import org.hamcrest.TypeSafeMatcher;
  * Matcher for {@link List} of {@link XmlNode} to have specific instructions.
  * @since 0.1
  */
+@SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
 public final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
 
     /**
