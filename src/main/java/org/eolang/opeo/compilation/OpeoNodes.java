@@ -36,6 +36,8 @@ import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
+import org.eolang.opeo.ast.Variable;
+import org.objectweb.asm.Type;
 import org.xembly.Xembler;
 
 /**
@@ -141,6 +143,12 @@ public final class OpeoNodes {
             result = new Super(instance, arguments);
         } else if (node.hasAttribute("base", "$")) {
             result = new This();
+        } else if (node.hasAttribute("base", "local0")) {
+            //@checkstyle MethodBodyCommentsCheck (10 lines)
+            // @todo #65:90min Handle local variables.
+            //  Currently we just treat all the variables as local variable with index 0
+            //  and type int. We need to handle local variables correctly.
+            result = new Variable(Type.INT_TYPE, 0);
         } else {
             throw new IllegalArgumentException(
                 String.format("Can't recognize node: %n%s%n", node)

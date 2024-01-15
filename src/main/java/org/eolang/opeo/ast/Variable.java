@@ -25,6 +25,7 @@ package org.eolang.opeo.ast;
 
 import java.util.List;
 import lombok.ToString;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -81,6 +82,9 @@ public final class Variable implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
+        if (this.type.equals(Type.INT_TYPE)) {
+            return List.of(new Opcode(Opcodes.ILOAD, this.identifier));
+        }
         throw new UnsupportedOperationException("Not implemented yet");
     }
 }
