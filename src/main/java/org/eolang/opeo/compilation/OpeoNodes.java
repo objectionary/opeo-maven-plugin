@@ -109,11 +109,6 @@ public final class OpeoNodes {
      * Convert XmlNode to AstNode.
      * @param node XmlNode
      * @return Ast node
-     * @todo #65:90min Add more nodes to the parser.
-     *  Currently we only support addition and integer literals.
-     *  We need to add support for multiplication and many other nodes.
-     *  You can check all the required nodes in the {@link org.eolang.opeo.ast} package.
-     *  To check all correct transformation you can modify 'benchmark' integration test.
      */
     private static AstNode node(final XmlNode node) {
         final AstNode result;
