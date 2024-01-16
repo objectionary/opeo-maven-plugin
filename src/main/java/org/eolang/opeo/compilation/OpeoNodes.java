@@ -162,7 +162,15 @@ public final class OpeoNodes {
             } else {
                 arguments = Collections.emptyList();
             }
-            result = new Super(instance, arguments);
+            result = new Super(
+                instance,
+                arguments,
+                node.attribute("scope")
+                    .orElseThrow(
+                        () -> new IllegalArgumentException(
+                            "Can't find descriptor for super invocation")
+                    )
+            );
         } else if ("$".equals(base)) {
             result = new This();
         } else if (base.contains("local")) {

@@ -383,8 +383,9 @@ public final class DecompilerMachine {
                     String.format("Instruction %s is not supported yet", instruction)
                 );
             }
+            final String descriptor = (String) instruction.operand(2);
             final List<AstNode> args = DecompilerMachine.this.popArguments(
-                Type.getArgumentCount((String) instruction.operand(2))
+                Type.getArgumentCount(descriptor)
             );
             //@checkstyle MethodBodyCommentsCheck (10 lines)
             // @todo #76:90min Target might not be an Object.
@@ -394,7 +395,7 @@ public final class DecompilerMachine {
             //  constructor of the 'Super' class somehow.
             if ("java/lang/Object".equals(target)) {
                 DecompilerMachine.this.stack.push(
-                    new Super(DecompilerMachine.this.stack.pop(), args)
+                    new Super(DecompilerMachine.this.stack.pop(), args, descriptor)
                 );
             } else {
                 ((Reference) DecompilerMachine.this.stack.pop())
