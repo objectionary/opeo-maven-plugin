@@ -377,27 +377,30 @@ public final class DecompilerMachine {
     private class InvokespecialHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
+            final String target = (String) instruction.operand(0);
             if (!instruction.operand(1).equals("<init>")) {
                 throw new UnsupportedOperationException(
                     String.format("Instruction %s is not supported yet", instruction)
                 );
             }
-            if (instruction.operand(0).equals("java/lang/Object")) {
-                final List<AstNode> args = DecompilerMachine.this.popArguments(
-                    Type.getArgumentCount((String) instruction.operand(2))
-                );
+            final List<AstNode> args = DecompilerMachine.this.popArguments(
+                Type.getArgumentCount((String) instruction.operand(2))
+            );
+            //@checkstyle MethodBodyCommentsCheck (10 lines)
+            // @todo #76:90min Target might not be an Object.
+            //  Here we just compare with object, but if the current class has a parent, the
+            //  target might not be an Object. We should compare with the current class name
+            //  instead. Moreover, we have to pass the 'target' as an argument to the
+            //  constructor of the 'Super' class somehow.
+            if ("java/lang/Object".equals(target)) {
                 DecompilerMachine.this.stack.push(
                     new Super(DecompilerMachine.this.stack.pop(), args)
                 );
             } else {
-                final List<AstNode> args = DecompilerMachine.this.popArguments(
-                    Type.getArgumentCount((String) instruction.operand(2))
-                );
                 ((Reference) DecompilerMachine.this.stack.pop())
-                    .link(new Constructor((String) instruction.operand(0), args));
+                    .link(new Constructor(target, args));
             }
         }
-
     }
 
     /**
