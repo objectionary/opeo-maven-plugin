@@ -160,10 +160,12 @@ public final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
                 if (!operand.equals(expected)) {
                     this.warnings.add(
                         String.format(
-                            "Bytecode instruction at %d index should have opcode with operands %s but got %s instead",
+                            "Bytecode instruction at %d index should have opcode with operands %s but got %s instead, ('%s' != '%s')",
                             index,
                             operand,
-                            expected
+                            expected,
+                            new HexString(operand.text()).decode(),
+                            new HexString(expected.text()).decode()
                         )
                     );
                     result = false;

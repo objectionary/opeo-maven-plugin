@@ -24,8 +24,10 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
+import org.objectweb.asm.Opcodes;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Transformers;
 import org.xembly.Xembler;
@@ -62,6 +64,26 @@ class InvocationTest {
             XhtmlMatchers.hasXPaths(
                 "/o[@base='.bar']/o[@base='.new']/o[@base='foo']",
                 "/o[@base='.bar']/o[@base='string' and @data='bytes' and text()='62 61 7A']"
+            )
+        );
+    }
+
+    @Test
+    void transformsToOpcodes() {
+        final String name = "bar";
+        final String constant = "baz";
+        MatcherAssert.assertThat(
+            "Can't transform 'invocation' to correct opcodes",
+            new OpcodeNodes(new Invocation(new This(), name, new Literal(constant))).opcodes(),
+            new HasInstructions(
+                new HasInstructions.Instruction(Opcodes.ALOAD, 0),
+                new HasInstructions.Instruction(Opcodes.LDC, constant),
+                new HasInstructions.Instruction(
+                    Opcodes.INVOKEVIRTUAL,
+                    "???owner???",
+                    name,
+                    "(Ljava/lang/String;)Ljava/lang/String;"
+                )
             )
         );
     }
