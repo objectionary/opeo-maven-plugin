@@ -87,14 +87,9 @@ public final class Super implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
-        final List<AstNode> res = new ArrayList<>(1);
+        final List<AstNode> res = new ArrayList<>(2);
         res.addAll(this.instance.opcodes());
         this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
-        //@checkstyle MethodBodyCommentsCheck (10 lines)
-        // @todo #65:90min Pass correct arguments to invokespecial instruction.
-        //  Currently we just pass default arguments to invokespecial instruction.
-        //  We need to pass correct arguments to invokespecial instruction.
-        //  But in order to implement this we need to save this arguments somewhere before.
         res.add(new Opcode(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V"));
         return res;
     }
