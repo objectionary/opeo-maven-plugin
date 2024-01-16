@@ -25,16 +25,12 @@ package org.eolang.opeo.compilation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.eolang.jeo.representation.directives.DirectivesData;
 import org.eolang.jeo.representation.xmir.XmlNode;
-import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.OpcodeName;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
@@ -150,10 +146,9 @@ public final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
      * @return True if opcode operands are correct.
      */
     private boolean verifyOperands(final XmlNode node, final int index) {
+        boolean result = true;
         final Instruction instruction = this.instructions.get(index);
-        if (instruction.isEmpty()) {
-            return true;
-        } else {
+        if (!instruction.isEmpty()) {
             final List<XmlNode> operands = node.children().skip(1).collect(Collectors.toList());
             for (int operindex = 0; operindex < operands.size(); ++operindex) {
                 final XmlNode operand = operands.get(operindex);
@@ -171,11 +166,12 @@ public final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
                             expected
                         )
                     );
-                    return false;
+                    result = false;
+                    break;
                 }
             }
-            return true;
         }
+        return result;
     }
 
     /**
@@ -215,29 +211,62 @@ public final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
         return result;
     }
 
+    /**
+     * Instruction.
+     * @since 0.1
+     */
+    public static final class Instruction {
 
-    public static class Instruction {
+        /**
+         * Opcode.
+         */
         private final int opcode;
+
+        /**
+         * Instruction operands.
+         */
         private final List<Object> operands;
 
+        /**
+         * Constructor.
+         * @param opcode Opcode.
+         */
         public Instruction(final int opcode) {
             this(opcode, new ArrayList<>(0));
         }
 
+        /**
+         * Constructor.
+         * @param opcode Instruction opcode.
+         * @param operands Instruction operands.
+         */
         public Instruction(final int opcode, final Object... operands) {
             this(opcode, Arrays.asList(operands));
         }
 
-        public Instruction(final int opcode, final List<Object> operands) {
+        /**
+         * Constructor.
+         * @param opcode Instruction opcode.
+         * @param operands Instruction operands.
+         */
+        Instruction(final int opcode, final List<Object> operands) {
             this.opcode = opcode;
             this.operands = operands;
         }
 
+        /**
+         * Opcode name.
+         * @return Opcode name.
+         */
         public String name() {
             return new OpcodeName(this.opcode).simplified();
         }
 
-        public boolean isEmpty() {
+        /**
+         * Check if instruction is empty.
+         * @return True if instruction operands are empty.
+         */
+        boolean isEmpty() {
             return this.operands.isEmpty();
         }
     }

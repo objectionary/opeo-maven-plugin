@@ -24,10 +24,9 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import java.util.List;
 import java.util.stream.Collectors;
-import org.eolang.opeo.compilation.HasInstructions;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
