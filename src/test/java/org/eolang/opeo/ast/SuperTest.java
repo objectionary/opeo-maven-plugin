@@ -80,9 +80,14 @@ class SuperTest {
                 .map(XmlNode::new)
                 .collect(Collectors.toList()),
             new HasInstructions(
-                Opcodes.ALOAD,
-                Opcodes.ICONST_1,
-                Opcodes.INVOKESPECIAL
+                new HasInstructions.Instruction(Opcodes.ALOAD, 0),
+                new HasInstructions.Instruction(Opcodes.ICONST_1),
+                new HasInstructions.Instruction(
+                    Opcodes.INVOKESPECIAL,
+                    "java/lang/Object",
+                    "<init>",
+                    "()V"
+                )
             )
         );
     }

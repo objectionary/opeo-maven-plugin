@@ -24,14 +24,21 @@
 package org.eolang.opeo.compilation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import org.eolang.jeo.representation.directives.DirectivesData;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.OpcodeName;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
+import org.xembly.Xembler;
 
 /**
  * Matcher for {@link List} of {@link XmlNode} to have specific instructions.
@@ -43,7 +50,7 @@ public final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
     /**
      * Expected opcodes.
      */
-    private final List<Integer> opcodes;
+    private final List<Instruction> instructions;
 
     /**
      * Bag of collected warnings.
@@ -63,8 +70,28 @@ public final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
      * @param opcodes Expected opcodes.
      */
     private HasInstructions(final List<Integer> opcodes) {
-        this.opcodes = opcodes;
-        this.warnings = new ArrayList<>(0);
+        this(
+            opcodes.stream().map(Instruction::new).collect(Collectors.toList()),
+            new ArrayList<>(0)
+        );
+    }
+
+    /**
+     * Constructor.
+     * @param instructions Expected instructions.
+     */
+    public HasInstructions(final Instruction... instructions) {
+        this(Arrays.asList(instructions), new ArrayList<>(0));
+    }
+
+    /**
+     * Constructor.
+     * @param instructions Expected instructions.
+     * @param warnings Bag of collected warnings.
+     */
+    public HasInstructions(final List<Instruction> instructions, final List<String> warnings) {
+        this.instructions = instructions;
+        this.warnings = warnings;
     }
 
     @Override
@@ -72,7 +99,7 @@ public final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
         description.appendText(
             String.format(
                 "Expected to have %d opcodes, but got %d instead. %n%s%n",
-                this.opcodes.size(),
+                this.instructions.size(),
                 this.warnings.size(),
                 String.join("\n", this.warnings)
             )
@@ -102,7 +129,7 @@ public final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
         final boolean result;
         final String base = node.attribute("base").orElseThrow();
         if (base.equals("opcode")) {
-            result = this.verifyName(node, index);
+            result = this.verifyName(node, index) && this.verifyOperands(node, index);
         } else {
             this.warnings.add(
                 String.format(
@@ -117,6 +144,41 @@ public final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
     }
 
     /**
+     * Verify opcode operands.
+     * @param node Node.
+     * @param index Index.
+     * @return True if opcode operands are correct.
+     */
+    private boolean verifyOperands(final XmlNode node, final int index) {
+        final Instruction instruction = this.instructions.get(index);
+        if (instruction.isEmpty()) {
+            return true;
+        } else {
+            final List<XmlNode> operands = node.children().skip(1).collect(Collectors.toList());
+            for (int operindex = 0; operindex < operands.size(); ++operindex) {
+                final XmlNode operand = operands.get(operindex);
+                final XmlNode expected = new XmlNode(
+                    new Xembler(
+                        new DirectivesData(instruction.operands.get(operindex))
+                    ).xmlQuietly()
+                );
+                if (!operand.equals(expected)) {
+                    this.warnings.add(
+                        String.format(
+                            "Bytecode instruction at %d index should have opcode with operands %s but got %s instead",
+                            index,
+                            operand,
+                            expected
+                        )
+                    );
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    /**
      * Verify opcode name.
      * @param node Node.
      * @param index Index.
@@ -126,7 +188,7 @@ public final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
         final boolean result;
         final Optional<String> oname = node.attribute("name");
         if (oname.isPresent()) {
-            final String expected = new OpcodeName(this.opcodes.get(index)).simplified();
+            final String expected = this.instructions.get(index).name();
             final String name = oname.get();
             if (name.contains(expected)) {
                 result = true;
@@ -151,5 +213,32 @@ public final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
             result = false;
         }
         return result;
+    }
+
+
+    public static class Instruction {
+        private final int opcode;
+        private final List<Object> operands;
+
+        public Instruction(final int opcode) {
+            this(opcode, new ArrayList<>(0));
+        }
+
+        public Instruction(final int opcode, final Object... operands) {
+            this(opcode, Arrays.asList(operands));
+        }
+
+        public Instruction(final int opcode, final List<Object> operands) {
+            this.opcode = opcode;
+            this.operands = operands;
+        }
+
+        public String name() {
+            return new OpcodeName(this.opcode).simplified();
+        }
+
+        public boolean isEmpty() {
+            return this.operands.isEmpty();
+        }
     }
 }
