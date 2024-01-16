@@ -28,6 +28,7 @@ import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Transformers;
 import org.xembly.Xembler;
@@ -83,6 +84,26 @@ class InvocationTest {
                     "???owner???",
                     name,
                     "(Ljava/lang/String;)Ljava/lang/String;"
+                )
+            )
+        );
+    }
+
+    @Test
+    void transformsToOpcodesWithoutArguments() {
+        final String name = "toString";
+        MatcherAssert.assertThat(
+            "Can't transform 'local1.toSting()' to correct opcodes",
+            new OpcodeNodes(
+                new Invocation(new Variable(Type.getType(String.class), 1), name)
+            ).opcodes(),
+            new HasInstructions(
+                new HasInstructions.Instruction(Opcodes.ALOAD, 1),
+                new HasInstructions.Instruction(
+                    Opcodes.INVOKEVIRTUAL,
+                    "???owner???",
+                    name,
+                    "()Ljava/lang/String;"
                 )
             )
         );

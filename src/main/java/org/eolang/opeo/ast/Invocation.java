@@ -118,7 +118,7 @@ public final class Invocation implements AstNode {
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.source.opcodes());
         this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
-        res.add(new Opcode(Opcodes.INVOKEVIRTUAL, "V", this.method, "V()"));
+        res.add(new Opcode(Opcodes.INVOKEVIRTUAL, "???owner???", this.method, "V()"));
         return res;
     }
 
