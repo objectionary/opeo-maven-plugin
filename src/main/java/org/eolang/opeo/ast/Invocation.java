@@ -115,11 +115,8 @@ public final class Invocation implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
-        //@checkstyle MethodBodyCommentsCheck (10 lines)
-        // @todo #76:90min Implement and test invocation opcodes compilation.
-        //  Current implementation is dummy and is used only to pass integration tests.
-        //  We need to implement and test invocation opcodes compilation.
         final List<AstNode> res = new ArrayList<>(0);
+        res.addAll(this.source.opcodes());
         this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
         res.add(new Opcode(Opcodes.INVOKEVIRTUAL, "V", this.method, "V()"));
         return res;
