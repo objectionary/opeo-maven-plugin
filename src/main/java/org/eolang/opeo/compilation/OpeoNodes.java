@@ -32,6 +32,7 @@ import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Constructor;
+import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
@@ -199,31 +200,37 @@ public final class OpeoNodes {
             }
             result = new Constructor(type, arguments);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
-            final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final AstNode target = OpeoNodes.node(inner.get(0));
-            final List<AstNode> arguments;
-            if (inner.size() > 1) {
-                arguments = inner.subList(1, inner.size())
-                    .stream()
-                    .map(OpeoNodes::node)
-                    .collect(Collectors.toList());
+            if (node.hasAttribute("scope", "field")) {
+                final List<XmlNode> inner = node.children().collect(Collectors.toList());
+                final AstNode target = OpeoNodes.node(inner.get(0));
+                result = new InstanceField(target, base.substring(1));
             } else {
-                arguments = Collections.emptyList();
-            }
-            result = new Invocation(
-                target,
-                base.substring(1),
-                arguments,
-                node.attribute("scope")
-                    .orElseThrow(
-                        () -> new IllegalArgumentException(
-                            String.format(
-                                "Can't find descriptor for invocation of '%s'",
-                                base
+                final List<XmlNode> inner = node.children().collect(Collectors.toList());
+                final AstNode target = OpeoNodes.node(inner.get(0));
+                final List<AstNode> arguments;
+                if (inner.size() > 1) {
+                    arguments = inner.subList(1, inner.size())
+                        .stream()
+                        .map(OpeoNodes::node)
+                        .collect(Collectors.toList());
+                } else {
+                    arguments = Collections.emptyList();
+                }
+                result = new Invocation(
+                    target,
+                    base.substring(1),
+                    arguments,
+                    node.attribute("scope")
+                        .orElseThrow(
+                            () -> new IllegalArgumentException(
+                                String.format(
+                                    "Can't find descriptor for invocation of '%s'",
+                                    base
+                                )
                             )
                         )
-                    )
-            );
+                );
+            }
         } else {
             throw new IllegalArgumentException(
                 String.format("Can't recognize node: %n%s%n", node)

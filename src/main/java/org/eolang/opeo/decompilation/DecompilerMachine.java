@@ -530,6 +530,5 @@ public final class DecompilerMachine {
                     );
             }
         }
-
     }
 }
