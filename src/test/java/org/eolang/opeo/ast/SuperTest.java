@@ -24,8 +24,6 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import java.util.stream.Collectors;
-import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -70,20 +68,74 @@ class SuperTest {
     void convertsToOpcodes() {
         MatcherAssert.assertThat(
             "Can't convert 'super' statement to opcodes with correct arguments",
-            new Super(new This(), new Literal(1))
-                .opcodes()
-                .stream()
-                .map(AstNode::toXmir)
-                .map(Xembler::new)
-                .map(Xembler::xmlQuietly)
-                .map(XmlNode::new)
-                .collect(Collectors.toList()),
+            new OpcodeNodes(
+                new Super(new This(), new Literal(1))
+            ).opcodes(),
             new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.ALOAD, 0),
                 new HasInstructions.Instruction(Opcodes.ICONST_1),
                 new HasInstructions.Instruction(
                     Opcodes.INVOKESPECIAL,
                     "java/lang/Object",
+                    "<init>",
+                    "(I)V"
+                )
+            )
+        );
+    }
+
+    @Test
+    void convertsToOpcodesWithNoArguments() {
+        MatcherAssert.assertThat(
+            "Can't convert 'super' statement to opcodes with no arguments",
+            new OpcodeNodes(
+                new Super(new This())
+            ).opcodes(),
+            new HasInstructions(
+                new HasInstructions.Instruction(Opcodes.ALOAD, 0),
+                new HasInstructions.Instruction(
+                    Opcodes.INVOKESPECIAL,
+                    "java/lang/Object",
+                    "<init>",
+                    "()V"
+                )
+            )
+        );
+    }
+
+    @Test
+    void convertsToOpcodesWithMultipleArguments() {
+        MatcherAssert.assertThat(
+            "Can't convert 'super' statement to opcodes with multiple arguments",
+            new OpcodeNodes(
+                new Super(new This(), new Literal(1), new Literal(2))
+            ).opcodes(),
+            new HasInstructions(
+                new HasInstructions.Instruction(Opcodes.ALOAD, 0),
+                new HasInstructions.Instruction(Opcodes.ICONST_1),
+                new HasInstructions.Instruction(Opcodes.ICONST_2),
+                new HasInstructions.Instruction(
+                    Opcodes.INVOKESPECIAL,
+                    "java/lang/Object",
+                    "<init>",
+                    "(II)V"
+                )
+            )
+        );
+    }
+
+    @Test
+    void convertsToOpcodesWithParent() {
+        MatcherAssert.assertThat(
+            "Can't convert 'super' statement to opcodes with parent",
+            new OpcodeNodes(
+                new Super(new This())
+            ).opcodes(),
+            new HasInstructions(
+                new HasInstructions.Instruction(Opcodes.ALOAD, 0),
+                new HasInstructions.Instruction(
+                    Opcodes.INVOKESPECIAL,
+                    "some/interesting/Parent",
                     "<init>",
                     "()V"
                 )
