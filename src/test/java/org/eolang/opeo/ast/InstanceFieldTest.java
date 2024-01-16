@@ -75,10 +75,10 @@ class InstanceFieldTest {
     void transformsToOpcodes() {
         MatcherAssert.assertThat(
             "Can't transform to opcodes",
-            new OpcodeNodes(new InstanceField(new This(), "bar")).opcodes(),
+            new OpcodeNodes(new InstanceField(new This(), "bar", "S")).opcodes(),
             new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.ALOAD, 0),
-                new HasInstructions.Instruction(Opcodes.GETFIELD, "","bar")
+                new HasInstructions.Instruction(Opcodes.GETFIELD, "???owner???", "bar", "S")
             )
         );
     }

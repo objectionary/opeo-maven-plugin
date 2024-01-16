@@ -200,10 +200,12 @@ public final class OpeoNodes {
             }
             result = new Constructor(type, arguments);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
-            if (node.hasAttribute("scope", "field")) {
+            if (base.contains("field|")) {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode target = OpeoNodes.node(inner.get(0));
-                result = new InstanceField(target, base.substring(1));
+                result = new InstanceField(
+                    target, base.substring(1), node.attribute("scope").orElseThrow()
+                );
             } else {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode target = OpeoNodes.node(inner.get(0));
