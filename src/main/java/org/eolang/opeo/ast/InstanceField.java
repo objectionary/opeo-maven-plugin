@@ -72,6 +72,11 @@ public final class InstanceField implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
+        //@checkstyle MethodBodyCommentsCheck (10 lines)
+        // @todo #86:90min Implement "GETFIELD" opcode compilation from 'InstanceField'.
+        //  The opcode should be compiled from the 'InstanceField' node correctly.
+        //  Right now we put dummy owner and descriptor.
+        //  Don't forget to remove this comment after the implementation is done and add new tests.
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.source.opcodes());
         res.add(new Opcode(Opcodes.GETFIELD, "???owner???", this.name, "???descriptor???"));

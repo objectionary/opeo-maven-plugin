@@ -61,7 +61,13 @@ public final class Literal implements AstNode {
         } else if (this.object instanceof String) {
             result = Collections.singletonList(Literal.opcode((String) this.object));
         } else {
-            throw new UnsupportedOperationException("Not implemented yet");
+            throw new IllegalArgumentException(
+                String.format(
+                    "Unsupported literal type %s, value is %s",
+                    this.object.getClass().getName(),
+                    this.object
+                )
+            );
         }
         return result;
     }

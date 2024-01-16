@@ -74,6 +74,6 @@ public final class Reference implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return this.ref.get().opcodes();
     }
 }
