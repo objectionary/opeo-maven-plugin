@@ -59,9 +59,25 @@ class SuperTest {
             xmir,
             XhtmlMatchers.hasXPaths(
                 "./o[@base='.super']",
+                "./o[@base='.super' and @scope='()V']",
                 "./o[@base='.super']/o[@base='$']",
                 "./o[@base='.super']/o[@base='int' and contains(text(), '1')]"
             )
+        );
+    }
+
+    @Test
+    void convertsToXmirWithCustomDescriptor() throws ImpossibleModificationException {
+        final String xmir = new Xembler(
+            new Super(new This(), "(I)V", new Literal(10)).toXmir()
+        ).xml();
+        MatcherAssert.assertThat(
+            String.format(
+                "Can't convert 'super' statement to XMIR, result is wrong: %n%s%n",
+                xmir
+            ),
+            xmir,
+            XhtmlMatchers.hasXPaths("./o[@base='.super' and @scope='(I)V']")
         );
     }
 

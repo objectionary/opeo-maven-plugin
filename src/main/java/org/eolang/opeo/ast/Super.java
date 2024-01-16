@@ -104,6 +104,7 @@ public final class Super implements AstNode {
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", ".super")
+            .attr("scope", this.descriptor)
             .append(this.instance.toXmir());
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
