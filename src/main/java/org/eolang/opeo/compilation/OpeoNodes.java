@@ -210,7 +210,20 @@ public final class OpeoNodes {
             } else {
                 arguments = Collections.emptyList();
             }
-            result = new Invocation(target, base.substring(1), arguments);
+            result = new Invocation(
+                target,
+                base.substring(1),
+                arguments,
+                node.attribute("scope")
+                    .orElseThrow(
+                        () -> new IllegalArgumentException(
+                            String.format(
+                                "Can't find descriptor for invocation of '%s'",
+                                base
+                            )
+                        )
+                    )
+            );
         } else {
             throw new IllegalArgumentException(
                 String.format("Can't recognize node: %n%s%n", node)
