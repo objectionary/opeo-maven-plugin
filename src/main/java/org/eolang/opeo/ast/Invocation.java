@@ -80,6 +80,7 @@ public final class Invocation implements AstNode {
      * @param method Method name
      * @param descriptor Method descriptor
      * @param args Arguments
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
     public Invocation(
         final AstNode source,
@@ -89,7 +90,6 @@ public final class Invocation implements AstNode {
     ) {
         this(source, method, Arrays.asList(args), descriptor);
     }
-
 
     /**
      * Constructor.
@@ -111,6 +111,7 @@ public final class Invocation implements AstNode {
      * @param method Method name
      * @param arguments Arguments
      * @param descriptor Descriptor
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
     public Invocation(
         final AstNode source,
