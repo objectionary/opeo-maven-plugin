@@ -168,7 +168,8 @@ public final class OpeoNodes {
                 node.attribute("scope")
                     .orElseThrow(
                         () -> new IllegalArgumentException(
-                            "Can't find descriptor for super invocation")
+                            "Can't find descriptor for super invocation"
+                        )
                     )
             );
         } else if ("$".equals(base)) {

@@ -377,7 +377,6 @@ public final class DecompilerMachine {
     private class InvokespecialHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
-            final String target = (String) instruction.operand(0);
             if (!instruction.operand(1).equals("<init>")) {
                 throw new UnsupportedOperationException(
                     String.format("Instruction %s is not supported yet", instruction)
@@ -387,6 +386,7 @@ public final class DecompilerMachine {
             final List<AstNode> args = DecompilerMachine.this.popArguments(
                 Type.getArgumentCount(descriptor)
             );
+            final String target = (String) instruction.operand(0);
             //@checkstyle MethodBodyCommentsCheck (10 lines)
             // @todo #76:90min Target might not be an Object.
             //  Here we just compare with object, but if the current class has a parent, the

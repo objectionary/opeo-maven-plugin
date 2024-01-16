@@ -80,6 +80,12 @@ public final class Super implements AstNode {
         this(instance, arguments, "()V");
     }
 
+    /**
+     * Constructor.
+     * @param instance Target instance
+     * @param arguments Super arguments
+     * @param descriptor Descriptor
+     */
     public Super(
         final AstNode instance,
         final List<AstNode> arguments,
