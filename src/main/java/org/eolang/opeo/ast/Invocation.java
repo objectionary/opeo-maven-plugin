@@ -56,6 +56,11 @@ public final class Invocation implements AstNode {
     private final List<AstNode> arguments;
 
     /**
+     * Descriptor.
+     */
+    private final String descriptor;
+
+    /**
      * Constructor.
      * @param source Source or target on which the invocation is performed
      * @param method Method name
@@ -73,6 +78,23 @@ public final class Invocation implements AstNode {
      * Constructor.
      * @param source Source or target on which the invocation is performed
      * @param method Method name
+     * @param descriptor Method descriptor
+     * @param args Arguments
+     */
+    public Invocation(
+        final AstNode source,
+        final String method,
+        final String descriptor,
+        final AstNode... args
+    ) {
+        this(source, method, Arrays.asList(args), descriptor);
+    }
+
+
+    /**
+     * Constructor.
+     * @param source Source or target on which the invocation is performed
+     * @param method Method name
      * @param arguments Arguments
      */
     public Invocation(
@@ -80,9 +102,26 @@ public final class Invocation implements AstNode {
         final String method,
         final List<AstNode> arguments
     ) {
+        this(source, method, arguments, "V()");
+    }
+
+    /**
+     * Constructor.
+     * @param source Source or target on which the invocation is performed
+     * @param method Method name
+     * @param arguments Arguments
+     * @param descriptor Descriptor
+     */
+    public Invocation(
+        final AstNode source,
+        final String method,
+        final List<AstNode> arguments,
+        final String descriptor
+    ) {
         this.source = source;
         this.method = method;
         this.arguments = arguments;
+        this.descriptor = descriptor;
     }
 
     @Override
@@ -108,6 +147,7 @@ public final class Invocation implements AstNode {
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", String.format(".%s", this.method))
+            .attr("scope", this.descriptor)
             .append(this.source.toXmir());
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
@@ -118,7 +158,7 @@ public final class Invocation implements AstNode {
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.source.opcodes());
         this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
-        res.add(new Opcode(Opcodes.INVOKEVIRTUAL, "???owner???", this.method, "V()"));
+        res.add(new Opcode(Opcodes.INVOKEVIRTUAL, "???owner???", this.method, this.descriptor));
         return res;
     }
 

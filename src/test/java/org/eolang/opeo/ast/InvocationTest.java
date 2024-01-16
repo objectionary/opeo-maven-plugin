@@ -29,6 +29,7 @@ import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
+import org.xembly.Directive;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Transformers;
 import org.xembly.Xembler;
@@ -70,12 +71,34 @@ class InvocationTest {
     }
 
     @Test
+    void savesDescriptorToScopeAttribute() {
+        MatcherAssert.assertThat(
+            "Can't save descriptor to scope attribute",
+            new Xembler(
+                new Invocation(
+                    new This(),
+                    "bar",
+                    "(Ljava/lang/String;)Ljava/lang/String;",
+                    new Literal("baz")
+                ).toXmir(),
+                new Transformers.Node()
+            ).xmlQuietly(),
+            XhtmlMatchers.hasXPaths(
+                "/o[@base='.bar' and @scope='(Ljava/lang/String;)Ljava/lang/String;']"
+            )
+        );
+    }
+
+    @Test
     void transformsToOpcodes() {
         final String name = "bar";
         final String constant = "baz";
+        final String descriptor = "(Ljava/lang/String;)Ljava/lang/String;";
         MatcherAssert.assertThat(
             "Can't transform 'invocation' to correct opcodes",
-            new OpcodeNodes(new Invocation(new This(), name, new Literal(constant))).opcodes(),
+            new OpcodeNodes(
+                new Invocation(new This(), name, descriptor, new Literal(constant))
+            ).opcodes(),
             new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.ALOAD, 0),
                 new HasInstructions.Instruction(Opcodes.LDC, constant),
@@ -83,7 +106,7 @@ class InvocationTest {
                     Opcodes.INVOKEVIRTUAL,
                     "???owner???",
                     name,
-                    "(Ljava/lang/String;)Ljava/lang/String;"
+                    descriptor
                 )
             )
         );
@@ -92,10 +115,11 @@ class InvocationTest {
     @Test
     void transformsToOpcodesWithoutArguments() {
         final String name = "toString";
+        final String descriptor = "()Ljava/lang/String;";
         MatcherAssert.assertThat(
             "Can't transform 'local1.toSting()' to correct opcodes",
             new OpcodeNodes(
-                new Invocation(new Variable(Type.getType(String.class), 1), name)
+                new Invocation(new Variable(Type.getType(String.class), 1), name, descriptor)
             ).opcodes(),
             new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.ALOAD, 1),
@@ -103,7 +127,7 @@ class InvocationTest {
                     Opcodes.INVOKEVIRTUAL,
                     "???owner???",
                     name,
-                    "()Ljava/lang/String;"
+                    descriptor
                 )
             )
         );
