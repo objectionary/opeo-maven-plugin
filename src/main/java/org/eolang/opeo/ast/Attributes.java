@@ -127,6 +127,24 @@ public final class Attributes {
     }
 
     /**
+     * Get name attribute.
+     * @return Name value.
+     */
+    public String name() {
+        return this.find("name");
+    }
+
+    /**
+     * Set name attribute.
+     * @param name Name
+     * @return This object
+     */
+    public Attributes name(final String name) {
+        this.all.put("name", name);
+        return this;
+    }
+
+    /**
      * Find attribute.
      * @param key Attribute key
      * @return Attribute value
