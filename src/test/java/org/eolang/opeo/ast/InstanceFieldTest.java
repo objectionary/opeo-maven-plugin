@@ -24,9 +24,11 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.objectweb.asm.Opcodes;
 import org.xembly.Directives;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
@@ -65,6 +67,18 @@ class InstanceFieldTest {
                 "./o[@name='method']",
                 "./o[@name='method']/o[@base='.bar']",
                 "./o[@name='method']/o[@base='.bar']/o[@base='$']"
+            )
+        );
+    }
+
+    @Test
+    void transformsToOpcodes() {
+        MatcherAssert.assertThat(
+            "Can't transform to opcodes",
+            new OpcodeNodes(new InstanceField(new This(), "bar")).opcodes(),
+            new HasInstructions(
+                new HasInstructions.Instruction(Opcodes.ALOAD, 0),
+                new HasInstructions.Instruction(Opcodes.GETFIELD, "","bar")
             )
         );
     }
