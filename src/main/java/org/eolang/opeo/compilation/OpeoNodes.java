@@ -194,12 +194,21 @@ public final class OpeoNodes {
             }
             result = new Constructor(type, arguments);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
-            if (base.contains("field|")) {
+            final Attributes attributes = new Attributes(
+                node.attribute("scope")
+                    .orElseThrow(
+                        () -> new IllegalArgumentException(
+                            String.format(
+                                "Can't find attributes of '%s'",
+                                base
+                            )
+                        )
+                    )
+            );
+            if ("field".equals(attributes.type())) {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode target = OpeoNodes.node(inner.get(0));
-                result = new InstanceField(
-                    target, new Attributes(node.attribute("scope").orElseThrow())
-                );
+                result = new InstanceField(target, attributes);
             } else {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode target = OpeoNodes.node(inner.get(0));
@@ -212,21 +221,7 @@ public final class OpeoNodes {
                 } else {
                     arguments = Collections.emptyList();
                 }
-                result = new Invocation(
-                    target,
-                    new Attributes(
-                        node.attribute("scope")
-                            .orElseThrow(
-                                () -> new IllegalArgumentException(
-                                    String.format(
-                                        "Can't find descriptor for invocation of '%s'",
-                                        base
-                                    )
-                                )
-                            )
-                    ),
-                    arguments
-                );
+                result = new Invocation(target, attributes, arguments);
             }
         } else {
             throw new IllegalArgumentException(

@@ -295,7 +295,11 @@ public final class DecompilerMachine {
             DecompilerMachine.this.stack.push(
                 new InstanceField(
                     DecompilerMachine.this.stack.pop(),
-                    new Attributes().name(name).descriptor(descriptor).owner(owner)
+                    new Attributes()
+                        .name(name)
+                        .descriptor(descriptor)
+                        .owner(owner)
+                        .type("field")
                 )
             );
         }
