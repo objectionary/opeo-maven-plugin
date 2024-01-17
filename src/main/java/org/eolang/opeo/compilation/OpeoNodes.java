@@ -114,13 +114,6 @@ public final class OpeoNodes {
      * @checkstyle ExecutableStatementCountCheck (200 lines)
      * @checkstyle JavaNCSSCheck (200 lines)
      * @checkstyle NestedIfDepthCheck (200 lines)
-     * @todo #77:90min Finish compilation pipeline.
-     *  Right now we successfully disassemble bytecode (jeo), transform it to a high-level
-     *  representation (opeo) and then somehow compile back to low-level representation.
-     *  Probably with some mistakes.
-     *  We need to finish this implementation and check if the transformation is correct.
-     *  To do so, we need to enable "benchmark" integration test.
-     *  To do so, just add "jeo.assemble" goal.
      * @todo #77:90min Refactor OpeoNodes.node() method.
      *  The parsing method OpeoNodes.node() looks overcomplicated and violates many
      *  code quality standards. We should refactor the method and remove all
