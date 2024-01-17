@@ -315,14 +315,13 @@ public final class DecompilerMachine {
         public void handle(final Instruction instruction) {
             final AstNode value = DecompilerMachine.this.stack.pop();
             final AstNode target = DecompilerMachine.this.stack.pop();
+            final Attributes attributes = new Attributes()
+                .type("field")
+                .owner((String) instruction.operand(0))
+                .name((String) instruction.operand(1))
+                .descriptor((String) instruction.operand(2));
             DecompilerMachine.this.stack.push(
-                new WriteField(
-                    new InstanceField(
-                        target,
-                        (String) instruction.operand(1)
-                    ),
-                    value
-                )
+                new WriteField(target, value, attributes)
             );
         }
     }

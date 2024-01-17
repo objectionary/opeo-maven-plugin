@@ -24,9 +24,12 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import java.util.List;
+import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.objectweb.asm.Opcodes;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
@@ -66,6 +69,31 @@ class WriteFieldTest {
                 "./o[@base='.write']",
                 "./o[@base='.write']/o[@base='.bar']",
                 "./o[@base='.write']/o[@base='int' and contains(text(),'3')]"
+            )
+        );
+    }
+
+    @Test
+    void transformsToOpcodes() {
+        final String name = "d";
+        final String owner = "test/Test";
+        final String descriptor = "I";
+        MatcherAssert.assertThat(
+            "Can't transform 'this.a = 1' statement to the correct opcodes, result is wrong",
+            new OpcodeNodes(
+                new WriteField(
+                    new This(),
+                    new Literal(1),
+                    new Attributes()
+                        .name(name)
+                        .owner(owner)
+                        .descriptor(descriptor)
+                )
+            ).opcodes(),
+            new HasInstructions(
+                new HasInstructions.Instruction(Opcodes.ALOAD, 0),
+                new HasInstructions.Instruction(Opcodes.ICONST_1),
+                new HasInstructions.Instruction(Opcodes.PUTFIELD, owner, name, descriptor)
             )
         );
     }

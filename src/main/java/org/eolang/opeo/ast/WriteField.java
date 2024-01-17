@@ -46,13 +46,33 @@ public final class WriteField implements AstNode {
     private final AstNode value;
 
     /**
+     * Field attributes.
+     */
+    private final Attributes attributes;
+
+    /**
      * Constructor.
      * @param target The target where the value is put
      * @param value The value to put
      */
     public WriteField(final AstNode target, final AstNode value) {
+        this(
+            target,
+            value,
+            new Attributes().type("field").descriptor("I").owner("test/Obj").name("a")
+        );
+    }
+
+    /**
+     * Constructor.
+     * @param target The target where the value is put
+     * @param value The value to put
+     * @param attributes Field attributes
+     */
+    public WriteField(final AstNode target, final AstNode value, final Attributes attributes) {
         this.target = target;
         this.value = value;
+        this.attributes = attributes;
     }
 
     @Override
@@ -64,6 +84,7 @@ public final class WriteField implements AstNode {
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
             .attr("base", ".write")
+            .attr("scope", this.attributes)
             .append(this.target.toXmir())
             .append(this.value.toXmir())
             .up();
@@ -72,8 +93,16 @@ public final class WriteField implements AstNode {
     @Override
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(1);
+        res.addAll(this.target.opcodes());
         res.addAll(this.value.opcodes());
-        res.add(new Opcode(Opcodes.PUTFIELD, this.target.print()));
+        res.add(
+            new Opcode(
+                Opcodes.PUTFIELD,
+                this.attributes.owner(),
+                this.attributes.name(),
+                this.attributes.descriptor()
+            )
+        );
         return res;
     }
 }

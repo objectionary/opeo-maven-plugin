@@ -178,7 +178,11 @@ public final class OpeoNodes {
             if (variable instanceof Variable) {
                 result = new StoreLocal(variable, value);
             } else {
-                result = new WriteField(variable, value);
+                result = new WriteField(
+                    variable,
+                    value,
+                    new Attributes(node.attribute("scope").orElseThrow())
+                );
             }
         } else if (".new".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
