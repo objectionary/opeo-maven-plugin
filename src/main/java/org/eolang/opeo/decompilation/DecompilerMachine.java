@@ -39,6 +39,7 @@ import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Invocation;
+import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Mul;
 import org.eolang.opeo.ast.Opcode;
@@ -47,6 +48,7 @@ import org.eolang.opeo.ast.Root;
 import org.eolang.opeo.ast.StoreLocal;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.WriteField;
+import org.eolang.opeo.jeo.JeoLabel;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -128,7 +130,8 @@ public final class DecompilerMachine {
             new MapEntry<>(Opcodes.PUTFIELD, new PutFieldHnadler()),
             new MapEntry<>(Opcodes.LDC, new LdcHandler()),
             new MapEntry<>(Opcodes.POP, new PopHandler()),
-            new MapEntry<>(Opcodes.RETURN, new ReturnHandler())
+            new MapEntry<>(Opcodes.RETURN, new ReturnHandler()),
+            new MapEntry<>(JeoLabel.LABEL_OPCODE, new LabelHandler())
         );
     }
 
@@ -536,6 +539,20 @@ public final class DecompilerMachine {
                         String.format("Instruction %s is not supported yet", instruction)
                     );
             }
+        }
+    }
+
+    /**
+     * Label instruction handler.
+     * @since 0.1
+     */
+    private class LabelHandler implements InstructionHandler {
+
+        @Override
+        public void handle(final Instruction instruction) {
+            DecompilerMachine.this.stack.push(
+                new Label(new Literal(instruction.operand(0)))
+            );
         }
     }
 }
