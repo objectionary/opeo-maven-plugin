@@ -31,6 +31,7 @@ import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Invocation;
@@ -204,7 +205,7 @@ public final class OpeoNodes {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode target = OpeoNodes.node(inner.get(0));
                 result = new InstanceField(
-                    target, base.substring(1), node.attribute("scope").orElseThrow()
+                    target, new Attributes(node.attribute("scope").orElseThrow())
                 );
             } else {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());

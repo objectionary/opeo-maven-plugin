@@ -165,15 +165,21 @@ public final class Attributes {
      * @return Map
      */
     private static Map<String, String> fromEntries(final String... entries) {
+        final Map<String, String> result;
         final int length = entries.length;
-        if (length % 2 != 0) {
-            throw new IllegalArgumentException("Entries must be even");
+        if (length == 0) {
+            result = new LinkedHashMap<>(0);
+        } else {
+            if (length % 2 != 0) {
+                throw new IllegalArgumentException("Entries must be even");
+            }
+            final Map<String, String> res = new LinkedHashMap<>(0);
+            for (int idx = 0; idx < length; idx += 2) {
+                res.put(entries[idx], entries[idx + 1]);
+            }
+            result = res;
         }
-        final Map<String, String> res = new LinkedHashMap<>(0);
-        for (int idx = 0; idx < length; idx += 2) {
-            res.put(entries[idx], entries[idx + 1]);
-        }
-        return res;
+        return result;
     }
 
     /**

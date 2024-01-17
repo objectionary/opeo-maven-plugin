@@ -73,12 +73,20 @@ class InstanceFieldTest {
 
     @Test
     void transformsToOpcodes() {
+        final String descriptor = "S";
+        final String owner = "java/lang/Object";
+        final String name = "bar";
         MatcherAssert.assertThat(
             "Can't transform to opcodes",
-            new OpcodeNodes(new InstanceField(new This(), "bar", "S")).opcodes(),
+            new OpcodeNodes(
+                new InstanceField(
+                    new This(),
+                    new Attributes("name", name, "descriptor", descriptor, "owner", owner)
+                )
+            ).opcodes(),
             new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.ALOAD, 0),
-                new HasInstructions.Instruction(Opcodes.GETFIELD, "???owner???", "bar", "S")
+                new HasInstructions.Instruction(Opcodes.GETFIELD, owner, name, descriptor)
             )
         );
     }

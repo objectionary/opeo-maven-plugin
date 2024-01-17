@@ -41,14 +41,9 @@ public final class InstanceField implements AstNode {
     private final AstNode source;
 
     /**
-     * Field name.
+     * Field attributes.
      */
-    private final String name;
-
-    /**
-     * Field descriptor.
-     */
-    private final String descriptor;
+    private final Attributes attributes;
 
     /**
      * Constructor.
@@ -73,22 +68,46 @@ public final class InstanceField implements AstNode {
         final String name,
         final String descriptor
     ) {
+        this(source, new Attributes().name(name).type("field").descriptor(descriptor));
+    }
+
+    /**
+     * Constructor.
+     * @param source Object reference from which the field is accessed
+     * @param name Field name
+     * @param descriptor Field descriptor
+     * @param owner Field owner
+     */
+    public InstanceField(
+        final AstNode source,
+        final String name,
+        final String descriptor,
+        final String owner
+    ) {
+        this(source, new Attributes().name(name).type("field").descriptor(descriptor).owner(owner));
+    }
+
+    /**
+     * Constructor.
+     * @param source Object reference from which the field is accessed
+     * @param attributes Field attributes
+     */
+    public InstanceField(final AstNode source, final Attributes attributes) {
         this.source = source;
-        this.name = name;
-        this.descriptor = descriptor.replace("field|", "");
+        this.attributes = attributes;
     }
 
     @Override
     public String print() {
-        return String.format("%s.%s", this.source.print(), this.name);
+        return String.format("%s.%s", this.source.print(), this.attributes.name());
     }
 
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives()
             .add("o")
-            .attr("base", String.format(".%s", this.name))
-            .attr("scope", String.format("field|%s", this.descriptor))
+            .attr("base", String.format(".%s", this.attributes.name()))
+            .attr("scope", String.format(this.attributes.descriptor()))
             .append(this.source.toXmir())
             .up();
     }
@@ -97,7 +116,14 @@ public final class InstanceField implements AstNode {
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.source.opcodes());
-        res.add(new Opcode(Opcodes.GETFIELD, "???owner???", this.name, this.descriptor));
+        res.add(
+            new Opcode(
+                Opcodes.GETFIELD,
+                this.attributes.owner(),
+                this.attributes.name(),
+                this.attributes.descriptor()
+            )
+        );
         return res;
     }
 }
