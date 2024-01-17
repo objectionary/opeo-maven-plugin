@@ -46,19 +46,14 @@ public final class Invocation implements AstNode {
     private final AstNode source;
 
     /**
-     * Method name.
+     * Method attributes.
      */
-    private final String method;
+    private final Attributes attributes;
 
     /**
      * Arguments.
      */
     private final List<AstNode> arguments;
-
-    /**
-     * Descriptor.
-     */
-    private final String descriptor;
 
     /**
      * Constructor.
@@ -94,6 +89,20 @@ public final class Invocation implements AstNode {
     /**
      * Constructor.
      * @param source Source or target on which the invocation is performed
+     * @param attributes Method attributes
+     * @param args Arguments
+     */
+    public Invocation(
+        final AstNode source,
+        final Attributes attributes,
+        final AstNode... args
+    ) {
+        this(source, attributes, Arrays.asList(args));
+    }
+
+    /**
+     * Constructor.
+     * @param source Source or target on which the invocation is performed
      * @param method Method name
      * @param arguments Arguments
      */
@@ -119,10 +128,23 @@ public final class Invocation implements AstNode {
         final List<AstNode> arguments,
         final String descriptor
     ) {
+        this(source, new Attributes().name(method).descriptor(descriptor), arguments);
+    }
+
+    /**
+     * Constructor.
+     * @param source Source or target on which the invocation is performed
+     * @param attributes Method attributes
+     * @param arguments Arguments
+     */
+    public Invocation(
+        final AstNode source,
+        final Attributes attributes,
+        final List<AstNode> arguments
+    ) {
         this.source = source;
-        this.method = method;
+        this.attributes = attributes.type("method");
         this.arguments = arguments;
-        this.descriptor = descriptor;
     }
 
     @Override
@@ -130,14 +152,14 @@ public final class Invocation implements AstNode {
         return String.format(
             "(%s).%s%s",
             this.source.print(),
-            this.method,
+            this.attributes.name(),
             this.args()
         );
     }
 
     @Override
     public Iterable<Directive> toXmir() {
-        if (Objects.isNull(this.source) || Objects.isNull(this.method)) {
+        if (Objects.isNull(this.source)) {
             throw new IllegalArgumentException(
                 String.format(
                     "Source and method must not be null, but they are %s",
@@ -147,8 +169,8 @@ public final class Invocation implements AstNode {
         }
         final Directives directives = new Directives();
         directives.add("o")
-            .attr("base", String.format(".%s", this.method))
-            .attr("scope", this.descriptor)
+            .attr("base", String.format(".%s", this.attributes.name()))
+            .attr("scope", this.attributes)
             .append(this.source.toXmir());
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
@@ -159,7 +181,14 @@ public final class Invocation implements AstNode {
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.source.opcodes());
         this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
-        res.add(new Opcode(Opcodes.INVOKEVIRTUAL, "???owner???", this.method, this.descriptor));
+        res.add(
+            new Opcode(
+                Opcodes.INVOKEVIRTUAL,
+                this.attributes.owner(),
+                this.attributes.name(),
+                this.attributes.descriptor()
+            )
+        );
         return res;
     }
 

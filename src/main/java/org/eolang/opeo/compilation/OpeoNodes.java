@@ -221,17 +221,18 @@ public final class OpeoNodes {
                 }
                 result = new Invocation(
                     target,
-                    base.substring(1),
-                    arguments,
-                    node.attribute("scope")
-                        .orElseThrow(
-                            () -> new IllegalArgumentException(
-                                String.format(
-                                    "Can't find descriptor for invocation of '%s'",
-                                    base
+                    new Attributes(
+                        node.attribute("scope")
+                            .orElseThrow(
+                                () -> new IllegalArgumentException(
+                                    String.format(
+                                        "Can't find descriptor for invocation of '%s'",
+                                        base
+                                    )
                                 )
                             )
-                        )
+                    ),
+                    arguments
                 );
             }
         } else {

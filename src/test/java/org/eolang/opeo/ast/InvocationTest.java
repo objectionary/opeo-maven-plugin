@@ -76,14 +76,15 @@ class InvocationTest {
             new Xembler(
                 new Invocation(
                     new This(),
-                    "bar",
-                    "(Ljava/lang/String;)Ljava/lang/String;",
+                    new Attributes().name("bar")
+                        .descriptor("(Ljava/lang/String;)Ljava/lang/String;")
+                        .owner("some/Owner"),
                     new Literal("baz")
                 ).toXmir(),
                 new Transformers.Node()
             ).xmlQuietly(),
             XhtmlMatchers.hasXPaths(
-                "/o[@base='.bar' and @scope='(Ljava/lang/String;)Ljava/lang/String;']"
+                "/o[@base='.bar' and contains(@scope,'(Ljava/lang/String;)Ljava/lang/String;')]"
             )
         );
     }
@@ -93,17 +94,22 @@ class InvocationTest {
         final String name = "bar";
         final String constant = "baz";
         final String descriptor = "(Ljava/lang/String;)Ljava/lang/String;";
+        final String owner = "some/instruction/Owner";
         MatcherAssert.assertThat(
             "Can't transform 'invocation' to correct opcodes",
             new OpcodeNodes(
-                new Invocation(new This(), name, descriptor, new Literal(constant))
+                new Invocation(
+                    new This(),
+                    new Attributes().descriptor(descriptor).name(name).owner(owner),
+                    new Literal(constant)
+                )
             ).opcodes(),
             new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.ALOAD, 0),
                 new HasInstructions.Instruction(Opcodes.LDC, constant),
                 new HasInstructions.Instruction(
                     Opcodes.INVOKEVIRTUAL,
-                    "???owner???",
+                    owner,
                     name,
                     descriptor
                 )
@@ -115,16 +121,21 @@ class InvocationTest {
     void transformsToOpcodesWithoutArguments() {
         final String name = "toString";
         final String descriptor = "()Ljava/lang/String;";
+        final String owner = "random/Owner";
         MatcherAssert.assertThat(
             "Can't transform 'local1.toSting()' to correct opcodes",
             new OpcodeNodes(
-                new Invocation(new Variable(Type.getType(String.class), 1), name, descriptor)
+                new Invocation(
+                    new Variable(Type.getType(String.class), 1),
+                    new Attributes().name(name).descriptor(descriptor).owner(
+                        owner)
+                )
             ).opcodes(),
             new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.ALOAD, 1),
                 new HasInstructions.Instruction(
                     Opcodes.INVOKEVIRTUAL,
-                    "???owner???",
+                    owner,
                     name,
                     descriptor
                 )
