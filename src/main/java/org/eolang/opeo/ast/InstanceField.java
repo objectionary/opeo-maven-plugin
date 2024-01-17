@@ -74,22 +74,6 @@ public final class InstanceField implements AstNode {
     /**
      * Constructor.
      * @param source Object reference from which the field is accessed
-     * @param name Field name
-     * @param descriptor Field descriptor
-     * @param owner Field owner
-     */
-    public InstanceField(
-        final AstNode source,
-        final String name,
-        final String descriptor,
-        final String owner
-    ) {
-        this(source, new Attributes().name(name).type("field").descriptor(descriptor).owner(owner));
-    }
-
-    /**
-     * Constructor.
-     * @param source Object reference from which the field is accessed
      * @param attributes Field attributes
      */
     public InstanceField(final AstNode source, final Attributes attributes) {
@@ -107,7 +91,7 @@ public final class InstanceField implements AstNode {
         return new Directives()
             .add("o")
             .attr("base", String.format(".%s", this.attributes.name()))
-            .attr("scope", String.format(this.attributes.descriptor()))
+            .attr("scope", this.attributes)
             .append(this.source.toXmir())
             .up();
     }

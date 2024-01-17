@@ -188,8 +188,32 @@ public final class Attributes {
      * @return Map
      */
     private static Map<String, String> parse(final String raw) {
-        return Arrays.stream(raw.split("\\|")).map(entry -> entry.split("="))
-            .map(entry -> new MapEntry<>(entry[0], entry[1]))
-            .collect(Collectors.toMap(MapEntry::getKey, MapEntry::getValue));
+        try {
+            return Arrays.stream(raw.split("\\|")).map(entry -> entry.split("="))
+                .peek(Attributes::entrySize)
+                .map(entry -> new MapEntry<>(entry[0], entry[1]))
+                .collect(Collectors.toMap(MapEntry::getKey, MapEntry::getValue));
+        } catch (final IllegalArgumentException exception) {
+            throw new IllegalArgumentException(
+                String.format("Can't parse attributes '%s'", raw),
+                exception
+            );
+        }
+    }
+
+    /**
+     * Check entry size.
+     * @param entry Entry to check
+     */
+    private static void entrySize(final String... entry) {
+        if (entry.length != 2) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "Entry must have two parts, but it has %d: %s",
+                    entry.length,
+                    Arrays.toString(entry)
+                )
+            );
+        }
     }
 }

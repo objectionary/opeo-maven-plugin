@@ -286,10 +286,13 @@ public final class DecompilerMachine {
 
         @Override
         public void handle(final Instruction instruction) {
+            final String owner = (String) instruction.operand(0);
+            final String name = (String) instruction.operand(1);
+            final String descriptor = (String) instruction.operand(2);
             DecompilerMachine.this.stack.push(
                 new InstanceField(
                     DecompilerMachine.this.stack.pop(),
-                    (String) instruction.operand(1)
+                    new Attributes().name(name).descriptor(descriptor).owner(owner)
                 )
             );
         }
