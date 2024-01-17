@@ -34,6 +34,7 @@ import org.cactoos.map.MapEntry;
  * This class is useful when we need to preserve the information about types of AST nodes.
  * @since 0.1
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class Attributes {
 
     /**

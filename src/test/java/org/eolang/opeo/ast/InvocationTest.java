@@ -127,8 +127,7 @@ class InvocationTest {
             new OpcodeNodes(
                 new Invocation(
                     new Variable(Type.getType(String.class), 1),
-                    new Attributes().name(name).descriptor(descriptor).owner(
-                        owner)
+                    new Attributes().name(name).descriptor(descriptor).owner(owner)
                 )
             ).opcodes(),
             new HasInstructions(
