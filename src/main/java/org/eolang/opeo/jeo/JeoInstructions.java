@@ -23,7 +23,9 @@
  */
 package org.eolang.opeo.jeo;
 
+import org.eolang.jeo.representation.xmir.XmlBytecodeEntry;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
+import org.eolang.jeo.representation.xmir.XmlLabel;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.opeo.Instruction;
 
@@ -52,9 +54,24 @@ public final class JeoInstructions {
      */
     public Instruction[] instructions() {
         return this.method.instructions().stream()
-            .filter(node -> node instanceof XmlInstruction)
-            .map(XmlInstruction.class::cast)
-            .map(JeoInstruction::new)
+            .map(JeoInstructions::toInstruction)
             .toArray(Instruction[]::new);
+    }
+
+    /**
+     * Convert XML instruction to instruction.
+     * @param entry XML instruction.
+     * @return Instruction.
+     */
+    private static Instruction toInstruction(final XmlBytecodeEntry entry) {
+        if (entry instanceof XmlInstruction) {
+            return new JeoInstruction((XmlInstruction) entry);
+        } else if (entry instanceof XmlLabel) {
+            return new JeoLabel((XmlLabel) entry);
+        } else {
+            throw new IllegalArgumentException(
+                String.format("Unknown bytecode entry: %s, class is %s", entry, entry.getClass())
+            );
+        }
     }
 }
