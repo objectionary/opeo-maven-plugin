@@ -64,14 +64,16 @@ public final class JeoInstructions {
      * @return Instruction.
      */
     private static Instruction toInstruction(final XmlBytecodeEntry entry) {
+        final Instruction result;
         if (entry instanceof XmlInstruction) {
-            return new JeoInstruction((XmlInstruction) entry);
+            result = new JeoInstruction((XmlInstruction) entry);
         } else if (entry instanceof XmlLabel) {
-            return new JeoLabel((XmlLabel) entry);
+            result = new JeoLabel((XmlLabel) entry);
         } else {
             throw new IllegalArgumentException(
                 String.format("Unknown bytecode entry: %s, class is %s", entry, entry.getClass())
             );
         }
+        return result;
     }
 }

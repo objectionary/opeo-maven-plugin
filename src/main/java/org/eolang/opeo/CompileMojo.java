@@ -51,6 +51,7 @@ public final class CompileMojo extends AbstractMojo {
      * Output directory.
      * The default value is 'xmir'.
      * @since 0.1.0
+     * @checkstyle MemberNameCheck (3 lines)
      */
     @Parameter(defaultValue = "xmir")
     private String outputDirectory;
