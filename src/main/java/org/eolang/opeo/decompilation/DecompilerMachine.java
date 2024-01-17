@@ -35,6 +35,7 @@ import org.cactoos.map.MapOf;
 import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Invocation;
@@ -411,6 +412,7 @@ public final class DecompilerMachine {
     private class InvokevirtualHandler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
+            final String owner = (String) instruction.operand(0);
             final String method = (String) instruction.operand(1);
             final String descriptor = (String) instruction.operand(2);
             final List<AstNode> args = DecompilerMachine.this.popArguments(
@@ -418,7 +420,9 @@ public final class DecompilerMachine {
             );
             final AstNode source = DecompilerMachine.this.stack.pop();
             DecompilerMachine.this.stack.push(
-                new Invocation(source, method, args)
+                new Invocation(
+                    source, new Attributes().name(method).descriptor(descriptor).owner(owner), args
+                )
             );
         }
 

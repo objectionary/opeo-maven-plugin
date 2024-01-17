@@ -72,23 +72,6 @@ public final class Invocation implements AstNode {
     /**
      * Constructor.
      * @param source Source or target on which the invocation is performed
-     * @param method Method name
-     * @param descriptor Method descriptor
-     * @param args Arguments
-     * @checkstyle ParameterNumberCheck (5 lines)
-     */
-    public Invocation(
-        final AstNode source,
-        final String method,
-        final String descriptor,
-        final AstNode... args
-    ) {
-        this(source, method, Arrays.asList(args), descriptor);
-    }
-
-    /**
-     * Constructor.
-     * @param source Source or target on which the invocation is performed
      * @param attributes Method attributes
      * @param args Arguments
      */
