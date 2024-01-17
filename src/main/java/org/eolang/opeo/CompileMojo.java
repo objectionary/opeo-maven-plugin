@@ -47,8 +47,19 @@ public final class CompileMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project.build.directory}/generated-sources")
     private File generated;
 
+    /**
+     * Output directory.
+     * The default value is 'xmir'.
+     * @since 0.1.0
+     */
+    @Parameter(defaultValue = "xmir")
+    private String outputDirectory;
+
     @Override
     public void execute() {
-        new Compiler(this.generated).compile();
+        new Compiler(
+            this.generated.toPath().resolve("opeo-xmir"),
+            this.generated.toPath().resolve(this.outputDirectory)
+        ).compile();
     }
 }
