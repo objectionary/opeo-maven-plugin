@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.compilation;
 
-import com.jcabi.xml.XMLDocument;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -75,9 +74,6 @@ final class CompilerTest {
             output,
             FileMatchers.anExistingFile()
         );
-        final XMLDocument actual = new XMLDocument(new BytesOf(output).asBytes());
-        Assertions.assertEquals(actual, new XMLDocument(before));
-        System.out.println(actual);
         MatcherAssert.assertThat(
             "The compiled file is not equal to the original, but should. This is because Bar.xmir is already a low-level xmir",
             new BytesOf(output).asBytes(),
