@@ -48,7 +48,7 @@ class VariableTest {
     @Test
     void prints() {
         final String actual = new Variable(Type.INT_TYPE, 0).print();
-        final String expected = "local0int";
+        final String expected = "llocal0int";
         MatcherAssert.assertThat(
             String.format(
                 "We expect the printed variable to be equal to '%s', but it wasn't, current value is '%s'",
@@ -65,7 +65,7 @@ class VariableTest {
         MatcherAssert.assertThat(
             "We expect the xmir variable to be equal to <o base='local1'/>, but it wasn't",
             new Xembler(new Variable(Type.INT_TYPE, 1).toXmir()).xml(),
-            XhtmlMatchers.hasXPath("./o[@base='local1']")
+            XhtmlMatchers.hasXPath("./o[@base='llocal1']")
         );
     }
 

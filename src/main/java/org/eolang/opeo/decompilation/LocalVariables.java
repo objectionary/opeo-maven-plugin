@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.StoreVariable;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.ast.Variable;
 import org.objectweb.asm.Opcodes;
@@ -74,8 +75,24 @@ public final class LocalVariables {
      * @param type Type.
      * @return Variable.
      */
-    public AstNode variable(final int index, final Type type) {
-        return this.variables.computeIfAbsent(index, key -> new Variable(type, key));
+    public AstNode variable(final int index, final Type type, boolean load) {
+        final AstNode node = this.variables.computeIfAbsent(
+            index,
+            key -> {
+                if (load) {
+                    return new Variable(type, key);
+                } else {
+                    return new StoreVariable(type, key);
+                }
+            }
+        );
+        if (node instanceof Variable && !load) {
+            return new StoreVariable(type, index);
+        } else if (node instanceof StoreVariable && load) {
+            return new Variable(type, index);
+        } else {
+            return node;
+        }
     }
 
     /**

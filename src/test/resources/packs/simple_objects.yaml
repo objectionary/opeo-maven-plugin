@@ -91,7 +91,7 @@ eo:
             $
             .x
             .write
-              local0
+              llocal0
             opcode > RETURN
               177
       [] > j$foo
@@ -134,7 +134,7 @@ eo:
             $
             .a
             .write
-              local0
+              llocal0
             opcode > RETURN
               177
       [] > j$bar

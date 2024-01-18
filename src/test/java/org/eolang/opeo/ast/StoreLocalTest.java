@@ -43,7 +43,7 @@ class StoreLocalTest {
         MatcherAssert.assertThat(
             "We expect the printed assignment to be correct",
             new StoreLocal(new Variable(Type.INT_TYPE, 1), new Literal(1)).print(),
-            Matchers.equalTo("local1int = 1")
+            Matchers.equalTo("llocal1int = 1")
         );
     }
 
@@ -63,7 +63,7 @@ class StoreLocalTest {
             xml,
             XhtmlMatchers.hasXPaths(
                 "./o[@base='.write']",
-                "./o[@base='.write']/o[@base='local2']",
+                "./o[@base='.write']/o[@base='llocal2']",
                 "./o[@base='.write']/o[@base='float']"
             )
         );

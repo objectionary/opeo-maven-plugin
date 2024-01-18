@@ -229,7 +229,8 @@ public final class DecompilerMachine {
             DecompilerMachine.this.stack.push(
                 DecompilerMachine.this.locals.variable(
                     (Integer) instruction.operands().get(0),
-                    this.type
+                    this.type,
+                    true
                 )
             );
         }
@@ -261,7 +262,8 @@ public final class DecompilerMachine {
                 new StoreLocal(
                     DecompilerMachine.this.locals.variable(
                         (Integer) instruction.operands().get(0),
-                        this.type
+                        this.type,
+                        false
                     ),
                     DecompilerMachine.this.stack.pop()
                 )
