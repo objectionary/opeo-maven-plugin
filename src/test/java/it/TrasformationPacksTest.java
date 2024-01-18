@@ -43,7 +43,7 @@ import org.eolang.jeo.representation.BytecodeRepresentation;
 import org.eolang.jeo.representation.bytecode.Bytecode;
 import org.eolang.jucs.ClasspathSource;
 import org.eolang.opeo.jeo.JeoDecompiler;
-import org.eolang.parser.XMIR;
+import org.eolang.parser.xmir.Xmir;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -79,8 +79,8 @@ final class TrasformationPacksTest {
             .map(BytecodeRepresentation::toEO)
             .map(JeoDecompiler::new)
             .map(JeoDecompiler::decompile)
-            .map(XMIR::new)
-            .map(XMIR::toEO)
+            .map(Xmir.Default::new)
+            .map(Xmir.Default::toEO)
             .collect(Collectors.toList());
         final List<String> expected = jeopack.eolang()
             .stream()
@@ -120,7 +120,7 @@ final class TrasformationPacksTest {
         Logger.debug(this, "Decompiled XMIR example:%n%s%n", decompiled);
         MatcherAssert.assertThat(
             "Decompiled EO doesn't match expected EO",
-            new XMIR(decompiled).toEO(),
+            new Xmir.Default(decompiled).toEO(),
             Matchers.equalTo(
                 new TextOf(new ResourceOf("simple.eo")).asString()
             )

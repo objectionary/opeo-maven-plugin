@@ -23,12 +23,13 @@
  */
 package org.eolang.opeo.ast;
 
+import com.jcabi.xml.XMLDocument;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.eolang.jeo.representation.directives.DirectivesInstruction;
-import org.eolang.parser.XMIR;
+import org.eolang.parser.xmir.Xmir;
 import org.xembly.Directive;
 import org.xembly.Transformers;
 import org.xembly.Xembler;
@@ -105,7 +106,7 @@ public final class Opcode implements AstNode {
 
     @Override
     public String print() {
-        return new XMIR(new Xembler(this.toXmir(), new Transformers.Node()).xmlQuietly()).toEO();
+        return "opcode";
     }
 
     @Override

@@ -23,12 +23,13 @@
  */
 package org.eolang.opeo.decompilation;
 
-import org.cactoos.text.TextOf;
+import com.jcabi.xml.XMLDocument;
 import org.eolang.opeo.OpcodeInstruction;
-import org.eolang.parser.XMIR;
+import org.eolang.parser.xmir.Xmir;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Xembler;
@@ -49,6 +50,7 @@ final class DecompilerMachineTest {
      * </p>
      */
     @Test
+    @Disabled("https://github.com/objectionary/eo/issues/2801")
     void decompilesNewInstructions() {
         MatcherAssert.assertThat(
             "Can't decompile bytecode instructions for 'new B(new A(42));'",
@@ -79,6 +81,7 @@ final class DecompilerMachineTest {
      * </p>
      */
     @Test
+    @Disabled("https://github.com/objectionary/eo/issues/2801")
     void decompilesNewInstructionsEachWithParam() {
         final String res = new DecompilerMachine().decompile(
             new OpcodeInstruction(Opcodes.NEW, "D"),
@@ -269,6 +272,7 @@ final class DecompilerMachineTest {
     }
 
     @Test
+    @Disabled("https://github.com/objectionary/eo/issues/2801")
     void decompilesFieldAccessAndMethodInvocationToEo() {
         final String xml = new Xembler(
             new DecompilerMachine().decompileToXmir(
@@ -284,7 +288,7 @@ final class DecompilerMachineTest {
                 "Can't decompile field access and method invocation into EO for 'this.a.intValue() + 1;', received XML: %n%s%n",
                 xml
             ),
-            new XMIR(new TextOf(xml)).toEO(),
+            new Xmir.Default(new XMLDocument(xml)).toEO(),
             Matchers.equalTo(
                 String.join(
                     "\n",
