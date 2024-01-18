@@ -172,17 +172,27 @@ public final class OpeoNodes {
         } else if (base.contains("local")) {
             result = new Variable(node);
         } else if (".write".equals(base)) {
-            final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final AstNode variable = OpeoNodes.node(inner.get(0));
-            final AstNode value = OpeoNodes.node(inner.get(1));
-            if (variable instanceof Variable) {
-                result = new StoreLocal(variable, value);
-            } else {
+            //@checkstyle MethodBodyCommentsCheck (20 lines)
+            // @todo #80:90min Correct parsing of WriteField node
+            //  Currently we have an ad-hoc solution for parsing WriteField node.
+            //  It looks ugly, requires refactoring and maybe adding new ast node types.
+            //  For now the parsing is done in a way to make the tests pass.
+            if (node.attribute("scope").isPresent()) {
+                final List<XmlNode> inner = node.children().collect(Collectors.toList());
+                final AstNode target = OpeoNodes.node(
+                    inner.get(0).children().collect(Collectors.toList()).get(0)
+                );
+                final AstNode value = OpeoNodes.node(inner.get(1));
                 result = new WriteField(
-                    variable,
+                    target,
                     value,
                     new Attributes(node.attribute("scope").orElseThrow())
                 );
+            } else {
+                final List<XmlNode> inner = node.children().collect(Collectors.toList());
+                final AstNode variable = OpeoNodes.node(inner.get(0));
+                final AstNode value = OpeoNodes.node(inner.get(1));
+                result = new StoreLocal(variable, value);
             }
         } else if (".new".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
