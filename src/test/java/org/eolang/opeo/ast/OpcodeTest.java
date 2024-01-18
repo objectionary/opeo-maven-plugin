@@ -24,8 +24,6 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import com.jcabi.xml.XMLDocument;
-import org.eolang.parser.xmir.Xmir;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;

@@ -4,29 +4,39 @@
 
 [] > j$Simple
   33 > access
-  "java/lang/Object" > supername
-  tuple > interfaces
+  """
+  java/lang/Object
+  """ > supername
+  * > interfaces
   [] > new
     1 > access
-    "()V" > descriptor
-    "" > signature
-    tuple > exceptions
+    """
+    ()V
+    """ > descriptor
+    """
+    """ > signature
+    * > exceptions
     seq > @
-      tuple
+      *
         $
         .super
         opcode > RETURN
           177
   [arg__[Ljava/lang/String;__0] > j$main
     9 > access
-    "([Ljava/lang/String;)V" > descriptor
-    "" > signature
-    tuple > exceptions
+    """
+    ([Ljava/lang/String;)V
+    """ > descriptor
+    """
+    """ > signature
+    * > exceptions
     seq > @
-      tuple
+      *
         java/lang/StringBuilder
         .new
-          "abc"
+          """
+          abc
+          """
         .append
           1
         opcode > RETURN
