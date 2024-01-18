@@ -94,7 +94,7 @@ public final class Constructor implements AstNode {
         res.add(new Opcode(Opcodes.NEW, this.type));
         res.add(new Opcode(Opcodes.DUP));
         this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
-        res.add(new Opcode(Opcodes.INVOKESPECIAL, this.type, "<init>", "V()"));
+        res.add(new Opcode(Opcodes.INVOKESPECIAL, this.type, "<init>", "()V"));
         return res;
     }
 

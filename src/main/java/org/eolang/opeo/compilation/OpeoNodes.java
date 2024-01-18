@@ -196,7 +196,14 @@ public final class OpeoNodes {
             }
         } else if (".new".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final String type = inner.get(0).text();
+            final String type = inner.get(0).attribute("base").orElseThrow(
+                () -> new IllegalArgumentException(
+                    String.format(
+                        "Can't find type of '%s'",
+                        base
+                    )
+                )
+            );
             final List<AstNode> arguments;
             if (inner.size() > 1) {
                 arguments = inner.subList(1, inner.size())
