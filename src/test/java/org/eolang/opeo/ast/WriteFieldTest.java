@@ -54,8 +54,9 @@ class WriteFieldTest {
     void convertsToXmir() throws ImpossibleModificationException {
         final String xmir = new Xembler(
             new WriteField(
-                new InstanceField(new This(), "bar"),
-                new Literal(3)
+                new This(),
+                new Literal(3),
+                new Attributes("name", "bar")
             ).toXmir()
         ).xml();
         MatcherAssert.assertThat(

@@ -85,7 +85,10 @@ public final class WriteField implements AstNode {
         return new Directives().add("o")
             .attr("base", ".write")
             .attr("scope", this.attributes)
+            .add("o")
+            .attr("base", String.format(".%s", this.attributes.name()))
             .append(this.target.toXmir())
+            .up()
             .append(this.value.toXmir())
             .up();
     }
