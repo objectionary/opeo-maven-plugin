@@ -30,7 +30,7 @@
       <o abstract="" name="j$B">
          <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 20</o>
          <o base="string" data="bytes" name="supername">6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>
-         <o base="tuple" data="tuple" name="interfaces"/>
+         <o base="tuple" star="" name="interfaces"/>
          <o base="field" name="j$f">
             <o base="int" data="bytes">00 00 00 00 00 00 00 12</o>
             <o base="string" data="bytes">4C 6F 72 67 2F 65 6F 6C 61 6E 67 2F 62 65 6E 63 68 6D 61 72 6B 2F 46 3B</o>
@@ -41,10 +41,10 @@
             <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 00</o>
             <o base="string" data="bytes" name="descriptor">28 4C 6F 72 67 2F 65 6F 6C 61 6E 67 2F 62 65 6E 63 68 6D 61 72 6B 2F 46 3B 29 56</o>
             <o base="string" data="bytes" name="signature"/>
-            <o base="tuple" data="tuple" name="exceptions"/>
+            <o base="tuple" star="" name="exceptions"/>
             <o abstract="" name="arg__Lorg/eolang/benchmark/F;__0"/>
             <o base="seq" name="@">
-               <o base="tuple">
+               <o base="tuple" star="">
                   <o base=".super">
                      <o base="$"/>
                   </o>
@@ -64,9 +64,9 @@
             <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 00</o>
             <o base="string" data="bytes" name="descriptor">28 29 49</o>
             <o base="string" data="bytes" name="signature"/>
-            <o base="tuple" data="tuple" name="exceptions"/>
+            <o base="tuple" star="" name="exceptions"/>
             <o base="seq" name="@">
-               <o base="tuple">
+               <o base="tuple" star="">
                   <o base=".f">
                      <o base="$"/>
                   </o>

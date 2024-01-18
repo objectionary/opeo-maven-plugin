@@ -118,6 +118,7 @@ final class TrasformationPacksTest {
             ).toEO()
         ).decompile();
         Logger.debug(this, "Decompiled XMIR example:%n%s%n", decompiled);
+
         MatcherAssert.assertThat(
             "Decompiled EO doesn't match expected EO",
             new XMIR(decompiled).toEO(),

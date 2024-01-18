@@ -69,7 +69,7 @@ public final class Root implements AstNode {
             result = Collections.emptyList();
         } else {
             final Directives directives = new Directives();
-            directives.add("o").attr("base", "tuple");
+            directives.add("o").attr("base", "tuple").attr("star","");
             this.children.stream().map(AstNode::toXmir).forEach(directives::append);
             directives.up();
             result = directives;
