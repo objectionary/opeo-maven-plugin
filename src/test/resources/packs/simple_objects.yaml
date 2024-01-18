@@ -37,12 +37,12 @@ eo:
     [] > j$Application
       33 > access
       "java/lang/Object" > supername
-      * > interfaces
+      tuple > interfaces
       [] > new
         1 > access
         "()V" > descriptor
         "" > signature
-        * > exceptions
+        tuple > exceptions
         seq > @
           tuple
             $
@@ -53,7 +53,7 @@ eo:
         9 > access
         "([Ljava/lang/String;)V" > descriptor
         "" > signature
-        * > exceptions
+        tuple > exceptions
         seq > @
           tuple
             com/example/B
@@ -73,7 +73,7 @@ eo:
     [] > j$A
       33 > access
       "java/lang/Object" > supername
-      * > interfaces
+      tuple > interfaces
       field > j$x
         18
         "I"
@@ -83,7 +83,7 @@ eo:
         1 > access
         "(I)V" > descriptor
         "" > signature
-        * > exceptions
+        tuple > exceptions
         seq > @
           tuple
             $
@@ -98,7 +98,7 @@ eo:
         1 > access
         "()I" > descriptor
         "" > signature
-        * > exceptions
+        tuple > exceptions
         seq > @
           tuple
             times
@@ -116,7 +116,7 @@ eo:
     [] > j$B
       33 > access
       "java/lang/Object" > supername
-      * > interfaces
+      tuple > interfaces
       field > j$a
         18
         "Lcom/example/A;"
@@ -126,7 +126,7 @@ eo:
         1 > access
         "(Lcom/example/A;)V" > descriptor
         "" > signature
-        * > exceptions
+        tuple > exceptions
         seq > @
           tuple
             $
@@ -141,7 +141,7 @@ eo:
         1 > access
         "()I" > descriptor
         "" > signature
-        * > exceptions
+        tuple > exceptions
         seq > @
           tuple
             $

@@ -46,6 +46,7 @@ import org.eolang.opeo.jeo.JeoDecompiler;
 import org.eolang.parser.XMIR;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.io.TempDir;
@@ -118,7 +119,6 @@ final class TrasformationPacksTest {
             ).toEO()
         ).decompile();
         Logger.debug(this, "Decompiled XMIR example:%n%s%n", decompiled);
-
         MatcherAssert.assertThat(
             "Decompiled EO doesn't match expected EO",
             new XMIR(decompiled).toEO(),

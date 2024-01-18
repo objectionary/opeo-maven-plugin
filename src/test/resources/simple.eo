@@ -5,12 +5,12 @@
 [] > j$Simple
   33 > access
   "java/lang/Object" > supername
-  * > interfaces
+  tuple > interfaces
   [] > new
     1 > access
     "()V" > descriptor
     "" > signature
-    * > exceptions
+    tuple > exceptions
     seq > @
       tuple
         $
@@ -21,7 +21,7 @@
     9 > access
     "([Ljava/lang/String;)V" > descriptor
     "" > signature
-    * > exceptions
+    tuple > exceptions
     seq > @
       tuple
         java/lang/StringBuilder
