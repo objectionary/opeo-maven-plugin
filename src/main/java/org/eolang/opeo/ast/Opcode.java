@@ -23,16 +23,12 @@
  */
 package org.eolang.opeo.ast;
 
-import com.jcabi.xml.XMLDocument;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.eolang.jeo.representation.directives.DirectivesInstruction;
-import org.eolang.parser.xmir.Xmir;
 import org.xembly.Directive;
-import org.xembly.Transformers;
-import org.xembly.Xembler;
 
 /**
  * Opcode output node.
