@@ -46,6 +46,11 @@ public final class LocalVariables {
     private Map<Integer, AstNode> variables;
 
     /**
+     * Method access modifiers.
+     */
+    private final int modifiers;
+
+    /**
      * Constructor.
      */
     public LocalVariables() {
@@ -58,15 +63,25 @@ public final class LocalVariables {
      * @param descriptor Method descriptor.
      */
     public LocalVariables(final int modifiers, final String descriptor) {
-        this(LocalVariables.fromMethod(modifiers, descriptor));
+        this(LocalVariables.fromMethod(modifiers, descriptor), modifiers);
     }
 
     /**
      * Constructor.
      * @param variables Local variables.
      */
-    public LocalVariables(final Map<Integer, AstNode> variables) {
-        this.variables = new HashMap<>(variables);
+    private LocalVariables(final Map<Integer, AstNode> variables) {
+        this(new HashMap<>(variables), Opcodes.ACC_PUBLIC);
+    }
+
+    /**
+     * Constructor.
+     * @param variables Local variables.
+     * @param modifiers Method access modifiers.
+     */
+    public LocalVariables(final Map<Integer, AstNode> variables, final int modifiers) {
+        this.variables = variables;
+        this.modifiers = modifiers;
     }
 
     /**
@@ -77,7 +92,15 @@ public final class LocalVariables {
      * @return Variable.
      */
     public AstNode variable(final int index, final Type type, final boolean load) {
-        return new Variable(type, load ? Variable.Operation.LOAD : Variable.Operation.STORE, index);
+        final AstNode result;
+        if ((this.modifiers & Opcodes.ACC_STATIC) == 0) {
+            result = new This();
+        } else if (load) {
+            result = new Variable(type, Variable.Operation.LOAD, index);
+        } else {
+            result = new Variable(type, Variable.Operation.STORE, index);
+        }
+        return result;
     }
 
     /**
