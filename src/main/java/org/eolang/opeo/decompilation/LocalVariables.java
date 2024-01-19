@@ -43,7 +43,7 @@ public final class LocalVariables {
     /**
      * Constructor.
      */
-    private LocalVariables() {
+    public LocalVariables() {
         this(Opcodes.ACC_PUBLIC);
     }
 

@@ -50,7 +50,6 @@ public final class Variable implements AstNode {
      */
     private final Attributes attributes;
 
-
     /**
      * The identifier of the variable.
      */
@@ -208,6 +207,11 @@ public final class Variable implements AstNode {
         );
     }
 
+    /**
+     * Get the attributes of the variable.
+     * @param node The XML node that represents variable.
+     * @return The attributes.
+     */
     private static Attributes vattributes(final XmlNode node) {
         return new Attributes(
             node.attribute("scope")
