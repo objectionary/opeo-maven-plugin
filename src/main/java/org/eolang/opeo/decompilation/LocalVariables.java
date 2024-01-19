@@ -93,7 +93,7 @@ public final class LocalVariables {
      */
     public AstNode variable(final int index, final Type type, final boolean load) {
         final AstNode result;
-        if ((this.modifiers & Opcodes.ACC_STATIC) == 0) {
+        if (index == 0 && (this.modifiers & Opcodes.ACC_STATIC) == 0) {
             result = new This();
         } else if (load) {
             result = new Variable(type, Variable.Operation.LOAD, index);
