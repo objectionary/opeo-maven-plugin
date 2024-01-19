@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.StoreVariable;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.ast.Variable;
 import org.objectweb.asm.Opcodes;
