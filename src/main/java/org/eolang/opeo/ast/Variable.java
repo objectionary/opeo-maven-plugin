@@ -43,12 +43,12 @@ public final class Variable implements AstNode {
     /**
      * The prefix of the variable.
      */
-    private static final String PREFIX = "llocal";
+    private static final String PREFIX = "local";
 
     /**
-     * The type of the variable.
+     * The attributes of the variable.
      */
-    private final Type type;
+    private final Attributes attributes;
 
     /**
      * The identifier of the variable.
@@ -60,7 +60,7 @@ public final class Variable implements AstNode {
      * @param node The XML node that represents variable.
      */
     public Variable(final XmlNode node) {
-        this(Variable.vtype(node), Variable.videntifier(node));
+        this(Variable.vattributes(node), Variable.videntifier(node));
     }
 
     /**
@@ -68,18 +68,45 @@ public final class Variable implements AstNode {
      * @param type The type of the variable.
      * @param identifier The identifier of the variable.
      */
+    public Variable(final Type type, final int identifier) {
+        this(type, Operation.LOAD, identifier);
+    }
+
+    /**
+     * Constructor.
+     * @param type The type of the variable.
+     * @param operation The operation of the variable.
+     * @param identifier The identifier of the variable.
+     */
+    public Variable(final Type type, final Operation operation, final int identifier) {
+        this(
+            new Attributes().descriptor(type.getDescriptor()).type(operation.name()),
+            identifier
+        );
+    }
+
+    /**
+     * Constructor.
+     * @param attributes The variable attributes.
+     * @param identifier The identifier of the variable.
+     */
     public Variable(
-        final Type type,
+        final Attributes attributes,
         final int identifier
     ) {
-        this.type = type;
+        this.attributes = attributes;
         this.identifier = identifier;
     }
 
     @ToString.Include
     @Override
     public String print() {
-        return String.format("%s%d%s", Variable.PREFIX, this.identifier, this.type.getClassName());
+        return String.format(
+            "%s%d%s",
+            Variable.PREFIX,
+            this.identifier,
+            Type.getType(this.attributes.descriptor()).getClassName()
+        );
     }
 
     @Override
@@ -87,31 +114,77 @@ public final class Variable implements AstNode {
         return new Directives()
             .add("o")
             .attr("base", String.format("%s%d", Variable.PREFIX, this.identifier))
-            .attr("scope", this.type.getDescriptor())
+            .attr("scope", this.attributes)
             .up();
     }
 
     @Override
     public List<AstNode> opcodes() {
         final List<AstNode> result;
-        if (this.type.equals(Type.INT_TYPE)) {
+        if (Operation.valueOf(this.attributes.type()).equals(Operation.LOAD)) {
+            result = this.load();
+        } else {
+            result = this.store();
+        }
+        return result;
+    }
+
+    /**
+     * Load the variable opcodes.
+     * @return Opcodes.
+     */
+    private List<AstNode> load() {
+        final List<AstNode> result;
+        final Type type = Type.getType(this.attributes.descriptor());
+        if (type.equals(Type.INT_TYPE)) {
             result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
-        } else if (this.type.equals(Type.DOUBLE_TYPE)) {
+        } else if (type.equals(Type.DOUBLE_TYPE)) {
             result = List.of(new Opcode(Opcodes.DLOAD, this.identifier));
-        } else if (this.type.equals(Type.LONG_TYPE)) {
+        } else if (type.equals(Type.LONG_TYPE)) {
             result = List.of(new Opcode(Opcodes.LLOAD, this.identifier));
-        } else if (this.type.equals(Type.FLOAT_TYPE)) {
+        } else if (type.equals(Type.FLOAT_TYPE)) {
             result = List.of(new Opcode(Opcodes.FLOAD, this.identifier));
-        } else if (this.type.equals(Type.BOOLEAN_TYPE)) {
+        } else if (type.equals(Type.BOOLEAN_TYPE)) {
             result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
-        } else if (this.type.equals(Type.CHAR_TYPE)) {
+        } else if (type.equals(Type.CHAR_TYPE)) {
             result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
-        } else if (this.type.equals(Type.BYTE_TYPE)) {
+        } else if (type.equals(Type.BYTE_TYPE)) {
             result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
-        } else if (this.type.equals(Type.SHORT_TYPE)) {
+        } else if (type.equals(Type.SHORT_TYPE)) {
             result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
         } else {
             result = List.of(new Opcode(Opcodes.ALOAD, this.identifier));
+        }
+        return result;
+    }
+
+    /**
+     * Bytecode opcodes with operands for storing local variable.
+     * @return Opcodes.
+     */
+    private List<AstNode> store() {
+        final List<AstNode> result;
+        final Type type = Type.getType(this.attributes.descriptor());
+        if (type.equals(Type.INT_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ISTORE, this.identifier));
+        } else if (type.equals(Type.DOUBLE_TYPE)) {
+            result = List.of(new Opcode(Opcodes.DSTORE, this.identifier));
+        } else if (type.equals(Type.LONG_TYPE)) {
+            result = List.of(new Opcode(Opcodes.LSTORE, this.identifier));
+        } else if (type.equals(Type.FLOAT_TYPE)) {
+            result = List.of(new Opcode(Opcodes.FSTORE, this.identifier));
+        } else if (type.equals(Type.BOOLEAN_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ISTORE, this.identifier));
+        } else if (type.equals(Type.CHAR_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ISTORE, this.identifier));
+        } else if (type.equals(Type.BYTE_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ISTORE, this.identifier));
+        } else if (type.equals(Type.SHORT_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ISTORE, this.identifier));
+        } else if (type.equals(Type.VOID_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ISTORE, this.identifier));
+        } else {
+            result = List.of(new Opcode(Opcodes.ASTORE, this.identifier));
         }
         return result;
     }
@@ -135,20 +208,38 @@ public final class Variable implements AstNode {
     }
 
     /**
-     * Get the type of the variable.
+     * Get the attributes of the variable.
      * @param node The XML node that represents variable.
-     * @return The type.
+     * @return The attributes.
      */
-    private static Type vtype(final XmlNode node) {
-        return Type.getType(node.attribute("scope")
-            .orElseThrow(
-                () -> new IllegalArgumentException(
-                    String.format(
-                        "Can't recognize variable node: %n%s%nWe expected to find 'scope' attribute",
-                        node
+    private static Attributes vattributes(final XmlNode node) {
+        return new Attributes(
+            node.attribute("scope")
+                .orElseThrow(
+                    () -> new IllegalArgumentException(
+                        String.format(
+                            "Can't recognize variable node: %n%s%nWe expected to find 'scope' attribute",
+                            node
+                        )
                     )
                 )
-            )
         );
+    }
+
+    /**
+     * Local variable intention in bytecode.
+     * @since 0.1
+     */
+    public enum Operation {
+
+        /**
+         * Load local variable.
+         */
+        LOAD,
+
+        /**
+         * Store local variable.
+         */
+        STORE;
     }
 }

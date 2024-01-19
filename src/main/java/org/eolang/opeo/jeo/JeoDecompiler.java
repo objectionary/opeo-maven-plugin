@@ -77,7 +77,7 @@ public final class JeoDecompiler {
                 new XmlNode(
                     new Xembler(
                         new DecompilerMachine(
-                            new LocalVariables(method.access(), method.descriptor()),
+                            new LocalVariables(method.access()),
                             Map.of("counting", "false")
                         ).decompileToXmir(new JeoInstructions(method).instructions()),
                         new Transformers.Node()

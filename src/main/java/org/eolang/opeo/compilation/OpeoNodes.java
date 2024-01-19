@@ -39,7 +39,6 @@ import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.StoreLocal;
-import org.eolang.opeo.ast.StoreVariable;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.ast.Variable;
@@ -170,10 +169,8 @@ public final class OpeoNodes {
             );
         } else if ("$".equals(base)) {
             result = new This();
-        } else if (base.contains("llocal")) {
+        } else if (base.contains("local")) {
             result = new Variable(node);
-        } else if (base.contains("slocal")) {
-            result = new StoreVariable(node);
         } else if (".write".equals(base)) {
             //@checkstyle MethodBodyCommentsCheck (20 lines)
             // @todo #80:90min Correct parsing of WriteField node

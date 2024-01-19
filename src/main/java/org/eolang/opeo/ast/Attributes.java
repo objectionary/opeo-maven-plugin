@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import lombok.EqualsAndHashCode;
 import org.cactoos.map.MapEntry;
 
 /**
@@ -35,6 +36,7 @@ import org.cactoos.map.MapEntry;
  * @since 0.1
  */
 @SuppressWarnings("PMD.TooManyMethods")
+@EqualsAndHashCode
 public final class Attributes {
 
     /**
