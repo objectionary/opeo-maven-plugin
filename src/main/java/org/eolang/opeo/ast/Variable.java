@@ -64,10 +64,21 @@ public final class Variable implements AstNode {
         this(Variable.vattributes(node), Variable.videntifier(node));
     }
 
+    /**
+     * Constructor.
+     * @param type The type of the variable.
+     * @param identifier The identifier of the variable.
+     */
     public Variable(final Type type, final int identifier) {
         this(type, Operation.LOAD, identifier);
     }
 
+    /**
+     * Constructor.
+     * @param type The type of the variable.
+     * @param operation The operation of the variable.
+     * @param identifier The identifier of the variable.
+     */
     public Variable(final Type type, final Operation operation, final int identifier) {
         this(
             new Attributes().descriptor(type.getDescriptor()).type(operation.name()),
@@ -119,6 +130,10 @@ public final class Variable implements AstNode {
         return result;
     }
 
+    /**
+     * Load the variable opcodes.
+     * @return Opcodes.
+     */
     private List<AstNode> load() {
         final List<AstNode> result;
         final Type type = Type.getType(this.attributes.descriptor());
@@ -144,6 +159,10 @@ public final class Variable implements AstNode {
         return result;
     }
 
+    /**
+     * Bytecode opcodes with operands for storing local variable.
+     * @return Opcodes.
+     */
     private List<AstNode> store() {
         final List<AstNode> result;
         final Type type = Type.getType(this.attributes.descriptor());
@@ -203,8 +222,20 @@ public final class Variable implements AstNode {
         );
     }
 
+    /**
+     * Local variable intention in bytecode.
+     * @since 0.1
+     */
     public enum Operation {
+
+        /**
+         * Load local variable.
+         */
         LOAD,
+
+        /**
+         * Store local variable.
+         */
         STORE;
     }
 }

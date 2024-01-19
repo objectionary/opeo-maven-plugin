@@ -23,10 +23,6 @@
  */
 package org.eolang.opeo.decompilation;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.ast.Variable;
@@ -40,11 +36,6 @@ import org.objectweb.asm.Type;
 public final class LocalVariables {
 
     /**
-     * Local variables as ast nodes.
-     */
-    private Map<Integer, AstNode> variables;
-
-    /**
      * Method access modifiers.
      */
     private final int modifiers;
@@ -52,34 +43,15 @@ public final class LocalVariables {
     /**
      * Constructor.
      */
-    public LocalVariables() {
-        this(Map.of(0, new This()));
+    private LocalVariables() {
+        this(Opcodes.ACC_PUBLIC);
     }
 
     /**
      * Constructor.
      * @param modifiers Method access modifiers.
-     * @param descriptor Method descriptor.
      */
-    public LocalVariables(final int modifiers, final String descriptor) {
-        this(LocalVariables.fromMethod(modifiers, descriptor), modifiers);
-    }
-
-    /**
-     * Constructor.
-     * @param variables Local variables.
-     */
-    private LocalVariables(final Map<Integer, AstNode> variables) {
-        this(new HashMap<>(variables), Opcodes.ACC_PUBLIC);
-    }
-
-    /**
-     * Constructor.
-     * @param variables Local variables.
-     * @param modifiers Method access modifiers.
-     */
-    public LocalVariables(final Map<Integer, AstNode> variables, final int modifiers) {
-        this.variables = variables;
+    public LocalVariables(final int modifiers) {
         this.modifiers = modifiers;
     }
 
@@ -101,38 +73,4 @@ public final class LocalVariables {
         }
         return result;
     }
-
-    /**
-     * Size of local variables.
-     * Important for tests.
-     * @return Size.
-     */
-    int size() {
-        return this.variables.size();
-    }
-
-    /**
-     * Create local variables from method description.
-     * @param modifiers Method access modifiers.
-     * @param descriptor Method descriptor.
-     * @return Local variables.
-     */
-    private static Map<Integer, AstNode> fromMethod(final int modifiers, final String descriptor) {
-        final Type[] args = Type.getArgumentTypes(descriptor);
-        final int size = args.length;
-        final List<AstNode> res = new ArrayList<>(size);
-        if ((modifiers & Opcodes.ACC_STATIC) == 0) {
-            res.add(new This());
-        }
-        for (int index = 0; index < size; ++index) {
-            res.add(new Variable(args[index], Variable.Operation.LOAD, index));
-        }
-        final Map<Integer, AstNode> result = new HashMap<>(size);
-        final int rsize = res.size();
-        for (int index = 0; index < rsize; ++index) {
-            result.put(index, res.get(index));
-        }
-        return result;
-    }
-
 }
