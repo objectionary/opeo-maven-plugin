@@ -51,6 +51,11 @@ public final class Variable implements AstNode {
     private final Type type;
 
     /**
+     * The operation of the variable.
+     */
+    private final Operation operation;
+
+    /**
      * The identifier of the variable.
      */
     private final int identifier;
@@ -60,7 +65,11 @@ public final class Variable implements AstNode {
      * @param node The XML node that represents variable.
      */
     public Variable(final XmlNode node) {
-        this(Variable.vtype(node), Variable.videntifier(node));
+        this(Variable.vtype(node), Variable.voperation(node), Variable.videntifier(node));
+    }
+
+    public Variable(final Type type, final int identifier) {
+        this(type, Operation.LOAD, identifier);
     }
 
     /**
@@ -70,9 +79,11 @@ public final class Variable implements AstNode {
      */
     public Variable(
         final Type type,
+        final Operation operation,
         final int identifier
     ) {
         this.type = type;
+        this.operation = operation;
         this.identifier = identifier;
     }
 
@@ -94,6 +105,16 @@ public final class Variable implements AstNode {
     @Override
     public List<AstNode> opcodes() {
         final List<AstNode> result;
+        if (this.operation.equals(Operation.LOAD)) {
+            result = this.load();
+        } else {
+            result = this.store();
+        }
+        return result;
+    }
+
+    private List<AstNode> load() {
+        final List<AstNode> result;
         if (this.type.equals(Type.INT_TYPE)) {
             result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
         } else if (this.type.equals(Type.DOUBLE_TYPE)) {
@@ -112,6 +133,32 @@ public final class Variable implements AstNode {
             result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
         } else {
             result = List.of(new Opcode(Opcodes.ALOAD, this.identifier));
+        }
+        return result;
+    }
+
+    private List<AstNode> store() {
+        final List<AstNode> result;
+        if (this.type.equals(Type.INT_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ISTORE, this.identifier));
+        } else if (this.type.equals(Type.DOUBLE_TYPE)) {
+            result = List.of(new Opcode(Opcodes.DSTORE, this.identifier));
+        } else if (this.type.equals(Type.LONG_TYPE)) {
+            result = List.of(new Opcode(Opcodes.LSTORE, this.identifier));
+        } else if (this.type.equals(Type.FLOAT_TYPE)) {
+            result = List.of(new Opcode(Opcodes.FSTORE, this.identifier));
+        } else if (this.type.equals(Type.BOOLEAN_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ISTORE, this.identifier));
+        } else if (this.type.equals(Type.CHAR_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ISTORE, this.identifier));
+        } else if (this.type.equals(Type.BYTE_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ISTORE, this.identifier));
+        } else if (this.type.equals(Type.SHORT_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ISTORE, this.identifier));
+        } else if (this.type.equals(Type.VOID_TYPE)) {
+            result = List.of(new Opcode(Opcodes.ISTORE, this.identifier));
+        } else {
+            result = List.of(new Opcode(Opcodes.ASTORE, this.identifier));
         }
         return result;
     }
@@ -150,5 +197,15 @@ public final class Variable implements AstNode {
                 )
             )
         );
+    }
+
+    private static Operation voperation(final XmlNode node) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+
+    public enum Operation {
+        LOAD,
+        STORE;
     }
 }
