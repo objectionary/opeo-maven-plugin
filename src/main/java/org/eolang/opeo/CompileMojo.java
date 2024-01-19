@@ -41,26 +41,36 @@ import org.eolang.opeo.compilation.Compiler;
 public final class CompileMojo extends AbstractMojo {
 
     /**
-     * Project default target directory.
-     * @since 0.1.0
+     * Source directory.
+     * Where to take opeo xmir from.
+     *
+     * @since 0.2.0
+     * @checkstyle MemberNameCheck (6 lines)
      */
-    @Parameter(defaultValue = "${project.build.directory}/generated-sources")
-    private File generated;
+    @Parameter(
+        property = "opeo.compile.sourcesDir",
+        defaultValue = "${project.build.directory}/generated-sources/opeo-xmir"
+    )
+    private File sourcesDir;
 
     /**
-     * Output directory.
-     * The default value is 'xmir'.
-     * @since 0.1.0
-     * @checkstyle MemberNameCheck (3 lines)
+     * Target directory.
+     * Where to save jeo representations to.
+     *
+     * @since 0.2.0
+     * @checkstyle MemberNameCheck (6 lines)
      */
-    @Parameter(defaultValue = "xmir")
-    private String outputDirectory;
+    @Parameter(
+        property = "opeo.compile.outputDir",
+        defaultValue = "${project.build.directory}/generated-sources/jeo-xmir"
+    )
+    private File outputDir;
 
     @Override
     public void execute() {
         new Compiler(
-            this.generated.toPath().resolve("opeo-xmir"),
-            this.generated.toPath().resolve(this.outputDirectory)
+            this.sourcesDir.toPath(),
+            this.outputDir.toPath()
         ).compile();
     }
 }

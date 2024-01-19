@@ -60,14 +60,6 @@ public final class Decompiler {
      * Constructor.
      * @param generated The default Maven 'generated-sources' directory.
      */
-    public Decompiler(final File generated) {
-        this(generated.toPath());
-    }
-
-    /**
-     * Constructor.
-     * @param generated The default Maven 'generated-sources' directory.
-     */
     public Decompiler(final Path generated) {
         this(generated.resolve("xmir"), generated.resolve("opeo-xmir"));
     }
