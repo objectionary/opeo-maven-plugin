@@ -51,10 +51,29 @@ SOFTWARE.
             </goals>
           </execution>
           <execution>
+            <id>opeo-decompile-to-other-dir</id>
+            <goals>
+              <goal>decompile</goal>
+            </goals>
+            <configuration>
+              <outputDir>${project.build.directory}/generated-sources/opeo-xmir-second-try</outputDir>
+            </configuration>
+          </execution>
+          <execution>
             <id>opeo-compile</id>
             <goals>
               <goal>compile</goal>
             </goals>
+          </execution>
+          <execution>
+            <id>opeo-compile-from-other-dir</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <sourceDir>${project.build.directory}/generated-sources/opeo-xmir-second-try</sourceDir>
+              <outputDir>${project.build.directory}/generated-sources/jeo-xmir-second-try</outputDir>
+            </configuration>
           </execution>
         </executions>
       </plugin>

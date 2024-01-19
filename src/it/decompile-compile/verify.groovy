@@ -33,6 +33,11 @@ assert log.contains("Compiling EO sources from")
 assert log.contains("Saving new compiled EO sources to")
 assert log.contains("Compiled")
 assert log.contains("Compiled 1 sources")
+// Check compiled files.
+assert new File(basedir, 'target/generated-sources/jeo-xmir').exists()
+assert new File(basedir, 'target/generated-sources/jeo-xmir-second-try').exists()
+assert new File(basedir, 'target/generated-sources/opeo-xmir').exists()
+assert new File(basedir, 'target/generated-sources/opeo-xmir-second-try').exists()
 // Check success.
 assert log.contains("BUILD SUCCESS")
 
