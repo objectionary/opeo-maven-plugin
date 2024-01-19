@@ -41,14 +41,33 @@ import org.eolang.opeo.decompilation.Decompiler;
 public final class DecompileMojo extends AbstractMojo {
 
     /**
-     * Project default target directory.
-     * @since 0.1.0
+     * Source directory.
+     * Where to take jeo xmir from.
+     *
+     * @since 0.2.0
+     * @checkstyle MemberNameCheck (6 lines)
      */
-    @Parameter(defaultValue = "${project.build.directory}/generated-sources")
-    private File generated;
+    @Parameter(
+        property = "opeo.decompile.sourcesDir",
+        defaultValue = "${project.build.directory}/generated-sources/jeo-xmir"
+    )
+    private File sourcesDir;
+
+    /**
+     * Target directory.
+     * Where to save opeo decompiler representations to.
+     *
+     * @since 0.2.0
+     * @checkstyle MemberNameCheck (6 lines)
+     */
+    @Parameter(
+        property = "opeo.decompile.outputDir",
+        defaultValue = "${project.build.directory}/generated-sources/opeo-xmir"
+    )
+    private File outputDir;
 
     @Override
     public void execute() {
-        new Decompiler(this.generated).decompile();
+        new Decompiler(this.sourcesDir.toPath(), this.outputDir.toPath()).decompile();
     }
 }
