@@ -31,57 +31,29 @@
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">package</strong> org.eolang.opeo.decompilation;
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.hamcrest.MatcherAssert;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.hamcrest.Matchers;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Test;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.objectweb.asm.Opcodes;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> * Test for {@link LocalVariables}.</em>
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> * @since 0.1</em>
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">class</strong> <a name="LocalVariablesTest" href="../../../../org/eolang/opeo/decompilation/LocalVariablesTest.html#LocalVariablesTest">LocalVariablesTest</a> {
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>      @Test
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>      <strong class="jxr_keyword">void</strong> createsForEmptyStaticMethod() {
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>          <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> res = <strong class="jxr_keyword">new</strong> LocalVariables(Opcodes.ACC_STATIC + Opcodes.ACC_PUBLIC, <span class="jxr_string">"()V"</span>).size();
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Variable;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.hamcrest.MatcherAssert;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.hamcrest.Matchers;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Test;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.objectweb.asm.Type;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> * Test for {@link LocalVariables}.</em>
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> * @since 0.1</em>
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">class</strong> <a name="LocalVariablesTest" href="../../../../org/eolang/opeo/decompilation/LocalVariablesTest.html#LocalVariablesTest">LocalVariablesTest</a> {
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>      @Test
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>      <strong class="jxr_keyword">void</strong> returnsVariable() {
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>          MatcherAssert.assertThat(
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>              String.format(
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>                  <span class="jxr_string">"Local variables size for static method with no arguments should be 0, but was %d"</span>,
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>                  res
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>              ),
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>              res,
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>              Matchers.equalTo(0)
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>          );
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>      }
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>  
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>      @Test
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">void</strong> createsForEmptyInstanceMethod() {
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>          MatcherAssert.assertThat(
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>              <span class="jxr_string">"Local variables size for instance method with no arguments should contain 'this', but wasn't"</span>,
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>              <strong class="jxr_keyword">new</strong> LocalVariables(Opcodes.ACC_PUBLIC, <span class="jxr_string">"()V"</span>).size(),
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>              Matchers.equalTo(1)
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>          );
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>      }
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>  
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>      @Test
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">void</strong> createsForNonEmptyStaticMethod() {
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>          MatcherAssert.assertThat(
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>              <span class="jxr_string">"Local variables size for static method with arguments should be equal to arguments count from descriptor"</span>,
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>              <strong class="jxr_keyword">new</strong> LocalVariables(Opcodes.ACC_STATIC + Opcodes.ACC_PUBLIC, <span class="jxr_string">"(II)V"</span>).size(),
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>              Matchers.equalTo(2)
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>          );
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>      }
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>  
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>      @Test
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">void</strong> createsForNonEmptyInstanceMethod() {
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>          MatcherAssert.assertThat(
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>              <span class="jxr_string">"Local variables size for instance method with arguments should be equal to arguments count from descriptor + 1 for 'this'"</span>,
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>              <strong class="jxr_keyword">new</strong> LocalVariables(Opcodes.ACC_PUBLIC, <span class="jxr_string">"(II)V"</span>).size(),
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>              Matchers.equalTo(3)
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>          );
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>      }
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>  }
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>              <span class="jxr_string">"Local variables should return correct variable by index"</span>,
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>              <strong class="jxr_keyword">new</strong> LocalVariables().variable(1, Type.INT_TYPE, <strong class="jxr_keyword">true</strong>),
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>              Matchers.equalTo(
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>                  <strong class="jxr_keyword">new</strong> Variable(Type.INT_TYPE, Variable.Operation.LOAD, 1)
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>              )
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>          );
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      }
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2023&#x2013;2024 <a href="https://github.com/objectionary/eo">EO</a>. All rights reserved.</div>
