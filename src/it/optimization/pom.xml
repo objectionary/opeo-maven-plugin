@@ -31,7 +31,7 @@ SOFTWARE.
   <description>
     Integration test that checks entire benchmark suite together with the ineo-maven-plugin optimizations
     If you need to run only this test, use the following command:
-    "mvn clean integration-test invoker:run -Dinvoker.test=optimization -DskipTests"
+    "mvn clean install invoker:run -Dinvoker.test=optimization -DskipTests"
   </description>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -39,6 +39,7 @@ SOFTWARE.
     <maven.compiler.target>11</maven.compiler.target>
     <jeo.version>0.2.20</jeo.version>
     <ineo.version>0.1.6</ineo.version>
+    <opeo.version>@project.version@</opeo.version>
   </properties>
   <build>
     <plugins>
@@ -109,7 +110,8 @@ SOFTWARE.
             </goals>
             <configuration>
               <arguments combine.children="append">
-                <argument>opeo:${version}:compile</argument>
+                <argument>-Dopeo.version=${opeo.version}</argument>
+                <argument>org.eolang:opeo-maven-plugin:@project.version@:compile</argument>
                 <argument>-Dopeo.compile.sourcesDir=${project.build.directory}/generated-sources/ineo-fuse-xmir</argument>
                 <argument>-Dopeo.compile.outputDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>
                 <argument>-e</argument>
@@ -123,7 +125,6 @@ SOFTWARE.
               <goal>exec</goal>
             </goals>
             <configuration>
-              <executable>mvn</executable>
               <commandlineArgs>org.eolang:jeo-maven-plugin:${jeo.version}:assemble -e -DsourcesDir="${project.build.directory}/generated-sources/opeo-compile-xmir"</commandlineArgs>
             </configuration>
           </execution>

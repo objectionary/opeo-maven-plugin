@@ -215,7 +215,16 @@ public final class OpeoNodes {
             }
             result = new Constructor(
                 type,
-                new Attributes(node.attribute("scope").orElseThrow()),
+                new Attributes(
+                    node.attribute("scope").orElseThrow(
+                        () -> new IllegalStateException(
+                            String.format(
+                                "Can't find 'scope' attribute of constructor in node: %n%s%n",
+                                node
+                            )
+                        )
+                    )
+                ),
                 arguments
             );
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
