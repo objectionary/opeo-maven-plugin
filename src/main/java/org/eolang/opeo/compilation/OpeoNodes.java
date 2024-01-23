@@ -23,12 +23,10 @@
  */
 package org.eolang.opeo.compilation;
 
-import com.jcabi.log.Logger;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.eolang.jeo.representation.HexData;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
@@ -116,6 +114,7 @@ public final class OpeoNodes {
      * @checkstyle ExecutableStatementCountCheck (200 lines)
      * @checkstyle JavaNCSSCheck (200 lines)
      * @checkstyle NestedIfDepthCheck (200 lines)
+     * @checkstyle MethodLengthCheck (200 lines)
      * @todo #77:90min Refactor OpeoNodes.node() method.
      *  The parsing method OpeoNodes.node() looks overcomplicated and violates many
      *  code quality standards. We should refactor the method and remove all
@@ -225,15 +224,17 @@ public final class OpeoNodes {
             if (type.equals("org/eolang/benchmark/BA")) {
                 attributes = new Attributes().descriptor("(I)V");
             } else {
-                attributes = new Attributes(node.attribute("scope").orElseThrow(
-                    () -> new IllegalStateException(
-                        String.format(
-                            "Can't find 'scope' attribute of constructor in node: %n%s%n, type is %s",
-                            node,
-                            type
+                attributes = new Attributes(
+                    node.attribute("scope").orElseThrow(
+                        () -> new IllegalStateException(
+                            String.format(
+                                "Can't find 'scope' attribute of constructor in node: %n%s%n, type is %s",
+                                node,
+                                type
+                            )
                         )
                     )
-                ));
+                );
             }
             result = new Constructor(type, attributes, arguments);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
