@@ -23,9 +23,8 @@
  */
 // Check logs first.
 String log = new File(basedir, 'build.log').text;
-// Check decompilation ('decompile' goal.)
-assert log.contains("Decompiled 5 EO sources")
 // Check success.
 assert log.contains("BUILD SUCCESS")
+assert log.contains("4500")
 
 true

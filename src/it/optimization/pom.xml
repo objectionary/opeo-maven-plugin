@@ -37,7 +37,7 @@ SOFTWARE.
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
-    <jeo.version>0.2.20</jeo.version>
+    <jeo.version>1.0-SNAPSHOT</jeo.version>
     <ineo.version>0.1.6</ineo.version>
     <opeo.version>@project.version@</opeo.version>
   </properties>
@@ -118,8 +118,6 @@ SOFTWARE.
               </arguments>
             </configuration>
           </execution>
-
-
           <execution>
             <id>jeo-to-bytecode</id>
             <phase>process-classes</phase>
@@ -133,6 +131,17 @@ SOFTWARE.
                 <argument>-Djeo.assemble.sourcesDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>
                 <argument>-e</argument>
               </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>run-app</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>java</goal>
+            </goals>
+            <configuration>
+              <mainClass>org.eolang.benchmark.Main</mainClass>
+              <arguments>100</arguments>
             </configuration>
           </execution>
         </executions>

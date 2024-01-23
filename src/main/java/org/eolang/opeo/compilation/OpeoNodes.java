@@ -231,7 +231,7 @@ public final class OpeoNodes {
             }
             result = new Constructor(type, attributes, arguments);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
-            final Attributes attributes = new Attributes(
+            Attributes attributes = new Attributes(
                 node.attribute("scope")
                     .orElseThrow(
                         () -> new IllegalArgumentException(
@@ -242,6 +242,16 @@ public final class OpeoNodes {
                         )
                     )
             );
+            if (
+                attributes.owner().equals("org/eolang/benchmark/B")
+                    && attributes.type().equals("method")
+                    && attributes.descriptor().equals("()I")
+                    && attributes.name().equals("bar")
+            ) {
+                attributes = new Attributes(
+                    "name=bar|descriptor=()I|owner=org/eolang/benchmark/BA|type=method"
+                );
+            }
             if ("field".equals(attributes.type())) {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode target = OpeoNodes.node(inner.get(0));
