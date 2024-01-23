@@ -1,0 +1,5 @@
+org.eolang.opeo
+org.eolang.opeo.ast
+org.eolang.opeo.compilation
+org.eolang.opeo.decompilation
+org.eolang.opeo.jeo
