@@ -110,14 +110,16 @@ SOFTWARE.
             </goals>
             <configuration>
               <arguments combine.children="append">
-                <argument>-Dopeo.version=${opeo.version}</argument>
                 <argument>org.eolang:opeo-maven-plugin:@project.version@:compile</argument>
+                <argument>-Dopeo.version=${opeo.version}</argument>
                 <argument>-Dopeo.compile.sourcesDir=${project.build.directory}/generated-sources/ineo-fuse-xmir</argument>
                 <argument>-Dopeo.compile.outputDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>
                 <argument>-e</argument>
               </arguments>
             </configuration>
           </execution>
+
+
           <execution>
             <id>jeo-to-bytecode</id>
             <phase>process-classes</phase>
@@ -125,7 +127,12 @@ SOFTWARE.
               <goal>exec</goal>
             </goals>
             <configuration>
-              <commandlineArgs>org.eolang:jeo-maven-plugin:${jeo.version}:assemble -e -DsourcesDir="${project.build.directory}/generated-sources/opeo-compile-xmir"</commandlineArgs>
+              <arguments combine.children="append">
+                <argument>org.eolang:jeo-maven-plugin:${jeo.version}:assemble</argument>
+                <argument>-Djeo.version=${opeo.version}</argument>
+                <argument>-Djeo.assemble.sourcesDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>
+                <argument>-e</argument>
+              </arguments>
             </configuration>
           </execution>
         </executions>

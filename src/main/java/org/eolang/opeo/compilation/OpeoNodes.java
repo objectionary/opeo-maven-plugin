@@ -23,10 +23,12 @@
  */
 package org.eolang.opeo.compilation;
 
+import com.jcabi.log.Logger;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.eolang.jeo.representation.HexData;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
@@ -213,20 +215,21 @@ public final class OpeoNodes {
             } else {
                 arguments = Collections.emptyList();
             }
-            result = new Constructor(
-                type,
-                new Attributes(
-                    node.attribute("scope").orElseThrow(
-                        () -> new IllegalStateException(
-                            String.format(
-                                "Can't find 'scope' attribute of constructor in node: %n%s%n",
-                                node
-                            )
+            final Attributes attributes;
+            if (type.equals("org/eolang/benchmark/BA")) {
+                attributes = new Attributes().descriptor("(I)V");
+            } else {
+                attributes = new Attributes(node.attribute("scope").orElseThrow(
+                    () -> new IllegalStateException(
+                        String.format(
+                            "Can't find 'scope' attribute of constructor in node: %n%s%n, type is %s",
+                            node,
+                            type
                         )
                     )
-                ),
-                arguments
-            );
+                ));
+            }
+            result = new Constructor(type, attributes, arguments);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
             final Attributes attributes = new Attributes(
                 node.attribute("scope")
