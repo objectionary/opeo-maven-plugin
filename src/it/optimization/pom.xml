@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2016-2023 Objectionary.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.eolang</groupId>
+  <artifactId>opeo-it</artifactId>
+  <version>@project.version@</version>
+  <packaging>jar</packaging>
+  <description>
+    Integration test that checks entire benchmark suite together with the ineo-maven-plugin optimizations
+    If you need to run only this test, use the following command:
+    "mvn clean integration-test invoker:run -Dinvoker.test=optimization -DskipTests"
+  </description>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <jeo.version>0.2.20</jeo.version>
+    <ineo.version>0.1.6</ineo.version>
+  </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.eolang</groupId>
+        <artifactId>jeo-maven-plugin</artifactId>
+        <version>${jeo.version}</version>
+        <executions>
+          <execution>
+            <id>bytecode-to-eo</id>
+            <goals>
+              <goal>disassemble</goal>
+            </goals>
+            <configuration>
+              <outputDir>${project.build.directory}/generated-sources/jeo-decompile-xmir</outputDir>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eolang</groupId>
+        <artifactId>opeo-maven-plugin</artifactId>
+        <version>@project.version@</version>
+        <executions>
+          <execution>
+            <id>opeo-decompile</id>
+            <goals>
+              <goal>decompile</goal>
+            </goals>
+            <configuration>
+              <sourcesDir>${project.build.directory}/generated-sources/jeo-decompile-xmir</sourcesDir>
+              <outputDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</outputDir>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eolang</groupId>
+        <artifactId>ineo-maven-plugin</artifactId>
+        <version>${ineo.version}</version>
+        <executions>
+          <execution>
+            <id>ineo-fuse</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>fuse</goal>
+            </goals>
+            <configuration>
+              <sourcesDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</sourcesDir>
+              <outputDir>${project.build.directory}/generated-sources/ineo-fuse-xmir</outputDir>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.1</version>
+        <configuration>
+          <executable>mvn</executable>
+        </configuration>
+        <executions>
+          <execution>
+            <id>opeo-to-jeo</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <arguments combine.children="append">
+                <argument>opeo:${version}:compile</argument>
+                <argument>-Dopeo.compile.sourcesDir=${project.build.directory}/generated-sources/ineo-fuse-xmir</argument>
+                <argument>-Dopeo.compile.outputDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>
+                <argument>-e</argument>
+              </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>jeo-to-bytecode</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>mvn</executable>
+              <commandlineArgs>org.eolang:jeo-maven-plugin:${jeo.version}:assemble -e -DsourcesDir="${project.build.directory}/generated-sources/opeo-compile-xmir"</commandlineArgs>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
