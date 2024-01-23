@@ -120,6 +120,12 @@ public final class OpeoNodes {
      *  The parsing method OpeoNodes.node() looks overcomplicated and violates many
      *  code quality standards. We should refactor the method and remove all
      *  the checkstyle and PMD "suppressions" from the method.
+     * @todo #110:90min Remove ad-hoc solution for replacing descriptors and owners.
+     *  Currently we have an ad-hoc solution for replacing descriptors and owners.
+     *  It looks ugly and requires refactoring. To remove ad-hoc solution we need
+     *  to remove all the if statements that use concerete class names as:
+     *  - "org/eolang/benchmark/B"
+     *  - "org/eolang/benchmark/BA"
      */
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     private static AstNode node(final XmlNode node) {
