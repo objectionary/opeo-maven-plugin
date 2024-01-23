@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
+import org.xembly.Directive;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Transformers;
 import org.xembly.Xembler;
@@ -65,6 +66,23 @@ class ConstructorTest {
                 "/o[@base='.new']/o[@base='A']",
                 "/o[@base='.new']/o[@base='string' and @data='bytes']",
                 "/o[@base='.new']/o[@base='int' and @data='bytes']"
+            )
+        );
+    }
+
+    @Test
+    void transformsConstructorToXmirWithScope() throws ImpossibleModificationException {
+        MatcherAssert.assertThat(
+            "We expect that constructor will be transformed to XMIR with scope attribute",
+            new Xembler(
+                new Constructor(
+                    "A",
+                    new Attributes().descriptor("(Ljava/lang/String;)V"),
+                    new Literal("first")
+                ).toXmir()
+            ).xml(),
+            XhtmlMatchers.hasXPaths(
+                "/o[@base='.new' and @scope='descriptor=(Ljava/lang/String;)V']"
             )
         );
     }

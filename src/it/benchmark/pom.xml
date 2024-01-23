@@ -88,7 +88,7 @@ SOFTWARE.
             </goals>
             <configuration>
               <executable>mvn</executable>
-              <commandlineArgs>org.eolang:jeo-maven-plugin:0.2.18:assemble -e -DsourcesDir=opeo-compile</commandlineArgs>
+              <commandlineArgs>org.eolang:jeo-maven-plugin:0.2.20:assemble -e -DsourcesDir=opeo-compile</commandlineArgs>
             </configuration>
           </execution>
         </executions>

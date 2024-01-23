@@ -213,7 +213,11 @@ public final class OpeoNodes {
             } else {
                 arguments = Collections.emptyList();
             }
-            result = new Constructor(type, arguments);
+            result = new Constructor(
+                type,
+                new Attributes(node.attribute("scope").orElseThrow()),
+                arguments
+            );
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
             final Attributes attributes = new Attributes(
                 node.attribute("scope")

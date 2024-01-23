@@ -411,7 +411,7 @@ public final class DecompilerMachine {
                 );
             } else {
                 ((Reference) DecompilerMachine.this.stack.pop())
-                    .link(new Constructor(target, args));
+                    .link(new Constructor(target, new Attributes().descriptor(descriptor), args));
             }
         }
     }

@@ -43,6 +43,11 @@ public final class Constructor implements AstNode {
     private final String type;
 
     /**
+     * Constructor attributes.
+     */
+    private final Attributes attributes;
+
+    /**
      * Constructor arguments.
      */
     private final List<AstNode> arguments;
@@ -65,8 +70,37 @@ public final class Constructor implements AstNode {
      * @param arguments Constructor arguments
      */
     public Constructor(final String type, final List<AstNode> arguments) {
+        this(type, new Attributes(), arguments);
+    }
+
+    /**
+     * Constructor.
+     * @param type Constructor type
+     * @param attrs Constructor attributes
+     * @param arguments Constructor arguments
+     */
+    public Constructor(
+        final String type,
+        final Attributes attrs,
+        final AstNode... arguments
+    ) {
+        this(type, attrs, Arrays.asList(arguments));
+    }
+
+    /**
+     * Constructor.
+     * @param type Constructor type
+     * @param attrs Constructor attributes
+     * @param args Constructor arguments
+     */
+    public Constructor(
+        final String type,
+        final Attributes attrs,
+        final List<AstNode> args
+    ) {
         this.type = type;
-        this.arguments = arguments;
+        this.attributes = attrs;
+        this.arguments = args;
     }
 
     @Override
@@ -83,6 +117,7 @@ public final class Constructor implements AstNode {
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", ".new")
+            .attr("scope", this.attributes)
             .add("o").attr("base", this.type).up();
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
@@ -94,7 +129,14 @@ public final class Constructor implements AstNode {
         res.add(new Opcode(Opcodes.NEW, this.type));
         res.add(new Opcode(Opcodes.DUP));
         this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
-        res.add(new Opcode(Opcodes.INVOKESPECIAL, this.type, "<init>", "()V"));
+        res.add(
+            new Opcode(
+                Opcodes.INVOKESPECIAL,
+                this.type,
+                "<init>",
+                this.attributes.descriptor()
+            )
+        );
         return res;
     }
 
