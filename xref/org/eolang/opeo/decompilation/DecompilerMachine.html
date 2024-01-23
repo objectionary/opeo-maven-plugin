@@ -419,7 +419,7 @@
 <a class="jxr_linenumber" name="L411" href="#L411">411</a>                 );
 <a class="jxr_linenumber" name="L412" href="#L412">412</a>             } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="L413" href="#L413">413</a>                 ((<a name="Reference" href="../../../../org/eolang/opeo/ast/Reference.html#Reference">Reference</a>) DecompilerMachine.<strong class="jxr_keyword">this</strong>.stack.pop())
-<a class="jxr_linenumber" name="L414" href="#L414">414</a>                     .link(<strong class="jxr_keyword">new</strong> <a name="Constructor" href="../../../../org/eolang/opeo/ast/Constructor.html#Constructor">Constructor</a>(target, args));
+<a class="jxr_linenumber" name="L414" href="#L414">414</a>                     .link(<strong class="jxr_keyword">new</strong> <a name="Constructor" href="../../../../org/eolang/opeo/ast/Constructor.html#Constructor">Constructor</a>(target, <strong class="jxr_keyword">new</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a>().descriptor(descriptor), args));
 <a class="jxr_linenumber" name="L415" href="#L415">415</a>             }
 <a class="jxr_linenumber" name="L416" href="#L416">416</a>         }
 <a class="jxr_linenumber" name="L417" href="#L417">417</a>     }
