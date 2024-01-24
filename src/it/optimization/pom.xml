@@ -74,8 +74,36 @@ SOFTWARE.
               <outputDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</outputDir>
             </configuration>
           </execution>
+          <execution>
+            <id>opeo-compile</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <sourcesDir>${project.build.directory}/generated-sources/ineo-fuse-xmir</sourcesDir>
+              <outputDir>${project.build.directory}/generated-sources/opeo-compile-xmir</outputDir>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
+
+      <!--          <execution>-->
+      <!--            <id>opeo-to-jeo</id>-->
+      <!--            <phase>process-classes</phase>-->
+      <!--            <goals>-->
+      <!--              <goal>exec</goal>-->
+      <!--            </goals>-->
+      <!--            <configuration>-->
+      <!--              <arguments combine.children="append">-->
+      <!--                <argument>opeo:compile</argument>-->
+      <!--                <argument>-Dmaven.repo.local=@localRepositoryUrl@</argument>-->
+      <!--                <argument>-Dopeo.compile.sourcesDir=${project.build.directory}/generated-sources/ineo-fuse-xmir</argument>-->
+      <!--                <argument>-Dopeo.compile.outputDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>-->
+      <!--                <argument>-e</argument>-->
+      <!--              </arguments>-->
+      <!--            </configuration>-->
+      <!--          </execution>-->
       <plugin>
         <groupId>org.eolang</groupId>
         <artifactId>ineo-maven-plugin</artifactId>
@@ -102,32 +130,31 @@ SOFTWARE.
           <executable>mvn</executable>
         </configuration>
         <executions>
-          <execution>
-            <id>opeo-to-jeo</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <arguments combine.children="append">
-                <argument>org.eolang:opeo-maven-plugin:@project.version@:compile</argument>
-                <argument>-Dopeo.version=${opeo.version}</argument>
-                <argument>-Dopeo.compile.sourcesDir=${project.build.directory}/generated-sources/ineo-fuse-xmir</argument>
-                <argument>-Dopeo.compile.outputDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>
-                <argument>-e</argument>
-              </arguments>
-            </configuration>
-          </execution>
+          <!--          <execution>-->
+          <!--            <id>opeo-to-jeo</id>-->
+          <!--            <phase>process-classes</phase>-->
+          <!--            <goals>-->
+          <!--              <goal>exec</goal>-->
+          <!--            </goals>-->
+          <!--            <configuration>-->
+          <!--              <arguments combine.children="append">-->
+          <!--                <argument>opeo:compile</argument>-->
+          <!--                <argument>-Dmaven.repo.local=@localRepositoryUrl@</argument>-->
+          <!--                <argument>-Dopeo.compile.sourcesDir=${project.build.directory}/generated-sources/ineo-fuse-xmir</argument>-->
+          <!--                <argument>-Dopeo.compile.outputDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>-->
+          <!--                <argument>-e</argument>-->
+          <!--              </arguments>-->
+          <!--            </configuration>-->
+          <!--          </execution>-->
           <execution>
             <id>jeo-to-bytecode</id>
-            <phase>process-classes</phase>
+            <phase>generate-test-sources</phase>
             <goals>
               <goal>exec</goal>
             </goals>
             <configuration>
               <arguments combine.children="append">
                 <argument>org.eolang:jeo-maven-plugin:${jeo.version}:assemble</argument>
-                <argument>-Djeo.version=${opeo.version}</argument>
                 <argument>-Djeo.assemble.sourcesDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>
                 <argument>-e</argument>
               </arguments>
@@ -135,7 +162,7 @@ SOFTWARE.
           </execution>
           <execution>
             <id>run-app</id>
-            <phase>process-classes</phase>
+            <phase>generate-test-sources</phase>
             <goals>
               <goal>java</goal>
             </goals>

@@ -195,28 +195,6 @@ SOFTWARE.
         </includes>
       </testResource>
     </testResources>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-invoker-plugin</artifactId>
-        <version>3.6.0</version>
-        <configuration>
-          <!--
-            @todo #110:90min Enable optimization test when jtcop 0.2.21  will be published.
-             The optimization test is disabled because of the bytecode verification in jtcop 0.2.20.
-             The bytecode verification is disabled in jtcop 0.2.21.
-             When jtcop 0.2.21 will be published, we should enable the optimization test.
-             Moreover for most of the executions in this test much better to use "install" phase and later
-             otherwise the changes in the code won't affect the test.
-          -->
-          <pomExcludes>
-            <exclude>
-              optimization/pom.xml
-            </exclude>
-          </pomExcludes>
-        </configuration>
-      </plugin>
-    </plugins>
   </build>
   <profiles>
     <profile>
