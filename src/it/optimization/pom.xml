@@ -32,6 +32,15 @@ SOFTWARE.
     Integration test that checks entire benchmark suite together with the ineo-maven-plugin optimizations
     If you need to run only this test, use the following command:
     "mvn clean install invoker:run -Dinvoker.test=optimization -DskipTests"
+    _____
+    This integration test consists from the following steps (in order):
+    1. jeo-maven-plugin:disassemble | phase:process-classes
+    2. opeo-maven-plugin:decompile | phase:process-classes
+    3. ineo-maven-plugin:fuse | phase:process-classes
+    4. jeo-maven-plugin:assemble | phase:generate-test-sources
+    5. exec-maven-plugin:exec | phase:generate-test-sources
+
+    Although the declaration order is a bit confusing, the actual execution is presented above.
   </description>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -87,23 +96,6 @@ SOFTWARE.
           </execution>
         </executions>
       </plugin>
-
-      <!--          <execution>-->
-      <!--            <id>opeo-to-jeo</id>-->
-      <!--            <phase>process-classes</phase>-->
-      <!--            <goals>-->
-      <!--              <goal>exec</goal>-->
-      <!--            </goals>-->
-      <!--            <configuration>-->
-      <!--              <arguments combine.children="append">-->
-      <!--                <argument>opeo:compile</argument>-->
-      <!--                <argument>-Dmaven.repo.local=@localRepositoryUrl@</argument>-->
-      <!--                <argument>-Dopeo.compile.sourcesDir=${project.build.directory}/generated-sources/ineo-fuse-xmir</argument>-->
-      <!--                <argument>-Dopeo.compile.outputDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>-->
-      <!--                <argument>-e</argument>-->
-      <!--              </arguments>-->
-      <!--            </configuration>-->
-      <!--          </execution>-->
       <plugin>
         <groupId>org.eolang</groupId>
         <artifactId>ineo-maven-plugin</artifactId>
@@ -130,22 +122,6 @@ SOFTWARE.
           <executable>mvn</executable>
         </configuration>
         <executions>
-          <!--          <execution>-->
-          <!--            <id>opeo-to-jeo</id>-->
-          <!--            <phase>process-classes</phase>-->
-          <!--            <goals>-->
-          <!--              <goal>exec</goal>-->
-          <!--            </goals>-->
-          <!--            <configuration>-->
-          <!--              <arguments combine.children="append">-->
-          <!--                <argument>opeo:compile</argument>-->
-          <!--                <argument>-Dmaven.repo.local=@localRepositoryUrl@</argument>-->
-          <!--                <argument>-Dopeo.compile.sourcesDir=${project.build.directory}/generated-sources/ineo-fuse-xmir</argument>-->
-          <!--                <argument>-Dopeo.compile.outputDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>-->
-          <!--                <argument>-e</argument>-->
-          <!--              </arguments>-->
-          <!--            </configuration>-->
-          <!--          </execution>-->
           <execution>
             <id>jeo-to-bytecode</id>
             <phase>generate-test-sources</phase>
