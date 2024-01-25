@@ -36,17 +36,12 @@ eo:
     
     [] > j$Application
       33 > access
-      """
-      java/lang/Object
-      """ > supername
+      "java/lang/Object" > supername
       * > interfaces
       [] > new
         1 > access
-        """
-        ()V
-        """ > descriptor
-        """
-        """ > signature
+        "()V" > descriptor
+        "" > signature
         * > exceptions
         seq > @
           *
@@ -56,11 +51,8 @@ eo:
               177
       [arg__[Ljava/lang/String;__0] > j$main
         9 > access
-        """
-        ([Ljava/lang/String;)V
-        """ > descriptor
-        """
-        """ > signature
+        "([Ljava/lang/String;)V" > descriptor
+        "" > signature
         * > exceptions
         seq > @
           *
@@ -80,26 +72,17 @@ eo:
 
     [] > j$A
       33 > access
-      """
-      java/lang/Object
-      """ > supername
+      "java/lang/Object" > supername
       * > interfaces
       field > j$x
         18
-        """
-        I
-        """
-        """
-        """
-        """
-        """
+        "I"
+        ""
+        ""
       [arg__I__0] > new
         1 > access
-        """
-        (I)V
-        """ > descriptor
-        """
-        """ > signature
+        "(I)V" > descriptor
+        "" > signature
         * > exceptions
         seq > @
           *
@@ -113,11 +96,8 @@ eo:
               177
       [] > j$foo
         1 > access
-        """
-        ()I
-        """ > descriptor
-        """
-        """ > signature
+        "()I" > descriptor
+        "" > signature
         * > exceptions
         seq > @
           *
@@ -135,26 +115,17 @@ eo:
 
     [] > j$B
       33 > access
-      """
-      java/lang/Object
-      """ > supername
+      "java/lang/Object" > supername
       * > interfaces
       field > j$a
         18
-        """
-        Lcom/example/A;
-        """
-        """
-        """
-        """
-        """
+        "Lcom/example/A;"
+        ""
+        ""
       [arg__Lcom/example/A;__0] > new
         1 > access
-        """
-        (Lcom/example/A;)V
-        """ > descriptor
-        """
-        """ > signature
+        "(Lcom/example/A;)V" > descriptor
+        "" > signature
         * > exceptions
         seq > @
           *
@@ -168,11 +139,8 @@ eo:
               177
       [] > j$bar
         1 > access
-        """
-        ()I
-        """ > descriptor
-        """
-        """ > signature
+        "()I" > descriptor
+        "" > signature
         * > exceptions
         seq > @
           *
