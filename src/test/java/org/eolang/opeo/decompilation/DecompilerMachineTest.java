@@ -28,8 +28,6 @@ import java.util.UUID;
 import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.OpcodeInstruction;
-import org.eolang.opeo.compilation.OpeoNodes;
-import org.eolang.opeo.jeo.JeoLabel;
 import org.eolang.parser.xmir.Xmir;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -44,7 +42,7 @@ import org.xembly.Xembler;
  * Test case for {@link DecompilerMachine}.
  * @since 0.1
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.TooManyMethods"})
 final class DecompilerMachineTest {
 
     /**
@@ -319,6 +317,7 @@ final class DecompilerMachineTest {
      *             return d;
      *         }
      *         return new A(d - 1).get();
+     *         }
      *     }
      * </p>
      */
@@ -344,9 +343,11 @@ final class DecompilerMachineTest {
                     new OpcodeInstruction(Opcodes.ICONST_1),
                     new OpcodeInstruction(Opcodes.ISUB),
                     new OpcodeInstruction(
-                        Opcodes.INVOKESPECIAL, "org/eolang/other/A", "<init>", "(I)V"),
+                        Opcodes.INVOKESPECIAL, "org/eolang/other/A", "<init>", "(I)V"
+                    ),
                     new OpcodeInstruction(
-                        Opcodes.INVOKEVIRTUAL, "org/eolang/other/A", "get", "()I"),
+                        Opcodes.INVOKEVIRTUAL, "org/eolang/other/A", "get", "()I"
+                    ),
                     new OpcodeInstruction(Opcodes.IRETURN)
                 );
             },
