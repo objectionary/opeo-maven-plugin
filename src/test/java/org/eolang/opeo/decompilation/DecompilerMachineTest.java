@@ -24,13 +24,19 @@
 package org.eolang.opeo.decompilation;
 
 import com.jcabi.xml.XMLDocument;
+import java.util.UUID;
+import org.eolang.jeo.representation.xmir.AllLabels;
+import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.OpcodeInstruction;
+import org.eolang.opeo.compilation.OpeoNodes;
+import org.eolang.opeo.jeo.JeoLabel;
 import org.eolang.parser.xmir.Xmir;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Xembler;
 
@@ -301,6 +307,50 @@ final class DecompilerMachineTest {
                     ""
                 )
             )
+        );
+    }
+
+    /**
+     * Decimpilation test of a simple method with "if" clause.
+     * <p>
+     *     {@code
+     *         public int get() {
+     *         if (d <= 0) {
+     *             return d;
+     *         }
+     *         return new A(d - 1).get();
+     *     }
+     * </p>
+     */
+    @Test
+    void decompilesIfStatement() {
+        final AllLabels labels = new AllLabels();
+        final String uid = UUID.randomUUID().toString();
+        final Label label = labels.label(uid);
+        Assertions.assertDoesNotThrow(
+            () -> {
+                new DecompilerMachine().decompileToXmir(
+                    new OpcodeInstruction(Opcodes.ALOAD, 0),
+                    new OpcodeInstruction(Opcodes.GETFIELD, "org/eolang/other/A", "d", "I"),
+                    new OpcodeInstruction(Opcodes.IFGT, label),
+                    new OpcodeInstruction(Opcodes.ALOAD, 0),
+                    new OpcodeInstruction(Opcodes.GETFIELD, "org/eolang/other/A", "d", "I"),
+                    new OpcodeInstruction(Opcodes.IRETURN),
+                    new LabelInstruction(label),
+                    new OpcodeInstruction(Opcodes.NEW, "org/eolang/other/A"),
+                    new OpcodeInstruction(Opcodes.DUP),
+                    new OpcodeInstruction(Opcodes.ALOAD, 0),
+                    new OpcodeInstruction(Opcodes.GETFIELD, "org/eolang/other/A", "d", "I"),
+                    new OpcodeInstruction(Opcodes.ICONST_1),
+                    new OpcodeInstruction(Opcodes.ISUB),
+                    new OpcodeInstruction(
+                        Opcodes.INVOKESPECIAL, "org/eolang/other/A", "<init>", "(I)V"),
+                    new OpcodeInstruction(
+                        Opcodes.INVOKEVIRTUAL, "org/eolang/other/A", "get", "()I"),
+                    new OpcodeInstruction(Opcodes.IRETURN)
+                );
+            },
+            "Compiles without exceptions"
         );
     }
 
