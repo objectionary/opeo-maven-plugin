@@ -6,6 +6,14 @@ import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
+/**
+ * Substraction output node.
+ * @since 0.1
+ * @todo #122:30min Add unit tests for Substraction class.
+ *  Add unit tests for Substraction class.
+ *  We have to test the both transformations: toXmir and opcodes.
+ *  Don't forget to remove this puzzle after adding the tests.
+ */
 public final class Substraction implements AstNode {
 
     private final AstNode left;

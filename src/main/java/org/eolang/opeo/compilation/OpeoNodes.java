@@ -39,6 +39,7 @@ import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.StoreLocal;
+import org.eolang.opeo.ast.Substraction;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.ast.Variable;
@@ -142,6 +143,11 @@ public final class OpeoNodes {
             final AstNode left = OpeoNodes.node(inner.get(0));
             final AstNode right = OpeoNodes.node(inner.get(1));
             result = new Add(left, right);
+        } else if (".minus".equals(base)) {
+            final List<XmlNode> inner = node.children().collect(Collectors.toList());
+            final AstNode left = OpeoNodes.node(inner.get(0));
+            final AstNode right = OpeoNodes.node(inner.get(1));
+            result = new Substraction(left, right);
         } else if ("opcode".equals(base)) {
             final XmlInstruction instruction = new XmlInstruction(node.node());
             result = new Opcode(instruction.opcode(), instruction.operands());
