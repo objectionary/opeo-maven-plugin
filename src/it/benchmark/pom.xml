@@ -31,7 +31,7 @@ SOFTWARE.
   <description>
     Integration test that checks entire benchmark suite together with the ineo-maven-plugin optimizations
     If you need to run only this test, use the following command:
-    "mvn clean install invoker:run -Dinvoker.test=optimization -DskipTests"
+    "mvn clean integration-test invoker:run -Dinvoker.test=benchmark -DskipTests"
     _____
     This integration test consists from the following steps (in order):
     1. jeo-maven-plugin:disassemble | phase:process-classes
