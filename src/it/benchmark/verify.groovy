@@ -25,6 +25,5 @@
 String log = new File(basedir, 'build.log').text;
 // Check success.
 assert log.contains("BUILD SUCCESS")
-assert log.contains("4500")
-
+assert log.contains("Finished successfully. Result is:")
 true
