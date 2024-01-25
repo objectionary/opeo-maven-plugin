@@ -78,7 +78,7 @@ public final class Substraction implements AstNode {
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.left.opcodes());
         res.addAll(this.right.opcodes());
-        res.add(new Opcode(Opcodes.IADD));
+        res.add(new Opcode(Opcodes.ISUB));
         return res;
     }
 }
