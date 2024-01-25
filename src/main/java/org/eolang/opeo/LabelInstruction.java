@@ -2,6 +2,7 @@ package org.eolang.opeo;
 
 import java.util.Collections;
 import java.util.List;
+import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.opeo.jeo.JeoLabel;
 import org.objectweb.asm.Label;
 
@@ -20,11 +21,13 @@ public final class LabelInstruction implements Instruction {
 
     @Override
     public Object operand(final int index) {
-        return this.label;
+        return this.operands().get(index);
     }
 
     @Override
     public List<Object> operands() {
-        return Collections.singletonList(this.label);
+        return Collections.singletonList(
+            new AllLabels().uid(this.label)
+        );
     }
 }
