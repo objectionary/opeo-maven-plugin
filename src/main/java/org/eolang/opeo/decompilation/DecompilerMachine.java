@@ -46,6 +46,7 @@ import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Root;
 import org.eolang.opeo.ast.StoreLocal;
+import org.eolang.opeo.ast.Substraction;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.WriteField;
 import org.eolang.opeo.jeo.JeoLabel;
@@ -110,6 +111,7 @@ public final class DecompilerMachine {
             new MapEntry<>(Opcodes.ICONST_4, new IconstHandler()),
             new MapEntry<>(Opcodes.ICONST_5, new IconstHandler()),
             new MapEntry<>(Opcodes.IADD, new AddHandler()),
+            new MapEntry<>(Opcodes.ISUB, new SubstractionHandler()),
             new MapEntry<>(Opcodes.IMUL, new MulHandler()),
             new MapEntry<>(Opcodes.ILOAD, new LoadHandler(Type.INT_TYPE)),
             new MapEntry<>(Opcodes.LLOAD, new LoadHandler(Type.LONG_TYPE)),
@@ -480,6 +482,29 @@ public final class DecompilerMachine {
                 final AstNode right = DecompilerMachine.this.stack.pop();
                 final AstNode left = DecompilerMachine.this.stack.pop();
                 DecompilerMachine.this.stack.push(new Add(left, right));
+            } else {
+                DecompilerMachine.this.stack.push(
+                    new Opcode(
+                        instruction.opcode(),
+                        instruction.operands(),
+                        DecompilerMachine.this.counting()
+                    )
+                );
+            }
+        }
+    }
+
+    /**
+     * Substraction instruction handler.
+     * @since 0.1
+     */
+    private class SubstractionHandler implements InstructionHandler {
+        @Override
+        public void handle(final Instruction instruction) {
+            if (instruction.opcode() == Opcodes.ISUB) {
+                final AstNode right = DecompilerMachine.this.stack.pop();
+                final AstNode left = DecompilerMachine.this.stack.pop();
+                DecompilerMachine.this.stack.push(new Substraction(left, right));
             } else {
                 DecompilerMachine.this.stack.push(
                     new Opcode(
