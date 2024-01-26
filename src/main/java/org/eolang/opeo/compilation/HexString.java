@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * Hex string.
  * @since 0.1.0
  */
-final class HexString {
+public final class HexString {
 
     /**
      * Hex radix.
@@ -48,7 +48,7 @@ final class HexString {
      * Constructor.
      * @param hex Hex string.
      */
-    HexString(final String hex) {
+    public HexString(final String hex) {
         this.hex = hex;
     }
 
@@ -58,7 +58,7 @@ final class HexString {
      *  "48 65 6C 6C 6F 20 57 6F 72 6C 64 21" -> "Hello World!"
      * @return Human-readable string.
      */
-    String decode() {
+    public String decode() {
         try {
             final String result;
             if (this.hex.isEmpty()) {

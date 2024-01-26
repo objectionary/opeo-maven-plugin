@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
+import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Constructor;
@@ -243,6 +244,11 @@ public final class OpeoNodes {
                 );
             }
             result = new Constructor(type, attributes, arguments);
+        } else if (".array".equals(base)) {
+            final List<XmlNode> children = node.children().collect(Collectors.toList());
+            final String type = children.get(0).text();
+            final AstNode size = OpeoNodes.node(children.get(1));
+            result = new ArrayConstructor(size, type);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
             Attributes attributes = new Attributes(
                 node.attribute("scope")

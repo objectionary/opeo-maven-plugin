@@ -46,6 +46,7 @@ import org.eolang.opeo.ast.Mul;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Root;
+import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.ast.StoreLocal;
 import org.eolang.opeo.ast.Substraction;
 import org.eolang.opeo.ast.Super;
@@ -124,6 +125,7 @@ public final class DecompilerMachine {
             new MapEntry<>(Opcodes.FSTORE, new StoreHandler(Type.FLOAT_TYPE)),
             new MapEntry<>(Opcodes.DSTORE, new StoreHandler(Type.DOUBLE_TYPE)),
             new MapEntry<>(Opcodes.ASTORE, new StoreHandler(Type.getType(Object.class))),
+            new MapEntry<>(Opcodes.AASTORE, new StoreToArrayHandler()),
             new MapEntry<>(Opcodes.ANEWARRAY, new NewArrayHandler()),
             new MapEntry<>(Opcodes.NEW, new NewHandler()),
             new MapEntry<>(Opcodes.DUP, new DupHandler()),
@@ -239,6 +241,7 @@ public final class DecompilerMachine {
             );
         }
 
+
     }
 
     /**
@@ -273,6 +276,22 @@ public final class DecompilerMachine {
                 )
             );
         }
+
+    }
+
+    /**
+     * Label instruction handler.
+     * @since 0.1
+     */
+    private class StoreToArrayHandler implements InstructionHandler {
+
+        @Override
+        public void handle(final Instruction instruction) {
+            final AstNode value = DecompilerMachine.this.stack.pop();
+            final AstNode index = DecompilerMachine.this.stack.pop();
+            final AstNode array = DecompilerMachine.this.stack.pop();
+            DecompilerMachine.this.stack.push(new StoreArray(array, index, value));
+        }
     }
 
     /**
@@ -284,10 +303,11 @@ public final class DecompilerMachine {
         public void handle(final Instruction instruction) {
             final String type = (String) instruction.operand(0);
             final AstNode size = DecompilerMachine.this.stack.pop();
-            DecompilerMachine.this.stack.push(
-                new ArrayConstructor(size, type)
-            );
+            final Reference reference = new Reference();
+            reference.link(new ArrayConstructor(size, type));
+            DecompilerMachine.this.stack.push(reference);
         }
+
     }
 
     /**
@@ -295,9 +315,23 @@ public final class DecompilerMachine {
      * @since 0.1
      */
     private class NewHandler implements InstructionHandler {
+
         @Override
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(new Reference());
+        }
+
+    }
+
+    /**
+     * Dup instruction handler.
+     * @since 0.1
+     */
+    private class DupHandler implements InstructionHandler {
+
+        @Override
+        public void handle(final Instruction instruction) {
+            DecompilerMachine.this.stack.push(DecompilerMachine.this.stack.peek());
         }
 
     }
@@ -324,6 +358,7 @@ public final class DecompilerMachine {
                 )
             );
         }
+
     }
 
     /**
@@ -345,17 +380,6 @@ public final class DecompilerMachine {
                 new WriteField(target, value, attributes)
             );
         }
-    }
-
-    /**
-     * Dup instruction handler.
-     * @since 0.1
-     */
-    private class DupHandler implements InstructionHandler {
-        @Override
-        public void handle(final Instruction instruction) {
-            DecompilerMachine.this.stack.push(DecompilerMachine.this.stack.peek());
-        }
 
     }
 
@@ -364,6 +388,7 @@ public final class DecompilerMachine {
      * @since 0.1
      */
     private class BipushHandler implements InstructionHandler {
+
         @Override
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(new Literal(instruction.operand(0)));
@@ -376,6 +401,7 @@ public final class DecompilerMachine {
      * @since 0.1
      */
     private class PopHandler implements InstructionHandler {
+
         @Override
         public void handle(final Instruction ignore) {
             // We ignore this instruction intentionally.
@@ -388,6 +414,7 @@ public final class DecompilerMachine {
      * @since 0.1
      */
     private class ReturnHandler implements InstructionHandler {
+
         @Override
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(
@@ -433,6 +460,7 @@ public final class DecompilerMachine {
                     .link(new Constructor(target, new Attributes().descriptor(descriptor), args));
             }
         }
+
     }
 
     /**
@@ -440,6 +468,7 @@ public final class DecompilerMachine {
      * @since 0.1
      */
     private class InvokevirtualHandler implements InstructionHandler {
+
         @Override
         public void handle(final Instruction instruction) {
             final String owner = (String) instruction.operand(0);
@@ -463,6 +492,7 @@ public final class DecompilerMachine {
      * @since 0.1
      */
     private class LdcHandler implements InstructionHandler {
+
         @Override
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(new Literal(instruction.operand(0)));
@@ -475,6 +505,7 @@ public final class DecompilerMachine {
      * @since 0.1
      */
     private class UnimplementedHandler implements InstructionHandler {
+
         @Override
         public void handle(final Instruction instruction) {
             DecompilerMachine.this.stack.push(
@@ -509,6 +540,7 @@ public final class DecompilerMachine {
                 );
             }
         }
+
     }
 
     /**
@@ -532,6 +564,7 @@ public final class DecompilerMachine {
                 );
             }
         }
+
     }
 
     /**
@@ -555,6 +588,7 @@ public final class DecompilerMachine {
                 );
             }
         }
+
     }
 
     /**
@@ -587,12 +621,9 @@ public final class DecompilerMachine {
                     );
             }
         }
+
     }
 
-    /**
-     * Label instruction handler.
-     * @since 0.1
-     */
     private class LabelHandler implements InstructionHandler {
 
         @Override
@@ -601,5 +632,6 @@ public final class DecompilerMachine {
                 new Label(new Literal(instruction.operand(0)))
             );
         }
+
     }
 }

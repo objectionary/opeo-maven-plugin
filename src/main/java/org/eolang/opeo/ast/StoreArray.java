@@ -25,30 +25,45 @@ package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.eolang.jeo.representation.directives.DirectivesData;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
 /**
- * Array constructor.
+ * Store array element.
  * @since 0.1
  */
-public final class ArrayConstructor implements AstNode {
+public final class StoreArray implements AstNode {
 
     /**
-     * Array size.
+     * Target array.
      */
-    private final AstNode size;
+    private final AstNode array;
 
     /**
-     * Array type.
+     * Index where to store.
      */
-    private final String type;
+    private final AstNode index;
 
-    public ArrayConstructor(final AstNode size, final String type) {
-        this.size = size;
-        this.type = type;
+    /**
+     * Value to store.
+     */
+    private final AstNode value;
+
+    /**
+     * Constructor.
+     * @param array Array
+     * @param index Index
+     * @param value Value
+     */
+    public StoreArray(
+        final AstNode array,
+        final AstNode index,
+        final AstNode value
+    ) {
+        this.array = array;
+        this.index = index;
+        this.value = value;
     }
 
     @Override
@@ -58,21 +73,21 @@ public final class ArrayConstructor implements AstNode {
 
     @Override
     public Iterable<Directive> toXmir() {
-        final Directives directives = new Directives();
-        directives.add("o")
-            .attr("base", ".array")
-            .append(new DirectivesData(this.type))
-            .append(this.size.toXmir());
-        return directives.up();
+        return new Directives().add("o")
+            .attr("base", ".writearray")
+            .append(this.array.toXmir())
+            .append(this.index.toXmir())
+            .append(this.value.toXmir())
+            .up();
     }
 
     @Override
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(0);
-        res.addAll(this.size.opcodes());
-        res.add(new Opcode(Opcodes.ANEWARRAY, this.type));
-        res.add(new Opcode(Opcodes.DUP));
+        res.addAll(this.array.opcodes());
+        res.addAll(this.index.opcodes());
+        res.addAll(this.value.opcodes());
+        res.add(new Opcode(Opcodes.AASTORE));
         return res;
     }
-
 }
