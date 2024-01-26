@@ -24,6 +24,7 @@
 package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +48,14 @@ public final class Root implements AstNode {
      */
     public Root() {
         this(new ArrayList<>(0));
+    }
+
+    /**
+     * Constructor.
+     * @param children Children.
+     */
+    public Root(final AstNode... children) {
+        this(Arrays.asList(children));
     }
 
     /**

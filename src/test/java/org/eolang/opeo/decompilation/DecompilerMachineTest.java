@@ -25,9 +25,14 @@ package org.eolang.opeo.decompilation;
 
 import com.jcabi.xml.XMLDocument;
 import java.util.UUID;
+import org.eolang.jeo.representation.directives.DirectivesTuple;
 import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.OpcodeInstruction;
+import org.eolang.opeo.ast.Add;
+import org.eolang.opeo.ast.ArrayConstructor;
+import org.eolang.opeo.ast.Literal;
+import org.eolang.opeo.ast.Root;
 import org.eolang.parser.xmir.Xmir;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -377,14 +382,27 @@ final class DecompilerMachineTest {
 
     @Test
     void decompilesArrayCreation() throws ImpossibleModificationException {
-        final String xml = new Xembler(
-            new DecompilerMachine()
-                .decompileToXmir(
-                    new OpcodeInstruction(Opcodes.ICONST_2),
-                    new OpcodeInstruction(Opcodes.ICONST_3),
-                    new OpcodeInstruction(Opcodes.IADD),
-                    new OpcodeInstruction(Opcodes.ANEWARRAY, "java/lang/Object")
+        final String type = "java/lang/Object";
+        final String xpath = new Xembler(
+            new Root(
+                new ArrayConstructor(
+                    new Add(new Literal(2), new Literal(3)),
+                    type
                 )
+            ).toXmir()
         ).xml();
+        MatcherAssert.assertThat(
+            "Can't decompile array creation",
+            new Xembler(
+                new DecompilerMachine()
+                    .decompileToXmir(
+                        new OpcodeInstruction(Opcodes.ICONST_2),
+                        new OpcodeInstruction(Opcodes.ICONST_3),
+                        new OpcodeInstruction(Opcodes.IADD),
+                        new OpcodeInstruction(Opcodes.ANEWARRAY, type)
+                    )
+            ).xml(),
+            Matchers.equalTo(xpath)
+        );
     }
 }
