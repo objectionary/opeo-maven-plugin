@@ -240,8 +240,6 @@ public final class DecompilerMachine {
                 )
             );
         }
-
-
     }
 
     /**

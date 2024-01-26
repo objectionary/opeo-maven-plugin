@@ -39,6 +39,7 @@ import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
+import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.ast.StoreLocal;
 import org.eolang.opeo.ast.Substraction;
 import org.eolang.opeo.ast.Super;
@@ -185,6 +186,12 @@ public final class OpeoNodes {
             result = new This();
         } else if (base.contains("local")) {
             result = new Variable(node);
+        } else if (".writearray".equals(base)) {
+            final List<XmlNode> inner = node.children().collect(Collectors.toList());
+            final AstNode array = OpeoNodes.node(inner.get(0));
+            final AstNode index = OpeoNodes.node(inner.get(1));
+            final AstNode value = OpeoNodes.node(inner.get(2));
+            result = new StoreArray(array, index, value);
         } else if (".write".equals(base)) {
             //@checkstyle MethodBodyCommentsCheck (20 lines)
             // @todo #80:90min Correct parsing of WriteField node
