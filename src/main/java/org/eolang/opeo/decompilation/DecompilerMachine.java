@@ -34,6 +34,7 @@ import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.Add;
+import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Constructor;
@@ -123,6 +124,7 @@ public final class DecompilerMachine {
             new MapEntry<>(Opcodes.FSTORE, new StoreHandler(Type.FLOAT_TYPE)),
             new MapEntry<>(Opcodes.DSTORE, new StoreHandler(Type.DOUBLE_TYPE)),
             new MapEntry<>(Opcodes.ASTORE, new StoreHandler(Type.getType(Object.class))),
+            new MapEntry<>(Opcodes.ANEWARRAY, new NewArrayHandler()),
             new MapEntry<>(Opcodes.NEW, new NewHandler()),
             new MapEntry<>(Opcodes.DUP, new DupHandler()),
             new MapEntry<>(Opcodes.BIPUSH, new BipushHandler()),
@@ -269,6 +271,21 @@ public final class DecompilerMachine {
                     ),
                     DecompilerMachine.this.stack.pop()
                 )
+            );
+        }
+    }
+
+    /**
+     * New array instruction handler.
+     * @since 0.1
+     */
+    private class NewArrayHandler implements InstructionHandler {
+        @Override
+        public void handle(final Instruction instruction) {
+            final String type = (String) instruction.operand(0);
+            final AstNode size = DecompilerMachine.this.stack.pop();
+            DecompilerMachine.this.stack.push(
+                new ArrayConstructor(size, type)
             );
         }
     }

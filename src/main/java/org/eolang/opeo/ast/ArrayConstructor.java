@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2023 Objectionary.com
+ * Copyright (c) 2016-2023 Objectionary.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,18 +21,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.other;
+package org.eolang.opeo.ast;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.objectweb.asm.Opcodes;
+import org.xembly.Directive;
 
 /**
- * This class was added to check how DUP problem is solved.
- * <p>
- * For more information see
- * <a href="https://github.com/objectionary/opeo-maven-plugin/issues/132">this issue</a>.
- * </p>
- * @since 0.1.0
+ * Array constructor.
+ * @since 0.1
  */
-class DupProblem {
-    public static void main(String... args) {
-        System.out.printf("Hello %d", Integer.valueOf(12));
+public final class ArrayConstructor implements AstNode {
+
+    /**
+     * Array size.
+     */
+    private final AstNode size;
+
+    /**
+     * Array type.
+     */
+    private final String type;
+
+    public ArrayConstructor(final AstNode size, final String type) {
+        this.size = size;
+        this.type = type;
+    }
+
+    @Override
+    public String print() {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public Iterable<Directive> toXmir() {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public List<AstNode> opcodes() {
+        final List<AstNode> res = new ArrayList<>(0);
+        res.addAll(this.size.opcodes());
+        res.add(new Opcode(Opcodes.ANEWARRAY, this.type));
+        res.add(new Opcode(Opcodes.DUP));
+        return res;
     }
 }

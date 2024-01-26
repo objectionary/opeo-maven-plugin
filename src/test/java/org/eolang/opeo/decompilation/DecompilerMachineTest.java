@@ -36,6 +36,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
+import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
 /**
@@ -372,5 +373,18 @@ final class DecompilerMachineTest {
                 ).xml(),
             "Can't decompile invoke virtual"
         );
+    }
+
+    @Test
+    void decompilesArrayCreation() throws ImpossibleModificationException {
+        final String xml = new Xembler(
+            new DecompilerMachine()
+                .decompileToXmir(
+                    new OpcodeInstruction(Opcodes.ICONST_2),
+                    new OpcodeInstruction(Opcodes.ICONST_3),
+                    new OpcodeInstruction(Opcodes.IADD),
+                    new OpcodeInstruction(Opcodes.ANEWARRAY, "java/lang/Object")
+                )
+        ).xml();
     }
 }
