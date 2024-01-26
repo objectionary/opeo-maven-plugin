@@ -23,11 +23,15 @@
  */
 package org.eolang.opeo.ast;
 
+import com.jcabi.matchers.XhtmlMatchers;
 import java.util.List;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
+import org.xembly.Directive;
+import org.xembly.ImpossibleModificationException;
+import org.xembly.Xembler;
 
 /**
  * Test case for {@link ArrayConstructor}.
@@ -65,6 +69,30 @@ class ArrayConstructorTest {
                 new HasInstructions.Instruction(Opcodes.IADD),
                 new HasInstructions.Instruction(Opcodes.ANEWARRAY, type),
                 new HasInstructions.Instruction(Opcodes.DUP)
+            )
+        );
+    }
+
+
+    @Test
+    void convertsToXmir() throws ImpossibleModificationException {
+        final String type = "java/lang/Integer";
+        final String xmir = new Xembler(
+            new ArrayConstructor(
+                new Add(new Literal(1), new Literal(2)),
+                type
+            ).toXmir()
+        ).xml();
+        MatcherAssert.assertThat(
+            String.format(
+                "We expect that array constructor will be correctly transformed to XMIR, but it didn't. Result is: %n%s%n",
+                xmir
+            ),
+            xmir,
+            XhtmlMatchers.hasXPaths(
+                "./o[@base='.array']",
+                "./o[@base='.array']/o[@base='string' and @data='bytes']",
+                "./o[@base='.array']/o[@base='.plus']"
             )
         );
     }

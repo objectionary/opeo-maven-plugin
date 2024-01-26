@@ -25,8 +25,10 @@ package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.eolang.jeo.representation.directives.DirectivesData;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
  * Array constructor.
@@ -56,7 +58,12 @@ public final class ArrayConstructor implements AstNode {
 
     @Override
     public Iterable<Directive> toXmir() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        final Directives directives = new Directives();
+        directives.add("o")
+            .attr("base", ".array")
+            .append(new DirectivesData(this.type))
+            .append(this.size.toXmir());
+        return directives.up();
     }
 
     @Override
