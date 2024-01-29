@@ -143,10 +143,11 @@ public final class OpeoNodes {
             )
         );
         if (".plus".equals(base)) {
+            final Attributes attrs = new Attributes(node.attribute("scope").orElseThrow());
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode left = OpeoNodes.node(inner.get(0));
             final AstNode right = OpeoNodes.node(inner.get(1));
-            result = new Add(left, right);
+            result = new Add(left, right, attrs);
         } else if (".minus".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode left = OpeoNodes.node(inner.get(0));
