@@ -155,7 +155,7 @@ SOFTWARE.
             </goals>
             <configuration>
               <mainClass>org.eolang.updated.Main</mainClass>
-              <arguments>100</arguments>
+              <arguments>28</arguments>
             </configuration>
           </execution>
         </executions>

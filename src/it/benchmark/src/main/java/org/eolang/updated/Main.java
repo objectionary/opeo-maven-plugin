@@ -29,7 +29,7 @@ public class Main {
         long sum = 0L;
         long start = System.currentTimeMillis();
         for (long i = 0; i < total; ++i) {
-            sum += new A(42).get();
+            sum += new A(28).get();
         }
         System.out.printf("Updated res sum=%d time=%d\n", sum, System.currentTimeMillis() - start);
     }
