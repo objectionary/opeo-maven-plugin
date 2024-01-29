@@ -33,6 +33,7 @@ import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
+import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Invocation;
@@ -184,6 +185,8 @@ public final class OpeoNodes {
             );
         } else if ("$".equals(base)) {
             result = new This();
+        } else if ("staticfield".equals(base)) {
+            result = new ClassField(new Attributes(node.attribute("scope").orElseThrow()));
         } else if (base.contains("local")) {
             result = new Variable(node);
         } else if (".writearray".equals(base)) {

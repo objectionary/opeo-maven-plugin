@@ -37,6 +37,7 @@ import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
+import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Invocation;
@@ -134,6 +135,7 @@ public final class DecompilerMachine {
             new MapEntry<>(Opcodes.INVOKEVIRTUAL, new InvokevirtualHandler()),
             new MapEntry<>(Opcodes.GETFIELD, new GetFieldHandler()),
             new MapEntry<>(Opcodes.PUTFIELD, new PutFieldHnadler()),
+            new MapEntry<>(Opcodes.GETSTATIC, new GetStaticHnadler()),
             new MapEntry<>(Opcodes.LDC, new LdcHandler()),
             new MapEntry<>(Opcodes.POP, new PopHandler()),
             new MapEntry<>(Opcodes.RETURN, new ReturnHandler()),
@@ -631,5 +633,17 @@ public final class DecompilerMachine {
             );
         }
 
+
     }
+
+    private class GetStaticHnadler implements InstructionHandler {
+        @Override
+        public void handle(final Instruction instruction) {
+            final String klass = (String) instruction.operand(0);
+            final String method = (String) instruction.operand(1);
+            final String descriptor = (String) instruction.operand(2);
+            DecompilerMachine.this.stack.push(new ClassField(klass, method, descriptor));
+        }
+    }
+
 }

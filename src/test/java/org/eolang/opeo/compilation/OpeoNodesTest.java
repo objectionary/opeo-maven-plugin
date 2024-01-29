@@ -110,5 +110,4 @@ final class OpeoNodesTest {
             )
         );
     }
-
 }
