@@ -25,7 +25,6 @@ package org.eolang.opeo.decompilation;
 
 import com.jcabi.xml.XMLDocument;
 import java.util.UUID;
-import org.eolang.jeo.representation.directives.DirectivesTuple;
 import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.OpcodeInstruction;

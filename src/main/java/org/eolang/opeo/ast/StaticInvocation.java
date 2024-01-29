@@ -45,8 +45,19 @@ public final class StaticInvocation implements AstNode {
      */
     private final List<AstNode> arguments;
 
+    /**
+     * Constructor.
+     * @param owner Owner class name
+     * @param name Method name
+     * @param descriptor Method descriptor
+     * @param arguments Arguments
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
     public StaticInvocation(
-        final String owner, final String name, final String descriptor, List<AstNode> arguments
+        final String owner,
+        final String name,
+        final String descriptor,
+        final List<AstNode> arguments
     ) {
         this(
             new Attributes().owner(owner).name(name).descriptor(descriptor).type("static"),
@@ -54,6 +65,11 @@ public final class StaticInvocation implements AstNode {
         );
     }
 
+    /**
+     * Constructor.
+     * @param attributes Attributes
+     * @param arguments Arguments
+     */
     public StaticInvocation(final Attributes attributes, final List<AstNode> arguments) {
         this.attributes = attributes;
         this.arguments = arguments;

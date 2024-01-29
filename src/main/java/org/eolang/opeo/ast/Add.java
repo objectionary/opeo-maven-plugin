@@ -100,10 +100,12 @@ public final class Add implements AstNode {
      * @return Opcode.
      */
     private AstNode opcode() {
+        final AstNode result;
         if (this.attributes.type().equals("long")) {
-            return new Opcode(Opcodes.LADD);
+            result = new Opcode(Opcodes.LADD);
         } else {
-            return new Opcode(Opcodes.IADD);
+            result = new Opcode(Opcodes.IADD);
         }
+        return result;
     }
 }

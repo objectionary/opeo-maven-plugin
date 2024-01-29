@@ -64,8 +64,15 @@ public final class OpeoNodes {
      */
     private final List<XmlNode> nodes;
 
-    //TODo
-    private final AtomicInteger pops = new AtomicInteger(0);
+    /**
+     * Number of pops.
+     * @todo #132:90min Fix adding of pop instructions.
+     *  Currently we have an ad-hoc solution for adding pop instructions
+     *  before labels. It looks ugly and requires refactoring. Maybe we
+     *  should add a new ast node type for pop instructions.
+     *  Anyway, we should remove this field and refactor the code.
+     */
+    private final AtomicInteger pops;
 
     /**
      * Constructor.
@@ -88,6 +95,7 @@ public final class OpeoNodes {
      */
     public OpeoNodes(final List<XmlNode> nodes) {
         this.nodes = nodes;
+        this.pops = new AtomicInteger(0);
     }
 
     /**
@@ -306,10 +314,10 @@ public final class OpeoNodes {
             } else if ("static".equals(attributes.type())) {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final List<AstNode> arguments;
-                if (inner.size() > 0) {
-                    arguments = inner.stream().map(this::node).collect(Collectors.toList());
-                } else {
+                if (inner.isEmpty()) {
                     arguments = Collections.emptyList();
+                } else {
+                    arguments = inner.stream().map(this::node).collect(Collectors.toList());
                 }
                 result = new StaticInvocation(attributes, arguments);
             } else {

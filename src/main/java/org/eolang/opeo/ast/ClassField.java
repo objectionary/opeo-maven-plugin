@@ -35,12 +35,25 @@ import org.xembly.Directives;
  */
 public final class ClassField implements AstNode {
 
+    /**
+     * Attributes.
+     */
     private final Attributes attributes;
 
+    /**
+     * Constructor.
+     * @param owner Owner class name
+     * @param name Field name
+     * @param descriptor Field descriptor
+     */
     public ClassField(final String owner, final String name, final String descriptor) {
         this(new Attributes().owner(owner).name(name).descriptor(descriptor));
     }
 
+    /**
+     * Constructor.
+     * @param attributes Attributes.
+     */
     public ClassField(final Attributes attributes) {
         this.attributes = attributes;
     }

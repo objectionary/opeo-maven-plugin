@@ -46,6 +46,11 @@ public final class ArrayConstructor implements AstNode {
      */
     private final String type;
 
+    /**
+     * Constructor.
+     * @param size Array size
+     * @param type Array type
+     */
     public ArrayConstructor(final AstNode size, final String type) {
         this.size = size;
         this.type = type;

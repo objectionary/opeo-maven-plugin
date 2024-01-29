@@ -24,12 +24,10 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import java.util.List;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
-import org.xembly.Directive;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
@@ -73,7 +71,6 @@ class ArrayConstructorTest {
         );
     }
 
-
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
         final String type = "java/lang/Integer";
@@ -96,5 +93,4 @@ class ArrayConstructorTest {
             )
         );
     }
-
 }

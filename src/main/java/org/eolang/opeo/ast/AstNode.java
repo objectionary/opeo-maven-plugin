@@ -55,20 +55,32 @@ public interface AstNode {
      */
     List<AstNode> opcodes();
 
+    /**
+     * Sequence of nodes.
+     * @since 0.1
+     */
+    final class Sequence implements AstNode {
 
-    class Sequence implements AstNode {
-
+        /**
+         * Nodes.
+         */
         private final List<AstNode> nodes;
 
-        public Sequence(AstNode... several) {
-            this(Arrays.asList(several));
+        /**
+         * Useful constructor.
+         * @param nodes Nodes
+         * @param another Additional nodes
+         */
+        public Sequence(final List<AstNode> nodes, final AstNode... another) {
+            this(
+                Stream.concat(nodes.stream(), Arrays.stream(another)).collect(Collectors.toList())
+            );
         }
 
-        public Sequence(final List<AstNode> nodes, AstNode... another) {
-            this(Stream.concat(nodes.stream(), Arrays.stream(another)).collect(Collectors.toList()));
-        }
-
-
+        /**
+         * Constructor.
+         * @param nodes Nodes.
+         */
         public Sequence(final List<AstNode> nodes) {
             this.nodes = nodes;
         }

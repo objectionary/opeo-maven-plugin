@@ -104,10 +104,12 @@ public final class Substraction implements AstNode {
      * @return Opcode.
      */
     private Opcode opcode() {
+        final Opcode result;
         if (this.attributes.type().equals("long")) {
-            return new Opcode(Opcodes.LSUB);
+            result = new Opcode(Opcodes.LSUB);
         } else {
-            return new Opcode(Opcodes.ISUB);
+            result = new Opcode(Opcodes.ISUB);
         }
+        return result;
     }
 }

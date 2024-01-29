@@ -294,7 +294,12 @@ public final class DecompilerMachine {
             final AstNode value = DecompilerMachine.this.stack.pop();
             final AstNode index = DecompilerMachine.this.stack.pop();
             final AstNode array = DecompilerMachine.this.stack.pop();
-            // !IMPORTANT
+            //@checkstyle MethodBodyCommentsCheck (10 lines)
+            // @todo #132:90min Handle array links carefully.
+            //  Currently we added an ad-hoc solution to handle array links. We should
+            //  refactor this code to handle array links in a more elegant way.
+            //  Moreover, the approach with removing the array reference from the stack is not
+            //  safe and maybe even wrong.
             if (DecompilerMachine.this.stack.peek() == array) {
                 DecompilerMachine.this.stack.pop();
             }
@@ -495,6 +500,10 @@ public final class DecompilerMachine {
 
     }
 
+    /**
+     * Invokestatic instruction handler.
+     * @since 0.1
+     */
     private class InvokestaticHander implements InstructionHandler {
 
         @Override
@@ -584,7 +593,8 @@ public final class DecompilerMachine {
                 final AstNode right = DecompilerMachine.this.stack.pop();
                 final AstNode left = DecompilerMachine.this.stack.pop();
                 DecompilerMachine.this.stack.push(
-                    new Substraction(left, right, new Attributes().type("int")));
+                    new Substraction(left, right, new Attributes().type("int"))
+                );
             } else if (instruction.opcode() == Opcodes.LSUB) {
                 final AstNode right = DecompilerMachine.this.stack.pop();
                 final AstNode left = DecompilerMachine.this.stack.pop();
@@ -661,6 +671,10 @@ public final class DecompilerMachine {
 
     }
 
+    /**
+     * Label instruction handler.
+     * @since 0.1
+     */
     private class LabelHandler implements InstructionHandler {
 
         @Override
@@ -669,10 +683,12 @@ public final class DecompilerMachine {
                 new Label(new Literal(instruction.operand(0)))
             );
         }
-
-
     }
 
+    /**
+     * Getstatic instruction handler.
+     * @since 0.1
+     */
     private class GetStaticHnadler implements InstructionHandler {
         @Override
         public void handle(final Instruction instruction) {
@@ -682,5 +698,4 @@ public final class DecompilerMachine {
             DecompilerMachine.this.stack.push(new ClassField(klass, method, descriptor));
         }
     }
-
 }
