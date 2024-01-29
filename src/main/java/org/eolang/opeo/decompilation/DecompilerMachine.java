@@ -292,6 +292,10 @@ public final class DecompilerMachine {
             final AstNode value = DecompilerMachine.this.stack.pop();
             final AstNode index = DecompilerMachine.this.stack.pop();
             final AstNode array = DecompilerMachine.this.stack.pop();
+            // !IMPORTANT
+            if (DecompilerMachine.this.stack.peek() == array) {
+                DecompilerMachine.this.stack.pop();
+            }
             DecompilerMachine.this.stack.push(new StoreArray(array, index, value));
         }
     }
