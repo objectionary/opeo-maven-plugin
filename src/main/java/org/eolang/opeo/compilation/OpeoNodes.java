@@ -257,7 +257,7 @@ public final class OpeoNodes {
             result = new Constructor(type, attributes, arguments);
         } else if (".array".equals(base)) {
             final List<XmlNode> children = node.children().collect(Collectors.toList());
-            final String type = children.get(0).text();
+            final String type = new HexString(children.get(0).text()).decode();
             final AstNode size = OpeoNodes.node(children.get(1));
             result = new ArrayConstructor(size, type);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {

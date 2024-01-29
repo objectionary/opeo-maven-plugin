@@ -25,6 +25,7 @@ package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -163,7 +164,9 @@ public final class Invocation implements AstNode {
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.source.opcodes());
-        this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
+        for (int index = this.arguments.size() - 1; index >= 0; --index) {
+            res.addAll(this.arguments.get(index).opcodes());
+        }
         res.add(
             new Opcode(
                 Opcodes.INVOKEVIRTUAL,

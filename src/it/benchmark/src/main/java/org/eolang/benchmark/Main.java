@@ -31,7 +31,6 @@ public class Main {
         for (long i = 0; i < total; ++i) {
             sum += app.run();
         }
-        System.out.println("Finished successfully. Result is:");
-        System.out.println(sum);
+        System.out.printf("Finished successfully. Result is: %d%n", sum);
     }
 }
