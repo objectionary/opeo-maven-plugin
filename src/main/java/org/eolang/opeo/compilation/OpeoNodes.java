@@ -40,6 +40,7 @@ import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Opcode;
+import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.ast.StoreLocal;
 import org.eolang.opeo.ast.Substraction;
@@ -285,6 +286,15 @@ public final class OpeoNodes {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode target = OpeoNodes.node(inner.get(0));
                 result = new InstanceField(target, attributes);
+            } else if ("static".equals(attributes.type())) {
+                final List<XmlNode> inner = node.children().collect(Collectors.toList());
+                final List<AstNode> arguments;
+                if (inner.size() > 0) {
+                    arguments = inner.stream().map(OpeoNodes::node).collect(Collectors.toList());
+                } else {
+                    arguments = Collections.emptyList();
+                }
+                result = new StaticInvocation(attributes, arguments);
             } else {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode target = OpeoNodes.node(inner.get(0));

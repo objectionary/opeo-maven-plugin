@@ -47,6 +47,7 @@ import org.eolang.opeo.ast.Mul;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Root;
+import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.ast.StoreLocal;
 import org.eolang.opeo.ast.Substraction;
@@ -133,6 +134,7 @@ public final class DecompilerMachine {
             new MapEntry<>(Opcodes.BIPUSH, new BipushHandler()),
             new MapEntry<>(Opcodes.INVOKESPECIAL, new InvokespecialHandler()),
             new MapEntry<>(Opcodes.INVOKEVIRTUAL, new InvokevirtualHandler()),
+            new MapEntry<>(Opcodes.INVOKESTATIC, new InvokestaticHander()),
             new MapEntry<>(Opcodes.GETFIELD, new GetFieldHandler()),
             new MapEntry<>(Opcodes.PUTFIELD, new PutFieldHnadler()),
             new MapEntry<>(Opcodes.GETSTATIC, new GetStaticHnadler()),
@@ -485,6 +487,22 @@ public final class DecompilerMachine {
             );
         }
 
+    }
+
+    private class InvokestaticHander implements InstructionHandler {
+
+        @Override
+        public void handle(final Instruction instruction) {
+            final String owner = (String) instruction.operand(0);
+            final String method = (String) instruction.operand(1);
+            final String descriptor = (String) instruction.operand(2);
+            final List<AstNode> args = DecompilerMachine.this.popArguments(
+                Type.getArgumentCount(descriptor)
+            );
+            DecompilerMachine.this.stack.push(
+                new StaticInvocation(owner, method, descriptor, args)
+            );
+        }
     }
 
     /**
