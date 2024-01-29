@@ -43,6 +43,7 @@ class ArrayConstructorTest {
         final String type = "java/lang/Integer";
         final ArrayConstructor constructor = new ArrayConstructor(new Literal(size), type);
         MatcherAssert.assertThat(
+            "Can't compile array constructor with defined length",
             new OpcodeNodes(constructor).opcodes(),
             new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.BIPUSH, size),
@@ -55,12 +56,14 @@ class ArrayConstructorTest {
     @Test
     void compilesArrayWithComplexLength() {
         final String type = "java/lang/Integer";
-        final ArrayConstructor constructor = new ArrayConstructor(
-            new Add(new Literal(1), new Literal(2)),
-            type
-        );
         MatcherAssert.assertThat(
-            new OpcodeNodes(constructor).opcodes(),
+            "Can't compile array constructor with complex undefined length",
+            new OpcodeNodes(
+                new ArrayConstructor(
+                    new Add(new Literal(1), new Literal(2)),
+                    type
+                )
+            ).opcodes(),
             new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.ICONST_1),
                 new HasInstructions.Instruction(Opcodes.ICONST_2),
