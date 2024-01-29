@@ -1,7 +1,7 @@
 /*
- * MIT License
+ * The MIT License (MIT)
  *
- * Copyright (c) 2016-2023 Objectionary.com
+ * Copyright (c) 2023-2024 Objectionary.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -10,21 +10,27 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-// Check logs first.
-String log = new File(basedir, 'build.log').text;
-// Check success.
-assert log.contains("BUILD SUCCESS")
-assert log.contains("Finished successfully. Result is:")
-assert log.contains("Updated res sum=")
-true
+package org.eolang.updated;
+
+public class Main {
+    public static void main(String... args) {
+        long total = Long.parseLong(args[0]);
+        long sum = 0L;
+        long start = System.currentTimeMillis();
+        for (long i = 0; i < total; ++i) {
+            sum += new A(42).get();
+        }
+        System.out.printf("Updated res sum=%d time=%d\n", sum, System.currentTimeMillis() - start);
+    }
+}

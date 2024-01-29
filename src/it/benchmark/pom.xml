@@ -137,13 +137,24 @@ SOFTWARE.
             </configuration>
           </execution>
           <execution>
-            <id>run-app</id>
+            <id>run-old-app</id>
             <phase>generate-test-sources</phase>
             <goals>
               <goal>java</goal>
             </goals>
             <configuration>
               <mainClass>org.eolang.benchmark.Main</mainClass>
+              <arguments>100</arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>run-new-app</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>java</goal>
+            </goals>
+            <configuration>
+              <mainClass>org.eolang.updated.Main</mainClass>
               <arguments>100</arguments>
             </configuration>
           </execution>
