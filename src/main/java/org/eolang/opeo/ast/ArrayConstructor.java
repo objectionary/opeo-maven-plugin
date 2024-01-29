@@ -71,7 +71,6 @@ public final class ArrayConstructor implements AstNode {
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.size.opcodes());
         res.add(new Opcode(Opcodes.ANEWARRAY, this.type));
-        res.add(new Opcode(Opcodes.DUP));
         return res;
     }
 

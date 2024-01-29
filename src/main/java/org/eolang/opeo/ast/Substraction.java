@@ -50,13 +50,29 @@ public final class Substraction implements AstNode {
     private final AstNode right;
 
     /**
+     * Attributes.
+     */
+    private final Attributes attributes;
+
+    /**
      * Constructor.
      * @param left Left operand.
      * @param right Right operand.
      */
     public Substraction(final AstNode left, final AstNode right) {
+        this(left, right, new Attributes().type("int"));
+    }
+
+    /**
+     * Constructor.
+     * @param left Left operand.
+     * @param right Right operand.
+     * @param attributes Attributes.
+     */
+    public Substraction(final AstNode left, final AstNode right, final Attributes attributes) {
         this.left = left;
         this.right = right;
+        this.attributes = attributes;
     }
 
     @Override
@@ -68,6 +84,7 @@ public final class Substraction implements AstNode {
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
             .attr("base", ".minus")
+            .attr("scope", this.attributes)
             .append(this.left.toXmir())
             .append(this.right.toXmir())
             .up();
@@ -78,7 +95,19 @@ public final class Substraction implements AstNode {
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.left.opcodes());
         res.addAll(this.right.opcodes());
-        res.add(new Opcode(Opcodes.ISUB));
+        res.add(this.opcode());
         return res;
+    }
+
+    /**
+     * Convert string into an opcode.
+     * @return Opcode.
+     */
+    private Opcode opcode() {
+        if (this.attributes.type().equals("long")) {
+            return new Opcode(Opcodes.LSUB);
+        } else {
+            return new Opcode(Opcodes.ISUB);
+        }
     }
 }

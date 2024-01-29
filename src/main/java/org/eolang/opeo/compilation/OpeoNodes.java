@@ -26,6 +26,7 @@ package org.eolang.opeo.compilation;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
@@ -48,6 +49,7 @@ import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.ast.Variable;
 import org.eolang.opeo.ast.WriteField;
+import org.objectweb.asm.Opcodes;
 import org.xembly.Xembler;
 
 /**
@@ -61,6 +63,9 @@ public final class OpeoNodes {
      * Opeo nodes.
      */
     private final List<XmlNode> nodes;
+
+    //TODo
+    private final AtomicInteger pops = new AtomicInteger(0);
 
     /**
      * Constructor.
@@ -91,7 +96,7 @@ public final class OpeoNodes {
      */
     List<XmlNode> toJeoNodes() {
         return this.nodes.stream()
-            .map(OpeoNodes::opcodes)
+            .map(this::opcodes)
             .flatMap(List::stream)
             .collect(Collectors.toList());
     }
@@ -101,8 +106,8 @@ public final class OpeoNodes {
      * @param node XmlNode
      * @return List of opcodes
      */
-    private static List<XmlNode> opcodes(final XmlNode node) {
-        return OpeoNodes.node(node).opcodes()
+    private List<XmlNode> opcodes(final XmlNode node) {
+        return this.node(node).opcodes()
             .stream()
             .map(AstNode::toXmir)
             .map(Xembler::new)
@@ -120,8 +125,8 @@ public final class OpeoNodes {
      * @checkstyle JavaNCSSCheck (200 lines)
      * @checkstyle NestedIfDepthCheck (200 lines)
      * @checkstyle MethodLengthCheck (200 lines)
-     * @todo #77:90min Refactor OpeoNodes.node() method.
-     *  The parsing method OpeoNodes.node() looks overcomplicated and violates many
+     * @todo #77:90min Refactor this.node() method.
+     *  The parsing method this.node() looks overcomplicated and violates many
      *  code quality standards. We should refactor the method and remove all
      *  the checkstyle and PMD "suppressions" from the method.
      * @todo #110:90min Remove ad-hoc solution for replacing descriptors and owners.
@@ -132,7 +137,7 @@ public final class OpeoNodes {
      *  - "org/eolang/benchmark/BA"
      */
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
-    private static AstNode node(final XmlNode node) {
+    private AstNode node(final XmlNode node) {
         final AstNode result;
         final String base = node.attribute("base").orElseThrow(
             () -> new IllegalArgumentException(
@@ -145,32 +150,42 @@ public final class OpeoNodes {
         if (".plus".equals(base)) {
             final Attributes attrs = new Attributes(node.attribute("scope").orElseThrow());
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final AstNode left = OpeoNodes.node(inner.get(0));
-            final AstNode right = OpeoNodes.node(inner.get(1));
+            final AstNode left = this.node(inner.get(0));
+            final AstNode right = this.node(inner.get(1));
             result = new Add(left, right, attrs);
         } else if (".minus".equals(base)) {
+            final Attributes attrs = new Attributes(node.attribute("scope").orElseThrow());
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final AstNode left = OpeoNodes.node(inner.get(0));
-            final AstNode right = OpeoNodes.node(inner.get(1));
-            result = new Substraction(left, right);
+            final AstNode left = this.node(inner.get(0));
+            final AstNode right = this.node(inner.get(1));
+            result = new Substraction(left, right, attrs);
         } else if ("opcode".equals(base)) {
             final XmlInstruction instruction = new XmlInstruction(node.node());
-            result = new Opcode(instruction.opcode(), instruction.operands());
+            final int opcode = instruction.opcode();
+            result = new Opcode(opcode, instruction.operands());
         } else if ("label".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            result = new Label(OpeoNodes.node(inner.get(0)));
+            if (this.pops.get() > 0) {
+                result = new AstNode.Sequence(
+                    Collections.nCopies(this.pops.get(), new Opcode(Opcodes.POP)),
+                    new Label(this.node(inner.get(0)))
+                );
+                this.pops.set(0);
+            } else {
+                result = new Label(this.node(inner.get(0)));
+            }
         } else if ("int".equals(base)) {
             result = new Literal(new HexString(node.text()).decodeAsInt());
         } else if ("string".equals(base)) {
             result = new Literal(new HexString(node.text()).decode());
         } else if (".super".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final AstNode instance = OpeoNodes.node(inner.get(0));
+            final AstNode instance = this.node(inner.get(0));
             final List<AstNode> arguments;
             if (inner.size() > 1) {
                 arguments = inner.subList(1, inner.size())
                     .stream()
-                    .map(OpeoNodes::node)
+                    .map(this::node)
                     .collect(Collectors.toList());
             } else {
                 arguments = Collections.emptyList();
@@ -193,9 +208,9 @@ public final class OpeoNodes {
             result = new Variable(node);
         } else if (".writearray".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final AstNode array = OpeoNodes.node(inner.get(0));
-            final AstNode index = OpeoNodes.node(inner.get(1));
-            final AstNode value = OpeoNodes.node(inner.get(2));
+            final AstNode array = this.node(inner.get(0));
+            final AstNode index = this.node(inner.get(1));
+            final AstNode value = this.node(inner.get(2));
             result = new StoreArray(array, index, value);
         } else if (".write".equals(base)) {
             //@checkstyle MethodBodyCommentsCheck (20 lines)
@@ -205,10 +220,10 @@ public final class OpeoNodes {
             //  For now the parsing is done in a way to make the tests pass.
             if (node.attribute("scope").isPresent()) {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
-                final AstNode target = OpeoNodes.node(
+                final AstNode target = this.node(
                     inner.get(0).children().collect(Collectors.toList()).get(0)
                 );
-                final AstNode value = OpeoNodes.node(inner.get(1));
+                final AstNode value = this.node(inner.get(1));
                 result = new WriteField(
                     target,
                     value,
@@ -216,8 +231,8 @@ public final class OpeoNodes {
                 );
             } else {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
-                final AstNode variable = OpeoNodes.node(inner.get(0));
-                final AstNode value = OpeoNodes.node(inner.get(1));
+                final AstNode variable = this.node(inner.get(0));
+                final AstNode value = this.node(inner.get(1));
                 result = new StoreLocal(variable, value);
             }
         } else if (".new".equals(base)) {
@@ -234,7 +249,7 @@ public final class OpeoNodes {
             if (inner.size() > 1) {
                 arguments = inner.subList(1, inner.size())
                     .stream()
-                    .map(OpeoNodes::node)
+                    .map(this::node)
                     .collect(Collectors.toList());
             } else {
                 arguments = Collections.emptyList();
@@ -259,7 +274,8 @@ public final class OpeoNodes {
         } else if (".array".equals(base)) {
             final List<XmlNode> children = node.children().collect(Collectors.toList());
             final String type = new HexString(children.get(0).text()).decode();
-            final AstNode size = OpeoNodes.node(children.get(1));
+            final AstNode size = this.node(children.get(1));
+            this.pops.incrementAndGet();
             result = new ArrayConstructor(size, type);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
             Attributes attributes = new Attributes(
@@ -285,25 +301,25 @@ public final class OpeoNodes {
             }
             if ("field".equals(attributes.type())) {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
-                final AstNode target = OpeoNodes.node(inner.get(0));
+                final AstNode target = this.node(inner.get(0));
                 result = new InstanceField(target, attributes);
             } else if ("static".equals(attributes.type())) {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final List<AstNode> arguments;
                 if (inner.size() > 0) {
-                    arguments = inner.stream().map(OpeoNodes::node).collect(Collectors.toList());
+                    arguments = inner.stream().map(this::node).collect(Collectors.toList());
                 } else {
                     arguments = Collections.emptyList();
                 }
                 result = new StaticInvocation(attributes, arguments);
             } else {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
-                final AstNode target = OpeoNodes.node(inner.get(0));
+                final AstNode target = this.node(inner.get(0));
                 final List<AstNode> arguments;
                 if (inner.size() > 1) {
                     arguments = inner.subList(1, inner.size())
                         .stream()
-                        .map(OpeoNodes::node)
+                        .map(this::node)
                         .collect(Collectors.toList());
                 } else {
                     arguments = Collections.emptyList();

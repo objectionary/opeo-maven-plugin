@@ -23,8 +23,13 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
  * Abstract syntax tree node.
@@ -49,4 +54,46 @@ public interface AstNode {
      * @return List of opcodes.
      */
     List<AstNode> opcodes();
+
+
+    class Sequence implements AstNode {
+
+        private final List<AstNode> nodes;
+
+        public Sequence(AstNode... several) {
+            this(Arrays.asList(several));
+        }
+
+        public Sequence(final List<AstNode> nodes, AstNode... another) {
+            this(Stream.concat(nodes.stream(), Arrays.stream(another)).collect(Collectors.toList()));
+        }
+
+
+        public Sequence(final List<AstNode> nodes) {
+            this.nodes = nodes;
+        }
+
+        @Override
+        public String print() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public Iterable<Directive> toXmir() {
+            final Directives directives = new Directives();
+            for (final AstNode node : this.nodes) {
+                directives.append(node.toXmir());
+            }
+            return directives;
+        }
+
+        @Override
+        public List<AstNode> opcodes() {
+            final List<AstNode> res = new ArrayList<>(0);
+            for (final AstNode node : this.nodes) {
+                res.addAll(node.opcodes());
+            }
+            return res;
+        }
+    }
 }

@@ -117,6 +117,7 @@ public final class DecompilerMachine {
             new MapEntry<>(Opcodes.IADD, new AddHandler()),
             new MapEntry<>(Opcodes.IADD, new AddHandler()),
             new MapEntry<>(Opcodes.ISUB, new SubstractionHandler()),
+            new MapEntry<>(Opcodes.LSUB, new SubstractionHandler()),
             new MapEntry<>(Opcodes.IMUL, new MulHandler()),
             new MapEntry<>(Opcodes.ILOAD, new LoadHandler(Type.INT_TYPE)),
             new MapEntry<>(Opcodes.LLOAD, new LoadHandler(Type.LONG_TYPE)),
@@ -582,7 +583,14 @@ public final class DecompilerMachine {
             if (instruction.opcode() == Opcodes.ISUB) {
                 final AstNode right = DecompilerMachine.this.stack.pop();
                 final AstNode left = DecompilerMachine.this.stack.pop();
-                DecompilerMachine.this.stack.push(new Substraction(left, right));
+                DecompilerMachine.this.stack.push(
+                    new Substraction(left, right, new Attributes().type("int")));
+            } else if (instruction.opcode() == Opcodes.LSUB) {
+                final AstNode right = DecompilerMachine.this.stack.pop();
+                final AstNode left = DecompilerMachine.this.stack.pop();
+                DecompilerMachine.this.stack.push(
+                    new Substraction(left, right, new Attributes().type("long"))
+                );
             } else {
                 DecompilerMachine.this.stack.push(
                     new Opcode(

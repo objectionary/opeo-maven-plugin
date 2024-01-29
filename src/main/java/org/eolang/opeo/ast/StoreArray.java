@@ -85,6 +85,7 @@ public final class StoreArray implements AstNode {
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.array.opcodes());
+        res.add(new Opcode(Opcodes.DUP));
         res.addAll(this.index.opcodes());
         res.addAll(this.value.opcodes());
         res.add(new Opcode(Opcodes.AASTORE));
