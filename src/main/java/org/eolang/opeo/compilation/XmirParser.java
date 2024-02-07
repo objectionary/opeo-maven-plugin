@@ -57,7 +57,7 @@ import org.xembly.Xembler;
  * @since 0.1
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class OpeoNodes {
+public final class XmirParser {
 
     /**
      * Opeo nodes.
@@ -78,7 +78,7 @@ public final class OpeoNodes {
      * Constructor.
      * @param nodes Opeo nodes.
      */
-    public OpeoNodes(final AstNode... nodes) {
+    public XmirParser(final AstNode... nodes) {
         this(
             Arrays.stream(nodes)
                 .map(AstNode::toXmir)
@@ -93,7 +93,7 @@ public final class OpeoNodes {
      * Constructor.
      * @param nodes Opeo nodes.
      */
-    public OpeoNodes(final List<XmlNode> nodes) {
+    public XmirParser(final List<XmlNode> nodes) {
         this.nodes = nodes;
         this.pops = new AtomicInteger(0);
     }
