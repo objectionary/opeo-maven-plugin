@@ -30,11 +30,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.eolang.jeo.representation.directives.DirectivesData;
+import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.OpcodeName;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.xembly.Xembler;
+
 
 /**
  * Matcher for {@link List} of {@link XmlNode} to have specific instructions.
