@@ -174,15 +174,7 @@ public final class XmirParser {
             result = new Opcode(opcode, instruction.operands());
         } else if ("label".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            if (this.pops.get() > 0) {
-                result = new AstNode.Sequence(
-                    Collections.nCopies(this.pops.get(), new Opcode(Opcodes.POP)),
-                    new Label(this.node(inner.get(0)))
-                );
-                this.pops.set(0);
-            } else {
-                result = new Label(this.node(inner.get(0)));
-            }
+            result = new Label(this.node(inner.get(0)));
         } else if ("int".equals(base)) {
             result = new Literal(new HexString(node.text()).decodeAsInt());
         } else if ("string".equals(base)) {
@@ -284,7 +276,6 @@ public final class XmirParser {
             final List<XmlNode> children = node.children().collect(Collectors.toList());
             final String type = new HexString(children.get(0).text()).decode();
             final AstNode size = this.node(children.get(1));
-            this.pops.incrementAndGet();
             result = new ArrayConstructor(size, type);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
             Attributes attributes = new Attributes(
