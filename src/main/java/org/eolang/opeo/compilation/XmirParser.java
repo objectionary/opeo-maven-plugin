@@ -26,7 +26,6 @@ package org.eolang.opeo.compilation;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
@@ -50,7 +49,6 @@ import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.ast.Variable;
 import org.eolang.opeo.ast.WriteField;
-import org.objectweb.asm.Opcodes;
 import org.xembly.Xembler;
 
 /**
@@ -86,7 +84,6 @@ public final class XmirParser {
      */
     public XmirParser(final List<XmlNode> nodes) {
         this.nodes = nodes;
-        this.pops = new AtomicInteger(0);
     }
 
     /**

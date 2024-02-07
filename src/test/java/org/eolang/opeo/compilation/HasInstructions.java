@@ -37,7 +37,6 @@ import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.xembly.Xembler;
 
-
 /**
  * Matcher for {@link List} of {@link XmlNode} to have specific instructions.
  * @since 0.1
