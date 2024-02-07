@@ -66,16 +66,6 @@ public final class XmirParser {
     private final List<XmlNode> nodes;
 
     /**
-     * Number of pops.
-     * @todo #132:90min Fix adding of pop instructions.
-     *  Currently we have an ad-hoc solution for adding pop instructions
-     *  before labels. It looks ugly and requires refactoring. Maybe we
-     *  should add a new ast node type for pop instructions.
-     *  Anyway, we should remove this field and refactor the code.
-     */
-    private final AtomicInteger pops;
-
-    /**
      * Constructor.
      * @param nodes Opeo nodes.
      */
