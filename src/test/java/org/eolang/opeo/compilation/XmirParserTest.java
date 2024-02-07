@@ -34,14 +34,14 @@ import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
 
 /**
- * Tests for {@link OpeoNodes}.
+ * Tests for {@link XmirParser}.
  * @since 0.1
  */
-final class OpeoNodesTest {
+final class XmirParserTest {
 
     @Test
     void convertsOpcodesAsIs() {
-        final List<XmlNode> nodes = new OpeoNodes(
+        final List<XmlNode> nodes = new XmirParser(
             new Opcode(Opcodes.ICONST_0, false), new Opcode(Opcodes.POP, false)
         ).toJeoNodes();
         MatcherAssert.assertThat(
@@ -61,7 +61,7 @@ final class OpeoNodesTest {
 
     @Test
     void convertsAddition() {
-        final List<XmlNode> nodes = new OpeoNodes(
+        final List<XmlNode> nodes = new XmirParser(
             new Add(new Literal(1), new Literal(2))
         ).toJeoNodes();
         MatcherAssert.assertThat(
@@ -87,7 +87,7 @@ final class OpeoNodesTest {
     void convertsDeepAddition() {
         MatcherAssert.assertThat(
             "We expect to retrieve 7 opcodes, but got something else instead",
-            new OpeoNodes(
+            new XmirParser(
                 new Add(
                     new Add(
                         new Literal(1),

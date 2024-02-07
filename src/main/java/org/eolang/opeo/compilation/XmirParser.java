@@ -26,8 +26,8 @@ package org.eolang.opeo.compilation;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
@@ -49,7 +49,6 @@ import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.ast.Variable;
 import org.eolang.opeo.ast.WriteField;
-import org.objectweb.asm.Opcodes;
 import org.xembly.Xembler;
 
 /**
@@ -57,7 +56,7 @@ import org.xembly.Xembler;
  * @since 0.1
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class OpeoNodes {
+public final class XmirParser {
 
     /**
      * Opeo nodes.
@@ -65,20 +64,10 @@ public final class OpeoNodes {
     private final List<XmlNode> nodes;
 
     /**
-     * Number of pops.
-     * @todo #132:90min Fix adding of pop instructions.
-     *  Currently we have an ad-hoc solution for adding pop instructions
-     *  before labels. It looks ugly and requires refactoring. Maybe we
-     *  should add a new ast node type for pop instructions.
-     *  Anyway, we should remove this field and refactor the code.
-     */
-    private final AtomicInteger pops;
-
-    /**
      * Constructor.
      * @param nodes Opeo nodes.
      */
-    public OpeoNodes(final AstNode... nodes) {
+    public XmirParser(final AstNode... nodes) {
         this(
             Arrays.stream(nodes)
                 .map(AstNode::toXmir)
@@ -93,9 +82,8 @@ public final class OpeoNodes {
      * Constructor.
      * @param nodes Opeo nodes.
      */
-    public OpeoNodes(final List<XmlNode> nodes) {
+    public XmirParser(final List<XmlNode> nodes) {
         this.nodes = nodes;
-        this.pops = new AtomicInteger(0);
     }
 
     /**
@@ -173,15 +161,7 @@ public final class OpeoNodes {
             result = new Opcode(opcode, instruction.operands());
         } else if ("label".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            if (this.pops.get() > 0) {
-                result = new AstNode.Sequence(
-                    Collections.nCopies(this.pops.get(), new Opcode(Opcodes.POP)),
-                    new Label(this.node(inner.get(0)))
-                );
-                this.pops.set(0);
-            } else {
-                result = new Label(this.node(inner.get(0)));
-            }
+            result = new Label(this.node(inner.get(0)));
         } else if ("int".equals(base)) {
             result = new Literal(new HexString(node.text()).decodeAsInt());
         } else if ("string".equals(base)) {
@@ -283,7 +263,6 @@ public final class OpeoNodes {
             final List<XmlNode> children = node.children().collect(Collectors.toList());
             final String type = new HexString(children.get(0).text()).decode();
             final AstNode size = this.node(children.get(1));
-            this.pops.incrementAndGet();
             result = new ArrayConstructor(size, type);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
             Attributes attributes = new Attributes(

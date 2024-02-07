@@ -65,7 +65,7 @@ public final class JeoCompiler {
      */
     private static void compile(final XmlMethod method) {
         method.replaceInstructions(
-            new OpeoNodes(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
+            new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
         );
     }
 
