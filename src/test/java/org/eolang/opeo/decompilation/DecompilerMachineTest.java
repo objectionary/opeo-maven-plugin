@@ -24,7 +24,6 @@
 package org.eolang.opeo.decompilation;
 
 import com.jcabi.xml.XMLDocument;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.eolang.jeo.representation.xmir.AllLabels;
