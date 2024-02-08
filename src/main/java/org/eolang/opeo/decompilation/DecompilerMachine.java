@@ -301,9 +301,9 @@ public final class DecompilerMachine {
             //  refactor this code to handle array links in a more elegant way.
             //  Moreover, the approach with removing the array reference from the stack is not
             //  safe and maybe even wrong.
-//            if (DecompilerMachine.this.stack.peek() == array) {
-//                DecompilerMachine.this.stack.pop();
-//            }
+            if (DecompilerMachine.this.stack.peek() == array) {
+                DecompilerMachine.this.stack.pop();
+            }
             DecompilerMachine.this.stack.push(new StoreArray(array, index, value));
         }
     }

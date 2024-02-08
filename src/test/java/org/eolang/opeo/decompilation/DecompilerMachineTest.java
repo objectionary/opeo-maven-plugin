@@ -24,6 +24,7 @@
 package org.eolang.opeo.decompilation;
 
 import com.jcabi.xml.XMLDocument;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.eolang.jeo.representation.xmir.AllLabels;
@@ -31,6 +32,7 @@ import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.OpcodeInstruction;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
+import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Literal;
@@ -485,7 +487,12 @@ final class DecompilerMachineTest {
                                 "out",
                                 "Ljava/io/PrintStream;"
                             ),
-                            "printf",
+                            new Attributes()
+                                .name("printf")
+                                .descriptor(
+                                    "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;"
+                                )
+                                .owner("java/io/PrintStream"),
                             new Literal("Number is %s"),
                             new StoreArray(
                                 new ArrayConstructor(
