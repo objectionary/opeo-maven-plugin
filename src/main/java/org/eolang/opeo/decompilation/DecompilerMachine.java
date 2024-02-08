@@ -24,6 +24,7 @@
 package org.eolang.opeo.decompilation;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -491,6 +492,7 @@ public final class DecompilerMachine {
             final List<AstNode> args = DecompilerMachine.this.popArguments(
                 Type.getArgumentCount(descriptor)
             );
+            Collections.reverse(args);
             final AstNode source = DecompilerMachine.this.stack.pop();
             DecompilerMachine.this.stack.push(
                 new Invocation(
