@@ -24,14 +24,19 @@
 package org.eolang.opeo.decompilation;
 
 import com.jcabi.xml.XMLDocument;
+import java.util.Map;
 import java.util.UUID;
 import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.OpcodeInstruction;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
+import org.eolang.opeo.ast.ClassField;
+import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Literal;
+import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Root;
+import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.ast.This;
 import org.eolang.parser.xmir.Xmir;
@@ -431,6 +436,72 @@ final class DecompilerMachineTest {
                             new Literal(0),
                             new This()
                         )
+                    ).toXmir()
+                ).xml()
+            )
+        );
+    }
+
+    @Test
+    void decompilesVarargInvocation() throws ImpossibleModificationException {
+        final String type = "java/lang/Object";
+        MatcherAssert.assertThat(
+            "Can't decompile vararg invocation",
+            new Xembler(
+                new DecompilerMachine(Map.of("counting", "false"))
+                    .decompileToXmir(
+                        new OpcodeInstruction(
+                            Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;"
+                        ),
+                        new OpcodeInstruction(Opcodes.LDC, "Number is %s"),
+                        new OpcodeInstruction(Opcodes.ICONST_1),
+                        new OpcodeInstruction(Opcodes.ANEWARRAY, type),
+                        new OpcodeInstruction(Opcodes.DUP),
+                        new OpcodeInstruction(Opcodes.ICONST_0),
+                        new OpcodeInstruction(Opcodes.ICONST_2),
+                        new OpcodeInstruction(
+                            Opcodes.INVOKESTATIC,
+                            "java/lang/Integer",
+                            "valueOf",
+                            "(I)Ljava/lang/Integer;"
+                        ),
+                        new OpcodeInstruction(Opcodes.AASTORE),
+                        new OpcodeInstruction(
+                            Opcodes.INVOKEVIRTUAL,
+                            "java/io/PrintStream",
+                            "printf",
+                            "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;"
+                        ),
+                        new OpcodeInstruction(Opcodes.POP),
+                        new OpcodeInstruction(Opcodes.RETURN)
+                    )
+            ).xml(),
+            Matchers.equalTo(
+                new Xembler(
+                    new Root(
+                        new Invocation(
+                            new ClassField(
+                                "java/lang/System",
+                                "out",
+                                "Ljava/io/PrintStream;"
+                            ),
+                            "printf",
+                            new Literal("Number is %s"),
+                            new StoreArray(
+                                new ArrayConstructor(
+                                    new Literal(1),
+                                    type
+                                ),
+                                new Literal(0),
+                                new StaticInvocation(
+                                    "java/lang/Integer",
+                                    "valueOf",
+                                    "(I)Ljava/lang/Integer;",
+                                    new Literal(2)
+                                )
+                            )
+                        ),
+                        new Opcode(Opcodes.RETURN, false)
                     ).toXmir()
                 ).xml()
             )

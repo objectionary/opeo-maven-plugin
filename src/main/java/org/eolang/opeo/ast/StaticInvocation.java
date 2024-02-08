@@ -24,6 +24,7 @@
 package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
@@ -44,6 +45,23 @@ public final class StaticInvocation implements AstNode {
      * Arguments.
      */
     private final List<AstNode> arguments;
+
+    /**
+     * Constructor.
+     * @param owner Owner class name
+     * @param name Method name
+     * @param descriptor Method descriptor
+     * @param arguments Arguments
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
+    public StaticInvocation(
+        final String owner,
+        final String name,
+        final String descriptor,
+        final AstNode... arguments
+    ) {
+        this(owner, name, descriptor, Arrays.asList(arguments));
+    }
 
     /**
      * Constructor.
