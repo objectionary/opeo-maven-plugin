@@ -109,6 +109,7 @@ public final class DecompilerMachine {
         this.locals = locals;
         this.arguments = arguments;
         this.handlers = new MapOf<>(
+            new MapEntry<>(Opcodes.ICONST_0, new IconstHandler()),
             new MapEntry<>(Opcodes.ICONST_1, new IconstHandler()),
             new MapEntry<>(Opcodes.ICONST_2, new IconstHandler()),
             new MapEntry<>(Opcodes.ICONST_3, new IconstHandler()),
@@ -300,9 +301,9 @@ public final class DecompilerMachine {
             //  refactor this code to handle array links in a more elegant way.
             //  Moreover, the approach with removing the array reference from the stack is not
             //  safe and maybe even wrong.
-            if (DecompilerMachine.this.stack.peek() == array) {
-                DecompilerMachine.this.stack.pop();
-            }
+//            if (DecompilerMachine.this.stack.peek() == array) {
+//                DecompilerMachine.this.stack.pop();
+//            }
             DecompilerMachine.this.stack.push(new StoreArray(array, index, value));
         }
     }
@@ -647,6 +648,9 @@ public final class DecompilerMachine {
         @Override
         public void handle(final Instruction instruction) {
             switch (instruction.opcode()) {
+                case Opcodes.ICONST_0:
+                    DecompilerMachine.this.stack.push(new Literal(0));
+                    break;
                 case Opcodes.ICONST_1:
                     DecompilerMachine.this.stack.push(new Literal(1));
                     break;

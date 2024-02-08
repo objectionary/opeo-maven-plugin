@@ -32,6 +32,8 @@ import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.Root;
+import org.eolang.opeo.ast.StoreArray;
+import org.eolang.opeo.ast.This;
 import org.eolang.parser.xmir.Xmir;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -382,14 +384,6 @@ final class DecompilerMachineTest {
     @Test
     void decompilesArrayCreation() throws ImpossibleModificationException {
         final String type = "java/lang/Object";
-        final String xpath = new Xembler(
-            new Root(
-                new ArrayConstructor(
-                    new Add(new Literal(2), new Literal(3)),
-                    type
-                )
-            ).toXmir()
-        ).xml();
         MatcherAssert.assertThat(
             "Can't decompile array creation",
             new Xembler(
@@ -401,7 +395,45 @@ final class DecompilerMachineTest {
                         new OpcodeInstruction(Opcodes.ANEWARRAY, type)
                     )
             ).xml(),
-            Matchers.equalTo(xpath)
+            Matchers.equalTo(
+                new Xembler(
+                    new Root(
+                        new ArrayConstructor(
+                            new Add(new Literal(2), new Literal(3)),
+                            type
+                        )
+                    ).toXmir()
+                ).xml()
+            )
+        );
+    }
+
+    @Test
+    void decompilesArrayInsertion() throws ImpossibleModificationException {
+        final String type = "java/lang/Object";
+        MatcherAssert.assertThat(
+            "Can't decompile array insertion",
+            new Xembler(
+                new DecompilerMachine()
+                    .decompileToXmir(
+                        new OpcodeInstruction(Opcodes.ICONST_2),
+                        new OpcodeInstruction(Opcodes.ANEWARRAY, type),
+                        new OpcodeInstruction(Opcodes.ICONST_0),
+                        new OpcodeInstruction(Opcodes.ALOAD, 0),
+                        new OpcodeInstruction(Opcodes.AASTORE)
+                    )
+            ).xml(),
+            Matchers.equalTo(
+                new Xembler(
+                    new Root(
+                        new StoreArray(
+                            new ArrayConstructor(new Literal(2), type),
+                            new Literal(0),
+                            new This()
+                        )
+                    ).toXmir()
+                ).xml()
+            )
         );
     }
 }
