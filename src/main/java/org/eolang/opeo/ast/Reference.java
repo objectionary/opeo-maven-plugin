@@ -62,6 +62,10 @@ public final class Reference implements AstNode {
         this.ref.set(node);
     }
 
+    /**
+     * Get the object.
+     * @return Object.
+     */
     public AstNode object() {
         return this.ref.get();
     }

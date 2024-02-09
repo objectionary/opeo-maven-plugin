@@ -63,6 +63,7 @@ import org.xembly.Directive;
 /**
  * Decompiler machine.
  * @since 0.1
+ * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
 public final class DecompilerMachine {
 
@@ -70,8 +71,6 @@ public final class DecompilerMachine {
      * Output Stack.
      */
     private final Deque<AstNode> stack;
-
-    private final Deque<AstNode> output;
 
     /**
      * Local variables.
@@ -290,6 +289,9 @@ public final class DecompilerMachine {
 
     /**
      * Label instruction handler.
+     * Store a reference in an array
+     * Opcodes: aastore
+     * Stack [before]->[after]: "arrayref, index, value →"
      * @since 0.1
      */
     private class StoreToArrayHandler implements InstructionHandler {
@@ -412,6 +414,7 @@ public final class DecompilerMachine {
 
         @Override
         public void handle(final Instruction ignore) {
+            // We do nothing here to keep the stack contains previous computations.
         }
 
     }
@@ -486,11 +489,14 @@ public final class DecompilerMachine {
             );
             Collections.reverse(args);
             final AstNode source = DecompilerMachine.this.stack.pop();
-            DecompilerMachine.this.stack.push(new Invocation(
-                source, new Attributes().name(method).descriptor(descriptor).owner(owner), args
-            ));
+            DecompilerMachine.this.stack.push(
+                new Invocation(
+                    source,
+                    new Attributes().name(method).descriptor(descriptor).owner(owner),
+                    args
+                )
+            );
         }
-
     }
 
     /**
