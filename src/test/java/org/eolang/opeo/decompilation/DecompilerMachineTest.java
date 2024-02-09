@@ -424,6 +424,7 @@ final class DecompilerMachineTest {
                     .decompileToXmir(
                         new OpcodeInstruction(Opcodes.ICONST_2),
                         new OpcodeInstruction(Opcodes.ANEWARRAY, type),
+                        new OpcodeInstruction(Opcodes.DUP),
                         new OpcodeInstruction(Opcodes.ICONST_0),
                         new OpcodeInstruction(Opcodes.ALOAD, 0),
                         new OpcodeInstruction(Opcodes.AASTORE)

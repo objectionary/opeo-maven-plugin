@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.decompilation;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
@@ -70,6 +71,8 @@ public final class DecompilerMachine {
      */
     private final Deque<AstNode> stack;
 
+    private final Deque<AstNode> output;
+
     /**
      * Local variables.
      */
@@ -107,6 +110,7 @@ public final class DecompilerMachine {
      */
     public DecompilerMachine(final LocalVariables locals, final Map<String, String> arguments) {
         this.stack = new LinkedList<>();
+        this.output = new ArrayDeque<>(0);
         this.locals = locals;
         this.arguments = arguments;
         this.handlers = new MapOf<>(
@@ -271,16 +275,15 @@ public final class DecompilerMachine {
 
         @Override
         public void handle(final Instruction instruction) {
-            DecompilerMachine.this.stack.push(
-                new StoreLocal(
-                    DecompilerMachine.this.locals.variable(
-                        (Integer) instruction.operands().get(0),
-                        this.type,
-                        false
-                    ),
-                    DecompilerMachine.this.stack.pop()
-                )
+            final StoreLocal store = new StoreLocal(
+                DecompilerMachine.this.locals.variable(
+                    (Integer) instruction.operands().get(0),
+                    this.type,
+                    false
+                ),
+                DecompilerMachine.this.stack.pop()
             );
+            DecompilerMachine.this.stack.push(store);
         }
 
     }
@@ -295,17 +298,19 @@ public final class DecompilerMachine {
         public void handle(final Instruction instruction) {
             final AstNode value = DecompilerMachine.this.stack.pop();
             final AstNode index = DecompilerMachine.this.stack.pop();
-            final AstNode array = DecompilerMachine.this.stack.pop();
+            final Reference array = (Reference) DecompilerMachine.this.stack.pop();
             //@checkstyle MethodBodyCommentsCheck (10 lines)
             // @todo #132:90min Handle array links carefully.
             //  Currently we added an ad-hoc solution to handle array links. We should
             //  refactor this code to handle array links in a more elegant way.
             //  Moreover, the approach with removing the array reference from the stack is not
             //  safe and maybe even wrong.
-            if (DecompilerMachine.this.stack.peek() == array) {
-                DecompilerMachine.this.stack.pop();
-            }
-            DecompilerMachine.this.stack.push(new StoreArray(array, index, value));
+//            if (DecompilerMachine.this.stack.peek() == array) {
+//                DecompilerMachine.this.stack.pop();
+//            }
+            array.link(new StoreArray(array.object(), index, value));
+//            DecompilerMachine.this.stack.push(out);
+//            DecompilerMachine.this.output.push(out);
         }
     }
 
@@ -321,6 +326,7 @@ public final class DecompilerMachine {
             final Reference reference = new Reference();
             reference.link(new ArrayConstructor(size, type));
             DecompilerMachine.this.stack.push(reference);
+//            DecompilerMachine.this.output.push(reference);
         }
 
     }
@@ -391,9 +397,9 @@ public final class DecompilerMachine {
                 .owner((String) instruction.operand(0))
                 .name((String) instruction.operand(1))
                 .descriptor((String) instruction.operand(2));
-            DecompilerMachine.this.stack.push(
-                new WriteField(target, value, attributes)
-            );
+            final WriteField write = new WriteField(target, value, attributes);
+            DecompilerMachine.this.stack.push(write);
+//            DecompilerMachine.this.output.push(write);
         }
 
     }
@@ -419,7 +425,7 @@ public final class DecompilerMachine {
 
         @Override
         public void handle(final Instruction ignore) {
-            // We ignore this instruction intentionally.
+//            DecompilerMachine.this.stack.pop();
         }
 
     }
@@ -494,11 +500,10 @@ public final class DecompilerMachine {
             );
             Collections.reverse(args);
             final AstNode source = DecompilerMachine.this.stack.pop();
-            DecompilerMachine.this.stack.push(
-                new Invocation(
-                    source, new Attributes().name(method).descriptor(descriptor).owner(owner), args
-                )
+            final Invocation invocation = new Invocation(
+                source, new Attributes().name(method).descriptor(descriptor).owner(owner), args
             );
+            DecompilerMachine.this.stack.push(invocation);
         }
 
     }

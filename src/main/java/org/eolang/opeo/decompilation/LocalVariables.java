@@ -62,7 +62,7 @@ public final class LocalVariables {
      * @param load Load or store.
      * @return Variable.
      */
-    public AstNode variable(final int index, final Type type, final boolean load) {
+    public AstNode  variable(final int index, final Type type, final boolean load) {
         final AstNode result;
         if (index == 0 && (this.modifiers & Opcodes.ACC_STATIC) == 0) {
             result = new This();
