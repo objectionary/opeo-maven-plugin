@@ -64,6 +64,10 @@ import org.xembly.Directive;
  * Decompiler machine.
  * @since 0.1
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
+ * @todo #136:90min Refactor DecompilerMachine to simplify the code.
+ *  The class is too complex and has too many responsibilities. It should be
+ *  refactored to have a single responsibility. The class should be split into
+ *  smaller classes, each with a single responsibility.
  */
 public final class DecompilerMachine {
 
