@@ -45,6 +45,7 @@ import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
+import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Mul;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Reference;
@@ -54,6 +55,7 @@ import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.ast.StoreLocal;
 import org.eolang.opeo.ast.Substraction;
 import org.eolang.opeo.ast.Super;
+import org.eolang.opeo.ast.Variable;
 import org.eolang.opeo.ast.WriteField;
 import org.eolang.opeo.jeo.JeoLabel;
 import org.objectweb.asm.Opcodes;
@@ -266,13 +268,21 @@ public final class DecompilerMachine {
 
         @Override
         public void handle(final Instruction instruction) {
-            final StoreLocal store = new StoreLocal(
-                DecompilerMachine.this.locals.variable(
-                    (Integer) instruction.operands().get(0),
-                    this.type,
-                    false
-                ),
-                DecompilerMachine.this.stack.pop()
+            final Integer index = (Integer) instruction.operands().get(0);
+            final AstNode variable = DecompilerMachine.this.locals.variable(
+                index,
+                this.type,
+                false
+            );
+            final AstNode value = DecompilerMachine.this.stack.pop();
+//            final StoreLocal store = new StoreLocal(
+//                variable,
+//                value
+//            );
+            final AstNode store = new Assignment(
+                new LocalVariable(index, this.type),
+                value,
+                new Attributes().type("local")
             );
             DecompilerMachine.this.stack.push(store);
         }

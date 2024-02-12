@@ -2,6 +2,7 @@ package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -13,9 +14,6 @@ public final class Assignment implements AstNode {
 
     private final Attributes attributes;
 
-    public Assignment(final AstNode left, final AstNode right) {
-        this(left, right, new Attributes().type("field"));
-    }
 
     public Assignment(
         final AstNode left,
@@ -45,14 +43,18 @@ public final class Assignment implements AstNode {
         final List<AstNode> res = new ArrayList<>(1);
         res.addAll(this.left.opcodes());
         res.addAll(this.right.opcodes());
-        res.add(
-            new Opcode(
-                Opcodes.PUTFIELD,
-                this.attributes.owner(),
-                this.attributes.name(),
-                this.attributes.descriptor()
-            )
-        );
+        if (this.attributes.type().equals("field")) {
+            res.add(
+                new Opcode(
+                    Opcodes.PUTFIELD,
+                    this.attributes.owner(),
+                    this.attributes.name(),
+                    this.attributes.descriptor()
+                )
+            );
+        } else {
+            //Do nothing
+        }
         return res;
     }
 }
