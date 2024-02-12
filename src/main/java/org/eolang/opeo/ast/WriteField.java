@@ -76,11 +76,6 @@ public final class WriteField implements AstNode {
     }
 
     @Override
-    public String print() {
-        return String.format("%s = %s", this.target.print(), this.value.print());
-    }
-
-    @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
             .attr("base", ".write")

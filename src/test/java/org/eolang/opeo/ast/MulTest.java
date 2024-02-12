@@ -37,18 +37,6 @@ import org.xembly.Xembler;
 class MulTest {
 
     @Test
-    void printsMultiplication() {
-        MatcherAssert.assertThat(
-            "Can't print multiplication of two literals",
-            new Mul(
-                new Literal(1),
-                new Literal(2)
-            ).print(),
-            Matchers.equalTo("1 * 2")
-        );
-    }
-
-    @Test
     void convertsToXmir() throws ImpossibleModificationException {
         final String xmir = new Xembler(
             new Mul(

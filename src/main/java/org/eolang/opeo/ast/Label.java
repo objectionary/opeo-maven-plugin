@@ -48,11 +48,6 @@ public final class Label implements AstNode {
     }
 
     @Override
-    public String print() {
-        return String.format(": %s", this.identifier.print());
-    }
-
-    @Override
     public Iterable<Directive> toXmir() {
         return new Directives()
             .add("o")

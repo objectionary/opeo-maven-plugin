@@ -59,11 +59,6 @@ public final class ClassField implements AstNode {
     }
 
     @Override
-    public String print() {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-    @Override
     public Iterable<Directive> toXmir() {
         return new Directives()
             .add("o")

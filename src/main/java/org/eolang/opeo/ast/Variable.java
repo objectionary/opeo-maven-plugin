@@ -98,17 +98,6 @@ public final class Variable implements AstNode {
         this.identifier = identifier;
     }
 
-    @ToString.Include
-    @Override
-    public String print() {
-        return String.format(
-            "%s%d%s",
-            Variable.PREFIX,
-            this.identifier,
-            Type.getType(this.attributes.descriptor()).getClassName()
-        );
-    }
-
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives()

@@ -82,11 +82,6 @@ public final class InstanceField implements AstNode {
     }
 
     @Override
-    public String print() {
-        return String.format("%s.%s", this.source.print(), this.attributes.name());
-    }
-
-    @Override
     public Iterable<Directive> toXmir() {
         return new Directives()
             .add("o")

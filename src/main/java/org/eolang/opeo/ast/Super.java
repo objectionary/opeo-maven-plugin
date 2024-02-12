@@ -97,15 +97,6 @@ public final class Super implements AstNode {
     }
 
     @Override
-    public String print() {
-        return String.format(
-            "%s.super%s",
-            this.instance.print(),
-            this.args()
-        );
-    }
-
-    @Override
     public Iterable<Directive> toXmir() {
         final Directives directives = new Directives();
         directives.add("o")
@@ -123,22 +114,5 @@ public final class Super implements AstNode {
         this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
         res.add(new Opcode(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", this.descriptor));
         return res;
-    }
-
-    /**
-     * Print arguments.
-     * @return Arguments.
-     */
-    private String args() {
-        final String result;
-        if (this.arguments.isEmpty()) {
-            result = "";
-        } else {
-            result = this.arguments
-                .stream()
-                .map(AstNode::print)
-                .collect(Collectors.joining(" ", " ", ""));
-        }
-        return result;
     }
 }

@@ -67,11 +67,6 @@ public final class Root implements AstNode {
     }
 
     @Override
-    public String print() {
-        return this.children.stream().map(AstNode::print).collect(Collectors.joining("\n"));
-    }
-
-    @Override
     public Iterable<Directive> toXmir() {
         final Iterable<Directive> result;
         if (this.children.isEmpty()) {

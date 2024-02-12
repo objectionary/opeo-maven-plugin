@@ -26,7 +26,6 @@ package org.eolang.opeo.ast;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Transformers;
@@ -35,12 +34,6 @@ import org.xembly.Xembler;
 /**
  * Test case for {@link Opcode}.
  * @since 0.1
- * @todo #95:90min Enable the 'prints 'test below and fix it.
- *  Currently the test {@link OpcodeTest#prints} is disabled because it fails.
- *  You can find the reason of the failure in the issue #2801.
- *  Link: <a href="https://github.com/objectionary/eo/issues/2801">#2801</a>.
- *  Also in the project we have several more tests with the same problem.
- *  You can find them by the '2801' in the project.
  */
 class OpcodeTest {
 
@@ -58,20 +51,6 @@ class OpcodeTest {
             Matchers.allOf(
                 XhtmlMatchers.hasXPath("./o[@base='opcode']/o[@base='int']"),
                 XhtmlMatchers.hasXPath("./o[@base='opcode']/o[@base='string']")
-            )
-        );
-    }
-
-    @Test
-    @Disabled("https://github.com/objectionary/eo/issues/2801")
-    void prints() {
-        MatcherAssert.assertThat(
-            "We expect the following string to be printed: 'opcode > LDC-1\n  18\n  \"bye\"'",
-            new Opcode(Opcodes.LDC, "bye").print(),
-            Matchers.allOf(
-                Matchers.containsString("opcode > LDC"),
-                Matchers.containsString("18"),
-                Matchers.containsString("bye")
             )
         );
     }

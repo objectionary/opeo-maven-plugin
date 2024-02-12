@@ -166,17 +166,6 @@ public final class DecompilerMachine {
     }
 
     /**
-     * Decompile instructions.
-     * @param instructions Instructions to decompile.
-     * @return Decompiled code.
-     */
-    public String decompile(final Instruction... instructions) {
-        Arrays.stream(instructions)
-            .forEach(inst -> this.handler(inst.opcode()).handle(inst));
-        return new Root(new ListOf<>(this.stack.descendingIterator())).print();
-    }
-
-    /**
      * Do we add number to opcode name or not?
      * if true then we add number to opcode name:
      *  RETURN -> RETURN-1

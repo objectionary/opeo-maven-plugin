@@ -26,7 +26,6 @@ package org.eolang.opeo.ast;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
@@ -38,15 +37,6 @@ import org.xembly.Xembler;
  * @since 0.1
  */
 class SuperTest {
-
-    @Test
-    void printsSuper() {
-        MatcherAssert.assertThat(
-            "Can't print 'super' statement, should be 'this.super \"hello, world!\"'",
-            new Super(new This(), new Literal("hello, world!")).print(),
-            Matchers.equalTo("this.super \"hello, world!\"")
-        );
-    }
 
     @Test
     void convertsToXmir() throws ImpossibleModificationException {

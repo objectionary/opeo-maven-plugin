@@ -104,15 +104,6 @@ public final class Constructor implements AstNode {
     }
 
     @Override
-    public String print() {
-        return String.format(
-            "%s.new%s",
-            this.type,
-            this.args()
-        );
-    }
-
-    @Override
     public Iterable<Directive> toXmir() {
         final Directives directives = new Directives();
         directives.add("o")
@@ -138,22 +129,5 @@ public final class Constructor implements AstNode {
             )
         );
         return res;
-    }
-
-    /**
-     * Print arguments.
-     * @return Arguments string.
-     */
-    private String args() {
-        final String result;
-        if (this.arguments.isEmpty()) {
-            result = "";
-        } else {
-            result = this.arguments.stream()
-                .map(AstNode::print)
-                .map(s -> String.format("(%s)", s))
-                .collect(Collectors.joining(" ", " ", ""));
-        }
-        return result;
     }
 }

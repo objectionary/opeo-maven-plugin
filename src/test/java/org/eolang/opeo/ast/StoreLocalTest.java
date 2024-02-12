@@ -39,15 +39,6 @@ import org.xembly.Xembler;
 class StoreLocalTest {
 
     @Test
-    void printsCorrectly() {
-        MatcherAssert.assertThat(
-            "We expect the printed assignment to be correct",
-            new StoreLocal(new Variable(Type.INT_TYPE, 1), new Literal(1)).print(),
-            Matchers.equalTo("local1int = 1")
-        );
-    }
-
-    @Test
     void convertsToXmirCorrectly() throws ImpossibleModificationException {
         final String xml = new Xembler(
             new StoreLocal(

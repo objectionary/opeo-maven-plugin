@@ -38,11 +38,6 @@ import org.xembly.Directives;
 public final class This implements AstNode {
 
     @Override
-    public String print() {
-        return "this";
-    }
-
-    @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o").attr("base", "$").up();
     }

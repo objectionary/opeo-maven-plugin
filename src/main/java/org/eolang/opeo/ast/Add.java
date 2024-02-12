@@ -72,11 +72,6 @@ public final class Add implements AstNode {
     }
 
     @Override
-    public String print() {
-        return String.format("(%s) + (%s)", this.left.print(), this.right.print());
-    }
-
-    @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
             .attr("base", ".plus")

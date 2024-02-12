@@ -38,12 +38,6 @@ import org.xembly.Directives;
 public interface AstNode {
 
     /**
-     * Print ast node and all it's children.
-     * @return String output.
-     */
-    String print();
-
-    /**
      * Convert node to XMIR.
      * @return XMIR XML.
      */
@@ -54,58 +48,4 @@ public interface AstNode {
      * @return List of opcodes.
      */
     List<AstNode> opcodes();
-
-    /**
-     * Sequence of nodes.
-     * @since 0.1
-     */
-    final class Sequence implements AstNode {
-
-        /**
-         * Nodes.
-         */
-        private final List<AstNode> nodes;
-
-        /**
-         * Useful constructor.
-         * @param nodes Nodes
-         * @param another Additional nodes
-         */
-        public Sequence(final List<AstNode> nodes, final AstNode... another) {
-            this(
-                Stream.concat(nodes.stream(), Arrays.stream(another)).collect(Collectors.toList())
-            );
-        }
-
-        /**
-         * Constructor.
-         * @param nodes Nodes.
-         */
-        public Sequence(final List<AstNode> nodes) {
-            this.nodes = nodes;
-        }
-
-        @Override
-        public String print() {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
-        public Iterable<Directive> toXmir() {
-            final Directives directives = new Directives();
-            for (final AstNode node : this.nodes) {
-                directives.append(node.toXmir());
-            }
-            return directives;
-        }
-
-        @Override
-        public List<AstNode> opcodes() {
-            final List<AstNode> res = new ArrayList<>(0);
-            for (final AstNode node : this.nodes) {
-                res.addAll(node.opcodes());
-            }
-            return res;
-        }
-    }
 }

@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.decompilation;
 
-import com.jcabi.xml.XMLDocument;
 import java.util.Map;
 import java.util.UUID;
 import org.eolang.jeo.representation.xmir.AllLabels;
@@ -40,11 +39,9 @@ import org.eolang.opeo.ast.Root;
 import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.ast.This;
-import org.eolang.parser.xmir.Xmir;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
@@ -59,74 +56,6 @@ import org.xembly.Xembler;
 final class DecompilerMachineTest {
 
     /**
-     * Test decompilation of new instructions.
-     * <p>
-     *     {@code
-     *       new B(new A(42));
-     *     }
-     * </p>
-     */
-    @Test
-    @Disabled("https://github.com/objectionary/eo/issues/2801")
-    void decompilesNewInstructions() {
-        MatcherAssert.assertThat(
-            "Can't decompile bytecode instructions for 'new B(new A(42));'",
-            new DecompilerMachine().decompile(
-                new OpcodeInstruction(Opcodes.NEW, "B"),
-                new OpcodeInstruction(Opcodes.DUP),
-                new OpcodeInstruction(Opcodes.NEW, "A"),
-                new OpcodeInstruction(Opcodes.DUP),
-                new OpcodeInstruction(Opcodes.BIPUSH, 42),
-                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "A", "<init>", "(I)V"),
-                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "B", "<init>", "(LA;)V"),
-                new OpcodeInstruction(Opcodes.POP),
-                new OpcodeInstruction(Opcodes.RETURN)
-            ),
-            Matchers.allOf(
-                Matchers.containsString("B.new (A.new (42))"),
-                Matchers.containsString("opcode > RETURN")
-            )
-        );
-    }
-
-    /**
-     * Test decompilation of new instructions.
-     * <p>
-     *     {@code
-     *       new D(new C(43), 44, 45);
-     *     }
-     * </p>
-     */
-    @Test
-    @Disabled("https://github.com/objectionary/eo/issues/2801")
-    void decompilesNewInstructionsEachWithParam() {
-        final String res = new DecompilerMachine().decompile(
-            new OpcodeInstruction(Opcodes.NEW, "D"),
-            new OpcodeInstruction(Opcodes.DUP),
-            new OpcodeInstruction(Opcodes.BIPUSH, 45),
-            new OpcodeInstruction(Opcodes.BIPUSH, 44),
-            new OpcodeInstruction(Opcodes.NEW, "C"),
-            new OpcodeInstruction(Opcodes.DUP),
-            new OpcodeInstruction(Opcodes.BIPUSH, 43),
-            new OpcodeInstruction(Opcodes.INVOKESPECIAL, "C", "<init>", "(I)V"),
-            new OpcodeInstruction(Opcodes.INVOKESPECIAL, "D", "<init>", "(LC;II)V"),
-            new OpcodeInstruction(Opcodes.POP),
-            new OpcodeInstruction(Opcodes.RETURN)
-        );
-        MatcherAssert.assertThat(
-            String.format(
-                "Can't decompile new instructions for 'new D(new C(43), 44, 45);', result: %n%s%n",
-                res
-            ),
-            res,
-            Matchers.allOf(
-                Matchers.containsString("D.new (C.new (43)) (44) (45)"),
-                Matchers.containsString("opcode > RETURN")
-            )
-        );
-    }
-
-    /**
      * Test decompilation of instance call instructions.
      * <p>
      *     {@code
@@ -138,7 +67,7 @@ final class DecompilerMachineTest {
     void decompilesSimpleInstanceCall() {
         MatcherAssert.assertThat(
             "Can't decompile method call instructions for 'new A().bar();'",
-            new DecompilerMachine().decompile(
+            new DecompilerMachine().decompileToXmir(
                 new OpcodeInstruction(Opcodes.NEW, "A"),
                 new OpcodeInstruction(Opcodes.DUP),
                 new OpcodeInstruction(Opcodes.INVOKESPECIAL, "A", "<init>", "()V"),
@@ -162,7 +91,7 @@ final class DecompilerMachineTest {
     void decompilesInstanceCallWithArguments() {
         MatcherAssert.assertThat(
             "Can't decompile method call instructions for 'new A(28).bar(29);'",
-            new DecompilerMachine().decompile(
+            new DecompilerMachine().decompileToXmir(
                 new OpcodeInstruction(Opcodes.NEW, "A"),
                 new OpcodeInstruction(Opcodes.DUP),
                 new OpcodeInstruction(Opcodes.BIPUSH, 28),
@@ -188,7 +117,7 @@ final class DecompilerMachineTest {
     void decompilesStringBuilder() {
         MatcherAssert.assertThat(
             "Can't decompile StringBuilder instructions for 'new StringBuilder('a').append('b');",
-            new DecompilerMachine().decompile(
+            new DecompilerMachine().decompileToXmir(
                 new OpcodeInstruction(Opcodes.NEW, "java/lang/StringBuilder"),
                 new OpcodeInstruction(Opcodes.DUP),
                 new OpcodeInstruction(Opcodes.LDC, "a"),
@@ -224,7 +153,7 @@ final class DecompilerMachineTest {
     void decompilesNestedInstanceCallWithArguments() {
         MatcherAssert.assertThat(
             "Can't decompile method call instructions for 'foo(bar()) + 3;'",
-            new DecompilerMachine().decompile(
+            new DecompilerMachine().decompileToXmir(
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "bar", "()I"),
@@ -250,7 +179,7 @@ final class DecompilerMachineTest {
     void decompilesFieldAccess() {
         MatcherAssert.assertThat(
             "Can't decompile field access instructions for 'this.a + this.b;'",
-            new DecompilerMachine().decompile(
+            new DecompilerMachine().decompileToXmir(
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.GETFIELD, "App", "a", "I"),
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
@@ -275,7 +204,7 @@ final class DecompilerMachineTest {
     void decompilesFieldAccessAndMethodInvocation() {
         MatcherAssert.assertThat(
             "Can't decompile field access and method invocation instructions for 'this.a.intValue() + 1;'",
-            new DecompilerMachine().decompile(
+            new DecompilerMachine().decompileToXmir(
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.GETFIELD, "App", "a", "Ljava/lang/Integer;"),
                 new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "intValue", "()I"),
@@ -284,39 +213,6 @@ final class DecompilerMachineTest {
             ),
             Matchers.equalTo(
                 "((this.a).intValue) + (1)"
-            )
-        );
-    }
-
-    @Test
-    @Disabled("https://github.com/objectionary/eo/issues/2801")
-    void decompilesFieldAccessAndMethodInvocationToEo() {
-        final String xml = new Xembler(
-            new DecompilerMachine().decompileToXmir(
-                new OpcodeInstruction(Opcodes.ALOAD, 0),
-                new OpcodeInstruction(Opcodes.GETFIELD, "App", "a", "Ljava/lang/Integer;"),
-                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "intValue", "()I"),
-                new OpcodeInstruction(Opcodes.ICONST_1),
-                new OpcodeInstruction(Opcodes.IADD)
-            )
-        ).xmlQuietly();
-        MatcherAssert.assertThat(
-            String.format(
-                "Can't decompile field access and method invocation into EO for 'this.a.intValue() + 1;', received XML: %n%s%n",
-                xml
-            ),
-            new Xmir.Default(new XMLDocument(xml)).toEO(),
-            Matchers.equalTo(
-                String.join(
-                    "\n",
-                    "tuple",
-                    "  $",
-                    "  .a",
-                    "  .intValue",
-                    "  .plus",
-                    "    1",
-                    ""
-                )
             )
         );
     }

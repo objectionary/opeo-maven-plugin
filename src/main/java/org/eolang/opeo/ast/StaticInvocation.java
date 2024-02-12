@@ -94,11 +94,6 @@ public final class StaticInvocation implements AstNode {
     }
 
     @Override
-    public String print() {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-    @Override
     public Iterable<Directive> toXmir() {
         final Directives directives = new Directives();
         directives.add("o")

@@ -131,16 +131,6 @@ public final class Invocation implements AstNode {
     }
 
     @Override
-    public String print() {
-        return String.format(
-            "(%s).%s%s",
-            this.source.print(),
-            this.attributes.name(),
-            this.args()
-        );
-    }
-
-    @Override
     public Iterable<Directive> toXmir() {
         if (Objects.isNull(this.source)) {
             throw new IllegalArgumentException(
@@ -173,20 +163,5 @@ public final class Invocation implements AstNode {
             )
         );
         return res;
-    }
-
-    /**
-     * Print arguments.
-     * @return Arguments
-     */
-    private String args() {
-        final String result;
-        if (this.arguments.isEmpty()) {
-            result = "";
-        } else {
-            result = this.arguments.stream().map(AstNode::print)
-                .collect(Collectors.joining(" ", " ", ""));
-        }
-        return result;
     }
 }

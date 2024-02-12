@@ -72,17 +72,6 @@ public final class Literal implements AstNode {
         return result;
     }
 
-    @Override
-    public String print() {
-        final String result;
-        if (this.object instanceof String) {
-            result = String.format("\"%s\"", this.object);
-        } else {
-            result = this.object.toString();
-        }
-        return result;
-    }
-
     /**
      * Convert string into an opcode.
      * @param value String value.

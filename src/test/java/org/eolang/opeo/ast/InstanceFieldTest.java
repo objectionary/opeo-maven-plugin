@@ -40,15 +40,6 @@ import org.xembly.Xembler;
 class InstanceFieldTest {
 
     @Test
-    void printsField() {
-        MatcherAssert.assertThat(
-            "We can't print a field access, actual result is wrong",
-            new InstanceField(new This(), "bar").print(),
-            Matchers.equalTo("this.bar")
-        );
-    }
-
-    @Test
     void convertsToXmir() throws ImpossibleModificationException {
         final String actual = new Xembler(
             new Directives()

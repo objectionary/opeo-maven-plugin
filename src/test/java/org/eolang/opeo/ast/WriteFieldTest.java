@@ -39,18 +39,6 @@ import org.xembly.Xembler;
 class WriteFieldTest {
 
     @Test
-    void prints() {
-        MatcherAssert.assertThat(
-            "Can't print 'write field' statement, should be 'this.a = 2' assignment",
-            new WriteField(
-                new InstanceField(new This(), "a"),
-                new Literal(2)
-            ).print(),
-            Matchers.equalTo("this.a = 2")
-        );
-    }
-
-    @Test
     void convertsToXmir() throws ImpossibleModificationException {
         final String xmir = new Xembler(
             new WriteField(

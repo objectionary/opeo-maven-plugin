@@ -58,26 +58,12 @@ public final class Substraction implements AstNode {
      * Constructor.
      * @param left Left operand.
      * @param right Right operand.
-     */
-    public Substraction(final AstNode left, final AstNode right) {
-        this(left, right, new Attributes().type("int"));
-    }
-
-    /**
-     * Constructor.
-     * @param left Left operand.
-     * @param right Right operand.
      * @param attributes Attributes.
      */
     public Substraction(final AstNode left, final AstNode right, final Attributes attributes) {
         this.left = left;
         this.right = right;
         this.attributes = attributes;
-    }
-
-    @Override
-    public String print() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override

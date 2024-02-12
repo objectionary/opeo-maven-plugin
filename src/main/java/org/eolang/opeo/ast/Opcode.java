@@ -101,11 +101,6 @@ public final class Opcode implements AstNode {
     }
 
     @Override
-    public String print() {
-        return "opcode";
-    }
-
-    @Override
     public Iterable<Directive> toXmir() {
         return new DirectivesInstruction(this.bytecode, this.counting, this.operands.toArray());
     }

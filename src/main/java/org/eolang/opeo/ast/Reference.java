@@ -71,11 +71,6 @@ public final class Reference implements AstNode {
     }
 
     @Override
-    public String print() {
-        return this.ref.get().print();
-    }
-
-    @Override
     public Iterable<Directive> toXmir() {
         return this.ref.get().toXmir();
     }

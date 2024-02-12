@@ -55,15 +55,6 @@ public final class StoreLocal implements AstNode {
     }
 
     @Override
-    public String print() {
-        return String.format(
-            "%s = %s",
-            this.variable.print(),
-            this.value.print()
-        );
-    }
-
-    @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
             .attr("base", ".write")
