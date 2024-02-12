@@ -26,7 +26,6 @@ package org.eolang.opeo.ast;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directives;

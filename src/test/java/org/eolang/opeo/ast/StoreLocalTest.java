@@ -25,7 +25,6 @@ package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Type;
 import org.xembly.ImpossibleModificationException;

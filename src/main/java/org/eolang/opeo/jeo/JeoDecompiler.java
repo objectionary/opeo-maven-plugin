@@ -79,7 +79,7 @@ public final class JeoDecompiler {
                         new DecompilerMachine(
                             new LocalVariables(method.access()),
                             Map.of("counting", "false")
-                        ).decompileToXmir(new JeoInstructions(method).instructions()),
+                        ).decompile(new JeoInstructions(method).instructions()),
                         new Transformers.Node()
                     ).xmlQuietly()
                 ).children().collect(Collectors.toList()).toArray(XmlNode[]::new)

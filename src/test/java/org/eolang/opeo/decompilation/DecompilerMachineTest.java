@@ -66,7 +66,7 @@ final class DecompilerMachineTest {
     @Test
     void decompilesSimpleInstanceCall() {
         Assertions.assertDoesNotThrow(
-            () -> new DecompilerMachine().decompileToXmir(
+            () -> new DecompilerMachine().decompile(
                 new OpcodeInstruction(Opcodes.NEW, "A"),
                 new OpcodeInstruction(Opcodes.DUP),
                 new OpcodeInstruction(Opcodes.INVOKESPECIAL, "A", "<init>", "()V"),
@@ -87,7 +87,7 @@ final class DecompilerMachineTest {
     @Test
     void decompilesInstanceCallWithArguments() {
         Assertions.assertDoesNotThrow(
-            () -> new DecompilerMachine().decompileToXmir(
+            () -> new DecompilerMachine().decompile(
                 new OpcodeInstruction(Opcodes.NEW, "A"),
                 new OpcodeInstruction(Opcodes.DUP),
                 new OpcodeInstruction(Opcodes.BIPUSH, 28),
@@ -110,7 +110,7 @@ final class DecompilerMachineTest {
     @Test
     void decompilesNestedInstanceCallWithArguments() {
         Assertions.assertDoesNotThrow(
-            () -> new DecompilerMachine().decompileToXmir(
+            () -> new DecompilerMachine().decompile(
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "bar", "()I"),
@@ -133,7 +133,7 @@ final class DecompilerMachineTest {
     @Test
     void decompilesFieldAccess() {
         Assertions.assertDoesNotThrow(
-            () -> new DecompilerMachine().decompileToXmir(
+            () -> new DecompilerMachine().decompile(
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.GETFIELD, "App", "a", "I"),
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
@@ -155,7 +155,7 @@ final class DecompilerMachineTest {
     @Test
     void decompilesFieldAccessAndMethodInvocation() {
         Assertions.assertDoesNotThrow(
-            () -> new DecompilerMachine().decompileToXmir(
+            () -> new DecompilerMachine().decompile(
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.GETFIELD, "App", "a", "Ljava/lang/Integer;"),
                 new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "intValue", "()I"),
@@ -186,7 +186,7 @@ final class DecompilerMachineTest {
         final Label label = labels.label(uid);
         Assertions.assertDoesNotThrow(
             () -> {
-                new DecompilerMachine().decompileToXmir(
+                new DecompilerMachine().decompile(
                     new OpcodeInstruction(Opcodes.ALOAD, 0),
                     new OpcodeInstruction(Opcodes.GETFIELD, "org/eolang/other/A", "d", "I"),
                     new OpcodeInstruction(Opcodes.IFGT, label),
@@ -219,7 +219,7 @@ final class DecompilerMachineTest {
             () ->
                 new Xembler(
                     new DecompilerMachine()
-                        .decompileToXmir(
+                        .decompile(
                             new OpcodeInstruction(Opcodes.LLOAD, 4),
                             new OpcodeInstruction(Opcodes.ALOAD, 1),
                             new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "run", "()I"),
@@ -239,7 +239,7 @@ final class DecompilerMachineTest {
             "Can't decompile array creation",
             new Xembler(
                 new DecompilerMachine()
-                    .decompileToXmir(
+                    .decompile(
                         new OpcodeInstruction(Opcodes.ICONST_2),
                         new OpcodeInstruction(Opcodes.ICONST_3),
                         new OpcodeInstruction(Opcodes.IADD),
@@ -266,7 +266,7 @@ final class DecompilerMachineTest {
             "Can't decompile array insertion",
             new Xembler(
                 new DecompilerMachine()
-                    .decompileToXmir(
+                    .decompile(
                         new OpcodeInstruction(Opcodes.ICONST_2),
                         new OpcodeInstruction(Opcodes.ANEWARRAY, type),
                         new OpcodeInstruction(Opcodes.DUP),
@@ -296,7 +296,7 @@ final class DecompilerMachineTest {
             "Can't decompile vararg invocation",
             new Xembler(
                 new DecompilerMachine(Map.of("counting", "false"))
-                    .decompileToXmir(
+                    .decompile(
                         new OpcodeInstruction(
                             Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;"
                         ),

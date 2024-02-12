@@ -159,7 +159,7 @@ public final class DecompilerMachine {
      * @param instructions Instructions to decompile.
      * @return Decompiled instructions.
      */
-    public Iterable<Directive> decompileToXmir(final Instruction... instructions) {
+    public Iterable<Directive> decompile(final Instruction... instructions) {
         Arrays.stream(instructions)
             .forEach(inst -> this.handler(inst.opcode()).handle(inst));
         return new Root(new ListOf<>(this.stack.descendingIterator())).toXmir();

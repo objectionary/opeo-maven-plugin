@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import lombok.ToString;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
