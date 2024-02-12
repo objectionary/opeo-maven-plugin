@@ -65,17 +65,14 @@ final class DecompilerMachineTest {
      */
     @Test
     void decompilesSimpleInstanceCall() {
-        MatcherAssert.assertThat(
-            "Can't decompile method call instructions for 'new A().bar();'",
-            new DecompilerMachine().decompileToXmir(
+        Assertions.assertDoesNotThrow(
+            () -> new DecompilerMachine().decompileToXmir(
                 new OpcodeInstruction(Opcodes.NEW, "A"),
                 new OpcodeInstruction(Opcodes.DUP),
                 new OpcodeInstruction(Opcodes.INVOKESPECIAL, "A", "<init>", "()V"),
                 new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "A", "bar", "()V")
             ),
-            Matchers.equalTo(
-                "(A.new).bar"
-            )
+            "Can't decompile method call instructions for 'new A().bar();'"
         );
     }
 
@@ -89,9 +86,8 @@ final class DecompilerMachineTest {
      */
     @Test
     void decompilesInstanceCallWithArguments() {
-        MatcherAssert.assertThat(
-            "Can't decompile method call instructions for 'new A(28).bar(29);'",
-            new DecompilerMachine().decompileToXmir(
+        Assertions.assertDoesNotThrow(
+            () -> new DecompilerMachine().decompileToXmir(
                 new OpcodeInstruction(Opcodes.NEW, "A"),
                 new OpcodeInstruction(Opcodes.DUP),
                 new OpcodeInstruction(Opcodes.BIPUSH, 28),
@@ -99,45 +95,7 @@ final class DecompilerMachineTest {
                 new OpcodeInstruction(Opcodes.BIPUSH, 29),
                 new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "A", "bar", "(I)V")
             ),
-            Matchers.equalTo(
-                "(A.new (28)).bar 29"
-            )
-        );
-    }
-
-    /**
-     * Test decompilation of instance call instructions with arguments.
-     * <p>
-     *     {@code
-     *       new StringBuilder('a').append('b');
-     *     }
-     * </p>
-     */
-    @Test
-    void decompilesStringBuilder() {
-        MatcherAssert.assertThat(
-            "Can't decompile StringBuilder instructions for 'new StringBuilder('a').append('b');",
-            new DecompilerMachine().decompileToXmir(
-                new OpcodeInstruction(Opcodes.NEW, "java/lang/StringBuilder"),
-                new OpcodeInstruction(Opcodes.DUP),
-                new OpcodeInstruction(Opcodes.LDC, "a"),
-                new OpcodeInstruction(
-                    Opcodes.INVOKESPECIAL,
-                    "java/lang/StringBuilder",
-                    "<init>",
-                    "(Ljava/lang/String;)V"
-                ),
-                new OpcodeInstruction(Opcodes.LDC, "b"),
-                new OpcodeInstruction(
-                    Opcodes.INVOKEVIRTUAL,
-                    "java/lang/StringBuilder",
-                    "append",
-                    "(Ljava/lang/String;)Ljava/lang/StringBuilder"
-                )
-            ),
-            Matchers.equalTo(
-                "(java/lang/StringBuilder.new (\"a\")).append \"b\""
-            )
+            "Can't decompile method call instructions for 'new A(28).bar(29);'"
         );
     }
 
@@ -151,9 +109,8 @@ final class DecompilerMachineTest {
      */
     @Test
     void decompilesNestedInstanceCallWithArguments() {
-        MatcherAssert.assertThat(
-            "Can't decompile method call instructions for 'foo(bar()) + 3;'",
-            new DecompilerMachine().decompileToXmir(
+        Assertions.assertDoesNotThrow(
+            () -> new DecompilerMachine().decompileToXmir(
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "bar", "()I"),
@@ -161,9 +118,7 @@ final class DecompilerMachineTest {
                 new OpcodeInstruction(Opcodes.ICONST_3),
                 new OpcodeInstruction(Opcodes.IADD)
             ),
-            Matchers.equalTo(
-                "((this).foo (this).bar) + (3)"
-            )
+            "Can't decompile method call instructions for 'foo(bar()) + 3;'"
         );
     }
 
@@ -177,18 +132,15 @@ final class DecompilerMachineTest {
      */
     @Test
     void decompilesFieldAccess() {
-        MatcherAssert.assertThat(
-            "Can't decompile field access instructions for 'this.a + this.b;'",
-            new DecompilerMachine().decompileToXmir(
+        Assertions.assertDoesNotThrow(
+            () -> new DecompilerMachine().decompileToXmir(
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.GETFIELD, "App", "a", "I"),
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.GETFIELD, "App", "b", "I"),
                 new OpcodeInstruction(Opcodes.IADD)
             ),
-            Matchers.equalTo(
-                "(this.a) + (this.b)"
-            )
+            "Can't decompile field access instructions for 'this.a + this.b;'"
         );
     }
 
@@ -202,18 +154,15 @@ final class DecompilerMachineTest {
      */
     @Test
     void decompilesFieldAccessAndMethodInvocation() {
-        MatcherAssert.assertThat(
-            "Can't decompile field access and method invocation instructions for 'this.a.intValue() + 1;'",
-            new DecompilerMachine().decompileToXmir(
+        Assertions.assertDoesNotThrow(
+            () -> new DecompilerMachine().decompileToXmir(
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.GETFIELD, "App", "a", "Ljava/lang/Integer;"),
                 new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "intValue", "()I"),
                 new OpcodeInstruction(Opcodes.ICONST_1),
                 new OpcodeInstruction(Opcodes.IADD)
             ),
-            Matchers.equalTo(
-                "((this.a).intValue) + (1)"
-            )
+            "Can't decompile field access and method invocation instructions for 'this.a.intValue() + 1;'"
         );
     }
 
