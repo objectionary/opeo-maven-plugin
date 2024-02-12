@@ -32,6 +32,7 @@ import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
+import org.eolang.opeo.ast.Assignment;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
@@ -212,11 +213,16 @@ public final class XmirParser {
                     inner.get(0).children().collect(Collectors.toList()).get(0)
                 );
                 final AstNode value = this.node(inner.get(1));
-                result = new WriteField(
+                result = new Assignment(
                     target,
                     value,
                     new Attributes(node.attribute("scope").orElseThrow())
                 );
+//                result = new WriteField(
+//                    target,
+//                    value,
+//                    new Attributes(node.attribute("scope").orElseThrow())
+//                );
             } else {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode variable = this.node(inner.get(0));

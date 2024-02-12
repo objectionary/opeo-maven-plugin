@@ -54,19 +54,6 @@ public final class WriteField implements AstNode {
      * Constructor.
      * @param target The target where the value is put
      * @param value The value to put
-     */
-    public WriteField(final AstNode target, final AstNode value) {
-        this(
-            target,
-            value,
-            new Attributes().type("field").descriptor("I").owner("test/Obj").name("a")
-        );
-    }
-
-    /**
-     * Constructor.
-     * @param target The target where the value is put
-     * @param value The value to put
      * @param attributes Field attributes
      */
     public WriteField(final AstNode target, final AstNode value, final Attributes attributes) {

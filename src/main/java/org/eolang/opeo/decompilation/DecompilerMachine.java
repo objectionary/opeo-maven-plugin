@@ -36,6 +36,7 @@ import org.cactoos.map.MapOf;
 import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
+import org.eolang.opeo.ast.Assignment;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
@@ -279,7 +280,7 @@ public final class DecompilerMachine {
     }
 
     /**
-     * Label instruction handler.
+     * Store to array instruction handler.
      * Store a reference in an array
      * Opcodes: aastore
      * Stack [before]->[after]: "arrayref, index, value →"
@@ -365,6 +366,7 @@ public final class DecompilerMachine {
 
     /**
      * Putfield instruction handler.
+     * Stack [before]->[after]:  "objectref, value →"
      * @since 0.1
      */
     private class PutFieldHnadler implements InstructionHandler {
@@ -378,8 +380,10 @@ public final class DecompilerMachine {
                 .owner((String) instruction.operand(0))
                 .name((String) instruction.operand(1))
                 .descriptor((String) instruction.operand(2));
-            final WriteField write = new WriteField(target, value, attributes);
-            DecompilerMachine.this.stack.push(write);
+            Assignment assignment = new Assignment(target, value, attributes);
+            DecompilerMachine.this.stack.push(assignment);
+//            final WriteField write = new WriteField(target, value, attributes);
+//            DecompilerMachine.this.stack.push(write);
         }
 
     }
