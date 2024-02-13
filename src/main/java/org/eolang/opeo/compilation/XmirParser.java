@@ -41,6 +41,7 @@ import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
+import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
@@ -193,8 +194,6 @@ public final class XmirParser {
             result = new This();
         } else if ("staticfield".equals(base)) {
             result = new ClassField(new Attributes(node.attribute("scope").orElseThrow()));
-        } else if (base.contains("local")) {
-            result = new Variable(node);
         } else if (".writearray".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode array = this.node(inner.get(0));
@@ -207,7 +206,9 @@ public final class XmirParser {
             //  Currently we have an ad-hoc solution for parsing WriteField node.
             //  It looks ugly, requires refactoring and maybe adding new ast node types.
             //  For now the parsing is done in a way to make the tests pass.
-//            if (node.attribute("scope").isPresent()) {
+
+            final Attributes attrs = new Attributes(node.attribute("scope").orElseThrow());
+            if (attrs.type().equals("field")) {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode target = this.node(
                     inner.get(0).children().collect(Collectors.toList()).get(0)
@@ -216,8 +217,14 @@ public final class XmirParser {
                 result = new Assignment(
                     target,
                     value,
-                    new Attributes(node.attribute("scope").orElseThrow())
+                    attrs
                 );
+            } else {
+                final List<XmlNode> inner = node.children().collect(Collectors.toList());
+                final AstNode variable = this.node(inner.get(0));
+                final AstNode value = this.node(inner.get(1));
+                result = new StoreLocal(variable, value);
+            }
 //                result = new WriteField(
 //                    target,
 //                    value,
@@ -230,6 +237,13 @@ public final class XmirParser {
 //                final AstNode value = this.node(inner.get(1));
 //                result = new StoreLocal(variable, value);
 //            }
+        } else if (base.contains("local")) {
+            final Attributes attributes = new Attributes(node.attribute("scope").orElseThrow());
+            if (attributes.type().equals("local")) {
+                result = new LocalVariable(node);
+            } else {
+                result = new Variable(node);
+            }
         } else if (".new".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final String type = inner.get(0).attribute("base").orElseThrow(

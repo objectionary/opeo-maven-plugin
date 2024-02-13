@@ -1,6 +1,7 @@
 package org.eolang.opeo.ast;
 
 import java.util.List;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -25,11 +26,15 @@ public final class LocalVariable implements AstNode {
     public LocalVariable(final int identifier, final Type type) {
         this(
             identifier,
-            new Attributes().descriptor(type.getDescriptor())
+            new Attributes().descriptor(type.getDescriptor()).type("local")
         );
     }
 
-    public LocalVariable(final int identifier, final Attributes attributes) {
+    public LocalVariable(final XmlNode node) {
+        this(LocalVariable.videntifier(node), LocalVariable.vattributes(node));
+    }
+
+    private LocalVariable(final int identifier, final Attributes attributes) {
         this.identifier = identifier;
         this.attributes = attributes;
     }
@@ -37,7 +42,9 @@ public final class LocalVariable implements AstNode {
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
-            .attr("base", this.name()).up();
+            .attr("base", this.name())
+            .attr("scope", this.attributes)
+            .up();
     }
 
     @Override
@@ -76,6 +83,43 @@ public final class LocalVariable implements AstNode {
             result = List.of(new Opcode(Opcodes.ALOAD, this.identifier));
         }
         return result;
+    }
+
+    /**
+     * Get the identifier of the variable.
+     * @param node The XML node that represents variable.
+     * @return The identifier.
+     */
+    private static int videntifier(final XmlNode node) {
+        return Integer.parseInt(
+            node.attribute("base").orElseThrow(
+                () -> new IllegalArgumentException(
+                    String.format(
+                        "Can't recognize variable node: %n%s%nWe expected to find 'base' attribute",
+                        node
+                    )
+                )
+            ).substring(LocalVariable.PREFIX.length())
+        );
+    }
+
+    /**
+     * Get the attributes of the variable.
+     * @param node The XML node that represents variable.
+     * @return The attributes.
+     */
+    private static Attributes vattributes(final XmlNode node) {
+        return new Attributes(
+            node.attribute("scope")
+                .orElseThrow(
+                    () -> new IllegalArgumentException(
+                        String.format(
+                            "Can't recognize variable node: %n%s%nWe expected to find 'scope' attribute",
+                            node
+                        )
+                    )
+                )
+        );
     }
 
 }
