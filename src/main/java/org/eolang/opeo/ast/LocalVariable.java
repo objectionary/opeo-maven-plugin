@@ -17,7 +17,6 @@ public final class LocalVariable implements AstNode {
 
     private final Attributes attributes;
 
-
     /**
      * Constructor.
      * @param identifier The identifier of the variable.
@@ -38,12 +37,16 @@ public final class LocalVariable implements AstNode {
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
-            .attr("base", String.format("%s%d", LocalVariable.PREFIX, this.identifier)).up();
+            .attr("base", this.name()).up();
     }
 
     @Override
     public List<AstNode> opcodes() {
         return this.load();
+    }
+
+    public String name() {
+        return String.format("%s%d", LocalVariable.PREFIX, this.identifier);
     }
 
     /**

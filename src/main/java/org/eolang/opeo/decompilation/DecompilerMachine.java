@@ -269,20 +269,21 @@ public final class DecompilerMachine {
         @Override
         public void handle(final Instruction instruction) {
             final Integer index = (Integer) instruction.operands().get(0);
-            final AstNode variable = DecompilerMachine.this.locals.variable(
-                index,
-                this.type,
-                false
-            );
+//            final AstNode variable = DecompilerMachine.this.locals.variable(
+//                index,
+//                this.type,
+//                false
+//            );
             final AstNode value = DecompilerMachine.this.stack.pop();
 //            final StoreLocal store = new StoreLocal(
 //                variable,
 //                value
-//            );
+//            );r
+            final LocalVariable variable = new LocalVariable(index, this.type);
             final AstNode store = new Assignment(
-                new LocalVariable(index, this.type),
+                variable,
                 value,
-                new Attributes().type("local")
+                new Attributes().type("local").name(variable.name())
             );
             DecompilerMachine.this.stack.push(store);
         }
