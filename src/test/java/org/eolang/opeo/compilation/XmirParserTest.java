@@ -130,8 +130,7 @@ final class XmirParserTest {
             new XmirParser(
                 new FieldAssignment(
                     new InstanceField(new This(), attrs),
-                    new LocalVariable(1, Type.INT_TYPE),
-                    attrs
+                    new LocalVariable(1, Type.INT_TYPE)
                 )
             ).toJeoNodes(),
             new HasInstructions(

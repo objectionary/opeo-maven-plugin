@@ -205,11 +205,18 @@ public final class XmirParser {
             result = new VariableAssignment((LocalVariable) target, value);
         } else if (".writefield".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final InstanceField target = (InstanceField) this.node(inner.get(0));
-            final AstNode value = this.node(inner.get(1));
-            result = new FieldAssignment(
-                target, value, new Attributes(node.attribute("scope").orElseThrow())
+
+            final XmlNode sub = inner.get(0);
+            final Attributes attributes = new Attributes(sub.attribute("scope").orElseThrow());
+            final InstanceField target = new InstanceField(
+                this.node(sub.children().collect(Collectors.toList()).get(0)),
+                attributes
             );
+
+
+//            final InstanceField target = (InstanceField) this.node(inner.get(0));
+            final AstNode value = this.node(inner.get(1));
+            result = new FieldAssignment(target, value);
         } else if (base.contains("local")) {
             result = new LocalVariable(node);
         } else if (".new".equals(base)) {

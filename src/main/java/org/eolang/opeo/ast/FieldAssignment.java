@@ -48,9 +48,16 @@ public final class FieldAssignment implements AstNode {
     private final AstNode value;
 
     /**
-     * Field attributes.
+     * Constructor.
+     * @param left The field to assign to
+     * @param right The value to assign
      */
-    private final Attributes attributes;
+    public FieldAssignment(
+        final InstanceField left,
+        final AstNode right
+    ) {
+        this(left, right, new Attributes());
+    }
 
     /**
      * Constructor.
@@ -65,14 +72,12 @@ public final class FieldAssignment implements AstNode {
     ) {
         this.field = left;
         this.value = right;
-        this.attributes = attributes.type("field");
     }
 
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
             .attr("base", ".writefield")
-            .attr("scope", this.attributes)
             .append(this.field.toXmir())
             .append(this.value.toXmir())
             .up();
