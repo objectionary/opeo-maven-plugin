@@ -205,50 +205,12 @@ public final class XmirParser {
             final AstNode value = this.node(inner.get(1));
             result = new VariableAssignment((LocalVariable) target, value);
         } else if (".writefield".equals(base)) {
-            //@checkstyle MethodBodyCommentsCheck (20 lines)
-            // @todo #80:90min Correct parsing of WriteField node
-            //  Currently we have an ad-hoc solution for parsing WriteField node.
-            //  It looks ugly, requires refactoring and maybe adding new ast node types.
-            //  For now the parsing is done in a way to make the tests pass.
-
-
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final InstanceField target = (InstanceField) this.node(inner.get(0));
             final AstNode value = this.node(inner.get(1));
             result = new FieldAssignment(
                 target, value, new Attributes(node.attribute("scope").orElseThrow())
             );
-
-//            final Attributes attrs = new Attributes(node.attribute("scope").orElseThrow());
-//            if (attrs.type().equals("field")) {
-//                final List<XmlNode> inner = node.children().collect(Collectors.toList());
-//                final AstNode target = this.node(
-//                    inner.get(0).children().collect(Collectors.toList()).get(0)
-//                );
-//                final AstNode value = this.node(inner.get(1));
-//                result = new Assignment(
-//                    target,
-//                    value,
-//                    attrs
-//                );
-//            } else {
-//                final List<XmlNode> inner = node.children().collect(Collectors.toList());
-//                final AstNode variable = this.node(inner.get(0));
-//                final AstNode value = this.node(inner.get(1));
-//                result = new StoreLocal(variable, value);
-//            }
-//                result = new WriteField(
-//                    target,
-//                    value,
-//                    new Attributes(node.attribute("scope").orElseThrow())
-//                );
-//            }
-//            else {
-//                final List<XmlNode> inner = node.children().collect(Collectors.toList());
-//                final AstNode variable = this.node(inner.get(0));
-//                final AstNode value = this.node(inner.get(1));
-//                result = new StoreLocal(variable, value);
-//            }
         } else if (base.contains("local")) {
             final Attributes attributes = new Attributes(node.attribute("scope").orElseThrow());
             if (attributes.type().equals("local")) {
