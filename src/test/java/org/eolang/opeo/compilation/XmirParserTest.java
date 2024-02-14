@@ -127,6 +127,7 @@ final class XmirParserTest {
             .descriptor(dscr)
             .owner(owner);
         MatcherAssert.assertThat(
+            "We expect to retrieve exactly 3 opcodes ALOAD, ILOAD and PUTFIELD, but got something else instead",
             new XmirParser(
                 new FieldAssignment(
                     new InstanceField(new This(), attrs),
