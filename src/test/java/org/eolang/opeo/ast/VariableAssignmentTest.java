@@ -32,16 +32,17 @@ import org.xembly.Transformers;
 import org.xembly.Xembler;
 
 /**
- * Test case for {@link StoreLocal}.
- * @since 0.1
+ * Test case for {@link VariableAssignment}.
+ * @since 0.2
  */
-class StoreLocalTest {
+final class VariableAssignmentTest {
 
     @Test
     void convertsToXmirCorrectly() throws ImpossibleModificationException {
         final String xml = new Xembler(
-            new StoreLocal(
-                new Variable(Type.DOUBLE_TYPE, 2), new Literal(0.1d)
+            new VariableAssignment(
+                new LocalVariable(1, Type.DOUBLE_TYPE),
+                new Literal(2)
             ).toXmir(),
             new Transformers.Node()
         ).xml();
@@ -53,8 +54,8 @@ class StoreLocalTest {
             xml,
             XhtmlMatchers.hasXPaths(
                 "./o[@base='.write']",
-                "./o[@base='.write']/o[@base='local2']",
-                "./o[@base='.write']/o[@base='float']"
+                "./o[@base='.write']/o[@base='local1']",
+                "./o[@base='.write']/o[@base='int']"
             )
         );
     }
