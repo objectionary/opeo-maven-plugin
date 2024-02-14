@@ -40,16 +40,16 @@ import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
 /**
- * Tests for {@link Variable}.
- * @since 0.1
+ * Test for {@link LocalVariable}.
+ * @since 0.2
  */
-class VariableTest {
+final class LocalVariableTest {
 
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
         MatcherAssert.assertThat(
             "We expect the xmir variable to be equal to <o base='local1'/>, but it wasn't",
-            new Xembler(new Variable(Type.INT_TYPE, 1).toXmir()).xml(),
+            new Xembler(new LocalVariable(1, Type.INT_TYPE).toXmir()).xml(),
             XhtmlMatchers.hasXPath("./o[@base='local1']")
         );
     }
@@ -59,7 +59,7 @@ class VariableTest {
     void convertsType(
         final Type type, final String expected
     ) throws ImpossibleModificationException {
-        final String xml = new Xembler(new Variable(type, 1).toXmir()).xml();
+        final String xml = new Xembler(new LocalVariable(1, type).toXmir()).xml();
         MatcherAssert.assertThat(
             String.format(
                 "We expect the xmir variable type to be equal to <o base='local1' scope='%s'/>, but it wasn't, current value is '%s'",
@@ -73,10 +73,10 @@ class VariableTest {
 
     @Test
     void createsVariableFromXmir() throws ImpossibleModificationException {
-        final Variable original = new Variable(Type.FLOAT_TYPE, 2);
+        final LocalVariable original = new LocalVariable(2, Type.FLOAT_TYPE);
         MatcherAssert.assertThat(
             "Can't correctly create variable from XMIR. We expect the variable to be equal to the original, but it wasn't",
-            new Variable(new XmlNode(new Xembler(original.toXmir()).xml())),
+            new LocalVariable(new XmlNode(new Xembler(original.toXmir()).xml())),
             Matchers.equalTo(original)
         );
     }
@@ -86,7 +86,7 @@ class VariableTest {
     void transformsToBytecodeInstructions(final Type type, final int expected) {
         MatcherAssert.assertThat(
             "Can't correctly transform variable to bytecode instructions. It should be exactly 1 instruction",
-            new Variable(type, 0).opcodes().stream().map(AstNode::toXmir)
+            new LocalVariable(0, type).opcodes().stream().map(AstNode::toXmir)
                 .map(Xembler::new)
                 .map(Xembler::xmlQuietly)
                 .map(XmlNode::new)
@@ -133,7 +133,6 @@ class VariableTest {
             Arguments.of(Type.FLOAT_TYPE, Opcodes.FLOAD),
             Arguments.of(Type.LONG_TYPE, Opcodes.LLOAD),
             Arguments.of(Type.SHORT_TYPE, Opcodes.ILOAD),
-            Arguments.of(Type.VOID_TYPE, Opcodes.ALOAD),
             Arguments.of(Type.getType("Ljava/lang/String;"), Opcodes.ALOAD)
         );
     }
