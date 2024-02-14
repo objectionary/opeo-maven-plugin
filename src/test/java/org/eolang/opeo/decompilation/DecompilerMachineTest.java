@@ -361,7 +361,7 @@ final class DecompilerMachineTest {
                     new OpcodeInstruction(
                         Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;"
                     ),
-                    new OpcodeInstruction(Opcodes.LDC, "Number1 is %s"),
+                    new OpcodeInstruction(Opcodes.LDC, "Number is %s"),
                     new OpcodeInstruction(Opcodes.ICONST_1),
                     new OpcodeInstruction(Opcodes.ANEWARRAY, type),
                     new OpcodeInstruction(Opcodes.DUP),
@@ -451,14 +451,15 @@ final class DecompilerMachineTest {
         }
 
         @Override
+        protected void describeMismatchSafely(
+            final Iterable<Directive> item, final Description mismatchDescription
+        ) {
+            mismatchDescription.appendText("was ").appendValue(this.actual.get());
+        }
+
+        @Override
         public void describeTo(final Description description) {
-            description.appendText(
-                String.format(
-                    "Expected: %n%s%nActual: %n%s%n",
-                    this.exp.get(),
-                    this.actual.get()
-                )
-            );
+            description.appendValue(this.exp.get());
         }
     }
 }
