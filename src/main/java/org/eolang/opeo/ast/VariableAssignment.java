@@ -49,40 +49,22 @@ public final class VariableAssignment implements AstNode {
     private final AstNode right;
 
     /**
-     * Attributes.
-     */
-    private final Attributes attributes;
-
-    /**
      * Constructor.
      * @param left Left variable.
      * @param right Right expression.
      */
-    public VariableAssignment(final LocalVariable left, final AstNode right) {
-        this(left, right, new Attributes());
-    }
-
-    /**
-     * Constructor.
-     * @param left Left variable.
-     * @param right Right expression.
-     * @param attributes Attributes.
-     */
-    private VariableAssignment(
+    public VariableAssignment(
         final LocalVariable left,
-        final AstNode right,
-        final Attributes attributes
+        final AstNode right
     ) {
         this.left = left;
         this.right = right;
-        this.attributes = attributes;
     }
 
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
             .attr("base", ".write")
-            .attr("scope", this.attributes)
             .append(this.left.toXmir())
             .append(this.right.toXmir())
             .up();
