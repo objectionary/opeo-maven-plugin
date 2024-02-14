@@ -36,8 +36,8 @@ class FieldAssignmentTest {
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
         final String xmir = new Xembler(
-            new WriteField(
-                new This(),
+            new FieldAssignment(
+                new InstanceField(new This(), "bar"),
                 new Literal(3),
                 new Attributes("name", "bar")
             ).toXmir()
@@ -49,9 +49,9 @@ class FieldAssignmentTest {
             ),
             xmir,
             XhtmlMatchers.hasXPaths(
-                "./o[@base='.write']",
-                "./o[@base='.write']/o[@base='.bar']",
-                "./o[@base='.write']/o[@base='int' and contains(text(),'3')]"
+                "./o[@base='.writefield']",
+                "./o[@base='.writefield']/o[@base='.bar']",
+                "./o[@base='.writefield']/o[@base='int' and contains(text(),'3')]"
             )
         );
     }
@@ -64,8 +64,11 @@ class FieldAssignmentTest {
         MatcherAssert.assertThat(
             "Can't transform 'this.a = 1' statement to the correct opcodes, result is wrong",
             new OpcodeNodes(
-                new WriteField(
-                    new This(),
+                new FieldAssignment(
+                    new InstanceField(
+                        new This(),
+                        name
+                    ),
                     new Literal(1),
                     new Attributes()
                         .name(name)
