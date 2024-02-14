@@ -23,7 +23,7 @@
  */
 package org.eolang.opeo.decompilation;
 
-import org.eolang.opeo.ast.Variable;
+import org.eolang.opeo.ast.LocalVariable;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -37,12 +37,14 @@ class LocalVariablesTest {
 
     @Test
     void returnsVariable() {
-//        MatcherAssert.assertThat(
-//            "Local variables should return correct variable by index",
-//            new LocalVariables().variable(1, Type.INT_TYPE, true),
-//            Matchers.equalTo(
-//                new Variable(Type.INT_TYPE, Variable.Operation.LOAD, 1)
-//            )
-//        );
+        final int index = 1;
+        final Type type = Type.INT_TYPE;
+        MatcherAssert.assertThat(
+            "Local variables should return correct variable by index",
+            new LocalVariables().variable(index, type),
+            Matchers.equalTo(
+                new LocalVariable(index, type)
+            )
+        );
     }
 }

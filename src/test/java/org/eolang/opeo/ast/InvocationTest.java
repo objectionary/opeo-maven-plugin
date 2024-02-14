@@ -126,7 +126,7 @@ class InvocationTest {
             "Can't transform 'local1.toSting()' to correct opcodes",
             new OpcodeNodes(
                 new Invocation(
-                    new Variable(Type.getType(String.class), 1),
+                    new LocalVariable(1, Type.getType(String.class)),
                     new Attributes().name(name).descriptor(descriptor).owner(owner)
                 )
             ).opcodes(),
