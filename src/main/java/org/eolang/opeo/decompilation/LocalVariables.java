@@ -24,6 +24,7 @@
 package org.eolang.opeo.decompilation;
 
 import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.ast.Variable;
 import org.objectweb.asm.Opcodes;
@@ -62,14 +63,30 @@ public final class LocalVariables {
      * @param load Load or store.
      * @return Variable.
      */
-    public AstNode variable(final int index, final Type type, final boolean load) {
+//    public AstNode variable(final int index, final Type type, final boolean load) {
+//        final AstNode result;
+//        if (index == 0 && (this.modifiers & Opcodes.ACC_STATIC) == 0) {
+//            result = new This();
+//        } else if (load) {
+//            result = new Variable(type, Variable.Operation.LOAD, index);
+//        } else {
+//            result = new Variable(type, Variable.Operation.STORE, index);
+//        }
+//        return result;
+//    }
+
+    /**
+     * Get variable by index.
+     * @param index Index.
+     * @param type Type.
+     * @return Variable.
+     */
+    public AstNode variable(final int index, final Type type) {
         final AstNode result;
         if (index == 0 && (this.modifiers & Opcodes.ACC_STATIC) == 0) {
             result = new This();
-        } else if (load) {
-            result = new Variable(type, Variable.Operation.LOAD, index);
         } else {
-            result = new Variable(type, Variable.Operation.STORE, index);
+            result = new LocalVariable(index, type);
         }
         return result;
     }

@@ -237,11 +237,17 @@ public final class DecompilerMachine {
 
         @Override
         public void handle(final Instruction instruction) {
+//            DecompilerMachine.this.stack.push(
+//                DecompilerMachine.this.locals.variable(
+//                    (Integer) instruction.operands().get(0),
+//                    this.type,
+//                    true
+//                )
+//            );
             DecompilerMachine.this.stack.push(
                 DecompilerMachine.this.locals.variable(
                     (Integer) instruction.operands().get(0),
-                    this.type,
-                    true
+                    this.type
                 )
             );
         }
@@ -385,14 +391,14 @@ public final class DecompilerMachine {
         @Override
         public void handle(final Instruction instruction) {
             final AstNode value = DecompilerMachine.this.stack.pop();
-            final AstNode target = DecompilerMachine.this.stack.pop();
-            final Attributes attributes = new Attributes()
-                .type("field")
-                .owner((String) instruction.operand(0))
-                .name((String) instruction.operand(1))
-                .descriptor((String) instruction.operand(2));
-            Assignment assignment = new Assignment(target, value, attributes);
-            DecompilerMachine.this.stack.push(assignment);
+            final String name = (String) instruction.operand(1);
+            final String owner = (String) instruction.operand(0);
+            final String descriptor = (String) instruction.operand(2);
+            final AstNode target = new InstanceField(
+                DecompilerMachine.this.stack.pop(),
+                new Attributes().name(name).owner(owner).descriptor(descriptor)
+            );
+            DecompilerMachine.this.stack.push(new Assignment(target, value));
 //            final WriteField write = new WriteField(target, value, attributes);
 //            DecompilerMachine.this.stack.push(write);
         }

@@ -15,6 +15,9 @@ public final class Assignment implements AstNode {
 
     private final Attributes attributes;
 
+    public Assignment(final AstNode left, final AstNode right) {
+        this(left, right, new Attributes());
+    }
 
     public Assignment(
         final AstNode left,
@@ -30,11 +33,8 @@ public final class Assignment implements AstNode {
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
             .attr("base", ".write")
-            .attr("scope", this.attributes)
-            .add("o")
-            .attr("base", String.format(".%s", this.attributes.name()))
+            .attr("scope", "")
             .append(this.left.toXmir())
-            .up()
             .append(this.right.toXmir())
             .up();
     }
