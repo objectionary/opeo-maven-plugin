@@ -81,7 +81,6 @@ public final class InstanceField implements AstNode {
         this.attributes = attributes;
     }
 
-
     /**
      * Store the field opcode. See {@link Opcodes#PUTFIELD}.
      * @return Opcode node to store the field. See {@link Opcode}
@@ -95,12 +94,12 @@ public final class InstanceField implements AstNode {
         );
     }
 
+    /**
+     * Get the object reference.
+     * @return Object reference.
+     */
     public AstNode instance() {
         return this.source;
-    }
-
-    public Attributes attributes() {
-        return this.attributes;
     }
 
     @Override

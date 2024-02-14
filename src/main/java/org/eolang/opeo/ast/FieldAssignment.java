@@ -56,20 +56,6 @@ public final class FieldAssignment implements AstNode {
         final InstanceField left,
         final AstNode right
     ) {
-        this(left, right, new Attributes());
-    }
-
-    /**
-     * Constructor.
-     * @param left The field to assign to
-     * @param right The value to assign
-     * @param attributes Field attributes
-     */
-    public FieldAssignment(
-        final InstanceField left,
-        final AstNode right,
-        final Attributes attributes
-    ) {
         this.field = left;
         this.value = right;
     }

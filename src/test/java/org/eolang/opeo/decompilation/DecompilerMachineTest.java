@@ -31,10 +31,10 @@ import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.OpcodeInstruction;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
-import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
+import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Literal;
@@ -331,23 +331,24 @@ final class DecompilerMachineTest {
 
     @Test
     void decompilesFieldAssignment() {
-        final Attributes attrs = new Attributes().name("a").owner("App").descriptor("I");
+        final String app = "App";
+        final String name = "a";
+        final String type = "I";
         MatcherAssert.assertThat(
             "Can't decompile assignment",
             new DecompilerMachine().decompile(
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.ILOAD, 1),
-                new OpcodeInstruction(Opcodes.PUTFIELD, "App", "a", "I")
+                new OpcodeInstruction(Opcodes.PUTFIELD, app, name, type)
             ),
             new SameNode(
                 new Root(
                     new FieldAssignment(
                         new InstanceField(
                             new This(),
-                            attrs
+                            new Attributes().name(name).owner(app).descriptor(type)
                         ),
-                        new LocalVariable(1, Type.INT_TYPE),
-                        attrs
+                        new LocalVariable(1, Type.INT_TYPE)
                     )
                 )
             )
@@ -421,27 +422,50 @@ final class DecompilerMachineTest {
         );
     }
 
-    private static class SameNode extends TypeSafeMatcher<Iterable<Directive>> {
+    /**
+     * Matcher for the same node.
+     * @since 0.2
+     */
+    private static final class SameNode extends TypeSafeMatcher<Iterable<Directive>> {
 
+        /**
+         * Expected node.
+         */
         private final AstNode expected;
 
+        /**
+         * Expected node.
+         */
         private final AtomicReference<String> exp;
+
+        /**
+         * Actual node.
+         */
         private final AtomicReference<String> actual;
 
-        public SameNode(final AstNode expected) {
+        /**
+         * Constructor.
+         * @param expected Expected node.
+         */
+        private SameNode(final AstNode expected) {
             this.expected = expected;
             this.exp = new AtomicReference<>();
             this.actual = new AtomicReference<>();
         }
 
         @Override
-        protected boolean matchesSafely(final Iterable<Directive> item) {
+        public void describeTo(final Description description) {
+            description.appendValue(this.exp.get());
+        }
+
+        @Override
+        public boolean matchesSafely(final Iterable<Directive> item) {
             try {
-                final String actual = new Xembler(item).xml();
-                final String expected = new Xembler(this.expected.toXmir()).xml();
-                this.actual.set(actual);
-                this.exp.set(expected);
-                return actual.equals(expected);
+                final String xactual = new Xembler(item).xml();
+                final String xpected = new Xembler(this.expected.toXmir()).xml();
+                this.actual.set(xactual);
+                this.exp.set(xpected);
+                return xactual.equals(xpected);
             } catch (final ImpossibleModificationException exception) {
                 throw new IllegalStateException(
                     String.format(
@@ -454,15 +478,10 @@ final class DecompilerMachineTest {
         }
 
         @Override
-        protected void describeMismatchSafely(
-            final Iterable<Directive> item, final Description mismatchDescription
+        public void describeMismatchSafely(
+            final Iterable<Directive> item, final Description mismatch
         ) {
-            mismatchDescription.appendText("was ").appendValue(this.actual.get());
-        }
-
-        @Override
-        public void describeTo(final Description description) {
-            description.appendValue(this.exp.get());
+            mismatch.appendText("was ").appendValue(this.actual.get());
         }
     }
 }

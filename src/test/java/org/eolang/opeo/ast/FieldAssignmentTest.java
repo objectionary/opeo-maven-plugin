@@ -31,15 +31,18 @@ import org.objectweb.asm.Opcodes;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
-class FieldAssignmentTest {
+/**
+ * Test for {@link FieldAssignment}.
+ * @since 0.2
+ */
+final class FieldAssignmentTest {
 
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
         final String xmir = new Xembler(
             new FieldAssignment(
-                new InstanceField(new This(), "bar"),
-                new Literal(3),
-                new Attributes("name", "bar")
+                new InstanceField(new This(), new Attributes("name", "bar")),
+                new Literal(3)
             ).toXmir()
         ).xml();
         MatcherAssert.assertThat(
@@ -61,20 +64,18 @@ class FieldAssignmentTest {
         final String name = "d";
         final String owner = "test/Test";
         final String descriptor = "I";
-        final Attributes attrs = new Attributes()
-            .name(name)
-            .owner(owner)
-            .descriptor(descriptor);
         MatcherAssert.assertThat(
             "Can't transform 'this.a = 1' statement to the correct opcodes, result is wrong",
             new OpcodeNodes(
                 new FieldAssignment(
                     new InstanceField(
                         new This(),
-                        attrs
+                        new Attributes()
+                            .name(name)
+                            .owner(owner)
+                            .descriptor(descriptor)
                     ),
-                    new Literal(1),
-                    attrs
+                    new Literal(1)
                 )
             ).opcodes(),
             new HasInstructions(
@@ -84,5 +85,4 @@ class FieldAssignmentTest {
             )
         );
     }
-
 }

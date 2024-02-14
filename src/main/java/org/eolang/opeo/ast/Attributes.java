@@ -148,25 +148,6 @@ public final class Attributes {
     }
 
     /**
-     * Check if type is set.
-     * @return True if type is set.
-     */
-    public boolean hasType() {
-        return this.all.containsKey("type");
-    }
-
-    /**
-     * Check if all attributes are set.
-     * @return True if all attributes are set.
-     */
-    public boolean full() {
-        return this.all.containsKey("name") &&
-            this.all.containsKey("owner") &&
-            this.all.containsKey("type") &&
-            this.all.containsKey("descriptor");
-    }
-
-    /**
      * Find attribute.
      * @param key Attribute key
      * @return Attribute value

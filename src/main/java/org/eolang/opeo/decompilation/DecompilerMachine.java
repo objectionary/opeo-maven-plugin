@@ -36,11 +36,11 @@ import org.cactoos.map.MapOf;
 import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
-import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.Constructor;
+import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
@@ -373,16 +373,16 @@ public final class DecompilerMachine {
             final String name = (String) instruction.operand(1);
             final String owner = (String) instruction.operand(0);
             final String descriptor = (String) instruction.operand(2);
-            final Attributes attrs = new Attributes().name(name).owner(owner)
-                .descriptor(descriptor);
             DecompilerMachine.this.stack.push(
                 new FieldAssignment(
                     new InstanceField(
                         DecompilerMachine.this.stack.pop(),
-                        attrs
+                        new Attributes()
+                            .name(name)
+                            .owner(owner)
+                            .descriptor(descriptor)
                     ),
-                    value,
-                    attrs
+                    value
                 )
             );
         }
