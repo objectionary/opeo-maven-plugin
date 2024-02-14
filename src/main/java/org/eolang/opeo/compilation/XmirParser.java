@@ -32,11 +32,11 @@ import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
-import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.Constructor;
+import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
@@ -48,7 +48,6 @@ import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.ast.Substraction;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
-import org.eolang.opeo.ast.Variable;
 import org.eolang.opeo.ast.VariableAssignment;
 import org.xembly.Xembler;
 
@@ -212,12 +211,7 @@ public final class XmirParser {
                 target, value, new Attributes(node.attribute("scope").orElseThrow())
             );
         } else if (base.contains("local")) {
-            final Attributes attributes = new Attributes(node.attribute("scope").orElseThrow());
-            if (attributes.type().equals("local")) {
-                result = new LocalVariable(node);
-            } else {
-                result = new Variable(node);
-            }
+            result = new LocalVariable(node);
         } else if (".new".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final String type = inner.get(0).attribute("base").orElseThrow(

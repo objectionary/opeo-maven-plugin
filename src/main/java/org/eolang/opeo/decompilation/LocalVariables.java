@@ -26,7 +26,6 @@ package org.eolang.opeo.decompilation;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.This;
-import org.eolang.opeo.ast.Variable;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 

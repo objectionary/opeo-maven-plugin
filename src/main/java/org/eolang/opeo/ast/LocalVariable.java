@@ -1,12 +1,23 @@
 package org.eolang.opeo.ast;
 
 import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
+/**
+ * A local variable.
+ * <p>{@code
+ *   int local1;
+ * }</p>
+ * @since 0.2
+ */
+@ToString
+@EqualsAndHashCode
 public final class LocalVariable implements AstNode {
 
     /**
@@ -14,10 +25,21 @@ public final class LocalVariable implements AstNode {
      */
     private static final String PREFIX = "local";
 
+    /**
+     * The identifier of the variable.
+     */
     private final int identifier;
 
+    /**
+     * The attributes of the variable.
+     * These attributes hold the type of the variable.
+     */
     private final Attributes attributes;
 
+    /**
+     * Constructor.
+     * @param node The XML node that represents variable.
+     */
     public LocalVariable(final XmlNode node) {
         this(LocalVariable.videntifier(node), LocalVariable.vattributes(node));
     }
@@ -28,12 +50,14 @@ public final class LocalVariable implements AstNode {
      * @param type The type of the variable.
      */
     public LocalVariable(final int identifier, final Type type) {
-        this(
-            identifier,
-            new Attributes().descriptor(type.getDescriptor()).type("local")
-        );
+        this(identifier, new Attributes().descriptor(type.getDescriptor()).type("local"));
     }
 
+    /**
+     * Constructor.
+     * @param identifier The identifier of the variable.
+     * @param attributes The attributes of the variable.
+     */
     private LocalVariable(final int identifier, final Attributes attributes) {
         this.identifier = identifier;
         this.attributes = attributes;
@@ -45,17 +69,16 @@ public final class LocalVariable implements AstNode {
      * @return Opcode to store the variable. See {@link Opcode}.
      */
     public AstNode store() {
-        return new Opcode(this.type().getOpcode(Opcodes.ISTORE), this.id());
-    }
-
-    public Type type() {
-        return Type.getType(this.attributes.descriptor());
+        return new Opcode(
+            Type.getType(this.attributes.descriptor()).getOpcode(Opcodes.ISTORE),
+            this.identifier
+        );
     }
 
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
-            .attr("base", this.name())
+            .attr("base", String.format("%s%d", LocalVariable.PREFIX, this.identifier))
             .attr("scope", this.attributes)
             .up();
     }
@@ -63,14 +86,6 @@ public final class LocalVariable implements AstNode {
     @Override
     public List<AstNode> opcodes() {
         return this.load();
-    }
-
-    public String name() {
-        return String.format("%s%d", LocalVariable.PREFIX, this.identifier);
-    }
-
-    public int id() {
-        return this.identifier;
     }
 
     /**

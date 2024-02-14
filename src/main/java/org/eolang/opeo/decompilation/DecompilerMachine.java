@@ -235,13 +235,6 @@ public final class DecompilerMachine {
 
         @Override
         public void handle(final Instruction instruction) {
-//            DecompilerMachine.this.stack.push(
-//                DecompilerMachine.this.locals.variable(
-//                    (Integer) instruction.operands().get(0),
-//                    this.type,
-//                    true
-//                )
-//            );
             DecompilerMachine.this.stack.push(
                 DecompilerMachine.this.locals.variable(
                     (Integer) instruction.operands().get(0),
