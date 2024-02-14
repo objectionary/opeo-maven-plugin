@@ -61,19 +61,20 @@ class FieldAssignmentTest {
         final String name = "d";
         final String owner = "test/Test";
         final String descriptor = "I";
+        final Attributes attrs = new Attributes()
+            .name(name)
+            .owner(owner)
+            .descriptor(descriptor);
         MatcherAssert.assertThat(
             "Can't transform 'this.a = 1' statement to the correct opcodes, result is wrong",
             new OpcodeNodes(
                 new FieldAssignment(
                     new InstanceField(
                         new This(),
-                        name
+                        attrs
                     ),
                     new Literal(1),
-                    new Attributes()
-                        .name(name)
-                        .owner(owner)
-                        .descriptor(descriptor)
+                    attrs
                 )
             ).opcodes(),
             new HasInstructions(

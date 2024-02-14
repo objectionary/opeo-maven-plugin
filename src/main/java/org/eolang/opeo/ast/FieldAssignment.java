@@ -25,7 +25,6 @@ package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -84,14 +83,7 @@ public final class FieldAssignment implements AstNode {
         final List<AstNode> res = new ArrayList<>(3);
         res.addAll(this.field.instance().opcodes());
         res.addAll(this.value.opcodes());
-        res.add(
-            new Opcode(
-                Opcodes.PUTFIELD,
-                this.attributes.owner(),
-                this.attributes.name(),
-                this.attributes.descriptor()
-            )
-        );
+        res.add(this.field.store());
         return res;
     }
 }
