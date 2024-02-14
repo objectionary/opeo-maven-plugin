@@ -25,7 +25,6 @@ package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -53,10 +52,7 @@ public final class VariableAssignment implements AstNode {
      * @param left Left variable.
      * @param right Right expression.
      */
-    public VariableAssignment(
-        final LocalVariable left,
-        final AstNode right
-    ) {
+    public VariableAssignment(final LocalVariable left, final AstNode right) {
         this.left = left;
         this.right = right;
     }
@@ -74,7 +70,7 @@ public final class VariableAssignment implements AstNode {
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(3);
         res.addAll(this.right.opcodes());
-        res.add(new Opcode(this.left.type().getOpcode(Opcodes.ISTORE), this.left.id()));
+        res.add(this.left.store());
         return res;
     }
 }

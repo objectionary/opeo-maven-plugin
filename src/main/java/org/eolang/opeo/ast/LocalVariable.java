@@ -18,6 +18,10 @@ public final class LocalVariable implements AstNode {
 
     private final Attributes attributes;
 
+    public LocalVariable(final XmlNode node) {
+        this(LocalVariable.videntifier(node), LocalVariable.vattributes(node));
+    }
+
     /**
      * Constructor.
      * @param identifier The identifier of the variable.
@@ -30,13 +34,18 @@ public final class LocalVariable implements AstNode {
         );
     }
 
-    public LocalVariable(final XmlNode node) {
-        this(LocalVariable.videntifier(node), LocalVariable.vattributes(node));
-    }
-
     private LocalVariable(final int identifier, final Attributes attributes) {
         this.identifier = identifier;
         this.attributes = attributes;
+    }
+
+    /**
+     * Store opcode for the variable.
+     * See {@link org.objectweb.asm.Opcodes#ISTORE}.
+     * @return Opcode to store the variable. See {@link Opcode}.
+     */
+    public AstNode store() {
+        return new Opcode(this.type().getOpcode(Opcodes.ISTORE), this.id());
     }
 
     public Type type() {
