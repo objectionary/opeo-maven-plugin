@@ -265,20 +265,12 @@ public final class DecompilerMachine {
 
         @Override
         public void handle(final Instruction instruction) {
-            final Integer index = (Integer) instruction.operands().get(0);
-//            final AstNode variable = DecompilerMachine.this.locals.variable(
-//                index,
-//                this.type,
-//                false
-//            );
-            final AstNode value = DecompilerMachine.this.stack.pop();
-//            final StoreLocal store = new StoreLocal(
-//                variable,
-//                value
-//            );r
-            final LocalVariable variable = new LocalVariable(index, this.type);
-            final AstNode store = new VariableAssignment(variable, value);
-            DecompilerMachine.this.stack.push(store);
+            DecompilerMachine.this.stack.push(
+                new VariableAssignment(
+                    new LocalVariable((Integer) instruction.operands().get(0), this.type),
+                    DecompilerMachine.this.stack.pop()
+                )
+            );
         }
 
     }
@@ -383,13 +375,16 @@ public final class DecompilerMachine {
             final String descriptor = (String) instruction.operand(2);
             final Attributes attrs = new Attributes().name(name).owner(owner)
                 .descriptor(descriptor);
-            final InstanceField target = new InstanceField(
-                DecompilerMachine.this.stack.pop(),
-                attrs
+            DecompilerMachine.this.stack.push(
+                new FieldAssignment(
+                    new InstanceField(
+                        DecompilerMachine.this.stack.pop(),
+                        attrs
+                    ),
+                    value,
+                    attrs
+                )
             );
-            DecompilerMachine.this.stack.push(new FieldAssignment(target, value, attrs));
-//            final WriteField write = new WriteField(target, value, attributes);
-//            DecompilerMachine.this.stack.push(write);
         }
 
     }

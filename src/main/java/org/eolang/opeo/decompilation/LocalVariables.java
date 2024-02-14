@@ -59,25 +59,6 @@ public final class LocalVariables {
      * Get variable by index.
      * @param index Index.
      * @param type Type.
-     * @param load Load or store.
-     * @return Variable.
-     */
-//    public AstNode variable(final int index, final Type type, final boolean load) {
-//        final AstNode result;
-//        if (index == 0 && (this.modifiers & Opcodes.ACC_STATIC) == 0) {
-//            result = new This();
-//        } else if (load) {
-//            result = new Variable(type, Variable.Operation.LOAD, index);
-//        } else {
-//            result = new Variable(type, Variable.Operation.STORE, index);
-//        }
-//        return result;
-//    }
-
-    /**
-     * Get variable by index.
-     * @param index Index.
-     * @param type Type.
      * @return Variable.
      */
     public AstNode variable(final int index, final Type type) {
