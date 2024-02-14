@@ -1,3 +1,26 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016-2023 Objectionary.com
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package org.eolang.opeo.ast;
 
 import java.util.List;
@@ -63,18 +86,6 @@ public final class LocalVariable implements AstNode {
         this.attributes = attributes;
     }
 
-    /**
-     * Store opcode for the variable.
-     * See {@link org.objectweb.asm.Opcodes#ISTORE}.
-     * @return Opcode to store the variable. See {@link Opcode}.
-     */
-    public AstNode store() {
-        return new Opcode(
-            Type.getType(this.attributes.descriptor()).getOpcode(Opcodes.ISTORE),
-            this.identifier
-        );
-    }
-
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
@@ -85,36 +96,24 @@ public final class LocalVariable implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
-        return this.load();
+        return List.of(
+            new Opcode(
+                Type.getType(this.attributes.descriptor()).getOpcode(Opcodes.ILOAD),
+                this.identifier
+            )
+        );
     }
 
     /**
-     * Load the variable opcodes.
-     * @return Opcodes.
+     * Store opcode for the variable.
+     * See {@link org.objectweb.asm.Opcodes#ISTORE}.
+     * @return Opcode to store the variable. See {@link Opcode}.
      */
-    private List<AstNode> load() {
-        final List<AstNode> result;
-        final Type type = Type.getType(this.attributes.descriptor());
-        if (type.equals(Type.INT_TYPE)) {
-            result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
-        } else if (type.equals(Type.DOUBLE_TYPE)) {
-            result = List.of(new Opcode(Opcodes.DLOAD, this.identifier));
-        } else if (type.equals(Type.LONG_TYPE)) {
-            result = List.of(new Opcode(Opcodes.LLOAD, this.identifier));
-        } else if (type.equals(Type.FLOAT_TYPE)) {
-            result = List.of(new Opcode(Opcodes.FLOAD, this.identifier));
-        } else if (type.equals(Type.BOOLEAN_TYPE)) {
-            result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
-        } else if (type.equals(Type.CHAR_TYPE)) {
-            result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
-        } else if (type.equals(Type.BYTE_TYPE)) {
-            result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
-        } else if (type.equals(Type.SHORT_TYPE)) {
-            result = List.of(new Opcode(Opcodes.ILOAD, this.identifier));
-        } else {
-            result = List.of(new Opcode(Opcodes.ALOAD, this.identifier));
-        }
-        return result;
+    public AstNode store() {
+        return new Opcode(
+            Type.getType(this.attributes.descriptor()).getOpcode(Opcodes.ISTORE),
+            this.identifier
+        );
     }
 
     /**
