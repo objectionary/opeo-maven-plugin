@@ -36,7 +36,7 @@ import org.cactoos.map.MapOf;
 import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
-import org.eolang.opeo.ast.Assignment;
+import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
@@ -52,11 +52,9 @@ import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Root;
 import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
-import org.eolang.opeo.ast.StoreLocal;
 import org.eolang.opeo.ast.Substraction;
 import org.eolang.opeo.ast.Super;
-import org.eolang.opeo.ast.Variable;
-import org.eolang.opeo.ast.WriteField;
+import org.eolang.opeo.ast.VariableAssignment;
 import org.eolang.opeo.jeo.JeoLabel;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -286,11 +284,7 @@ public final class DecompilerMachine {
 //                value
 //            );r
             final LocalVariable variable = new LocalVariable(index, this.type);
-            final AstNode store = new Assignment(
-                variable,
-                value,
-                new Attributes().type("local").name(variable.name())
-            );
+            final AstNode store = new VariableAssignment(variable, value);
             DecompilerMachine.this.stack.push(store);
         }
 
@@ -394,11 +388,13 @@ public final class DecompilerMachine {
             final String name = (String) instruction.operand(1);
             final String owner = (String) instruction.operand(0);
             final String descriptor = (String) instruction.operand(2);
-            final AstNode target = new InstanceField(
+            final Attributes attrs = new Attributes().name(name).owner(owner)
+                .descriptor(descriptor);
+            final InstanceField target = new InstanceField(
                 DecompilerMachine.this.stack.pop(),
-                new Attributes().name(name).owner(owner).descriptor(descriptor)
+                attrs
             );
-            DecompilerMachine.this.stack.push(new Assignment(target, value));
+            DecompilerMachine.this.stack.push(new FieldAssignment(target, value, attrs));
 //            final WriteField write = new WriteField(target, value, attributes);
 //            DecompilerMachine.this.stack.push(write);
         }

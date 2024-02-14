@@ -39,6 +39,10 @@ public final class LocalVariable implements AstNode {
         this.attributes = attributes;
     }
 
+    public Type type() {
+        return Type.getType(this.attributes.descriptor());
+    }
+
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
@@ -54,6 +58,10 @@ public final class LocalVariable implements AstNode {
 
     public String name() {
         return String.format("%s%d", LocalVariable.PREFIX, this.identifier);
+    }
+
+    public int id() {
+        return this.identifier;
     }
 
     /**
@@ -121,5 +129,4 @@ public final class LocalVariable implements AstNode {
                 )
         );
     }
-
 }

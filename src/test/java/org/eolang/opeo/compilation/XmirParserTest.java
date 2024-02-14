@@ -26,12 +26,18 @@ package org.eolang.opeo.compilation;
 import java.util.List;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
+import org.eolang.opeo.ast.Attributes;
+import org.eolang.opeo.ast.FieldAssignment;
+import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Literal;
+import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Opcode;
+import org.eolang.opeo.ast.This;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 /**
  * Tests for {@link XmirParser}.
@@ -107,6 +113,31 @@ final class XmirParserTest {
                 Opcodes.ICONST_4,
                 Opcodes.IADD,
                 Opcodes.IADD
+            )
+        );
+    }
+
+    @Test
+    void convertsFieldAssignment() {
+        final String owner = "org/eolang/opeo/ast/LocalVariables";
+        final String name = "d";
+        final String dscr = "I";
+        final Attributes attrs = new Attributes()
+            .name(name)
+            .descriptor(dscr)
+            .owner(owner);
+        MatcherAssert.assertThat(
+            new XmirParser(
+                new FieldAssignment(
+                    new InstanceField(new This(), attrs),
+                    new LocalVariable(1, Type.INT_TYPE),
+                    attrs
+                )
+            ).toJeoNodes(),
+            new HasInstructions(
+                new HasInstructions.Instruction(Opcodes.ALOAD, 0),
+                new HasInstructions.Instruction(Opcodes.ILOAD, 1),
+                new HasInstructions.Instruction(Opcodes.PUTFIELD, owner, name, dscr)
             )
         );
     }

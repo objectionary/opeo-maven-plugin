@@ -31,7 +31,7 @@ import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.OpcodeInstruction;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
-import org.eolang.opeo.ast.Assignment;
+import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
@@ -44,6 +44,7 @@ import org.eolang.opeo.ast.Root;
 import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.ast.This;
+import org.eolang.opeo.ast.VariableAssignment;
 import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -312,11 +313,11 @@ final class DecompilerMachineTest {
             ),
             new SameNode(
                 new Root(
-                    new Assignment(
+                    new VariableAssignment(
                         new LocalVariable(2, Type.INT_TYPE),
                         new LocalVariable(1, Type.INT_TYPE)
                     ),
-                    new Assignment(
+                    new VariableAssignment(
                         new LocalVariable(2, Type.INT_TYPE),
                         new Add(
                             new LocalVariable(2, Type.INT_TYPE),
@@ -330,6 +331,7 @@ final class DecompilerMachineTest {
 
     @Test
     void decompilesFieldAssignment() {
+        final Attributes attrs = new Attributes().name("a").owner("App").descriptor("I");
         MatcherAssert.assertThat(
             "Can't decompile assignment",
             new DecompilerMachine().decompile(
@@ -339,12 +341,13 @@ final class DecompilerMachineTest {
             ),
             new SameNode(
                 new Root(
-                    new Assignment(
+                    new FieldAssignment(
                         new InstanceField(
                             new This(),
-                            new Attributes().name("a").owner("App").descriptor("I")
+                            attrs
                         ),
-                        new LocalVariable(1, Type.INT_TYPE)
+                        new LocalVariable(1, Type.INT_TYPE),
+                        attrs
                     )
                 )
             )

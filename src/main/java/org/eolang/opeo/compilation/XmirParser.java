@@ -32,7 +32,7 @@ import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
-import org.eolang.opeo.ast.Assignment;
+import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
@@ -45,12 +45,11 @@ import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
-import org.eolang.opeo.ast.StoreLocal;
 import org.eolang.opeo.ast.Substraction;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.ast.Variable;
-import org.eolang.opeo.ast.WriteField;
+import org.eolang.opeo.ast.VariableAssignment;
 import org.xembly.Xembler;
 
 /**
@@ -201,30 +200,43 @@ public final class XmirParser {
             final AstNode value = this.node(inner.get(2));
             result = new StoreArray(array, index, value);
         } else if (".write".equals(base)) {
+            final List<XmlNode> inner = node.children().collect(Collectors.toList());
+            final AstNode target = this.node(inner.get(0));
+            final AstNode value = this.node(inner.get(1));
+            result = new VariableAssignment((LocalVariable) target, value);
+        } else if (".writefield".equals(base)) {
             //@checkstyle MethodBodyCommentsCheck (20 lines)
             // @todo #80:90min Correct parsing of WriteField node
             //  Currently we have an ad-hoc solution for parsing WriteField node.
             //  It looks ugly, requires refactoring and maybe adding new ast node types.
             //  For now the parsing is done in a way to make the tests pass.
 
-            final Attributes attrs = new Attributes(node.attribute("scope").orElseThrow());
-            if (attrs.type().equals("field")) {
-                final List<XmlNode> inner = node.children().collect(Collectors.toList());
-                final AstNode target = this.node(
-                    inner.get(0).children().collect(Collectors.toList()).get(0)
-                );
-                final AstNode value = this.node(inner.get(1));
-                result = new Assignment(
-                    target,
-                    value,
-                    attrs
-                );
-            } else {
-                final List<XmlNode> inner = node.children().collect(Collectors.toList());
-                final AstNode variable = this.node(inner.get(0));
-                final AstNode value = this.node(inner.get(1));
-                result = new StoreLocal(variable, value);
-            }
+
+            final List<XmlNode> inner = node.children().collect(Collectors.toList());
+            final InstanceField target = (InstanceField) this.node(inner.get(0));
+            final AstNode value = this.node(inner.get(1));
+            result = new FieldAssignment(
+                target, value, new Attributes(node.attribute("scope").orElseThrow())
+            );
+
+//            final Attributes attrs = new Attributes(node.attribute("scope").orElseThrow());
+//            if (attrs.type().equals("field")) {
+//                final List<XmlNode> inner = node.children().collect(Collectors.toList());
+//                final AstNode target = this.node(
+//                    inner.get(0).children().collect(Collectors.toList()).get(0)
+//                );
+//                final AstNode value = this.node(inner.get(1));
+//                result = new Assignment(
+//                    target,
+//                    value,
+//                    attrs
+//                );
+//            } else {
+//                final List<XmlNode> inner = node.children().collect(Collectors.toList());
+//                final AstNode variable = this.node(inner.get(0));
+//                final AstNode value = this.node(inner.get(1));
+//                result = new StoreLocal(variable, value);
+//            }
 //                result = new WriteField(
 //                    target,
 //                    value,
