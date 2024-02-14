@@ -204,17 +204,19 @@ public final class XmirParser {
             final AstNode value = this.node(inner.get(1));
             result = new VariableAssignment((LocalVariable) target, value);
         } else if (".writefield".equals(base)) {
+            //@checkstyle MethodBodyCommentsCheck (10 line)
+            // @todo #97:90min Parse FieldAssignment Node.
+            //  FieldAssignment has strange parsing logic. It's not clear how to
+            //  parse it. We need to refactor the parsing logic and remove all
+            //  the ad-hoc solutions. Don't forget to add tests for the parsing
+            //  logic.
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-
             final XmlNode sub = inner.get(0);
             final Attributes attributes = new Attributes(sub.attribute("scope").orElseThrow());
             final InstanceField target = new InstanceField(
                 this.node(sub.children().collect(Collectors.toList()).get(0)),
                 attributes
             );
-
-
-//            final InstanceField target = (InstanceField) this.node(inner.get(0));
             final AstNode value = this.node(inner.get(1));
             result = new FieldAssignment(target, value);
         } else if (base.contains("local")) {
