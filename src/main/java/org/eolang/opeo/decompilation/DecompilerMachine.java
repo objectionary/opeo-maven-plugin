@@ -41,6 +41,7 @@ import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.FieldAssignment;
+import org.eolang.opeo.ast.FieldRetrieval;
 import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
@@ -347,7 +348,7 @@ public final class DecompilerMachine {
             final String name = (String) instruction.operand(1);
             final String descriptor = (String) instruction.operand(2);
             DecompilerMachine.this.stack.push(
-                new InstanceField(
+                new FieldRetrieval(
                     DecompilerMachine.this.stack.pop(),
                     new Attributes()
                         .name(name)

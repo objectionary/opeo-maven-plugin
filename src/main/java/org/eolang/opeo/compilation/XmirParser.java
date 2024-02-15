@@ -37,6 +37,7 @@ import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.FieldAssignment;
+import org.eolang.opeo.ast.FieldRetrieval;
 import org.eolang.opeo.ast.InstanceField;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
@@ -203,6 +204,15 @@ public final class XmirParser {
             final AstNode target = this.node(inner.get(0));
             final AstNode value = this.node(inner.get(1));
             result = new VariableAssignment((LocalVariable) target, value);
+        } else if (".getfield".equals(base)) {
+            final List<XmlNode> inner = node.children().collect(Collectors.toList());
+            final XmlNode field = inner.get(0);
+            result = new FieldRetrieval(
+                new InstanceField(
+                    this.node(field.children().collect(Collectors.toList()).get(0)),
+                    new Attributes(field.attribute("scope").orElseThrow())
+                )
+            );
         } else if (".writefield".equals(base)) {
             //@checkstyle MethodBodyCommentsCheck (10 line)
             // @todo #97:90min Parse FieldAssignment Node.
@@ -211,14 +221,15 @@ public final class XmirParser {
             //  the ad-hoc solutions. Don't forget to add tests for the parsing
             //  logic.
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final XmlNode sub = inner.get(0);
-            final Attributes attributes = new Attributes(sub.attribute("scope").orElseThrow());
-            final InstanceField target = new InstanceField(
-                this.node(sub.children().collect(Collectors.toList()).get(0)),
-                attributes
-            );
+            final XmlNode field = inner.get(0);
             final AstNode value = this.node(inner.get(1));
-            result = new FieldAssignment(target, value);
+            result = new FieldAssignment(
+                new InstanceField(
+                    this.node(field.children().collect(Collectors.toList()).get(0)),
+                    new Attributes(field.attribute("scope").orElseThrow())
+                ),
+                value
+            );
         } else if (base.contains("local")) {
             result = new LocalVariable(node);
         } else if (".new".equals(base)) {
@@ -284,11 +295,13 @@ public final class XmirParser {
                     "name=bar|descriptor=()I|owner=org/eolang/benchmark/BA|type=method"
                 );
             }
-            if ("field".equals(attributes.type())) {
-                final List<XmlNode> inner = node.children().collect(Collectors.toList());
-                final AstNode target = this.node(inner.get(0));
-                result = new InstanceField(target, attributes);
-            } else if ("static".equals(attributes.type())) {
+//            if ("field".equals(attributes.type())) {
+//                final List<XmlNode> inner = node.children().collect(Collectors.toList());
+//                final AstNode target = this.node(inner.get(0));
+//                result = new InstanceField(target, attributes);
+//            }
+//            else
+            if ("static".equals(attributes.type())) {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final List<AstNode> arguments;
                 if (inner.isEmpty()) {

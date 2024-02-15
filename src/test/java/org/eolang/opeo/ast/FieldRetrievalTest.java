@@ -33,10 +33,10 @@ import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
 /**
- * Test case for {@link InstanceField}.
+ * Test case for {@link FieldRetrieval}.
  * @since 0.1
  */
-class InstanceFieldTest {
+class FieldRetrievalTest {
 
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
@@ -44,7 +44,7 @@ class InstanceFieldTest {
             new Directives()
                 .add("o")
                 .attr("name", "method")
-                .append(new InstanceField(new This(), "bar").toXmir())
+                .append(new FieldRetrieval(new This(), "bar").toXmir())
                 .up()
         ).xml();
         MatcherAssert.assertThat(
@@ -55,8 +55,8 @@ class InstanceFieldTest {
             actual,
             XhtmlMatchers.hasXPaths(
                 "./o[@name='method']",
-                "./o[@name='method']/o[@base='.bar']",
-                "./o[@name='method']/o[@base='.bar']/o[@base='$']"
+                "./o[@name='method']/o[@base='.getfield']/o[@base='.bar']",
+                "./o[@name='method']/o[@base='.getfield']/o[@base='.bar']/o[@base='$']"
             )
         );
     }
@@ -69,7 +69,7 @@ class InstanceFieldTest {
         MatcherAssert.assertThat(
             "Can't transform to opcodes",
             new OpcodeNodes(
-                new InstanceField(
+                new FieldRetrieval(
                     new This(),
                     new Attributes("name", name, "descriptor", descriptor, "owner", owner)
                 )

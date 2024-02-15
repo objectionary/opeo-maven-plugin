@@ -104,6 +104,7 @@ eo:
             times
               $
               .x
+              .getfield
               2
             opcode > IRETURN
               172
@@ -146,6 +147,7 @@ eo:
           *
             $
             .a
+            .getfield
             .foo
             .plus
               1

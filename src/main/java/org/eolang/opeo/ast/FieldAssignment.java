@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.ast;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -71,10 +70,6 @@ public final class FieldAssignment implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
-        final List<AstNode> res = new ArrayList<>(3);
-        res.addAll(this.field.instance().opcodes());
-        res.addAll(this.value.opcodes());
-        res.add(this.field.store());
-        return res;
+        return this.field.store(this.value);
     }
 }
