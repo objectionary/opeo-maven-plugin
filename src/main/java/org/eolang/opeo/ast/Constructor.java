@@ -108,7 +108,9 @@ public final class Constructor implements AstNode {
         directives.add("o")
             .attr("base", ".new")
             .attr("scope", this.attributes)
-            .add("o").attr("base", this.type).up();
+            .add("o")
+            .attr("base", this.type)
+            .up();
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
     }

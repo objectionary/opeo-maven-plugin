@@ -36,6 +36,7 @@ import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.Constructor;
+import org.eolang.opeo.ast.ConstructorDescriptor;
 import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.FieldRetrieval;
@@ -49,7 +50,9 @@ import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.ast.Substraction;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
+import org.eolang.opeo.ast.Typed;
 import org.eolang.opeo.ast.VariableAssignment;
+import org.objectweb.asm.Type;
 import org.xembly.Xembler;
 
 /**
@@ -228,22 +231,24 @@ public final class XmirParser {
                 )
             );
             final Attributes attributes;
-            if (type.equals("org/eolang/benchmark/BA")) {
-                attributes = new Attributes().descriptor("(I)V");
-            } else {
-                attributes = new Attributes(
-                    node.attribute("scope").orElseThrow(
-                        () -> new IllegalStateException(
-                            String.format(
-                                "Can't find 'scope' attribute of constructor in node: %n%s%n, type is %s",
-                                node,
-                                type
-                            )
-                        )
-                    )
-                );
-            }
-            result = new Constructor(type, attributes, this.args(inner));
+//            if (type.equals("org/eolang/benchmark/BA")) {
+//                attributes = new Attributes().descriptor("(I)V");
+//            } else {
+//            attributes = new Attributes(
+//                node.attribute("scope").orElseThrow(
+//                    () -> new IllegalStateException(
+//                        String.format(
+//                            "Can't find 'scope' attribute of constructor in node: %n%s%n, type is %s",
+//                            node,
+//                            type
+//                        )
+//                    )
+//                )
+//            );
+//            }
+            final List<AstNode> args = this.args(inner);
+            attributes = new Attributes().descriptor(new ConstructorDescriptor(args).toString());
+            result = new Constructor(type, attributes, args);
         } else if (".array".equals(base)) {
             final List<XmlNode> children = node.children().collect(Collectors.toList());
             final String type = new HexString(children.get(0).text()).decode();

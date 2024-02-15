@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import java.util.ArrayList;
 import java.util.List;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -37,7 +38,7 @@ import org.xembly.Directives;
  *  We have to test the both transformations: toXmir and opcodes.
  *  Don't forget to remove this puzzle after adding the tests.
  */
-public final class Substraction implements AstNode {
+public final class Substraction implements AstNode, Typed {
 
     /**
      * Left operand.
@@ -95,6 +96,17 @@ public final class Substraction implements AstNode {
             result = new Opcode(Opcodes.LSUB);
         } else {
             result = new Opcode(Opcodes.ISUB);
+        }
+        return result;
+    }
+
+    @Override
+    public Type type() {
+        final Type result;
+        if (this.attributes.type().equals("long")) {
+            result = Type.LONG_TYPE;
+        } else {
+            result = Type.INT_TYPE;
         }
         return result;
     }

@@ -27,13 +27,14 @@ import java.util.Collections;
 import java.util.List;
 import org.eolang.jeo.representation.directives.DirectivesData;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 
 /**
  * Literal output.
  * @since 0.1
  */
-public final class Literal implements AstNode {
+public final class Literal implements AstNode, Typed {
 
     /**
      * Literal value.
@@ -70,6 +71,15 @@ public final class Literal implements AstNode {
             );
         }
         return result;
+    }
+
+    @Override
+    public Type type() {
+        final Class<?> clazz = this.object.getClass();
+        if (clazz == int.class || clazz == Integer.class) {
+            return Type.INT_TYPE;
+        }
+        return Type.getType(clazz);
     }
 
     /**
