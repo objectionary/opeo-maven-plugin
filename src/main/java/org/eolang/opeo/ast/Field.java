@@ -67,6 +67,7 @@ public final class Field implements Xmir {
 
     /**
      * Store the field opcode. See {@link Opcodes#PUTFIELD}.
+     * @param value The value to store.
      * @return Opcode node to store the field. See {@link Opcode}
      */
     List<AstNode> store(final AstNode value) {

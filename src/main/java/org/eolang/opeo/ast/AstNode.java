@@ -24,13 +24,12 @@
 package org.eolang.opeo.ast;
 
 import java.util.List;
-import org.xembly.Directive;
 
 /**
  * Abstract syntax tree node.
  * @since 0.1
  */
-public interface AstNode extends Xmir{
+public interface AstNode extends Xmir {
 
     /**
      * Bytecode instructions.
