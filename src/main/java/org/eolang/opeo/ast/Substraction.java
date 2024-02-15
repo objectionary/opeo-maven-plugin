@@ -86,6 +86,17 @@ public final class Substraction implements AstNode, Typed {
         return res;
     }
 
+    @Override
+    public Type type() {
+        final Type result;
+        if (this.attributes.type().equals("long")) {
+            result = Type.LONG_TYPE;
+        } else {
+            result = Type.INT_TYPE;
+        }
+        return result;
+    }
+
     /**
      * Convert string into an opcode.
      * @return Opcode.
@@ -96,17 +107,6 @@ public final class Substraction implements AstNode, Typed {
             result = new Opcode(Opcodes.LSUB);
         } else {
             result = new Opcode(Opcodes.ISUB);
-        }
-        return result;
-    }
-
-    @Override
-    public Type type() {
-        final Type result;
-        if (this.attributes.type().equals("long")) {
-            result = Type.LONG_TYPE;
-        } else {
-            result = Type.INT_TYPE;
         }
         return result;
     }

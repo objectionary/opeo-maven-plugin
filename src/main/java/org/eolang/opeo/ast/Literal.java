@@ -33,6 +33,7 @@ import org.xembly.Directive;
 /**
  * Literal output.
  * @since 0.1
+ * @checkstyle CyclomaticComplexityCheck (500 lines)
  */
 public final class Literal implements AstNode, Typed {
 
@@ -75,11 +76,30 @@ public final class Literal implements AstNode, Typed {
 
     @Override
     public Type type() {
+        final Type result;
         final Class<?> clazz = this.object.getClass();
         if (clazz == int.class || clazz == Integer.class) {
-            return Type.INT_TYPE;
+            result = Type.INT_TYPE;
+        } else if (clazz == long.class || clazz == Long.class) {
+            result = Type.LONG_TYPE;
+        } else if (clazz == float.class || clazz == Float.class) {
+            result = Type.FLOAT_TYPE;
+        } else if (clazz == double.class || clazz == Double.class) {
+            result = Type.DOUBLE_TYPE;
+        } else if (clazz == boolean.class || clazz == Boolean.class) {
+            result = Type.BOOLEAN_TYPE;
+        } else if (clazz == char.class || clazz == Character.class) {
+            result = Type.CHAR_TYPE;
+        } else if (clazz == byte.class || clazz == Byte.class) {
+            result = Type.BYTE_TYPE;
+        } else if (clazz == short.class || clazz == Short.class) {
+            result = Type.SHORT_TYPE;
+        } else if (clazz == String.class) {
+            result = Type.getType(String.class);
+        } else {
+            result = Type.getType(clazz);
         }
-        return Type.getType(clazz);
+        return result;
     }
 
     /**

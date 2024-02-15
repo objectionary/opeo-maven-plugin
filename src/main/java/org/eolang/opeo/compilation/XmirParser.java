@@ -50,9 +50,7 @@ import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.ast.Substraction;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
-import org.eolang.opeo.ast.Typed;
 import org.eolang.opeo.ast.VariableAssignment;
-import org.objectweb.asm.Type;
 import org.xembly.Xembler;
 
 /**
@@ -60,7 +58,7 @@ import org.xembly.Xembler;
  * @since 0.1
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class XmirParser {
+final class XmirParser {
 
     /**
      * Opeo nodes.
@@ -71,7 +69,7 @@ public final class XmirParser {
      * Constructor.
      * @param nodes Opeo nodes.
      */
-    public XmirParser(final AstNode... nodes) {
+    XmirParser(final AstNode... nodes) {
         this(
             Arrays.stream(nodes)
                 .map(AstNode::toXmir)
@@ -86,7 +84,7 @@ public final class XmirParser {
      * Constructor.
      * @param nodes Opeo nodes.
      */
-    public XmirParser(final List<XmlNode> nodes) {
+    XmirParser(final List<XmlNode> nodes) {
         this.nodes = nodes;
     }
 
@@ -230,24 +228,9 @@ public final class XmirParser {
                     )
                 )
             );
-            final Attributes attributes;
-//            if (type.equals("org/eolang/benchmark/BA")) {
-//                attributes = new Attributes().descriptor("(I)V");
-//            } else {
-//            attributes = new Attributes(
-//                node.attribute("scope").orElseThrow(
-//                    () -> new IllegalStateException(
-//                        String.format(
-//                            "Can't find 'scope' attribute of constructor in node: %n%s%n, type is %s",
-//                            node,
-//                            type
-//                        )
-//                    )
-//                )
-//            );
-//            }
             final List<AstNode> args = this.args(inner);
-            attributes = new Attributes().descriptor(new ConstructorDescriptor(args).toString());
+            final Attributes attributes = new Attributes()
+                .descriptor(new ConstructorDescriptor(args).toString());
             result = new Constructor(type, attributes, args);
         } else if (".array".equals(base)) {
             final List<XmlNode> children = node.children().collect(Collectors.toList());
@@ -298,10 +281,15 @@ public final class XmirParser {
         return result;
     }
 
-    private List<AstNode> args(final List<XmlNode> nodes) {
+    /**
+     * Convert XML nodes into a list of arguments.
+     * @param all XML nodes.
+     * @return List of arguments.
+     */
+    private List<AstNode> args(final List<XmlNode> all) {
         final List<AstNode> arguments;
-        if (nodes.size() > 1) {
-            arguments = nodes.subList(1, nodes.size())
+        if (all.size() > 1) {
+            arguments = all.subList(1, all.size())
                 .stream()
                 .map(this::node)
                 .collect(Collectors.toList());
