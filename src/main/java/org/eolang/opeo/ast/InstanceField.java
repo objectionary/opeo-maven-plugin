@@ -38,7 +38,7 @@ public final class InstanceField implements AstNode {
     /**
      * Object reference from which the field is accessed.
      */
-    private final AstNode source;
+    private final AstNode inst;
 
     /**
      * Field attributes.
@@ -47,37 +47,30 @@ public final class InstanceField implements AstNode {
 
     /**
      * Constructor.
-     * @param source Object reference from which the field is accessed
+     * @param instance Object reference from which the field is accessed
      * @param name Field name
      */
-    public InstanceField(
-        final AstNode source,
-        final String name
-    ) {
-        this(source, name, "I");
+    public InstanceField(final AstNode instance, final String name) {
+        this(instance, name, "I");
     }
 
     /**
      * Constructor.
-     * @param source Object reference from which the field is accessed
+     * @param instance Object reference from which the field is accessed
      * @param name Field name
      * @param descriptor Field descriptor
      */
-    public InstanceField(
-        final AstNode source,
-        final String name,
-        final String descriptor
-    ) {
-        this(source, new Attributes().name(name).type("field").descriptor(descriptor));
+    public InstanceField(final AstNode instance, final String name, final String descriptor) {
+        this(instance, new Attributes().name(name).type("field").descriptor(descriptor));
     }
 
     /**
      * Constructor.
-     * @param source Object reference from which the field is accessed
+     * @param instance Object reference from which the field is accessed
      * @param attributes Field attributes
      */
-    public InstanceField(final AstNode source, final Attributes attributes) {
-        this.source = source;
+    public InstanceField(final AstNode instance, final Attributes attributes) {
+        this.inst = instance;
         this.attributes = attributes;
     }
 
@@ -99,7 +92,7 @@ public final class InstanceField implements AstNode {
      * @return Object reference.
      */
     public AstNode instance() {
-        return this.source;
+        return this.inst;
     }
 
     @Override
@@ -108,14 +101,14 @@ public final class InstanceField implements AstNode {
             .add("o")
             .attr("base", String.format(".%s", this.attributes.name()))
             .attr("scope", this.attributes)
-            .append(this.source.toXmir())
+            .append(this.inst.toXmir())
             .up();
     }
 
     @Override
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(0);
-        res.addAll(this.source.opcodes());
+        res.addAll(this.inst.opcodes());
         res.add(
             new Opcode(
                 Opcodes.GETFIELD,
