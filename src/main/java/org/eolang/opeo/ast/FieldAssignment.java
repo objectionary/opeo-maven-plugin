@@ -39,7 +39,7 @@ public final class FieldAssignment implements AstNode {
     /**
      * The field to assign to.
      */
-    private final InstanceField field;
+    private final Field field;
 
     /**
      * The value to assign.
@@ -52,7 +52,7 @@ public final class FieldAssignment implements AstNode {
      * @param right The value to assign
      */
     public FieldAssignment(
-        final InstanceField left,
+        final Field left,
         final AstNode right
     ) {
         this.field = left;

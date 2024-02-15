@@ -28,7 +28,7 @@ import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.FieldAssignment;
-import org.eolang.opeo.ast.InstanceField;
+import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Opcode;
@@ -130,7 +130,7 @@ final class XmirParserTest {
             "We expect to retrieve exactly 3 opcodes ALOAD, ILOAD and PUTFIELD, but got something else instead",
             new XmirParser(
                 new FieldAssignment(
-                    new InstanceField(new This(), attrs),
+                    new Field(new This(), attrs),
                     new LocalVariable(1, Type.INT_TYPE)
                 )
             ).toJeoNodes(),

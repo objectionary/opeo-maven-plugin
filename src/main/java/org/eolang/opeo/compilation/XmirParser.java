@@ -38,7 +38,7 @@ import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.FieldRetrieval;
-import org.eolang.opeo.ast.InstanceField;
+import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
@@ -208,23 +208,17 @@ public final class XmirParser {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final XmlNode field = inner.get(0);
             result = new FieldRetrieval(
-                new InstanceField(
+                new Field(
                     this.node(field.children().collect(Collectors.toList()).get(0)),
                     new Attributes(field.attribute("scope").orElseThrow())
                 )
             );
         } else if (".writefield".equals(base)) {
-            //@checkstyle MethodBodyCommentsCheck (10 line)
-            // @todo #97:90min Parse FieldAssignment Node.
-            //  FieldAssignment has strange parsing logic. It's not clear how to
-            //  parse it. We need to refactor the parsing logic and remove all
-            //  the ad-hoc solutions. Don't forget to add tests for the parsing
-            //  logic.
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final XmlNode field = inner.get(0);
             final AstNode value = this.node(inner.get(1));
             result = new FieldAssignment(
-                new InstanceField(
+                new Field(
                     this.node(field.children().collect(Collectors.toList()).get(0)),
                     new Attributes(field.attribute("scope").orElseThrow())
                 ),
@@ -295,12 +289,6 @@ public final class XmirParser {
                     "name=bar|descriptor=()I|owner=org/eolang/benchmark/BA|type=method"
                 );
             }
-//            if ("field".equals(attributes.type())) {
-//                final List<XmlNode> inner = node.children().collect(Collectors.toList());
-//                final AstNode target = this.node(inner.get(0));
-//                result = new InstanceField(target, attributes);
-//            }
-//            else
             if ("static".equals(attributes.type())) {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final List<AstNode> arguments;

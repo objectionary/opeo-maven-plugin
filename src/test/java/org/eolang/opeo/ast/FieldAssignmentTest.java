@@ -41,7 +41,7 @@ final class FieldAssignmentTest {
     void convertsToXmir() throws ImpossibleModificationException {
         final String xmir = new Xembler(
             new FieldAssignment(
-                new InstanceField(new This(), new Attributes("name", "bar")),
+                new Field(new This(), new Attributes("name", "bar")),
                 new Literal(3)
             ).toXmir()
         ).xml();
@@ -68,7 +68,7 @@ final class FieldAssignmentTest {
             "Can't transform 'this.a = 1' statement to the correct opcodes, result is wrong",
             new OpcodeNodes(
                 new FieldAssignment(
-                    new InstanceField(
+                    new Field(
                         new This(),
                         new Attributes()
                             .name(name)

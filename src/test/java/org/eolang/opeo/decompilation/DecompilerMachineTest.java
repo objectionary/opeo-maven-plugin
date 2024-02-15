@@ -35,7 +35,7 @@ import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.FieldAssignment;
-import org.eolang.opeo.ast.InstanceField;
+import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.LocalVariable;
@@ -344,7 +344,7 @@ final class DecompilerMachineTest {
             new SameNode(
                 new Root(
                     new FieldAssignment(
-                        new InstanceField(
+                        new Field(
                             new This(),
                             new Attributes().name(name).owner(app).descriptor(type)
                         ),

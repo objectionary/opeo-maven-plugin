@@ -23,18 +23,19 @@
  */
 package org.eolang.opeo.ast;
 
-import java.util.List;
 import org.xembly.Directive;
 
 /**
- * Abstract syntax tree node.
- * @since 0.1
+ * XMIR representation.
+ * If a class implements this interface, it means that it can be converted to XMIR.
+ * @since 0.2
  */
-public interface AstNode extends Xmir{
+public interface Xmir {
 
     /**
-     * Bytecode instructions.
-     * @return List of opcodes.
+     * Convert node to XMIR.
+     * @return XMIR XML.
      */
-    List<AstNode> opcodes();
+    Iterable<Directive> toXmir();
+
 }

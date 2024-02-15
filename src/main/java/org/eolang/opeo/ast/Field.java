@@ -25,8 +25,6 @@ package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -35,7 +33,7 @@ import org.xembly.Directives;
  * Access to a field.
  * @since 0.1
  */
-public final class InstanceField {
+public final class Field implements Xmir {
 
     /**
      * Object reference from which the field is accessed.
@@ -50,37 +48,28 @@ public final class InstanceField {
     /**
      * Constructor.
      * @param instance Object reference from which the field is accessed
-     * @param name Field name
-     */
-    public InstanceField(final AstNode instance, final String name) {
-        this(instance, name, "I");
-    }
-
-    /**
-     * Constructor.
-     * @param instance Object reference from which the field is accessed
-     * @param name Field name
-     * @param descriptor Field descriptor
-     */
-    public InstanceField(final AstNode instance, final String name, final String descriptor) {
-        this(instance, new Attributes().name(name).type("field").descriptor(descriptor));
-    }
-
-    /**
-     * Constructor.
-     * @param instance Object reference from which the field is accessed
      * @param attributes Field attributes
      */
-    public InstanceField(final AstNode instance, final Attributes attributes) {
+    public Field(final AstNode instance, final Attributes attributes) {
         this.inst = instance;
         this.attributes = attributes;
+    }
+
+    @Override
+    public Iterable<Directive> toXmir() {
+        return new Directives()
+            .add("o")
+            .attr("base", String.format(".%s", this.attributes.name()))
+            .attr("scope", this.attributes)
+            .append(this.inst.toXmir())
+            .up();
     }
 
     /**
      * Store the field opcode. See {@link Opcodes#PUTFIELD}.
      * @return Opcode node to store the field. See {@link Opcode}
      */
-    public List<AstNode> store(final AstNode value) {
+    List<AstNode> store(final AstNode value) {
         final List<AstNode> res = new ArrayList<>(3);
         res.addAll(this.inst.opcodes());
         res.addAll(value.opcodes());
@@ -99,7 +88,7 @@ public final class InstanceField {
      * Load the field opcode. See {@link Opcodes#GETFIELD}.
      * @return Opcode node to load the field. See {@link Opcode}
      */
-    public List<AstNode> load() {
+    List<AstNode> load() {
         final List<AstNode> res = new ArrayList<>(2);
         res.addAll(this.inst.opcodes());
         res.add(
@@ -112,35 +101,4 @@ public final class InstanceField {
         );
         return res;
     }
-
-    /**
-     * Get the object reference.
-     * @return Object reference.
-     */
-    public AstNode instance() {
-        return this.inst;
-    }
-
-    public Iterable<Directive> toXmir() {
-        return new Directives()
-            .add("o")
-            .attr("base", String.format(".%s", this.attributes.name()))
-            .attr("scope", this.attributes)
-            .append(this.inst.toXmir())
-            .up();
-    }
-
-//    public List<AstNode> opcodes() {
-//        final List<AstNode> res = new ArrayList<>(0);
-//        res.addAll(this.inst.opcodes());
-//        res.add(
-//            new Opcode(
-//                Opcodes.GETFIELD,
-//                this.attributes.owner(),
-//                this.attributes.name(),
-//                this.attributes.descriptor()
-//            )
-//        );
-//        return res;
-//    }
 }

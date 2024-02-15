@@ -6,7 +6,7 @@ import org.xembly.Directives;
 
 public final class FieldRetrieval implements AstNode {
 
-    private final InstanceField field;
+    private final Field field;
 
     /**
      * Constructor.
@@ -33,11 +33,11 @@ public final class FieldRetrieval implements AstNode {
      * @param attributes Field attributes
      */
     public FieldRetrieval(final AstNode instance, final Attributes attributes) {
-        this(new InstanceField(instance, attributes));
+        this(new Field(instance, attributes));
     }
 
 
-    public FieldRetrieval(final InstanceField field) {
+    public FieldRetrieval(final Field field) {
         this.field = field;
     }
 
