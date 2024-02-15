@@ -249,6 +249,11 @@ final class XmirParser {
                         )
                     )
             );
+            //@checkstyle MethodBodyCommentsCheck (10 line)
+            // @todo #117:30min Remove ad-hoc solution for replacing descriptors and owners.
+            //  We started type inference implementation. At least we infer types of
+            //  constructors. We need to infer descriptors and owners for all of the rest nodes.
+            //  Including instance and static method invocations.
             if (
                 attributes.owner().equals("org/eolang/benchmark/B")
                     && attributes.type().equals("method")
