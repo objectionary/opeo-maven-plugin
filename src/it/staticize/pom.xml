@@ -2,7 +2,7 @@
 <!--
 The MIT License (MIT)
 
-Copyright (c) 2016-2023 Objectionary.com
+Copyright (c) 2023-2024 Objectionary.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,26 +22,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.eolang</groupId>
-  <artifactId>opeo-it</artifactId>
-  <version>@project.version@</version>
+  <artifactId>benchmark</artifactId>
   <packaging>jar</packaging>
+  <version>0.0.0</version>
+  <name>benchmark</name>
+  <url>https://github.com/objectionary/benchmark</url>
   <description>
-    Integration test that checks entire benchmark suite together with the ineo-maven-plugin optimizations
+    Integration test that checks entire benchmark suite together with the ineo-maven-plugin optimizations.
+    We use "staticize" optimization in the test.
     If you need to run only this test, use the following command:
-    "mvn clean integration-test invoker:run -Dinvoker.test=benchmark -DskipTests"
+    "mvn clean integration-test invoker:run -Dinvoker.test=staticize -DskipTests"
     _____
-    This integration test consists from the following steps (in order):
+    This integration test consists of the following steps (in order):
     1. jeo-maven-plugin:disassemble | phase:process-classes
     2. opeo-maven-plugin:decompile | phase:process-classes
-    3. ineo-maven-plugin:fuse | phase:process-classes
+    3. ineo-maven-plugin:staticize | phase:process-classes
     4. jeo-maven-plugin:assemble | phase:generate-test-sources
     5. exec-maven-plugin:exec | phase:generate-test-sources
 
     Although the declaration order is a bit confusing, the actual execution is presented above.
   </description>
+  <inceptionYear>2024</inceptionYear>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>11</maven.compiler.source>
@@ -90,7 +94,7 @@ SOFTWARE.
               <goal>compile</goal>
             </goals>
             <configuration>
-              <sourcesDir>${project.build.directory}/generated-sources/ineo-fuse-xmir</sourcesDir>
+              <sourcesDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</sourcesDir>
               <outputDir>${project.build.directory}/generated-sources/opeo-compile-xmir</outputDir>
             </configuration>
           </execution>
@@ -102,14 +106,14 @@ SOFTWARE.
         <version>${ineo.version}</version>
         <executions>
           <execution>
-            <id>ineo-fuse</id>
+            <id>ineo-staticize</id>
             <phase>process-classes</phase>
             <goals>
-              <goal>fuse</goal>
+              <goal>staticize</goal>
             </goals>
             <configuration>
               <sourcesDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</sourcesDir>
-              <outputDir>${project.build.directory}/generated-sources/ineo-fuse-xmir</outputDir>
+              <outputDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</outputDir>
             </configuration>
           </execution>
         </executions>
@@ -154,7 +158,7 @@ SOFTWARE.
               <goal>java</goal>
             </goals>
             <configuration>
-              <mainClass>org.eolang.updated.Main</mainClass>
+              <mainClass>org.eolang.benchmark.Main</mainClass>
               <arguments>28</arguments>
             </configuration>
           </execution>
