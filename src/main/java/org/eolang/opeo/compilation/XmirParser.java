@@ -170,18 +170,9 @@ public final class XmirParser {
         } else if (".super".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode instance = this.node(inner.get(0));
-            final List<AstNode> arguments;
-            if (inner.size() > 1) {
-                arguments = inner.subList(1, inner.size())
-                    .stream()
-                    .map(this::node)
-                    .collect(Collectors.toList());
-            } else {
-                arguments = Collections.emptyList();
-            }
             result = new Super(
                 instance,
-                arguments,
+                this.args(inner),
                 node.attribute("scope")
                     .orElseThrow(
                         () -> new IllegalArgumentException(
@@ -236,15 +227,6 @@ public final class XmirParser {
                     )
                 )
             );
-            final List<AstNode> arguments;
-            if (inner.size() > 1) {
-                arguments = inner.subList(1, inner.size())
-                    .stream()
-                    .map(this::node)
-                    .collect(Collectors.toList());
-            } else {
-                arguments = Collections.emptyList();
-            }
             final Attributes attributes;
             if (type.equals("org/eolang/benchmark/BA")) {
                 attributes = new Attributes().descriptor("(I)V");
@@ -261,7 +243,7 @@ public final class XmirParser {
                     )
                 );
             }
-            result = new Constructor(type, attributes, arguments);
+            result = new Constructor(type, attributes, this.args(inner));
         } else if (".array".equals(base)) {
             final List<XmlNode> children = node.children().collect(Collectors.toList());
             final String type = new HexString(children.get(0).text()).decode();
@@ -301,16 +283,7 @@ public final class XmirParser {
             } else {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode target = this.node(inner.get(0));
-                final List<AstNode> arguments;
-                if (inner.size() > 1) {
-                    arguments = inner.subList(1, inner.size())
-                        .stream()
-                        .map(this::node)
-                        .collect(Collectors.toList());
-                } else {
-                    arguments = Collections.emptyList();
-                }
-                result = new Invocation(target, attributes, arguments);
+                result = new Invocation(target, attributes, this.args(inner));
             }
         } else {
             throw new IllegalArgumentException(
@@ -318,5 +291,18 @@ public final class XmirParser {
             );
         }
         return result;
+    }
+
+    private List<AstNode> args(final List<XmlNode> nodes) {
+        final List<AstNode> arguments;
+        if (nodes.size() > 1) {
+            arguments = nodes.subList(1, nodes.size())
+                .stream()
+                .map(this::node)
+                .collect(Collectors.toList());
+        } else {
+            arguments = Collections.emptyList();
+        }
+        return arguments;
     }
 }
