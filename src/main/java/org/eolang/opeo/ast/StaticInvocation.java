@@ -26,6 +26,9 @@ package org.eolang.opeo.ast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -34,6 +37,8 @@ import org.xembly.Directives;
  * Static invocation ast node.
  * @since 0.1
  */
+@ToString
+@EqualsAndHashCode
 public final class StaticInvocation implements AstNode {
 
     /**
@@ -42,9 +47,14 @@ public final class StaticInvocation implements AstNode {
     private final Attributes attributes;
 
     /**
+     * Class on which the method is invoked.
+     */
+    private final Owner owner;
+
+    /**
      * Arguments.
      */
-    private final List<AstNode> arguments;
+    private final List<AstNode> args;
 
     /**
      * Constructor.
@@ -78,7 +88,8 @@ public final class StaticInvocation implements AstNode {
         final List<AstNode> arguments
     ) {
         this(
-            new Attributes().owner(owner).name(name).descriptor(descriptor).type("static"),
+            new Attributes().name(name).descriptor(descriptor).type("static"),
+            new Owner(owner),
             arguments
         );
     }
@@ -89,8 +100,25 @@ public final class StaticInvocation implements AstNode {
      * @param arguments Arguments
      */
     public StaticInvocation(final Attributes attributes, final List<AstNode> arguments) {
+        this(attributes, new Owner(attributes.owner()), arguments);
+    }
+
+    public StaticInvocation(final XmlNode node, final AstNode... arguments) {
+        this(
+            StaticInvocation.xattrs(node),
+            StaticInvocation.xowner(node),
+            Arrays.asList(arguments)
+        );
+    }
+
+    public StaticInvocation(
+        final Attributes attributes,
+        final Owner owner,
+        final List<AstNode> args
+    ) {
         this.attributes = attributes;
-        this.arguments = arguments;
+        this.owner = owner;
+        this.args = args;
     }
 
     @Override
@@ -99,22 +127,39 @@ public final class StaticInvocation implements AstNode {
         directives.add("o")
             .attr("base", String.format(".%s", this.attributes.name()))
             .attr("scope", this.attributes);
-        this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
+        directives.append(this.owner.toXmir());
+        this.args.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
     }
 
     @Override
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(0);
-        this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
+        this.args.stream().map(AstNode::opcodes).forEach(res::addAll);
         res.add(
             new Opcode(
                 Opcodes.INVOKESTATIC,
-                this.attributes.owner(),
+                this.owner.toString(),
                 this.attributes.name(),
                 this.attributes.descriptor()
             )
         );
         return res;
+    }
+
+    private static Attributes xattrs(final XmlNode node) {
+        return node.attribute("scope").map(Attributes::new).orElseThrow(
+            () -> new IllegalArgumentException(
+                String.format("Can't retrieve static invocation attributes from the node %s", node)
+            )
+        );
+    }
+
+    private static Owner xowner(final XmlNode node) {
+        return node.child("o").attribute("base").map(Owner::new).orElseThrow(
+            () -> new IllegalArgumentException(
+                String.format("Can't retrieve static invocation owner from the node %s", node)
+            )
+        );
     }
 }
