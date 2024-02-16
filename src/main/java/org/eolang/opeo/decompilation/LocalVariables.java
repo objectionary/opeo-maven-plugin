@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.decompilation;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -43,13 +44,20 @@ public final class LocalVariables {
      */
     private final int modifiers;
 
+    /**
+     * Method argument types.
+     */
     private final Type[] types;
 
+    /**
+     * Cache of variables.
+     */
     private final Map<Integer, AstNode> cache;
 
     /**
      * Constructor.
      * @param modifiers Method access modifiers.
+     * @param descriptor Method descriptor.
      */
     public LocalVariables(final int modifiers, final String descriptor) {
         this(modifiers, Type.getArgumentTypes(descriptor));
@@ -62,9 +70,14 @@ public final class LocalVariables {
         this(Opcodes.ACC_PUBLIC, new Type[0]);
     }
 
-    private LocalVariables(final int modifiers, final Type[] types) {
+    /**
+     * Constructor.
+     * @param modifiers Method access modifiers.
+     * @param types Method argument types.
+     */
+    private LocalVariables(final int modifiers, final Type... types) {
         this.modifiers = modifiers;
-        this.types = types;
+        this.types = Arrays.copyOf(types, types.length);
         this.cache = new HashMap<>(0);
     }
 
@@ -78,6 +91,11 @@ public final class LocalVariables {
         return this.restore(index).orElseGet(() -> this.store(index, type));
     }
 
+    /**
+     * Restore variable from cache.
+     * @param index Index.
+     * @return Variable.
+     */
     private Optional<AstNode> restore(final int index) {
         final Optional<AstNode> result;
         if (this.cache.containsKey(index)) {
@@ -88,8 +106,14 @@ public final class LocalVariables {
         return result;
     }
 
+    /**
+     * Store variable in cache.
+     * @param index Index.
+     * @param fallback Fallback type.
+     * @return Variable.
+     */
     private AstNode store(final int index, final Type fallback) {
-        final Type type = this.findType(index).orElse(fallback);
+        final Type type = this.argumentType(index).orElse(fallback);
         final AstNode result;
         if (index == 0 && this.isInstanceMethod()) {
             result = new This(type);
@@ -100,13 +124,27 @@ public final class LocalVariables {
         return result;
     }
 
+    /**
+     * Is it an instance method?
+     * @return True if it is an instance method.
+     */
     private boolean isInstanceMethod() {
         return (this.modifiers & Opcodes.ACC_STATIC) == 0;
     }
 
-    private Optional<Type> findType(final int index) {
+    /**
+     * Find an argument type by index.
+     * @param index Index.
+     * @return Type.
+     */
+    private Optional<Type> argumentType(final int index) {
         final Optional<Type> result;
-        final int real = this.isInstanceMethod() ? index - 1 : index;
+        final int real;
+        if (this.isInstanceMethod()) {
+            real = index - 1;
+        } else {
+            real = index;
+        }
         if (real > -1 && real < this.types.length) {
             result = Optional.of(this.types[real]);
         } else {

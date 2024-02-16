@@ -40,7 +40,7 @@ public final class Constructor implements AstNode, Typed {
     /**
      * Constructor type.
      */
-    private final String type;
+    private final String ctype;
 
     /**
      * Constructor attributes.
@@ -98,7 +98,7 @@ public final class Constructor implements AstNode, Typed {
         final Attributes attrs,
         final List<AstNode> args
     ) {
-        this.type = type;
+        this.ctype = type;
         this.attributes = attrs;
         this.arguments = args;
     }
@@ -110,7 +110,7 @@ public final class Constructor implements AstNode, Typed {
             .attr("base", ".new")
             .attr("scope", this.attributes)
             .add("o")
-            .attr("base", this.type)
+            .attr("base", this.ctype)
             .up();
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
@@ -119,13 +119,13 @@ public final class Constructor implements AstNode, Typed {
     @Override
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(0);
-        res.add(new Opcode(Opcodes.NEW, this.type));
+        res.add(new Opcode(Opcodes.NEW, this.ctype));
         res.add(new Opcode(Opcodes.DUP));
         this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
         res.add(
             new Opcode(
                 Opcodes.INVOKESPECIAL,
-                this.type,
+                this.ctype,
                 "<init>",
                 this.attributes.descriptor()
             )
@@ -135,6 +135,6 @@ public final class Constructor implements AstNode, Typed {
 
     @Override
     public Type type() {
-        return Type.getObjectType(this.type);
+        return Type.getObjectType(this.ctype);
     }
 }
