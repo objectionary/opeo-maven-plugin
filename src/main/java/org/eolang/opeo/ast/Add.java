@@ -91,6 +91,17 @@ public final class Add implements AstNode, Typed {
         return res;
     }
 
+    @Override
+    public Type type() {
+        final Type result;
+        if (this.attributes.type().equals("long")) {
+            result = Type.LONG_TYPE;
+        } else {
+            result = Type.INT_TYPE;
+        }
+        return result;
+    }
+
     /**
      * Typed opcode.
      * @return Opcode.
@@ -101,17 +112,6 @@ public final class Add implements AstNode, Typed {
             result = new Opcode(Opcodes.LADD);
         } else {
             result = new Opcode(Opcodes.IADD);
-        }
-        return result;
-    }
-
-    @Override
-    public Type type() {
-        final Type result;
-        if (this.attributes.type().equals("long")) {
-            result = Type.LONG_TYPE;
-        } else {
-            result = Type.INT_TYPE;
         }
         return result;
     }

@@ -271,13 +271,19 @@ public final class DecompilerMachine {
             DecompilerMachine.this.stack.push(
                 new VariableAssignment(
                     (LocalVariable) DecompilerMachine.this.locals.variable(
-                        (Integer) instruction.operands().get(0), this.inferType(value)),
+                        (Integer) instruction.operands().get(0), this.infer(value)
+                    ),
                     value
                 )
             );
         }
 
-        private Type inferType(final AstNode value) {
+        /**
+         * Infer type of the variable.
+         * @param value Value to infer type from.
+         * @return Inferred type.
+         */
+        private Type infer(final AstNode value) {
             final Type result;
             if (value instanceof Typed) {
                 result = ((Typed) value).type();
@@ -477,8 +483,7 @@ public final class DecompilerMachine {
                 );
             } else {
                 ((Reference) DecompilerMachine.this.stack.pop())
-                    .link(
-                        new Constructor(target, new Attributes().descriptor(descriptor), args));
+                    .link(new Constructor(target, new Attributes().descriptor(descriptor), args));
             }
         }
 

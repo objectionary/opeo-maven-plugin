@@ -159,6 +159,11 @@ public final class StaticInvocation implements AstNode, Typed {
         return res;
     }
 
+    @Override
+    public Type type() {
+        return Type.getReturnType(this.attributes.descriptor());
+    }
+
     /**
      * Extracts attributes from the node.
      * @param node XML node
@@ -183,10 +188,5 @@ public final class StaticInvocation implements AstNode, Typed {
                 String.format("Can't retrieve static invocation owner from the node %s", node)
             )
         );
-    }
-
-    @Override
-    public Type type() {
-        return Type.getReturnType(this.attributes.descriptor());
     }
 }
