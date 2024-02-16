@@ -238,7 +238,7 @@ final class XmirParser {
             final AstNode size = this.node(children.get(1));
             result = new ArrayConstructor(size, type);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
-            Attributes attributes = new Attributes(
+            final Attributes attributes = new Attributes(
                 node.attribute("scope")
                     .orElseThrow(
                         () -> new IllegalArgumentException(
@@ -254,22 +254,6 @@ final class XmirParser {
                     node, this.args(node.children().collect(Collectors.toList()))
                 );
             } else {
-                //@checkstyle MethodBodyCommentsCheck (10 line)
-                // @todo #117:30min Continue removeing ad-hoc solution for replacing owners.
-                //  We started type inference implementation. At least we infer types of
-                //  constructors. Now, we save an owner as a node child.
-                //  We need to infer descriptors and owners for all of the rest nodes.
-                //  Including instance method invocations.
-                if (
-                    attributes.owner().equals("org/eolang/benchmark/B")
-                        && attributes.type().equals("method")
-                        && attributes.descriptor().equals("()I")
-                        && attributes.name().equals("bar")
-                ) {
-                    attributes = new Attributes(
-                        "name=bar|descriptor=()I|owner=org/eolang/benchmark/BA|type=method"
-                    );
-                }
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode target = this.node(inner.get(0));
                 result = new Invocation(target, attributes, this.args(inner));
