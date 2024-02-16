@@ -94,13 +94,12 @@ class InvocationTest {
         final String name = "bar";
         final String constant = "baz";
         final String descriptor = "(Ljava/lang/String;)Ljava/lang/String;";
-        final String owner = "some/instruction/Owner";
         MatcherAssert.assertThat(
             "Can't transform 'invocation' to correct opcodes",
             new OpcodeNodes(
                 new Invocation(
                     new This(),
-                    new Attributes().descriptor(descriptor).name(name).owner(owner),
+                    new Attributes().descriptor(descriptor).name(name),
                     new Literal(constant)
                 )
             ).opcodes(),
@@ -109,7 +108,7 @@ class InvocationTest {
                 new HasInstructions.Instruction(Opcodes.LDC, constant),
                 new HasInstructions.Instruction(
                     Opcodes.INVOKEVIRTUAL,
-                    owner,
+                    "java/lang/Object",
                     name,
                     descriptor
                 )
@@ -121,20 +120,20 @@ class InvocationTest {
     void transformsToOpcodesWithoutArguments() {
         final String name = "toString";
         final String descriptor = "()Ljava/lang/String;";
-        final String owner = "random/Owner";
+        final Type type = Type.getType(String.class);
         MatcherAssert.assertThat(
             "Can't transform 'local1.toSting()' to correct opcodes",
             new OpcodeNodes(
                 new Invocation(
-                    new LocalVariable(1, Type.getType(String.class)),
-                    new Attributes().name(name).descriptor(descriptor).owner(owner)
+                    new LocalVariable(1, type),
+                    new Attributes().name(name).descriptor(descriptor)
                 )
             ).opcodes(),
             new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.ALOAD, 1),
                 new HasInstructions.Instruction(
                     Opcodes.INVOKEVIRTUAL,
-                    owner,
+                    type.getClassName().replace('.', '/'),
                     name,
                     descriptor
                 )

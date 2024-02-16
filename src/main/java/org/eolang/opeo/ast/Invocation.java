@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Objects;
 import lombok.ToString;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -153,10 +154,19 @@ public final class Invocation implements AstNode {
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.source.opcodes());
         this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
+        if (!(this.source instanceof Typed)) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "Source must be of type Typed, but it is %s. Most probably, we don't implement the type of the source yet.",
+                    this.source
+                )
+            );
+        }
+        final Typed owner = (Typed) this.source;
         res.add(
             new Opcode(
                 Opcodes.INVOKEVIRTUAL,
-                this.attributes.owner(),
+                owner.type().getClassName().replace('.', '/'),
                 this.attributes.name(),
                 this.attributes.descriptor()
             )

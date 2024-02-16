@@ -41,7 +41,7 @@ import org.xembly.Directives;
  */
 @ToString
 @EqualsAndHashCode
-public final class LocalVariable implements AstNode {
+public final class LocalVariable implements AstNode, Typed {
 
     /**
      * The prefix of the variable.
@@ -96,12 +96,12 @@ public final class LocalVariable implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
-        return List.of(
-            new Opcode(
-                Type.getType(this.attributes.descriptor()).getOpcode(Opcodes.ILOAD),
-                this.identifier
-            )
-        );
+        return List.of(new Opcode(this.type().getOpcode(Opcodes.ILOAD), this.identifier));
+    }
+
+    @Override
+    public Type type() {
+        return Type.getType(this.attributes.descriptor());
     }
 
     /**
@@ -110,10 +110,7 @@ public final class LocalVariable implements AstNode {
      * @return Opcode to store the variable. See {@link Opcode}.
      */
     public AstNode store() {
-        return new Opcode(
-            Type.getType(this.attributes.descriptor()).getOpcode(Opcodes.ISTORE),
-            this.identifier
-        );
+        return new Opcode(this.type().getOpcode(Opcodes.ISTORE), this.identifier);
     }
 
     /**

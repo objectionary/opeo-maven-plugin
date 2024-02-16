@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import java.util.Collections;
 import java.util.List;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -35,7 +36,29 @@ import org.xembly.Directives;
  * In EO, it is represented as the keyword "$".
  * @since 0.1
  */
-public final class This implements AstNode {
+public final class This implements AstNode, Typed {
+
+    /**
+     * Type.
+     */
+    private final Type type;
+
+    /**
+     * Default ctor.
+     * If no type is provided, the default type is {@link Object}.
+     * @since 0.2
+     */
+    public This() {
+        this(Type.getType(Object.class));
+    }
+
+    /**
+     * Constructor.
+     * @param type Type of this node.
+     */
+    public This(final Type type) {
+        this.type = type;
+    }
 
     @Override
     public Iterable<Directive> toXmir() {
@@ -47,4 +70,8 @@ public final class This implements AstNode {
         return Collections.singletonList(new Opcode(Opcodes.ALOAD, 0));
     }
 
+    @Override
+    public Type type() {
+        return this.type;
+    }
 }

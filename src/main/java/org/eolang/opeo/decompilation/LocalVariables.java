@@ -64,7 +64,7 @@ public final class LocalVariables {
     public AstNode variable(final int index, final Type type) {
         final AstNode result;
         if (index == 0 && (this.modifiers & Opcodes.ACC_STATIC) == 0) {
-            result = new This();
+            result = new This(type);
         } else {
             result = new LocalVariable(index, type);
         }
