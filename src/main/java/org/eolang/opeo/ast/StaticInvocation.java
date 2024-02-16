@@ -30,6 +30,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -39,7 +40,7 @@ import org.xembly.Directives;
  */
 @ToString
 @EqualsAndHashCode
-public final class StaticInvocation implements AstNode {
+public final class StaticInvocation implements AstNode, Typed {
 
     /**
      * Method attributes.
@@ -182,5 +183,10 @@ public final class StaticInvocation implements AstNode {
                 String.format("Can't retrieve static invocation owner from the node %s", node)
             )
         );
+    }
+
+    @Override
+    public Type type() {
+        return Type.getReturnType(this.attributes.descriptor());
     }
 }

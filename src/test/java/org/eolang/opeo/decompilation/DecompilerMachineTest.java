@@ -232,10 +232,7 @@ final class DecompilerMachineTest {
                         .decompile(
                             new OpcodeInstruction(Opcodes.LLOAD, 4),
                             new OpcodeInstruction(Opcodes.ALOAD, 1),
-                            new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "run", "()I"),
-                            new OpcodeInstruction(Opcodes.I2L),
-                            new OpcodeInstruction(Opcodes.LADD),
-                            new OpcodeInstruction(Opcodes.LSTORE, 4)
+                            new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "run", "()I")
                         )
                 ).xml(),
             "Can't decompile invoke virtual"

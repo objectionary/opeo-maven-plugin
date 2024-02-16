@@ -25,13 +25,14 @@ package org.eolang.opeo.ast;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 
 /**
  * Object reference in the stack.
  * @since 0.1
  */
-public final class Reference implements AstNode {
+public final class Reference implements AstNode, Typed {
 
     /**
      * Object itself.
@@ -78,5 +79,13 @@ public final class Reference implements AstNode {
     @Override
     public List<AstNode> opcodes() {
         return this.ref.get().opcodes();
+    }
+
+    @Override
+    public Type type() {
+        if (this.object() instanceof Typed) {
+            return ((Typed) this.object()).type();
+        }
+        throw new IllegalStateException(String.format("Object %s is not typed", this.object()));
     }
 }

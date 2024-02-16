@@ -55,6 +55,7 @@ import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.ast.Substraction;
 import org.eolang.opeo.ast.Super;
+import org.eolang.opeo.ast.Typed;
 import org.eolang.opeo.ast.VariableAssignment;
 import org.eolang.opeo.jeo.JeoLabel;
 import org.objectweb.asm.Opcodes;
@@ -266,12 +267,24 @@ public final class DecompilerMachine {
 
         @Override
         public void handle(final Instruction instruction) {
+            final AstNode value = DecompilerMachine.this.stack.pop();
             DecompilerMachine.this.stack.push(
                 new VariableAssignment(
-                    new LocalVariable((Integer) instruction.operands().get(0), this.type),
-                    DecompilerMachine.this.stack.pop()
+                    (LocalVariable) DecompilerMachine.this.locals.variable(
+                        (Integer) instruction.operands().get(0), this.inferType(value)),
+                    value
                 )
             );
+        }
+
+        private Type inferType(final AstNode value) {
+            final Type result;
+            if (value instanceof Typed) {
+                result = ((Typed) value).type();
+            } else {
+                result = this.type;
+            }
+            return result;
         }
 
     }
@@ -464,7 +477,8 @@ public final class DecompilerMachine {
                 );
             } else {
                 ((Reference) DecompilerMachine.this.stack.pop())
-                    .link(new Constructor(target, new Attributes().descriptor(descriptor), args));
+                    .link(
+                        new Constructor(target, new Attributes().descriptor(descriptor), args));
             }
         }
 
@@ -698,3 +712,4 @@ public final class DecompilerMachine {
         }
     }
 }
+

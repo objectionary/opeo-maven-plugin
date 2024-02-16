@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import java.util.ArrayList;
 import java.util.List;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -33,7 +34,7 @@ import org.xembly.Directives;
  * Add output node.
  * @since 0.1
  */
-public final class Add implements AstNode {
+public final class Add implements AstNode, Typed {
 
     /**
      * Left operand.
@@ -100,6 +101,17 @@ public final class Add implements AstNode {
             result = new Opcode(Opcodes.LADD);
         } else {
             result = new Opcode(Opcodes.IADD);
+        }
+        return result;
+    }
+
+    @Override
+    public Type type() {
+        final Type result;
+        if (this.attributes.type().equals("long")) {
+            result = Type.LONG_TYPE;
+        } else {
+            result = Type.INT_TYPE;
         }
         return result;
     }
