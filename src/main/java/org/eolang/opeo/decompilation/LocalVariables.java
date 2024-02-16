@@ -23,6 +23,9 @@
  */
 package org.eolang.opeo.decompilation;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.This;
@@ -40,19 +43,29 @@ public final class LocalVariables {
      */
     private final int modifiers;
 
-    /**
-     * Constructor.
-     */
-    public LocalVariables() {
-        this(Opcodes.ACC_PUBLIC);
-    }
+    private final Type[] types;
+
+    private final Map<Integer, AstNode> cache;
 
     /**
      * Constructor.
      * @param modifiers Method access modifiers.
      */
-    public LocalVariables(final int modifiers) {
+    public LocalVariables(final int modifiers, final String descriptor) {
+        this(modifiers, Type.getArgumentTypes(descriptor));
+    }
+
+    /**
+     * Constructor.
+     */
+    LocalVariables() {
+        this(Opcodes.ACC_PUBLIC, new Type[0]);
+    }
+
+    private LocalVariables(final int modifiers, final Type[] types) {
         this.modifiers = modifiers;
+        this.types = types;
+        this.cache = new HashMap<>(0);
     }
 
     /**
@@ -62,11 +75,42 @@ public final class LocalVariables {
      * @return Variable.
      */
     public AstNode variable(final int index, final Type type) {
+        return this.restore(index).orElseGet(() -> this.store(index, type));
+    }
+
+    private Optional<AstNode> restore(final int index) {
+        final Optional<AstNode> result;
+        if (this.cache.containsKey(index)) {
+            result = Optional.of(this.cache.get(index));
+        } else {
+            result = Optional.empty();
+        }
+        return result;
+    }
+
+    private AstNode store(final int index, final Type fallback) {
+        final Type type = this.findType(index).orElse(fallback);
         final AstNode result;
-        if (index == 0 && (this.modifiers & Opcodes.ACC_STATIC) == 0) {
+        if (index == 0 && this.isInstanceMethod()) {
             result = new This(type);
         } else {
             result = new LocalVariable(index, type);
+        }
+        this.cache.put(index, result);
+        return result;
+    }
+
+    private boolean isInstanceMethod() {
+        return (this.modifiers & Opcodes.ACC_STATIC) == 0;
+    }
+
+    private Optional<Type> findType(final int index) {
+        final Optional<Type> result;
+        final int real = this.isInstanceMethod() ? index - 1 : index;
+        if (real > -1 && real < this.types.length) {
+            result = Optional.of(this.types[real]);
+        } else {
+            result = Optional.empty();
         }
         return result;
     }

@@ -25,6 +25,8 @@ package org.eolang.opeo.ast;
 
 import java.util.Collections;
 import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -37,6 +39,8 @@ import org.xembly.Directives;
  * In EO, it is represented as the keyword "$".
  * @since 0.1
  */
+@ToString
+@EqualsAndHashCode
 public final class This implements AstNode, Typed {
 
     /**

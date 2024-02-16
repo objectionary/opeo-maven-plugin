@@ -24,9 +24,11 @@
 package org.eolang.opeo.decompilation;
 
 import org.eolang.opeo.ast.LocalVariable;
+import org.eolang.opeo.ast.This;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 /**
@@ -45,6 +47,49 @@ class LocalVariablesTest {
             Matchers.equalTo(
                 new LocalVariable(index, type)
             )
+        );
+    }
+
+    @Test
+    void returnsThisForInstanceMethod() {
+        final int index = 0;
+        final Type type = Type.getType("Lorg/eolang/benchmark/A;");
+        MatcherAssert.assertThat(
+            "Since it is local variables in an instance method, the first variable is always `this`",
+            new LocalVariables(Opcodes.ACC_PUBLIC, "()V").variable(index, type),
+            Matchers.equalTo(new This(type))
+        );
+    }
+
+    @Test
+    void returnsArgumentWithTypeFromDescriptor() {
+        final int index = 1;
+        MatcherAssert.assertThat(
+            "Since it is local variable in an instance method, it should have 1 index, not 0. Moreover since we have a descriptor `(J)V`, the type should be `long` despite the fact that the passing type is `short`",
+            new LocalVariables(Opcodes.ACC_PUBLIC, "(J)V").variable(index, Type.SHORT_TYPE),
+            Matchers.equalTo(new LocalVariable(index, Type.LONG_TYPE))
+        );
+    }
+
+    @Test
+    void returnsArgumentForStaticMethod() {
+        final int index = 0;
+        MatcherAssert.assertThat(
+            "Since it is local variables in a static method, the first variable is a local variable",
+            new LocalVariables(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "(S)V")
+                .variable(index, Type.DOUBLE_TYPE),
+            Matchers.equalTo(new LocalVariable(index, Type.SHORT_TYPE))
+        );
+    }
+
+    @Test
+    void createsNewLocalVariable() {
+        final int index = 1;
+        final Type type = Type.INT_TYPE;
+        MatcherAssert.assertThat(
+            "Local variables should create a new variable if it is not in the cache",
+            new LocalVariables(Opcodes.ACC_PUBLIC, "()V").variable(index, type),
+            Matchers.equalTo(new LocalVariable(index, type))
         );
     }
 }
