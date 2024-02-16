@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -34,7 +35,7 @@ import org.xembly.Directives;
  * Constructor output node.
  * @since 0.1
  */
-public final class Constructor implements AstNode {
+public final class Constructor implements AstNode, Typed {
 
     /**
      * Constructor type.
@@ -130,5 +131,10 @@ public final class Constructor implements AstNode {
             )
         );
         return res;
+    }
+
+    @Override
+    public Type type() {
+        return Type.getObjectType(this.type);
     }
 }

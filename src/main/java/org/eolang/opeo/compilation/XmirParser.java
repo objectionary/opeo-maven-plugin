@@ -182,7 +182,7 @@ final class XmirParser {
                     )
             );
         } else if ("$".equals(base)) {
-            result = new This();
+            result = new This(node);
         } else if ("staticfield".equals(base)) {
             result = new ClassField(new Attributes(node.attribute("scope").orElseThrow()));
         } else if (".writearray".equals(base)) {

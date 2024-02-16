@@ -25,6 +25,7 @@ package org.eolang.opeo.ast;
 
 import java.util.Collections;
 import java.util.List;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -39,9 +40,9 @@ import org.xembly.Directives;
 public final class This implements AstNode, Typed {
 
     /**
-     * Type.
+     * Attributes.
      */
-    private final Type type;
+    private final Attributes attributes;
 
     /**
      * Default ctor.
@@ -54,15 +55,35 @@ public final class This implements AstNode, Typed {
 
     /**
      * Constructor.
+     * @param node XML node.
+     */
+    public This(final XmlNode node) {
+        this(This.xattrs(node));
+    }
+
+    /**
+     * Constructor.
      * @param type Type of this node.
      */
     public This(final Type type) {
-        this.type = type;
+        this(new Attributes().descriptor(type.getClassName()));
+    }
+
+    /**
+     * Constructor.
+     * @param attributes Attributes.
+     */
+    public This(final Attributes attributes) {
+        this.attributes = attributes;
     }
 
     @Override
     public Iterable<Directive> toXmir() {
-        return new Directives().add("o").attr("base", "$").up();
+        return new Directives()
+            .add("o")
+            .attr("base", "$")
+            .attr("scope", this.attributes)
+            .up();
     }
 
     @Override
@@ -72,6 +93,21 @@ public final class This implements AstNode, Typed {
 
     @Override
     public Type type() {
-        return this.type;
+        return Type.getObjectType(this.attributes.descriptor());
+    }
+
+    /**
+     * Extracts attributes from the XML node.
+     * @param node XML node.
+     * @return Attributes.
+     */
+    private static Attributes xattrs(final XmlNode node) {
+        return new Attributes(
+            node.attribute("scope").orElseThrow(
+                () -> new IllegalStateException(
+                    String.format("No scope attribute in this node %s", node)
+                )
+            )
+        );
     }
 }

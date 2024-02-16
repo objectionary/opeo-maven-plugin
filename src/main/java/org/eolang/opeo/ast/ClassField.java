@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import java.util.Collections;
 import java.util.List;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -33,7 +34,7 @@ import org.xembly.Directives;
  * Access to a static field.
  * @since 0.1
  */
-public final class ClassField implements AstNode {
+public final class ClassField implements AstNode, Typed {
 
     /**
      * Attributes.
@@ -77,5 +78,10 @@ public final class ClassField implements AstNode {
                 this.attributes.descriptor()
             )
         );
+    }
+
+    @Override
+    public Type type() {
+        return Type.getType(this.attributes.descriptor());
     }
 }
