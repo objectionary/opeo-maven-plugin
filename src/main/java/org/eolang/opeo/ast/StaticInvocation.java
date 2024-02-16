@@ -96,29 +96,40 @@ public final class StaticInvocation implements AstNode {
 
     /**
      * Constructor.
-     * @param attributes Attributes
+     * @param node XML node
      * @param arguments Arguments
      */
-    public StaticInvocation(final Attributes attributes, final List<AstNode> arguments) {
-        this(attributes, new Owner(attributes.owner()), arguments);
-    }
-
-    public StaticInvocation(final XmlNode node, final AstNode... arguments) {
+    public StaticInvocation(final XmlNode node, final List<AstNode> arguments) {
         this(
             StaticInvocation.xattrs(node),
             StaticInvocation.xowner(node),
-            Arrays.asList(arguments)
+            arguments
         );
     }
 
-    public StaticInvocation(
+    /**
+     * Constructor.
+     * @param node XML node
+     * @param arguments Arguments
+     */
+    StaticInvocation(final XmlNode node, final AstNode... arguments) {
+        this(node, Arrays.asList(arguments));
+    }
+
+    /**
+     * Constructor.
+     * @param attributes Method attributes
+     * @param owner Owner class name
+     * @param arguments Arguments
+     */
+    private StaticInvocation(
         final Attributes attributes,
         final Owner owner,
-        final List<AstNode> args
+        final List<AstNode> arguments
     ) {
         this.attributes = attributes;
         this.owner = owner;
-        this.args = args;
+        this.args = arguments;
     }
 
     @Override
@@ -139,7 +150,7 @@ public final class StaticInvocation implements AstNode {
         res.add(
             new Opcode(
                 Opcodes.INVOKESTATIC,
-                this.owner.toString(),
+                this.owner.toString().replace('.', '/'),
                 this.attributes.name(),
                 this.attributes.descriptor()
             )
@@ -147,6 +158,11 @@ public final class StaticInvocation implements AstNode {
         return res;
     }
 
+    /**
+     * Extracts attributes from the node.
+     * @param node XML node
+     * @return Attributes
+     */
     private static Attributes xattrs(final XmlNode node) {
         return node.attribute("scope").map(Attributes::new).orElseThrow(
             () -> new IllegalArgumentException(
@@ -155,6 +171,11 @@ public final class StaticInvocation implements AstNode {
         );
     }
 
+    /**
+     * Extracts owner from the node.
+     * @param node XML node
+     * @return Owner
+     */
     private static Owner xowner(final XmlNode node) {
         return node.child("o").attribute("base").map(Owner::new).orElseThrow(
             () -> new IllegalArgumentException(

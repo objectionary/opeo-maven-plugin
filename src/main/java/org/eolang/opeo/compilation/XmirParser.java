@@ -249,31 +249,26 @@ final class XmirParser {
                         )
                     )
             );
-            //@checkstyle MethodBodyCommentsCheck (10 line)
-            // @todo #117:30min Remove ad-hoc solution for replacing descriptors and owners.
-            //  We started type inference implementation. At least we infer types of
-            //  constructors. We need to infer descriptors and owners for all of the rest nodes.
-            //  Including instance and static method invocations.
-            if (
-                attributes.owner().equals("org/eolang/benchmark/B")
-                    && attributes.type().equals("method")
-                    && attributes.descriptor().equals("()I")
-                    && attributes.name().equals("bar")
-            ) {
-                attributes = new Attributes(
-                    "name=bar|descriptor=()I|owner=org/eolang/benchmark/BA|type=method"
-                );
-            }
             if ("static".equals(attributes.type())) {
-                final List<XmlNode> inner = node.children().collect(Collectors.toList());
-                final List<AstNode> arguments;
-                if (inner.isEmpty()) {
-                    arguments = Collections.emptyList();
-                } else {
-                    arguments = inner.stream().map(this::node).collect(Collectors.toList());
-                }
-                result = new StaticInvocation(attributes, arguments);
+                result = new StaticInvocation(
+                    node, this.args(node.children().collect(Collectors.toList()))
+                );
             } else {
+                //@checkstyle MethodBodyCommentsCheck (10 line)
+                // @todo #117:30min Remove ad-hoc solution for replacing descriptors and owners.
+                //  We started type inference implementation. At least we infer types of
+                //  constructors. We need to infer descriptors and owners for all of the rest nodes.
+                //  Including instance and static method invocations.
+                if (
+                    attributes.owner().equals("org/eolang/benchmark/B")
+                        && attributes.type().equals("method")
+                        && attributes.descriptor().equals("()I")
+                        && attributes.name().equals("bar")
+                ) {
+                    attributes = new Attributes(
+                        "name=bar|descriptor=()I|owner=org/eolang/benchmark/BA|type=method"
+                    );
+                }
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode target = this.node(inner.get(0));
                 result = new Invocation(target, attributes, this.args(inner));
