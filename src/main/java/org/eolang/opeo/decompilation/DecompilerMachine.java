@@ -163,9 +163,10 @@ public final class DecompilerMachine {
      * @return Decompiled instructions.
      */
     public Iterable<Directive> decompile(final Instruction... instructions) {
+        MachineState state = new MachineState(this.locals);
         Arrays.stream(instructions)
-            .forEach(inst -> this.handler(inst.opcode()).handle(inst));
-        return new Root(new ListOf<>(this.stack.descendingIterator())).toXmir();
+            .forEach(inst -> this.handler(inst.opcode()).handle(state.next(inst)));
+        return new Root(new ListOf<>(state.stack().descendingIterator())).toXmir();
     }
 
     /**
@@ -190,19 +191,6 @@ public final class DecompilerMachine {
     }
 
     /**
-     * Pops n arguments from the stack.
-     * @param number Number of arguments to pop.
-     * @return List of arguments.
-     */
-    private List<AstNode> popArguments(final int number) {
-        final List<AstNode> args = new LinkedList<>();
-        for (int index = 0; index < number; ++index) {
-            args.add(this.stack.pop());
-        }
-        return args;
-    }
-
-    /**
      * Instruction handler.
      * @since 0.1
      */
@@ -210,9 +198,9 @@ public final class DecompilerMachine {
 
         /**
          * Handle instruction.
-         * @param instruction Instruction to handle.
+         * @param state Current instruction to handle together with operand stack and variables.
          */
-        void handle(Instruction instruction);
+        void handle(MachineState state);
 
     }
 
@@ -236,10 +224,10 @@ public final class DecompilerMachine {
         }
 
         @Override
-        public void handle(final Instruction instruction) {
-            DecompilerMachine.this.stack.push(
-                DecompilerMachine.this.locals.variable(
-                    (Integer) instruction.operands().get(0),
+        public void handle(final MachineState state) {
+            state.stack().push(
+                state.variable(
+                    (Integer) state.operand(0),
                     this.type
                 )
             );
@@ -266,13 +254,12 @@ public final class DecompilerMachine {
         }
 
         @Override
-        public void handle(final Instruction instruction) {
-            final AstNode value = DecompilerMachine.this.stack.pop();
-            DecompilerMachine.this.stack.push(
+        public void handle(final MachineState state) {
+            final OperandStack stack = state.stack();
+            final AstNode value = stack.pop();
+            stack.push(
                 new VariableAssignment(
-                    (LocalVariable) DecompilerMachine.this.locals.variable(
-                        (Integer) instruction.operands().get(0), this.infer(value)
-                    ),
+                    (LocalVariable) state.variable((Integer) state.operand(0), this.infer(value)),
                     value
                 )
             );
@@ -305,10 +292,10 @@ public final class DecompilerMachine {
     private class StoreToArrayHandler implements InstructionHandler {
 
         @Override
-        public void handle(final Instruction instruction) {
-            final AstNode value = DecompilerMachine.this.stack.pop();
-            final AstNode index = DecompilerMachine.this.stack.pop();
-            final Reference array = (Reference) DecompilerMachine.this.stack.pop();
+        public void handle(final MachineState state) {
+            final AstNode value = state.stack().pop();
+            final AstNode index = state.stack().pop();
+            final Reference array = (Reference) state.stack().pop();
             array.link(new StoreArray(array.object(), index, value));
         }
     }
@@ -319,12 +306,11 @@ public final class DecompilerMachine {
      */
     private class NewArrayHandler implements InstructionHandler {
         @Override
-        public void handle(final Instruction instruction) {
-            final String type = (String) instruction.operand(0);
-            final AstNode size = DecompilerMachine.this.stack.pop();
-            final Reference reference = new Reference();
-            reference.link(new ArrayConstructor(size, type));
-            DecompilerMachine.this.stack.push(reference);
+        public void handle(final MachineState state) {
+            final String type = (String) state.operand(0);
+            final OperandStack stack = state.stack();
+            final AstNode size = stack.pop();
+            stack.push(new Reference(new ArrayConstructor(size, type)));
         }
 
     }
@@ -336,8 +322,8 @@ public final class DecompilerMachine {
     private class NewHandler implements InstructionHandler {
 
         @Override
-        public void handle(final Instruction instruction) {
-            DecompilerMachine.this.stack.push(new Reference());
+        public void handle(final MachineState state) {
+            state.stack().push(new Reference());
         }
 
     }
@@ -349,8 +335,8 @@ public final class DecompilerMachine {
     private class DupHandler implements InstructionHandler {
 
         @Override
-        public void handle(final Instruction instruction) {
-            DecompilerMachine.this.stack.push(DecompilerMachine.this.stack.peek());
+        public void handle(final MachineState state) {
+            state.stack().dup();
         }
 
     }
@@ -362,13 +348,13 @@ public final class DecompilerMachine {
     private class GetFieldHandler implements InstructionHandler {
 
         @Override
-        public void handle(final Instruction instruction) {
-            final String owner = (String) instruction.operand(0);
-            final String name = (String) instruction.operand(1);
-            final String descriptor = (String) instruction.operand(2);
-            DecompilerMachine.this.stack.push(
+        public void handle(final MachineState state) {
+            final String owner = (String) state.operand(0);
+            final String name = (String) state.operand(1);
+            final String descriptor = (String) state.operand(2);
+            state.stack().push(
                 new FieldRetrieval(
-                    DecompilerMachine.this.stack.pop(),
+                    state.stack().pop(),
                     new Attributes()
                         .name(name)
                         .descriptor(descriptor)
@@ -388,15 +374,15 @@ public final class DecompilerMachine {
     private class PutFieldHnadler implements InstructionHandler {
 
         @Override
-        public void handle(final Instruction instruction) {
-            final AstNode value = DecompilerMachine.this.stack.pop();
-            final String name = (String) instruction.operand(1);
-            final String owner = (String) instruction.operand(0);
-            final String descriptor = (String) instruction.operand(2);
-            DecompilerMachine.this.stack.push(
+        public void handle(final MachineState state) {
+            final AstNode value = state.stack().pop();
+            final String name = (String) state.operand(1);
+            final String owner = (String) state.operand(0);
+            final String descriptor = (String) state.operand(2);
+            state.stack().push(
                 new FieldAssignment(
                     new Field(
-                        DecompilerMachine.this.stack.pop(),
+                        state.stack().pop(),
                         new Attributes()
                             .name(name)
                             .owner(owner)
@@ -416,8 +402,8 @@ public final class DecompilerMachine {
     private class BipushHandler implements InstructionHandler {
 
         @Override
-        public void handle(final Instruction instruction) {
-            DecompilerMachine.this.stack.push(new Literal(instruction.operand(0)));
+        public void handle(final MachineState state) {
+            state.stack().push(new Literal(state.operand(0)));
         }
 
     }
@@ -429,7 +415,7 @@ public final class DecompilerMachine {
     private class PopHandler implements InstructionHandler {
 
         @Override
-        public void handle(final Instruction ignore) {
+        public void handle(final MachineState state) {
             // We do nothing here to keep the stack contains previous computations.
         }
 
@@ -442,11 +428,11 @@ public final class DecompilerMachine {
     private class ReturnHandler implements InstructionHandler {
 
         @Override
-        public void handle(final Instruction instruction) {
-            DecompilerMachine.this.stack.push(
+        public void handle(final MachineState state) {
+            state.stack().push(
                 new Opcode(
-                    instruction.opcode(),
-                    instruction.operands(),
+                    state.instruction().opcode(),
+                    state.instruction().operands(),
                     DecompilerMachine.this.counting()
                 )
             );
@@ -460,17 +446,17 @@ public final class DecompilerMachine {
      */
     private class InvokespecialHandler implements InstructionHandler {
         @Override
-        public void handle(final Instruction instruction) {
-            if (!instruction.operand(1).equals("<init>")) {
+        public void handle(final MachineState state) {
+            if (!state.operand(1).equals("<init>")) {
                 throw new UnsupportedOperationException(
-                    String.format("Instruction %s is not supported yet", instruction)
+                    String.format("Instruction %s is not supported yet", state)
                 );
             }
-            final String descriptor = (String) instruction.operand(2);
-            final List<AstNode> args = DecompilerMachine.this.popArguments(
+            final String descriptor = (String) state.operand(2);
+            final List<AstNode> args = state.stack().pop(
                 Type.getArgumentCount(descriptor)
             );
-            final String target = (String) instruction.operand(0);
+            final String target = (String) state.operand(0);
             //@checkstyle MethodBodyCommentsCheck (10 lines)
             // @todo #76:90min Target might not be an Object.
             //  Here we just compare with object, but if the current class has a parent, the
@@ -478,11 +464,11 @@ public final class DecompilerMachine {
             //  instead. Moreover, we have to pass the 'target' as an argument to the
             //  constructor of the 'Super' class somehow.
             if ("java/lang/Object".equals(target)) {
-                DecompilerMachine.this.stack.push(
-                    new Super(DecompilerMachine.this.stack.pop(), args, descriptor)
+                state.stack().push(
+                    new Super(state.stack().pop(), args, descriptor)
                 );
             } else {
-                ((Reference) DecompilerMachine.this.stack.pop())
+                ((Reference) state.stack().pop())
                     .link(new Constructor(target, new Attributes().descriptor(descriptor), args));
             }
         }
@@ -496,16 +482,16 @@ public final class DecompilerMachine {
     private class InvokevirtualHandler implements InstructionHandler {
 
         @Override
-        public void handle(final Instruction instruction) {
-            final String owner = (String) instruction.operand(0);
-            final String method = (String) instruction.operand(1);
-            final String descriptor = (String) instruction.operand(2);
-            final List<AstNode> args = DecompilerMachine.this.popArguments(
+        public void handle(final MachineState state) {
+            final String owner = (String) state.operand(0);
+            final String method = (String) state.operand(1);
+            final String descriptor = (String) state.operand(2);
+            final List<AstNode> args = state.stack().pop(
                 Type.getArgumentCount(descriptor)
             );
             Collections.reverse(args);
-            final AstNode source = DecompilerMachine.this.stack.pop();
-            DecompilerMachine.this.stack.push(
+            final AstNode source = state.stack().pop();
+            state.stack().push(
                 new Invocation(
                     source,
                     new Attributes().name(method).descriptor(descriptor).owner(owner),
@@ -522,14 +508,14 @@ public final class DecompilerMachine {
     private class InvokestaticHander implements InstructionHandler {
 
         @Override
-        public void handle(final Instruction instruction) {
-            final String owner = (String) instruction.operand(0);
-            final String method = (String) instruction.operand(1);
-            final String descriptor = (String) instruction.operand(2);
-            final List<AstNode> args = DecompilerMachine.this.popArguments(
+        public void handle(final MachineState state) {
+            final String owner = (String) state.operand(0);
+            final String method = (String) state.operand(1);
+            final String descriptor = (String) state.operand(2);
+            final List<AstNode> args = state.stack().pop(
                 Type.getArgumentCount(descriptor)
             );
-            DecompilerMachine.this.stack.push(
+            state.stack().push(
                 new StaticInvocation(owner, method, descriptor, args)
             );
         }
@@ -542,8 +528,8 @@ public final class DecompilerMachine {
     private class LdcHandler implements InstructionHandler {
 
         @Override
-        public void handle(final Instruction instruction) {
-            DecompilerMachine.this.stack.push(new Literal(instruction.operand(0)));
+        public void handle(final MachineState state) {
+            state.stack().push(new Literal(state.operand(0)));
         }
 
     }
@@ -555,11 +541,11 @@ public final class DecompilerMachine {
     private class UnimplementedHandler implements InstructionHandler {
 
         @Override
-        public void handle(final Instruction instruction) {
-            DecompilerMachine.this.stack.push(
+        public void handle(final MachineState state) {
+            state.stack().push(
                 new Opcode(
-                    instruction.opcode(),
-                    instruction.operands(),
+                    state.instruction().opcode(),
+                    state.instruction().operands(),
                     DecompilerMachine.this.counting()
                 )
             );
@@ -573,22 +559,22 @@ public final class DecompilerMachine {
      */
     private class AddHandler implements InstructionHandler {
         @Override
-        public void handle(final Instruction instruction) {
-            if (instruction.opcode() == Opcodes.IADD) {
-                final AstNode right = DecompilerMachine.this.stack.pop();
-                final AstNode left = DecompilerMachine.this.stack.pop();
-                DecompilerMachine.this.stack.push(new Add(left, right));
-            } else if (instruction.opcode() == Opcodes.LADD) {
-                final AstNode right = DecompilerMachine.this.stack.pop();
-                final AstNode left = DecompilerMachine.this.stack.pop();
-                DecompilerMachine.this.stack.push(
+        public void handle(final MachineState state) {
+            if (state.instruction().opcode() == Opcodes.IADD) {
+                final AstNode right = state.stack().pop();
+                final AstNode left = state.stack().pop();
+                state.stack().push(new Add(left, right));
+            } else if (state.instruction().opcode() == Opcodes.LADD) {
+                final AstNode right = state.stack().pop();
+                final AstNode left = state.stack().pop();
+                state.stack().push(
                     new Add(left, right, new Attributes().type("long"))
                 );
             } else {
-                DecompilerMachine.this.stack.push(
+                state.stack().push(
                     new Opcode(
-                        instruction.opcode(),
-                        instruction.operands(),
+                        state.instruction().opcode(),
+                        state.instruction().operands(),
                         DecompilerMachine.this.counting()
                     )
                 );
@@ -603,24 +589,24 @@ public final class DecompilerMachine {
      */
     private class SubstractionHandler implements InstructionHandler {
         @Override
-        public void handle(final Instruction instruction) {
-            if (instruction.opcode() == Opcodes.ISUB) {
-                final AstNode right = DecompilerMachine.this.stack.pop();
-                final AstNode left = DecompilerMachine.this.stack.pop();
-                DecompilerMachine.this.stack.push(
+        public void handle(final MachineState state) {
+            if (state.instruction().opcode() == Opcodes.ISUB) {
+                final AstNode right = state.stack().pop();
+                final AstNode left = state.stack().pop();
+                state.stack().push(
                     new Substraction(left, right, new Attributes().type("int"))
                 );
-            } else if (instruction.opcode() == Opcodes.LSUB) {
-                final AstNode right = DecompilerMachine.this.stack.pop();
-                final AstNode left = DecompilerMachine.this.stack.pop();
-                DecompilerMachine.this.stack.push(
+            } else if (state.instruction().opcode() == Opcodes.LSUB) {
+                final AstNode right = state.stack().pop();
+                final AstNode left = state.stack().pop();
+                state.stack().push(
                     new Substraction(left, right, new Attributes().type("long"))
                 );
             } else {
-                DecompilerMachine.this.stack.push(
+                state.stack().push(
                     new Opcode(
-                        instruction.opcode(),
-                        instruction.operands(),
+                        state.instruction().opcode(),
+                        state.instruction().operands(),
                         DecompilerMachine.this.counting()
                     )
                 );
@@ -635,16 +621,16 @@ public final class DecompilerMachine {
      */
     private class MulHandler implements InstructionHandler {
         @Override
-        public void handle(final Instruction instruction) {
-            if (instruction.opcode() == Opcodes.IMUL) {
-                final AstNode right = DecompilerMachine.this.stack.pop();
-                final AstNode left = DecompilerMachine.this.stack.pop();
-                DecompilerMachine.this.stack.push(new Mul(left, right));
+        public void handle(final MachineState state) {
+            if (state.instruction().opcode() == Opcodes.IMUL) {
+                final AstNode right = state.stack().pop();
+                final AstNode left = state.stack().pop();
+                state.stack().push(new Mul(left, right));
             } else {
-                DecompilerMachine.this.stack.push(
+                state.stack().push(
                     new Opcode(
-                        instruction.opcode(),
-                        instruction.operands(),
+                        state.instruction().opcode(),
+                        state.instruction().operands(),
                         DecompilerMachine.this.counting()
                     )
                 );
@@ -660,29 +646,29 @@ public final class DecompilerMachine {
     private class IconstHandler implements InstructionHandler {
 
         @Override
-        public void handle(final Instruction instruction) {
-            switch (instruction.opcode()) {
+        public void handle(final MachineState state) {
+            switch (state.instruction().opcode()) {
                 case Opcodes.ICONST_0:
-                    DecompilerMachine.this.stack.push(new Literal(0));
+                    state.stack().push(new Literal(0));
                     break;
                 case Opcodes.ICONST_1:
-                    DecompilerMachine.this.stack.push(new Literal(1));
+                    state.stack().push(new Literal(1));
                     break;
                 case Opcodes.ICONST_2:
-                    DecompilerMachine.this.stack.push(new Literal(2));
+                    state.stack().push(new Literal(2));
                     break;
                 case Opcodes.ICONST_3:
-                    DecompilerMachine.this.stack.push(new Literal(3));
+                    state.stack().push(new Literal(3));
                     break;
                 case Opcodes.ICONST_4:
-                    DecompilerMachine.this.stack.push(new Literal(4));
+                    state.stack().push(new Literal(4));
                     break;
                 case Opcodes.ICONST_5:
-                    DecompilerMachine.this.stack.push(new Literal(5));
+                    state.stack().push(new Literal(5));
                     break;
                 default:
                     throw new UnsupportedOperationException(
-                        String.format("Instruction %s is not supported yet", instruction)
+                        String.format("Instruction %s is not supported yet", state.instruction())
                     );
             }
         }
@@ -696,9 +682,9 @@ public final class DecompilerMachine {
     private class LabelHandler implements InstructionHandler {
 
         @Override
-        public void handle(final Instruction instruction) {
-            DecompilerMachine.this.stack.push(
-                new Label(new Literal(instruction.operand(0)))
+        public void handle(final MachineState state) {
+            state.stack().push(
+                new Label(new Literal(state.operand(0)))
             );
         }
     }
@@ -709,11 +695,11 @@ public final class DecompilerMachine {
      */
     private class GetStaticHnadler implements InstructionHandler {
         @Override
-        public void handle(final Instruction instruction) {
-            final String klass = (String) instruction.operand(0);
-            final String method = (String) instruction.operand(1);
-            final String descriptor = (String) instruction.operand(2);
-            DecompilerMachine.this.stack.push(new ClassField(klass, method, descriptor));
+        public void handle(final MachineState state) {
+            final String klass = (String) state.operand(0);
+            final String method = (String) state.operand(1);
+            final String descriptor = (String) state.operand(2);
+            state.stack().push(new ClassField(klass, method, descriptor));
         }
     }
 }

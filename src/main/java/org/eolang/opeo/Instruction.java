@@ -24,6 +24,8 @@
 package org.eolang.opeo;
 
 import java.util.List;
+import org.eolang.opeo.ast.Opcode;
+import org.objectweb.asm.Opcodes;
 
 /**
  * Instruction abstraction.
@@ -49,4 +51,25 @@ public interface Instruction {
      * @return Operands.
      */
     List<Object> operands();
+
+
+    final class Nop implements Instruction {
+
+        @Override
+        public int opcode() {
+            return Opcodes.NOP;
+        }
+
+        @Override
+        public Object operand(final int index) {
+            throw new UnsupportedOperationException(
+                String.format("NOP instruction doesn't have %d operand", index)
+            );
+        }
+
+        @Override
+        public List<Object> operands() {
+            throw new UnsupportedOperationException("NOP instruction doesn't have operands");
+        }
+    }
 }
