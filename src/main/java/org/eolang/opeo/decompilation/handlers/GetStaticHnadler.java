@@ -31,7 +31,7 @@ import org.eolang.opeo.decompilation.InstructionHandler;
  * Getstatic instruction handler.
  * @since 0.1
  */
-public class GetStaticHnadler implements InstructionHandler {
+public final class GetStaticHnadler implements InstructionHandler {
     @Override
     public void handle(final DecompilerState state) {
         final String klass = (String) state.operand(0);

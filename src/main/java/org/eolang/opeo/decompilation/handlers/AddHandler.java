@@ -35,11 +35,18 @@ import org.objectweb.asm.Opcodes;
  * Add instruction handler.
  * @since 0.1
  */
-public class AddHandler implements InstructionHandler {
+public final class AddHandler implements InstructionHandler {
 
+    /**
+     * Do we put numbers to opcodes?
+     */
     private final boolean counting;
 
-    public AddHandler(final boolean counting) {
+    /**
+     * Constructor.
+     * @param counting Do we put numbers to opcodes?
+     */
+    AddHandler(final boolean counting) {
         this.counting = counting;
     }
 

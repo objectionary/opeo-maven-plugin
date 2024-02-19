@@ -34,11 +34,18 @@ import org.objectweb.asm.Opcodes;
  * Mul instruction handler.
  * @since 0.1
  */
-public class MulHandler implements InstructionHandler {
+public final class MulHandler implements InstructionHandler {
 
+    /**
+     * Do we put numbers to opcodes?
+     */
     private final boolean counting;
 
-    public MulHandler(final boolean counting) {
+    /**
+     * Constructor.
+     * @param counting Do we put numbers to opcodes?
+     */
+    MulHandler(final boolean counting) {
         this.counting = counting;
     }
 

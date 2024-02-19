@@ -35,7 +35,7 @@ import org.objectweb.asm.Opcodes;
  * Substraction instruction handler.
  * @since 0.1
  */
-public class SubstractionHandler implements InstructionHandler {
+public final class SubstractionHandler implements InstructionHandler {
 
     private final boolean counting;
 

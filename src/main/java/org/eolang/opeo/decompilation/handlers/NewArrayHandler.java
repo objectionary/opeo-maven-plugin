@@ -34,7 +34,8 @@ import org.eolang.opeo.decompilation.OperandStack;
  * New array instruction handler.
  * @since 0.1
  */
-public class NewArrayHandler implements InstructionHandler {
+public final class NewArrayHandler implements InstructionHandler {
+
     @Override
     public void handle(final DecompilerState state) {
         final String type = (String) state.operand(0);

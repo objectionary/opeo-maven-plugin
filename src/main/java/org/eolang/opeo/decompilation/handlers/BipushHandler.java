@@ -31,7 +31,7 @@ import org.eolang.opeo.decompilation.InstructionHandler;
  * Bipush instruction handler.
  * @since 0.1
  */
-public class BipushHandler implements InstructionHandler {
+public final class BipushHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {

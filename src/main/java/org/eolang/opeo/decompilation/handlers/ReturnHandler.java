@@ -31,7 +31,7 @@ import org.eolang.opeo.decompilation.InstructionHandler;
  * Return instruction handler.
  * @since 0.1
  */
-public class ReturnHandler implements InstructionHandler {
+public final class ReturnHandler implements InstructionHandler {
 
     private final boolean counting;
 

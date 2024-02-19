@@ -31,7 +31,7 @@ import org.eolang.opeo.decompilation.InstructionHandler;
  * New instruction handler.
  * @since 0.1
  */
-public class NewHandler implements InstructionHandler {
+public final class NewHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {

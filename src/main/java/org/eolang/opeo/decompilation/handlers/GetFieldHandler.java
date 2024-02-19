@@ -32,7 +32,7 @@ import org.eolang.opeo.decompilation.InstructionHandler;
  * Getfield instruction handler.
  * @since 0.1
  */
-public class GetFieldHandler implements InstructionHandler {
+public final class GetFieldHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {

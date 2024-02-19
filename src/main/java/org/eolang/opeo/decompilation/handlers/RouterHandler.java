@@ -50,6 +50,10 @@ public final class RouterHandler implements InstructionHandler {
      */
     private final Map<Integer, InstructionHandler> handlers;
 
+    /**
+     * Constructor.
+     * @param counting Do we put numbers to opcodes?
+     */
     public RouterHandler(final boolean counting) {
         this(
             new MapOf<>(

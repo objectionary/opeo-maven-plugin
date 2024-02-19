@@ -34,7 +34,7 @@ import org.objectweb.asm.Type;
  * Invokestatic instruction handler.
  * @since 0.1
  */
-public class InvokestaticHander implements InstructionHandler {
+public final class InvokestaticHander implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {

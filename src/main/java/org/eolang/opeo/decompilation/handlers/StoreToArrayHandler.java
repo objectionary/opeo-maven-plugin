@@ -36,7 +36,7 @@ import org.eolang.opeo.decompilation.InstructionHandler;
  * Stack [before]->[after]: "arrayref, index, value →"
  * @since 0.1
  */
-public class StoreToArrayHandler implements InstructionHandler {
+public final class StoreToArrayHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {

@@ -30,7 +30,7 @@ import org.eolang.opeo.decompilation.InstructionHandler;
  * Pop instruction handler.
  * @since 0.1
  */
-public class PopHandler implements InstructionHandler {
+public final class PopHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {

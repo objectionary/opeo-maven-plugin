@@ -31,7 +31,7 @@ import org.eolang.opeo.decompilation.InstructionHandler;
  * Ldc instruction handler.
  * @since 0.1
  */
-public class LdcHandler implements InstructionHandler {
+public final class LdcHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {

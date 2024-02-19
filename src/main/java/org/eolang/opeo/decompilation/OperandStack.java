@@ -74,7 +74,7 @@ public final class OperandStack {
      * @param number Number of nodes to pop.
      * @return Collection of nodes.
      */
-    public List<AstNode> pop(int number) {
+    public List<AstNode> pop(final int number) {
         final List<AstNode> args = new LinkedList<>();
         for (int index = 0; index < number; ++index) {
             args.add(this.stack.pop());

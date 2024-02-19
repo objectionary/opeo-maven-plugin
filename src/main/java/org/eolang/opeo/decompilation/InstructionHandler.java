@@ -34,5 +34,5 @@ public interface InstructionHandler {
      * Handle instruction.
      * @param state Current instruction to handle together with operand stack and variables.
      */
-    void handle(final DecompilerState state);
+    void handle(DecompilerState state);
 }

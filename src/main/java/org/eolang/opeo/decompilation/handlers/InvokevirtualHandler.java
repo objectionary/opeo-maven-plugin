@@ -36,7 +36,7 @@ import org.objectweb.asm.Type;
  * Invokevirtual instruction handler.
  * @since 0.1
  */
-public class InvokevirtualHandler implements InstructionHandler {
+public final class InvokevirtualHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {

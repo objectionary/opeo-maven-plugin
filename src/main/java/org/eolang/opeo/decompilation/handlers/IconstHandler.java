@@ -32,7 +32,7 @@ import org.objectweb.asm.Opcodes;
  * Iconst instruction handler.
  * @since 0.1
  */
-public class IconstHandler implements InstructionHandler {
+public final class IconstHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {
