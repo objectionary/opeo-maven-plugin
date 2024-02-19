@@ -26,8 +26,8 @@ package org.eolang.opeo.decompilation.handlers;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.StoreArray;
-import org.eolang.opeo.decompilation.InstructionHandler;
 import org.eolang.opeo.decompilation.DecompilerState;
+import org.eolang.opeo.decompilation.InstructionHandler;
 
 /**
  * Store to array instruction handler.

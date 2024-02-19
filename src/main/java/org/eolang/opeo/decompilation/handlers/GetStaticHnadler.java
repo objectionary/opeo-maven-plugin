@@ -24,8 +24,8 @@
 package org.eolang.opeo.decompilation.handlers;
 
 import org.eolang.opeo.ast.ClassField;
-import org.eolang.opeo.decompilation.InstructionHandler;
 import org.eolang.opeo.decompilation.DecompilerState;
+import org.eolang.opeo.decompilation.InstructionHandler;
 
 /**
  * Getstatic instruction handler.

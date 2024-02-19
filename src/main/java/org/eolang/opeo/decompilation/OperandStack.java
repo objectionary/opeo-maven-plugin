@@ -37,6 +37,7 @@ import org.eolang.opeo.ast.AstNode;
  * <a href="https://stackoverflow.com/questions/24427056/what-is-an-operand-stack">here</a>
  * </p>
  * It emulates the behaviour of JVM operand stack.
+ * @since 0.2
  */
 public final class OperandStack {
 

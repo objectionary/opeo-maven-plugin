@@ -26,8 +26,8 @@ package org.eolang.opeo.decompilation.handlers;
 import java.util.List;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.StaticInvocation;
-import org.eolang.opeo.decompilation.InstructionHandler;
 import org.eolang.opeo.decompilation.DecompilerState;
+import org.eolang.opeo.decompilation.InstructionHandler;
 import org.objectweb.asm.Type;
 
 /**

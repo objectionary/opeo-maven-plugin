@@ -26,8 +26,8 @@ package org.eolang.opeo.decompilation.handlers;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Mul;
 import org.eolang.opeo.ast.Opcode;
-import org.eolang.opeo.decompilation.InstructionHandler;
 import org.eolang.opeo.decompilation.DecompilerState;
+import org.eolang.opeo.decompilation.InstructionHandler;
 import org.objectweb.asm.Opcodes;
 
 /**

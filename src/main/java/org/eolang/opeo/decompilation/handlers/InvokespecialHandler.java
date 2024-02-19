@@ -29,8 +29,8 @@ import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Super;
-import org.eolang.opeo.decompilation.InstructionHandler;
 import org.eolang.opeo.decompilation.DecompilerState;
+import org.eolang.opeo.decompilation.InstructionHandler;
 import org.objectweb.asm.Type;
 
 /**

@@ -23,8 +23,8 @@
  */
 package org.eolang.opeo.decompilation.handlers;
 
-import org.eolang.opeo.decompilation.InstructionHandler;
 import org.eolang.opeo.decompilation.DecompilerState;
+import org.eolang.opeo.decompilation.InstructionHandler;
 import org.objectweb.asm.Type;
 
 /**

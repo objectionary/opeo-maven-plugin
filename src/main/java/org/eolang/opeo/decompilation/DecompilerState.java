@@ -27,6 +27,11 @@ import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.AstNode;
 import org.objectweb.asm.Type;
 
+/**
+ * Internal state of decompiler.
+ * This state changes all the time between instruction handlers.
+ * @since 0.2
+ */
 public final class DecompilerState {
 
     /**

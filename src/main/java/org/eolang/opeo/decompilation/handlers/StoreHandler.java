@@ -27,8 +27,8 @@ import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Typed;
 import org.eolang.opeo.ast.VariableAssignment;
-import org.eolang.opeo.decompilation.InstructionHandler;
 import org.eolang.opeo.decompilation.DecompilerState;
+import org.eolang.opeo.decompilation.InstructionHandler;
 import org.eolang.opeo.decompilation.OperandStack;
 import org.objectweb.asm.Type;
 
