@@ -24,7 +24,6 @@
 package org.eolang.opeo;
 
 import java.util.List;
-import org.eolang.opeo.ast.Opcode;
 import org.objectweb.asm.Opcodes;
 
 /**
@@ -52,7 +51,11 @@ public interface Instruction {
      */
     List<Object> operands();
 
-
+    /**
+     * Not an operation instruction.
+     * Stub class that is useful for some cases.
+     * @since 0.2
+     */
     final class Nop implements Instruction {
 
         @Override

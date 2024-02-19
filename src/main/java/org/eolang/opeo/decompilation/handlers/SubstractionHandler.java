@@ -37,9 +37,16 @@ import org.objectweb.asm.Opcodes;
  */
 public final class SubstractionHandler implements InstructionHandler {
 
+    /**
+     * Do we put numbers to opcodes?
+     */
     private final boolean counting;
 
-    public SubstractionHandler(final boolean counting) {
+    /**
+     * Constructor.
+     * @param counting Do we put numbers to opcodes?
+     */
+    SubstractionHandler(final boolean counting) {
         this.counting = counting;
     }
 

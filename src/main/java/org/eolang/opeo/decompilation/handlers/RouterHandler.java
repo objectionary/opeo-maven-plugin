@@ -101,7 +101,7 @@ public final class RouterHandler implements InstructionHandler {
     }
 
     /**
-     * Constructor
+     * Constructor.
      * @param handlers All handlers that will try to handle incoming instructions.
      */
     private RouterHandler(final Map<Integer, InstructionHandler> handlers) {
@@ -119,16 +119,14 @@ public final class RouterHandler implements InstructionHandler {
      * @return Instruction handler.
      */
     private InstructionHandler handler(final int opcode) {
-        return this.handlers.getOrDefault(
-            opcode, this.handlers.get(RouterHandler.UNIMPLEMENTED));
+        return this.handlers.getOrDefault(opcode, this.handlers.get(RouterHandler.UNIMPLEMENTED));
     }
-
 
     /**
      * Unimplemented instruction handler.
      * @since 0.1
      */
-    private static class UnimplementedHandler implements InstructionHandler {
+    private static final class UnimplementedHandler implements InstructionHandler {
 
         /**
          * Do we put numbers to opcodes?

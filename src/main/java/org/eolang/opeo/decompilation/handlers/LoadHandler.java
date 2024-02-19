@@ -30,8 +30,8 @@ import org.objectweb.asm.Type;
 /**
  * Instruction handler.
  * This handler might understand the following instructions:
- * aload: 19 | 0001 1001 |	1: index |	→ objectref | load a reference onto the stack from a local variable #index
- * aload_0:	2a | 0010 1010 | → objectref | load a reference onto the stack from local variable 0
+ * aload: 1: index | → objectref | load a reference onto the stack from a local variable #index
+ * aload_0: → objectref | load a reference onto the stack from local variable 0
  * ...
  * @since 0.1
  */

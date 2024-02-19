@@ -33,9 +33,16 @@ import org.eolang.opeo.decompilation.InstructionHandler;
  */
 public final class ReturnHandler implements InstructionHandler {
 
+    /**
+     * Do we put numbers to opcodes?
+     */
     private final boolean counting;
 
-    public ReturnHandler(final boolean counting) {
+    /**
+     * Constructor.
+     * @param counting Do we put numbers to opcodes?
+     */
+    ReturnHandler(final boolean counting) {
         this.counting = counting;
     }
 

@@ -30,7 +30,7 @@ import org.eolang.opeo.decompilation.InstructionHandler;
  * Dup instruction handler.
  * @since 0.1
  */
-public class DupHandler implements InstructionHandler {
+public final class DupHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {
