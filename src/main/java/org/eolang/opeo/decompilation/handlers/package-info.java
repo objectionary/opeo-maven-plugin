@@ -24,5 +24,9 @@
 /**
  * This package contains all the opcode instruction handlers.
  * @since 0.2
+ * @todo #150:90min Continue handlers refactoring.
+ *  We need to rename some of the handlers in order to match them with instructions.
+ *  It would also be good to generalize some of the handlers. For example, AddHandler might
+ *  handle all the types, not only Integer and Long.
  */
 package org.eolang.opeo.decompilation.handlers;
