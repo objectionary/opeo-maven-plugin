@@ -29,7 +29,7 @@ import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.MachineState;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Type;
 
 /**
@@ -39,7 +39,7 @@ import org.objectweb.asm.Type;
 public class InvokevirtualHandler implements InstructionHandler {
 
     @Override
-    public void handle(final MachineState state) {
+    public void handle(final DecompilerState state) {
         final String owner = (String) state.operand(0);
         final String method = (String) state.operand(1);
         final String descriptor = (String) state.operand(2);

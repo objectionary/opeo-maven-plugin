@@ -27,7 +27,7 @@ import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Mul;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.MachineState;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 
 /**
@@ -43,7 +43,7 @@ public class MulHandler implements InstructionHandler {
     }
 
     @Override
-    public void handle(final MachineState state) {
+    public void handle(final DecompilerState state) {
         if (state.instruction().opcode() == Opcodes.IMUL) {
             final AstNode right = state.stack().pop();
             final AstNode left = state.stack().pop();

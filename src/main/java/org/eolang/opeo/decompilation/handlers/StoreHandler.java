@@ -28,7 +28,7 @@ import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Typed;
 import org.eolang.opeo.ast.VariableAssignment;
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.MachineState;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.OperandStack;
 import org.objectweb.asm.Type;
 
@@ -52,7 +52,7 @@ public final class StoreHandler implements InstructionHandler {
     }
 
     @Override
-    public void handle(final MachineState state) {
+    public void handle(final DecompilerState state) {
         final OperandStack stack = state.stack();
         final AstNode value = stack.pop();
         stack.push(

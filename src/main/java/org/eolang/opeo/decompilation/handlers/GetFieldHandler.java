@@ -26,7 +26,7 @@ package org.eolang.opeo.decompilation.handlers;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.FieldRetrieval;
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.MachineState;
+import org.eolang.opeo.decompilation.DecompilerState;
 
 /**
  * Getfield instruction handler.
@@ -35,7 +35,7 @@ import org.eolang.opeo.decompilation.MachineState;
 public class GetFieldHandler implements InstructionHandler {
 
     @Override
-    public void handle(final MachineState state) {
+    public void handle(final DecompilerState state) {
         final String owner = (String) state.operand(0);
         final String name = (String) state.operand(1);
         final String descriptor = (String) state.operand(2);

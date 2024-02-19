@@ -24,7 +24,7 @@
 package org.eolang.opeo.decompilation.handlers;
 
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.MachineState;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Type;
 
 /**
@@ -51,7 +51,7 @@ public final class LoadHandler implements InstructionHandler {
     }
 
     @Override
-    public void handle(final MachineState state) {
+    public void handle(final DecompilerState state) {
         state.stack().push(
             state.variable(
                 (Integer) state.operand(0),

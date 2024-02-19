@@ -25,7 +25,7 @@ package org.eolang.opeo.decompilation.handlers;
 
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.MachineState;
+import org.eolang.opeo.decompilation.DecompilerState;
 
 /**
  * Getstatic instruction handler.
@@ -33,7 +33,7 @@ import org.eolang.opeo.decompilation.MachineState;
  */
 public class GetStaticHnadler implements InstructionHandler {
     @Override
-    public void handle(final MachineState state) {
+    public void handle(final DecompilerState state) {
         final String klass = (String) state.operand(0);
         final String method = (String) state.operand(1);
         final String descriptor = (String) state.operand(2);

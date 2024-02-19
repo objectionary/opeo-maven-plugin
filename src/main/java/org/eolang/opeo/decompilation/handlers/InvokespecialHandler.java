@@ -30,7 +30,7 @@ import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.MachineState;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Type;
 
 /**
@@ -39,7 +39,7 @@ import org.objectweb.asm.Type;
  */
 public class InvokespecialHandler implements InstructionHandler {
     @Override
-    public void handle(final MachineState state) {
+    public void handle(final DecompilerState state) {
         if (!state.operand(1).equals("<init>")) {
             throw new UnsupportedOperationException(
                 String.format("Instruction %s is not supported yet", state)

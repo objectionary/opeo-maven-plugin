@@ -27,7 +27,7 @@ import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.MachineState;
+import org.eolang.opeo.decompilation.DecompilerState;
 
 /**
  * Store to array instruction handler.
@@ -39,7 +39,7 @@ import org.eolang.opeo.decompilation.MachineState;
 public class StoreToArrayHandler implements InstructionHandler {
 
     @Override
-    public void handle(final MachineState state) {
+    public void handle(final DecompilerState state) {
         final AstNode value = state.stack().pop();
         final AstNode index = state.stack().pop();
         final Reference array = (Reference) state.stack().pop();

@@ -27,7 +27,7 @@ import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.MachineState;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.OperandStack;
 
 /**
@@ -36,7 +36,7 @@ import org.eolang.opeo.decompilation.OperandStack;
  */
 public class NewArrayHandler implements InstructionHandler {
     @Override
-    public void handle(final MachineState state) {
+    public void handle(final DecompilerState state) {
         final String type = (String) state.operand(0);
         final OperandStack stack = state.stack();
         final AstNode size = stack.pop();

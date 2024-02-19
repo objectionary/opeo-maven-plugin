@@ -25,7 +25,7 @@ package org.eolang.opeo.decompilation.handlers;
 
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.MachineState;
+import org.eolang.opeo.decompilation.DecompilerState;
 
 /**
  * Bipush instruction handler.
@@ -34,7 +34,7 @@ import org.eolang.opeo.decompilation.MachineState;
 public class BipushHandler implements InstructionHandler {
 
     @Override
-    public void handle(final MachineState state) {
+    public void handle(final DecompilerState state) {
         state.stack().push(new Literal(state.operand(0)));
     }
 

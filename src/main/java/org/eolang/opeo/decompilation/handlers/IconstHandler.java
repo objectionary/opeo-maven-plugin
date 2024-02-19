@@ -25,7 +25,7 @@ package org.eolang.opeo.decompilation.handlers;
 
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.MachineState;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 
 /**
@@ -35,7 +35,7 @@ import org.objectweb.asm.Opcodes;
 public class IconstHandler implements InstructionHandler {
 
     @Override
-    public void handle(final MachineState state) {
+    public void handle(final DecompilerState state) {
         switch (state.instruction().opcode()) {
             case Opcodes.ICONST_0:
                 state.stack().push(new Literal(0));

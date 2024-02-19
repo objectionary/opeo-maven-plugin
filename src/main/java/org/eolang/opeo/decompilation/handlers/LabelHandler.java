@@ -26,7 +26,7 @@ package org.eolang.opeo.decompilation.handlers;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.MachineState;
+import org.eolang.opeo.decompilation.DecompilerState;
 
 /**
  * Label instruction handler.
@@ -35,7 +35,7 @@ import org.eolang.opeo.decompilation.MachineState;
 public class LabelHandler implements InstructionHandler {
 
     @Override
-    public void handle(final MachineState state) {
+    public void handle(final DecompilerState state) {
         state.stack().push(
             new Label(new Literal(state.operand(0)))
         );

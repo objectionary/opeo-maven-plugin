@@ -24,7 +24,7 @@
 package org.eolang.opeo.decompilation.handlers;
 
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.MachineState;
+import org.eolang.opeo.decompilation.DecompilerState;
 
 /**
  * Dup instruction handler.
@@ -33,7 +33,7 @@ import org.eolang.opeo.decompilation.MachineState;
 public class DupHandler implements InstructionHandler {
 
     @Override
-    public void handle(final MachineState state) {
+    public void handle(final DecompilerState state) {
         state.stack().dup();
     }
 

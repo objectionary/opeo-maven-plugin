@@ -28,7 +28,7 @@ import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.MachineState;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.jeo.JeoLabel;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -105,7 +105,7 @@ public final class RouterHandler implements InstructionHandler {
     }
 
     @Override
-    public void handle(final MachineState state) {
+    public void handle(final DecompilerState state) {
         this.handler(state.instruction().opcode()).handle(state);
     }
 
@@ -140,7 +140,7 @@ public final class RouterHandler implements InstructionHandler {
         }
 
         @Override
-        public void handle(final MachineState state) {
+        public void handle(final DecompilerState state) {
             state.stack().push(
                 new Opcode(
                     state.instruction().opcode(),

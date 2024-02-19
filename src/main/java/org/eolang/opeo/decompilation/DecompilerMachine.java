@@ -81,7 +81,7 @@ public final class DecompilerMachine {
      * @return Decompiled instructions.
      */
     public Iterable<Directive> decompile(final Instruction... instructions) {
-        final MachineState state = new MachineState(this.locals);
+        final DecompilerState state = new DecompilerState(this.locals);
         Arrays.stream(instructions)
             .forEach(inst -> this.router.handle(state.next(inst)));
         return new Root(new ListOf<>(state.stack().descendingIterator())).toXmir();
