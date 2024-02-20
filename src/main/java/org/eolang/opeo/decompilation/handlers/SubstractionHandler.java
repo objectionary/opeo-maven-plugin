@@ -24,12 +24,9 @@
 package org.eolang.opeo.decompilation.handlers;
 
 import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.Attributes;
-import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Substraction;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.objectweb.asm.Opcodes;
 
 /**
  * Substraction instruction handler.
@@ -37,41 +34,10 @@ import org.objectweb.asm.Opcodes;
  */
 public final class SubstractionHandler implements InstructionHandler {
 
-    /**
-     * Do we put numbers to opcodes?
-     */
-    private final boolean counting;
-
-    /**
-     * Constructor.
-     * @param counting Do we put numbers to opcodes?
-     */
-    SubstractionHandler(final boolean counting) {
-        this.counting = counting;
-    }
-
     @Override
     public void handle(final DecompilerState state) {
-        if (state.instruction().opcode() == Opcodes.ISUB) {
-            final AstNode right = state.stack().pop();
-            final AstNode left = state.stack().pop();
-            state.stack().push(
-                new Substraction(left, right, new Attributes().type("int"))
-            );
-        } else if (state.instruction().opcode() == Opcodes.LSUB) {
-            final AstNode right = state.stack().pop();
-            final AstNode left = state.stack().pop();
-            state.stack().push(
-                new Substraction(left, right, new Attributes().type("long"))
-            );
-        } else {
-            state.stack().push(
-                new Opcode(
-                    state.instruction().opcode(),
-                    state.instruction().operands(),
-                    this.counting
-                )
-            );
-        }
+        final AstNode right = state.stack().pop();
+        final AstNode left = state.stack().pop();
+        state.stack().push(new Substraction(left, right));
     }
 }

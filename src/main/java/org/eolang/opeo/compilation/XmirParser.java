@@ -152,11 +152,10 @@ final class XmirParser {
             final AstNode right = this.node(inner.get(1));
             result = new Add(left, right, attrs);
         } else if (".minus".equals(base)) {
-            final Attributes attrs = new Attributes(node.attribute("scope").orElseThrow());
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode left = this.node(inner.get(0));
             final AstNode right = this.node(inner.get(1));
-            result = new Substraction(left, right, attrs);
+            result = new Substraction(left, right);
         } else if ("opcode".equals(base)) {
             final XmlInstruction instruction = new XmlInstruction(node.node());
             final int opcode = instruction.opcode();
