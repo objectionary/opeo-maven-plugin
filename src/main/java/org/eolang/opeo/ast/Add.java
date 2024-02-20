@@ -33,6 +33,10 @@ import org.xembly.Directives;
 /**
  * Add output node.
  * @since 0.1
+ * @todo #129:90min Add more tests for Add class.
+ *  Add tests for all supported types of literals. Most probably, we will be able to
+ *  remove attributes field from this class, when implement honest type inference.
+ *  You can check how it's done in {@link Substraction} class.
  */
 public final class Add implements AstNode, Typed {
 
