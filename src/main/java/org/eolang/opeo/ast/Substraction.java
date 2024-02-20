@@ -79,7 +79,11 @@ public final class Substraction implements AstNode, Typed {
         final Type result;
         final Type ltype = this.cast(this.left).type();
         final Type rtype = this.cast(this.right).type();
-        if (ltype.equals(Type.LONG_TYPE) || rtype.equals(Type.LONG_TYPE)) {
+        if (ltype.equals(Type.DOUBLE_TYPE) || rtype.equals(Type.DOUBLE_TYPE)) {
+            result = Type.DOUBLE_TYPE;
+        } else if (ltype.equals(Type.FLOAT_TYPE) || rtype.equals(Type.FLOAT_TYPE)) {
+            result = Type.FLOAT_TYPE;
+        } else if (ltype.equals(Type.LONG_TYPE) || rtype.equals(Type.LONG_TYPE)) {
             result = Type.LONG_TYPE;
         } else {
             result = Type.INT_TYPE;
@@ -87,6 +91,11 @@ public final class Substraction implements AstNode, Typed {
         return result;
     }
 
+    /**
+     * Cast node to a typed node.
+     * @param node Node to cast.
+     * @return Typed node.
+     */
     private Typed cast(final AstNode node) {
         final Typed result;
         if (node instanceof Typed) {
@@ -105,8 +114,13 @@ public final class Substraction implements AstNode, Typed {
      */
     private Opcode opcode() {
         final Opcode result;
-        if (this.type().equals(Type.LONG_TYPE)) {
+        final Type type = this.type();
+        if (type.equals(Type.LONG_TYPE)) {
             result = new Opcode(Opcodes.LSUB);
+        } else if (type.equals(Type.FLOAT_TYPE)) {
+            result = new Opcode(Opcodes.FSUB);
+        } else if (type.equals(Type.DOUBLE_TYPE)) {
+            result = new Opcode(Opcodes.DSUB);
         } else {
             result = new Opcode(Opcodes.ISUB);
         }

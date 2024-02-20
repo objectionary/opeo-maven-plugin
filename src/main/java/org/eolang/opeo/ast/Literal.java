@@ -60,6 +60,8 @@ public final class Literal implements AstNode, Typed {
         final List<AstNode> result;
         if (this.object instanceof Integer) {
             result = Collections.singletonList(Literal.opcode((Integer) this.object));
+        } else if (this.object instanceof Long) {
+            result = Collections.singletonList(Literal.opcode((Long) this.object));
         } else if (this.object instanceof String) {
             result = Collections.singletonList(Literal.opcode((String) this.object));
         } else {
@@ -140,6 +142,23 @@ public final class Literal implements AstNode, Typed {
             default:
                 res = new Opcode(Opcodes.BIPUSH, value);
                 break;
+        }
+        return res;
+    }
+
+    /**
+     * Convert long into an opcode.
+     * @param value Long value.
+     * @return Opcode.
+     */
+    private static Opcode opcode(final long value) {
+        final Opcode res;
+        if (value == 0L) {
+            res = new Opcode(Opcodes.LCONST_0);
+        } else if (value == 1L) {
+            res = new Opcode(Opcodes.LCONST_1);
+        } else {
+            res = new Opcode(Opcodes.LDC, value);
         }
         return res;
     }
