@@ -24,6 +24,7 @@
 package org.eolang.opeo.ast;
 
 import java.util.List;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -31,7 +32,7 @@ import org.xembly.Directives;
  * Field retrieval.
  * @since 0.2
  */
-public final class FieldRetrieval implements AstNode {
+public final class FieldRetrieval implements AstNode, Typed {
 
     /**
      * The field to access.
@@ -85,5 +86,10 @@ public final class FieldRetrieval implements AstNode {
     @Override
     public List<AstNode> opcodes() {
         return this.field.load();
+    }
+
+    @Override
+    public Type type() {
+        return this.field.type();
     }
 }

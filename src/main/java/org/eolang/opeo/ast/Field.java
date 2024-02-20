@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import java.util.ArrayList;
 import java.util.List;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -33,7 +34,7 @@ import org.xembly.Directives;
  * Access to a field.
  * @since 0.1
  */
-public final class Field implements Xmir {
+public final class Field implements Xmir, Typed {
 
     /**
      * Object reference from which the field is accessed.
@@ -101,5 +102,10 @@ public final class Field implements Xmir {
             )
         );
         return res;
+    }
+
+    @Override
+    public Type type() {
+        return Type.getType(this.attributes.descriptor());
     }
 }
