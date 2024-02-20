@@ -55,6 +55,15 @@ public final class Substraction implements AstNode, Typed {
      * Constructor.
      * @param left Left operand.
      * @param right Right operand.
+     */
+    public Substraction(final AstNode left, final AstNode right) {
+        this(left, right, new Attributes());
+    }
+
+    /**
+     * Constructor.
+     * @param left Left operand.
+     * @param right Right operand.
      * @param attributes Attributes.
      */
     public Substraction(final AstNode left, final AstNode right, final Attributes attributes) {
@@ -85,10 +94,24 @@ public final class Substraction implements AstNode, Typed {
     @Override
     public Type type() {
         final Type result;
-        if (this.attributes.type().equals("long")) {
+        final Type ltype = this.cast(this.left).type();
+        final Type rtype = this.cast(this.right).type();
+        if (ltype.equals(Type.LONG_TYPE) || rtype.equals(Type.LONG_TYPE)) {
             result = Type.LONG_TYPE;
         } else {
             result = Type.INT_TYPE;
+        }
+        return result;
+    }
+
+    private Typed cast(final AstNode node) {
+        final Typed result;
+        if (node instanceof Typed) {
+            result = (Typed) node;
+        } else {
+            throw new IllegalStateException(
+                String.format("Node %s is not typed inside %s", node, this)
+            );
         }
         return result;
     }
@@ -99,11 +122,12 @@ public final class Substraction implements AstNode, Typed {
      */
     private Opcode opcode() {
         final Opcode result;
-        if (this.attributes.type().equals("long")) {
+        if (this.type().equals(Type.LONG_TYPE)) {
             result = new Opcode(Opcodes.LSUB);
         } else {
             result = new Opcode(Opcodes.ISUB);
         }
         return result;
     }
+
 }

@@ -25,8 +25,9 @@ package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
-import static org.junit.jupiter.api.Assertions.*;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.objectweb.asm.Type;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
@@ -41,11 +42,11 @@ class SubstractionTest {
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
         MatcherAssert.assertThat(
+            "Can't convert Substraction with two literals to XMIR",
             new Xembler(
                 new Substraction(
                     new Literal(1),
-                    new Literal(2),
-                    new Attributes().type("int")
+                    new Literal(2)
                 ).toXmir()
             ).xml(),
             XhtmlMatchers.hasXPaths(
@@ -53,6 +54,15 @@ class SubstractionTest {
                 "/o[@base='.minus']/o[@base='int' and contains(text(), '1')]",
                 "/o[@base='.minus']/o[@base='int' and contains(text(), '2')]"
             )
+        );
+    }
+
+    @Test
+    void determinesPrimitiveTypesCorrectly() {
+        MatcherAssert.assertThat(
+            "Can't determine the type of Substraction with two integer literals",
+            new Substraction(new Literal(1), new Literal(2)).type(),
+            Matchers.equalTo(Type.INT_TYPE)
         );
     }
 }
