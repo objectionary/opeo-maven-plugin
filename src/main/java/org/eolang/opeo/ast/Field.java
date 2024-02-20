@@ -66,6 +66,11 @@ public final class Field implements Xmir, Typed {
             .up();
     }
 
+    @Override
+    public Type type() {
+        return Type.getType(this.attributes.descriptor());
+    }
+
     /**
      * Store the field opcode. See {@link Opcodes#PUTFIELD}.
      * @param value The value to store.
@@ -102,10 +107,5 @@ public final class Field implements Xmir, Typed {
             )
         );
         return res;
-    }
-
-    @Override
-    public Type type() {
-        return Type.getType(this.attributes.descriptor());
     }
 }

@@ -24,7 +24,6 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import java.util.List;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -108,10 +107,13 @@ class SubstractionTest {
     void retrievesOpcodesWithLeftAndRightNodesWithTheSameType() {
         MatcherAssert.assertThat(
             "Can't retrieve opcodes from Substraction with two literals",
-            new OpcodeNodes(new Substraction(
-                new Literal(1),
-                new Literal(2)
-            )).opcodes(), new HasInstructions(
+            new OpcodeNodes(
+                new Substraction(
+                    new Literal(1),
+                    new Literal(2)
+                )
+            ).opcodes(),
+            new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.ICONST_1),
                 new HasInstructions.Instruction(Opcodes.ICONST_2),
                 new HasInstructions.Instruction(Opcodes.ISUB)
