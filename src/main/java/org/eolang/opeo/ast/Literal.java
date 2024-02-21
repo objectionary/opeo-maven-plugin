@@ -33,18 +33,19 @@ import org.xembly.Directive;
 /**
  * Literal output.
  * @since 0.1
+ * @checkstyle CyclomaticComplexityCheck (500 lines)
  */
 public final class Literal implements AstNode, Typed {
 
     /**
      * Literal value.
      */
-    private final Object value;
+    private final Object lvalue;
 
     /**
      * Literal type.
      */
-    private final Type type;
+    private final Type ltype;
 
     /**
      * Constructor.
@@ -132,44 +133,44 @@ public final class Literal implements AstNode, Typed {
      * @param type Literal type.
      */
     public Literal(final Object value, final Type type) {
-        this.value = value;
-        this.type = type;
+        this.lvalue = value;
+        this.ltype = type;
     }
 
     @Override
     public Iterable<Directive> toXmir() {
-        return new DirectivesData(this.value);
+        return new DirectivesData(this.lvalue);
     }
 
     @Override
     public List<AstNode> opcodes() {
         final Opcode res;
-        if (this.type.equals(Type.CHAR_TYPE)) {
-            res = Literal.opcode((char) this.value);
-        } else if (this.type.equals(Type.BOOLEAN_TYPE)) {
-            res = Literal.opcode((boolean) this.value);
-        } else if (this.type.equals(Type.BYTE_TYPE)) {
-            res = new Opcode(Opcodes.BIPUSH, this.value);
-        } else if (this.type.equals(Type.SHORT_TYPE)) {
-            res = new Opcode(Opcodes.SIPUSH, this.value);
-        } else if (this.type.equals(Type.INT_TYPE)) {
-            res = Literal.opcode((int) this.value);
-        } else if (this.type.equals(Type.LONG_TYPE)) {
-            res = Literal.opcode((long) this.value);
-        } else if (this.type.equals(Type.FLOAT_TYPE)) {
-            res = new Opcode(Opcodes.LDC, this.value);
-        } else if (this.type.equals(Type.DOUBLE_TYPE)) {
-            res = new Opcode(Opcodes.LDC, this.value);
-        } else if (this.type.equals(Type.getType(String.class))) {
-            res = new Opcode(Opcodes.LDC, this.value);
-        } else if (this.type.equals(Type.VOID_TYPE)) {
+        if (this.ltype.equals(Type.CHAR_TYPE)) {
+            res = Literal.opcode((char) this.lvalue);
+        } else if (this.ltype.equals(Type.BOOLEAN_TYPE)) {
+            res = Literal.opcode((boolean) this.lvalue);
+        } else if (this.ltype.equals(Type.BYTE_TYPE)) {
+            res = new Opcode(Opcodes.BIPUSH, this.lvalue);
+        } else if (this.ltype.equals(Type.SHORT_TYPE)) {
+            res = new Opcode(Opcodes.SIPUSH, this.lvalue);
+        } else if (this.ltype.equals(Type.INT_TYPE)) {
+            res = Literal.opcode((int) this.lvalue);
+        } else if (this.ltype.equals(Type.LONG_TYPE)) {
+            res = Literal.opcode((long) this.lvalue);
+        } else if (this.ltype.equals(Type.FLOAT_TYPE)) {
+            res = new Opcode(Opcodes.LDC, this.lvalue);
+        } else if (this.ltype.equals(Type.DOUBLE_TYPE)) {
+            res = new Opcode(Opcodes.LDC, this.lvalue);
+        } else if (this.ltype.equals(Type.getType(String.class))) {
+            res = new Opcode(Opcodes.LDC, this.lvalue);
+        } else if (this.ltype.equals(Type.VOID_TYPE)) {
             res = new Opcode(Opcodes.ACONST_NULL);
         } else {
             throw new IllegalArgumentException(
                 String.format(
                     "Unsupported literal type %s, value is %s",
-                    this.type.getClassName(),
-                    this.value
+                    this.ltype.getClassName(),
+                    this.lvalue
                 )
             );
         }
@@ -178,7 +179,7 @@ public final class Literal implements AstNode, Typed {
 
     @Override
     public Type type() {
-        return this.type;
+        return this.ltype;
     }
 
     /**

@@ -99,7 +99,6 @@ class LiteralTest {
         );
     }
 
-
     @Test
     void convertsToOpcodesForBipush() {
         MatcherAssert.assertThat(
