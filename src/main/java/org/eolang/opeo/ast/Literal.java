@@ -33,11 +33,6 @@ import org.xembly.Directive;
 /**
  * Literal output.
  * @since 0.1
- * @todo #129:90min Implement all types of literals.
- *  Currently, only int, long and string literals are supported.
- *  Add support for float, double, boolean, char, byte, short and other types.
- *  Don't forget to add tests for all supported types.
- * @checkstyle CyclomaticComplexityCheck (500 lines)
  */
 public final class Literal implements AstNode, Typed {
 
