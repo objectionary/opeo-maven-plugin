@@ -76,19 +76,20 @@ public final class Substraction implements AstNode, Typed {
 
     @Override
     public Type type() {
-        final Type result;
-        final Type ltype = this.cast(this.left).type();
-        final Type rtype = this.cast(this.right).type();
-        if (ltype.equals(Type.DOUBLE_TYPE) || rtype.equals(Type.DOUBLE_TYPE)) {
-            result = Type.DOUBLE_TYPE;
-        } else if (ltype.equals(Type.FLOAT_TYPE) || rtype.equals(Type.FLOAT_TYPE)) {
-            result = Type.FLOAT_TYPE;
-        } else if (ltype.equals(Type.LONG_TYPE) || rtype.equals(Type.LONG_TYPE)) {
-            result = Type.LONG_TYPE;
-        } else {
-            result = Type.INT_TYPE;
-        }
-        return result;
+        return new ExpressionType(this.left, this.right).type();
+//        final Type result;
+//        final Type ltype = this.cast(this.left).type();
+//        final Type rtype = this.cast(this.right).type();
+//        if (ltype.equals(Type.DOUBLE_TYPE) || rtype.equals(Type.DOUBLE_TYPE)) {
+//            result = Type.DOUBLE_TYPE;
+//        } else if (ltype.equals(Type.FLOAT_TYPE) || rtype.equals(Type.FLOAT_TYPE)) {
+//            result = Type.FLOAT_TYPE;
+//        } else if (ltype.equals(Type.LONG_TYPE) || rtype.equals(Type.LONG_TYPE)) {
+//            result = Type.LONG_TYPE;
+//        } else {
+//            result = Type.INT_TYPE;
+//        }
+//        return result;
     }
 
     /**

@@ -97,13 +97,14 @@ public final class Add implements AstNode, Typed {
 
     @Override
     public Type type() {
-        final Type result;
-        if (this.attributes.type().equals("long")) {
-            result = Type.LONG_TYPE;
-        } else {
-            result = Type.INT_TYPE;
-        }
-        return result;
+        return new ExpressionType(this.left, this.right).type();
+//        final Type result;
+//        if (this.attributes.type().equals("long")) {
+//            result = Type.LONG_TYPE;
+//        } else {
+//            result = Type.INT_TYPE;
+//        }
+//        return result;
     }
 
     /**

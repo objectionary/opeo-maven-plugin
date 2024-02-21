@@ -113,7 +113,7 @@ class AddTest {
             new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.ICONST_1),
                 new HasInstructions.Instruction(Opcodes.ICONST_2),
-                new HasInstructions.Instruction(Opcodes.ISUB)
+                new HasInstructions.Instruction(Opcodes.IADD)
             )
         );
     }
@@ -131,7 +131,7 @@ class AddTest {
             new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.LCONST_1),
                 new HasInstructions.Instruction(Opcodes.ICONST_1),
-                new HasInstructions.Instruction(Opcodes.LSUB)
+                new HasInstructions.Instruction(Opcodes.LADD)
             )
         );
     }
