@@ -44,77 +44,136 @@ public final class Literal implements AstNode, Typed {
     /**
      * Literal value.
      */
-    private final Object object;
+    private final Object value;
+
+    /**
+     * Literal type.
+     */
+    private final Type type;
 
     /**
      * Constructor.
-     * @param value Literal value
+     * @param value Char literal value.
+     */
+    public Literal(final char value) {
+        this(value, Type.CHAR_TYPE);
+    }
+
+    /**
+     * Constructor.
+     * @param value Boolean literal value.
+     */
+    public Literal(final boolean value) {
+        this(value, Type.BOOLEAN_TYPE);
+    }
+
+    /**
+     * Constructor.
+     * @param value Byte literal value.
+     */
+    public Literal(final byte value) {
+        this(value, Type.BYTE_TYPE);
+    }
+
+    /**
+     * Constructor.
+     * @param value Short literal value.
+     */
+    public Literal(final short value) {
+        this(value, Type.SHORT_TYPE);
+    }
+
+    /**
+     * Constructor.
+     * @param value Integer literal value.
+     */
+    public Literal(final int value) {
+        this(value, Type.INT_TYPE);
+    }
+
+    /**
+     * Constructor.
+     * @param value Long literal value.
+     */
+    public Literal(final long value) {
+        this(value, Type.LONG_TYPE);
+    }
+
+    /**
+     * Constructor.
+     * @param value Float literal value.
+     */
+    public Literal(final float value) {
+        this(value, Type.FLOAT_TYPE);
+    }
+
+    /**
+     * Constructor.
+     * @param value Double literal value.
+     */
+    public Literal(final double value) {
+        this(value, Type.DOUBLE_TYPE);
+    }
+
+    /**
+     * Constructor.
+     * @param value Literal value.
      */
     public Literal(final Object value) {
-        this.object = value;
+        this(value, Type.getType(value.getClass()));
+    }
+
+    /**
+     * Constructor.
+     * @param value Literal value.
+     * @param type Literal type.
+     */
+    public Literal(final Object value, final Type type) {
+        this.value = value;
+        this.type = type;
     }
 
     @Override
     public Iterable<Directive> toXmir() {
-        return new DirectivesData(this.object);
+        return new DirectivesData(this.value);
     }
 
     @Override
     public List<AstNode> opcodes() {
-        final List<AstNode> result;
-        if (this.object instanceof Integer) {
-            result = Collections.singletonList(Literal.opcode((Integer) this.object));
-        } else if (this.object instanceof Long) {
-            result = Collections.singletonList(Literal.opcode((Long) this.object));
-        } else if (this.object instanceof String) {
-            result = Collections.singletonList(Literal.opcode((String) this.object));
+        final Opcode res;
+        if (this.type.equals(Type.CHAR_TYPE)) {
+            res = Literal.opcode((char) this.value);
+        } else if (this.type.equals(Type.BOOLEAN_TYPE)) {
+            res = Literal.opcode((boolean) this.value);
+        } else if (this.type.equals(Type.BYTE_TYPE)) {
+            res = new Opcode(Opcodes.BIPUSH, this.value);
+        } else if (this.type.equals(Type.SHORT_TYPE)) {
+            res = new Opcode(Opcodes.SIPUSH, this.value);
+        } else if (this.type.equals(Type.INT_TYPE)) {
+            res = Literal.opcode((int) this.value);
+        } else if (this.type.equals(Type.LONG_TYPE)) {
+            res = Literal.opcode((long) this.value);
+        } else if (this.type.equals(Type.FLOAT_TYPE)) {
+            res = new Opcode(Opcodes.LDC, this.value);
+        } else if (this.type.equals(Type.DOUBLE_TYPE)) {
+            res = new Opcode(Opcodes.LDC, this.value);
+        } else if (this.type.equals(Type.getType(String.class))) {
+            res = new Opcode(Opcodes.LDC, this.value);
         } else {
             throw new IllegalArgumentException(
                 String.format(
                     "Unsupported literal type %s, value is %s",
-                    this.object.getClass().getName(),
-                    this.object
+                    this.type.getClassName(),
+                    this.value
                 )
             );
         }
-        return result;
+        return Collections.singletonList(res);
     }
 
     @Override
     public Type type() {
-        final Type result;
-        final Class<?> clazz = this.object.getClass();
-        if (clazz == int.class || clazz == Integer.class) {
-            result = Type.INT_TYPE;
-        } else if (clazz == long.class || clazz == Long.class) {
-            result = Type.LONG_TYPE;
-        } else if (clazz == float.class || clazz == Float.class) {
-            result = Type.FLOAT_TYPE;
-        } else if (clazz == double.class || clazz == Double.class) {
-            result = Type.DOUBLE_TYPE;
-        } else if (clazz == boolean.class || clazz == Boolean.class) {
-            result = Type.BOOLEAN_TYPE;
-        } else if (clazz == char.class || clazz == Character.class) {
-            result = Type.CHAR_TYPE;
-        } else if (clazz == byte.class || clazz == Byte.class) {
-            result = Type.BYTE_TYPE;
-        } else if (clazz == short.class || clazz == Short.class) {
-            result = Type.SHORT_TYPE;
-        } else if (clazz == String.class) {
-            result = Type.getType(String.class);
-        } else {
-            result = Type.getType(clazz);
-        }
-        return result;
-    }
-
-    /**
-     * Convert string into an opcode.
-     * @param value String value.
-     * @return Opcode.
-     */
-    private static Opcode opcode(final String value) {
-        return new Opcode(Opcodes.LDC, value);
+        return this.type;
     }
 
     /**
@@ -148,6 +207,30 @@ public final class Literal implements AstNode, Typed {
                 break;
         }
         return res;
+    }
+
+    /**
+     * Convert char into an opcode.
+     * @param value Char value.
+     * @return Opcode.
+     */
+    private static Opcode opcode(final char value) {
+        return new Opcode(Opcodes.BIPUSH, value);
+    }
+
+    /**
+     * Convert boolean into an opcode.
+     * @param value Boolean value.
+     * @return Opcode.
+     */
+    private static Opcode opcode(final boolean value) {
+        final Opcode result;
+        if (value) {
+            result = new Opcode(Opcodes.ICONST_1);
+        } else {
+            result = new Opcode(Opcodes.ICONST_0);
+        }
+        return result;
     }
 
     /**
