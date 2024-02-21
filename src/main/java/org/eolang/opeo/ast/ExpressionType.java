@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import lombok.ToString;
 import org.objectweb.asm.Type;
 
 /**
@@ -34,6 +35,7 @@ import org.objectweb.asm.Type;
  * Defines the type of expression.
  * @since 0.2
  */
+@ToString
 public final class ExpressionType {
 
     /**

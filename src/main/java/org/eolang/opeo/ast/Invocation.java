@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Objects;
 import lombok.ToString;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -37,7 +38,7 @@ import org.xembly.Directives;
  * @since 0.1
  */
 @ToString
-public final class Invocation implements AstNode {
+public final class Invocation implements AstNode, Typed {
 
     /**
      * Source or target on which the invocation is performed.
@@ -171,5 +172,10 @@ public final class Invocation implements AstNode {
             )
         );
         return res;
+    }
+
+    @Override
+    public Type type() {
+        return Type.getReturnType(this.attributes.descriptor());
     }
 }
