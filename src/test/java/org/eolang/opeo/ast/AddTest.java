@@ -135,4 +135,22 @@ class AddTest {
             )
         );
     }
+
+    @Test
+    void retrievesOpcodesWithLeftAndRightNodesWithDoubleType() {
+        MatcherAssert.assertThat(
+            "Can't retrieve opcodes from Add with where one of the operands is double",
+            new OpcodeNodes(
+                new Add(
+                    new Literal(1.0),
+                    new Literal(1)
+                )
+            ).opcodes(),
+            new HasInstructions(
+                new HasInstructions.Instruction(Opcodes.DCONST_1),
+                new HasInstructions.Instruction(Opcodes.ICONST_1),
+                new HasInstructions.Instruction(Opcodes.DADD)
+            )
+        );
+    }
 }

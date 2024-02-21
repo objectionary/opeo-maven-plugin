@@ -158,9 +158,9 @@ public final class Literal implements AstNode, Typed {
         } else if (this.ltype.equals(Type.LONG_TYPE)) {
             res = Literal.opcode((long) this.lvalue);
         } else if (this.ltype.equals(Type.FLOAT_TYPE)) {
-            res = new Opcode(Opcodes.LDC, this.lvalue);
+            res = Literal.opcode((float) this.lvalue);
         } else if (this.ltype.equals(Type.DOUBLE_TYPE)) {
-            res = new Opcode(Opcodes.LDC, this.lvalue);
+            res = Literal.opcode((double) this.lvalue);
         } else if (this.ltype.equals(Type.getType(String.class))) {
             res = new Opcode(Opcodes.LDC, this.lvalue);
         } else if (this.ltype.equals(Type.VOID_TYPE)) {
@@ -253,6 +253,42 @@ public final class Literal implements AstNode, Typed {
             res = new Opcode(Opcodes.LCONST_0);
         } else if (value == 1L) {
             res = new Opcode(Opcodes.LCONST_1);
+        } else {
+            res = new Opcode(Opcodes.LDC, value);
+        }
+        return res;
+    }
+
+    /**
+     * Convert double into an opcode.
+     * @param value Double value.
+     * @return Opcode.
+     */
+    private static Opcode opcode(final double value) {
+        final Opcode res;
+        if (value == 0.0d) {
+            res = new Opcode(Opcodes.DCONST_0);
+        } else if (value == 1.0d) {
+            res = new Opcode(Opcodes.DCONST_1);
+        } else {
+            res = new Opcode(Opcodes.LDC, value);
+        }
+        return res;
+    }
+
+    /**
+     * Convert float into an opcode.
+     * @param value Float value.
+     * @return Opcode.
+     */
+    private static Opcode opcode(final float value) {
+        final Opcode res;
+        if (value == 0.0f) {
+            res = new Opcode(Opcodes.FCONST_0);
+        } else if (value == 1.0f) {
+            res = new Opcode(Opcodes.FCONST_1);
+        } else if (value == 2.0f) {
+            res = new Opcode(Opcodes.FCONST_2);
         } else {
             res = new Opcode(Opcodes.LDC, value);
         }

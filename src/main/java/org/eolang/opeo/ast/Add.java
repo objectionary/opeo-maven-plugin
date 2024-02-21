@@ -106,8 +106,13 @@ public final class Add implements AstNode, Typed {
      */
     private AstNode opcode() {
         final AstNode result;
-        if (this.attributes.type().equals("long")) {
+        final Type type = this.type();
+        if (type.equals(Type.LONG_TYPE)) {
             result = new Opcode(Opcodes.LADD);
+        } else if (type.equals(Type.FLOAT_TYPE)) {
+            result = new Opcode(Opcodes.FADD);
+        } else if (type.equals(Type.DOUBLE_TYPE)) {
+            result = new Opcode(Opcodes.DADD);
         } else {
             result = new Opcode(Opcodes.IADD);
         }
