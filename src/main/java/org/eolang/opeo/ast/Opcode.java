@@ -27,6 +27,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.eolang.jeo.representation.directives.DirectivesInstruction;
 import org.xembly.Directive;
 
@@ -34,6 +36,8 @@ import org.xembly.Directive;
  * Opcode output node.
  * @since 0.1
  */
+@ToString
+@EqualsAndHashCode
 public final class Opcode implements AstNode {
 
     /**

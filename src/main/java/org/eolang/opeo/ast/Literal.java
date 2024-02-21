@@ -48,6 +48,14 @@ public final class Literal implements AstNode, Typed {
 
     /**
      * Constructor.
+     * Null literal.
+     */
+    public Literal() {
+        this(null, Type.VOID_TYPE);
+    }
+
+    /**
+     * Constructor.
      * @param value Char literal value.
      */
     public Literal(final char value) {
@@ -154,6 +162,8 @@ public final class Literal implements AstNode, Typed {
             res = new Opcode(Opcodes.LDC, this.value);
         } else if (this.type.equals(Type.getType(String.class))) {
             res = new Opcode(Opcodes.LDC, this.value);
+        } else if (this.type.equals(Type.VOID_TYPE)) {
+            res = new Opcode(Opcodes.ACONST_NULL);
         } else {
             throw new IllegalArgumentException(
                 String.format(
@@ -179,6 +189,9 @@ public final class Literal implements AstNode, Typed {
     private static Opcode opcode(final int value) {
         final Opcode res;
         switch (value) {
+            case -1:
+                res = new Opcode(Opcodes.ICONST_M1);
+                break;
             case 0:
                 res = new Opcode(Opcodes.ICONST_0);
                 break;

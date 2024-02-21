@@ -25,7 +25,10 @@ package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Transformers;
 import org.xembly.Xembler;
@@ -43,6 +46,78 @@ class LiteralTest {
             new Xembler(new Literal("Neo").toXmir(), new Transformers.Node()).xml(),
             XhtmlMatchers.hasXPath(
                 "/o[@base='string' and @data='bytes' and text()='4E 65 6F']/text()"
+            )
+        );
+    }
+
+    @Test
+    void dereminesType() {
+        MatcherAssert.assertThat(
+            "We expect the type to be determined as string",
+            new Literal("Neo").type(),
+            Matchers.equalTo(Type.getType(String.class))
+        );
+        MatcherAssert.assertThat(
+            "We expect the type to be determined as int",
+            new Literal(1).type(),
+            Matchers.equalTo(Type.INT_TYPE)
+        );
+        MatcherAssert.assertThat(
+            "We expect the type to be determined as char",
+            new Literal('a').type(),
+            Matchers.equalTo(Type.CHAR_TYPE)
+        );
+        MatcherAssert.assertThat(
+            "We expect the type to be determined as long",
+            new Literal(1L).type(),
+            Matchers.equalTo(Type.LONG_TYPE)
+        );
+        MatcherAssert.assertThat(
+            "We expect the type to be determined as float",
+            new Literal(1.0f).type(),
+            Matchers.equalTo(Type.FLOAT_TYPE)
+        );
+        MatcherAssert.assertThat(
+            "We expect the type to be determined as double",
+            new Literal(1.0d).type(),
+            Matchers.equalTo(Type.DOUBLE_TYPE)
+        );
+        MatcherAssert.assertThat(
+            "We expect the type to be determined as boolean",
+            new Literal(true).type(),
+            Matchers.equalTo(Type.BOOLEAN_TYPE)
+        );
+        MatcherAssert.assertThat(
+            "We expect the type to be determined as byte",
+            new Literal((byte) 1).type(),
+            Matchers.equalTo(Type.BYTE_TYPE)
+        );
+        MatcherAssert.assertThat(
+            "We expect the type to be determined as short",
+            new Literal((short) 1).type(),
+            Matchers.equalTo(Type.SHORT_TYPE)
+        );
+    }
+
+
+    @Test
+    void convertsToOpcodesForBipush() {
+        MatcherAssert.assertThat(
+            "We expect the following opcodes to be generated: bipush 10",
+            new Literal(10).opcodes(),
+            Matchers.contains(
+                new Opcode(Opcodes.BIPUSH, 10)
+            )
+        );
+    }
+
+    @Test
+    void convertsToOpcodesForNull() {
+        MatcherAssert.assertThat(
+            "We expect the following opcodes to be generated: aconst_null",
+            new Literal().opcodes(),
+            Matchers.contains(
+                new Opcode(Opcodes.ACONST_NULL)
             )
         );
     }
