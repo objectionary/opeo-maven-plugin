@@ -61,7 +61,7 @@ public final class Cast implements AstNode, Typed {
      * @param node XML node
      * @param target Function to determine the origin node.
      */
-    Cast(final XmlNode node, Function<XmlNode, AstNode> target) {
+    public Cast(final XmlNode node, Function<XmlNode, AstNode> target) {
         this(Cast.xtarget(node), Cast.xorigin(node, target));
     }
 
@@ -70,7 +70,7 @@ public final class Cast implements AstNode, Typed {
      * @param target Target type
      * @param origin Node to cast
      */
-    Cast(final Type target, final AstNode origin) {
+    public Cast(final Type target, final AstNode origin) {
         this.origin = origin;
         this.target = target;
     }

@@ -126,6 +126,10 @@ public final class Literal implements AstNode, Typed {
         this(value, Type.DOUBLE_TYPE);
     }
 
+    /**
+     * Constructor.
+     * @param node XML node.
+     */
     public Literal(final XmlNode node) {
         this(Literal.xvalue(node), Literal.xtype(node));
     }

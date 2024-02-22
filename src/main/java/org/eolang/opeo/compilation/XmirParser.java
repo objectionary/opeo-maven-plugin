@@ -34,6 +34,7 @@ import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
+import org.eolang.opeo.ast.Cast;
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.ConstructorDescriptor;
@@ -156,6 +157,8 @@ final class XmirParser {
             final AstNode left = this.node(inner.get(0));
             final AstNode right = this.node(inner.get(1));
             result = new Substraction(left, right);
+        } else if ("cast".equals(base)) {
+            result = new Cast(node, this::node);
         } else if ("opcode".equals(base)) {
             final XmlInstruction instruction = new XmlInstruction(node.node());
             final int opcode = instruction.opcode();
