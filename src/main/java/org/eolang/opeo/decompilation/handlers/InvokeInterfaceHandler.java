@@ -23,43 +23,30 @@
  */
 package org.eolang.opeo.decompilation.handlers;
 
-import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.objectweb.asm.Opcodes;
 
 /**
- * Iconst instruction handler.
- * @since 0.1
+ * Invoke Interface instruction handler.
+ * <p>
+ *   Other bytes: 4: indexbyte1, indexbyte2, count, 0
+ * </p>
+ * <p>
+ *   Stack: objectref, [arg1, arg2, ...] → result
+ * </p>
+ * <p>
+ *   Invokes an interface method on object objectref and puts the result on the stack,
+ *   might be void;
+ *   the interface method is identified by method reference index in constant
+ *   pool (indexbyte1 << 8 | indexbyte2)
+ * </p>
+ * @since 0.2
  */
-public final class IconstHandler implements InstructionHandler {
-
+public final class InvokeInterfaceHandler implements InstructionHandler {
     @Override
     public void handle(final DecompilerState state) {
-        switch (state.instruction().opcode()) {
-            case Opcodes.ICONST_0:
-                state.stack().push(new Literal(0));
-                break;
-            case Opcodes.ICONST_1:
-                state.stack().push(new Literal(1));
-                break;
-            case Opcodes.ICONST_2:
-                state.stack().push(new Literal(2));
-                break;
-            case Opcodes.ICONST_3:
-                state.stack().push(new Literal(3));
-                break;
-            case Opcodes.ICONST_4:
-                state.stack().push(new Literal(4));
-                break;
-            case Opcodes.ICONST_5:
-                state.stack().push(new Literal(5));
-                break;
-            default:
-                throw new UnsupportedOperationException(
-                    String.format("Instruction %s is not supported yet", state.instruction())
-                );
-        }
+        throw new UnsupportedOperationException(
+            String.format("Instruction %s is not supported yet", state)
+        );
     }
-
 }

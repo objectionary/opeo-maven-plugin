@@ -25,7 +25,11 @@ package org.eolang.opeo.ast;
 
 import java.util.Collections;
 import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.eolang.jeo.representation.directives.DirectivesData;
+import org.eolang.jeo.representation.xmir.HexString;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -35,6 +39,9 @@ import org.xembly.Directive;
  * @since 0.1
  * @checkstyle CyclomaticComplexityCheck (500 lines)
  */
+@ToString
+@EqualsAndHashCode
+@SuppressWarnings({"PMD.GodClass", "PMD.TooManyMethods"})
 public final class Literal implements AstNode, Typed {
 
     /**
@@ -121,6 +128,14 @@ public final class Literal implements AstNode, Typed {
 
     /**
      * Constructor.
+     * @param node XML node.
+     */
+    public Literal(final XmlNode node) {
+        this(Literal.xvalue(node), Literal.xtype(node));
+    }
+
+    /**
+     * Constructor.
      * @param value Literal value.
      */
     public Literal(final Object value) {
@@ -139,7 +154,21 @@ public final class Literal implements AstNode, Typed {
 
     @Override
     public Iterable<Directive> toXmir() {
-        return new DirectivesData(this.lvalue);
+        //@checkstyle MethodBodyCommentsCheck (30 line)
+        // @todo #168:90min Remove ad-hoc solution related to long literals.
+        //  Currently, long literals are not supported by the XMIR format.
+        //  This is a temporary solution to avoid the problem with long literals.
+        //  Most probably we would need to fix jtcop to allow long values.
+        //  After that, we can remove this ad-hoc solution. We should leave
+        //  only new DirectivesData(this.lvalue) in the return statement.
+        final Iterable<Directive> result;
+        if (this.ltype.equals(Type.LONG_TYPE)) {
+            final int value = ((Long) this.lvalue).intValue();
+            result = new DirectivesData(value);
+        } else {
+            result = new DirectivesData(this.lvalue);
+        }
+        return result;
     }
 
     @Override
@@ -158,9 +187,9 @@ public final class Literal implements AstNode, Typed {
         } else if (this.ltype.equals(Type.LONG_TYPE)) {
             res = Literal.opcode((long) this.lvalue);
         } else if (this.ltype.equals(Type.FLOAT_TYPE)) {
-            res = new Opcode(Opcodes.LDC, this.lvalue);
+            res = Literal.opcode((float) this.lvalue);
         } else if (this.ltype.equals(Type.DOUBLE_TYPE)) {
-            res = new Opcode(Opcodes.LDC, this.lvalue);
+            res = Literal.opcode((double) this.lvalue);
         } else if (this.ltype.equals(Type.getType(String.class))) {
             res = new Opcode(Opcodes.LDC, this.lvalue);
         } else if (this.ltype.equals(Type.VOID_TYPE)) {
@@ -257,5 +286,106 @@ public final class Literal implements AstNode, Typed {
             res = new Opcode(Opcodes.LDC, value);
         }
         return res;
+    }
+
+    /**
+     * Convert double into an opcode.
+     * @param value Double value.
+     * @return Opcode.
+     */
+    private static Opcode opcode(final double value) {
+        final Opcode res;
+        if (value == 0.0d) {
+            res = new Opcode(Opcodes.DCONST_0);
+        } else if (value == 1.0d) {
+            res = new Opcode(Opcodes.DCONST_1);
+        } else {
+            res = new Opcode(Opcodes.LDC, value);
+        }
+        return res;
+    }
+
+    /**
+     * Convert float into an opcode.
+     * @param value Float value.
+     * @return Opcode.
+     */
+    private static Opcode opcode(final float value) {
+        final Opcode res;
+        if (value == 0.0f) {
+            res = new Opcode(Opcodes.FCONST_0);
+        } else if (value == 1.0f) {
+            res = new Opcode(Opcodes.FCONST_1);
+        } else if (value == 2.0f) {
+            res = new Opcode(Opcodes.FCONST_2);
+        } else {
+            res = new Opcode(Opcodes.LDC, value);
+        }
+        return res;
+    }
+
+    /**
+     * Convert XML node into a value.
+     * @param node XML node
+     * @return Value.
+     */
+    private static Object xvalue(final XmlNode node) {
+        final Object result;
+        final Type type = Literal.xtype(node);
+        if (type.equals(Type.INT_TYPE)) {
+            result = new HexString(node.text()).decodeAsInt();
+        } else if (type.equals(Type.BOOLEAN_TYPE)) {
+            result = new HexString(node.text()).decodeAsBoolean();
+        } else {
+            result = new HexString(node.text()).decode();
+        }
+        return result;
+    }
+
+    /**
+     * Prestructor for Literal#ltype.
+     * @param node XML node
+     * @return Literal type.
+     */
+    private static Type xtype(final XmlNode node) {
+        final Type result;
+        final String attribute = node.attribute("base").orElseThrow();
+        switch (attribute) {
+            case "string":
+                result = Type.getType(String.class);
+                break;
+            case "int":
+                result = Type.INT_TYPE;
+                break;
+            case "char":
+                result = Type.CHAR_TYPE;
+                break;
+            case "long":
+                result = Type.LONG_TYPE;
+                break;
+            case "float":
+                result = Type.FLOAT_TYPE;
+                break;
+            case "double":
+                result = Type.DOUBLE_TYPE;
+                break;
+            case "boolean":
+                result = Type.BOOLEAN_TYPE;
+                break;
+            case "byte":
+                result = Type.BYTE_TYPE;
+                break;
+            case "short":
+                result = Type.SHORT_TYPE;
+                break;
+            default:
+                throw new IllegalStateException(
+                    String.format(
+                        "Unsupported literal type %s",
+                        attribute
+                    )
+                );
+        }
+        return result;
     }
 }

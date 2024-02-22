@@ -33,10 +33,9 @@ import org.xembly.Directives;
 /**
  * Add output node.
  * @since 0.1
- * @todo #129:90min Add more tests for Add class.
- *  Add tests for all supported types of literals. Most probably, we will be able to
- *  remove attributes field from this class, when implement honest type inference.
- *  You can check how it's done in {@link Substraction} class.
+ * @todo #68:90min Remove Attributes from Add node.
+ *  Add node should not have attributes. It is redundant and should be removed.
+ *  You can take a look how we implemented this in the Substraction node.
  */
 public final class Add implements AstNode, Typed {
 
@@ -97,13 +96,7 @@ public final class Add implements AstNode, Typed {
 
     @Override
     public Type type() {
-        final Type result;
-        if (this.attributes.type().equals("long")) {
-            result = Type.LONG_TYPE;
-        } else {
-            result = Type.INT_TYPE;
-        }
-        return result;
+        return new ExpressionType(this.left, this.right).type();
     }
 
     /**
@@ -112,8 +105,13 @@ public final class Add implements AstNode, Typed {
      */
     private AstNode opcode() {
         final AstNode result;
-        if (this.attributes.type().equals("long")) {
+        final Type type = this.type();
+        if (type.equals(Type.LONG_TYPE)) {
             result = new Opcode(Opcodes.LADD);
+        } else if (type.equals(Type.FLOAT_TYPE)) {
+            result = new Opcode(Opcodes.FADD);
+        } else if (type.equals(Type.DOUBLE_TYPE)) {
+            result = new Opcode(Opcodes.DADD);
         } else {
             result = new Opcode(Opcodes.IADD);
         }

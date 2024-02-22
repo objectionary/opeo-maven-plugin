@@ -24,8 +24,12 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
@@ -48,6 +52,104 @@ class AddTest {
                 "./o[@base='.plus']",
                 "./o[@base='.plus']/o[@base='int' and contains(text(),'1')]",
                 "./o[@base='.plus']/o[@base='int' and contains(text(),'2')]"
+            )
+        );
+    }
+
+    @Test
+    void determinesPrimitiveTypesCorrectly() {
+        MatcherAssert.assertThat(
+            "Can't determine the type of Add with two integer literals",
+            new Add(new Literal(1), new Literal(2)).type(),
+            Matchers.equalTo(Type.INT_TYPE)
+        );
+        MatcherAssert.assertThat(
+            "Can't determine the type of Add with two long literals",
+            new Add(new Literal(1L), new Literal(2L)).type(),
+            Matchers.equalTo(Type.LONG_TYPE)
+        );
+        MatcherAssert.assertThat(
+            "Can't determine the type of Add with two float literals",
+            new Add(new Literal(1.0f), new Literal(2.0f)).type(),
+            Matchers.equalTo(Type.FLOAT_TYPE)
+        );
+        MatcherAssert.assertThat(
+            "Can't determine the type of Add with two double literals",
+            new Add(new Literal(1.0), new Literal(2.0)).type(),
+            Matchers.equalTo(Type.DOUBLE_TYPE)
+        );
+        MatcherAssert.assertThat(
+            "Can't determine the type of Add with two integer and long literals",
+            new Add(new Literal(1), new Literal(2L)).type(),
+            Matchers.equalTo(Type.LONG_TYPE)
+        );
+        MatcherAssert.assertThat(
+            "Can't determine the type of Add with two integer and float literals",
+            new Add(new Literal(1), new Literal(2.0f)).type(),
+            Matchers.equalTo(Type.FLOAT_TYPE)
+        );
+        MatcherAssert.assertThat(
+            "Can't determine the type of Add with two integer and double literals",
+            new Add(new Literal(1), new Literal(2.0)).type(),
+            Matchers.equalTo(Type.DOUBLE_TYPE)
+        );
+        MatcherAssert.assertThat(
+            "Can't determine the type of Add with two long and float literals",
+            new Add(new Literal(1L), new Literal(2.0f)).type(),
+            Matchers.equalTo(Type.FLOAT_TYPE)
+        );
+    }
+
+    @Test
+    void retrievesOpcodesWithLeftAndRightNodesWithTheSameType() {
+        MatcherAssert.assertThat(
+            "Can't retrieve opcodes from Add with two literals",
+            new OpcodeNodes(
+                new Add(
+                    new Literal(1),
+                    new Literal(2)
+                )
+            ).opcodes(),
+            new HasInstructions(
+                new HasInstructions.Instruction(Opcodes.ICONST_1),
+                new HasInstructions.Instruction(Opcodes.ICONST_2),
+                new HasInstructions.Instruction(Opcodes.IADD)
+            )
+        );
+    }
+
+    @Test
+    void retrievesOpcodesWithLeftAndRightNodesWithDifferentTypes() {
+        MatcherAssert.assertThat(
+            "Can't retrieve opcodes from Add with two literals of different types",
+            new OpcodeNodes(
+                new Add(
+                    new Literal(1L),
+                    new Literal(1)
+                )
+            ).opcodes(),
+            new HasInstructions(
+                new HasInstructions.Instruction(Opcodes.LCONST_1),
+                new HasInstructions.Instruction(Opcodes.ICONST_1),
+                new HasInstructions.Instruction(Opcodes.LADD)
+            )
+        );
+    }
+
+    @Test
+    void retrievesOpcodesWithLeftAndRightNodesWithDoubleType() {
+        MatcherAssert.assertThat(
+            "Can't retrieve opcodes from Add with where one of the operands is double",
+            new OpcodeNodes(
+                new Add(
+                    new Literal(1.0),
+                    new Literal(1)
+                )
+            ).opcodes(),
+            new HasInstructions(
+                new HasInstructions.Instruction(Opcodes.DCONST_1),
+                new HasInstructions.Instruction(Opcodes.ICONST_1),
+                new HasInstructions.Instruction(Opcodes.DADD)
             )
         );
     }
