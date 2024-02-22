@@ -154,7 +154,19 @@ public final class Literal implements AstNode, Typed {
 
     @Override
     public Iterable<Directive> toXmir() {
-        return new DirectivesData(this.lvalue);
+        //@checkstyle MethodBodyCommentsCheck (30 line)
+        // @todo #168:90min Remove ad-hoc solution related to long literals.
+        //  Currently, long literals are not supported by the XMIR format.
+        //  This is a temporary solution to avoid the problem with long literals.
+        //  Most probably we would need to fix jtcop to allow long values.
+        //  After that, we can remove this ad-hoc solution. We should leave
+        //  only new DirectivesData(this.lvalue) in the return statement.
+        if (this.ltype.equals(Type.LONG_TYPE)) {
+            final int value = ((Long) this.lvalue).intValue();
+            return new DirectivesData(value);
+        } else {
+            return new DirectivesData(this.lvalue);
+        }
     }
 
     @Override

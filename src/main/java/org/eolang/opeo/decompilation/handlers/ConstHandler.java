@@ -36,9 +36,16 @@ import org.objectweb.asm.Type;
  */
 public final class ConstHandler implements InstructionHandler {
 
+    /**
+     * Type of constant.
+     */
     private final Type type;
 
-    public ConstHandler(final Type type) {
+    /**
+     * Constructor.
+     * @param type Type of constant
+     */
+    ConstHandler(final Type type) {
         this.type = type;
     }
 
@@ -86,7 +93,6 @@ public final class ConstHandler implements InstructionHandler {
         }
         return res;
     }
-
 
     /**
      * Create a constant node for float value.
