@@ -25,9 +25,12 @@ package org.eolang.opeo.ast;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.jeo.representation.directives.DirectivesData;
+import org.eolang.jeo.representation.xmir.HexString;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -121,6 +124,10 @@ public final class Literal implements AstNode, Typed {
      */
     public Literal(final double value) {
         this(value, Type.DOUBLE_TYPE);
+    }
+
+    public Literal(final XmlNode node) {
+        this(Literal.xvalue(node), Literal.xtype(node));
     }
 
     /**
@@ -297,5 +304,69 @@ public final class Literal implements AstNode, Typed {
             res = new Opcode(Opcodes.LDC, value);
         }
         return res;
+    }
+
+    /**
+     * Convert XML node into a value.
+     * @param node XML node
+     * @return Value.
+     */
+    private static Object xvalue(final XmlNode node) {
+        final Type type = Literal.xtype(node);
+        if (type.equals(Type.INT_TYPE)) {
+            return new HexString(node.text()).decodeAsInt();
+        } else if (type.equals(Type.BOOLEAN_TYPE)) {
+            return new HexString(node.text()).decodeAsBoolean();
+        } else {
+            return new HexString(node.text()).decode();
+        }
+
+    }
+
+    /**
+     * Prestructor for Literal#ltype.
+     * @param node XML node
+     * @return Literal type.
+     */
+    private static Type xtype(final XmlNode node) {
+        final Type result;
+        final String attribute = node.attribute("base").orElseThrow();
+        switch (attribute) {
+            case "string":
+                result = Type.getType(String.class);
+                break;
+            case "int":
+                result = Type.INT_TYPE;
+                break;
+            case "char":
+                result = Type.CHAR_TYPE;
+                break;
+            case "long":
+                result = Type.LONG_TYPE;
+                break;
+            case "float":
+                result = Type.FLOAT_TYPE;
+                break;
+            case "double":
+                result = Type.DOUBLE_TYPE;
+                break;
+            case "boolean":
+                result = Type.BOOLEAN_TYPE;
+                break;
+            case "byte":
+                result = Type.BYTE_TYPE;
+                break;
+            case "short":
+                result = Type.SHORT_TYPE;
+                break;
+            default:
+                throw new IllegalStateException(
+                    String.format(
+                        "Unsupported literal type %s",
+                        attribute
+                    )
+                );
+        }
+        return result;
     }
 }

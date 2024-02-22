@@ -24,8 +24,15 @@
 package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.eolang.jeo.representation.directives.DirectivesData;
+import org.eolang.jeo.representation.xmir.HexString;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -35,6 +42,8 @@ import org.xembly.Directives;
  * Cast node.
  * @since 0.2
  */
+@ToString
+@EqualsAndHashCode
 public final class Cast implements AstNode, Typed {
 
     /**
@@ -47,6 +56,20 @@ public final class Cast implements AstNode, Typed {
      */
     private final AstNode origin;
 
+    /**
+     * Constructor.
+     * @param node XML node
+     * @param target Function to determine the origin node.
+     */
+    Cast(final XmlNode node, Function<XmlNode, AstNode> target) {
+        this(Cast.xtarget(node), Cast.xorigin(node, target));
+    }
+
+    /**
+     * Constructor.
+     * @param target Target type
+     * @param origin Node to cast
+     */
     Cast(final Type target, final AstNode origin) {
         this.origin = origin;
         this.target = target;
@@ -122,5 +145,34 @@ public final class Cast implements AstNode, Typed {
     @Override
     public Type type() {
         return this.target;
+    }
+
+    /**
+     * Prestructor for Cast#target.
+     * @param node XML node
+     * @return Target type.
+     */
+    private static Type xtarget(final XmlNode node) {
+        return Type.getType(
+            new HexString(
+                node.children()
+                    .collect(Collectors.toCollection(LinkedList::new))
+                    .getLast()
+                    .text()
+            ).decode()
+        );
+    }
+
+    /**
+     * Prestructor for Cast#origin.
+     * @param node XML node
+     * @param target Function to determine the origin node.
+     * @return Origin node.
+     */
+    private static AstNode xorigin(
+        final XmlNode node,
+        final Function<? super XmlNode, ? extends AstNode> target
+    ) {
+        return target.apply(node.children().findFirst().orElseThrow());
     }
 }
