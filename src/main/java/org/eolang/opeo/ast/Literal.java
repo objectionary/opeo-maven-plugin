@@ -25,6 +25,8 @@ package org.eolang.opeo.ast;
 
 import java.util.Collections;
 import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.eolang.jeo.representation.directives.DirectivesData;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -35,6 +37,8 @@ import org.xembly.Directive;
  * @since 0.1
  * @checkstyle CyclomaticComplexityCheck (500 lines)
  */
+@ToString
+@EqualsAndHashCode
 public final class Literal implements AstNode, Typed {
 
     /**
