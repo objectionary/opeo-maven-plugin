@@ -61,7 +61,7 @@ public final class Cast implements AstNode, Typed {
      * @param node XML node
      * @param target Function to determine the origin node.
      */
-    public Cast(final XmlNode node, Function<XmlNode, AstNode> target) {
+    public Cast(final XmlNode node, final Function<XmlNode, AstNode> target) {
         this(Cast.xtarget(node), Cast.xorigin(node, target));
     }
 
@@ -92,59 +92,63 @@ public final class Cast implements AstNode, Typed {
         return opcodes;
     }
 
+    @Override
+    public Type type() {
+        return this.target;
+    }
+
     /**
      * Constructor.
      * @return Cast.
+     * @checkstyle CyclomaticComplexityCheck (50 lines)
+     * @checkstyle JavaNCSSCheck (50 lines)
      */
     private AstNode opcode() {
-        final Type from = new ExpressionType(this.origin).type();
-        final Type to = this.target;
-        if (from.equals(to)) {
-            return new Opcode(Opcodes.NOP);
-        } else if (from.equals(Type.INT_TYPE) && to.equals(Type.LONG_TYPE)) {
-            return new Opcode(Opcodes.I2L);
-        } else if (from.equals(Type.INT_TYPE) && to.equals(Type.FLOAT_TYPE)) {
-            return new Opcode(Opcodes.I2F);
-        } else if (from.equals(Type.INT_TYPE) && to.equals(Type.DOUBLE_TYPE)) {
-            return new Opcode(Opcodes.I2D);
-        } else if (from.equals(Type.LONG_TYPE) && to.equals(Type.INT_TYPE)) {
-            return new Opcode(Opcodes.L2I);
-        } else if (from.equals(Type.LONG_TYPE) && to.equals(Type.FLOAT_TYPE)) {
-            return new Opcode(Opcodes.L2F);
-        } else if (from.equals(Type.LONG_TYPE) && to.equals(Type.DOUBLE_TYPE)) {
-            return new Opcode(Opcodes.L2D);
-        } else if (from.equals(Type.FLOAT_TYPE) && to.equals(Type.DOUBLE_TYPE)) {
-            return new Opcode(Opcodes.F2D);
-        } else if (from.equals(Type.FLOAT_TYPE) && to.equals(Type.INT_TYPE)) {
-            return new Opcode(Opcodes.F2I);
-        } else if (from.equals(Type.FLOAT_TYPE) && to.equals(Type.LONG_TYPE)) {
-            return new Opcode(Opcodes.F2L);
-        } else if (from.equals(Type.DOUBLE_TYPE) && to.equals(Type.INT_TYPE)) {
-            return new Opcode(Opcodes.D2I);
-        } else if (from.equals(Type.DOUBLE_TYPE) && to.equals(Type.LONG_TYPE)) {
-            return new Opcode(Opcodes.D2L);
-        } else if (from.equals(Type.DOUBLE_TYPE) && to.equals(Type.FLOAT_TYPE)) {
-            return new Opcode(Opcodes.D2F);
-        } else if (from.equals(Type.INT_TYPE) && to.equals(Type.BYTE_TYPE)) {
-            return new Opcode(Opcodes.I2B);
-        } else if (from.equals(Type.INT_TYPE) && to.equals(Type.CHAR_TYPE)) {
-            return new Opcode(Opcodes.I2C);
-        } else if (from.equals(Type.INT_TYPE) && to.equals(Type.SHORT_TYPE)) {
-            return new Opcode(Opcodes.I2S);
+        final Type fromtype = new ExpressionType(this.origin).type();
+        final Type totype = this.target;
+        final AstNode result;
+        if (fromtype.equals(totype)) {
+            result = new Opcode(Opcodes.NOP);
+        } else if (fromtype.equals(Type.INT_TYPE) && totype.equals(Type.LONG_TYPE)) {
+            result = new Opcode(Opcodes.I2L);
+        } else if (fromtype.equals(Type.INT_TYPE) && totype.equals(Type.FLOAT_TYPE)) {
+            result = new Opcode(Opcodes.I2F);
+        } else if (fromtype.equals(Type.INT_TYPE) && totype.equals(Type.DOUBLE_TYPE)) {
+            result = new Opcode(Opcodes.I2D);
+        } else if (fromtype.equals(Type.LONG_TYPE) && totype.equals(Type.INT_TYPE)) {
+            result = new Opcode(Opcodes.L2I);
+        } else if (fromtype.equals(Type.LONG_TYPE) && totype.equals(Type.FLOAT_TYPE)) {
+            result = new Opcode(Opcodes.L2F);
+        } else if (fromtype.equals(Type.LONG_TYPE) && totype.equals(Type.DOUBLE_TYPE)) {
+            result = new Opcode(Opcodes.L2D);
+        } else if (fromtype.equals(Type.FLOAT_TYPE) && totype.equals(Type.DOUBLE_TYPE)) {
+            result = new Opcode(Opcodes.F2D);
+        } else if (fromtype.equals(Type.FLOAT_TYPE) && totype.equals(Type.INT_TYPE)) {
+            result = new Opcode(Opcodes.F2I);
+        } else if (fromtype.equals(Type.FLOAT_TYPE) && totype.equals(Type.LONG_TYPE)) {
+            result = new Opcode(Opcodes.F2L);
+        } else if (fromtype.equals(Type.DOUBLE_TYPE) && totype.equals(Type.INT_TYPE)) {
+            result = new Opcode(Opcodes.D2I);
+        } else if (fromtype.equals(Type.DOUBLE_TYPE) && totype.equals(Type.LONG_TYPE)) {
+            result = new Opcode(Opcodes.D2L);
+        } else if (fromtype.equals(Type.DOUBLE_TYPE) && totype.equals(Type.FLOAT_TYPE)) {
+            result = new Opcode(Opcodes.D2F);
+        } else if (fromtype.equals(Type.INT_TYPE) && totype.equals(Type.BYTE_TYPE)) {
+            result = new Opcode(Opcodes.I2B);
+        } else if (fromtype.equals(Type.INT_TYPE) && totype.equals(Type.CHAR_TYPE)) {
+            result = new Opcode(Opcodes.I2C);
+        } else if (fromtype.equals(Type.INT_TYPE) && totype.equals(Type.SHORT_TYPE)) {
+            result = new Opcode(Opcodes.I2S);
         } else {
             throw new IllegalStateException(
                 String.format(
                     "Can't cast from %s to %s",
-                    from.getDescriptor(),
-                    to.getDescriptor()
+                    fromtype.getDescriptor(),
+                    totype.getDescriptor()
                 )
             );
         }
-    }
-
-    @Override
-    public Type type() {
-        return this.target;
+        return result;
     }
 
     /**

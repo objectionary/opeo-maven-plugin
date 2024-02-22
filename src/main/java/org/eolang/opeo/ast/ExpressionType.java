@@ -47,7 +47,7 @@ public final class ExpressionType {
      * Constructor.
      * @param values Expression values.
      */
-    public ExpressionType(final AstNode... values) {
+    ExpressionType(final AstNode... values) {
         this(Arrays.asList(values));
     }
 
@@ -79,7 +79,6 @@ public final class ExpressionType {
         }
         return result;
     }
-
 
     /**
      * Cast node to a typed node.

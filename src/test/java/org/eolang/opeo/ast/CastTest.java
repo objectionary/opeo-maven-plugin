@@ -44,13 +44,17 @@ import org.xembly.Xembler;
  */
 final class CastTest {
 
-
     @Test
     void createsFromXmir() {
-        final XmlNode node = new XmlNode("<o base=\"cast\">\n" +
-            "   <o base=\"int\" data=\"bytes\">00 00 00 00 00 00 00 01</o>\n" +
-            "   <o base=\"string\" data=\"bytes\">49</o>\n" +
-            "</o>");
+        final XmlNode node = new XmlNode(
+            String.join(
+                "\n",
+                "<o base='cast'>",
+                "   <o base='int' data='bytes'>00 00 00 00 00 00 00 01</o>",
+                "   <o base='string' data='bytes'>49</o>",
+                "</o>"
+            )
+        );
         MatcherAssert.assertThat(
             "Can't create correct Cast from XMIR",
             new Cast(node, Literal::new),
@@ -60,12 +64,9 @@ final class CastTest {
 
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
-        final String xml = new Xembler(new Cast(Type.INT_TYPE, new Literal(1)).toXmir()).xml();
-
-        System.out.println(xml);
         MatcherAssert.assertThat(
             "Can't convert Cast to XMIR",
-            xml,
+            new Xembler(new Cast(Type.INT_TYPE, new Literal(1)).toXmir()).xml(),
             XhtmlMatchers.hasXPaths(
                 "/o[@base='cast']",
                 "/o[@base='cast']/o[@base='int' and contains(text(), '1')]",

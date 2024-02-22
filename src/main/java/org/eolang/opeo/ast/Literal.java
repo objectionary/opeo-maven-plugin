@@ -25,7 +25,6 @@ package org.eolang.opeo.ast;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.jeo.representation.directives.DirectivesData;
@@ -42,6 +41,7 @@ import org.xembly.Directive;
  */
 @ToString
 @EqualsAndHashCode
+@SuppressWarnings({"PMD.GodClass", "PMD.TooManyMethods"})
 public final class Literal implements AstNode, Typed {
 
     /**
@@ -161,12 +161,14 @@ public final class Literal implements AstNode, Typed {
         //  Most probably we would need to fix jtcop to allow long values.
         //  After that, we can remove this ad-hoc solution. We should leave
         //  only new DirectivesData(this.lvalue) in the return statement.
+        final Iterable<Directive> result;
         if (this.ltype.equals(Type.LONG_TYPE)) {
             final int value = ((Long) this.lvalue).intValue();
-            return new DirectivesData(value);
+            result = new DirectivesData(value);
         } else {
-            return new DirectivesData(this.lvalue);
+            result = new DirectivesData(this.lvalue);
         }
+        return result;
     }
 
     @Override
@@ -328,15 +330,16 @@ public final class Literal implements AstNode, Typed {
      * @return Value.
      */
     private static Object xvalue(final XmlNode node) {
+        final Object result;
         final Type type = Literal.xtype(node);
         if (type.equals(Type.INT_TYPE)) {
-            return new HexString(node.text()).decodeAsInt();
+            result = new HexString(node.text()).decodeAsInt();
         } else if (type.equals(Type.BOOLEAN_TYPE)) {
-            return new HexString(node.text()).decodeAsBoolean();
+            result = new HexString(node.text()).decodeAsBoolean();
         } else {
-            return new HexString(node.text()).decode();
+            result = new HexString(node.text()).decode();
         }
-
+        return result;
     }
 
     /**

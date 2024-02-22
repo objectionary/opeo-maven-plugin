@@ -54,13 +54,13 @@ public final class ConstHandler implements InstructionHandler {
         final int opcode = state.instruction().opcode();
         final AstNode res;
         if (this.type.equals(Type.INT_TYPE)) {
-            res = this.intConstant(opcode);
+            res = ConstHandler.intConstant(opcode);
         } else if (this.type.equals(Type.LONG_TYPE)) {
-            res = this.longConstant(opcode);
+            res = ConstHandler.longConstant(opcode);
         } else if (this.type.equals(Type.FLOAT_TYPE)) {
-            res = this.floatConstant(opcode);
+            res = ConstHandler.floatConstant(opcode);
         } else if (this.type.equals(Type.DOUBLE_TYPE)) {
-            res = this.doubleConstant(opcode);
+            res = ConstHandler.doubleConstant(opcode);
         } else {
             throw new UnsupportedOperationException(
                 String.format("Type %s is not supported yet", this.type)
@@ -74,7 +74,7 @@ public final class ConstHandler implements InstructionHandler {
      * @param opcode Opcode
      * @return Constant node
      */
-    private AstNode doubleConstant(final int opcode) {
+    private static AstNode doubleConstant(final int opcode) {
         final AstNode res;
         switch (opcode) {
             case Opcodes.DCONST_0:
@@ -99,7 +99,7 @@ public final class ConstHandler implements InstructionHandler {
      * @param opcode Opcode
      * @return Constant node
      */
-    private AstNode floatConstant(final int opcode) {
+    private static AstNode floatConstant(final int opcode) {
         final AstNode res;
         switch (opcode) {
             case Opcodes.FCONST_0:
@@ -127,7 +127,7 @@ public final class ConstHandler implements InstructionHandler {
      * @param opcode Opcode
      * @return Constant node
      */
-    private AstNode longConstant(final int opcode) {
+    private static AstNode longConstant(final int opcode) {
         final AstNode res;
         switch (opcode) {
             case Opcodes.LCONST_0:
@@ -152,7 +152,7 @@ public final class ConstHandler implements InstructionHandler {
      * @param opcode Opcode
      * @return Constant node
      */
-    private AstNode intConstant(final int opcode) {
+    private static AstNode intConstant(final int opcode) {
         final AstNode res;
         switch (opcode) {
             case Opcodes.ICONST_0:
