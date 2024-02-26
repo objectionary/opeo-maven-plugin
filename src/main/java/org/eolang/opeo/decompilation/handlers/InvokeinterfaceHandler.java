@@ -23,11 +23,17 @@
  */
 package org.eolang.opeo.decompilation.handlers;
 
+import java.util.Collections;
+import java.util.List;
+import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Attributes;
+import org.eolang.opeo.ast.InterfaceInvocation;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
+import org.objectweb.asm.Type;
 
 /**
- * Invoke Interface instruction handler.
+ * Invokeinterface instruction handler.
  * <p>
  *   Other bytes: 4: indexbyte1, indexbyte2, count, 0
  * </p>
@@ -42,11 +48,23 @@ import org.eolang.opeo.decompilation.InstructionHandler;
  * </p>
  * @since 0.2
  */
-public final class InvokeInterfaceHandler implements InstructionHandler {
+public final class InvokeinterfaceHandler implements InstructionHandler {
     @Override
     public void handle(final DecompilerState state) {
-        throw new UnsupportedOperationException(
-            String.format("Instruction %s is not supported yet", state)
+        final String owner = (String) state.operand(0);
+        final String method = (String) state.operand(1);
+        final String descriptor = (String) state.operand(2);
+        final List<AstNode> args = state.stack().pop(
+            Type.getArgumentCount(descriptor)
+        );
+        Collections.reverse(args);
+        final AstNode source = state.stack().pop();
+        state.stack().push(
+            new InterfaceInvocation(
+                source,
+                new Attributes().name(method).descriptor(descriptor).owner(owner),
+                args
+            )
         );
     }
 }

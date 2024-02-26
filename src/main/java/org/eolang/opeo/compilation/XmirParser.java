@@ -41,6 +41,7 @@ import org.eolang.opeo.ast.ConstructorDescriptor;
 import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.FieldRetrieval;
+import org.eolang.opeo.ast.InterfaceInvocation;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
@@ -257,6 +258,8 @@ final class XmirParser {
                 result = new StaticInvocation(
                     node, this.args(node.children().collect(Collectors.toList()))
                 );
+            } else if ("interface".equals(attributes.type())) {
+                result = new InterfaceInvocation(node, this::node);
             } else {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode target = this.node(inner.get(0));

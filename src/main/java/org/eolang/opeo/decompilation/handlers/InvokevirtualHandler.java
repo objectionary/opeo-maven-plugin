@@ -34,6 +34,17 @@ import org.objectweb.asm.Type;
 
 /**
  * Invokevirtual instruction handler.
+ * <p>
+ *     Other bytes: 2: indexbyte1, indexbyte2
+ * </p>
+ * <p>
+ *     objectref, [arg1, arg2, ...] → result
+ * </p>
+ * <p>
+ *     Invoke virtual method on object objectref and puts the result on the stack (might be void).
+ *     The method is identified by method reference index in constant pool
+ *     (indexbyte1 << 8 | indexbyte2)
+ * </p>
  * @since 0.1
  */
 public final class InvokevirtualHandler implements InstructionHandler {
