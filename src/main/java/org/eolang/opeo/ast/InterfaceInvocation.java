@@ -42,10 +42,26 @@ import org.xembly.Directives;
  */
 @ToString
 public final class InterfaceInvocation implements AstNode, Typed {
+    /**
+     * Source or target on which the invocation is performed.
+     */
     private final AstNode source;
+
+    /**
+     * Method attributes.
+     */
     private final Attributes attrs;
+
+    /**
+     * Arguments of the method.
+     */
     private final List<AstNode> arguments;
 
+    /**
+     * Constructor.
+     * @param node XML node.
+     * @param parser Parser, which can extract AstNode from XmlNode.
+     */
     public InterfaceInvocation(final XmlNode node, final Function<XmlNode, AstNode> parser) {
         this(
             InterfaceInvocation.xsource(node, parser),
@@ -54,11 +70,12 @@ public final class InterfaceInvocation implements AstNode, Typed {
         );
     }
 
-    private static AstNode xsource(final XmlNode node, final Function<XmlNode, AstNode> parser) {
-        final List<XmlNode> inner = node.children().collect(Collectors.toList());
-        return parser.apply(inner.get(0));
-    }
-
+    /**
+     * Constructor.
+     * @param source Source or target on which the invocation is performed
+     * @param attributes Method attributes.
+     * @param args Arguments of the method.
+     */
     public InterfaceInvocation(
         final AstNode source,
         final Attributes attributes,
@@ -135,12 +152,26 @@ public final class InterfaceInvocation implements AstNode, Typed {
     }
 
     /**
+     * Extracts source from the node.
+     * @param node XML node.
+     * @param parser Parser.
+     * @return Source.
+     */
+    private static AstNode xsource(final XmlNode node, final Function<XmlNode, AstNode> parser) {
+        final List<XmlNode> inner = node.children().collect(Collectors.toList());
+        return parser.apply(inner.get(0));
+    }
+
+    /**
      * Convert XML nodes into a list of arguments.
      * @param node XML node.
      * @param parser Parser.
      * @return List of arguments.
      */
-    private static List<AstNode> xargs(final XmlNode node, Function<XmlNode, AstNode> parser) {
+    private static List<AstNode> xargs(
+        final XmlNode node,
+        final Function<? super XmlNode, ? extends AstNode> parser
+    ) {
         final List<XmlNode> all = node.children().collect(Collectors.toList());
         final List<AstNode> arguments;
         if (all.size() > 1) {

@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.StringJoiner;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.eolang.jeo.representation.HexData;
 import org.eolang.jeo.representation.directives.DirectivesData;
 import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlNode;
@@ -185,20 +184,6 @@ public final class Literal implements AstNode, Typed {
         return result;
     }
 
-    /**
-     * Bytes to HEX.
-     *
-     * @param bytes Bytes.
-     * @return Hexadecimal value as string.
-     */
-    private static String bytesToHex(final byte... bytes) {
-        final StringJoiner out = new StringJoiner(" ");
-        for (final byte bty : bytes) {
-            out.add(String.format("%02X", bty));
-        }
-        return out.toString();
-    }
-
     @Override
     public List<AstNode> opcodes() {
         final Opcode res;
@@ -237,6 +222,20 @@ public final class Literal implements AstNode, Typed {
     @Override
     public Type type() {
         return this.ltype;
+    }
+
+    /**
+     * Bytes to HEX.
+     *
+     * @param bytes Bytes.
+     * @return Hexadecimal value as string.
+     */
+    private static String bytesToHex(final byte... bytes) {
+        final StringJoiner out = new StringJoiner(" ");
+        for (final byte bty : bytes) {
+            out.add(String.format("%02X", bty));
+        }
+        return out.toString();
     }
 
     /**
