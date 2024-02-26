@@ -194,7 +194,6 @@ SOFTWARE.
              Invokeinteface instructions handling.
             -->
             <exclude>fuse/pom.xml</exclude>
-            <exclude>staticize/pom.xml</exclude>
           </pomExcludes>
         </configuration>
       </plugin>

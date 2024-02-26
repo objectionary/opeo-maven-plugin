@@ -23,16 +23,20 @@
  */
 package org.eolang.opeo.ast;
 
+import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.List;
+import java.util.StringJoiner;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.eolang.jeo.representation.HexData;
 import org.eolang.jeo.representation.directives.DirectivesData;
 import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
+import org.xembly.Directives;
 
 /**
  * Literal output.
@@ -163,12 +167,36 @@ public final class Literal implements AstNode, Typed {
         //  only new DirectivesData(this.lvalue) in the return statement.
         final Iterable<Directive> result;
         if (this.ltype.equals(Type.LONG_TYPE)) {
-            final int value = ((Long) this.lvalue).intValue();
-            result = new DirectivesData(value);
+            result = new Directives()
+                .add("o")
+                .attr("base", "long")
+                .attr("data", "bytes")
+                .set(
+                    Literal.bytesToHex(
+                        ByteBuffer
+                            .allocate(Long.BYTES)
+                            .putLong((long) this.lvalue)
+                            .array()
+                    )
+                ).up();
         } else {
             result = new DirectivesData(this.lvalue);
         }
         return result;
+    }
+
+    /**
+     * Bytes to HEX.
+     *
+     * @param bytes Bytes.
+     * @return Hexadecimal value as string.
+     */
+    private static String bytesToHex(final byte... bytes) {
+        final StringJoiner out = new StringJoiner(" ");
+        for (final byte bty : bytes) {
+            out.add(String.format("%02X", bty));
+        }
+        return out.toString();
     }
 
     @Override
@@ -336,6 +364,8 @@ public final class Literal implements AstNode, Typed {
             result = new HexString(node.text()).decodeAsInt();
         } else if (type.equals(Type.BOOLEAN_TYPE)) {
             result = new HexString(node.text()).decodeAsBoolean();
+        } else if (type.equals(Type.LONG_TYPE)) {
+            result = Long.parseLong(node.text().trim().replace(" ", ""), 16);
         } else {
             result = new HexString(node.text()).decode();
         }

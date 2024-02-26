@@ -170,6 +170,8 @@ final class XmirParser {
             result = new Literal(new HexString(node.text()).decodeAsInt());
         } else if ("string".equals(base)) {
             result = new Literal(new HexString(node.text()).decode());
+        } else if ("long".equals(base)) {
+            result = new Literal(node);
         } else if (".super".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode instance = this.node(inner.get(0));
