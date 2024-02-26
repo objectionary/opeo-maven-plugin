@@ -42,6 +42,8 @@ import org.xembly.Directives;
  * @todo #173:90min Remove code duplication between Invocations.
  *  I just copied some code from other invocations and changed the opcode.
  *  It means that we have a code duplication. We need to remove it somehow.
+ *  Also pay attention that {@link #xargs} method is duplicate of the same method from
+ *  {@link org.eolang.opeo.compilation.XmirParser#args} class.
  */
 @ToString
 public final class InterfaceInvocation implements AstNode, Typed {
