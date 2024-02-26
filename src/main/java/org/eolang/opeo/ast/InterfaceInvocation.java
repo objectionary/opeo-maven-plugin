@@ -39,6 +39,9 @@ import org.xembly.Directives;
 /**
  * Interface invocation.
  * @since 0.2
+ * @todo #173:90min Remove code duplication between Invocations.
+ *  I just copied some code from other invocations and changed the opcode.
+ *  It means that we have a code duplication. We need to remove it somehow.
  */
 @ToString
 public final class InterfaceInvocation implements AstNode, Typed {
