@@ -25,6 +25,9 @@ package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -45,6 +48,18 @@ public final class Substraction implements AstNode, Typed {
      * Right operand.
      */
     private final AstNode right;
+
+    /**
+     * Constructor.
+     * @param node XML node
+     * @param parser Parser
+     */
+    public Substraction(final XmlNode node, final Function<XmlNode, AstNode> parser) {
+        this(
+            parser.apply(node.children().collect(Collectors.toList()).get(0)),
+            parser.apply(node.children().collect(Collectors.toList()).get(1))
+        );
+    }
 
     /**
      * Constructor.

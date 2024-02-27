@@ -148,15 +148,9 @@ final class XmirParser {
             )
         );
         if (".plus".equals(base)) {
-            final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final AstNode left = this.node(inner.get(0));
-            final AstNode right = this.node(inner.get(1));
-            result = new Add(left, right);
+            result = new Add(node, this::node);
         } else if (".minus".equals(base)) {
-            final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final AstNode left = this.node(inner.get(0));
-            final AstNode right = this.node(inner.get(1));
-            result = new Substraction(left, right);
+            result = new Substraction(node, this::node);
         } else if ("cast".equals(base)) {
             result = new Cast(node, this::node);
         } else if ("opcode".equals(base)) {
@@ -164,8 +158,7 @@ final class XmirParser {
             final int opcode = instruction.opcode();
             result = new Opcode(opcode, instruction.operands());
         } else if ("label".equals(base)) {
-            final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            result = new Label(this.node(inner.get(0)));
+            result = new Label(this.node(node.children().collect(Collectors.toList()).get(0)));
         } else if ("int".equals(base)) {
             result = new Literal(node);
         } else if ("string".equals(base)) {
