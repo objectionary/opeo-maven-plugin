@@ -60,7 +60,7 @@ public final class AddHandler implements InstructionHandler {
             final AstNode right = state.stack().pop();
             final AstNode left = state.stack().pop();
             state.stack().push(
-                new Add(left, right, new Attributes().type("long"))
+                new Add(left, right)
             );
         } else {
             state.stack().push(
