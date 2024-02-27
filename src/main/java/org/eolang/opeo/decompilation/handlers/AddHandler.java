@@ -37,40 +37,11 @@ import org.objectweb.asm.Opcodes;
  */
 public final class AddHandler implements InstructionHandler {
 
-    /**
-     * Do we put numbers to opcodes?
-     */
-    private final boolean counting;
-
-    /**
-     * Constructor.
-     * @param counting Do we put numbers to opcodes?
-     */
-    AddHandler(final boolean counting) {
-        this.counting = counting;
-    }
-
     @Override
     public void handle(final DecompilerState state) {
-        if (state.instruction().opcode() == Opcodes.IADD) {
-            final AstNode right = state.stack().pop();
-            final AstNode left = state.stack().pop();
-            state.stack().push(new Add(left, right));
-        } else if (state.instruction().opcode() == Opcodes.LADD) {
-            final AstNode right = state.stack().pop();
-            final AstNode left = state.stack().pop();
-            state.stack().push(
-                new Add(left, right)
-            );
-        } else {
-            state.stack().push(
-                new Opcode(
-                    state.instruction().opcode(),
-                    state.instruction().operands(),
-                    this.counting
-                )
-            );
-        }
+        final AstNode right = state.stack().pop();
+        final AstNode left = state.stack().pop();
+        state.stack().push(new Add(left, right));
     }
 
 }
