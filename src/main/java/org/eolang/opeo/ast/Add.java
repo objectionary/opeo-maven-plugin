@@ -36,9 +36,6 @@ import org.xembly.Directives;
 /**
  * Add output node.
  * @since 0.1
- * @todo #68:90min Remove Attributes from Add node.
- *  Add node should not have attributes. It is redundant and should be removed.
- *  You can take a look how we implemented this in the Substraction node.
  */
 public final class Add implements AstNode, Typed {
 
