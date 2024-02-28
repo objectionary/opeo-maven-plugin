@@ -75,31 +75,26 @@
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>      }
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>      @Override
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>      <strong class="jxr_keyword">public</strong> String print() {
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>          <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> UnsupportedOperationException(<span class="jxr_string">"Not implemented yet"</span>);
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>      }
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>  
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>      @Override
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">public</strong> Iterable&lt;Directive&gt; toXmir() {
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Directives().add(<span class="jxr_string">"o"</span>)
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>              .attr(<span class="jxr_string">"base"</span>, <span class="jxr_string">".writearray"</span>)
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>              .append(<strong class="jxr_keyword">this</strong>.array.toXmir())
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>              .append(<strong class="jxr_keyword">this</strong>.index.toXmir())
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>              .append(<strong class="jxr_keyword">this</strong>.value.toXmir())
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>              .up();
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>      }
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>  
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>      @Override
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>      <strong class="jxr_keyword">public</strong> List&lt;AstNode&gt; opcodes() {
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>          <strong class="jxr_keyword">final</strong> List&lt;AstNode&gt; res = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(0);
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>          res.addAll(<strong class="jxr_keyword">this</strong>.array.opcodes());
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>          res.add(<strong class="jxr_keyword">new</strong> <a name="Opcode" href="../../../../org/eolang/opeo/ast/Opcode.html#Opcode">Opcode</a>(Opcodes.DUP));
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>          res.addAll(<strong class="jxr_keyword">this</strong>.index.opcodes());
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>          res.addAll(<strong class="jxr_keyword">this</strong>.value.opcodes());
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>          res.add(<strong class="jxr_keyword">new</strong> <a name="Opcode" href="../../../../org/eolang/opeo/ast/Opcode.html#Opcode">Opcode</a>(Opcodes.AASTORE));
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>          <strong class="jxr_keyword">return</strong> res;
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>      }
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>  }
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      <strong class="jxr_keyword">public</strong> Iterable&lt;Directive&gt; toXmir() {
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Directives().add(<span class="jxr_string">"o"</span>)
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>              .attr(<span class="jxr_string">"base"</span>, <span class="jxr_string">".writearray"</span>)
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>              .append(<strong class="jxr_keyword">this</strong>.array.toXmir())
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>              .append(<strong class="jxr_keyword">this</strong>.index.toXmir())
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>              .append(<strong class="jxr_keyword">this</strong>.value.toXmir())
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>              .up();
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>      }
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>  
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>      @Override
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>      <strong class="jxr_keyword">public</strong> List&lt;AstNode&gt; opcodes() {
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          <strong class="jxr_keyword">final</strong> List&lt;AstNode&gt; res = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(0);
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          res.addAll(<strong class="jxr_keyword">this</strong>.array.opcodes());
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>          res.add(<strong class="jxr_keyword">new</strong> <a name="Opcode" href="../../../../org/eolang/opeo/ast/Opcode.html#Opcode">Opcode</a>(Opcodes.DUP));
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>          res.addAll(<strong class="jxr_keyword">this</strong>.index.opcodes());
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>          res.addAll(<strong class="jxr_keyword">this</strong>.value.opcodes());
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          res.add(<strong class="jxr_keyword">new</strong> <a name="Opcode" href="../../../../org/eolang/opeo/ast/Opcode.html#Opcode">Opcode</a>(Opcodes.AASTORE));
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          <strong class="jxr_keyword">return</strong> res;
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>      }
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2023&#x2013;2024 <a href="https://github.com/objectionary/eo">EO</a>. All rights reserved.</div>

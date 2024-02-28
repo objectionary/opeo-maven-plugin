@@ -110,7 +110,7 @@
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Map&lt;Integer, String&gt; init() {
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>         <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L104" href="#L104">104</a>             <strong class="jxr_keyword">final</strong> Map&lt;Integer, String&gt; res = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>             <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> Field field : Opcodes.<strong class="jxr_keyword">class</strong>.getFields()) {
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>             <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> <a name="Field" href="../../../../org/eolang/opeo/ast/Field.html#Field">Field</a> field : Opcodes.<strong class="jxr_keyword">class</strong>.getFields()) {
 <a class="jxr_linenumber" name="L106" href="#L106">106</a>                 <strong class="jxr_keyword">if</strong> (field.getType() == <strong class="jxr_keyword">int</strong>.<strong class="jxr_keyword">class</strong>) {
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>                     res.put(field.getInt(Opcodes.<strong class="jxr_keyword">class</strong>), field.getName());
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>                 }
