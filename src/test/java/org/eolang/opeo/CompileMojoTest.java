@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.1
  */
-class CompileMojoTest {
+final class CompileMojoTest {
 
     @Test
     void createsMojoWithoutProblems() {

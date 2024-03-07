@@ -36,7 +36,7 @@ import org.xembly.Xembler;
  * Test case for {@link Root}.
  * @since 0.1
  */
-class RootTest {
+final class RootTest {
 
     @Test
     void combinesAllChildElementsIntoSingleXmir() throws ImpossibleModificationException {

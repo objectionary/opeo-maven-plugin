@@ -120,11 +120,6 @@ final class XmirParser {
      * Convert XmlNode to AstNode.
      * @param node XmlNode
      * @return Ast node
-     * @checkstyle CyclomaticComplexityCheck (200 lines)
-     * @checkstyle ExecutableStatementCountCheck (200 lines)
-     * @checkstyle JavaNCSSCheck (200 lines)
-     * @checkstyle NestedIfDepthCheck (200 lines)
-     * @checkstyle MethodLengthCheck (200 lines)
      * @todo #77:90min Refactor this.node() method.
      *  The parsing method this.node() looks overcomplicated and violates many
      *  code quality standards. We should refactor the method and remove all
@@ -135,6 +130,11 @@ final class XmirParser {
      *  to remove all the if statements that use concerete class names as:
      *  - "org/eolang/benchmark/B"
      *  - "org/eolang/benchmark/BA"
+     * @checkstyle CyclomaticComplexityCheck (200 lines)
+     * @checkstyle ExecutableStatementCountCheck (200 lines)
+     * @checkstyle JavaNCSSCheck (200 lines)
+     * @checkstyle NestedIfDepthCheck (200 lines)
+     * @checkstyle MethodLengthCheck (200 lines)     *
      */
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     private AstNode node(final XmlNode node) {

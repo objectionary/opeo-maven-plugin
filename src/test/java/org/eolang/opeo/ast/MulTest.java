@@ -33,7 +33,7 @@ import org.xembly.Xembler;
  * Test case for {@link Mul}.
  * @since 0.1
  */
-class MulTest {
+final class MulTest {
 
     @Test
     void convertsToXmir() throws ImpossibleModificationException {

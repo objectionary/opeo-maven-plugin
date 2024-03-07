@@ -33,7 +33,7 @@ import org.xembly.Xembler;
  * Test case for {@link org.eolang.opeo.ast.This}.
  * @since 0.1
  */
-class ThisTest {
+final class ThisTest {
 
     @Test
     void convertsToXmir() throws ImpossibleModificationException {

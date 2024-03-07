@@ -39,7 +39,7 @@ import org.xembly.Xembler;
  *
  * @since 0.2
  */
-class SubstractionTest {
+final class SubstractionTest {
 
     @Test
     void convertsToXmir() throws ImpossibleModificationException {

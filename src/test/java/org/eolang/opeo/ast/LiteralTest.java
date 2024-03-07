@@ -37,7 +37,7 @@ import org.xembly.Xembler;
  * Test case for {@link Literal}.
  * @since 0.1
  */
-class LiteralTest {
+final class LiteralTest {
 
     @Test
     void transformsToXmir() throws ImpossibleModificationException {
