@@ -41,7 +41,11 @@ import org.xembly.Xembler;
  * Matcher for {@link List} of {@link XmlNode} to have specific instructions.
  * @since 0.1
  */
-@SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
+@SuppressWarnings({
+    "JTCOP.RuleAllTestsHaveProductionClass",
+    "JTCOP.RuleCorrectTestName",
+    "JTCOP.RuleInheritanceInTests"
+})
 public final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
 
     /**
