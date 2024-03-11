@@ -36,8 +36,6 @@ public final class LabelHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {
-        state.stack().push(
-            new Label(new Literal(state.operand(0)))
-        );
+        state.stack().push(new Label(String.class.cast(state.operand(0))));
     }
 }

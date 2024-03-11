@@ -25,8 +25,11 @@ package org.eolang.opeo.ast;
 
 import java.util.Collections;
 import java.util.List;
+import org.eolang.jeo.representation.directives.DirectivesData;
+import org.eolang.jeo.representation.xmir.AllLabels;
+import org.eolang.jeo.representation.xmir.HexString;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.xembly.Directive;
-import org.xembly.Directives;
 
 /**
  * Label ast node.
@@ -37,23 +40,27 @@ public final class Label implements AstNode {
     /**
      * Label identifier.
      */
-    private final AstNode identifier;
+    private final String identifier;
+
+    /**
+     * Constructor.
+     * @param node XML node.
+     */
+    public Label(final XmlNode node) {
+        this(new HexString(node.text()).decode());
+    }
 
     /**
      * Constructor.
      * @param identifier Label identifier.
      */
-    public Label(final AstNode identifier) {
+    public Label(final String identifier) {
         this.identifier = identifier;
     }
 
     @Override
     public Iterable<Directive> toXmir() {
-        return new Directives()
-            .add("o")
-            .attr("base", "label")
-            .append(this.identifier.toXmir())
-            .up();
+        return new DirectivesData(new AllLabels().label(this.identifier));
     }
 
     @Override

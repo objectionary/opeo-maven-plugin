@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
+import org.eolang.jeo.representation.xmir.XmlOperand;
 import org.eolang.opeo.Instruction;
 
 /**
@@ -60,6 +61,9 @@ public final class JeoInstruction implements Instruction {
 
     @Override
     public List<Object> operands() {
-        return Arrays.stream(this.instruction.operands()).collect(Collectors.toList());
+        return this.instruction.operands()
+            .stream()
+            .map(XmlOperand::asObject)
+            .collect(Collectors.toList());
     }
 }

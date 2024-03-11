@@ -23,7 +23,10 @@
  */
 package org.eolang.opeo.compilation;
 
+import java.util.Date;
 import java.util.List;
+import org.eolang.jeo.representation.DataType;
+import org.eolang.jeo.representation.HexData;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.Attributes;

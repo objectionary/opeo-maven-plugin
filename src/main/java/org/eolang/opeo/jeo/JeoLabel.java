@@ -23,8 +23,10 @@
  */
 package org.eolang.opeo.jeo;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import org.eolang.jeo.representation.xmir.XmlLabel;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.Instruction;
 
 /**
@@ -68,6 +70,18 @@ public final class JeoLabel implements Instruction {
 
     @Override
     public List<Object> operands() {
-        return List.of(this.label.identifier());
+        try {
+            // @checkstyle MethodBodyCommentsCheck (10 line)
+            final Field field = this.label.getClass().getDeclaredField("node");
+            field.setAccessible(true);
+            return List.of(
+                XmlNode.class.cast(field.get(this.label)).text()
+            );
+        } catch (final IllegalAccessException | NoSuchFieldException exception) {
+            throw new IllegalStateException(
+                "Can't get the label node text",
+                exception
+            );
+        }
     }
 }

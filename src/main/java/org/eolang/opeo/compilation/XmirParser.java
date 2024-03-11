@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.jeo.representation.xmir.XmlOperand;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
@@ -154,11 +155,17 @@ final class XmirParser {
         } else if ("cast".equals(base)) {
             result = new Cast(node, this::node);
         } else if ("opcode".equals(base)) {
-            final XmlInstruction instruction = new XmlInstruction(node.node());
+            final XmlInstruction instruction = new XmlInstruction(node);
             final int opcode = instruction.opcode();
-            result = new Opcode(opcode, instruction.operands());
+            result = new Opcode(
+                opcode,
+                instruction.operands()
+                    .stream()
+                    .map(XmlOperand::asObject)
+                    .collect(Collectors.toList())
+            );
         } else if ("label".equals(base)) {
-            result = new Label(this.node(node.children().collect(Collectors.toList()).get(0)));
+            result = new Label(node);
         } else if ("int".equals(base)) {
             result = new Literal(node);
         } else if ("string".equals(base)) {
