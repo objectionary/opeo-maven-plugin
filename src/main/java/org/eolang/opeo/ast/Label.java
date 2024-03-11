@@ -67,4 +67,5 @@ public final class Label implements AstNode {
     public List<AstNode> opcodes() {
         return Collections.singletonList(this);
     }
+
 }

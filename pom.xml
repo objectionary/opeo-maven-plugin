@@ -182,6 +182,23 @@ SOFTWARE.
     </dependency>
   </dependencies>
   <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-invoker-plugin</artifactId>
+        <configuration>
+          <pomExcludes>
+            <!--
+            @todo #174:30min Enable the following integration tests when it's possible.
+             Now this integration tests are disabled, because optimizations generate wrongly formatted
+             EO code. We need to fix this issue and enable the tests.
+            -->
+            <exclude>staticize/pom.xml</exclude>
+            <exclude>fuse/pom.xml</exclude>
+          </pomExcludes>
+        </configuration>
+      </plugin>
+    </plugins>
     <testResources>
       <testResource>
         <directory>src/test/resources</directory>
