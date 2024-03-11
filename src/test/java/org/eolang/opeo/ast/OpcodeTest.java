@@ -35,7 +35,7 @@ import org.xembly.Xembler;
  * Test case for {@link Opcode}.
  * @since 0.1
  */
-class OpcodeTest {
+final class OpcodeTest {
 
     @Test
     void transformsToXml() {

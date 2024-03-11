@@ -127,7 +127,7 @@ SOFTWARE.
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.5.1</version>
+      <version>1.5.3</version>
     </dependency>
     <dependency>
       <groupId>org.eolang</groupId>
@@ -204,7 +204,7 @@ SOFTWARE.
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.22.0</version>
+            <version>0.22.1</version>
             <configuration>
               <license>file:${basedir}/LICENSE.txt</license>
               <excludes>
@@ -212,6 +212,7 @@ SOFTWARE.
                 <exclude>pmd:/src/it/.*</exclude>
                 <exclude>checkstyle:/src/test/resources/.*</exclude>
                 <exclude>checkstyle:/src/it/.*</exclude>
+                <exclude>checkstyle:/src/site/.*</exclude>
                 <exclude>duplicatefinder:.*</exclude>
                 <!--
                   @todo #1:30min Enable dependency check.
@@ -235,7 +236,7 @@ SOFTWARE.
           <plugin>
             <groupId>com.github.volodya-lombrozo</groupId>
             <artifactId>jtcop-maven-plugin</artifactId>
-            <version>1.1.1</version>
+            <version>1.2.0</version>
             <executions>
               <execution>
                 <phase>verify</phase>

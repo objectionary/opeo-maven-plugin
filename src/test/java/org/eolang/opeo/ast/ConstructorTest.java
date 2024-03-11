@@ -34,7 +34,7 @@ import org.xembly.Xembler;
  * Test case for {@link Constructor}.
  * @since 0.1
  */
-class ConstructorTest {
+final class ConstructorTest {
 
     @Test
     void transformsIntoXmir() throws ImpossibleModificationException {

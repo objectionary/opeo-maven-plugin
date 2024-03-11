@@ -35,7 +35,7 @@ import org.objectweb.asm.Type;
  * Test for {@link LocalVariables}.
  * @since 0.1
  */
-class LocalVariablesTest {
+final class LocalVariablesTest {
 
     @Test
     void returnsVariable() {

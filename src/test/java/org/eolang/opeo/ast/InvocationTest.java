@@ -37,7 +37,7 @@ import org.xembly.Xembler;
  * Test case for {@link Invocation}.
  * @since 0.1
  */
-class InvocationTest {
+final class InvocationTest {
 
     @Test
     void transformsToXmir() throws ImpossibleModificationException {

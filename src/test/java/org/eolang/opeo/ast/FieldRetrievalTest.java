@@ -36,7 +36,7 @@ import org.xembly.Xembler;
  * Test case for {@link FieldRetrieval}.
  * @since 0.1
  */
-class FieldRetrievalTest {
+final class FieldRetrievalTest {
 
     @Test
     void convertsToXmir() throws ImpossibleModificationException {

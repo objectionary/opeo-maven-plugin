@@ -36,7 +36,7 @@ import org.xembly.Xembler;
  * Test case for {@link Super}.
  * @since 0.1
  */
-class SuperTest {
+final class SuperTest {
 
     @Test
     void convertsToXmir() throws ImpossibleModificationException {

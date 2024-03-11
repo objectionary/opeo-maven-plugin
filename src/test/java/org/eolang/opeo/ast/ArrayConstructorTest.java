@@ -35,7 +35,7 @@ import org.xembly.Xembler;
  * Test case for {@link ArrayConstructor}.
  * @since 0.1
  */
-class ArrayConstructorTest {
+final class ArrayConstructorTest {
 
     @Test
     void compilesSimpleArrayCreation() {

@@ -37,7 +37,7 @@ import org.junit.jupiter.api.io.TempDir;
  * Test case for {@link Decompiler}.
  * @since 0.1
  */
-class DecompilerTest {
+final class DecompilerTest {
 
     @Test
     void decompilesSeveralFiles(@TempDir final Path temp) throws Exception {

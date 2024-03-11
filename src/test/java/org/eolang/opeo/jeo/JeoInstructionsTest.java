@@ -35,7 +35,7 @@ import org.objectweb.asm.Opcodes;
  * Test case for {@link JeoInstructions}.
  * @since 0.1
  */
-class JeoInstructionsTest {
+final class JeoInstructionsTest {
 
     @Test
     void parsesJeoInstructions() {
