@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.ast;
 
-import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringJoiner;
@@ -35,7 +34,6 @@ import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
-import org.xembly.Directives;
 
 /**
  * Literal output.
@@ -198,20 +196,6 @@ public final class Literal implements AstNode, Typed {
     @Override
     public Type type() {
         return this.ltype;
-    }
-
-    /**
-     * Bytes to HEX.
-     *
-     * @param bytes Bytes.
-     * @return Hexadecimal value as string.
-     */
-    private static String bytesToHex(final byte... bytes) {
-        final StringJoiner out = new StringJoiner(" ");
-        for (final byte bty : bytes) {
-            out.add(String.format("%02X", bty));
-        }
-        return out.toString();
     }
 
     /**

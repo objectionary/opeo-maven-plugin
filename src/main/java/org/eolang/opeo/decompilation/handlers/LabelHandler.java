@@ -24,7 +24,6 @@
 package org.eolang.opeo.decompilation.handlers;
 
 import org.eolang.opeo.ast.Label;
-import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
 

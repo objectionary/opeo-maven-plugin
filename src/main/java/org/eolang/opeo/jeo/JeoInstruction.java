@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.jeo;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
