@@ -25,7 +25,6 @@ package org.eolang.opeo.ast;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.StringJoiner;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.jeo.representation.directives.DirectivesData;
