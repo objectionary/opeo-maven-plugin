@@ -23,10 +23,8 @@
  */
 package org.eolang.opeo.jeo;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import org.eolang.jeo.representation.xmir.XmlLabel;
-import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.Instruction;
 
 /**
