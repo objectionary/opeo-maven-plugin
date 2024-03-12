@@ -24,7 +24,6 @@
 package org.eolang.opeo.decompilation;
 
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.opeo.LabelInstruction;
