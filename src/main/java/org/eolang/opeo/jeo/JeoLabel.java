@@ -70,21 +70,6 @@ public final class JeoLabel implements Instruction {
 
     @Override
     public List<Object> operands() {
-        try {
-            // @checkstyle MethodBodyCommentsCheck (10 line)
-            //  @todo #174:30min The following code is a hack to get the label identifier.
-            //   We need to refactor it and handle it differently, in a more straightforward way.
-            //   To do so, we need to open #identifier method in jeo-maven-plugin.
-            final Field field = this.label.getClass().getDeclaredField("node");
-            field.setAccessible(true);
-            return List.of(
-                XmlNode.class.cast(field.get(this.label)).text()
-            );
-        } catch (final IllegalAccessException | NoSuchFieldException exception) {
-            throw new IllegalStateException(
-                "Can't get the label node text",
-                exception
-            );
-        }
+        return List.of(this.label.identifier());
     }
 }
