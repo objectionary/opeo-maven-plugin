@@ -55,7 +55,7 @@ public final class Label implements AstNode {
      * @param identifier Label identifier.
      */
     public Label(final String identifier) {
-        this.identifier = new HexString(identifier).decode();
+        this.identifier = new HexString(identifier.trim()).decode();
     }
 
     @Override
