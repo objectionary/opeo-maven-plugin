@@ -41,7 +41,7 @@ final class LabelTest {
     void convertsToXmir() throws ImpossibleModificationException {
         MatcherAssert.assertThat(
             "The label should be converted to XMIR",
-            new Xembler(new Label("foo").toXmir(), new Transformers.Node()).xml(),
+            new Xembler(new Label("66 6F 6F").toXmir(), new Transformers.Node()).xml(),
             Matchers.equalTo("<o base=\"label\" data=\"bytes\">66 6F 6F</o>")
         );
     }

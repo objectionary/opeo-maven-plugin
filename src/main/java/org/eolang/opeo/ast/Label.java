@@ -47,7 +47,7 @@ public final class Label implements AstNode {
      * @param node XML node.
      */
     public Label(final XmlNode node) {
-        this(new HexString(node.text()).decode());
+        this(node.text());
     }
 
     /**
@@ -55,7 +55,7 @@ public final class Label implements AstNode {
      * @param identifier Label identifier.
      */
     public Label(final String identifier) {
-        this.identifier = identifier;
+        this.identifier = new HexString(identifier.trim()).decode();
     }
 
     @Override

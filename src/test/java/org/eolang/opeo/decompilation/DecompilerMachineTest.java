@@ -24,7 +24,6 @@
 package org.eolang.opeo.decompilation;
 
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.opeo.LabelInstruction;
@@ -192,8 +191,7 @@ final class DecompilerMachineTest {
     @Test
     void decompilesIfStatement() {
         final AllLabels labels = new AllLabels();
-        final String uid = UUID.randomUUID().toString();
-        final Label label = labels.label(uid);
+        final Label label = labels.label("66 6F 6F");
         Assertions.assertDoesNotThrow(
             () -> {
                 new DecompilerMachine().decompile(
