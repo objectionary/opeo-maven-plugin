@@ -2,10 +2,12 @@
 +alias org.eolang.jeo.opcode
 +alias org.eolang.jeo.label
 
+# This is the default 64+ symbols comment in front of named abstract object.
 [] > j$Simple
   33 > access
   "java/lang/Object" > supername
   * > interfaces
+  # This is the default 64+ symbols comment in front of named abstract object.
   [] > new
     1 > access
     "()V" > descriptor
@@ -17,11 +19,14 @@
         .super
         opcode > RETURN
           177
-  [arg__[Ljava/lang/String;__0] > j$main
+  # This is the default 64+ symbols comment in front of named abstract object.
+  [] > j$main
     9 > access
     "([Ljava/lang/String;)V" > descriptor
     "" > signature
     * > exceptions
+    # This is the default 64+ symbols comment in front of named abstract object.
+    [] > arg__[Ljava/lang/String;__0
     seq > @
       *
         java/lang/StringBuilder

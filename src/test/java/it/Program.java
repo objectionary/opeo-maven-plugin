@@ -27,10 +27,11 @@ import java.util.Map;
 
 /**
  * Program.
+ *
  * @since 0.1
  */
 @SuppressWarnings("JTCOP.RuleCorrectTestName")
-final class Program {
+final class Program implements Comparable<Program> {
 
     /**
      * Filename.
@@ -44,6 +45,7 @@ final class Program {
 
     /**
      * Constructor.
+     *
      * @param entry Entry.
      */
     Program(final Map.Entry<String, String> entry) {
@@ -52,6 +54,7 @@ final class Program {
 
     /**
      * Constructor.
+     *
      * @param filename Filename.
      * @param source Source.
      */
@@ -62,6 +65,7 @@ final class Program {
 
     /**
      * Program filename.
+     *
      * @return Filename.
      */
     String name() {
@@ -70,9 +74,15 @@ final class Program {
 
     /**
      * Program source.
+     *
      * @return Source code.
      */
     String src() {
         return this.source;
+    }
+
+    @Override
+    public int compareTo(final Program other) {
+        return this.filename.compareTo(other.filename);
     }
 }

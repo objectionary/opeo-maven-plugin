@@ -30,6 +30,7 @@ import org.yaml.snakeyaml.Yaml;
 
 /**
  * Test pack that can parse java input and expected eo output.
+ *
  * @since 0.1
  */
 @SuppressWarnings("JTCOP.RuleCorrectTestName")
@@ -42,6 +43,7 @@ final class JavaEoPack {
 
     /**
      * Constructor.
+     *
      * @param yaml Raw YAML.
      */
     JavaEoPack(final String yaml) {
@@ -50,28 +52,34 @@ final class JavaEoPack {
 
     /**
      * Java programs.
+     *
      * @return List of programs.
      */
     List<Program> java() {
         return this.parse().get("java")
             .entrySet().stream()
             .map(Program::new)
+            .sorted()
             .collect(Collectors.toList());
     }
 
     /**
      * EO programs.
+     *
      * @return List of programs.
      */
     List<Program> eolang() {
         return this.parse().get("eo")
             .entrySet()
-            .stream().map(Program::new)
+            .stream()
+            .map(Program::new)
+            .sorted()
             .collect(Collectors.toList());
     }
 
     /**
      * Parse YAML.
+     *
      * @return Map of programs.
      */
     private Map<String, Map<String, String>> parse() {
