@@ -36,6 +36,7 @@ eo:
     
     # This is the default 64+ symbols comment in front of named abstract object.
     [] > j$Application
+      55 > version
       33 > access
       "java/lang/Object" > supername
       * > interfaces
@@ -45,6 +46,10 @@ eo:
         "()V" > descriptor
         "" > signature
         * > exceptions
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > maxs
+          1 > stack
+          1 > locals
         seq > @
           *
             $
@@ -57,6 +62,10 @@ eo:
         "([Ljava/lang/String;)V" > descriptor
         "" > signature
         * > exceptions
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > maxs
+          5 > stack
+          1 > locals
         # This is the default 64+ symbols comment in front of named abstract object.
         [] > arg__[Ljava/lang/String;__0
         seq > @
@@ -77,20 +86,26 @@ eo:
 
     # This is the default 64+ symbols comment in front of named abstract object.
     [] > j$A
+      55 > version
       33 > access
       "java/lang/Object" > supername
       * > interfaces
       field > j$x
-        18
-        "I"
-        ""
-        ""
+        18 > access-j$x
+        "I" > descriptor-j$x
+        "" > signature-j$x
+        int > value-j$x
+          --
       # This is the default 64+ symbols comment in front of named abstract object.
       [] > new
         1 > access
         "(I)V" > descriptor
         "" > signature
         * > exceptions
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > maxs
+          2 > stack
+          2 > locals
         # This is the default 64+ symbols comment in front of named abstract object.
         [] > arg__I__0
         seq > @
@@ -109,6 +124,10 @@ eo:
         "()I" > descriptor
         "" > signature
         * > exceptions
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > maxs
+          2 > stack
+          1 > locals
         seq > @
           *
             times
@@ -126,20 +145,26 @@ eo:
 
     # This is the default 64+ symbols comment in front of named abstract object.
     [] > j$B
+      55 > version
       33 > access
       "java/lang/Object" > supername
       * > interfaces
       field > j$a
-        18
-        "Lcom/example/A;"
-        ""
-        ""
+        18 > access-j$a
+        "Lcom/example/A;" > descriptor-j$a
+        "" > signature-j$a
+        class > value-j$a
+          --
       # This is the default 64+ symbols comment in front of named abstract object.
       [] > new
         1 > access
         "(Lcom/example/A;)V" > descriptor
         "" > signature
         * > exceptions
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > maxs
+          2 > stack
+          2 > locals
         # This is the default 64+ symbols comment in front of named abstract object.
         [] > arg__Lcom/example/A;__0
         seq > @
@@ -158,6 +183,10 @@ eo:
         "()I" > descriptor
         "" > signature
         * > exceptions
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > maxs
+          2 > stack
+          1 > locals
         seq > @
           *
             $

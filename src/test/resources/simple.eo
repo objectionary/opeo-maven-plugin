@@ -4,6 +4,7 @@
 
 # This is the default 64+ symbols comment in front of named abstract object.
 [] > j$Simple
+  55 > version
   33 > access
   "java/lang/Object" > supername
   * > interfaces
@@ -13,6 +14,10 @@
     "()V" > descriptor
     "" > signature
     * > exceptions
+    # This is the default 64+ symbols comment in front of named abstract object.
+    [] > maxs
+      1 > stack
+      1 > locals
     seq > @
       *
         $
@@ -25,6 +30,10 @@
     "([Ljava/lang/String;)V" > descriptor
     "" > signature
     * > exceptions
+    # This is the default 64+ symbols comment in front of named abstract object.
+    [] > maxs
+      3 > stack
+      1 > locals
     # This is the default 64+ symbols comment in front of named abstract object.
     [] > arg__[Ljava/lang/String;__0
     seq > @
