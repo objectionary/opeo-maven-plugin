@@ -99,7 +99,7 @@ final class TrasformationPacksTest {
             decompiled.size(),
             Matchers.equalTo(expected.size())
         );
-        for (int index = 0; index < expected.size(); index++) {
+        for (int index = 0; index < expected.size(); ++index) {
             MatcherAssert.assertThat(
                 "Decompiled EO doesn't match with expected",
                 decompiled.get(index),

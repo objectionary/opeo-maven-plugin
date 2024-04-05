@@ -63,6 +63,11 @@ final class Program implements Comparable<Program> {
         this.source = source;
     }
 
+    @Override
+    public int compareTo(final Program other) {
+        return this.filename.compareTo(other.filename);
+    }
+
     /**
      * Program filename.
      *
@@ -79,10 +84,5 @@ final class Program implements Comparable<Program> {
      */
     String src() {
         return this.source;
-    }
-
-    @Override
-    public int compareTo(final Program other) {
-        return this.filename.compareTo(other.filename);
     }
 }
