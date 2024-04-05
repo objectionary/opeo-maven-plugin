@@ -58,6 +58,7 @@ import org.xembly.Xembler;
 
 /**
  * High-level representation of Opeo nodes.
+ *
  * @since 0.1
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
@@ -70,6 +71,7 @@ final class XmirParser {
 
     /**
      * Constructor.
+     *
      * @param nodes Opeo nodes.
      */
     XmirParser(final AstNode... nodes) {
@@ -85,6 +87,7 @@ final class XmirParser {
 
     /**
      * Constructor.
+     *
      * @param nodes Opeo nodes.
      */
     XmirParser(final List<XmlNode> nodes) {
@@ -93,6 +96,7 @@ final class XmirParser {
 
     /**
      * Convert to XML nodes.
+     *
      * @return XML nodes.
      */
     List<XmlNode> toJeoNodes() {
@@ -104,6 +108,7 @@ final class XmirParser {
 
     /**
      * Convert XmlNode into a list of opcodes.
+     *
      * @param node XmlNode
      * @return List of opcodes
      */
@@ -119,6 +124,7 @@ final class XmirParser {
 
     /**
      * Convert XmlNode to AstNode.
+     *
      * @param node XmlNode
      * @return Ast node
      * @todo #77:90min Refactor this.node() method.
@@ -137,7 +143,7 @@ final class XmirParser {
      * @checkstyle NestedIfDepthCheck (200 lines)
      * @checkstyle MethodLengthCheck (200 lines)     *
      */
-    @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
+    @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength", "PMD.CognitiveComplexity"})
     private AstNode node(final XmlNode node) {
         final AstNode result;
         final String base = node.attribute("base").orElseThrow(
@@ -274,6 +280,7 @@ final class XmirParser {
 
     /**
      * Convert XML nodes into a list of arguments.
+     *
      * @param all XML nodes.
      * @return List of arguments.
      */
