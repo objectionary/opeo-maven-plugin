@@ -9,5 +9,5 @@ test.
 To run only this test, use the following command:
 
 ```shell
-mvn clean integration-test invoker:run -Dinvoker.test=fuse -DskipTests"
+mvn clean integration-test invoker:run -Dinvoker.test=fuse -DskipTests
 ```
