@@ -34,6 +34,7 @@ import org.xembly.Directive;
 
 /**
  * Decompiler machine.
+ *
  * @since 0.1
  */
 public final class DecompilerMachine {
@@ -57,6 +58,7 @@ public final class DecompilerMachine {
 
     /**
      * Constructor.
+     *
      * @param args Arguments provided to decompiler.
      */
     DecompilerMachine(final Map<String, String> args) {
@@ -65,18 +67,20 @@ public final class DecompilerMachine {
 
     /**
      * Constructor.
+     *
      * @param locals Local variables.
      * @param arguments Arguments provided to decompiler.
      */
     public DecompilerMachine(final LocalVariables locals, final Map<String, String> arguments) {
         this.locals = locals;
         this.router = new RouterHandler(
-            arguments.getOrDefault("counting", "true").equals("true")
+            "true".equals(arguments.getOrDefault("counting", "true"))
         );
     }
 
     /**
      * Decompile instructions into directives.
+     *
      * @param instructions Instructions to decompile.
      * @return Decompiled instructions.
      */

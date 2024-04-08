@@ -34,26 +34,40 @@ eo:
     +alias org.eolang.jeo.opcode
     +alias org.eolang.jeo.label
     
+    # This is the default 64+ symbols comment in front of named abstract object.
     [] > j$Application
+      55 > version
       33 > access
       "java/lang/Object" > supername
       * > interfaces
+      # This is the default 64+ symbols comment in front of named abstract object.
       [] > new
         1 > access
         "()V" > descriptor
         "" > signature
         * > exceptions
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > maxs
+          1 > stack
+          1 > locals
         seq > @
           *
             $
             .super
             opcode > RETURN
               177
-      [arg__[Ljava/lang/String;__0] > j$main
+      # This is the default 64+ symbols comment in front of named abstract object.
+      [] > j$main
         9 > access
         "([Ljava/lang/String;)V" > descriptor
         "" > signature
         * > exceptions
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > maxs
+          5 > stack
+          1 > locals
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > arg__[Ljava/lang/String;__0
         seq > @
           *
             com/example/B
@@ -70,20 +84,30 @@ eo:
     +alias org.eolang.jeo.opcode
     +alias org.eolang.jeo.label
 
+    # This is the default 64+ symbols comment in front of named abstract object.
     [] > j$A
+      55 > version
       33 > access
       "java/lang/Object" > supername
       * > interfaces
       field > j$x
-        18
-        "I"
-        ""
-        ""
-      [arg__I__0] > new
+        18 > access-j$x
+        "I" > descriptor-j$x
+        "" > signature-j$x
+        int > value-j$x
+          --
+      # This is the default 64+ symbols comment in front of named abstract object.
+      [] > new
         1 > access
         "(I)V" > descriptor
         "" > signature
         * > exceptions
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > maxs
+          2 > stack
+          2 > locals
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > arg__I__0
         seq > @
           *
             $
@@ -94,11 +118,16 @@ eo:
               local1
             opcode > RETURN
               177
+      # This is the default 64+ symbols comment in front of named abstract object.
       [] > j$foo
         1 > access
         "()I" > descriptor
         "" > signature
         * > exceptions
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > maxs
+          2 > stack
+          1 > locals
         seq > @
           *
             times
@@ -114,20 +143,30 @@ eo:
     +alias org.eolang.jeo.opcode
     +alias org.eolang.jeo.label
 
+    # This is the default 64+ symbols comment in front of named abstract object.
     [] > j$B
+      55 > version
       33 > access
       "java/lang/Object" > supername
       * > interfaces
       field > j$a
-        18
-        "Lcom/example/A;"
-        ""
-        ""
-      [arg__Lcom/example/A;__0] > new
+        18 > access-j$a
+        "Lcom/example/A;" > descriptor-j$a
+        "" > signature-j$a
+        class > value-j$a
+          --
+      # This is the default 64+ symbols comment in front of named abstract object.
+      [] > new
         1 > access
         "(Lcom/example/A;)V" > descriptor
         "" > signature
         * > exceptions
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > maxs
+          2 > stack
+          2 > locals
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > arg__Lcom/example/A;__0
         seq > @
           *
             $
@@ -138,11 +177,16 @@ eo:
               local1
             opcode > RETURN
               177
+      # This is the default 64+ symbols comment in front of named abstract object.
       [] > j$bar
         1 > access
         "()I" > descriptor
         "" > signature
         * > exceptions
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > maxs
+          2 > stack
+          1 > locals
         seq > @
           *
             $

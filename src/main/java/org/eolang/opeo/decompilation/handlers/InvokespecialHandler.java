@@ -35,12 +35,13 @@ import org.objectweb.asm.Type;
 
 /**
  * Invokespecial instruction handler.
+ *
  * @since 0.1
  */
 public final class InvokespecialHandler implements InstructionHandler {
     @Override
     public void handle(final DecompilerState state) {
-        if (!state.operand(1).equals("<init>")) {
+        if (!"<init>".equals(state.operand(1))) {
             throw new UnsupportedOperationException(
                 String.format("Instruction %s is not supported yet", state)
             );

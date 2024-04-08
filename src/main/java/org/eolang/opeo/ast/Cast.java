@@ -40,6 +40,7 @@ import org.xembly.Directives;
 
 /**
  * Cast node.
+ *
  * @since 0.2
  */
 @ToString
@@ -58,6 +59,7 @@ public final class Cast implements AstNode, Typed {
 
     /**
      * Constructor.
+     *
      * @param node XML node
      * @param target Function to determine the origin node.
      */
@@ -67,6 +69,7 @@ public final class Cast implements AstNode, Typed {
 
     /**
      * Constructor.
+     *
      * @param target Target type
      * @param origin Node to cast
      */
@@ -99,10 +102,12 @@ public final class Cast implements AstNode, Typed {
 
     /**
      * Constructor.
+     *
      * @return Cast.
      * @checkstyle CyclomaticComplexityCheck (50 lines)
      * @checkstyle JavaNCSSCheck (50 lines)
      */
+    @SuppressWarnings("PMD.CognitiveComplexity")
     private AstNode opcode() {
         final Type fromtype = new ExpressionType(this.origin).type();
         final Type totype = this.target;
@@ -153,6 +158,7 @@ public final class Cast implements AstNode, Typed {
 
     /**
      * Prestructor for Cast#target.
+     *
      * @param node XML node
      * @return Target type.
      */
@@ -169,6 +175,7 @@ public final class Cast implements AstNode, Typed {
 
     /**
      * Prestructor for Cast#origin.
+     *
      * @param node XML node
      * @param target Function to determine the origin node.
      * @return Origin node.

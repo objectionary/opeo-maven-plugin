@@ -58,6 +58,7 @@ import org.junit.jupiter.params.ParameterizedTest;
  * 2. Transform bytecode into XMIR
  * 3. Transform XMIR into EO code
  * 4. Compare EO code with expected EO code
+ *
  * @since 0.1
  */
 final class TrasformationPacksTest {
@@ -73,7 +74,8 @@ final class TrasformationPacksTest {
         //  We don't apply decompilation. Thus, we still have a dummy assertion in this test.
         //  We have to apply decompilation and make the assertion more precise and applicable
         //  for this test.
-        final List<String> decompiled = TrasformationPacksTest.compile(where, jeopack.java())
+        final List<Program> java = jeopack.java();
+        final List<String> decompiled = TrasformationPacksTest.compile(where, java)
             .stream()
             .map(BytecodeRepresentation::new)
             .map(BytecodeRepresentation::toEO)
@@ -82,7 +84,8 @@ final class TrasformationPacksTest {
             .map(Xmir.Default::new)
             .map(Xmir.Default::toEO)
             .collect(Collectors.toList());
-        final List<String> expected = jeopack.eolang()
+        final List<Program> eolang = jeopack.eolang();
+        final List<String> expected = eolang
             .stream()
             .map(Program::src)
             .collect(Collectors.toList());
@@ -93,14 +96,22 @@ final class TrasformationPacksTest {
                 expected.size(),
                 String.join("\n", decompiled)
             ),
-            decompiled,
-            Matchers.containsInAnyOrder(expected.toArray(String[]::new))
+            decompiled.size(),
+            Matchers.equalTo(expected.size())
         );
+        for (int index = 0; index < expected.size(); ++index) {
+            MatcherAssert.assertThat(
+                "Decompiled EO doesn't match with expected",
+                decompiled.get(index),
+                Matchers.equalTo(expected.get(index))
+            );
+        }
     }
 
     /**
      * You can use this method to check how jeo + opeo decompile java bytecode into EO.
-     *  - "decompiled" variable contains XMIR representation of EO code.
+     * - "decompiled" variable contains XMIR representation of EO code.
+     *
      * @param where Temporary directory where to compile java code.
      * @throws IOException If fails.
      */
@@ -129,6 +140,7 @@ final class TrasformationPacksTest {
 
     /**
      * Compile java classes into bytecode.
+     *
      * @param where Where to compile.
      * @param program All java programs to compile.
      * @return Bytecode.
@@ -143,6 +155,7 @@ final class TrasformationPacksTest {
 
     /**
      * Compile java classes into bytecode.
+     *
      * @param where Where to compile.
      * @param programs All java programs to compile.
      * @return Bytecode.
@@ -171,6 +184,7 @@ final class TrasformationPacksTest {
         );
         return Arrays.stream(where.toFile().listFiles())
             .map(File::toPath)
+            .sorted()
             .filter(p -> p.getFileName().toString().endsWith(".class"))
             .map(TrasformationPacksTest::readBytectode)
             .collect(Collectors.toList());
@@ -178,6 +192,7 @@ final class TrasformationPacksTest {
 
     /**
      * Tries to read bytecode of a classfile.
+     *
      * @param classfile Classfile with '.class' extension.
      * @return Bytecode.
      */
@@ -195,6 +210,7 @@ final class TrasformationPacksTest {
     /**
      * Check if java compiler is available.
      * Don't care about PMD warning: this method is used in @EnabledIf annotation.
+     *
      * @return True if java compiler is available.
      */
     @SuppressWarnings("PMD.UnusedPrivateMethod")
