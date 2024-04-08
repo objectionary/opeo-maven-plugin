@@ -18,7 +18,7 @@ The integration test comprises the following steps, executed in order:
 3. `ineo-maven-plugin:staticize`, phase `process-classes`
 4. `jeo-maven-plugin:assemble`, phase `generate-test-sources`
 5. `exec-maven-plugin:exec`, phase `generate-test-sources`
-6.
+
 
 Despite the seemingly confusing declaration order, the actual execution sequence
 is as presented above.
