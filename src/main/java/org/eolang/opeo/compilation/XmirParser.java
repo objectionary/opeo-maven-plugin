@@ -239,7 +239,6 @@ final class XmirParser {
                 )
             );
             final List<AstNode> args = this.args(inner);
-            //todo! ad-hoc? Can't send 'false' directly
             final Attributes attributes = new Attributes()
                 .descriptor(new ConstructorDescriptor(args).toString())
                 .interfaced(false);
