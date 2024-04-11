@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +31,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.jeo.representation.directives.DirectivesInstruction;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 
 /**
@@ -100,7 +103,7 @@ public final class Opcode implements AstNode {
      */
     public Opcode(final int bytecode, final List<Object> operands, final boolean counting) {
         this.bytecode = bytecode;
-        this.operands = operands;
+        this.operands = new ArrayList<>(operands);
         this.counting = counting;
     }
 
@@ -111,7 +114,22 @@ public final class Opcode implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
+        switch (this.bytecode) {
+            case Opcodes.INVOKEVIRTUAL:
+            case Opcodes.INVOKEDYNAMIC:
+            case Opcodes.INVOKEINTERFACE:
+            case Opcodes.INVOKESPECIAL:
+            case Opcodes.INVOKESTATIC:
+                this.appendInterfaced();
+                break;
+        }
         return List.of(this);
+    }
+
+    private void appendInterfaced() {
+        if (!(this.operands.get(this.operands.size() - 1) instanceof Boolean)) {
+            this.operands.add(false);
+        }
     }
 
     /**

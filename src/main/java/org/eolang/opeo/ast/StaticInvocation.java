@@ -167,7 +167,8 @@ public final class StaticInvocation implements AstNode, Typed {
                 Opcodes.INVOKESTATIC,
                 this.owner.toString().replace('.', '/'),
                 this.attributes.name(),
-                this.attributes.descriptor()
+                this.attributes.descriptor(),
+                this.attributes.interfaced()
             )
         );
         return res;

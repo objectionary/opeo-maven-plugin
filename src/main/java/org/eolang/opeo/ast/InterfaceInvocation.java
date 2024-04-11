@@ -105,12 +105,14 @@ public final class InterfaceInvocation implements AstNode, Typed {
             );
         }
         final Typed owner = (Typed) this.source;
+        //todo! this is bad to pass 'true' here
         res.add(
             new Opcode(
                 Opcodes.INVOKEINTERFACE,
                 owner.type().getClassName().replace('.', '/'),
                 this.attrs.name(),
-                this.attrs.descriptor()
+                this.attrs.descriptor(),
+                true
             )
         );
         return res;
