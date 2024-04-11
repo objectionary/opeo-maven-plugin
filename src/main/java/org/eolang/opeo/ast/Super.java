@@ -111,7 +111,16 @@ public final class Super implements AstNode {
         final List<AstNode> res = new ArrayList<>(2);
         res.addAll(this.instance.opcodes());
         this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
-        res.add(new Opcode(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", this.descriptor));
+        //todo! this is not correct to pass just 'false'
+        res.add(
+            new Opcode(
+                Opcodes.INVOKESPECIAL,
+                "java/lang/Object",
+                "<init>",
+                this.descriptor,
+                false
+            )
+        );
         return res;
     }
 }

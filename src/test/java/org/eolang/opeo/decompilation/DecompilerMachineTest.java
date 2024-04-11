@@ -78,8 +78,8 @@ final class DecompilerMachineTest {
             () -> new DecompilerMachine().decompile(
                 new OpcodeInstruction(Opcodes.NEW, "A"),
                 new OpcodeInstruction(Opcodes.DUP),
-                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "A", "<init>", "()V"),
-                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "A", "bar", "()V")
+                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "A", "<init>", "()V", false),
+                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "A", "bar", "()V", false)
             ),
             "Can't decompile method call instructions for 'new A().bar();'"
         );
@@ -100,9 +100,9 @@ final class DecompilerMachineTest {
                 new OpcodeInstruction(Opcodes.NEW, "A"),
                 new OpcodeInstruction(Opcodes.DUP),
                 new OpcodeInstruction(Opcodes.BIPUSH, 28),
-                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "A", "<init>", "(I)V"),
+                new OpcodeInstruction(Opcodes.INVOKESPECIAL, "A", "<init>", "(I)V", false),
                 new OpcodeInstruction(Opcodes.BIPUSH, 29),
-                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "A", "bar", "(I)V")
+                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "A", "bar", "(I)V", false)
             ),
             "Can't decompile method call instructions for 'new A(28).bar(29);'"
         );
@@ -122,8 +122,8 @@ final class DecompilerMachineTest {
             () -> new DecompilerMachine().decompile(
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
-                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "bar", "()I"),
-                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "foo", "(I)I"),
+                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "bar", "()I", false),
+                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "foo", "(I)I", false),
                 new OpcodeInstruction(Opcodes.ICONST_3),
                 new OpcodeInstruction(Opcodes.IADD)
             ),
@@ -167,7 +167,7 @@ final class DecompilerMachineTest {
             () -> new DecompilerMachine().decompile(
                 new OpcodeInstruction(Opcodes.ALOAD, 0),
                 new OpcodeInstruction(Opcodes.GETFIELD, "App", "a", "Ljava/lang/Integer;"),
-                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "intValue", "()I"),
+                new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "intValue", "()I", false),
                 new OpcodeInstruction(Opcodes.ICONST_1),
                 new OpcodeInstruction(Opcodes.IADD)
             ),
@@ -209,10 +209,10 @@ final class DecompilerMachineTest {
                     new OpcodeInstruction(Opcodes.ICONST_1),
                     new OpcodeInstruction(Opcodes.ISUB),
                     new OpcodeInstruction(
-                        Opcodes.INVOKESPECIAL, "org/eolang/other/A", "<init>", "(I)V"
+                        Opcodes.INVOKESPECIAL, "org/eolang/other/A", "<init>", "(I)V", false
                     ),
                     new OpcodeInstruction(
-                        Opcodes.INVOKEVIRTUAL, "org/eolang/other/A", "get", "()I"
+                        Opcodes.INVOKEVIRTUAL, "org/eolang/other/A", "get", "()I", false
                     ),
                     new OpcodeInstruction(Opcodes.IRETURN)
                 );
@@ -230,7 +230,7 @@ final class DecompilerMachineTest {
                         .decompile(
                             new OpcodeInstruction(Opcodes.LLOAD, 4),
                             new OpcodeInstruction(Opcodes.ALOAD, 1),
-                            new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "run", "()I")
+                            new OpcodeInstruction(Opcodes.INVOKEVIRTUAL, "App", "run", "()I", false)
                         )
                 ).xml(),
             "Can't decompile invoke virtual"
@@ -370,14 +370,16 @@ final class DecompilerMachineTest {
                         Opcodes.INVOKESTATIC,
                         "java/lang/Integer",
                         "valueOf",
-                        "(I)Ljava/lang/Integer;"
+                        "(I)Ljava/lang/Integer;",
+                        false
                     ),
                     new OpcodeInstruction(Opcodes.AASTORE),
                     new OpcodeInstruction(
                         Opcodes.INVOKEVIRTUAL,
                         "java/io/PrintStream",
                         "printf",
-                        "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;"
+                        "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;",
+                        false
                     ),
                     new OpcodeInstruction(Opcodes.POP),
                     new OpcodeInstruction(Opcodes.RETURN)
@@ -395,7 +397,8 @@ final class DecompilerMachineTest {
                             .descriptor(
                                 "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;"
                             )
-                            .owner("java/io/PrintStream"),
+                            .owner("java/io/PrintStream")
+                            .interfaced(false),
                         new Literal("Number is %s"),
                         new StoreArray(
                             new ArrayConstructor(

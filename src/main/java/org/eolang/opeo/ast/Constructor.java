@@ -122,12 +122,14 @@ public final class Constructor implements AstNode, Typed {
         res.add(new Opcode(Opcodes.NEW, this.ctype));
         res.add(new Opcode(Opcodes.DUP));
         this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
+        //todo! this is not correct to pass just 'false'
         res.add(
             new Opcode(
                 Opcodes.INVOKESPECIAL,
                 this.ctype,
                 "<init>",
-                this.attributes.descriptor()
+                this.attributes.descriptor(),
+                false
             )
         );
         return res;

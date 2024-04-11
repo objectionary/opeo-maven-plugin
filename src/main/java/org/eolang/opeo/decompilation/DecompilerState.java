@@ -88,6 +88,15 @@ public final class DecompilerState {
      * @return Instruction operand.
      */
     public Object operand(final int index) {
+        if (this.current.operands().size() <= index) {
+            throw new IllegalStateException(
+                String.format(
+                    "Instruction '%s' doesn't have operand at index '%d'",
+                    this.current,
+                    index
+                )
+            );
+        }
         return this.current.operand(index);
     }
 

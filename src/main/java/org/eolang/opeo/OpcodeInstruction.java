@@ -26,6 +26,7 @@ package org.eolang.opeo;
 import java.util.Collections;
 import java.util.List;
 import lombok.ToString;
+import org.eolang.opeo.ast.OpcodeName;
 import org.eolang.opeo.jeo.JeoInstruction;
 
 /**
@@ -78,5 +79,10 @@ public final class OpcodeInstruction implements Instruction {
     @Override
     public List<Object> operands() {
         return Collections.unmodifiableList(this.arguments);
+    }
+
+    @ToString.Include(name = "opcode-name")
+    private String opname() {
+        return new OpcodeName(this.code).simplified();
     }
 }

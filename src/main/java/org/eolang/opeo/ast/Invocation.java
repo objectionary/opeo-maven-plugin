@@ -168,7 +168,8 @@ public final class Invocation implements AstNode, Typed {
                 Opcodes.INVOKEVIRTUAL,
                 owner.type().getClassName().replace('.', '/'),
                 this.attributes.name(),
-                this.attributes.descriptor()
+                this.attributes.descriptor(),
+                this.attributes.interfaced()
             )
         );
         return res;

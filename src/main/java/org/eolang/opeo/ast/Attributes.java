@@ -148,6 +148,24 @@ public final class Attributes {
     }
 
     /**
+     * Get interfaced attribute.
+     * @return True if method is interfaced or not.
+     */
+    public boolean interfaced() {
+        return this.find("interfaced").equals("true");
+    }
+
+    /**
+     * Set interfaced attribute.
+     * @param interfaced Interfaced method or not
+     * @return This object
+     */
+    public Attributes interfaced(final boolean interfaced) {
+        this.all.put("interfaced", Boolean.toString(interfaced));
+        return this;
+    }
+
+    /**
      * Find attribute.
      * @param key Attribute key
      * @return Attribute value
