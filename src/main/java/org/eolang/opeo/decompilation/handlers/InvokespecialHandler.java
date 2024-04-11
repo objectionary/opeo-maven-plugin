@@ -63,10 +63,12 @@ public final class InvokespecialHandler implements InstructionHandler {
                 new Super(state.stack().pop(), args, descriptor)
             );
         } else {
-            ((Reference) state.stack().pop())
-                .link(new Constructor(target,
-                    new Attributes().descriptor(descriptor).interfaced(interfaced), args
-                ));
+            final AstNode constructor = new Constructor(
+                target,
+                new Attributes().descriptor(descriptor).interfaced(interfaced),
+                args
+            );
+            ((Reference) state.stack().pop()).link(constructor);
         }
     }
 

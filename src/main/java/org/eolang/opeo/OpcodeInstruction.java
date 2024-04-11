@@ -82,6 +82,7 @@ public final class OpcodeInstruction implements Instruction {
     }
 
     @ToString.Include(name = "opcode-name")
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private String opname() {
         return new OpcodeName(this.code).simplified();
     }

@@ -154,7 +154,7 @@ public final class Attributes {
      */
     public boolean interfaced() {
         //todo!??? ad-hoc???
-        return this.all.getOrDefault("interfaced", "false").equals("true");
+        return "true".equals(this.all.getOrDefault("interfaced", "false"));
     }
 
     /**

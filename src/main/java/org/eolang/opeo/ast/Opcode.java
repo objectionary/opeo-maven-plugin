@@ -32,7 +32,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.jeo.representation.directives.DirectivesInstruction;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
 import org.xembly.Directive;
 
 /**
@@ -122,14 +121,10 @@ public final class Opcode implements AstNode {
             case Opcodes.INVOKESTATIC:
                 this.appendInterfaced();
                 break;
+            default:
+                break;
         }
         return List.of(this);
-    }
-
-    private void appendInterfaced() {
-        if (!(this.operands.get(this.operands.size() - 1) instanceof Boolean)) {
-            this.operands.add(false);
-        }
     }
 
     /**
@@ -143,5 +138,15 @@ public final class Opcode implements AstNode {
     @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
     public static void disableCounting() {
         Opcode.COUNTING.set(false);
+    }
+
+    /**
+     * Append 'interfaced' attribute.
+     * @todo: ....
+     */
+    private void appendInterfaced() {
+        if (!(this.operands.get(this.operands.size() - 1) instanceof Boolean)) {
+            this.operands.add(false);
+        }
     }
 }
