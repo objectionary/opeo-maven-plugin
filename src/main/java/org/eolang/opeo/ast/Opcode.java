@@ -142,7 +142,11 @@ public final class Opcode implements AstNode {
 
     /**
      * Append 'interfaced' attribute.
-     * @todo: ....
+     * @todo #201:90 Remove the 'appendInterfaced' method from Opcode.
+     *  This method was added to hide problems in 'ineo-maven-plugin' optimizations implementation.
+     *  Also in 'opeo-maven-plugin' we also have some gaps related to 'interfaced' attribute.
+     *  We definitely should remove this method. Moreover, we shouldn't forget to clean
+     *  {@link #opcodes} method after.
      */
     private void appendInterfaced() {
         if (!(this.operands.get(this.operands.size() - 1) instanceof Boolean)) {
