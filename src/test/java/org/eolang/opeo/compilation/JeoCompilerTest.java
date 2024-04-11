@@ -34,6 +34,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link JeoCompiler}.
+ *
  * @since 0.1
  */
 final class JeoCompilerTest {

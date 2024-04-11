@@ -38,6 +38,7 @@ import org.xembly.Xembler;
 
 /**
  * Decompiler that gets jeo instructions and decompiles them into high-level EO constructs.
+ *
  * @since 0.1
  */
 public final class JeoDecompiler {
@@ -49,6 +50,7 @@ public final class JeoDecompiler {
 
     /**
      * Constructor.
+     *
      * @param prog Program in XMIR format received from jeo maven plugin.
      */
     public JeoDecompiler(final XML prog) {
@@ -57,6 +59,7 @@ public final class JeoDecompiler {
 
     /**
      * Decompile program.
+     *
      * @return EO program.
      */
     public XML decompile() {
@@ -69,11 +72,12 @@ public final class JeoDecompiler {
 
     /**
      * Decompile method.
+     *
      * @param method Method.
      */
     private static void decompile(final XmlMethod method) {
         if (!method.instructions().isEmpty()) {
-            method.replaceInstructions(
+            method.withInstructions(
                 new XmlNode(
                     new Xembler(
                         new DecompilerMachine(

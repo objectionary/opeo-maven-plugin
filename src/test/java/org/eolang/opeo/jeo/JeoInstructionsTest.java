@@ -40,7 +40,7 @@ final class JeoInstructionsTest {
     @Test
     void parsesJeoInstructions() {
         final XmlMethod method = new XmlMethod();
-        method.replaceInstructions(
+        method.withInstructions(
             new XmlInstruction(Opcodes.LDC, "Hello, world!").toNode(),
             new XmlInstruction(
                 Opcodes.INVOKEVIRTUAL,

@@ -31,6 +31,7 @@ import org.eolang.opeo.Instruction;
 
 /**
  * Class that represents the instructions provided by jeo maven plugin.
+ *
  * @since 0.1
  */
 public final class JeoInstructions {
@@ -42,6 +43,7 @@ public final class JeoInstructions {
 
     /**
      * Constructor.
+     *
      * @param method Method.
      */
     public JeoInstructions(final XmlMethod method) {
@@ -50,16 +52,28 @@ public final class JeoInstructions {
 
     /**
      * Parse instructions.
+     *
      * @return Instructions array.
      */
     public Instruction[] instructions() {
         return this.method.instructions().stream()
+            .filter(JeoInstructions::isInstruction)
             .map(JeoInstructions::toInstruction)
             .toArray(Instruction[]::new);
     }
 
     /**
+     * Check if entry is an instruction.
+     * @param entry XML bytecode entry.
+     * @return True if entry is instruction.
+     */
+    private static boolean isInstruction(final XmlBytecodeEntry entry) {
+        return entry instanceof XmlInstruction || entry instanceof XmlLabel;
+    }
+
+    /**
      * Convert XML instruction to instruction.
+     *
      * @param entry XML instruction.
      * @return Instruction.
      */
