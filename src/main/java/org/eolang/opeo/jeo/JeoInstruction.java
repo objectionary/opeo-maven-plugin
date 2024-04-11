@@ -25,6 +25,7 @@ package org.eolang.opeo.jeo;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.ToString;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlOperand;
 import org.eolang.opeo.Instruction;
@@ -33,6 +34,7 @@ import org.eolang.opeo.Instruction;
  * Class that represents the instruction provided by jeo maven plugin.
  * @since 0.1
  */
+@ToString
 public final class JeoInstruction implements Instruction {
 
     /**

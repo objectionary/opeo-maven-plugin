@@ -153,7 +153,8 @@ public final class Attributes {
      * @return True if method is interfaced or not.
      */
     public boolean interfaced() {
-        return this.find("interfaced").equals("true");
+        //todo!??? ad-hoc???
+        return this.all.getOrDefault("interfaced", "false").equals("true");
     }
 
     /**

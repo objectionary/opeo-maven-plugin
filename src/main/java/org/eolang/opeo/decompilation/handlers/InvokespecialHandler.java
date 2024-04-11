@@ -47,6 +47,7 @@ public final class InvokespecialHandler implements InstructionHandler {
             );
         }
         final String descriptor = (String) state.operand(2);
+        final boolean interfaced = (boolean) state.operand(3);
         final List<AstNode> args = state.stack().pop(
             Type.getArgumentCount(descriptor)
         );
@@ -63,7 +64,9 @@ public final class InvokespecialHandler implements InstructionHandler {
             );
         } else {
             ((Reference) state.stack().pop())
-                .link(new Constructor(target, new Attributes().descriptor(descriptor), args));
+                .link(new Constructor(target,
+                    new Attributes().descriptor(descriptor).interfaced(interfaced), args
+                ));
         }
     }
 

@@ -54,7 +54,7 @@ public final class InvokevirtualHandler implements InstructionHandler {
         final String owner = (String) state.operand(0);
         final String method = (String) state.operand(1);
         final String descriptor = (String) state.operand(2);
-        final boolean interfced = (Boolean) state.operand(3);
+        final boolean interfaced = (Boolean) state.operand(3);
         final List<AstNode> args = state.stack().pop(
             Type.getArgumentCount(descriptor)
         );
@@ -67,7 +67,7 @@ public final class InvokevirtualHandler implements InstructionHandler {
                     .name(method)
                     .descriptor(descriptor)
                     .owner(owner)
-                    .interfaced(interfced),
+                    .interfaced(interfaced),
                 args
             )
         );
