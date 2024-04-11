@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import org.cactoos.map.MapEntry;
@@ -65,7 +66,7 @@ public final class Attributes {
      * @param all All attributes.
      */
     public Attributes(final Map<String, String> all) {
-        this.all = all;
+        this.all = new TreeMap<>(all);
     }
 
     @Override

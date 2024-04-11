@@ -85,7 +85,8 @@ final class SuperTest {
                     Opcodes.INVOKESPECIAL,
                     "java/lang/Object",
                     "<init>",
-                    "(I)V"
+                    "(I)V",
+                    false
                 )
             )
         );
@@ -104,7 +105,8 @@ final class SuperTest {
                     Opcodes.INVOKESPECIAL,
                     "java/lang/Object",
                     "<init>",
-                    "()V"
+                    "()V",
+                    false
                 )
             )
         );
@@ -125,7 +127,8 @@ final class SuperTest {
                     Opcodes.INVOKESPECIAL,
                     "java/lang/Object",
                     "<init>",
-                    "(II)V"
+                    "(II)V",
+                    false
                 )
             )
         );
@@ -145,7 +148,8 @@ final class SuperTest {
                     Opcodes.INVOKESPECIAL,
                     "some/interesting/Parent",
                     "<init>",
-                    "()V"
+                    "()V",
+                    false
                 )
             )
         );

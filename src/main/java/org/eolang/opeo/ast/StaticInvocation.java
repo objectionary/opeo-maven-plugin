@@ -113,7 +113,7 @@ public final class StaticInvocation implements AstNode, Typed {
      * @param node XML node
      * @param arguments Arguments
      */
-    StaticInvocation(final XmlNode node, final AstNode... arguments) {
+    public StaticInvocation(final XmlNode node, final AstNode... arguments) {
         this(node, Arrays.asList(arguments));
     }
 
@@ -123,12 +123,26 @@ public final class StaticInvocation implements AstNode, Typed {
      * @param owner Owner class name
      * @param arguments Arguments
      */
-    private StaticInvocation(
+    public StaticInvocation(
+        final Attributes attributes,
+        final Owner owner,
+        final AstNode... arguments
+    ) {
+        this(attributes, owner, List.of(arguments));
+    }
+
+    /**
+     * Constructor.
+     * @param attributes Method attributes
+     * @param owner Owner class name
+     * @param arguments Arguments
+     */
+    public StaticInvocation(
         final Attributes attributes,
         final Owner owner,
         final List<AstNode> arguments
     ) {
-        this.attributes = attributes;
+        this.attributes = attributes.type("static");
         this.owner = owner;
         this.args = arguments;
     }

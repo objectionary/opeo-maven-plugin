@@ -39,6 +39,7 @@ import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Opcode;
+import org.eolang.opeo.ast.Owner;
 import org.eolang.opeo.ast.Root;
 import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
@@ -407,9 +408,12 @@ final class DecompilerMachineTest {
                             ),
                             new Literal(0),
                             new StaticInvocation(
-                                "java/lang/Integer",
-                                "valueOf",
-                                "(I)Ljava/lang/Integer;",
+                                new Attributes()
+                                    .owner("java/lang/Integer")
+                                    .name("valueOf")
+                                    .descriptor("(I)Ljava/lang/Integer;")
+                                    .interfaced(false),
+                                new Owner("java/lang/Integer"),
                                 new Literal(2)
                             )
                         )

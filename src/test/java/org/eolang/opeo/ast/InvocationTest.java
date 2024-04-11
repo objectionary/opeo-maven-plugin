@@ -99,7 +99,7 @@ final class InvocationTest {
             new OpcodeNodes(
                 new Invocation(
                     new This(),
-                    new Attributes().descriptor(descriptor).name(name),
+                    new Attributes().descriptor(descriptor).interfaced(false).name(name),
                     new Literal(constant)
                 )
             ).opcodes(),
@@ -110,7 +110,8 @@ final class InvocationTest {
                     Opcodes.INVOKEVIRTUAL,
                     "java/lang/Object",
                     name,
-                    descriptor
+                    descriptor,
+                    false
                 )
             )
         );
@@ -126,7 +127,7 @@ final class InvocationTest {
             new OpcodeNodes(
                 new Invocation(
                     new LocalVariable(1, type),
-                    new Attributes().name(name).descriptor(descriptor)
+                    new Attributes().name(name).interfaced(false).descriptor(descriptor)
                 )
             ).opcodes(),
             new HasInstructions(
@@ -135,7 +136,8 @@ final class InvocationTest {
                     Opcodes.INVOKEVIRTUAL,
                     type.getClassName().replace('.', '/'),
                     name,
-                    descriptor
+                    descriptor,
+                    false
                 )
             )
         );
