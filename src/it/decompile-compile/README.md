@@ -2,8 +2,9 @@
 
 This integration test decompiles XMIR produced
 by [jeo-maven-plugin](https://github.com/objectionary/jeo-maven-plugin)
-by `decompile` goal and then compiles it back to Java source code
-using `compile` goal and `jeo-maven-plugin`
+by `decompile` goal and then compiles it back to `jeo-maven-plugin`
+representation using `compile` goal.
+
 To run only this test, use the following command:
 
 ```shell
