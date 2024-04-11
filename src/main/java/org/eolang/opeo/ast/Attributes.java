@@ -151,9 +151,15 @@ public final class Attributes {
     /**
      * Get interfaced attribute.
      * @return True if method is interfaced or not.
+     * @todo #201:90min Fix 'staticize' optimization.
+     *  We need to use of the default value below because outdated 'staticize' optimization
+     *  doesn't add 'interfaced' attribute to some methods. Particulary,
+     *  scope="name=get|descriptor=()I|owner=org/eolang/benchmark/StaticizedA|type=method"
+     *  in class A should contain 'interfaced=false'.
+     *  To implement this, we need to send a PR to ineo-maven-plugin repository.
+     *  See https://github.com/objectionary/ineo-maven-plugin
      */
     public boolean interfaced() {
-        //todo!??? ad-hoc???
         return "true".equals(this.all.getOrDefault("interfaced", "false"));
     }
 
