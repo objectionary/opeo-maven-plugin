@@ -38,8 +38,8 @@ final class AttributesTest {
     @ParameterizedTest(name = "Converts \"{1}\" attributes to a single string \"{0}\"")
     @CsvSource({
         "scope=foo, 'scope,foo,'",
-        "descriptor=I|type=field|owner=Lorg/eolang/opeo/ast/Invocation;, 'descriptor,I,type,field,owner,Lorg/eolang/opeo/ast/Invocation;'",
-        "descriptor=()V|type=method|owner=Lorg/eolang/opeo/ast/Invocation;, 'descriptor,()V,type,method,owner,Lorg/eolang/opeo/ast/Invocation;'"
+        "descriptor=I|owner=Lorg/eolang/opeo/ast/Invocation;|type=field, 'descriptor,I,type,field,owner,Lorg/eolang/opeo/ast/Invocation;'",
+        "descriptor=()V|owner=Lorg/eolang/opeo/ast/Invocation;|type=method, 'descriptor,()V,type,method,owner,Lorg/eolang/opeo/ast/Invocation;'"
     })
     void convertsToString(final String expected, final String attributes) {
         MatcherAssert.assertThat(

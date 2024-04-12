@@ -47,7 +47,7 @@ public final class Owner implements Xmir {
      * Constructor.
      * @param type Owner type.
      */
-    Owner(final String type) {
+    public Owner(final String type) {
         this(Type.getObjectType(type));
     }
 

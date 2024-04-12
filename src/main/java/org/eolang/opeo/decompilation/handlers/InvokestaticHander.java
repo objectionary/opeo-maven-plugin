@@ -25,6 +25,8 @@ package org.eolang.opeo.decompilation.handlers;
 
 import java.util.List;
 import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Attributes;
+import org.eolang.opeo.ast.Owner;
 import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
@@ -41,7 +43,18 @@ public final class InvokestaticHander implements InstructionHandler {
         final String owner = (String) state.operand(0);
         final String method = (String) state.operand(1);
         final String descriptor = (String) state.operand(2);
+        final boolean interfaced = (boolean) state.operand(3);
         final List<AstNode> args = state.stack().pop(Type.getArgumentCount(descriptor));
-        state.stack().push(new StaticInvocation(owner, method, descriptor, args));
+        state.stack().push(
+            new StaticInvocation(
+                new Attributes()
+                    .name(method)
+                    .descriptor(descriptor)
+                    .owner(owner)
+                    .interfaced(interfaced),
+                new Owner(owner),
+                args
+            )
+        );
     }
 }

@@ -127,7 +127,8 @@ public final class Constructor implements AstNode, Typed {
                 Opcodes.INVOKESPECIAL,
                 this.ctype,
                 "<init>",
-                this.attributes.descriptor()
+                this.attributes.descriptor(),
+                this.attributes.interfaced()
             )
         );
         return res;

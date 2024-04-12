@@ -110,7 +110,8 @@ public final class InterfaceInvocation implements AstNode, Typed {
                 Opcodes.INVOKEINTERFACE,
                 owner.type().getClassName().replace('.', '/'),
                 this.attrs.name(),
-                this.attrs.descriptor()
+                this.attrs.descriptor(),
+                this.attrs.interfaced()
             )
         );
         return res;

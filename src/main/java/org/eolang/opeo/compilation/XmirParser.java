@@ -240,7 +240,8 @@ final class XmirParser {
             );
             final List<AstNode> args = this.args(inner);
             final Attributes attributes = new Attributes()
-                .descriptor(new ConstructorDescriptor(args).toString());
+                .descriptor(new ConstructorDescriptor(args).toString())
+                .interfaced(false);
             result = new Constructor(type, attributes, args);
         } else if (".array".equals(base)) {
             final List<XmlNode> children = node.children().collect(Collectors.toList());

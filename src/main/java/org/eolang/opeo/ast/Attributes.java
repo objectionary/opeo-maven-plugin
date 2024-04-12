@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import org.cactoos.map.MapEntry;
@@ -65,7 +66,7 @@ public final class Attributes {
      * @param all All attributes.
      */
     public Attributes(final Map<String, String> all) {
-        this.all = all;
+        this.all = new TreeMap<>(all);
     }
 
     @Override
@@ -144,6 +145,31 @@ public final class Attributes {
      */
     public Attributes name(final String name) {
         this.all.put("name", name);
+        return this;
+    }
+
+    /**
+     * Get interfaced attribute.
+     * @return True if method is interfaced or not.
+     * @todo #201:90min Fix 'staticize' optimization.
+     *  We need to use of the default value below because outdated 'staticize' optimization
+     *  doesn't add 'interfaced' attribute to some methods. Particulary,
+     *  scope="name=get|descriptor=()I|owner=org/eolang/benchmark/StaticizedA|type=method"
+     *  in class A should contain 'interfaced=false'.
+     *  To implement this, we need to send a PR to ineo-maven-plugin repository.
+     *  See https://github.com/objectionary/ineo-maven-plugin
+     */
+    public boolean interfaced() {
+        return "true".equals(this.all.getOrDefault("interfaced", "false"));
+    }
+
+    /**
+     * Set interfaced attribute.
+     * @param interfaced Interfaced method or not
+     * @return This object
+     */
+    public Attributes interfaced(final boolean interfaced) {
+        this.all.put("interfaced", Boolean.toString(interfaced));
         return this;
     }
 

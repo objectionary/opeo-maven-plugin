@@ -33,6 +33,10 @@ import org.xembly.Directives;
 /**
  * Super output node.
  * @since 0.1
+ * @todo #201:90min Add Attributes to the Super class.
+ *  The Super class should have attributes that can be used to define the
+ *  'descriptor' and 'intefaced' operands of the INVOKESPECIAL opcode.
+ *  Moreover, we use hardcoded value for 'interfaced' which is dangerous.
  */
 public final class Super implements AstNode {
 
@@ -111,7 +115,15 @@ public final class Super implements AstNode {
         final List<AstNode> res = new ArrayList<>(2);
         res.addAll(this.instance.opcodes());
         this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
-        res.add(new Opcode(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", this.descriptor));
+        res.add(
+            new Opcode(
+                Opcodes.INVOKESPECIAL,
+                "java/lang/Object",
+                "<init>",
+                this.descriptor,
+                false
+            )
+        );
         return res;
     }
 }
