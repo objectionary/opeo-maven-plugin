@@ -1,34 +1,34 @@
 # Full Spring Fat Jar Integration Test
 
-This integration test verifies all the phases of the
-`opeo-maven-plugin` together with `jeo-maven-plugin` and `ineo-maven-plugin`.
-In this test we use created Spring Framework based application, build a fat jar
-application and then apply all the transformations and optimizations to it.
+This integration test verifies all the phases of the `opeo-maven-plugin` along
+with the `jeo-maven-plugin` and `ineo-maven-plugin`. In this test, we use a
+Spring Framework-based application, build a fat jar application, and then apply
+all the transformations and optimizations to it.
 
 The distinctive aspect of this test is its comprehensive process of handling
-dependencies: it downloads all required dependencies, unpacks them, applies
-transformations via the `jeo-maven-plugin`, and then tries to decompile the
-`jeo` representation via `opeo-maven-plugin:decompile`, then we apply
-oprimization via `ineo-maven-plugin:optimize` then we compile the optimized
-representation back to the original representation
-via `opeo-maven-plugin:compile`, then we assemble the compiled `jeo`
-representation back to bytecode
-by utilizing `jeo-maven-plugin:assemble"`. By doing this we can verify that
-that `opeo-maven-plugin` does not break the application and all its
-dependencies.
+application dependencies alongside the application code itself. It downloads all
+required dependencies, unpacks them, and compiles the entire application. Then,
+it applies transformations via the `jeo-maven-plugin` and receives the `jeo`
+representation, which it then tries to decompile
+using `opeo-maven-plugin:decompile`. Next, it applies optimization via
+`ineo-maven-plugin:optimize`, and then it compiles the optimized representation
+back to the `jeo` representation using `opeo-maven-plugin:compile`. Finally, it
+assembles the compiled `jeo`representation back into bytecode using
+`jeo-maven-plugin:assemble`. By doing all this steps, it can ensure that
+the `opeo-maven-plugin` does not break the application and works as expected.
 
 In short, the process is as follows:
 
-1. **Compile the application and download all it's dependencies**
+1. **Compile the application and download all its dependencies**
 2. **Unpack dependencies**
-3. **Disassemble**: Apply transformation via the `jeo-maven-plugin:dissassemble`
-   goal for all the unpacked dependencies including the application itself.
+3. **disassemble**: Apply transformation via the `jeo-maven-plugin:disassemble`
+   goal for all the unpacked dependencies, including the application itself.
 4. **Decompile**: Apply decompilation via the `opeo-maven-plugin:decompile` goal
 5. **Optimize**: Apply optimization via the `ineo-maven-plugin:optimize` goal
 6. **Compile**: Apply compilation via the `opeo-maven-plugin:compile` goal
 7. **Assemble**: Apply back transformation via the `jeo-maven-plugin:assemble`
    goal
-8. **Build the application**: Compiles the optimizaed application back into a
+8. **Build the application**: Compiles the optimized application back into a
    fat jar.
 9. **Run the application**: Run the optimized application to verify that it
    works correctly.
