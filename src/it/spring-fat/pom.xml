@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2016-2023 Objectionary.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <!--
+      The version of 3.2.0 and similar requires rather high java
+      version: 17 or higher. So we intentionally use the version 2.7.18
+      here that requires java 11 since our plugin should be compatible with
+      java 11.
+    -->
+    <version>2.7.18</version>
+    <relativePath/>
+  </parent>
+  <groupId>org.eolang</groupId>
+  <artifactId>jeo-spring-fat-it</artifactId>
+  <version>@project.version@</version>
+  <packaging>jar</packaging>
+  <description>
+    Integration test that checks correct transformation of an application written with using of the Springs Framework.
+    This integration test starts the application with several beans and prints results to the console.
+    This is a similar integration test with the "spring" test in the "src/it/spring" test.
+    The only difference is that in this test we download all the dependencies, unpack them, transform using jeo-maven-plugin
+    and then pack them back. In other words, we test the fat jar transformation.
+    If you need to run only this test, use the following command:
+    "mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests"
+  </description>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.6.1</version>
+        <executions>
+          <execution>
+            <id>unpack-dependencies</id>
+            <goals>
+              <goal>unpack-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eolang</groupId>
+        <artifactId>jeo-maven-plugin</artifactId>
+        <version>@project.version@</version>
+        <configuration>
+          <disabled>false</disabled>
+          <!--
+            @todo #488:90min Enable Bytecode Verification For Spring Fat Integration Test.
+             We skip verification because the Spring Framework uses many classes that
+             are not in the classpath and the plugin cannot verify the correctness of
+             the transformation. For not it's not so crucial, but in the future, we
+             should enable it.
+          -->
+          <skipVerification>true</skipVerification>
+        </configuration>
+        <executions>
+          <execution>
+            <id>bytecode-to-eo</id>
+            <goals>
+              <goal>disassemble</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>eo-to-bytecode</id>
+            <goals>
+              <goal>assemble</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <phase>
+              process-classes
+            </phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <executable>java</executable>
+          <arguments>
+            <argument>-classpath</argument>
+            <argument>${project.build.outputDirectory}</argument>
+            <argument>org.eolang.jeo.spring.Application</argument>
+          </arguments>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
