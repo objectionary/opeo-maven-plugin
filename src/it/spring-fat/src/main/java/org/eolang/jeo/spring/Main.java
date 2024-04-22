@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2016-2023 Objectionary.com
+ * Copyright (c) 2023-2024 Objectionary.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,15 +23,35 @@
  */
 package org.eolang.jeo.spring;
 
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Greeter bean.
+ * Main class.
+ * We expect that the usage of Factorial objects in this class will be replaced.
  * @since 0.2
  */
-@Component
-public class Receptionist {
-    public void sayHello(final String who) {
-        System.out.printf("Glad to see you, %s...%n", who);
+@RestController
+public final class Main {
+
+    @GetMapping("/factorial")
+    public String factorial(
+        @RequestParam(value = "rounds", defaultValue = "1") String prounds,
+        @RequestParam(value = "value", defaultValue = "10") String pvalue
+    ) {
+        long rounds = Long.parseLong(prounds);
+        int value = Integer.parseInt(pvalue);
+        long sum = 0L;
+        long start = System.currentTimeMillis();
+        for (long i = 0; i < rounds; ++i) {
+            sum += new Factorial(value).get();
+        }
+        final String response = String.format(
+            "sum=%d time=%d\n", sum, System.currentTimeMillis() - start
+        );
+        System.out.println(response);
+        return response;
     }
+
 }
