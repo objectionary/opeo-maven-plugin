@@ -37,7 +37,14 @@ SOFTWARE.
     <relativePath/>
   </parent>
   <groupId>org.eolang</groupId>
-  <artifactId>jeo-spring-fat-it</artifactId>
+  <!--
+    @todo #200:90min Enable Opeo Spring Fat Integration Test.
+     The test is disabled because it fails in many places.
+     We have to fix all the tests steps and enable this test.
+     Don't forget to add this test to the merge workflow.
+     see .github/workflows/maven.test.yaml
+  -->
+  <artifactId>opeo-spring-fat-it</artifactId>
   <version>@project.version@</version>
   <packaging>jar</packaging>
   <description>
