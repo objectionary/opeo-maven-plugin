@@ -44,12 +44,12 @@ mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests
 Here is the summary of the first results of the `spring-fat` integration test:
 
 - The application starts and runs successfully.
-- The average test time is approximately **TODO seconds**.
-- The total number of classes is **TODO**.
-- The Disassembly phase takes approximately **TODO minutes**.
-- The Decompile phase takes approximately **TODO minutes**.
-- The Compile phase takes approximately **TODO minutes**.
-- The Assembly phase takes approximately **TODO minutes**.
+- The average test time is approximately **X seconds**.
+- The total number of classes is **Y**.
+- The Disassembly phase takes approximately **Z minutes**.
+- The Decompile phase takes approximately **K minutes**.
+- The Compile phase takes approximately **L minutes**.
+- The Assembly phase takes approximately **N minutes**.
 
 ## Developer Notes
 
