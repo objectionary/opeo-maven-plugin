@@ -53,21 +53,20 @@ SOFTWARE.
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <jeo.version>0.4.2</jeo.version>
+    <ineo.version>0.2.1</ineo.version>
   </properties>
-
- 	<dependencies>
- 		<dependency>
- 			<groupId>org.springframework.boot</groupId>
- 			<artifactId>spring-boot-starter-web</artifactId>
- 		</dependency>
-
- 		<dependency>
- 			<groupId>org.springframework.boot</groupId>
- 			<artifactId>spring-boot-starter-test</artifactId>
- 			<scope>test</scope>
- 		</dependency>
- 	</dependencies>
-
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
   <build>
     <plugins>
       <plugin>
@@ -89,30 +88,62 @@ SOFTWARE.
       <plugin>
         <groupId>org.eolang</groupId>
         <artifactId>jeo-maven-plugin</artifactId>
-        <version>@project.version@</version>
-        <configuration>
-          <disabled>false</disabled>
-          <!--
-            @todo #200:90min Enable Bytecode Verification For Spring Fat Integration Test.
-             We skip verification because the Spring Framework uses many classes that
-             are not in the classpath and the plugin cannot verify the correctness of
-             the transformation. For not it's not so crucial, but in the future, we
-             should enable it.
-          -->
-          <skipVerification>true</skipVerification>
-        </configuration>
+        <version>${jeo.version}</version>
         <executions>
           <execution>
             <id>bytecode-to-eo</id>
             <goals>
               <goal>disassemble</goal>
             </goals>
+            <configuration>
+              <outputDir>${project.build.directory}/generated-sources/jeo-disassemble-xmir</outputDir>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eolang</groupId>
+        <artifactId>opeo-maven-plugin</artifactId>
+        <version>@project.version@</version>
+        <executions>
+          <execution>
+            <id>opeo-decompile</id>
+            <goals>
+              <goal>decompile</goal>
+            </goals>
+            <configuration>
+              <sourcesDir>${project.build.directory}/generated-sources/jeo-disassemble-xmir</sourcesDir>
+              <outputDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</outputDir>
+            </configuration>
           </execution>
           <execution>
-            <id>eo-to-bytecode</id>
+            <id>opeo-compile</id>
+            <phase>generate-test-sources</phase>
             <goals>
-              <goal>assemble</goal>
+              <goal>compile</goal>
             </goals>
+            <configuration>
+              <sourcesDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</sourcesDir>
+              <outputDir>${project.build.directory}/generated-sources/opeo-compile-xmir</outputDir>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eolang</groupId>
+        <artifactId>ineo-maven-plugin</artifactId>
+        <version>${ineo.version}</version>
+        <executions>
+          <execution>
+            <id>ineo-staticize</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>staticize</goal>
+            </goals>
+            <configuration>
+              <sourcesDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</sourcesDir>
+              <outputDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</outputDir>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -120,24 +151,33 @@ SOFTWARE.
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.2.0</version>
+        <configuration>
+          <executable>mvn</executable>
+        </configuration>
         <executions>
           <execution>
-            <phase>
-              process-classes
-            </phase>
+            <id>jeo-to-bytecode</id>
+            <phase>generate-test-sources</phase>
             <goals>
               <goal>exec</goal>
             </goals>
+            <configuration>
+              <arguments combine.children="append">
+                <argument>org.eolang:jeo-maven-plugin:${jeo.version}:assemble</argument>
+                <argument>-Djeo.assemble.sourcesDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>
+                <!--
+                  @todo #200:90min Enable Bytecode Verification For Spring Fat Integration Test.
+                   We skip verification because the Spring Framework uses many classes that
+                   are not in the classpath and the plugin cannot verify the correctness of
+                   the transformation. For not it's not so crucial, but in the future, we
+                   should enable it.
+                -->
+                <argument>-Djeo.assemble.skipVerification=true</argument>
+                <argument>-e</argument>
+              </arguments>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <executable>java</executable>
-          <arguments>
-            <argument>-classpath</argument>
-            <argument>${project.build.outputDirectory}</argument>
-            <argument>org.eolang.jeo.spring.FactorialApplication</argument>
-          </arguments>
-        </configuration>
       </plugin>
     </plugins>
   </build>
