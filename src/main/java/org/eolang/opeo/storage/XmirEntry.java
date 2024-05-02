@@ -61,7 +61,7 @@ public final class XmirEntry {
      * @param transformer Function to transform XMIR.
      * @return Transformed XMIR.
      */
-    public XmirEntry transform(Function<? super XML, ? extends XML> transformer) {
+    public XmirEntry transform(final Function<? super XML, ? extends XML> transformer) {
         return new XmirEntry(transformer.apply(this.xml), this.pckg);
     }
 
@@ -69,15 +69,15 @@ public final class XmirEntry {
      * To XML.
      * @return XML representation of XMIR.
      */
-    XML xml() {
+    XML toXml() {
         return this.xml;
     }
 
     /**
      * Package name.
-     * @return Package name.
+     * @return Package name (relative path).
      */
-    String pckg() {
+    String relative() {
         return this.pckg;
     }
 }

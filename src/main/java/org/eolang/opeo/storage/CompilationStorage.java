@@ -76,7 +76,7 @@ public final class CompilationStorage implements Storage {
     public void save(final XmirEntry xmir) {
         try {
             this.original.save(xmir);
-            final Path out = this.output.resolve(Path.of(xmir.pckg()));
+            final Path out = this.output.resolve(Path.of(xmir.relative()));
             Logger.info(this, "Compiled %[file]s (%[size]s)", out, Files.size(out));
         } catch (final IOException exception) {
             throw new IllegalStateException(

@@ -75,7 +75,7 @@ public final class DecompilationStorage implements Storage {
     @Override
     public void save(final XmirEntry xmir) {
         try {
-            final Path out = this.output.resolve(Path.of(xmir.pckg()));
+            final Path out = this.output.resolve(Path.of(xmir.relative()));
             this.original.save(xmir);
             Logger.info(
                 this,
@@ -87,7 +87,7 @@ public final class DecompilationStorage implements Storage {
             throw new IllegalStateException(
                 String.format(
                     "Can't decompile file '%s' in the '%s' folder",
-                    xmir.pckg(),
+                    xmir.relative(),
                     this.xmirs
                 ),
                 exception

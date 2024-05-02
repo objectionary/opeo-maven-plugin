@@ -24,17 +24,8 @@
 package org.eolang.opeo.decompilation;
 
 import com.jcabi.log.Logger;
-import com.jcabi.xml.XML;
-import com.jcabi.xml.XMLDocument;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
 import org.eolang.opeo.jeo.JeoDecompiler;
-import org.eolang.opeo.storage.CompilationStorage;
 import org.eolang.opeo.storage.DecompilationStorage;
 import org.eolang.opeo.storage.Storage;
 import org.eolang.opeo.storage.XmirEntry;
@@ -56,14 +47,6 @@ public final class DefaultDecompiler implements Decompiler {
 
     /**
      * Constructor.
-     * @param generated The default Maven 'generated-sources' directory.
-     */
-    public DefaultDecompiler(final Path generated) {
-        this(generated.resolve("xmir"), generated.resolve("opeo-xmir"));
-    }
-
-    /**
-     * Constructor.
      * @param xmirs Path to the generated XMIRs by jeo-maven-plugin.
      * @param output Path to the output directory.
      */
@@ -76,9 +59,17 @@ public final class DefaultDecompiler implements Decompiler {
 
     /**
      * Constructor.
+     * @param generated The default Maven 'generated-sources' directory.
+     */
+    DefaultDecompiler(final Path generated) {
+        this(generated.resolve("xmir"), generated.resolve("opeo-xmir"));
+    }
+
+    /**
+     * Constructor.
      * @param storage The storage where the XMIRs are stored.
      */
-    public DefaultDecompiler(final Storage storage) {
+    private DefaultDecompiler(final Storage storage) {
         this.storage = storage;
     }
 
@@ -91,6 +82,11 @@ public final class DefaultDecompiler implements Decompiler {
         );
     }
 
+    /**
+     * Decompile the entry.
+     * @param entry The entry to decompile.
+     * @return Number of decompiled EO sources.
+     */
     private int decompile(final XmirEntry entry) {
         this.storage.save(entry.transform(xml -> new JeoDecompiler(xml).decompile()));
         return 1;

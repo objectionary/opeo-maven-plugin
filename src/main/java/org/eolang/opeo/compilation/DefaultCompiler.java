@@ -24,14 +24,7 @@
 package org.eolang.opeo.compilation;
 
 import com.jcabi.log.Logger;
-import com.jcabi.xml.XML;
-import com.jcabi.xml.XMLDocument;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.stream.Stream;
 import org.eolang.opeo.storage.CompilationStorage;
 import org.eolang.opeo.storage.Storage;
 import org.eolang.opeo.storage.XmirEntry;
@@ -88,7 +81,8 @@ public class DefaultCompiler implements Compiler {
 
     /**
      * Compile the file.
-     * @param xmir Path to the file.
+     * @param xmir Xmir.
+     * @return Number of compiled files.
      */
     private int compile(final XmirEntry xmir) {
         this.storage.save(xmir.transform(xml -> new JeoCompiler(xml).compile()));

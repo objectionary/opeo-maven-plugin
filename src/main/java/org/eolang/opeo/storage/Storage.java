@@ -42,5 +42,5 @@ public interface Storage {
      * Save XMIR.
      * @param xmir XMIR to save
      */
-    void save(final XmirEntry xmir);
+    void save(XmirEntry xmir);
 }
