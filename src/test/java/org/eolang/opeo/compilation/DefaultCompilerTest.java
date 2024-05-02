@@ -53,7 +53,7 @@ final class DefaultCompilerTest {
             ).getMessage(),
             Matchers.containsString(
                 String.format(
-                    "The input xmirs folder '%s' doesn't exist",
+                    "The input XMIR folder '%s' doesn't exist",
                     temp.resolve("opeo-xmir")
                 )
             )

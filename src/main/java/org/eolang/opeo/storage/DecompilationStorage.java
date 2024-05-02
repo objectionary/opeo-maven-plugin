@@ -31,6 +31,7 @@ import java.util.Collection;
 
 /**
  * Decompilation storage.
+ * The same as {@link FileStorage}, but with some logging.
  * @since 0.2
  */
 public final class DecompilationStorage implements Storage {
