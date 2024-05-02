@@ -105,7 +105,7 @@ SOFTWARE.
         <groupId>org.eolang</groupId>
         <artifactId>opeo-maven-plugin</artifactId>
         <version>@project.version@</version>
-          <!--
+        <!--
             @todo #219:90min Enable Opeo Spring Fat Integration Test.
              The test is disabled because it fails in many places.
              We have to fix all the tests steps and enable this test.
