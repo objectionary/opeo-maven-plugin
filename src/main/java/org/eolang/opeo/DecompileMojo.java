@@ -23,12 +23,14 @@
  */
 package org.eolang.opeo;
 
+import com.jcabi.log.Logger;
 import java.io.File;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.eolang.opeo.decompilation.Decompiler;
+import org.eolang.opeo.decompilation.DummyDecompiler;
 
 /**
  * Decompiles bytecode in EO representation into high-level EO representation.
@@ -81,6 +83,11 @@ public final class DecompileMojo extends AbstractMojo {
 
     @Override
     public void execute() {
-        new Decompiler(this.sourcesDir.toPath(), this.outputDir.toPath()).decompile();
+        if (this.disabled) {
+            Logger.info(this, "Decompiler is disabled");
+            new DummyDecompiler(this.sourcesDir.toPath(), this.outputDir.toPath()).decompile();
+        } else {
+            new Decompiler(this.sourcesDir.toPath(), this.outputDir.toPath()).decompile();
+        }
     }
 }
