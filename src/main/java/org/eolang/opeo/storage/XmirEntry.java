@@ -28,26 +28,55 @@ import java.util.function.Function;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * Xmir with package.
+ * @since 0.2
+ */
 @ToString
 @EqualsAndHashCode
 public final class XmirEntry {
 
+    /**
+     * XML representation of XMIR.
+     */
     private final XML xml;
+
+    /**
+     * Package name.
+     */
     private final String pckg;
 
-    public XmirEntry(final XML xml, final String pckg) {
-        this.xml = xml;
+    /**
+     * Constructor.
+     * @param xmir XMIR as XML.
+     * @param pckg Package name.
+     */
+    XmirEntry(final XML xmir, final String pckg) {
+        this.xml = xmir;
         this.pckg = pckg;
     }
 
+    /**
+     * Transform XMIR.
+     * @param transformer Function to transform XMIR.
+     * @return Transformed XMIR.
+     */
     public XmirEntry transform(Function<? super XML, ? extends XML> transformer) {
         return new XmirEntry(transformer.apply(this.xml), this.pckg);
     }
 
+    /**
+     * To XML.
+     * @return XML representation of XMIR.
+     */
     XML xml() {
         return this.xml;
     }
 
+    /**
+     * Package name.
+     * @return Package name.
+     */
     String pckg() {
         return this.pckg;
     }

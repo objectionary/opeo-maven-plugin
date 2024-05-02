@@ -92,19 +92,19 @@ public final class FileStorage implements Storage {
     }
 
     @Override
-    public void save(final XmirEntry xml) {
-        final Path out = this.output.resolve(Path.of(xml.pckg()));
+    public void save(final XmirEntry xmir) {
+        final Path out = this.output.resolve(Path.of(xmir.pckg()));
         try {
             Files.createDirectories(out.getParent());
             Files.write(
                 out,
-                xml.xml().toString().getBytes(StandardCharsets.UTF_8)
+                xmir.xml().toString().getBytes(StandardCharsets.UTF_8)
             );
         } catch (final IllegalArgumentException exception) {
             throw new IllegalStateException(
                 String.format(
                     "Can't save file '%s' from the '%s' folder into '%s'",
-                    xml.pckg(),
+                    xmir.pckg(),
                     this.xmirs,
                     this.output
                 ),
@@ -114,7 +114,7 @@ public final class FileStorage implements Storage {
             throw new IllegalStateException(
                 String.format(
                     "Can't find the file '%s' in the '%s' folder",
-                    xml.pckg(),
+                    xmir.pckg(),
                     this.xmirs
                 ),
                 exception
@@ -123,7 +123,7 @@ public final class FileStorage implements Storage {
             throw new IllegalStateException(
                 String.format(
                     "Can't save file '%s' from the '%s' folder to '%s'",
-                    xml.pckg(),
+                    xmir.pckg(),
                     this.xmirs,
                     this.output
                 ),

@@ -73,14 +73,14 @@ public final class CompilationStorage implements Storage {
     }
 
     @Override
-    public void save(final XmirEntry xml) {
+    public void save(final XmirEntry xmir) {
         try {
-            this.original.save(xml);
-            final Path out = this.output.resolve(Path.of(xml.pckg()));
+            this.original.save(xmir);
+            final Path out = this.output.resolve(Path.of(xmir.pckg()));
             Logger.info(this, "Compiled %[file]s (%[size]s)", out, Files.size(out));
         } catch (final IOException exception) {
             throw new IllegalStateException(
-                String.format("Can't compile '%s'", xml),
+                String.format("Can't compile '%s'", xmir),
                 exception
             );
         }

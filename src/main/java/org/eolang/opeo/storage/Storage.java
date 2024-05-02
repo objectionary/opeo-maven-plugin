@@ -25,9 +25,22 @@ package org.eolang.opeo.storage;
 
 import java.util.Collection;
 
+/**
+ * Storage.
+ * The place where XMIRs are stored.
+ * @since 0.2
+ */
 public interface Storage {
 
+    /**
+     * Get all XMIRs.
+     * @return All XMIRs
+     */
     Collection<XmirEntry> all();
 
-    void save(final XmirEntry xml);
+    /**
+     * Save XMIR.
+     * @param xmir XMIR to save
+     */
+    void save(final XmirEntry xmir);
 }
