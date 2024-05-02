@@ -34,6 +34,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 import org.eolang.opeo.jeo.JeoDecompiler;
+import org.eolang.opeo.storage.CompilationStorage;
+import org.eolang.opeo.storage.DecompilationStorage;
+import org.eolang.opeo.storage.Storage;
+import org.eolang.opeo.storage.XmirEntry;
 
 /**
  * Default Decompiler.
@@ -43,17 +47,12 @@ import org.eolang.opeo.jeo.JeoDecompiler;
  *
  * @since 0.1
  */
-public final class DefaultDecompiler implements Decompiler{
+public final class DefaultDecompiler implements Decompiler {
 
     /**
-     * Path to the generated XMIRs by jeo-maven-plugin.
+     * The storage where the XMIRs are stored.
      */
-    private final Path xmirs;
-
-    /**
-     * Path to the output directory.
-     */
-    private final Path output;
+    private final Storage storage;
 
     /**
      * Constructor.
@@ -72,90 +71,29 @@ public final class DefaultDecompiler implements Decompiler{
         final Path xmirs,
         final Path output
     ) {
-        this.xmirs = xmirs;
-        this.output = output;
+        this(new DecompilationStorage(xmirs, output));
     }
 
+    /**
+     * Constructor.
+     * @param storage The storage where the XMIRs are stored.
+     */
+    public DefaultDecompiler(final Storage storage) {
+        this.storage = storage;
+    }
 
     @Override
     public void decompile() {
-        try (Stream<Path> files = Files.walk(this.xmirs).filter(Files::isRegularFile)) {
-            Logger.info(this, "Decompiling EO sources from %[file]s", this.xmirs);
-            Logger.info(this, "Saving new decompiled EO sources to %[file]s", this.output);
-            Logger.info(
-                this,
-                "Decompiled %d EO sources",
-                files.filter(DefaultDecompiler::isXmir).peek(this::decompile).count()
-            );
-        } catch (final IOException exception) {
-            throw new IllegalStateException(
-                String.format("Can't decompile files from '%s'", this.xmirs),
-                exception
-            );
-        } catch (final IllegalArgumentException exception) {
-            throw new IllegalStateException(
-                String.format(
-                    "Can't decompile files from '%s' directory and save them into '%s', current directory is '%s'",
-                    this.xmirs,
-                    this.output,
-                    Paths.get("").toAbsolutePath()
-                ),
-                exception
-            );
-        }
+        Logger.info(
+            this,
+            "Decompiled %d EO sources",
+            this.storage.all().stream().mapToInt(this::decompile).sum()
+        );
     }
 
-    /**
-     * Decompile XMIR to high-level EO.
-     * @param path Path to the XMIR file.
-     */
-    private void decompile(final Path path) {
-        try {
-            final XML decompiled = new JeoDecompiler(new XMLDocument(path)).decompile();
-            final Path out = this.output.resolve(this.xmirs.relativize(path));
-            Files.createDirectories(out.getParent());
-            Files.write(
-                out,
-                decompiled.toString().getBytes(StandardCharsets.UTF_8)
-            );
-            Logger.info(this, "Decompiled %[file]s (%[size]s)", out, Files.size(out));
-        } catch (final IllegalArgumentException exception) {
-            throw new IllegalStateException(
-                String.format(
-                    "Can't decompile file '%s' in the '%s' folder and save it into '%s'",
-                    path,
-                    this.xmirs,
-                    this.output
-                ),
-                exception
-            );
-        } catch (final FileNotFoundException exception) {
-            throw new IllegalStateException(
-                String.format(
-                    "Can't find the file '%s' for decompilation in the '%s' folder",
-                    path,
-                    this.xmirs
-                ),
-                exception
-            );
-        } catch (final IOException exception) {
-            throw new IllegalStateException(
-                String.format(
-                    "Can't decompile file '%s' in the '%s' folder",
-                    path,
-                    this.xmirs
-                ),
-                exception
-            );
-        }
+    private int decompile(final XmirEntry entry) {
+        this.storage.save(entry.transform(xml -> new JeoDecompiler(xml).decompile()));
+        return 1;
     }
 
-    /**
-     * Check if the file is XMIR.
-     * @param path Path to the file.
-     * @return True if the file is XMIR.
-     */
-    private static boolean isXmir(final Path path) {
-        return path.toString().endsWith(".xmir");
-    }
 }

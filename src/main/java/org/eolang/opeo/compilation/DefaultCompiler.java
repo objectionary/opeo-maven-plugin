@@ -49,14 +49,6 @@ public class DefaultCompiler implements Compiler {
 
     /**
      * Constructor.
-     * @param generated The default Maven 'generated-sources' directory.
-     */
-    public DefaultCompiler(final Path generated) {
-        this(generated.resolve("opeo-xmir"), generated.resolve("xmir"));
-    }
-
-    /**
-     * Constructor.
      * @param xmirs Path to the generated XMIRs by opeo-maven-plugin.
      * @param output Path to the output directory.
      */
@@ -64,7 +56,19 @@ public class DefaultCompiler implements Compiler {
         this(new CompilationStorage(xmirs, output));
     }
 
-    public DefaultCompiler(final Storage storage) {
+    /**
+     * Constructor.
+     * @param generated The default Maven 'generated-sources' directory.
+     */
+    DefaultCompiler(final Path generated) {
+        this(generated.resolve("opeo-xmir"), generated.resolve("xmir"));
+    }
+
+    /**
+     * Constructor.
+     * @param storage The storage where the XMIRs are stored.
+     */
+    private DefaultCompiler(final Storage storage) {
         this.storage = storage;
     }
 
@@ -72,7 +76,6 @@ public class DefaultCompiler implements Compiler {
      * Compile high-level EO constructs into XMIRs for the jeo-maven-plugin.
      */
     public void compile() {
-        Logger.info(this, "Compiling EO sources from StorageCompiler");
         Logger.info(
             this,
             "Compiled %d sources",

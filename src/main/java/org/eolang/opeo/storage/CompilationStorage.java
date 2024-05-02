@@ -1,7 +1,6 @@
 package org.eolang.opeo.storage;
 
 import com.jcabi.log.Logger;
-import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,7 +10,6 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.eolang.opeo.compilation.DefaultCompiler;
 
 public final class CompilationStorage implements Storage {
 
@@ -78,7 +76,6 @@ public final class CompilationStorage implements Storage {
     private static boolean isXmir(final Path path) {
         return Files.isRegularFile(path) && path.toString().endsWith(".xmir");
     }
-
 
     @Override
     public void save(final XmirEntry xml) {
