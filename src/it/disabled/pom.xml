@@ -45,7 +45,7 @@ SOFTWARE.
         <artifactId>opeo-maven-plugin</artifactId>
         <version>@project.version@</version>
         <configuration>
-           <disabled>true</disabled>
+          <disabled>true</disabled>
         </configuration>
         <executions>
           <execution>

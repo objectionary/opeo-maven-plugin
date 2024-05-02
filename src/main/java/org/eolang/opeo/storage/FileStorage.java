@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.storage;
 
-import com.jcabi.log.Logger;
 import com.jcabi.xml.XMLDocument;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -35,45 +34,56 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public final class DecompilationStorage implements Storage {
+/**
+ * File storage.
+ * @since 0.2
+ */
+public final class FileStorage implements Storage {
 
     /**
-     * Path to the generated XMIRs by jeo-maven-plugin.
+     * Path to the source folder.
      */
     private final Path xmirs;
 
     /**
-     * Path to the output directory.
+     * Path to the output folder.
      */
     private final Path output;
 
-    public DecompilationStorage(
-        final Path xmirs,
-        final Path output
-    ) {
+    /**
+     * Constructor.
+     * @param xmirs Path to the source folder.
+     * @param output Path to the output folder.
+     */
+    public FileStorage(final Path xmirs, final Path output) {
         this.xmirs = xmirs;
         this.output = output;
     }
 
     @Override
     public Collection<XmirEntry> all() {
-        Logger.info(this, "Decompiling EO sources from %[file]s", this.xmirs);
-        Logger.info(this, "Saving new decompiled EO sources to %[file]s", this.output);
+        if (!Files.exists(this.xmirs)) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "The input XMIR folder '%s' doesn't exist",
+                    this.xmirs
+                )
+            );
+        }
         try (Stream<Path> files = Files.walk(this.xmirs).filter(Files::isRegularFile)) {
-            return files.filter(DecompilationStorage::isXmir)
-                .map(this::read)
+            return files.filter(FileStorage::isXmir)
+                .map(this::entry)
                 .collect(Collectors.toList());
         } catch (final IOException exception) {
             throw new IllegalStateException(
-                String.format("Can't decompile files from '%s'", this.xmirs),
+                String.format("Can't retrieve XMIR files from the '%s' folder", this.xmirs),
                 exception
             );
         } catch (final IllegalArgumentException exception) {
             throw new IllegalStateException(
                 String.format(
-                    "Can't decompile files from '%s' directory and save them into '%s', current directory is '%s'",
+                    "Can't retrieve XMIR files from '%s' directory, current directory is '%s'",
                     this.xmirs,
-                    this.output,
                     Paths.get("").toAbsolutePath()
                 ),
                 exception
@@ -90,16 +100,10 @@ public final class DecompilationStorage implements Storage {
                 out,
                 xml.xml().toString().getBytes(StandardCharsets.UTF_8)
             );
-            Logger.info(
-                this,
-                "Decompiled %[file]s (%[size]s)",
-                this.output,
-                Files.size(this.output)
-            );
         } catch (final IllegalArgumentException exception) {
             throw new IllegalStateException(
                 String.format(
-                    "Can't decompile file '%s' in the '%s' folder and save it into '%s'",
+                    "Can't save file '%s' from the '%s' folder into '%s'",
                     xml.pckg(),
                     this.xmirs,
                     this.output
@@ -109,7 +113,7 @@ public final class DecompilationStorage implements Storage {
         } catch (final FileNotFoundException exception) {
             throw new IllegalStateException(
                 String.format(
-                    "Can't find the file '%s' for decompilation in the '%s' folder",
+                    "Can't find the file '%s' in the '%s' folder",
                     xml.pckg(),
                     this.xmirs
                 ),
@@ -118,17 +122,22 @@ public final class DecompilationStorage implements Storage {
         } catch (final IOException exception) {
             throw new IllegalStateException(
                 String.format(
-                    "Can't decompile file '%s' in the '%s' folder",
+                    "Can't save file '%s' from the '%s' folder to '%s'",
                     xml.pckg(),
-                    this.xmirs
+                    this.xmirs,
+                    this.output
                 ),
                 exception
             );
         }
     }
 
-
-    private XmirEntry read(final Path path) {
+    /**
+     * Read XMIR from the file.
+     * @param path Path to the file
+     * @return XMIR entry.
+     */
+    private XmirEntry entry(final Path path) {
         try {
             return new XmirEntry(new XMLDocument(path), this.xmirs.relativize(path).toString());
         } catch (final FileNotFoundException exception) {

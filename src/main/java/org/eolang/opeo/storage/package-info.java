@@ -21,13 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+/**
+ * Contains classes for working with storage.
+ */
 package org.eolang.opeo.storage;
-
-import java.util.Collection;
-
-public interface Storage {
-
-    Collection<XmirEntry> all();
-
-    void save(final XmirEntry xml);
-}
