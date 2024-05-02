@@ -32,33 +32,20 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
+import org.eolang.opeo.storage.CompilationStorage;
+import org.eolang.opeo.storage.Storage;
+import org.eolang.opeo.storage.XmirEntry;
 
 /**
  * Compiler of high-level eo constructs into XMIRs for the jeo-maven-plugin.
  * @since 0.1
  */
-public class DefaultCompiler implements Compiler{
+public class DefaultCompiler implements Compiler {
 
     /**
-     * Path to the generated XMIRs by opeo-maven-plugin.
-     * In other words, it is the folder of the high-level EO constructs that were decompiled
-     * on the previous step.
+     * Storage where the XMIRs are stored.
      */
-    private final Path xmirs;
-
-    /**
-     * Path to the output directory.
-     * The output folder with XMIRs accepted by jeo-maven-plugin.
-     */
-    private final Path output;
-
-    /**
-     * Constructor.
-     * @param generated The default Maven 'generated-sources' directory.
-     */
-    public DefaultCompiler(final File generated) {
-        this(generated.toPath());
-    }
+    private final Storage storage;
 
     /**
      * Constructor.
@@ -74,65 +61,35 @@ public class DefaultCompiler implements Compiler{
      * @param output Path to the output directory.
      */
     public DefaultCompiler(final Path xmirs, final Path output) {
-        this.xmirs = xmirs;
-        this.output = output;
+        this(new CompilationStorage(xmirs, output));
+    }
+
+    public DefaultCompiler(final Storage storage) {
+        this.storage = storage;
     }
 
     /**
      * Compile high-level EO constructs into XMIRs for the jeo-maven-plugin.
      */
     public void compile() {
-        if (!Files.exists(this.xmirs)) {
-            throw new IllegalArgumentException(
-                String.format(
-                    "The input xmirs folder '%s' doesn't exist",
-                    this.xmirs
-                )
-            );
-        }
-        Logger.info(this, "Compiling EO sources from %[file]s", this.xmirs);
-        Logger.info(this, "Saving new compiled EO sources to %[file]s", this.output);
-        try (Stream<Path> decompiled = Files.walk(this.xmirs).filter(DefaultCompiler::isXmir)) {
-            Logger.info(this, "Compiled %d sources", decompiled.peek(this::compile).count());
-        } catch (final IOException exception) {
-            throw new IllegalStateException(
-                String.format(
-                    "Some problem with reading XMIRs from the '%s' folder",
-                    this.xmirs
-                ),
-                exception
-            );
-        }
+        Logger.info(this, "Compiling EO sources from StorageCompiler");
+        Logger.info(
+            this,
+            "Compiled %d sources",
+            this.storage.all()
+                .stream()
+                .mapToInt(this::compile)
+                .sum()
+        );
     }
 
     /**
      * Compile the file.
      * @param xmir Path to the file.
      */
-    private void compile(final Path xmir) {
-        try {
-            final XML compiled = new JeoCompiler(new XMLDocument(xmir)).compile();
-            final Path out = this.output.resolve(this.xmirs.relativize(xmir));
-            Files.createDirectories(out.getParent());
-            Files.write(
-                out,
-                compiled.toString().getBytes(StandardCharsets.UTF_8)
-            );
-            Logger.info(this, "Compiled %[file]s (%[size]s)", out, Files.size(out));
-        } catch (final IOException exception) {
-            throw new IllegalStateException(
-                String.format("Can't compile '%x'", xmir),
-                exception
-            );
-        }
+    private int compile(final XmirEntry xmir) {
+        this.storage.save(xmir.transform(xml -> new JeoCompiler(xml).compile()));
+        return 1;
     }
 
-    /**
-     * Check if the file is XMIR.
-     * @param path Path to the file
-     * @return True if the file is XMIR
-     */
-    private static boolean isXmir(final Path path) {
-        return Files.isRegularFile(path) && path.toString().endsWith(".xmir");
-    }
 }

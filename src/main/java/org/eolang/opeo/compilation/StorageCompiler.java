@@ -31,7 +31,7 @@ public final class StorageCompiler implements Compiler {
         Logger.info(
             this,
             "Compiled %d sources",
-            (long) this.storage.all()
+            this.storage.all()
                 .stream()
                 .mapToInt(this::compile)
                 .sum()
@@ -43,7 +43,6 @@ public final class StorageCompiler implements Compiler {
      * @param xmir Path to the file.
      */
     private int compile(final XmirEntry xmir) {
-        Logger.info(this, "Compiling %s", xmir.pckg());
         this.storage.save(xmir.transform(xml -> new JeoCompiler(xml).compile()));
         return 1;
     }

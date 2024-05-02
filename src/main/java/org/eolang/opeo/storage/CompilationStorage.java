@@ -15,7 +15,18 @@ import org.eolang.opeo.compilation.DefaultCompiler;
 
 public final class CompilationStorage implements Storage {
 
+    /**
+     * Path to the generated XMIRs by opeo-maven-plugin.
+     * In other words, it is the folder of the high-level EO constructs that were decompiled
+     * on the previous step.
+     */
     private final Path xmirs;
+
+
+    /**
+     * Path to the output directory.
+     * The output folder with XMIRs accepted by jeo-maven-plugin.
+     */
     private final Path output;
 
     public CompilationStorage(final Path xmirs, final Path output) {
