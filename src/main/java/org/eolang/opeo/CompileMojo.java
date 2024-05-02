@@ -32,6 +32,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.eolang.opeo.compilation.Compiler;
 import org.eolang.opeo.compilation.DefaultCompiler;
 import org.eolang.opeo.compilation.DummyCompiler;
+import org.eolang.opeo.compilation.StorageCompiler;
 
 /**
  * Compiles high-level EO representation into low-level representation.
@@ -89,7 +90,7 @@ public final class CompileMojo extends AbstractMojo {
             Logger.info(this, "Compiler is disabled");
             compiler = new DummyCompiler(this.sourcesDir.toPath(), this.outputDir.toPath());
         } else {
-            compiler = new DefaultCompiler(this.sourcesDir.toPath(), this.outputDir.toPath());
+            compiler = new StorageCompiler(this.sourcesDir.toPath(), this.outputDir.toPath());
         }
         compiler.compile();
     }
