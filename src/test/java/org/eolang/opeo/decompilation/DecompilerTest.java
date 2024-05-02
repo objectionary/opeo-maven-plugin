@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Test case for {@link Decompiler}.
+ * Test case for {@link DefaultDecompiler}.
  * @since 0.1
  */
 final class DecompilerTest {
@@ -46,7 +46,7 @@ final class DecompilerTest {
         final Path input = temp.resolve("xmir").resolve(subpath).resolve(name);
         Files.createDirectories(input.getParent());
         Files.write(input, new BytesOf(new ResourceOf("xmir/Bar.xmir")).asBytes());
-        new Decompiler(temp).decompile();
+        new DefaultDecompiler(temp).decompile();
         final Path expected = temp.resolve("opeo-xmir").resolve(subpath).resolve(name);
         MatcherAssert.assertThat(
             String.format(

@@ -9,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 
-public final class DummyCompiler {
+public final class DummyCompiler implements Compiler{
 
     private final Path xmirs;
 
@@ -21,9 +21,7 @@ public final class DummyCompiler {
     }
 
 
-    /**
-     * Compile high-level EO constructs into XMIRs for the jeo-maven-plugin.
-     */
+    @Override
     public void compile() {
         if (!Files.exists(this.xmirs)) {
             throw new IllegalArgumentException(

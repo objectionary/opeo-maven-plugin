@@ -30,6 +30,7 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.eolang.opeo.decompilation.Decompiler;
+import org.eolang.opeo.decompilation.DefaultDecompiler;
 import org.eolang.opeo.decompilation.DummyDecompiler;
 
 /**
@@ -83,11 +84,13 @@ public final class DecompileMojo extends AbstractMojo {
 
     @Override
     public void execute() {
+        final Decompiler decompiler;
         if (this.disabled) {
             Logger.info(this, "Decompiler is disabled");
-            new DummyDecompiler(this.sourcesDir.toPath(), this.outputDir.toPath()).decompile();
+            decompiler = new DummyDecompiler(this.sourcesDir.toPath(), this.outputDir.toPath());
         } else {
-            new Decompiler(this.sourcesDir.toPath(), this.outputDir.toPath()).decompile();
+            decompiler = new DefaultDecompiler(this.sourcesDir.toPath(), this.outputDir.toPath());
         }
+        decompiler.decompile();
     }
 }

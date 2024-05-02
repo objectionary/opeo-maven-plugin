@@ -30,6 +30,7 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.eolang.opeo.compilation.Compiler;
+import org.eolang.opeo.compilation.DefaultCompiler;
 import org.eolang.opeo.compilation.DummyCompiler;
 
 /**
@@ -83,11 +84,13 @@ public final class CompileMojo extends AbstractMojo {
 
     @Override
     public void execute() {
+        final Compiler compiler;
         if (this.disabled) {
             Logger.info(this, "Compiler is disabled");
-            new DummyCompiler(this.sourcesDir.toPath(), this.outputDir.toPath()).compile();
+            compiler = new DummyCompiler(this.sourcesDir.toPath(), this.outputDir.toPath());
         } else {
-            new Compiler(this.sourcesDir.toPath(), this.outputDir.toPath()).compile();
+            compiler = new DefaultCompiler(this.sourcesDir.toPath(), this.outputDir.toPath());
         }
+        compiler.compile();
     }
 }

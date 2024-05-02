@@ -24,28 +24,58 @@
 package org.eolang.opeo.decompilation;
 
 import com.jcabi.log.Logger;
+import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
+import org.eolang.opeo.jeo.JeoDecompiler;
 
 /**
- * Dummy decompiler.
- * It just copies XMIR files to the output directory without any changes.
- * @since 0.2
+ * Default Decompiler.
+ * This class is a high-level abstraction of the decompilation process.
+ * The main purpose of this class is to get the output of the jeo-maven-plugin
+ * and decompile it into high-level EO constructs.
+ *
+ * @since 0.1
  */
-public final class DummyDecompiler implements Decompiler {
+public final class DefaultDecompiler implements Decompiler{
 
+    /**
+     * Path to the generated XMIRs by jeo-maven-plugin.
+     */
     private final Path xmirs;
 
+    /**
+     * Path to the output directory.
+     */
     private final Path output;
 
-    public DummyDecompiler(final Path xmirs, final Path output) {
+    /**
+     * Constructor.
+     * @param generated The default Maven 'generated-sources' directory.
+     */
+    public DefaultDecompiler(final Path generated) {
+        this(generated.resolve("xmir"), generated.resolve("opeo-xmir"));
+    }
+
+    /**
+     * Constructor.
+     * @param xmirs Path to the generated XMIRs by jeo-maven-plugin.
+     * @param output Path to the output directory.
+     */
+    public DefaultDecompiler(
+        final Path xmirs,
+        final Path output
+    ) {
         this.xmirs = xmirs;
         this.output = output;
     }
+
 
     @Override
     public void decompile() {
@@ -55,9 +85,7 @@ public final class DummyDecompiler implements Decompiler {
             Logger.info(
                 this,
                 "Decompiled %d EO sources",
-                files.filter(DummyDecompiler::isXmir)
-                    .peek(this::decompile)
-                    .count()
+                files.filter(DefaultDecompiler::isXmir).peek(this::decompile).count()
             );
         } catch (final IOException exception) {
             throw new IllegalStateException(
@@ -77,30 +105,19 @@ public final class DummyDecompiler implements Decompiler {
         }
     }
 
-
-    /**
-     * Check if the file is XMIR.
-     * @param path Path to the file.
-     * @return True if the file is XMIR.
-     */
-    private static boolean isXmir(final Path path) {
-        return path.toString().endsWith(".xmir");
-    }
-
     /**
      * Decompile XMIR to high-level EO.
      * @param path Path to the XMIR file.
      */
     private void decompile(final Path path) {
         try {
-//            final XML decompiled = new XMLDocument(path);
+            final XML decompiled = new JeoDecompiler(new XMLDocument(path)).decompile();
             final Path out = this.output.resolve(this.xmirs.relativize(path));
             Files.createDirectories(out.getParent());
-            Files.copy(path, out);
-//            Files.write(
-//                out,
-//                decompiled.toString().getBytes(StandardCharsets.UTF_8)
-//            );
+            Files.write(
+                out,
+                decompiled.toString().getBytes(StandardCharsets.UTF_8)
+            );
             Logger.info(this, "Decompiled %[file]s (%[size]s)", out, Files.size(out));
         } catch (final IllegalArgumentException exception) {
             throw new IllegalStateException(
@@ -133,4 +150,12 @@ public final class DummyDecompiler implements Decompiler {
         }
     }
 
+    /**
+     * Check if the file is XMIR.
+     * @param path Path to the file.
+     * @return True if the file is XMIR.
+     */
+    private static boolean isXmir(final Path path) {
+        return path.toString().endsWith(".xmir");
+    }
 }

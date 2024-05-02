@@ -37,10 +37,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Test case for {@link Compiler}.
+ * Test case for {@link DefaultCompiler}.
  * @since 0.1
  */
-final class CompilerTest {
+final class DefaultCompilerTest {
 
     @Test
     void compilesWithFailureSinceInputFolderIsNotFound(@TempDir final Path temp) {
@@ -48,7 +48,7 @@ final class CompilerTest {
             "We expect to receive detailed error message",
             Assertions.assertThrows(
                 IllegalArgumentException.class,
-                () -> new Compiler(temp).compile(),
+                () -> new DefaultCompiler(temp).compile(),
                 "The input folder should not be found"
             ).getMessage(),
             Matchers.containsString(
@@ -67,7 +67,7 @@ final class CompilerTest {
         Files.createDirectories(input.getParent());
         final byte[] before = new BytesOf(new ResourceOf("xmir/Bar.xmir")).asBytes();
         Files.write(input, before);
-        new Compiler(temp).compile();
+        new DefaultCompiler(temp).compile();
         final File output = temp.resolve("xmir").resolve("Bar.xmir").toFile();
         MatcherAssert.assertThat(
             "The compiled file is missing",
