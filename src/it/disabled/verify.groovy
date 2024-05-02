@@ -27,6 +27,7 @@ import com.jcabi.xml.XMLDocument
 String log = new File(basedir, 'build.log').text;
 assert log.contains("BUILD SUCCESS")
 // Check success.
+// @todo
 XMLDocument expected = new XMLDocument(new File(basedir, 'target/generated-sources/jeo-xmir/org/eolang/jeo/Bar.xmir'));
 XMLDocument decompile = new XMLDocument(new File(basedir, 'target/generated-sources/opeo-decompile-xmir/org/eolang/jeo/Bar.xmir'));
 XMLDocument compile = new XMLDocument(new File(basedir, 'target/generated-sources/opeo-compile-xmir/org/eolang/jeo/Bar.xmir'));
