@@ -66,6 +66,19 @@ public final class CompileMojo extends AbstractMojo {
     )
     private File outputDir;
 
+    /**
+     * Whether the plugin is disabled.
+     * If it's disabled, then it won't do anything.
+     *
+     * @since 0.2.0
+     * @checkstyle MemberNameCheck (6 lines)
+     */
+    @Parameter(
+        property = "opeo.compile.disabled",
+        defaultValue = "false"
+    )
+    private boolean disabled;
+
     @Override
     public void execute() {
         new Compiler(
