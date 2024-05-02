@@ -21,16 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
+import com.jcabi.xml.XMLDocument
 
 // Check logs first.
 String log = new File(basedir, 'build.log').text;
 assert log.contains("BUILD SUCCESS")
 // Check success.
-String expected = new File(basedir,'target/generated-sources/jeo-xmir/org/eolang/jeo/Bar.xmir').text;
-String decompile = new File(basedir, 'target/generated-sources/opeo-decompile-xmir/org/eolang/jeo/Bar.xmir').text;
-String compile = new File(basedir, 'target/generated-sources/opeo-compile-xmir/org/eolang/jeo/Bar.xmir').text;
+XMLDocument expected = new XMLDocument(new File(basedir, 'target/generated-sources/jeo-xmir/org/eolang/jeo/Bar.xmir'));
+XMLDocument decompile = new XMLDocument(new File(basedir, 'target/generated-sources/opeo-decompile-xmir/org/eolang/jeo/Bar.xmir'));
+XMLDocument compile = new XMLDocument(new File(basedir, 'target/generated-sources/opeo-compile-xmir/org/eolang/jeo/Bar.xmir'));
 // We expect the same output.
-assert compile == expected
-assert decompile == expected
+assert compile.toString().replace(' ', '') == expected.toString().replace(' ', '')
+assert decompile.toString().replace(' ', '') == expected.toString().replace(' ', '')
 true

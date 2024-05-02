@@ -1,7 +1,9 @@
 package org.eolang.opeo.storage;
 
 import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
 import java.util.function.Function;
+import java.util.logging.XMLFormatter;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
