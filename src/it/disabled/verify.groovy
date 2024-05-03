@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 import com.jcabi.xml.XMLDocument
+import com.jcabi.xml.XML
 
 // Check logs first.
 String log = new File(basedir, 'build.log').text;
@@ -37,7 +38,6 @@ assert log.contains("BUILD SUCCESS")
 XMLDocument expected = new XMLDocument(new File(basedir, 'target/generated-sources/jeo-xmir/org/eolang/jeo/Bar.xmir'));
 XMLDocument decompile = new XMLDocument(new File(basedir, 'target/generated-sources/opeo-decompile-xmir/org/eolang/jeo/Bar.xmir'));
 XMLDocument compile = new XMLDocument(new File(basedir, 'target/generated-sources/opeo-compile-xmir/org/eolang/jeo/Bar.xmir'));
-// We expect the same output.
-assert compile.toString().replace(' ', '') == expected.toString().replace(' ', '')
-assert decompile.toString().replace(' ', '') == expected.toString().replace(' ', '')
+assert decompile == expected
+assert compile == expected
 true
