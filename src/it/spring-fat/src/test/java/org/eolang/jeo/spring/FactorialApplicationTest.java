@@ -61,6 +61,7 @@ class FactorialApplicationTest {
             "Response body is empty"
         );
         final String expected = "sum=3628800";
+        System.out.printf("Expected %s%n", expected);
         Assertions.assertTrue(
             resp.getBody().contains(expected),
             String.format(
