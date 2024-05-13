@@ -23,7 +23,7 @@
  */
 package org.eolang.opeo.storage;
 
-import java.util.Collection;
+import java.util.stream.Stream;
 
 /**
  * Storage.
@@ -36,7 +36,7 @@ public interface Storage {
      * Get all XMIRs.
      * @return All XMIRs
      */
-    Collection<XmirEntry> all();
+    Stream<XmirEntry> all();
 
     /**
      * Save XMIR.

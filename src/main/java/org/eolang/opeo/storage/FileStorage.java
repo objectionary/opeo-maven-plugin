@@ -23,15 +23,12 @@
  */
 package org.eolang.opeo.storage;
 
-import com.jcabi.xml.XMLDocument;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -61,7 +58,7 @@ public final class FileStorage implements Storage {
     }
 
     @Override
-    public Collection<XmirEntry> all() {
+    public Stream<XmirEntry> all() {
         if (!Files.exists(this.xmirs)) {
             throw new IllegalArgumentException(
                 String.format(
@@ -70,10 +67,11 @@ public final class FileStorage implements Storage {
                 )
             );
         }
-        try (Stream<Path> files = Files.walk(this.xmirs).filter(Files::isRegularFile)) {
-            return files.filter(FileStorage::isXmir)
-                .map(this::entry)
-                .collect(Collectors.toList());
+        try {
+            return Files.walk(this.xmirs)
+                .filter(Files::isRegularFile)
+                .filter(FileStorage::isXmir)
+                .map(this::entry);
         } catch (final IOException exception) {
             throw new IllegalStateException(
                 String.format("Can't retrieve XMIR files from the '%s' folder", this.xmirs),
@@ -138,14 +136,7 @@ public final class FileStorage implements Storage {
      * @return XMIR entry.
      */
     private XmirEntry entry(final Path path) {
-        try {
-            return new XmirEntry(new XMLDocument(path), this.xmirs.relativize(path).toString());
-        } catch (final FileNotFoundException exception) {
-            throw new IllegalStateException(
-                String.format("Can't decompile '%x'", path),
-                exception
-            );
-        }
+        return new XmirEntry(path, this.xmirs.relativize(path).toString());
     }
 
     /**

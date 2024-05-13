@@ -27,7 +27,7 @@ import com.jcabi.log.Logger;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collection;
+import java.util.stream.Stream;
 
 /**
  * Decompilation storage.
@@ -66,7 +66,7 @@ public final class DecompilationStorage implements Storage {
     }
 
     @Override
-    public Collection<XmirEntry> all() {
+    public Stream<XmirEntry> all() {
         Logger.info(this, "Decompiling EO sources from %[file]s", this.xmirs);
         Logger.info(this, "Saving new decompiled EO sources to %[file]s", this.output);
         return this.original.all();

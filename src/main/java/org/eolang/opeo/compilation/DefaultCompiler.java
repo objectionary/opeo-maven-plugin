@@ -73,7 +73,7 @@ public class DefaultCompiler implements Compiler {
             this,
             "Compiled %d sources",
             this.storage.all()
-                .stream()
+                .parallel()
                 .mapToInt(this::compile)
                 .sum()
         );
