@@ -67,7 +67,7 @@ public final class XmirEntry {
      * @param pckg Package name.
      */
     XmirEntry(final XML xmir, final String pckg) {
-        this(XmirEntry.fromXML(xmir), pckg);
+        this(XmirEntry.fromXml(xmir), pckg);
     }
 
     /**
@@ -134,7 +134,7 @@ public final class XmirEntry {
      * @param xml XML.
      * @return Lazy XMIR entry.
      */
-    private static Unchecked<XML> fromXML(final XML xml) {
+    private static Unchecked<XML> fromXml(final XML xml) {
         return new Unchecked<>(new Synced<>(new Sticky<>(() -> xml)));
     }
 

@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.storage;
 
-import com.jcabi.xml.XMLDocument;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
