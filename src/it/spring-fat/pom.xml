@@ -128,17 +128,6 @@ SOFTWARE.
               <outputDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</outputDir>
             </configuration>
           </execution>
-<!--          <execution>-->
-<!--            <id>opeo-compile</id>-->
-<!--            <phase>generate-test-sources</phase>-->
-<!--            <goals>-->
-<!--              <goal>compile</goal>-->
-<!--            </goals>-->
-<!--            <configuration>-->
-<!--              <sourcesDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</sourcesDir>-->
-<!--              <outputDir>${project.build.directory}/generated-sources/opeo-compile-xmir</outputDir>-->
-<!--            </configuration>-->
-<!--          </execution>-->
           <execution>
             <id>opeo-compile</id>
             <phase>generate-test-sources</phase>
@@ -146,30 +135,29 @@ SOFTWARE.
               <goal>compile</goal>
             </goals>
             <configuration>
-              <sourcesDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</sourcesDir>
+              <sourcesDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</sourcesDir>
               <outputDir>${project.build.directory}/generated-sources/opeo-compile-xmir</outputDir>
+            </configuration>
+          </execution>
+      </plugin>
+      <plugin>
+        <groupId>org.eolang</groupId>
+        <artifactId>ineo-maven-plugin</artifactId>
+        <version>${ineo.version}</version>
+        <executions>
+          <execution>
+            <id>ineo-staticize</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>staticize</goal>
+            </goals>
+            <configuration>
+              <sourcesDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</sourcesDir>
+              <outputDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</outputDir>
             </configuration>
           </execution>
         </executions>
       </plugin>
-<!--      <plugin>-->
-<!--        <groupId>org.eolang</groupId>-->
-<!--        <artifactId>ineo-maven-plugin</artifactId>-->
-<!--        <version>${ineo.version}</version>-->
-<!--        <executions>-->
-<!--          <execution>-->
-<!--            <id>ineo-staticize</id>-->
-<!--            <phase>process-classes</phase>-->
-<!--            <goals>-->
-<!--              <goal>staticize</goal>-->
-<!--            </goals>-->
-<!--            <configuration>-->
-<!--              <sourcesDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</sourcesDir>-->
-<!--              <outputDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</outputDir>-->
-<!--            </configuration>-->
-<!--          </execution>-->
-<!--        </executions>-->
-<!--      </plugin>-->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
