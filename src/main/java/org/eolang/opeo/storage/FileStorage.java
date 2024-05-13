@@ -137,14 +137,7 @@ public final class FileStorage implements Storage {
      * @return XMIR entry.
      */
     private XmirEntry entry(final Path path) {
-        try {
-            return new XmirEntry(new XMLDocument(path), this.xmirs.relativize(path).toString());
-        } catch (final FileNotFoundException exception) {
-            throw new IllegalStateException(
-                String.format("Can't decompile '%x'", path),
-                exception
-            );
-        }
+        return new XmirEntry(path, this.xmirs.relativize(path).toString());
     }
 
     /**

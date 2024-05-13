@@ -24,9 +24,15 @@
 package org.eolang.opeo.storage;
 
 import com.jcabi.xml.XML;
+import com.jcabi.xml.XMLDocument;
+import java.io.FileNotFoundException;
+import java.nio.file.Path;
 import java.util.function.Function;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Synced;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Xmir with package.
@@ -39,7 +45,7 @@ public final class XmirEntry {
     /**
      * XML representation of XMIR.
      */
-    private final XML xml;
+    private final Unchecked<XML> xml;
 
     /**
      * Package name.
@@ -48,11 +54,29 @@ public final class XmirEntry {
 
     /**
      * Constructor.
+     * @param path Path to XMIR.
+     * @param pckg Package name.
+     */
+    XmirEntry(final Path path, final String pckg) {
+        this(XmirEntry.fromFile(path), pckg);
+    }
+
+    /**
+     * Constructor.
      * @param xmir XMIR as XML.
      * @param pckg Package name.
      */
     XmirEntry(final XML xmir, final String pckg) {
-        this.xml = xmir;
+        this(XmirEntry.fromXML(xmir), pckg);
+    }
+
+    /**
+     * Constructor.
+     * @param xml Lazy XML.
+     * @param pckg Package name.
+     */
+    public XmirEntry(final Unchecked<XML> xml, final String pckg) {
+        this.xml = xml;
         this.pckg = pckg;
     }
 
@@ -62,7 +86,7 @@ public final class XmirEntry {
      * @return Transformed XMIR.
      */
     public XmirEntry transform(final Function<? super XML, ? extends XML> transformer) {
-        return new XmirEntry(transformer.apply(this.xml), this.pckg);
+        return new XmirEntry(transformer.apply(this.xml.value()), this.pckg);
     }
 
     /**
@@ -70,7 +94,7 @@ public final class XmirEntry {
      * @return XML representation of XMIR.
      */
     XML toXml() {
-        return this.xml;
+        return this.xml.value();
     }
 
     /**
@@ -80,4 +104,38 @@ public final class XmirEntry {
     String relative() {
         return this.pckg;
     }
+
+    /**
+     * Prestructor from file.
+     * @param path Path to the file.
+     * @return Lazy XMIR entry.
+     */
+    private static Unchecked<XML> fromFile(final Path path) {
+        return new Unchecked<>(
+            new Synced<>(
+                new Sticky<>(
+                    () -> {
+                        try {
+                            return new XMLDocument(path);
+                        } catch (final FileNotFoundException exception) {
+                            throw new IllegalStateException(
+                                String.format("Can't find '%x'", path),
+                                exception
+                            );
+                        }
+                    }
+                )
+            )
+        );
+    }
+
+    /**
+     * Prestructor from XML.
+     * @param xml XML.
+     * @return Lazy XMIR entry.
+     */
+    private static Unchecked<XML> fromXML(final XML xml) {
+        return new Unchecked<>(new Synced<>(new Sticky<>(() -> xml)));
+    }
+
 }
