@@ -72,10 +72,7 @@ public class DefaultCompiler implements Compiler {
         Logger.info(
             this,
             "Compiled %d sources",
-            this.storage.all()
-                .stream()
-                .mapToInt(this::compile)
-                .sum()
+            this.storage.all().mapToInt(this::compile).sum()
         );
     }
 

@@ -78,7 +78,7 @@ public final class DefaultDecompiler implements Decompiler {
         Logger.info(
             this,
             "Decompiled %d EO sources",
-            this.storage.all().stream().mapToInt(this::decompile).sum()
+            this.storage.all().mapToInt(this::decompile).sum()
         );
     }
 
