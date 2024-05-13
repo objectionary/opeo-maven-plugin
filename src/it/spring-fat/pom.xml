@@ -97,7 +97,6 @@ SOFTWARE.
             </goals>
             <configuration>
               <outputDir>${project.build.directory}/generated-sources/jeo-disassemble-xmir</outputDir>
-              <skipVerification>true</skipVerification>
             </configuration>
           </execution>
         </executions>
@@ -139,6 +138,7 @@ SOFTWARE.
               <outputDir>${project.build.directory}/generated-sources/opeo-compile-xmir</outputDir>
             </configuration>
           </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.eolang</groupId>
