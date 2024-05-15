@@ -53,7 +53,7 @@ SOFTWARE.
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <jeo.version>0.4.3</jeo.version>
+    <jeo.version>0.4.4</jeo.version>
     <ineo.version>0.2.1</ineo.version>
   </properties>
   <dependencies>
@@ -80,6 +80,16 @@ SOFTWARE.
               <goal>unpack-dependencies</goal>
             </goals>
             <configuration>
+              <!--
+               @todo #229:90min Handle module-info.class files correctly.
+                Currently we just exclude all `module-info.class` files from the downloaded dependencies.
+                This means that we don't support Java 9+ modules.
+                We should handle them correctly and ensure support Java 9+ modules in 'spring-fat' integration test.
+                Otherwise the application of our solution will be limited to Java 8.
+             -->
+              <excludes>
+                module-info.class
+              </excludes>
               <outputDirectory>${project.build.outputDirectory}</outputDirectory>
             </configuration>
           </execution>

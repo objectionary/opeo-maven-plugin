@@ -85,8 +85,8 @@ SOFTWARE.
   </distributionManagement>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <skipITs/>
   </properties>
   <dependencies>
@@ -137,7 +137,7 @@ SOFTWARE.
     <dependency>
       <groupId>org.eolang</groupId>
       <artifactId>jeo-maven-plugin</artifactId>
-      <version>0.4.3</version>
+      <version>0.4.4</version>
     </dependency>
     <dependency>
       <groupId>com.jcabi</groupId>
