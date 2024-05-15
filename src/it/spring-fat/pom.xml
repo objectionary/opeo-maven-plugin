@@ -53,7 +53,7 @@ SOFTWARE.
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-<!--    <jeo.version>0.4.3</jeo.version>-->
+    <jeo.version>0.4.4</jeo.version>
     <jeo.version>1.0-SNAPSHOT</jeo.version>
     <ineo.version>0.2.1</ineo.version>
   </properties>
@@ -81,189 +81,120 @@ SOFTWARE.
               <goal>unpack-dependencies</goal>
             </goals>
             <configuration>
+<!--            TODO-->
             <excludes>
               module-info.class
-</excludes>
+             </excludes>
               <outputDirectory>${project.build.outputDirectory}</outputDirectory>
             </configuration>
           </execution>
         </executions>
       </plugin>
-<!--<plugin>-->
-<!--  <groupId>org.apache.maven.plugins</groupId>-->
-<!--  <artifactId>maven-compiler-plugin</artifactId>-->
-<!--  <configuration>-->
-<!--    <source>1.8</source>-->
-<!--    <target>1.8</target>-->
-<!--  </configuration>-->
-<!--  <executions>-->
-<!--    <execution>-->
-<!--      <id>test-compile</id>-->
-<!--      <phase>process-test-sources</phase>-->
-<!--      <goals>-->
-<!--        <goal>testCompile</goal>-->
-<!--      </goals>-->
-<!--    </execution>-->
-<!--  </executions>-->
-<!--</plugin>-->
-
-
-<!--           <plugin>-->
-<!--              <groupId>org.eolang</groupId>-->
-<!--              <artifactId>jeo-maven-plugin</artifactId>-->
-<!--              <version>${jeo.version}</version>-->
-<!--              <executions>-->
-<!--                <execution>-->
-<!--                  <id>bytecode-to-eo</id>-->
-<!--                  <goals>-->
-<!--                    <goal>disassemble</goal>-->
-<!--                  </goals>-->
-<!--                  <configuration>-->
-<!--                    <outputDir>${project.build.directory}/generated-sources/jeo-disassemble-xmir</outputDir>-->
-<!--                  </configuration>-->
-<!--                </execution>-->
-<!--              </executions>-->
-<!--            </plugin>-->
-<!--            <plugin>-->
-<!--              <groupId>org.codehaus.mojo</groupId>-->
-<!--              <artifactId>exec-maven-plugin</artifactId>-->
-<!--              <version>3.2.0</version>-->
-<!--              <configuration>-->
-<!--                <executable>mvn</executable>-->
-<!--              </configuration>-->
-<!--              <executions>-->
-<!--                <execution>-->
-<!--                  <id>jeo-to-bytecode</id>-->
-<!--                  <phase>generate-test-sources</phase>-->
-<!--                  <goals>-->
-<!--                    <goal>exec</goal>-->
-<!--                  </goals>-->
-<!--                  <configuration>-->
-<!--                    <arguments combine.children="append">-->
-<!--                      <argument>org.eolang:jeo-maven-plugin:${jeo.version}:assemble</argument>-->
-<!--                      <argument>-Djeo.assemble.sourcesDir=${project.build.directory}/generated-sources/jeo-disassemble-xmir</argument>-->
-<!--                      &lt;!&ndash;-->
-<!--                        @todo #200:90min Enable Bytecode Verification For Spring Fat Integration Test.-->
-<!--                         We skip verification because the Spring Framework uses many classes that-->
-<!--                         are not in the classpath and the plugin cannot verify the correctness of-->
-<!--                         the transformation. For not it's not so crucial, but in the future, we-->
-<!--                         should enable it.-->
-<!--                      &ndash;&gt;-->
-<!--                      <argument>-Djeo.assemble.skip.verification=true</argument>-->
-<!--                      <argument>-e</argument>-->
-<!--                    </arguments>-->
-<!--                  </configuration>-->
-<!--                </execution>-->
-<!--              </executions>-->
-<!--            </plugin>-->
-
-
-
-<!--      <plugin>-->
-<!--        <groupId>org.eolang</groupId>-->
-<!--        <artifactId>jeo-maven-plugin</artifactId>-->
-<!--        <version>${jeo.version}</version>-->
-<!--        <executions>-->
-<!--          <execution>-->
-<!--            <id>bytecode-to-eo</id>-->
-<!--            <goals>-->
-<!--              <goal>disassemble</goal>-->
-<!--            </goals>-->
-<!--            <configuration>-->
-<!--              <outputDir>${project.build.directory}/generated-sources/jeo-disassemble-xmir</outputDir>-->
-<!--            </configuration>-->
-<!--          </execution>-->
-<!--        </executions>-->
-<!--      </plugin>-->
-<!--      <plugin>-->
-<!--        <groupId>org.eolang</groupId>-->
-<!--        <artifactId>opeo-maven-plugin</artifactId>-->
-<!--        <version>@project.version@</version>-->
-<!--        &lt;!&ndash;-->
-<!--            @todo #219:90min Enable Opeo Spring Fat Integration Test.-->
-<!--             The test is disabled because it fails in many places.-->
-<!--             We have to fix all the tests steps and enable this test.-->
-<!--             Don't forget to add this test to the merge workflow.-->
-<!--             see .github/workflows/maven.test.yaml-->
-<!--             Also don't forget to remove the disabled tag from the configuration.-->
-<!--          &ndash;&gt;-->
-<!--        <configuration>-->
-<!--          <disabled>true</disabled>-->
-<!--        </configuration>-->
-<!--        <executions>-->
-<!--          <execution>-->
-<!--            <id>opeo-decompile</id>-->
-<!--            <goals>-->
-<!--              <goal>decompile</goal>-->
-<!--            </goals>-->
-<!--            <configuration>-->
-<!--              <sourcesDir>${project.build.directory}/generated-sources/jeo-disassemble-xmir</sourcesDir>-->
-<!--              <outputDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</outputDir>-->
-<!--            </configuration>-->
-<!--          </execution>-->
-<!--          <execution>-->
-<!--            <id>opeo-compile</id>-->
-<!--            <phase>generate-test-sources</phase>-->
-<!--            <goals>-->
-<!--              <goal>compile</goal>-->
-<!--            </goals>-->
-<!--            <configuration>-->
-<!--              <sourcesDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</sourcesDir>-->
-<!--              <outputDir>${project.build.directory}/generated-sources/opeo-compile-xmir</outputDir>-->
-<!--            </configuration>-->
-<!--          </execution>-->
-<!--        </executions>-->
-<!--      </plugin>-->
-<!--      <plugin>-->
-<!--        <groupId>org.eolang</groupId>-->
-<!--        <artifactId>ineo-maven-plugin</artifactId>-->
-<!--        <version>${ineo.version}</version>-->
-<!--        <executions>-->
-<!--          <execution>-->
-<!--            <id>ineo-staticize</id>-->
-<!--            <phase>process-classes</phase>-->
-<!--            <goals>-->
-<!--              <goal>staticize</goal>-->
-<!--            </goals>-->
-<!--            <configuration>-->
-<!--              <sourcesDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</sourcesDir>-->
-<!--              <outputDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</outputDir>-->
-<!--            </configuration>-->
-<!--          </execution>-->
-<!--        </executions>-->
-<!--      </plugin>-->
-<!--      <plugin>-->
-<!--        <groupId>org.codehaus.mojo</groupId>-->
-<!--        <artifactId>exec-maven-plugin</artifactId>-->
-<!--        <version>3.2.0</version>-->
-<!--        <configuration>-->
-<!--          <executable>mvn</executable>-->
-<!--        </configuration>-->
-<!--        <executions>-->
-<!--          <execution>-->
-<!--            <id>jeo-to-bytecode</id>-->
-<!--            <phase>generate-test-sources</phase>-->
-<!--            <goals>-->
-<!--              <goal>exec</goal>-->
-<!--            </goals>-->
-<!--            <configuration>-->
-<!--              <arguments combine.children="append">-->
-<!--                <argument>org.eolang:jeo-maven-plugin:${jeo.version}:assemble</argument>-->
-<!--                <argument>-Djeo.assemble.sourcesDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>-->
-<!--                &lt;!&ndash;-->
-<!--                  @todo #200:90min Enable Bytecode Verification For Spring Fat Integration Test.-->
-<!--                   We skip verification because the Spring Framework uses many classes that-->
-<!--                   are not in the classpath and the plugin cannot verify the correctness of-->
-<!--                   the transformation. For not it's not so crucial, but in the future, we-->
-<!--                   should enable it.-->
-<!--                &ndash;&gt;-->
-<!--                <argument>-Djeo.assemble.skip.verification=true</argument>-->
-<!--                <argument>-e</argument>-->
-<!--              </arguments>-->
-<!--            </configuration>-->
-<!--          </execution>-->
-<!--        </executions>-->
-<!--      </plugin>-->
+      <plugin>
+        <groupId>org.eolang</groupId>
+        <artifactId>jeo-maven-plugin</artifactId>
+        <version>${jeo.version}</version>
+        <executions>
+          <execution>
+            <id>bytecode-to-eo</id>
+            <goals>
+              <goal>disassemble</goal>
+            </goals>
+            <configuration>
+              <outputDir>${project.build.directory}/generated-sources/jeo-disassemble-xmir</outputDir>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eolang</groupId>
+        <artifactId>opeo-maven-plugin</artifactId>
+        <version>@project.version@</version>
+        <!--
+            @todo #219:90min Enable Opeo Spring Fat Integration Test.
+             The test is disabled because it fails in many places.
+             We have to fix all the tests steps and enable this test.
+             Don't forget to add this test to the merge workflow.
+             see .github/workflows/maven.test.yaml
+             Also don't forget to remove the disabled tag from the configuration.
+          -->
+        <configuration>
+          <disabled>true</disabled>
+        </configuration>
+        <executions>
+          <execution>
+            <id>opeo-decompile</id>
+            <goals>
+              <goal>decompile</goal>
+            </goals>
+            <configuration>
+              <sourcesDir>${project.build.directory}/generated-sources/jeo-disassemble-xmir</sourcesDir>
+              <outputDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</outputDir>
+            </configuration>
+          </execution>
+          <execution>
+            <id>opeo-compile</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <sourcesDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</sourcesDir>
+              <outputDir>${project.build.directory}/generated-sources/opeo-compile-xmir</outputDir>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eolang</groupId>
+        <artifactId>ineo-maven-plugin</artifactId>
+        <version>${ineo.version}</version>
+        <executions>
+          <execution>
+            <id>ineo-staticize</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>staticize</goal>
+            </goals>
+            <configuration>
+              <sourcesDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</sourcesDir>
+              <outputDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</outputDir>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <executable>mvn</executable>
+        </configuration>
+        <executions>
+          <execution>
+            <id>jeo-to-bytecode</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <arguments combine.children="append">
+                <argument>org.eolang:jeo-maven-plugin:${jeo.version}:assemble</argument>
+                <argument>-Djeo.assemble.sourcesDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>
+                <!--
+                  @todo #200:90min Enable Bytecode Verification For Spring Fat Integration Test.
+                   We skip verification because the Spring Framework uses many classes that
+                   are not in the classpath and the plugin cannot verify the correctness of
+                   the transformation. For not it's not so crucial, but in the future, we
+                   should enable it.
+                -->
+                <argument>-Djeo.assemble.skip.verification=true</argument>
+                <argument>-e</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 </project>
