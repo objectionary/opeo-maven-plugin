@@ -39,30 +39,68 @@ public final class SelectiveDecompiler implements Decompiler {
      */
     private final String[] supported;
 
+    /**
+     * Constructor.
+     * @param input Input folder with XMIRs.
+     * @param output Output folder where to save the decompiled files.
+     * @param modified Folder where to save the modified XMIRs.
+     */
     public SelectiveDecompiler(final Path input, final Path output, final Path modified) {
         this(input, output, modified, new RouterHandler(false).supportedOpcodes());
     }
 
+    /**
+     * Constructor.
+     * @param input Input folder with XMIRs.
+     * @param output Output folder where to save the decompiled files.
+     */
     public SelectiveDecompiler(final Path input, final Path output) {
         this(input, output, new RouterHandler(false).supportedOpcodes());
     }
 
-    public SelectiveDecompiler(
-        final Path input, final Path output, final Path modified, String... supported
-    ) {
-        this(new FileStorage(input, output), new FileStorage(modified, modified), supported);
-    }
-
+    /**
+     * Constructor.
+     * @param input Input folder with XMIRs.
+     * @param output Output folder where to save the decompiled files.
+     * @param supported Supported opcodes are used in selection.
+     */
     public SelectiveDecompiler(
         final Path input, final Path output, String... supported
     ) {
         this(new FileStorage(input, output), supported);
     }
 
+    /**
+     * Constructor.
+     * @param input Input folder with XMIRs.
+     * @param output Output folder where to save the decompiled files.
+     * @param modified Folder where to save the modified XMIRs.
+     * @param supported Supported opcodes are used in selection.
+     */
+    public SelectiveDecompiler(
+        final Path input,
+        final Path output,
+        final Path modified,
+        final String... supported
+    ) {
+        this(new FileStorage(input, output), new FileStorage(modified, modified), supported);
+    }
+
+    /**
+     * Constructor.
+     * @param storage Storage from which retrieve the XMIRs and where to save the modified ones.
+     * @param supported Supported opcodes are used in selection.
+     */
     public SelectiveDecompiler(final Storage storage, String... supported) {
         this(storage, new DummyStorage(), supported);
     }
 
+    /**
+     * Constructor.
+     * @param storage Storage from which retrieve the XMIRs and where to save the modified ones.
+     * @param modified Storage where to save the modified of each decompiled file.
+     * @param supported Supported opcodes are used in selection.
+     */
     public SelectiveDecompiler(
         final Storage storage, final Storage modified, final String... supported
     ) {
@@ -94,6 +132,10 @@ public final class SelectiveDecompiler implements Decompiler {
         );
     }
 
+    /**
+     * Xpath to find all opcodes that are not supported.
+     * @return Xpath.
+     */
     private String xpath() {
         return String.format(
             "//o[@base='opcode'][not(contains('%s', substring-before(concat(@name, '-'), '-'))) ]/@name",
