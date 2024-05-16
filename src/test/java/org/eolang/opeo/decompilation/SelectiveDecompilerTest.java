@@ -94,14 +94,14 @@ final class SelectiveDecompilerTest {
 
     @Test
     void decompilesOnlySomeFiles(@TempDir final Path temp) throws Exception {
-        final byte[] known = new BytesOf(new ResourceOf("xmir/Bar.xmir")).asBytes();
+        final byte[] known = new BytesOf(new ResourceOf("xmir/Known.xmir")).asBytes();
         final byte[] unknown = new BytesOf(new ResourceOf("xmir/Bar.xmir")).asBytes();
         final Path input = temp.resolve("input");
         final Path output = temp.resolve("output");
         Files.createDirectories(input);
         Files.createDirectories(output);
         Files.write(input.resolve("Known.xmir"), known);
-        Files.write(input.resolve("Unknown.xmir"), known);
+        Files.write(input.resolve("Unknown.xmir"), unknown);
         new SelectiveDecompiler(new FileStorage(input, output)).decompile();
         MatcherAssert.assertThat(
             "We expect that the decompiled file will be changed since the decompiler knows all instructions.",
