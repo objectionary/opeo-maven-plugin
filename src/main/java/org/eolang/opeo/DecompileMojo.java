@@ -25,6 +25,7 @@ package org.eolang.opeo;
 
 import com.jcabi.log.Logger;
 import java.io.File;
+import java.util.Objects;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -69,6 +70,9 @@ public final class DecompileMojo extends AbstractMojo {
     )
     private File outputDir;
 
+    @Parameter(property = "opeo.decompile.modifiedDir")
+    private File modifiedDir;
+
     /**
      * Whether the plugin is disabled.
      * If it's disabled, then it won't do anything.
@@ -88,7 +92,13 @@ public final class DecompileMojo extends AbstractMojo {
         if (this.disabled) {
             Logger.info(this, "Decompiler is disabled");
             decompiler = new DummyDecompiler(this.sourcesDir.toPath(), this.outputDir.toPath());
+        } else if (Objects.nonNull(this.modifiedDir)) {
+            Logger.info(this, "Use selective decompiler");
+            decompiler = new SelectiveDecompiler(
+                this.sourcesDir.toPath(), this.outputDir.toPath(), this.modifiedDir.toPath()
+            );
         } else {
+            Logger.info(this, "Use naive decompiler");
             decompiler = new NaiveDecompiler(this.sourcesDir.toPath(), this.outputDir.toPath());
         }
         decompiler.decompile();
