@@ -27,6 +27,7 @@ import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Function;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -87,6 +88,15 @@ public final class XmirEntry {
      */
     public XmirEntry transform(final Function<? super XML, ? extends XML> transformer) {
         return new XmirEntry(transformer.apply(this.xml.value()), this.pckg);
+    }
+
+    /**
+     * Apply XPath query.
+     * @param query XPath query.
+     * @return List of strings returned by query.
+     */
+    public List<String> xpath(final String query) {
+        return this.xml.value().xpath(query);
     }
 
     /**

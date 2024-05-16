@@ -23,12 +23,14 @@
  */
 package org.eolang.opeo.decompilation;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.stream.Stream;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.eolang.opeo.SelectiveDecompiler;
+import org.eolang.opeo.decompilation.handlers.RouterHandler;
 import org.eolang.opeo.storage.FileStorage;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -42,6 +44,12 @@ import org.junit.jupiter.api.io.TempDir;
  */
 final class SelectiveDecompilerTest {
 
+    private final String[] supported =
+        Stream.concat(
+            Arrays.stream(new RouterHandler(false).supportedOpcodes()),
+            Stream.of("IRETURN", "IFLE")
+        ).toArray(String[]::new);
+
     @Test
     void decompiles(@TempDir final Path temp) throws Exception {
         final byte[] known = new BytesOf(new ResourceOf("xmir/Bar.xmir")).asBytes();
@@ -50,7 +58,7 @@ final class SelectiveDecompilerTest {
         Files.createDirectories(input);
         Files.createDirectories(output);
         Files.write(input.resolve("Bar.xmir"), known);
-        new SelectiveDecompiler(new FileStorage(input, output)).decompile();
+        new SelectiveDecompiler(new FileStorage(input, output), this.supported).decompile();
         MatcherAssert.assertThat(
             "We expect that decompiler will decompile the input file and store the result into the output folder.",
             output.resolve("Bar.xmir").toFile(),
@@ -58,8 +66,8 @@ final class SelectiveDecompilerTest {
         );
         MatcherAssert.assertThat(
             "We expect that the decompiled file won't be the same as the input file. Since the decompiler should change the file.",
-            new BytesOf(output.resolve("Bar.xmir")),
-            Matchers.not(Matchers.equalTo(new BytesOf(known)))
+            new BytesOf(output.resolve("Bar.xmir")).asBytes(),
+            Matchers.not(Matchers.equalTo(known))
         );
     }
 
@@ -79,8 +87,8 @@ final class SelectiveDecompilerTest {
         );
         MatcherAssert.assertThat(
             "We expect that the decompiled file will be the same as the input file. Since the decompiler doesn't know some instructions.",
-            new BytesOf(output.resolve("Bar.xmir")),
-            Matchers.equalTo(new BytesOf(known))
+            new BytesOf(output.resolve("Bar.xmir")).asBytes(),
+            Matchers.equalTo(known)
         );
     }
 
@@ -97,13 +105,13 @@ final class SelectiveDecompilerTest {
         new SelectiveDecompiler(new FileStorage(input, output)).decompile();
         MatcherAssert.assertThat(
             "We expect that the decompiled file will be changed since the decompiler knows all instructions.",
-            new BytesOf(output.resolve("Known.xmir")),
-            Matchers.not(Matchers.equalTo(new BytesOf(known)))
+            new BytesOf(output.resolve("Known.xmir")).asBytes(),
+            Matchers.not(Matchers.equalTo(known))
         );
         MatcherAssert.assertThat(
             "We expect that the decompiled file won't be changed since the decompiler doesn't know some instructions.",
-            new BytesOf(output.resolve("Unknown.xmir")),
-            Matchers.equalTo(new BytesOf(unknown))
+            new BytesOf(output.resolve("Unknown.xmir")).asBytes(),
+            Matchers.equalTo(unknown)
         );
     }
 
