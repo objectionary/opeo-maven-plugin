@@ -31,8 +31,8 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.eolang.opeo.decompilation.Decompiler;
-import org.eolang.opeo.decompilation.NaiveDecompiler;
 import org.eolang.opeo.decompilation.DummyDecompiler;
+import org.eolang.opeo.decompilation.NaiveDecompiler;
 
 /**
  * Decompiles bytecode in EO representation into high-level EO representation.
@@ -70,6 +70,17 @@ public final class DecompileMojo extends AbstractMojo {
     )
     private File outputDir;
 
+    /**
+     * Directory where modified XMIRs are stored.
+     * It is an optional folder that is used to separate files that were modified.
+     * In some cases, the decompilation phase might just skip some files because some instructions
+     * are not supported yet.
+     * To "see" what we actually decompiled, we store the modified files in this folder.
+     * It doesn't affect {@link #outputDir}.
+     *
+     * @since 0.2.0
+     * @checkstyle MemberNameCheck (6 lines)
+     */
     @Parameter(property = "opeo.decompile.modifiedDir")
     private File modifiedDir;
 

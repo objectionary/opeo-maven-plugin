@@ -71,7 +71,8 @@ public final class RawXml implements AstNode {
         //  method to be more efficient.
         return new Directives().append(
             new XMLDocument(
-                new XMLDocument(this.node.node()).toString()).node()
+                new XMLDocument(this.node.node()).toString()
+            ).node()
         );
     }
 }

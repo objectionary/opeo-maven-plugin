@@ -1,5 +1,27 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016-2023 Objectionary.com
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package org.eolang.opeo;
-
 
 import com.jcabi.log.Logger;
 import java.nio.file.Path;
@@ -65,7 +87,7 @@ public final class SelectiveDecompiler implements Decompiler {
      * @param supported Supported opcodes are used in selection.
      */
     public SelectiveDecompiler(
-        final Path input, final Path output, String... supported
+        final Path input, final Path output, final String... supported
     ) {
         this(new FileStorage(input, output), supported);
     }
@@ -76,6 +98,7 @@ public final class SelectiveDecompiler implements Decompiler {
      * @param output Output folder where to save the decompiled files.
      * @param modified Folder where to save the modified XMIRs.
      * @param supported Supported opcodes are used in selection.
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
     public SelectiveDecompiler(
         final Path input,
@@ -91,7 +114,7 @@ public final class SelectiveDecompiler implements Decompiler {
      * @param storage Storage from which retrieve the XMIRs and where to save the modified ones.
      * @param supported Supported opcodes are used in selection.
      */
-    public SelectiveDecompiler(final Storage storage, String... supported) {
+    public SelectiveDecompiler(final Storage storage, final String... supported) {
         this(storage, new DummyStorage(), supported);
     }
 
@@ -106,7 +129,7 @@ public final class SelectiveDecompiler implements Decompiler {
     ) {
         this.storage = storage;
         this.modified = modified;
-        this.supported = supported;
+        this.supported = supported.clone();
     }
 
     @Override
@@ -114,8 +137,8 @@ public final class SelectiveDecompiler implements Decompiler {
         this.storage.all().forEach(
             entry -> {
                 final XmirEntry res;
-                final List<String> xpath = entry.xpath(this.xpath());
-                if (xpath.isEmpty()) {
+                final List<String> found = entry.xpath(this.xpath());
+                if (found.isEmpty()) {
                     res = entry.transform(xml -> new JeoDecompiler(xml).decompile());
                     this.modified.save(res);
                 } else {
@@ -123,7 +146,7 @@ public final class SelectiveDecompiler implements Decompiler {
                         this,
                         "Skipping %s, because of unsupported opcodes: %s",
                         entry,
-                        xpath
+                        found
                     );
                     res = entry;
                 }
