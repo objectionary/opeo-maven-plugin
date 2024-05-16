@@ -1,6 +1,7 @@
 package org.eolang.opeo;
 
 
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,6 +9,8 @@ import org.eolang.opeo.ast.OpcodeName;
 import org.eolang.opeo.decompilation.Decompiler;
 import org.eolang.opeo.decompilation.handlers.RouterHandler;
 import org.eolang.opeo.jeo.JeoDecompiler;
+import org.eolang.opeo.storage.DummyStorage;
+import org.eolang.opeo.storage.FileStorage;
 import org.eolang.opeo.storage.Storage;
 import org.eolang.opeo.storage.XmirEntry;
 
@@ -34,12 +37,30 @@ public final class SelectiveDecompiler implements Decompiler {
 
     private final String[] supported;
 
-    public SelectiveDecompiler(final Storage storage) {
-        this(storage, new RouterHandler(true).supportedOpcodes());
+
+    public SelectiveDecompiler(final Path input, final Path output, final Path copy) {
+        this(input, output, copy, new RouterHandler(false).supportedOpcodes());
+    }
+
+    public SelectiveDecompiler(final Path input, final Path output) {
+        this(input, output, new RouterHandler(false).supportedOpcodes());
+    }
+
+
+    public SelectiveDecompiler(
+        final Path input, final Path output, final Path copy, String... supported
+    ) {
+        this(new FileStorage(input, output), new FileStorage(copy, copy), supported);
+    }
+
+    public SelectiveDecompiler(
+        final Path input, final Path output, String... supported
+    ) {
+        this(new FileStorage(input, output), supported);
     }
 
     public SelectiveDecompiler(final Storage storage, String... supported) {
-        this(storage, storage, supported);
+        this(storage, new DummyStorage(), supported);
     }
 
     public SelectiveDecompiler(

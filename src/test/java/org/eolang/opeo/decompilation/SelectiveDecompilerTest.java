@@ -31,7 +31,6 @@ import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.eolang.opeo.SelectiveDecompiler;
 import org.eolang.opeo.decompilation.handlers.RouterHandler;
-import org.eolang.opeo.storage.FileStorage;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.io.FileMatchers;
@@ -58,7 +57,7 @@ final class SelectiveDecompilerTest {
         Files.createDirectories(input);
         Files.createDirectories(output);
         Files.write(input.resolve("Bar.xmir"), known);
-        new SelectiveDecompiler(new FileStorage(input, output), this.supported).decompile();
+        new SelectiveDecompiler(input, output, this.supported).decompile();
         MatcherAssert.assertThat(
             "We expect that decompiler will decompile the input file and store the result into the output folder.",
             output.resolve("Bar.xmir").toFile(),
@@ -79,7 +78,7 @@ final class SelectiveDecompilerTest {
         Files.createDirectories(input);
         Files.createDirectories(output);
         Files.write(input.resolve("Bar.xmir"), known);
-        new SelectiveDecompiler(new FileStorage(input, output)).decompile();
+        new SelectiveDecompiler(input, output).decompile();
         MatcherAssert.assertThat(
             "We expect that decompiler will copy the input file and store the result into the output folder.",
             output.resolve("Bar.xmir").toFile(),
@@ -102,7 +101,7 @@ final class SelectiveDecompilerTest {
         Files.createDirectories(output);
         Files.write(input.resolve("Known.xmir"), known);
         Files.write(input.resolve("Unknown.xmir"), unknown);
-        new SelectiveDecompiler(new FileStorage(input, output)).decompile();
+        new SelectiveDecompiler(input, output).decompile();
         MatcherAssert.assertThat(
             "We expect that the decompiled file will be changed since the decompiler knows all instructions.",
             new BytesOf(output.resolve("Known.xmir")).asBytes(),
@@ -112,6 +111,50 @@ final class SelectiveDecompilerTest {
             "We expect that the decompiled file won't be changed since the decompiler doesn't know some instructions.",
             new BytesOf(output.resolve("Unknown.xmir")).asBytes(),
             Matchers.equalTo(unknown)
+        );
+    }
+
+    @Test
+    void copiesDecompiledFiles(@TempDir final Path temp) throws Exception {
+        final byte[] known = new BytesOf(new ResourceOf("xmir/Known.xmir")).asBytes();
+        final Path input = temp.resolve("input");
+        final Path output = temp.resolve("output");
+        final Path copy = temp.resolve("copy");
+        Files.createDirectories(input);
+        Files.createDirectories(output);
+        Files.createDirectories(copy);
+        Files.write(input.resolve("Known.xmir"), known);
+        new SelectiveDecompiler(input, output, copy, this.supported).decompile();
+        MatcherAssert.assertThat(
+            "We expect that the decompiled file will be stored in the output folder.",
+            output.resolve("Known.xmir").toFile(),
+            FileMatchers.anExistingFile()
+        );
+        MatcherAssert.assertThat(
+            "We expect that the decompiled file will be stored in the copy folder.",
+            copy.resolve("Known.xmir").toFile(),
+            FileMatchers.anExistingFile()
+        );
+        MatcherAssert.assertThat(
+            "We expect that the decompiled file will be the same in the output and copy folders.",
+            new BytesOf(output.resolve("Known.xmir")).asBytes(),
+            Matchers.equalTo(new BytesOf(copy.resolve("Known.xmir")).asBytes())
+        );
+    }
+
+    @Test
+    void doesNotCopyDecompiledFiles(@TempDir final Path temp) throws Exception {
+        final byte[] known = new BytesOf(new ResourceOf("xmir/Known.xmir")).asBytes();
+        final Path input = temp.resolve("input");
+        final Path output = temp.resolve("output");
+        Files.createDirectories(input);
+        Files.createDirectories(output);
+        Files.write(input.resolve("Known.xmir"), known);
+        new SelectiveDecompiler(input, output, this.supported).decompile();
+        MatcherAssert.assertThat(
+            "We expect that nothing additional will be stored in the folder instead of 'input' and 'output' folders.",
+            temp.toFile().listFiles(),
+            Matchers.arrayWithSize(2)
         );
     }
 
