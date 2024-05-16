@@ -31,14 +31,16 @@ import org.eolang.opeo.storage.Storage;
 import org.eolang.opeo.storage.XmirEntry;
 
 /**
- * Default Decompiler.
+ * Naive Decompiler.
  * This class is a high-level abstraction of the decompilation process.
  * The main purpose of this class is to get the output of the jeo-maven-plugin
  * and decompile it into high-level EO constructs.
  *
+ * This class just tries to decompile ALL possible files.
+ *
  * @since 0.1
  */
-public final class DefaultDecompiler implements Decompiler {
+public final class NaiveDecompiler implements Decompiler {
 
     /**
      * The storage where the XMIRs are stored.
@@ -50,7 +52,7 @@ public final class DefaultDecompiler implements Decompiler {
      * @param xmirs Path to the generated XMIRs by jeo-maven-plugin.
      * @param output Path to the output directory.
      */
-    public DefaultDecompiler(
+    public NaiveDecompiler(
         final Path xmirs,
         final Path output
     ) {
@@ -61,7 +63,7 @@ public final class DefaultDecompiler implements Decompiler {
      * Constructor.
      * @param generated The default Maven 'generated-sources' directory.
      */
-    DefaultDecompiler(final Path generated) {
+    NaiveDecompiler(final Path generated) {
         this(generated.resolve("xmir"), generated.resolve("opeo-xmir"));
     }
 
@@ -69,7 +71,7 @@ public final class DefaultDecompiler implements Decompiler {
      * Constructor.
      * @param storage The storage where the XMIRs are stored.
      */
-    private DefaultDecompiler(final Storage storage) {
+    private NaiveDecompiler(final Storage storage) {
         this.storage = storage;
     }
 
