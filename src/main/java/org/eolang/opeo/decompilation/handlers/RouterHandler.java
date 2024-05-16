@@ -121,6 +121,7 @@ public final class RouterHandler implements InstructionHandler {
                 new MapEntry<>(Opcodes.LDC, new LdcHandler()),
                 new MapEntry<>(Opcodes.POP, new PopHandler()),
                 new MapEntry<>(Opcodes.RETURN, new ReturnHandler(counting)),
+                new MapEntry<>(Opcodes.IRETURN, new ReturnHandler(counting)),
                 new MapEntry<>(JeoLabel.LABEL_OPCODE, new LabelHandler()),
                 new MapEntry<>(
                     RouterHandler.UNIMPLEMENTED, new UnimplementedHandler(counting)
