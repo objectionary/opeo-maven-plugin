@@ -40,9 +40,20 @@ import org.junit.jupiter.api.io.TempDir;
 /**
  * Test cases for {@link org.eolang.opeo.SelectiveDecompiler}.
  * @since 0.1
+ * @todo #226:90min Refactor SelectiveDecompilerTest.
+ *  This test has a lot of string literals that are duplicated.
+ *  Moreover, it has a {@link SelectiveDecompilerTest#supported} field that should be removed.
+ *  See the javadoc for 'supported' field.
+ *  Also we have some sort of duplication between method initializations.
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class SelectiveDecompilerTest {
 
+    /**
+     * Supported opcodes.
+     * Here we intentionally expand the list of supported opcodes to test the decompiler.
+     * Bar.xmir contains the IFLE instruction which is not supported by the decompiler yet.
+     */
     private final String[] supported =
         Stream.concat(
             Arrays.stream(new RouterHandler(false).supportedOpcodes()),
@@ -157,5 +168,4 @@ final class SelectiveDecompilerTest {
             Matchers.arrayWithSize(2)
         );
     }
-
 }
