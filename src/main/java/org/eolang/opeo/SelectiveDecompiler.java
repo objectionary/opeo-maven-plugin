@@ -1,6 +1,7 @@
 package org.eolang.opeo;
 
 
+import com.jcabi.log.Logger;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
@@ -75,13 +76,17 @@ public final class SelectiveDecompiler implements Decompiler {
         this.storage.all().forEach(
             entry -> {
                 final XmirEntry res;
-                final String xpath1 = this.xpath();
-                final List<String> xpath = entry.xpath(xpath1);
-                final boolean empty = xpath.isEmpty();
-                if (empty) {
+                final List<String> xpath = entry.xpath(this.xpath());
+                if (xpath.isEmpty()) {
                     res = entry.transform(xml -> new JeoDecompiler(xml).decompile());
                     this.modified.save(res);
                 } else {
+                    Logger.info(
+                        this,
+                        "Skipping %s, because of unsupported opcodes: %s",
+                        entry,
+                        xpath
+                    );
                     res = entry;
                 }
                 this.storage.save(res);

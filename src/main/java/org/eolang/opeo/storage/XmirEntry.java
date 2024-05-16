@@ -46,6 +46,7 @@ public final class XmirEntry {
     /**
      * XML representation of XMIR.
      */
+    @ToString.Exclude
     private final Unchecked<XML> xml;
 
     /**
