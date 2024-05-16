@@ -48,6 +48,7 @@ import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Opcode;
+import org.eolang.opeo.ast.RawXml;
 import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.ast.Substraction;
@@ -160,6 +161,8 @@ final class XmirParser {
             result = new Substraction(node, this::node);
         } else if ("cast".equals(base)) {
             result = new Cast(node, this::node);
+        } else if ("frame".equals(base)) {
+            result = new RawXml(node);
         } else if ("opcode".equals(base)) {
             final XmlInstruction instruction = new XmlInstruction(node);
             final int opcode = instruction.opcode();
