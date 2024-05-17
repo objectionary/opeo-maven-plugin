@@ -37,7 +37,7 @@ SOFTWARE.
     <relativePath/>
   </parent>
   <groupId>org.eolang</groupId>
-  <artifactId>opeo-spring-fat-it</artifactId>
+  <artifactId>opeo-spring-it</artifactId>
   <version>@project.version@</version>
   <packaging>jar</packaging>
   <description>
@@ -47,7 +47,7 @@ SOFTWARE.
     all the transformations and optimizations to it.
 
     If you need to run only this test, use the following command:
-    "mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests"
+    "mvn clean integration-test invoker:run -Dinvoker.test=spring -DskipTests"
   </description>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -70,32 +70,6 @@ SOFTWARE.
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>3.6.1</version>
-        <executions>
-          <execution>
-            <id>unpack-dependencies</id>
-            <goals>
-              <goal>unpack-dependencies</goal>
-            </goals>
-            <configuration>
-              <!--
-               @todo #229:90min Handle module-info.class files correctly.
-                Currently we just exclude all `module-info.class` files from the downloaded dependencies.
-                This means that we don't support Java 9+ modules.
-                We should handle them correctly and ensure support Java 9+ modules in 'spring-fat' integration test.
-                Otherwise the application of our solution will be limited to Java 8.
-             -->
-              <excludes>
-                module-info.class
-              </excludes>
-              <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.eolang</groupId>
         <artifactId>jeo-maven-plugin</artifactId>
         <version>${jeo.version}</version>
@@ -115,14 +89,6 @@ SOFTWARE.
         <groupId>org.eolang</groupId>
         <artifactId>opeo-maven-plugin</artifactId>
         <version>@project.version@</version>
-        <!--
-            @todo #219:90min Enable Opeo Spring Fat Integration Test.
-             The test is disabled because it fails in many places.
-             We have to fix all the tests steps and enable this test.
-             Don't forget to add this test to the merge workflow.
-             see .github/workflows/maven.test.yaml
-             Also don't forget to remove the disabled tag from the configuration.
-          -->
         <configuration>
           <disabled>true</disabled>
         </configuration>
@@ -187,13 +153,6 @@ SOFTWARE.
               <arguments combine.children="append">
                 <argument>org.eolang:jeo-maven-plugin:${jeo.version}:assemble</argument>
                 <argument>-Djeo.assemble.sourcesDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>
-                <!--
-                  @todo #200:90min Enable Bytecode Verification For Spring Fat Integration Test.
-                   We skip verification because the Spring Framework uses many classes that
-                   are not in the classpath and the plugin cannot verify the correctness of
-                   the transformation. For not it's not so crucial, but in the future, we
-                   should enable it.
-                -->
                 <argument>-Djeo.assemble.skip.verification=true</argument>
                 <argument>-e</argument>
               </arguments>
