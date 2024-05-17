@@ -23,12 +23,14 @@
  */
 package org.eolang.opeo.decompilation.handlers;
 
+import java.util.Collections;
 import java.util.List;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Super;
+import org.eolang.opeo.ast.This;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
 import org.objectweb.asm.Type;
@@ -51,24 +53,30 @@ public final class InvokespecialHandler implements InstructionHandler {
         final List<AstNode> args = state.stack().pop(
             Type.getArgumentCount(descriptor)
         );
-        final String target = (String) state.operand(0);
+        Collections.reverse(args);
+        final String type = (String) state.operand(0);
         //@checkstyle MethodBodyCommentsCheck (10 lines)
         // @todo #76:90min Target might not be an Object.
         //  Here we just compare with object, but if the current class has a parent, the
         //  target might not be an Object. We should compare with the current class name
         //  instead. Moreover, we have to pass the 'target' as an argument to the
         //  constructor of the 'Super' class somehow.
-        if ("java/lang/Object".equals(target)) {
+        final AstNode tar = state.stack().pop();
+        if ("java/lang/Object".equals(type)) {
             state.stack().push(
-                new Super(state.stack().pop(), args, descriptor)
+                new Super(tar, args, descriptor)
+            );
+        } else if (tar instanceof This) {
+            state.stack().push(
+                new Super(tar, args, descriptor)
             );
         } else {
             final AstNode constructor = new Constructor(
-                target,
+                type,
                 new Attributes().descriptor(descriptor).interfaced(interfaced),
                 args
             );
-            ((Reference) state.stack().pop()).link(constructor);
+            ((Reference) tar).link(constructor);
         }
     }
 

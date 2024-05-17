@@ -26,6 +26,12 @@ eo:
       33 > access
       "java/lang/Object" > supername
       * > interfaces
+      field > j$x
+        0 > access-j$x
+        "I" > descriptor-j$x
+        "" > signature-j$x
+        int > value-j$x
+          --
       # This is the default 64+ symbols comment in front of named abstract object.
       [] > new
         1 > access
@@ -36,14 +42,18 @@ eo:
         [] > maxs
           2 > stack
           2 > locals
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > arg__I__0
         seq > @
           *
             $
             .super
-            opcode > INVOKESPECIAL
-              183
-            operand > Parent.<init>
-            descriptor > (I)V
+            $
+            .x
+            .writefield
+              local1
+            opcode > RETURN
+              177
   Child.eo: |
     +package com.example
     +alias org.eolang.jeo.opcode
@@ -65,11 +75,12 @@ eo:
         [] > maxs
           2 > stack
           2 > locals
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > arg__I__0
         seq > @
           *
             $
             .super
-            opcode > INVOKESPECIAL
-              183
-            operand > Parent.<init>
-            descriptor > (I)V
+              local1
+            opcode > RETURN
+              177
