@@ -66,7 +66,7 @@ public final class JeoDecompiler {
         final Node node = this.prog.node();
         new XmlProgram(node).top()
             .methods()
-            .forEach(JeoDecompiler::decompile);
+            .forEach(this::decompile);
         return new XMLDocument(node);
     }
 
@@ -75,19 +75,31 @@ public final class JeoDecompiler {
      *
      * @param method Method.
      */
-    private static void decompile(final XmlMethod method) {
-        if (!method.instructions().isEmpty()) {
-            method.withInstructions(
-                new XmlNode(
-                    new Xembler(
-                        new DecompilerMachine(
-                            new LocalVariables(method.access(), method.descriptor()),
-                            Map.of("counting", "false")
-                        ).decompile(new JeoInstructions(method).instructions()),
-                        new Transformers.Node()
-                    ).xmlQuietly()
-                ).children().collect(Collectors.toList()).toArray(XmlNode[]::new)
+    private void decompile(final XmlMethod method) {
+        try {
+            if (!method.instructions().isEmpty()) {
+                method.withInstructions(
+                    new XmlNode(
+                        new Xembler(
+                            new DecompilerMachine(
+                                new LocalVariables(method.access(), method.descriptor()),
+                                Map.of("counting", "false")
+                            ).decompile(new JeoInstructions(method).instructions()),
+                            new Transformers.Node()
+                        ).xmlQuietly()
+                    ).children().collect(Collectors.toList()).toArray(XmlNode[]::new)
+                );
+            }
+        } catch (final ClassCastException exception) {
+            throw new IllegalStateException(
+                String.format(
+                    "Failed to decompile method '%s' from the following XMIR: '%s'",
+                    method,
+                    this.prog
+                ),
+                exception
             );
         }
+
     }
 }

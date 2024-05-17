@@ -1,0 +1,75 @@
+java:
+  Parent.java: |
+    package com.example;
+    public class Parent {
+        int x;
+        public Parent(int x) {
+            this.x = x;
+        }
+    }
+  Child.java: |
+    package com.example;
+    public class Child extends Parent {
+        public Child(int x) {
+            super(x);
+        }
+    }
+eo:
+  Parent.eo: |
+    +package com.example
+    +alias org.eolang.jeo.opcode
+    +alias org.eolang.jeo.label
+    
+    # This is the default 64+ symbols comment in front of named abstract object.
+    [] > j$Parent
+      55 > version
+      33 > access
+      "java/lang/Object" > supername
+      * > interfaces
+      # This is the default 64+ symbols comment in front of named abstract object.
+      [] > new
+        1 > access
+        "(I)V" > descriptor
+        "" > signature
+        * > exceptions
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > maxs
+          2 > stack
+          2 > locals
+        seq > @
+          *
+            $
+            .super
+            opcode > INVOKESPECIAL
+              183
+            operand > Parent.<init>
+            descriptor > (I)V
+  Child.eo: |
+    +package com.example
+    +alias org.eolang.jeo.opcode
+    +alias org.eolang.jeo.label
+    
+    # This is the default 64+ symbols comment in front of named abstract object.
+    [] > j$Child
+      55 > version
+      33 > access
+      "com/example/Parent" > supername
+      * > interfaces
+      # This is the default 64+ symbols comment in front of named abstract object.
+      [] > new
+        1 > access
+        "(I)V" > descriptor
+        "" > signature
+        * > exceptions
+        # This is the default 64+ symbols comment in front of named abstract object.
+        [] > maxs
+          2 > stack
+          2 > locals
+        seq > @
+          *
+            $
+            .super
+            opcode > INVOKESPECIAL
+              183
+            operand > Parent.<init>
+            descriptor > (I)V
