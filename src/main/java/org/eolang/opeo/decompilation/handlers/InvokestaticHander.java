@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.decompilation.handlers;
 
+import java.util.Collections;
 import java.util.List;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
@@ -45,6 +46,7 @@ public final class InvokestaticHander implements InstructionHandler {
         final String descriptor = (String) state.operand(2);
         final boolean interfaced = (boolean) state.operand(3);
         final List<AstNode> args = state.stack().pop(Type.getArgumentCount(descriptor));
+        Collections.reverse(args);
         state.stack().push(
             new StaticInvocation(
                 new Attributes()

@@ -36,6 +36,7 @@ import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Cast;
+import org.eolang.opeo.ast.ClassConstant;
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.ConstructorDescriptor;
@@ -181,6 +182,8 @@ final class XmirParser {
             result = new Literal(node);
         } else if ("long".equals(base)) {
             result = new Literal(node);
+        } else if ("type".equals(base)) {
+            result = new ClassConstant(node);
         } else if (".super".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode instance = this.node(inner.get(0));
