@@ -123,9 +123,9 @@ SOFTWARE.
              see .github/workflows/maven.test.yaml
              Also don't forget to remove the disabled tag from the configuration.
           -->
-<!--        <configuration>-->
-<!--          <disabled>true</disabled>-->
-<!--        </configuration>-->
+        <configuration>
+          <disabled>true</disabled>
+        </configuration>
         <executions>
           <execution>
             <id>opeo-decompile</id>
