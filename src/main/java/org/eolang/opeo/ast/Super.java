@@ -50,6 +50,9 @@ public final class Super implements AstNode {
      */
     private final List<AstNode> arguments;
 
+    /**
+     * Attributes.
+     */
     private final Attributes attributes;
 
     /**
@@ -94,6 +97,15 @@ public final class Super implements AstNode {
         this(instance, arguments, descriptor, "java/lang/Object", "<init>");
     }
 
+    /**
+     * Constructor.
+     * @param instance Target instance
+     * @param arguments Super arguments
+     * @param descriptor Descriptor
+     * @param type Type
+     * @param name Method Name
+     * @checkstyle ParameterNumberCheck (5 lines)
+     */
     public Super(
         final AstNode instance,
         final List<AstNode> arguments,
@@ -104,6 +116,12 @@ public final class Super implements AstNode {
         this(instance, arguments, new Attributes().descriptor(descriptor).name(name).owner(type));
     }
 
+    /**
+     * Constructor.
+     * @param instance Target instance
+     * @param arguments Super arguments
+     * @param attributes Attributes
+     */
     public Super(
         final AstNode instance,
         final List<AstNode> arguments,
