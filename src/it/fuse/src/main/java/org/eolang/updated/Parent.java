@@ -23,13 +23,17 @@
  */
 package org.eolang.updated;
 
-class A extends Parent {
+class Parent {
+    private int d;
 
-    A(int d) {
-        super(d);
+    Parent(int d) {
+        this.d = d;
     }
 
     public int get() {
-        return super.get();
+        if (d <= 0) {
+            return d;
+        }
+        return new Parent(d - 1).get();
     }
 }
