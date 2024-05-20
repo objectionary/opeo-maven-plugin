@@ -101,19 +101,19 @@ public final class XmirEntry {
     }
 
     /**
+     * Package name.
+     * @return Package name (relative path).
+     */
+    public String relative() {
+        return this.pckg;
+    }
+
+    /**
      * To XML.
      * @return XML representation of XMIR.
      */
     XML toXml() {
         return this.xml.value();
-    }
-
-    /**
-     * Package name.
-     * @return Package name (relative path).
-     */
-    String relative() {
-        return this.pckg;
     }
 
     /**
