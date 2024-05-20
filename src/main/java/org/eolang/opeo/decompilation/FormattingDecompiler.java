@@ -27,6 +27,7 @@ import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.nio.file.Path;
+import java.util.stream.Stream;
 import org.eolang.opeo.storage.FileStorage;
 import org.eolang.opeo.storage.Storage;
 import org.eolang.opeo.storage.XmirEntry;
@@ -66,7 +67,26 @@ public final class FormattingDecompiler implements Decompiler {
     @Override
     public void decompile() {
         this.original.decompile();
-        this.modified.all().map(this::format).forEach(this.modified::save);
+        this.all().map(this::format).forEach(this.modified::save);
+    }
+
+    /**
+     * All XMIR entries.
+     * @return Stream of XMIR entries.
+     */
+    private Stream<XmirEntry> all() {
+        Stream<XmirEntry> result;
+        try {
+            result = this.modified.all();
+        } catch (final IllegalArgumentException exception) {
+            Logger.info(
+                this,
+                "No modified XMIRs found. Original storage threw the following exception '%s'",
+                exception.getMessage()
+            );
+            result = Stream.empty();
+        }
+        return result;
     }
 
     /**
