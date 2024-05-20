@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.decompilation.handlers;
 
+import com.jcabi.log.Logger;
 import java.util.Collections;
 import java.util.List;
 import org.eolang.opeo.ast.AstNode;
@@ -43,18 +44,21 @@ import org.objectweb.asm.Type;
 public final class InvokespecialHandler implements InstructionHandler {
     @Override
     public void handle(final DecompilerState state) {
-        if (!"<init>".equals(state.operand(1))) {
-            throw new UnsupportedOperationException(
-                String.format("Instruction %s is not supported yet", state)
-            );
-        }
+        final String type = (String) state.operand(0);
+        final String name = (String) state.operand(1);
         final String descriptor = (String) state.operand(2);
         final boolean interfaced = (boolean) state.operand(3);
+
+//        if (!"<init>".equals(name)) {
+//            throw new UnsupportedOperationException(
+//                String.format("Instruction %s is not supported yet", state)
+//            );
+//        }
         final List<AstNode> args = state.stack().pop(
             Type.getArgumentCount(descriptor)
         );
         Collections.reverse(args);
-        final String type = (String) state.operand(0);
+
         //@checkstyle MethodBodyCommentsCheck (10 lines)
         // @todo #76:90min Target might not be an Object.
         //  Here we just compare with object, but if the current class has a parent, the
@@ -62,13 +66,21 @@ public final class InvokespecialHandler implements InstructionHandler {
         //  instead. Moreover, we have to pass the 'target' as an argument to the
         //  constructor of the 'Super' class somehow.
         final AstNode tar = state.stack().pop();
-        if ("java/lang/Object".equals(type)) {
-            state.stack().push(
-                new Super(tar, args, descriptor)
+//        if ("java/lang/Object".equals(type)) {
+//            state.stack().push(
+//                new Super(tar, args, descriptor)
+//            );
+//        } else
+        if (tar instanceof This) {
+            Logger.info(
+                this,
+                "Invokespecial %s.%s%s",
+                type,
+                name,
+                descriptor
             );
-        } else if (tar instanceof This) {
             state.stack().push(
-                new Super(tar, args, descriptor)
+                new Super(tar, args, descriptor, type, name)
             );
         } else {
             final AstNode constructor = new Constructor(

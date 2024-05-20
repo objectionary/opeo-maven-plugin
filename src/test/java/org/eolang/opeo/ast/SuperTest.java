@@ -49,7 +49,7 @@ final class SuperTest {
             xmir,
             XhtmlMatchers.hasXPaths(
                 "./o[@base='.super']",
-                "./o[@base='.super' and @scope='()V']",
+                "./o[@base='.super' and @scope='descriptor=()V|name=<init>|owner=java/lang/Object']",
                 "./o[@base='.super']/o[@base='$']",
                 "./o[@base='.super']/o[@base='int' and contains(text(), '1')]"
             )
@@ -67,7 +67,7 @@ final class SuperTest {
                 xmir
             ),
             xmir,
-            XhtmlMatchers.hasXPaths("./o[@base='.super' and @scope='(I)V']")
+            XhtmlMatchers.hasXPaths("./o[@base='.super' and contains(@scope,'(I)V')]")
         );
     }
 

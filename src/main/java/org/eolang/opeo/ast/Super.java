@@ -50,10 +50,7 @@ public final class Super implements AstNode {
      */
     private final List<AstNode> arguments;
 
-    /**
-     * Descriptor.
-     */
-    private final String descriptor;
+    private final Attributes attributes;
 
     /**
      * Constructor.
@@ -94,9 +91,27 @@ public final class Super implements AstNode {
         final List<AstNode> arguments,
         final String descriptor
     ) {
+        this(instance, arguments, descriptor, "java/lang/Object", "<init>");
+    }
+
+    public Super(
+        final AstNode instance,
+        final List<AstNode> arguments,
+        final String descriptor,
+        final String type,
+        final String name
+    ) {
+        this(instance, arguments, new Attributes().descriptor(descriptor).name(name).owner(type));
+    }
+
+    public Super(
+        final AstNode instance,
+        final List<AstNode> arguments,
+        final Attributes attributes
+    ) {
         this.instance = instance;
         this.arguments = arguments;
-        this.descriptor = descriptor;
+        this.attributes = attributes;
     }
 
     @Override
@@ -104,7 +119,7 @@ public final class Super implements AstNode {
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", ".super")
-            .attr("scope", this.descriptor)
+            .attr("scope", this.attributes)
             .append(this.instance.toXmir());
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
@@ -118,9 +133,9 @@ public final class Super implements AstNode {
         res.add(
             new Opcode(
                 Opcodes.INVOKESPECIAL,
-                "java/lang/Object",
-                "<init>",
-                this.descriptor,
+                this.attributes.owner(),
+                this.attributes.name(),
+                this.attributes.descriptor(),
                 false
             )
         );

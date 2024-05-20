@@ -190,12 +190,14 @@ final class XmirParser {
             result = new Super(
                 instance,
                 this.args(inner),
-                node.attribute("scope")
+                new Attributes(node.attribute("scope")
                     .orElseThrow(
                         () -> new IllegalArgumentException(
                             "Can't find descriptor for super invocation"
                         )
                     )
+                )
+
             );
         } else if ("$".equals(base)) {
             result = new This(node);
