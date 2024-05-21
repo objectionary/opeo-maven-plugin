@@ -190,7 +190,7 @@ SOFTWARE.
     <profile>
       <id>ineo</id>
       <properties>
-      <opeo.compile.input>${project.build.directory}/generated-sources/ineo-staticize-xmir</opeo.compile.input>
+        <opeo.compile.input>${project.build.directory}/generated-sources/ineo-staticize-xmir</opeo.compile.input>
       </properties>
       <build>
         <plugins>
@@ -259,8 +259,8 @@ SOFTWARE.
                   <goal>compile</goal>
                 </goals>
                 <configuration>
-                            <sourcesDir>${opeo.compile.input}</sourcesDir>
-                                 <outputDir>${opeo.compile.output}</outputDir>
+                  <sourcesDir>${opeo.compile.input}</sourcesDir>
+                  <outputDir>${opeo.compile.output}</outputDir>
                 </configuration>
               </execution>
             </executions>
