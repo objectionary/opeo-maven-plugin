@@ -29,7 +29,6 @@ import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.eolang.opeo.ast.Opcode;
-import org.eolang.opeo.decompilation.NaiveDecompiler;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.io.FileMatchers;

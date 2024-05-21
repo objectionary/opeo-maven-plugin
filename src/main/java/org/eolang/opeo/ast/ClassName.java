@@ -81,6 +81,11 @@ public final class ClassName implements AstNode, Typed {
         return new DirectivesData(this.name);
     }
 
+    @Override
+    public Type type() {
+        return Type.getType(Class.class);
+    }
+
     /**
      * Prestructor to parse the Class name from the XML node.
      * @param node XML node
@@ -88,10 +93,5 @@ public final class ClassName implements AstNode, Typed {
      */
     private static String xname(final XmlNode node) {
         return new HexString(node.text()).decode();
-    }
-
-    @Override
-    public Type type() {
-        return Type.getType(Class.class);
     }
 }
