@@ -33,18 +33,35 @@ In short, the process is as follows:
 9. **Run the application**: Run the optimized application to verify that it
    works correctly.
 
+## Full Run
+
 To exclusively run this test, execute the command below:
 
 ```shell
 mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests 
 ```
 
-If you need to test **only** transformations without optimizations and 
+## Jeo Only
+
+If you need to check only the current version of `jeo-maven-plugin`
+you can use the following command:
+
+```shell
+mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests -Dinvoker.invokerPropertiesFile="invoker.jeo.only.properties"
+```
+
+This might be helpful to ensure that the `jeo-maven-plugin` works correctly.
+
+## Jeo and Opeo only
+
+If you need to test **only** transformations without optimizations and
 PHI printing, you can use the following command:
 
 ```shell
-mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests -Dinvoker.invokerPropertiesFile="invoker.translation.properties"
+mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests -Dinvoker.invokerPropertiesFile="invoker.jeo.opeo.properties"
 ```
+
+This might be helpful to exclude an optimization influence.
 
 ## The First Results
 
