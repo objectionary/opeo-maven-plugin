@@ -36,7 +36,7 @@ In short, the process is as follows:
 To exclusively run this test, execute the command below:
 
 ```shell
-mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests
+mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests 
 ```
 
 ## The First Results
