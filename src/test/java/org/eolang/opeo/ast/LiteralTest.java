@@ -24,9 +24,12 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.ImpossibleModificationException;
@@ -118,6 +121,51 @@ final class LiteralTest {
             Matchers.contains(
                 new Opcode(Opcodes.ACONST_NULL)
             )
+        );
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "FF FF FF FF FF FF FF FF, 2, ICONST_M1",
+        "00 00 00 00 00 00 00 00, 3, ICONST_0",
+        "00 00 00 00 00 00 00 01, 4, ICONST_1",
+        "00 00 00 00 00 00 00 02, 5, ICONST_2",
+        "00 00 00 00 00 00 00 03, 6, ICONST_3",
+        "00 00 00 00 00 00 00 04, 7, ICONST_4",
+        "00 00 00 00 00 00 00 05, 8, ICONST_5"
+    })
+    void constructsIntFromXmir(final String input, final int opcode, final String expected) {
+        final AstNode actual = new Literal(
+            new XmlNode(String.format("<o base='int' data='bytes'>%s</o>", input))
+        ).opcodes().get(0);
+        MatcherAssert.assertThat(
+            String.format(
+                "We expect the following opcodes to be generated: '%s', but was '%s'",
+                expected,
+                actual
+            ),
+            actual,
+            Matchers.equalTo(new Opcode(opcode))
+        );
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "00 00 00 00 00 00 00 00, 9, LCONST_0",
+        "00 00 00 00 00 00 00 01, 10, LCONST_1"
+    })
+    void constructsLongFromXmir(final String input, final int opcode, final String expected) {
+        final AstNode actual = new Literal(
+            new XmlNode(String.format("<o base='long' data='bytes'>%s</o>", input))
+        ).opcodes().get(0);
+        MatcherAssert.assertThat(
+            String.format(
+                "We expect the following opcodes to be generated: '%s', but was '%s'",
+                expected,
+                actual
+            ),
+            actual,
+            Matchers.equalTo(new Opcode(opcode))
         );
     }
 }

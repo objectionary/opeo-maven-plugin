@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.List;
 import lombok.EqualsAndHashCode;
@@ -319,15 +320,48 @@ public final class Literal implements AstNode, Typed {
         final Object result;
         final Type type = Literal.xtype(node);
         if (type.equals(Type.INT_TYPE)) {
-            result = new HexString(node.text()).decodeAsInt();
+            result = Literal.parseInt(node.text());
         } else if (type.equals(Type.BOOLEAN_TYPE)) {
             result = new HexString(node.text()).decodeAsBoolean();
         } else if (type.equals(Type.LONG_TYPE)) {
-            result = Long.parseLong(node.text().trim().replace(" ", ""), 16);
+            result = Literal.parseLong(node.text());
         } else {
             result = new HexString(node.text()).decode();
         }
         return result;
+    }
+
+    /**
+     * Parse hex string into integer.
+     * @param hex Hex string
+     * @return Integer.
+     */
+    private static int parseInt(final String hex) {
+        return ByteBuffer.wrap(Literal.parseBytes(hex), 4, 4).getInt();
+    }
+
+    /**
+     * Parse hex string into long.
+     * @param hex Hex string
+     * @return Long.
+     */
+    private static long parseLong(final String hex) {
+        return ByteBuffer.wrap(Literal.parseBytes(hex)).getLong();
+    }
+
+    /**
+     * Parse hex string into bytes.
+     * @param hex Hex string
+     * @return Bytes.
+     */
+    private static byte[] parseBytes(final String hex) {
+        final String[] split = hex.split(" ");
+        final int length = split.length;
+        byte[] res = new byte[length];
+        for (int i = 0; i < length; i++) {
+            res[i] = (byte) Integer.parseInt(split[i], 16);
+        }
+        return res;
     }
 
     /**
