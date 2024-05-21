@@ -28,7 +28,10 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import lombok.ToString;
 import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Label;
+import org.eolang.opeo.ast.Labeled;
 
 /**
  * Operand stack.
@@ -39,6 +42,7 @@ import org.eolang.opeo.ast.AstNode;
  * It emulates the behaviour of JVM operand stack.
  * @since 0.2
  */
+@ToString
 public final class OperandStack {
 
     /**
@@ -66,7 +70,14 @@ public final class OperandStack {
      * @return Node.
      */
     public AstNode pop() {
-        return this.stack.pop();
+        final AstNode res;
+        final AstNode pop = this.stack.pop();
+        if (pop instanceof Label) {
+            res = new Labeled(this.stack.pop(), (Label) pop);
+        } else {
+            res = pop;
+        }
+        return res;
     }
 
     /**
@@ -77,7 +88,7 @@ public final class OperandStack {
     public List<AstNode> pop(final int number) {
         final List<AstNode> args = new LinkedList<>();
         for (int index = 0; index < number; ++index) {
-            args.add(this.stack.pop());
+            args.add(this.pop());
         }
         return args;
     }

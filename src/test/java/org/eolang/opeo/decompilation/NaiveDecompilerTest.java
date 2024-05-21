@@ -58,4 +58,22 @@ final class NaiveDecompilerTest {
         );
     }
 
+    @Test
+    void decompilesArrayStore(@TempDir final Path temp) throws Exception {
+        final String name = "BeanMethod$NonOverridableMethodError.xmir";
+        final Path input = temp.resolve("xmir").resolve(name);
+        Files.createDirectories(input.getParent());
+        Files.write(input, new BytesOf(new ResourceOf(String.format("xmir/%s", name))).asBytes());
+        new NaiveDecompiler(temp).decompile();
+        final Path expected = temp.resolve("opeo-xmir").resolve(name);
+        MatcherAssert.assertThat(
+            String.format(
+                "The decompiled file is missing, expected path: %s",
+                expected
+            ),
+            expected.toFile(),
+            FileMatchers.anExistingFile()
+        );
+    }
+
 }

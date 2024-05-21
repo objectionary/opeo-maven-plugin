@@ -28,6 +28,7 @@ import java.util.List;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Constructor;
+import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
@@ -39,8 +40,14 @@ import org.objectweb.asm.Type;
  * Invokespecial instruction handler.
  *
  * @since 0.1
+ * @todo #229:90min Is Labeled Class an Abstraction Failure?
+ *  As you can see in {@link InvokespecialHandler} we use many 'instanceof' checks.
+ *  This is a clear sign that the class hierarchy is not well designed.
+ *  The original problem lies in the {@link Labeled} class.
+ *  We need to find more elegant solutions to handle labels in AST.
  */
 public final class InvokespecialHandler implements InstructionHandler {
+
     @Override
     public void handle(final DecompilerState state) {
         final String type = (String) state.operand(0);
@@ -51,10 +58,10 @@ public final class InvokespecialHandler implements InstructionHandler {
             Type.getArgumentCount(descriptor)
         );
         Collections.reverse(args);
-        final AstNode tar = state.stack().pop();
-        if (tar instanceof This) {
+        final AstNode target = state.stack().pop();
+        if (InvokespecialHandler.isThis(target)) {
             state.stack().push(
-                new Super(tar, args, descriptor, type, name)
+                new Super(target, args, descriptor, type, name)
             );
         } else {
             final AstNode constructor = new Constructor(
@@ -62,8 +69,36 @@ public final class InvokespecialHandler implements InstructionHandler {
                 new Attributes().descriptor(descriptor).interfaced(interfaced),
                 args
             );
-            ((Reference) tar).link(constructor);
+            if (target instanceof Reference) {
+                ((Reference) target).link(constructor);
+            } else if (target instanceof Labeled) {
+                ((Reference) ((Labeled) target).origin()).link(constructor);
+            } else {
+                throw new IllegalStateException(
+                    String.format(
+                        "Unexpected target type: %s",
+                        target.getClass().getCanonicalName()
+                    )
+                );
+            }
         }
+    }
+
+    /**
+     * Check if the node is "this".
+     * @param candidate Node to check
+     * @return True if the node is "this"
+     */
+    private static boolean isThis(final AstNode candidate) {
+        final boolean result;
+        if (candidate instanceof This) {
+            result = true;
+        } else if (candidate instanceof Labeled) {
+            result = InvokespecialHandler.isThis(((Labeled) candidate).origin());
+        } else {
+            result = false;
+        }
+        return result;
     }
 
 }

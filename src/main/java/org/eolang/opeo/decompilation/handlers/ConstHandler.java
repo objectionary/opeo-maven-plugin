@@ -155,6 +155,9 @@ public final class ConstHandler implements InstructionHandler {
     private static AstNode intConstant(final int opcode) {
         final AstNode res;
         switch (opcode) {
+            case Opcodes.ICONST_M1:
+                res = new Literal(-1);
+                break;
             case Opcodes.ICONST_0:
                 res = new Literal(0);
                 break;
