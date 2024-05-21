@@ -42,7 +42,8 @@ public final class StoreToArrayHandler implements InstructionHandler {
     public void handle(final DecompilerState state) {
         final AstNode value = state.stack().pop();
         final AstNode index = state.stack().pop();
-        final Reference array = (Reference) state.stack().pop();
-        array.link(new StoreArray(array.object(), index, value));
+        final AstNode array = state.stack().pop();
+        final Reference ref = (Reference) array;
+        ref.link(new StoreArray(ref.object(), index, value));
     }
 }

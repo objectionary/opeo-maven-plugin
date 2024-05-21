@@ -64,6 +64,7 @@ public final class JeoDecompiler {
      */
     public XML decompile() {
         final Node node = this.prog.node();
+        System.out.println("JeoDecompiler.decompile: " + new XMLDocument(node));
         new XmlProgram(node).top()
             .methods()
             .forEach(this::decompile);

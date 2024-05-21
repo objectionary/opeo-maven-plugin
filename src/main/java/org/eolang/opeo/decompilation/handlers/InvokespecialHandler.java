@@ -51,10 +51,10 @@ public final class InvokespecialHandler implements InstructionHandler {
             Type.getArgumentCount(descriptor)
         );
         Collections.reverse(args);
-        final AstNode tar = state.stack().pop();
-        if (tar instanceof This) {
+        final AstNode target = state.stack().pop();
+        if (target instanceof This) {
             state.stack().push(
-                new Super(tar, args, descriptor, type, name)
+                new Super(target, args, descriptor, type, name)
             );
         } else {
             final AstNode constructor = new Constructor(
@@ -62,7 +62,7 @@ public final class InvokespecialHandler implements InstructionHandler {
                 new Attributes().descriptor(descriptor).interfaced(interfaced),
                 args
             );
-            ((Reference) tar).link(constructor);
+            ((Reference) target).link(constructor);
         }
     }
 

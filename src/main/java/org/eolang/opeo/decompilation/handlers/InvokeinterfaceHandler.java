@@ -63,7 +63,8 @@ public final class InvokeinterfaceHandler implements InstructionHandler {
         state.stack().push(
             new InterfaceInvocation(
                 source,
-                new Attributes().name(method)
+                new Attributes()
+                    .name(method)
                     .descriptor(descriptor)
                     .interfaced(interfaced)
                     .owner(owner),
