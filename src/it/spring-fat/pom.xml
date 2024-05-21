@@ -122,7 +122,7 @@ SOFTWARE.
       </build>
     </profile>
     <profile>
-      <id>opeo</id>
+      <id>decompile-nothing</id>
       <build>
         <plugins>
           <plugin>
@@ -130,13 +130,13 @@ SOFTWARE.
             <artifactId>opeo-maven-plugin</artifactId>
             <version>@project.version@</version>
             <!--
-                @todo #219:90min Enable Opeo Spring Fat Integration Test.
-                 The test is disabled because it fails in many places.
-                 We have to fix all the tests steps and enable this test.
-                 Don't forget to add this test to the merge workflow.
-                 see .github/workflows/maven.test.yaml
-                 Also don't forget to remove the disabled tag from the configuration.
-              -->
+                    @todo #219:90min Enable Opeo Spring Fat Integration Test.
+                     The test is disabled because it fails in many places.
+                     We have to fix all the tests steps and enable this test.
+                     Don't forget to add this test to the merge workflow.
+                     see .github/workflows/maven.test.yaml
+                     Also don't forget to remove the disabled tag from the configuration.
+                  -->
             <configuration>
               <disabled>true</disabled>
             </configuration>
@@ -152,15 +152,29 @@ SOFTWARE.
                   <modifiedDir>${project.build.directory}/generated-sources/opeo-decompile-modified-xmir</modifiedDir>
                 </configuration>
               </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>decompile</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eolang</groupId>
+            <artifactId>opeo-maven-plugin</artifactId>
+            <version>@project.version@</version>
+            <executions>
               <execution>
-                <id>opeo-compile</id>
-                <phase>generate-test-sources</phase>
+                <id>opeo-decompile</id>
                 <goals>
-                  <goal>compile</goal>
+                  <goal>decompile</goal>
                 </goals>
                 <configuration>
-                  <sourcesDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</sourcesDir>
-                  <outputDir>${project.build.directory}/generated-sources/opeo-compile-xmir</outputDir>
+                  <sourcesDir>${project.build.directory}/generated-sources/jeo-disassemble-xmir</sourcesDir>
+                  <outputDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</outputDir>
+                  <modifiedDir>${project.build.directory}/generated-sources/opeo-decompile-modified-xmir</modifiedDir>
                 </configuration>
               </execution>
             </executions>
@@ -186,6 +200,59 @@ SOFTWARE.
                 <configuration>
                   <sourcesDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</sourcesDir>
                   <outputDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</outputDir>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>compile-nothing</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eolang</groupId>
+            <artifactId>opeo-maven-plugin</artifactId>
+            <version>@project.version@</version>
+            <configuration>
+              <disabled>true</disabled>
+            </configuration>
+            <executions>
+              <execution>
+                <id>opeo-compile</id>
+                <phase>generate-test-sources</phase>
+                <goals>
+                  <goal>compile</goal>
+                </goals>
+                <configuration>
+                  <sourcesDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</sourcesDir>
+                  <outputDir>${project.build.directory}/generated-sources/opeo-compile-xmir</outputDir>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>compile</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eolang</groupId>
+            <artifactId>opeo-maven-plugin</artifactId>
+            <version>@project.version@</version>
+            <executions>
+              <execution>
+                <id>opeo-compile</id>
+                <phase>generate-test-sources</phase>
+                <goals>
+                  <goal>compile</goal>
+                </goals>
+                <configuration>
+                  <sourcesDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</sourcesDir>
+                  <outputDir>${project.build.directory}/generated-sources/opeo-compile-xmir</outputDir>
                 </configuration>
               </execution>
             </executions>

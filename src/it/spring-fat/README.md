@@ -39,6 +39,13 @@ To exclusively run this test, execute the command below:
 mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests 
 ```
 
+If you need to test **only** transformations without optimizations and 
+PHI printing, you can use the following command:
+
+```shell
+mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests -Dinvoker.invokerPropertiesFile="invoker.translation.properties"
+```
+
 ## The First Results
 
 Here is the summary of the first results of the `spring-fat` integration test:
