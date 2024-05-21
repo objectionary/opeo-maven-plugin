@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-05-21T12:08:29.348732Z"
+         ms="1716293309348"
+         name="j$JsonMixinModule$JsonMixinComponentScanner"
+         revision="0.0.0"
+         time="2024-05-21T12:08:29.348732Z"
+         version="0.0.0">
+   <listing>yv66vgAAADQAJAoABwAYBwAZBwAaCgACABsKAAYAHAcAHgcAHwEABjxpbml0PgEAAygpVgEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBABJMb2NhbFZhcmlhYmxlVGFibGUBAAR0aGlzAQAZSnNvbk1peGluQ29tcG9uZW50U2Nhbm5lcgEADElubmVyQ2xhc3NlcwEATExvcmcvc3ByaW5nZnJhbWV3b3JrL2Jvb3QvamFja3Nvbi9Kc29uTWl4aW5Nb2R1bGUkSnNvbk1peGluQ29tcG9uZW50U2Nhbm5lcjsBABRpc0NhbmRpZGF0ZUNvbXBvbmVudAEASShMb3JnL3NwcmluZ2ZyYW1ld29yay9iZWFucy9mYWN0b3J5L2Fubm90YXRpb24vQW5ub3RhdGVkQmVhbkRlZmluaXRpb247KVoBAA5iZWFuRGVmaW5pdGlvbgEARkxvcmcvc3ByaW5nZnJhbWV3b3JrL2JlYW5zL2ZhY3RvcnkvYW5ub3RhdGlvbi9Bbm5vdGF0ZWRCZWFuRGVmaW5pdGlvbjsBABBNZXRob2RQYXJhbWV0ZXJzAQAKU291cmNlRmlsZQEAFEpzb25NaXhpbk1vZHVsZS5qYXZhDAAIAAkBADlvcmcvc3ByaW5nZnJhbWV3b3JrL2NvcmUvdHlwZS9maWx0ZXIvQW5ub3RhdGlvblR5cGVGaWx0ZXIBACpvcmcvc3ByaW5nZnJhbWV3b3JrL2Jvb3QvamFja3Nvbi9Kc29uTWl4aW4MAAgAIAwAIQAiBwAjAQBKb3JnL3NwcmluZ2ZyYW1ld29yay9ib290L2phY2tzb24vSnNvbk1peGluTW9kdWxlJEpzb25NaXhpbkNvbXBvbmVudFNjYW5uZXIBAFJvcmcvc3ByaW5nZnJhbWV3b3JrL2NvbnRleHQvYW5ub3RhdGlvbi9DbGFzc1BhdGhTY2FubmluZ0NhbmRpZGF0ZUNvbXBvbmVudFByb3ZpZGVyAQAUKExqYXZhL2xhbmcvQ2xhc3M7KVYBABBhZGRJbmNsdWRlRmlsdGVyAQA0KExvcmcvc3ByaW5nZnJhbWV3b3JrL2NvcmUvdHlwZS9maWx0ZXIvVHlwZUZpbHRlcjspVgEAMG9yZy9zcHJpbmdmcmFtZXdvcmsvYm9vdC9qYWNrc29uL0pzb25NaXhpbk1vZHVsZQAgAAYABwAAAAAAAgAAAAgACQABAAoAAABEAAQAAQAAABIqtwABKrsAAlkSA7cABLYABbEAAAACAAsAAAAOAAMAAABbAAQAXAARAF0ADAAAAAwAAQAAABIADQAQAAAABAARABIAAgAKAAAANgABAAIAAAACBKwAAAACAAsAAAAGAAEAAABhAAwAAAAWAAIAAAACAA0AEAAAAAAAAgATABQAAQAVAAAABQEAEwAAAAIAFgAAAAIAFwAPAAAACgABAAYAHQAOAAg=</listing>
+   <errors/>
+   <sheets/>
+   <license/>
+   <metas>
+      <meta>
+         <head>package</head>
+         <tail>org.springframework.boot.jackson</tail>
+         <part>org.springframework.boot.jackson</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.opcode</tail>
+         <part>org.eolang.jeo.opcode</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.label</tail>
+         <part>org.eolang.jeo.label</part>
+      </meta>
+   </metas>
+   <objects>
+      <o abstract="" name="j$JsonMixinModule$JsonMixinComponentScanner">
+         <o base="int" data="bytes" name="version">00 00 00 00 00 00 00 34</o>
+         <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 20</o>
+         <o base="string" data="bytes" name="supername">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 6E 74 65 78 74 2F 61 6E 6E 6F 74 61 74 69 6F 6E 2F 43 6C 61 73 73 50 61 74 68 53 63 61 6E 6E 69 6E 67 43 61 6E 64 69 64 61 74 65 43 6F 6D 70 6F 6E 65 6E 74 50 72 6F 76 69 64 65 72</o>
+         <o base="tuple" name="interfaces" star=""/>
+         <o abstract="" name="new">
+            <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 00</o>
+            <o base="string" data="bytes" name="descriptor">28 29 56</o>
+            <o base="string" data="bytes" name="signature"/>
+            <o base="tuple" name="exceptions" star=""/>
+            <o name="maxs">
+               <o base="int" data="bytes" name="stack">00 00 00 00 00 00 00 04</o>
+               <o base="int" data="bytes" name="locals">00 00 00 00 00 00 00 01</o>
+            </o>
+            <o base="seq" name="@">
+               <o base="tuple" star="">
+                  <o base="label" data="bytes">38 34 63 38 39 39 66 36 2D 35 32 34 35 2D 34 37 63 34 2D 62 35 33 36 2D 34 35 32 39 36 65 30 30 38 31 37 31</o>
+                  <o base=".super"
+                     scope="descriptor=()V|name=&lt;init&gt;|owner=org/springframework/context/annotation/ClassPathScanningCandidateComponentProvider">
+                     <o base="$" scope="descriptor=java.lang.Object"/>
+                  </o>
+                  <o base="label" data="bytes">30 34 36 62 61 65 37 62 2D 35 39 32 33 2D 34 34 64 38 2D 38 30 39 38 2D 32 30 38 33 35 61 35 35 32 34 37 30</o>
+                  <o base=".addIncludeFilter"
+                     scope="descriptor=(Lorg/springframework/core/type/filter/TypeFilter;)V|interfaced=false|name=addIncludeFilter|owner=org/springframework/boot/jackson/JsonMixinModule$JsonMixinComponentScanner|type=method">
+                     <o base="$" scope="descriptor=java.lang.Object"/>
+                     <o base=".new" scope="descriptor=(Ljava/lang/Class;)V|interfaced=false">
+                        <o base="org/springframework/core/type/filter/AnnotationTypeFilter"/>
+                        <o base="type" data="bytes">4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 6A 61 63 6B 73 6F 6E 2F 4A 73 6F 6E 4D 69 78 69 6E 3B</o>
+                     </o>
+                  </o>
+                  <o base="label" data="bytes">64 35 65 34 39 34 33 37 2D 32 39 31 32 2D 34 37 65 32 2D 38 61 34 61 2D 63 37 37 65 61 63 63 33 30 35 61 63</o>
+                  <o base="opcode" line="999" name="RETURN">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B1</o>
+                  </o>
+                  <o base="label" data="bytes">36 39 61 65 63 38 35 38 2D 66 62 65 66 2D 34 39 66 62 2D 61 33 33 65 2D 32 30 32 64 38 37 34 34 38 34 34 31</o>
+               </o>
+            </o>
+         </o>
+         <o abstract="" name="j$isCandidateComponent">
+            <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 04</o>
+            <o base="string" data="bytes" name="descriptor">28 4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 65 61 6E 73 2F 66 61 63 74 6F 72 79 2F 61 6E 6E 6F 74 61 74 69 6F 6E 2F 41 6E 6E 6F 74 61 74 65 64 42 65 61 6E 44 65 66 69 6E 69 74 69 6F 6E 3B 29 5A</o>
+            <o base="string" data="bytes" name="signature"/>
+            <o base="tuple" name="exceptions" star=""/>
+            <o name="maxs">
+               <o base="int" data="bytes" name="stack">00 00 00 00 00 00 00 01</o>
+               <o base="int" data="bytes" name="locals">00 00 00 00 00 00 00 02</o>
+            </o>
+            <o abstract=""
+               name="arg__Lorg/springframework/beans/factory/annotation/AnnotatedBeanDefinition;__0"/>
+            <o base="seq" name="@">
+               <o base="tuple" star="">
+                  <o base="label" data="bytes">36 66 39 63 37 38 62 66 2D 39 39 33 63 2D 34 36 38 63 2D 61 62 66 31 2D 30 65 30 36 34 39 61 34 33 31 35 31</o>
+                  <o base="int" data="bytes">00 00 00 00 00 00 00 01</o>
+                  <o base="opcode" line="999" name="IRETURN">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 AC</o>
+                  </o>
+                  <o base="label" data="bytes">66 63 66 33 62 38 64 65 2D 36 65 63 65 2D 34 66 63 66 2D 38 34 63 31 2D 36 32 30 35 37 66 33 32 37 30 62 63</o>
+               </o>
+            </o>
+         </o>
+         <o base="tuple" name="attributes" star="">
+            <o name="InnerClass">
+               <o base="string" data="bytes" name="name">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 6A 61 63 6B 73 6F 6E 2F 4A 73 6F 6E 4D 69 78 69 6E 4D 6F 64 75 6C 65 24 4A 73 6F 6E 4D 69 78 69 6E 43 6F 6D 70 6F 6E 65 6E 74 53 63 61 6E 6E 65 72</o>
+               <o base="string" data="bytes" name="outer">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 6A 61 63 6B 73 6F 6E 2F 4A 73 6F 6E 4D 69 78 69 6E 4D 6F 64 75 6C 65</o>
+               <o base="string" data="bytes" name="inner">4A 73 6F 6E 4D 69 78 69 6E 43 6F 6D 70 6F 6E 65 6E 74 53 63 61 6E 6E 65 72</o>
+               <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 08</o>
+            </o>
+         </o>
+      </o>
+   </objects>
+</program>

@@ -29,6 +29,7 @@ import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.eolang.opeo.ast.Opcode;
+import org.eolang.opeo.decompilation.NaiveDecompiler;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.io.FileMatchers;
@@ -78,6 +79,24 @@ final class DefaultCompilerTest {
             "The compiled file is not equal to the original, but should. This is because Bar.xmir is already a low-level xmir",
             new BytesOf(output).asBytes(),
             Matchers.equalTo(before)
+        );
+    }
+
+    @Test
+    void compilesClassNameType(@TempDir final Path temp) throws Exception {
+        final String name = "JsonMixinModule$JsonMixinComponentScanner.xmir";
+        final Path input = temp.resolve("opeo-xmir").resolve(name);
+        Files.createDirectories(input.getParent());
+        Files.write(input, new BytesOf(new ResourceOf(String.format("xmir/%s", name))).asBytes());
+        new DefaultCompiler(temp).compile();
+        final Path expected = temp.resolve("xmir").resolve(name);
+        MatcherAssert.assertThat(
+            String.format(
+                "The compiled file is missing, expected path: %s",
+                expected
+            ),
+            expected.toFile(),
+            FileMatchers.anExistingFile()
         );
     }
 }

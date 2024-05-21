@@ -25,6 +25,7 @@ package org.eolang.opeo.ast;
 
 import java.util.Collections;
 import java.util.List;
+import lombok.ToString;
 import org.eolang.jeo.representation.directives.DirectivesData;
 import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlNode;
@@ -41,7 +42,8 @@ import org.xembly.Directive;
  *  we can remove this node and use something already existing in the project.
  *  If we decide to keep this node, we need to add a test for it.
  */
-public final class ClassName implements AstNode {
+@ToString
+public final class ClassName implements AstNode, Typed {
 
     /**
      * Class name.
@@ -86,5 +88,10 @@ public final class ClassName implements AstNode {
      */
     private static String xname(final XmlNode node) {
         return new HexString(node.text()).decode();
+    }
+
+    @Override
+    public Type type() {
+        return Type.getType(Class.class);
     }
 }
