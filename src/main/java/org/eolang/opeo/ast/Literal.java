@@ -357,9 +357,9 @@ public final class Literal implements AstNode, Typed {
     private static byte[] parseBytes(final String hex) {
         final String[] split = hex.split(" ");
         final int length = split.length;
-        byte[] res = new byte[length];
-        for (int i = 0; i < length; i++) {
-            res[i] = (byte) Integer.parseInt(split[i], 16);
+        final byte[] res = new byte[length];
+        for (int index = 0; index < length; ++index) {
+            res[index] = (byte) Integer.parseInt(split[index], 16);
         }
         return res;
     }
