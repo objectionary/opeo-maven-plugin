@@ -55,6 +55,11 @@ SOFTWARE.
     <maven.compiler.target>1.8</maven.compiler.target>
     <jeo.version>0.4.4</jeo.version>
     <ineo.version>0.2.1</ineo.version>
+    <jeo.disassemble.output>${project.build.directory}/generated-sources/jeo-disassemble-xmir</jeo.disassemble.output>
+    <opeo.decompile.output>${project.build.directory}/generated-sources/opeo-decompile-xmir</opeo.decompile.output>
+    <opeo.modified>${project.build.directory}/generated-sources/opeo-decompile-modified-xmir</opeo.modified>
+    <opeo.compile.input>${opeo.decompile.output}</opeo.compile.input>
+    <opeo.compile.output>${project.build.directory}/generated-sources/opeo-compile-xmir</opeo.compile.output>
   </properties>
   <dependencies>
     <dependency>
@@ -113,7 +118,7 @@ SOFTWARE.
                   <goal>disassemble</goal>
                 </goals>
                 <configuration>
-                  <outputDir>${project.build.directory}/generated-sources/jeo-disassemble-xmir</outputDir>
+                  <outputDir>${jeo.disassemble.output}</outputDir>
                 </configuration>
               </execution>
             </executions>
@@ -147,9 +152,9 @@ SOFTWARE.
                   <goal>decompile</goal>
                 </goals>
                 <configuration>
-                  <sourcesDir>${project.build.directory}/generated-sources/jeo-disassemble-xmir</sourcesDir>
-                  <outputDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</outputDir>
-                  <modifiedDir>${project.build.directory}/generated-sources/opeo-decompile-modified-xmir</modifiedDir>
+                  <sourcesDir>${jeo.disassemble.output}</sourcesDir>
+                  <outputDir>${opeo.decompile.output}</outputDir>
+                  <modifiedDir>${opeo.modified}</modifiedDir>
                 </configuration>
               </execution>
             </executions>
@@ -172,9 +177,9 @@ SOFTWARE.
                   <goal>decompile</goal>
                 </goals>
                 <configuration>
-                  <sourcesDir>${project.build.directory}/generated-sources/jeo-disassemble-xmir</sourcesDir>
-                  <outputDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</outputDir>
-                  <modifiedDir>${project.build.directory}/generated-sources/opeo-decompile-modified-xmir</modifiedDir>
+                  <sourcesDir>${jeo.disassemble.output}</sourcesDir>
+                  <outputDir>${opeo.decompile.output}</outputDir>
+                  <modifiedDir>${opeo.modified}</modifiedDir>
                 </configuration>
               </execution>
             </executions>
@@ -184,6 +189,9 @@ SOFTWARE.
     </profile>
     <profile>
       <id>ineo</id>
+      <properties>
+      <opeo.compile.input>${project.build.directory}/generated-sources/ineo-staticize-xmir</opeo.compile.input>
+      </properties>
       <build>
         <plugins>
           <plugin>
@@ -198,8 +206,8 @@ SOFTWARE.
                   <goal>staticize</goal>
                 </goals>
                 <configuration>
-                  <sourcesDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</sourcesDir>
-                  <outputDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</outputDir>
+                  <sourcesDir>${opeo.decompile.output}</sourcesDir>
+                  <outputDir>${opeo.compile.input}</outputDir>
                 </configuration>
               </execution>
             </executions>
@@ -226,8 +234,8 @@ SOFTWARE.
                   <goal>compile</goal>
                 </goals>
                 <configuration>
-                  <sourcesDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</sourcesDir>
-                  <outputDir>${project.build.directory}/generated-sources/opeo-compile-xmir</outputDir>
+                  <sourcesDir>${opeo.compile.input}</sourcesDir>
+                  <outputDir>${opeo.compile.output}</outputDir>
                 </configuration>
               </execution>
             </executions>
@@ -251,8 +259,8 @@ SOFTWARE.
                   <goal>compile</goal>
                 </goals>
                 <configuration>
-                  <sourcesDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</sourcesDir>
-                  <outputDir>${project.build.directory}/generated-sources/opeo-compile-xmir</outputDir>
+                            <sourcesDir>${opeo.compile.input}</sourcesDir>
+                                 <outputDir>${opeo.compile.output}</outputDir>
                 </configuration>
               </execution>
             </executions>
@@ -281,7 +289,7 @@ SOFTWARE.
                 <configuration>
                   <arguments combine.children="append">
                     <argument>org.eolang:jeo-maven-plugin:${jeo.version}:assemble</argument>
-                    <argument>-Djeo.assemble.sourcesDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>
+                    <argument>-Djeo.assemble.sourcesDir=${opeo.compile.output}</argument>
                     <!--
                           @todo #200:90min Enable Bytecode Verification For Spring Fat Integration Test.
                            We skip verification because the Spring Framework uses many classes that
