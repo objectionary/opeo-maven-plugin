@@ -40,8 +40,14 @@ import org.objectweb.asm.Type;
  * Invokespecial instruction handler.
  *
  * @since 0.1
+ * @todo #229:90min Is Labeled Class an Abstraction Failure?
+ *  As you can see in {@link InvokespecialHandler} we use many 'instanceof' checks.
+ *  This is a clear sign that the class hierarchy is not well designed.
+ *  The original problem lies in the {@link Labeled} class.
+ *  We need to find more elegant solutions to handle labels in AST.
  */
 public final class InvokespecialHandler implements InstructionHandler {
+
     @Override
     public void handle(final DecompilerState state) {
         final String type = (String) state.operand(0);
@@ -78,6 +84,11 @@ public final class InvokespecialHandler implements InstructionHandler {
         }
     }
 
+    /**
+     * Check if the node is "this".
+     * @param candidate Node to check
+     * @return True if the node is "this"
+     */
     private static boolean isThis(final AstNode candidate) {
         final boolean result;
         if (candidate instanceof This) {
