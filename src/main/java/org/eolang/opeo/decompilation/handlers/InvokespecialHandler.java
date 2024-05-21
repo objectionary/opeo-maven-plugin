@@ -28,6 +28,7 @@ import java.util.List;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Constructor;
+import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
@@ -52,7 +53,7 @@ public final class InvokespecialHandler implements InstructionHandler {
         );
         Collections.reverse(args);
         final AstNode target = state.stack().pop();
-        if (target instanceof This) {
+        if (InvokespecialHandler.isThis(target)) {
             state.stack().push(
                 new Super(target, args, descriptor, type, name)
             );
@@ -62,8 +63,31 @@ public final class InvokespecialHandler implements InstructionHandler {
                 new Attributes().descriptor(descriptor).interfaced(interfaced),
                 args
             );
-            ((Reference) target).link(constructor);
+            if (target instanceof Reference) {
+                ((Reference) target).link(constructor);
+            } else if (target instanceof Labeled) {
+                ((Reference) ((Labeled) target).origin()).link(constructor);
+            } else {
+                throw new IllegalStateException(
+                    String.format(
+                        "Unexpected target type: %s",
+                        target.getClass().getCanonicalName()
+                    )
+                );
+            }
         }
+    }
+
+    private static boolean isThis(final AstNode candidate) {
+        final boolean result;
+        if (candidate instanceof This) {
+            result = true;
+        } else if (candidate instanceof Labeled) {
+            result = InvokespecialHandler.isThis(((Labeled) candidate).origin());
+        } else {
+            result = false;
+        }
+        return result;
     }
 
 }

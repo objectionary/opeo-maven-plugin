@@ -16,6 +16,10 @@ public final class Labeled implements AstNode {
         this.label = label;
     }
 
+    public AstNode origin() {
+        return this.node;
+    }
+
     @Override
     public List<AstNode> opcodes() {
         return Stream.concat(

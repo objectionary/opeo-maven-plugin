@@ -32,6 +32,7 @@ import lombok.ToString;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Labeled;
+import org.eolang.opeo.ast.Reference;
 
 /**
  * Operand stack.
