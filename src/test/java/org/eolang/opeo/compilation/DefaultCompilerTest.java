@@ -35,6 +35,9 @@ import org.hamcrest.io.FileMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Test case for {@link DefaultCompiler}.
@@ -81,9 +84,13 @@ final class DefaultCompilerTest {
         );
     }
 
-    @Test
-    void compilesClassNameType(@TempDir final Path temp) throws Exception {
-        final String name = "JsonMixinModule$JsonMixinComponentScanner.xmir";
+    @ParameterizedTest
+    @CsvSource({
+        "JsonMixinModule$JsonMixinComponentScanner.xmir",
+        "StreamUtils$NonClosingOutputStream.xmir"
+    })
+    void compilesDecompiledRepresentationSuccessfully(final String name, @TempDir final Path temp)
+        throws Exception {
         final Path input = temp.resolve("opeo-xmir").resolve(name);
         Files.createDirectories(input.getParent());
         Files.write(input, new BytesOf(new ResourceOf(String.format("xmir/%s", name))).asBytes());

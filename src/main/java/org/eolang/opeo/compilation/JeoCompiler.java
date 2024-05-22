@@ -77,7 +77,16 @@ public final class JeoCompiler {
             return method.withoutMaxs().withInstructions(
                 new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
             );
-        } catch (final IllegalArgumentException exception) {
+        } catch (final ClassCastException exception) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "Failed to compile method %s: %s",
+                    method.name(),
+                    method
+                ),
+                exception
+            );
+        }  catch (final IllegalArgumentException exception) {
             throw new IllegalArgumentException(
                 String.format(
                     "Failed to compile method %s: %s",
