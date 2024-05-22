@@ -72,6 +72,10 @@ public final class JeoCompiler {
      * @param method The method to compile.
      * @return The compiled method.
      * @checkstyle IllegalCatch (50 lines)
+     * @todo #229:90min Refactor {@link #compile} method to handle exceptions appropriately.
+     *  The method {@link #compile} is catching generic exceptions which is bad.
+     *  We should refactor it to simplify the code and remove duplicated catch blocks.
+     *  After, don't forget to remove the Checkstyle and PMD tags.
      */
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.IdenticalCatchBranches"})
     private static XmlMethod compile(final XmlMethod method) {
