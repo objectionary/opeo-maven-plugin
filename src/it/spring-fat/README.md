@@ -58,6 +58,15 @@ You need to run this command from the root directory of the project, not from
 this directory.
 So, you need to be inside the `opeo-maven-plugin` directory.
 
+**Warning!**
+Not all bytecode classes are represented in the PHI expressions. We still don't
+implement all the bytecode instructions in the PHI expressions. Moreover, even
+for some instructions that we do implement, we still have issues related to
+incorrect XMIR representation. Therefore, in most cases, we just skip those
+classes that either have unsupported instructions or have incorrect XMIR
+representation. Moreover, the current representation of the PHI expressions is
+not the final one. We are still working on improving it.
+
 ## Jeo Only
 
 If you need to check only the current version of `jeo-maven-plugin`
@@ -86,8 +95,7 @@ Here is the summary of the first results of the `spring-fat` integration test:
 
 - The application starts and runs successfully.
 - The average test time is approximately **826 seconds (13 minutes)**.
-- The total number of classes is **19511 (19516 — sometimes the number is
-  different? Why?)**.
+- The total number of classes is **19511**.
 - The Disassembly phase takes approximately **1 minute**.
 - The Decompile phase takes approximately **K minutes**.
 - The Compile phase takes approximately **L minutes**.
