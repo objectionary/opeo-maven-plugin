@@ -134,7 +134,7 @@ public final class SelectiveDecompiler implements Decompiler {
 
     @Override
     public void decompile() {
-        this.storage.all().forEach(
+        this.storage.all().parallel().forEach(
             entry -> {
                 final XmirEntry res;
                 final List<String> found = entry.xpath(this.xpath());
