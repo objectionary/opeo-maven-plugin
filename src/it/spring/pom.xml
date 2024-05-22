@@ -127,7 +127,7 @@ SOFTWARE.
             </goals>
             <configuration>
               <phiInputDir>${project.build.directory}/generated-sources/opeo-decompile-modified-xmir</phiInputDir>
-              <phiOutputDir>${project.build.directory}/generated-sources/opeo-decompile-modified-phi</phiOutputDir>
+              <phiOutputDir>${project.build.directory}/generated-sources/phi-expressions</phiOutputDir>
             </configuration>
           </execution>
         </executions>

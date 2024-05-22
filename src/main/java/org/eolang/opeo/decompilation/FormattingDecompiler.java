@@ -26,8 +26,6 @@ package org.eolang.opeo.decompilation;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
-import com.yegor256.xsline.StClasspath;
-import com.yegor256.xsline.Xsline;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 import org.eolang.opeo.storage.FileStorage;
