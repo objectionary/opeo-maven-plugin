@@ -26,6 +26,12 @@ To exclusively run this test, execute the command below:
 mvn clean integration-test invoker:run -Dinvoker.test=spring -DskipTests
 ```
 
+## PHI Expressions
+
+You might find PHI expressions in the `target/generated-sources/phi-expressions`
+directory.
+To generate them, you don't need to run any special command.
+
 ## Notes
 
 It is the shortest version
