@@ -232,7 +232,8 @@ SOFTWARE.
                   <goal>xmir-to-phi</goal>
                 </goals>
                 <configuration>
-                  <phiInputDir>${opeo.decompile.output}</phiInputDir>
+                  <phiOptimize>false</phiOptimize>
+                  <phiInputDir>${opeo.modified}</phiInputDir>
                   <phiOutputDir>${eo.phi.output}</phiOutputDir>
                 </configuration>
               </execution>

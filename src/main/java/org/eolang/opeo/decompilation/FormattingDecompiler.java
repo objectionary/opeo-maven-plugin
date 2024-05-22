@@ -26,6 +26,8 @@ package org.eolang.opeo.decompilation;
 import com.jcabi.log.Logger;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
+import com.yegor256.xsline.StClasspath;
+import com.yegor256.xsline.Xsline;
 import java.nio.file.Path;
 import java.util.stream.Stream;
 import org.eolang.opeo.storage.FileStorage;
@@ -123,13 +125,23 @@ public final class FormattingDecompiler implements Decompiler {
      */
     private static XML format(final XML input) {
         final Directives lines = new Directives()
-            .xpath("//o[@name='descriptor' or @name='visible']")
-            .attr("line", "999");
+            .xpath(
+                "//o[@name='descriptor' or @name='visible' or (@base and not(@line) and not(@abstract))]"
+            ).attr("line", "999");
         final Directives maxs = new Directives()
             .xpath("//o[@name='maxs']")
             .attr("abstract", "");
+        final Directives inner = new Directives()
+            .xpath("//o[@name='InnerClass']")
+            .attr("base", "InnerClass")
+            .xpath("//o[@name='InnerClass']/@name")
+            .remove();
         return new XMLDocument(
-            new Xembler(maxs).applyQuietly(new Xembler(lines).applyQuietly(input.node()))
+            new Xembler(inner).applyQuietly(
+                new Xembler(maxs).applyQuietly(
+                    new Xembler(lines).applyQuietly(input.node())
+                )
+            )
         );
     }
 }
