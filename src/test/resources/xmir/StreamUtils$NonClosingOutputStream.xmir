@@ -32,35 +32,6 @@
          <o base="int" data="bytes" line="999" name="access">00 00 00 00 00 00 00 20</o>
          <o base="string" data="bytes" line="999" name="supername">6A 61 76 61 2F 69 6F 2F 46 69 6C 74 65 72 4F 75 74 70 75 74 53 74 72 65 61 6D</o>
          <o base="tuple" line="999" name="interfaces" star=""/>
-         <o abstract="" name="new">
-            <o base="int" data="bytes" line="999" name="access">00 00 00 00 00 00 00 01</o>
-            <o base="string" data="bytes" line="999" name="descriptor">28 4C 6A 61 76 61 2F 69 6F 2F 4F 75 74 70 75 74 53 74 72 65 61 6D 3B 29 56</o>
-            <o base="string" data="bytes" line="999" name="signature"/>
-            <o base="tuple" line="999" name="exceptions" star=""/>
-            <o abstract="" name="maxs">
-               <o base="int" data="bytes" line="999" name="stack">00 00 00 00 00 00 00 02</o>
-               <o base="int" data="bytes" line="999" name="locals">00 00 00 00 00 00 00 02</o>
-            </o>
-            <o abstract="" name="arg__Ljava/io/OutputStream;__0"/>
-            <o base="seq" line="999" name="@">
-               <o base="tuple" line="999" star="">
-                  <o base="label" data="bytes" line="999">65 30 66 61 63 66 64 38 2D 33 31 34 33 2D 34 32 36 33 2D 62 63 65 31 2D 62 36 37 62 33 33 39 36 30 39 36 39</o>
-                  <o base=".super"
-                     line="999"
-                     scope="descriptor=(Ljava/io/OutputStream;)V|name=&lt;init&gt;|owner=java/io/FilterOutputStream">
-                     <o base="$" line="999" scope="descriptor=java.lang.Object"/>
-                     <o base="local1"
-                        line="999"
-                        scope="descriptor=Ljava/io/OutputStream;|type=local"/>
-                  </o>
-                  <o base="label" data="bytes" line="999">30 38 66 37 38 38 30 33 2D 66 61 39 33 2D 34 36 62 34 2D 62 34 30 36 2D 64 36 64 30 61 61 39 64 65 30 65 31</o>
-                  <o base="opcode" line="999" name="RETURN">
-                     <o base="int" data="bytes" line="999">00 00 00 00 00 00 00 B1</o>
-                  </o>
-                  <o base="label" data="bytes" line="999">65 30 38 61 39 38 32 64 2D 61 39 62 39 2D 34 63 62 37 2D 62 63 64 38 2D 35 64 33 36 39 64 36 30 62 37 32 63</o>
-               </o>
-            </o>
-         </o>
          <o abstract="" name="j$write">
             <o base="int" data="bytes" line="999" name="access">00 00 00 00 00 00 00 01</o>
             <o base="string" data="bytes" line="999" name="descriptor">28 5B 42 49 49 29 56</o>
@@ -97,27 +68,6 @@
                      <o base="int" data="bytes" line="999">00 00 00 00 00 00 00 B1</o>
                   </o>
                   <o base="label" data="bytes" line="999">38 62 32 30 34 62 30 66 2D 37 36 33 61 2D 34 61 66 37 2D 38 34 34 62 2D 30 64 63 64 35 64 36 65 34 63 32 30</o>
-               </o>
-            </o>
-         </o>
-         <o abstract="" name="j$close">
-            <o base="int" data="bytes" line="999" name="access">00 00 00 00 00 00 00 01</o>
-            <o base="string" data="bytes" line="999" name="descriptor">28 29 56</o>
-            <o base="string" data="bytes" line="999" name="signature"/>
-            <o base="tuple" line="999" name="exceptions" star="">
-               <o base="string" data="bytes" line="999">6A 61 76 61 2F 69 6F 2F 49 4F 45 78 63 65 70 74 69 6F 6E</o>
-            </o>
-            <o abstract="" name="maxs">
-               <o base="int" data="bytes" line="999" name="stack">00 00 00 00 00 00 00 00</o>
-               <o base="int" data="bytes" line="999" name="locals">00 00 00 00 00 00 00 01</o>
-            </o>
-            <o base="seq" line="999" name="@">
-               <o base="tuple" line="999" star="">
-                  <o base="label" data="bytes" line="999">33 33 62 61 63 62 30 64 2D 37 38 32 64 2D 34 30 30 30 2D 62 35 36 32 2D 37 38 64 65 65 61 33 66 31 36 39 30</o>
-                  <o base="opcode" line="999" name="RETURN">
-                     <o base="int" data="bytes" line="999">00 00 00 00 00 00 00 B1</o>
-                  </o>
-                  <o base="label" data="bytes" line="999">61 31 34 32 64 65 38 63 2D 62 37 34 64 2D 34 36 66 34 2D 39 31 34 61 2D 64 39 37 39 34 61 34 35 30 37 36 30</o>
                </o>
             </o>
          </o>
