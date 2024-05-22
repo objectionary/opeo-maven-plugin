@@ -133,7 +133,7 @@ eo:
             times
               $
               .x
-              .getfield
+              .get-field
               2
             opcode > IRETURN
               172
@@ -191,7 +191,7 @@ eo:
           *
             $
             .a
-            .getfield
+            .get-field
             .foo
             .plus
               1

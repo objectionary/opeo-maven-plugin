@@ -86,7 +86,7 @@ public final class JeoCompiler {
                 ),
                 exception
             );
-        }  catch (final IllegalArgumentException exception) {
+        } catch (final IllegalArgumentException exception) {
             throw new IllegalArgumentException(
                 String.format(
                     "Failed to compile method %s: %s",
@@ -96,6 +96,15 @@ public final class JeoCompiler {
                 exception
             );
         } catch (final IllegalStateException exception) {
+            throw new IllegalStateException(
+                String.format(
+                    "Failed to compile method %s: %s",
+                    method.name(),
+                    method
+                ),
+                exception
+            );
+        } catch (final Exception exception) {
             throw new IllegalStateException(
                 String.format(
                     "Failed to compile method %s: %s",

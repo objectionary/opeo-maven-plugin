@@ -213,7 +213,7 @@ final class XmirParser {
             final AstNode target = this.node(inner.get(0));
             final AstNode value = this.node(inner.get(1));
             result = new VariableAssignment((LocalVariable) target, value);
-        } else if (".getfield".equals(base)) {
+        } else if (".get-field".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final XmlNode field = inner.get(0);
             result = new FieldRetrieval(

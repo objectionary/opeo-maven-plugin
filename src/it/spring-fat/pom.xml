@@ -286,7 +286,8 @@ SOFTWARE.
                   <goal>compile</goal>
                 </goals>
                 <configuration>
-                  <sourcesDir>${opeo.compile.input}</sourcesDir>
+<!--                  <sourcesDir>${opeo.compile.input}</sourcesDir>-->
+                  <sourcesDir>${opeo.modified}</sourcesDir>
                   <outputDir>${opeo.compile.output}</outputDir>
                 </configuration>
               </execution>

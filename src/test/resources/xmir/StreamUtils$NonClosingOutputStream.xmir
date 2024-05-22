@@ -52,7 +52,7 @@
                   <o base=".write"
                      line="999"
                      scope="descriptor=([BII)V|interfaced=false|name=write|owner=java/io/OutputStream|type=method">
-                     <o base=".getfield" line="999">
+                     <o base=".get-field" line="999">
                         <o base=".out"
                            line="999"
                            scope="descriptor=Ljava/io/OutputStream;|name=out|owner=org/springframework/util/StreamUtils$NonClosingOutputStream|type=field">
