@@ -208,7 +208,7 @@ final class XmirParser {
             final AstNode index = this.node(inner.get(1));
             final AstNode value = this.node(inner.get(2));
             result = new StoreArray(array, index, value);
-        } else if (".write".equals(base)) {
+        } else if (".write-local-var".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode target = this.node(inner.get(0));
             final AstNode value = this.node(inner.get(1));

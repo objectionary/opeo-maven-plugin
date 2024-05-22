@@ -53,9 +53,9 @@ final class VariableAssignmentTest {
             ),
             xml,
             XhtmlMatchers.hasXPaths(
-                "./o[@base='.write']",
-                "./o[@base='.write']/o[@base='local1']",
-                "./o[@base='.write']/o[@base='int']"
+                "./o[@base='.write-local-var']",
+                "./o[@base='.write-local-var']/o[@base='local1']",
+                "./o[@base='.write-local-var']/o[@base='int']"
             )
         );
     }
