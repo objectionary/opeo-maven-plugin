@@ -41,6 +41,23 @@ To exclusively run this test, execute the command below:
 mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests 
 ```
 
+## PHI Expressions
+
+If you are interested in how a Spring Application with all its dependencies
+looks using PHI expressions, you can use the following command:
+
+```shell
+mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests -Dinvoker.invokerPropertiesFile="invoker.phi.properties"
+```
+
+After running this command, you can find the PHI expressions in
+the `target/generated-sources/phi-expressions` directory.
+
+**Pay attention!**
+You need to run this command from the root directory of the project, not from
+this directory.
+So, you need to be inside the `opeo-maven-plugin` directory.
+
 ## Jeo Only
 
 If you need to check only the current version of `jeo-maven-plugin`
