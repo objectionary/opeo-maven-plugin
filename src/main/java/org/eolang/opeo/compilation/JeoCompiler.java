@@ -71,7 +71,9 @@ public final class JeoCompiler {
      *
      * @param method The method to compile.
      * @return The compiled method.
+     * @checkstyle IllegalCatch (50 lines)
      */
+    @SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.IdenticalCatchBranches"})
     private static XmlMethod compile(final XmlMethod method) {
         try {
             return method.withoutMaxs().withInstructions(
