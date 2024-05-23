@@ -55,6 +55,22 @@ public final class LocalVariables {
     private final Map<Integer, AstNode> cache;
 
     /**
+     * Class type.
+     * todo! explain
+     */
+    private final Type clazz;
+
+    /**
+     * Constructor.
+     * @param modifiers Method access modifiers.
+     * @param descriptor Method descriptor.
+     */
+    public LocalVariables(final int modifiers, final String descriptor, final String name) {
+        this(modifiers, Type.getArgumentTypes(descriptor), Type.getType(name));
+    }
+
+
+    /**
      * Constructor.
      * @param modifiers Method access modifiers.
      * @param descriptor Method descriptor.
@@ -76,9 +92,18 @@ public final class LocalVariables {
      * @param types Method argument types.
      */
     private LocalVariables(final int modifiers, final Type... types) {
+        this(modifiers, types, Type.getType(Object.class));
+    }
+
+    public LocalVariables(
+        final int modifiers,
+        final Type[] types,
+        final Type clazz
+    ) {
         this.modifiers = modifiers;
         this.types = Arrays.copyOf(types, types.length);
         this.cache = new HashMap<>(0);
+        this.clazz = clazz;
     }
 
     /**
@@ -116,7 +141,7 @@ public final class LocalVariables {
         final Type type = this.argumentType(index).orElse(fallback);
         final AstNode result;
         if (index == 0 && this.isInstanceMethod()) {
-            result = new This(type);
+            result = new This(this.clazz);
         } else {
             result = new LocalVariable(index, type);
         }

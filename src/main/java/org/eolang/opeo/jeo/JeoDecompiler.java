@@ -27,11 +27,14 @@ import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.eolang.jeo.representation.ClassName;
+import org.eolang.jeo.representation.xmir.XmlClass;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.jeo.representation.xmir.XmlProgram;
 import org.eolang.opeo.decompilation.DecompilerMachine;
 import org.eolang.opeo.decompilation.LocalVariables;
+import org.objectweb.asm.Type;
 import org.w3c.dom.Node;
 import org.xembly.Transformers;
 import org.xembly.Xembler;
@@ -48,14 +51,27 @@ public final class JeoDecompiler {
      */
     private final XML prog;
 
+    private final String pckg;
+
     /**
      * Constructor.
      *
      * @param prog Program in XMIR format received from jeo maven plugin.
      */
     public JeoDecompiler(final XML prog) {
-        this.prog = prog;
+        this(prog, "");
     }
+
+    /**
+     * Constructor.
+     *
+     * @param prog Program in XMIR format received from jeo maven plugin.
+     */
+    public JeoDecompiler(final XML prog, final String pckg) {
+        this.prog = prog;
+        this.pckg = pckg;
+    }
+
 
     /**
      * Decompile program.
@@ -64,9 +80,12 @@ public final class JeoDecompiler {
      */
     public XML decompile() {
         final Node node = this.prog.node();
-        new XmlProgram(node).top()
-            .methods()
-            .forEach(this::decompile);
+        final XmlClass top = new XmlProgram(node).top();
+        final String clazz = top.name().substring(2);
+        final String clazz1 = this.pckg + clazz;
+        final String descriptor = Type.getObjectType(clazz1).getDescriptor();
+        top.methods()
+            .forEach(method -> this.decompile(method, descriptor));
         return new XMLDocument(node);
     }
 
@@ -75,14 +94,14 @@ public final class JeoDecompiler {
      *
      * @param method Method.
      */
-    private void decompile(final XmlMethod method) {
+    private void decompile(final XmlMethod method, final String clazz) {
         try {
             if (!method.instructions().isEmpty()) {
                 method.withInstructions(
                     new XmlNode(
                         new Xembler(
                             new DecompilerMachine(
-                                new LocalVariables(method.access(), method.descriptor()),
+                                new LocalVariables(method.access(), method.descriptor(), clazz),
                                 Map.of("counting", "false")
                             ).decompile(new JeoInstructions(method).instructions()),
                             new Transformers.Node()

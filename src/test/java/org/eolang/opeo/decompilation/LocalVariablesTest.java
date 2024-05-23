@@ -53,10 +53,11 @@ final class LocalVariablesTest {
     @Test
     void returnsThisForInstanceMethod() {
         final int index = 0;
-        final Type type = Type.getType("Lorg/eolang/benchmark/A;");
+        final String name = "Lorg/eolang/benchmark/A;";
+        final Type type = Type.getType(name);
         MatcherAssert.assertThat(
             "Since it is local variables in an instance method, the first variable is always `this`",
-            new LocalVariables(Opcodes.ACC_PUBLIC, "()V").variable(index, type),
+            new LocalVariables(Opcodes.ACC_PUBLIC, "()V", name).variable(index, type),
             Matchers.equalTo(new This(type))
         );
     }
