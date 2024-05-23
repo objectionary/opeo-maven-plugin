@@ -92,7 +92,9 @@ public final class NaiveDecompiler implements Decompiler {
      * @return Number of decompiled EO sources.
      */
     private int decompile(final XmirEntry entry) {
-        this.storage.save(entry.transform(xml -> new JeoDecompiler(xml).decompile()));
+        this.storage.save(
+            entry.transform(xml -> new JeoDecompiler(xml, entry.relative()).decompile())
+        );
         return 1;
     }
 

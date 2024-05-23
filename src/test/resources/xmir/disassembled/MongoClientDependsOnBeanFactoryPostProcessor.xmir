@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-05-23T13:18:42.074983Z"
+         ms="1716470322075"
+         name="j$MongoClientDependsOnBeanFactoryPostProcessor"
+         revision="0.0.0"
+         time="2024-05-23T13:18:42.074983Z"
+         version="0.0.0">
+   <listing>yv66vgAAADQAIAcAGgcAGwoABQAcBwAdBwAeAQAGPGluaXQ+AQAVKFtMamF2YS9sYW5nL0NsYXNzOylWAQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEAEkxvY2FsVmFyaWFibGVUYWJsZQEABHRoaXMBAGBMb3JnL3NwcmluZ2ZyYW1ld29yay9ib290L2F1dG9jb25maWd1cmUvZGF0YS9tb25nby9Nb25nb0NsaWVudERlcGVuZHNPbkJlYW5GYWN0b3J5UG9zdFByb2Nlc3NvcjsBAAlkZXBlbmRzT24BABJbTGphdmEvbGFuZy9DbGFzczsBABZMb2NhbFZhcmlhYmxlVHlwZVRhYmxlAQAVW0xqYXZhL2xhbmcvQ2xhc3M8Kj47AQAQTWV0aG9kUGFyYW1ldGVycwEACVNpZ25hdHVyZQEAGChbTGphdmEvbGFuZy9DbGFzczwqPjspVgEAClNvdXJjZUZpbGUBADFNb25nb0NsaWVudERlcGVuZHNPbkJlYW5GYWN0b3J5UG9zdFByb2Nlc3Nvci5qYXZhAQAZUnVudGltZVZpc2libGVBbm5vdGF0aW9ucwEAK0xvcmcvc3ByaW5nZnJhbWV3b3JrL2NvcmUvYW5ub3RhdGlvbi9PcmRlcjsBAAV2YWx1ZQN/////AQAeY29tL21vbmdvZGIvY2xpZW50L01vbmdvQ2xpZW50AQA8b3JnL3NwcmluZ2ZyYW1ld29yay9kYXRhL21vbmdvZGIvY29yZS9Nb25nb0NsaWVudEZhY3RvcnlCZWFuDAAGAB8BAF5vcmcvc3ByaW5nZnJhbWV3b3JrL2Jvb3QvYXV0b2NvbmZpZ3VyZS9kYXRhL21vbmdvL01vbmdvQ2xpZW50RGVwZW5kc09uQmVhbkZhY3RvcnlQb3N0UHJvY2Vzc29yAQBQb3JnL3NwcmluZ2ZyYW1ld29yay9ib290L2F1dG9jb25maWd1cmUvQWJzdHJhY3REZXBlbmRzT25CZWFuRmFjdG9yeVBvc3RQcm9jZXNzb3IBADcoTGphdmEvbGFuZy9DbGFzcztMamF2YS9sYW5nL0NsYXNzO1tMamF2YS9sYW5nL0NsYXNzOylWACEABAAFAAAAAAABAIEABgAHAAMACAAAAFQABAACAAAACioSARICK7cAA7EAAAADAAkAAAAKAAIAAAAtAAkALgAKAAAAFgACAAAACgALAAwAAAAAAAoADQAOAAEADwAAAAwAAQAAAAoADQAQAAEAEQAAAAUBAA0AAAASAAAAAgATAAIAFAAAAAIAFQAWAAAACwABABcAAQAYSQAZ</listing>
+   <errors/>
+   <sheets/>
+   <license/>
+   <metas>
+      <meta>
+         <head>package</head>
+         <tail>org.springframework.boot.autoconfigure.data.mongo</tail>
+         <part>org.springframework.boot.autoconfigure.data.mongo</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.opcode</tail>
+         <part>org.eolang.jeo.opcode</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.label</tail>
+         <part>org.eolang.jeo.label</part>
+      </meta>
+   </metas>
+   <objects>
+      <o abstract="" name="j$MongoClientDependsOnBeanFactoryPostProcessor">
+         <o base="int" data="bytes" name="version">00 00 00 00 00 00 00 34</o>
+         <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 21</o>
+         <o base="string" data="bytes" name="supername">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 61 75 74 6F 63 6F 6E 66 69 67 75 72 65 2F 41 62 73 74 72 61 63 74 44 65 70 65 6E 64 73 4F 6E 42 65 61 6E 46 61 63 74 6F 72 79 50 6F 73 74 50 72 6F 63 65 73 73 6F 72</o>
+         <o base="tuple" name="interfaces" star=""/>
+         <o abstract="" name="new">
+            <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 81</o>
+            <o base="string" data="bytes" name="descriptor">28 5B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73 3B 29 56</o>
+            <o base="string" data="bytes" name="signature">28 5B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73 3C 2A 3E 3B 29 56</o>
+            <o base="tuple" name="exceptions" star=""/>
+            <o name="maxs">
+               <o base="int" data="bytes" name="stack">00 00 00 00 00 00 00 04</o>
+               <o base="int" data="bytes" name="locals">00 00 00 00 00 00 00 02</o>
+            </o>
+            <o abstract="" name="arg__[Ljava/lang/Class;__0"/>
+            <o base="seq" name="@">
+               <o base="tuple" star="">
+                  <o base="label" data="bytes">64 63 35 37 31 31 32 37 2D 31 36 61 64 2D 34 38 35 38 2D 39 65 38 63 2D 61 34 32 65 33 34 37 64 35 38 38 65</o>
+                  <o base="opcode" line="999" name="ALOAD-FBCB3">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 00</o>
+                  </o>
+                  <o base="opcode" line="999" name="LDC-FBCB4">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 12</o>
+                     <o base="type" data="bytes">4C 63 6F 6D 2F 6D 6F 6E 67 6F 64 62 2F 63 6C 69 65 6E 74 2F 4D 6F 6E 67 6F 43 6C 69 65 6E 74 3B</o>
+                  </o>
+                  <o base="opcode" line="999" name="LDC-FBCB5">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 12</o>
+                     <o base="type" data="bytes">4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 64 61 74 61 2F 6D 6F 6E 67 6F 64 62 2F 63 6F 72 65 2F 4D 6F 6E 67 6F 43 6C 69 65 6E 74 46 61 63 74 6F 72 79 42 65 61 6E 3B</o>
+                  </o>
+                  <o base="opcode" line="999" name="ALOAD-FBCB7">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 01</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKESPECIAL-FBCB8">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B7</o>
+                     <o base="string" data="bytes">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 61 75 74 6F 63 6F 6E 66 69 67 75 72 65 2F 41 62 73 74 72 61 63 74 44 65 70 65 6E 64 73 4F 6E 42 65 61 6E 46 61 63 74 6F 72 79 50 6F 73 74 50 72 6F 63 65 73 73 6F 72</o>
+                     <o base="string" data="bytes">3C 69 6E 69 74 3E</o>
+                     <o base="string" data="bytes">28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73 3B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73 3B 5B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73 3B 29 56</o>
+                     <o base="bool" data="bytes">00</o>
+                  </o>
+                  <o base="label" data="bytes">38 39 64 32 65 35 66 63 2D 34 61 63 38 2D 34 63 39 63 2D 38 38 36 37 2D 34 33 63 31 65 62 61 61 62 31 66 65</o>
+                  <o base="opcode" line="999" name="RETURN-FBCB9">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B1</o>
+                  </o>
+                  <o base="label" data="bytes">65 31 37 61 37 31 39 64 2D 63 65 36 35 2D 34 31 35 65 2D 39 35 32 66 2D 35 31 64 33 38 32 65 33 34 65 39 30</o>
+               </o>
+            </o>
+         </o>
+         <o base="tuple" name="annotations" star="">
+            <o base="annotation">
+               <o base="string" data="bytes" name="descriptor">4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 72 65 2F 61 6E 6E 6F 74 61 74 69 6F 6E 2F 4F 72 64 65 72 3B</o>
+               <o base="bool" data="bytes" name="visible">01</o>
+               <o base="annotation-property">
+                  <o base="string" data="bytes" name="type">50 4C 41 49 4E</o>
+                  <o base="string" data="bytes" name="name">76 61 6C 75 65</o>
+                  <o base="int" data="bytes" name="value">00 00 00 00 7F FF FF FF</o>
+               </o>
+            </o>
+         </o>
+      </o>
+   </objects>
+</program>

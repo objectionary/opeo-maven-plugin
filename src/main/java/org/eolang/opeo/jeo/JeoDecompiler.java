@@ -59,7 +59,7 @@ public final class JeoDecompiler {
      * @param prog Program in XMIR format received from jeo maven plugin.
      */
     public JeoDecompiler(final XML prog) {
-        this(prog, "");
+        this(prog, "java.lang.Object");
     }
 
     /**
@@ -81,8 +81,7 @@ public final class JeoDecompiler {
     public XML decompile() {
         final Node node = this.prog.node();
         final XmlClass top = new XmlProgram(node).top();
-        final String clazz = top.name().substring(2);
-        final String clazz1 = this.pckg + clazz;
+        final String clazz1 = this.pckg.replace(".xmir", "").replace(".", "/");
         final String descriptor = Type.getObjectType(clazz1).getDescriptor();
         top.methods()
             .forEach(method -> this.decompile(method, descriptor));
