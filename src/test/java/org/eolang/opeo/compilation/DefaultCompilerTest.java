@@ -93,7 +93,10 @@ final class DefaultCompilerTest {
         throws Exception {
         final Path input = temp.resolve("opeo-xmir").resolve(name);
         Files.createDirectories(input.getParent());
-        Files.write(input, new BytesOf(new ResourceOf(String.format("xmir/%s", name))).asBytes());
+        Files.write(
+            input,
+            new BytesOf(new ResourceOf(String.format("xmir/decompiled/%s", name))).asBytes()
+        );
         new DefaultCompiler(temp).compile();
         final Path expected = temp.resolve("xmir").resolve(name);
         MatcherAssert.assertThat(
