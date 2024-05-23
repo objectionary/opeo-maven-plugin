@@ -28,6 +28,7 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import lombok.ToString;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Label;
@@ -63,6 +64,15 @@ public final class OperandStack {
      */
     private OperandStack(final Deque<AstNode> original) {
         this.stack = original;
+    }
+
+
+    public Optional<AstNode> popOpt() {
+        if (this.stack.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.ofNullable(this.stack.pop());
+        }
     }
 
     /**

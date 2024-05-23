@@ -30,6 +30,7 @@ import org.cactoos.text.TextOf;
 import org.eolang.opeo.ast.Opcode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -51,5 +52,4 @@ final class JeoCompilerTest {
             Matchers.equalTo(expected)
         );
     }
-
 }

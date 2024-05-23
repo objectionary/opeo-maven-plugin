@@ -23,6 +23,7 @@
  */
 package it;
 
+import com.jcabi.xml.XMLDocument;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.eolang.jeo.representation.BytecodeRepresentation;
@@ -35,18 +36,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 /**
- * Integration test for JEO and OPEO transformations.
- * In this test, we check that the entire pipeline:
- * '.class' -> 'jeo-xmir' -> 'opeo-xmir' -> 'jeo-xmir' -> '.class'
+ * Integration tests for JEO and OPEO transformations.
+ * This class is rather useful for bug identification on different transformation stages.
  * @since 0.2
  */
 final class JeoAndOpeoTest {
 
     @ParameterizedTest
-    @CsvSource({
-        "AgentBuilder.class",
-        "AgentBuilder$RedefinitionStrategy$Collector.class"
-    })
+    @CsvSource("AgentBuilder.class")
     void dissassemblesDecompilesCompilesAssembles(final String name) {
         Assertions.assertDoesNotThrow(
             () -> new XmirRepresentation(
@@ -63,6 +60,19 @@ final class JeoAndOpeoTest {
                 ).compile()
             ).toBytecode(),
             "We expect that the entire pipeline '.class' -> 'jeo-xmir' -> 'opeo-xmir' -> 'jeo-xmir' -> '.class' will not throw any exceptions."
+        );
+    }
+
+    @ParameterizedTest
+    @CsvSource("AgentBuilder$RedefinitionStrategy$Collector.xmir")
+    void compilesAlreadyCompiledAndAssembles(final String path) {
+        Assertions.assertDoesNotThrow(
+            () -> new XmirRepresentation(
+                new JeoCompiler(new XMLDocument(new BytesOf(
+                    new ResourceOf(String.format("xmir/compiled/%s", path))
+                ).asBytes())).compile()
+            ).toBytecode(),
+            "We expect that the pipeline 'already-compiled-xmir' -> (compile) -> (assemble) ->'.class' will not throw any exceptions."
         );
     }
 

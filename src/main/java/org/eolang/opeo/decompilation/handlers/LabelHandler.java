@@ -23,7 +23,9 @@
  */
 package org.eolang.opeo.decompilation.handlers;
 
+import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Label;
+import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
 
@@ -35,6 +37,11 @@ public final class LabelHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {
-        state.stack().push(new Label(String.class.cast(state.operand(0))));
+        final AstNode node1 = state.stack().popOpt().orElse(new AstNode.Empty());
+        final Labeled node = new Labeled(
+            node1,
+            new Label(String.class.cast(state.operand(0)))
+        );
+        state.stack().push(node);
     }
 }

@@ -80,7 +80,9 @@ public final class JeoCompiler {
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.IdenticalCatchBranches"})
     private static XmlMethod compile(final XmlMethod method) {
         try {
-            return method.withoutMaxs().withInstructions(
+            return method
+//                .withoutMaxs()
+                .withInstructions(
                 new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
             );
         } catch (final ClassCastException exception) {
