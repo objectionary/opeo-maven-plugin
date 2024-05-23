@@ -24,6 +24,7 @@
 package org.eolang.opeo.compilation;
 
 import com.jcabi.xml.XML;
+import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.jeo.representation.xmir.XmlClass;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlNode;
@@ -80,11 +81,14 @@ public final class JeoCompiler {
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.IdenticalCatchBranches"})
     private static XmlMethod compile(final XmlMethod method) {
         try {
+            //todo! explain
+            new AllLabels().clearCache();
+            //todo! explain
             return method
 //                .withoutMaxs()
                 .withInstructions(
-                new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
-            );
+                    new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
+                );
         } catch (final ClassCastException exception) {
             throw new IllegalArgumentException(
                 String.format(
