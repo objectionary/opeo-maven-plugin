@@ -57,48 +57,6 @@ public final class Super implements AstNode {
 
     /**
      * Constructor.
-     * @param instance Super instance
-     * @param arguments Super arguments
-     */
-    public Super(final AstNode instance, final AstNode... arguments) {
-        this(instance, Arrays.asList(arguments));
-    }
-
-    /**
-     * Constructor.
-     * @param instance Super instance
-     * @param descriptor Descriptor
-     * @param arguments Super arguments
-     */
-    public Super(final AstNode instance, final String descriptor, final AstNode... arguments) {
-        this(instance, Arrays.asList(arguments), descriptor);
-    }
-
-    /**
-     * Constructor.
-     * @param instance Super instance
-     * @param arguments Super arguments
-     */
-    public Super(final AstNode instance, final List<AstNode> arguments) {
-        this(instance, arguments, "()V");
-    }
-
-    /**
-     * Constructor.
-     * @param instance Target instance
-     * @param arguments Super arguments
-     * @param descriptor Descriptor
-     */
-    public Super(
-        final AstNode instance,
-        final List<AstNode> arguments,
-        final String descriptor
-    ) {
-        this(instance, arguments, descriptor, "java/lang/Object", "<init>");
-    }
-
-    /**
-     * Constructor.
      * @param instance Target instance
      * @param arguments Super arguments
      * @param descriptor Descriptor
@@ -130,6 +88,48 @@ public final class Super implements AstNode {
         this.instance = instance;
         this.arguments = arguments;
         this.attributes = attributes;
+    }
+
+    /**
+     * Constructor.
+     * @param instance Super instance
+     * @param arguments Super arguments
+     */
+    Super(final AstNode instance, final AstNode... arguments) {
+        this(instance, Arrays.asList(arguments));
+    }
+
+    /**
+     * Constructor.
+     * @param instance Super instance
+     * @param descriptor Descriptor
+     * @param arguments Super arguments
+     */
+    Super(final AstNode instance, final String descriptor, final AstNode... arguments) {
+        this(instance, Arrays.asList(arguments), descriptor);
+    }
+
+    /**
+     * Constructor.
+     * @param instance Target instance
+     * @param arguments Super arguments
+     * @param descriptor Descriptor
+     */
+    private Super(
+        final AstNode instance,
+        final List<AstNode> arguments,
+        final String descriptor
+    ) {
+        this(instance, arguments, descriptor, "java/lang/Object", "<init>");
+    }
+
+    /**
+     * Constructor.
+     * @param instance Super instance
+     * @param arguments Super arguments
+     */
+    private Super(final AstNode instance, final List<AstNode> arguments) {
+        this(instance, arguments, "()V");
     }
 
     @Override
