@@ -113,17 +113,17 @@ public final class Opcode implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
-//        switch (this.bytecode) {
-//            case Opcodes.INVOKEVIRTUAL:
+        switch (this.bytecode) {
+            case Opcodes.INVOKEVIRTUAL:
+            case Opcodes.INVOKEINTERFACE:
+            case Opcodes.INVOKESPECIAL:
+            case Opcodes.INVOKESTATIC:
 //            case Opcodes.INVOKEDYNAMIC:
-//            case Opcodes.INVOKEINTERFACE:
-//            case Opcodes.INVOKESPECIAL:
-//            case Opcodes.INVOKESTATIC:
-//                this.appendInterfaced();
-//                break;
-//            default:
-//                break;
-//        }
+                this.appendInterfaced();
+                break;
+            default:
+                break;
+        }
         return List.of(this);
     }
 

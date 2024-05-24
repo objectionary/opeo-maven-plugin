@@ -207,8 +207,6 @@ SOFTWARE.
             mvn clean install -Plong
           -->
           <pomExcludes>
-            <!-- TODO: explain-->
-            <exclude>fuse/pom.xml</exclude>
             <exclude>spring-fat/pom.xml</exclude>
           </pomExcludes>
         </configuration>
