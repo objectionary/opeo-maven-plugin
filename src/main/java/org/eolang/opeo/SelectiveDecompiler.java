@@ -164,16 +164,21 @@ public final class SelectiveDecompiler implements Decompiler {
             //            "junit",
 
 
-            "ch", "com", "javax",
+//            "ch", "com", "javax",
 
 //            "net",
 
 //            То что ниже исключено из билда, то что посередине, добавлено.
 //            Если билд фейлится, то одна из зависимостей выше инициировала падение
-            "aopalliance", "apiguardian", "assertj", "eolang", "hamcrest", "json",
-            "mockito", "objectweb", "objenesis", "opentest4j", "slf4j", "xmlunit",
+//            "aopalliance", "apiguardian", "assertj", "eolang", "hamcrest", "json",
+//            "mockito", "objectweb", "objenesis", "opentest4j", "slf4j", "xmlunit",
 
-            "springframework", "yaml"
+//            HERE IS THE PROBLEM!!!
+//            "springframework"
+///////////////////////////////////////
+//
+//            ,
+            "yaml"
         ).anyMatch(relative::contains);
     }
 
