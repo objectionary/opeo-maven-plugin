@@ -52,9 +52,9 @@ final class FieldAssignmentTest {
             ),
             xmir,
             XhtmlMatchers.hasXPaths(
-                "./o[@base='.writefield']",
-                "./o[@base='.writefield']/o[@base='.bar']",
-                "./o[@base='.writefield']/o[@base='int' and contains(text(),'3')]"
+                "./o[@base='.write-field']",
+                "./o[@base='.write-field']/o[@base='.bar']",
+                "./o[@base='.write-field']/o[@base='int' and contains(text(),'3')]"
             )
         );
     }

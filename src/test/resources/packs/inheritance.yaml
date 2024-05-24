@@ -50,7 +50,7 @@ eo:
             .super
             $
             .x
-            .writefield
+            .write-field
               local1
             opcode > RETURN
               177

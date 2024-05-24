@@ -62,7 +62,7 @@ public final class FieldAssignment implements AstNode {
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
-            .attr("base", ".writefield")
+            .attr("base", ".write-field")
             .append(this.field.toXmir())
             .append(this.value.toXmir())
             .up();

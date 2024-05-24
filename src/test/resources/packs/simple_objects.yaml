@@ -115,7 +115,7 @@ eo:
             .super
             $
             .x
-            .writefield
+            .write-field
               local1
             opcode > RETURN
               177
@@ -174,7 +174,7 @@ eo:
             .super
             $
             .a
-            .writefield
+            .write-field
               local1
             opcode > RETURN
               177

@@ -203,9 +203,9 @@ final class XmirParser {
             );
         } else if ("$".equals(base)) {
             result = new This(node);
-        } else if ("staticfield".equals(base)) {
+        } else if ("static-field".equals(base)) {
             result = new ClassField(new Attributes(node.attribute("scope").orElseThrow()));
-        } else if (".writearray".equals(base)) {
+        } else if (".write-array".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode array = this.node(inner.get(0));
             final AstNode index = this.node(inner.get(1));
@@ -225,7 +225,7 @@ final class XmirParser {
                     new Attributes(field.attribute("scope").orElseThrow())
                 )
             );
-        } else if (".writefield".equals(base)) {
+        } else if (".write-field".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final XmlNode field = inner.get(0);
             final AstNode value = this.node(inner.get(1));
@@ -258,7 +258,7 @@ final class XmirParser {
                 .descriptor(descriptor)
                 .interfaced(false);
             result = new Constructor(type, attributes, args);
-        } else if (".array".equals(base)) {
+        } else if (".array-node".equals(base)) {
             final List<XmlNode> children = node.children().collect(Collectors.toList());
             final String type = new HexString(children.get(0).text()).decode();
             final AstNode size = this.node(children.get(1));

@@ -103,12 +103,14 @@ final class JeoAndOpeoTest {
     @CsvSource({"xmir/disassembled/AsIsEscapeUtil.xmir", "xmir/disassembled/LongArrayAssert.xmir"})
     void decompilesCompilesAndKeppsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
+        final XML decompiled = new JeoDecompiler(original).decompile();
+        System.out.println(decompiled);
         MatcherAssert.assertThat(
             "The original and compiled instructions are not equal",
             new JeoInstructions(
                 new XmlProgram(
                     new JeoCompiler(
-                        new JeoDecompiler(original).decompile()
+                        decompiled
                     ).compile()
                 ).top().methods().get(0)
             ).instuctionNames(),
@@ -137,6 +139,7 @@ final class JeoAndOpeoTest {
 
 
     @Test
+    @Disabled
     void findTheProblem() {
         final String base = "/Users/lombrozo/Workspace/EOlang/opeo-maven-plugin/target-standard/it/spring-fat/target/generated-sources/opeo-compile-xmir/org";
         Path golden = Paths.get(
