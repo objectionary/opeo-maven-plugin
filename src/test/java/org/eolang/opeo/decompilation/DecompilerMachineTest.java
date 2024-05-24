@@ -40,6 +40,7 @@ import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Owner;
+import org.eolang.opeo.ast.Popped;
 import org.eolang.opeo.ast.Root;
 import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
@@ -387,7 +388,7 @@ final class DecompilerMachineTest {
                 ),
             new SameNode(
                 new Root(
-                    new Invocation(
+                    new Popped(new Invocation(
                         new ClassField(
                             "java/lang/System",
                             "out",
@@ -417,7 +418,7 @@ final class DecompilerMachineTest {
                                 new Literal(2)
                             )
                         )
-                    ),
+                    )),
                     new Opcode(Opcodes.RETURN, false)
                 )
             )

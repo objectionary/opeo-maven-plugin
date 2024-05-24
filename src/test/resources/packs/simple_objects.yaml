@@ -76,6 +76,7 @@ eo:
               .new
                 42
             .bar
+            .ignore-result
             opcode > RETURN
               177
 

@@ -49,7 +49,6 @@
             <o abstract="" name="arg__I__3"/>
             <o base="seq" name="@">
                <o base="tuple" star="">
-                  <o base="label" data="bytes">35 33 34 66 38 61 35 33 2D 39 63 64 35 2D 34 66 37 62 2D 39 64 61 36 2D 64 34 66 66 31 35 39 32 38 33 35 66</o>
                   <o base="opcode" line="999" name="ALOAD">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
                      <o base="int" data="bytes">00 00 00 00 00 00 00 02</o>
@@ -68,7 +67,6 @@
                   <o base="opcode" line="999" name="POP">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 57</o>
                   </o>
-                  <o base="label" data="bytes">63 36 32 61 30 32 31 38 2D 31 64 39 63 2D 34 36 64 38 2D 61 63 65 36 2D 61 36 66 37 33 64 38 37 33 36 39 36</o>
                   <o base="opcode" line="999" name="ALOAD">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
                      <o base="int" data="bytes">00 00 00 00 00 00 00 02</o>
@@ -87,11 +85,9 @@
                   <o base="opcode" line="999" name="POP">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 57</o>
                   </o>
-                  <o base="label" data="bytes">63 36 39 61 63 64 33 65 2D 33 33 36 33 2D 34 30 35 31 2D 38 66 33 63 2D 35 34 66 62 36 66 61 61 64 38 66 30</o>
                   <o base="opcode" line="999" name="RETURN">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 B1</o>
                   </o>
-                  <o base="label" data="bytes">66 61 61 35 63 30 32 33 2D 65 32 32 63 2D 34 36 66 62 2D 38 31 36 36 2D 62 62 38 32 62 62 65 36 65 35 38 34</o>
                </o>
             </o>
          </o>

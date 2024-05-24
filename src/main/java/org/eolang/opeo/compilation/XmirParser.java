@@ -49,6 +49,7 @@ import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Opcode;
+import org.eolang.opeo.ast.Popped;
 import org.eolang.opeo.ast.RawXml;
 import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
@@ -156,7 +157,9 @@ final class XmirParser {
                 )
             )
         );
-        if (".plus".equals(base)) {
+        if (".ignore-result".equals(base)) {
+            result = new Popped(this.node(node.firstChild()));
+        } else if (".plus".equals(base)) {
             result = new Add(node, this::node);
         } else if (".minus".equals(base)) {
             result = new Substraction(node, this::node);

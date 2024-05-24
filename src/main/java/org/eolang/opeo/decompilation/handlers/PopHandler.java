@@ -23,8 +23,10 @@
  */
 package org.eolang.opeo.decompilation.handlers;
 
+import org.eolang.opeo.ast.Popped;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
+import org.eolang.opeo.decompilation.OperandStack;
 
 /**
  * Pop instruction handler.
@@ -35,6 +37,8 @@ public final class PopHandler implements InstructionHandler {
     @Override
     public void handle(final DecompilerState state) {
         // We do nothing here to keep the stack contains previous computations.
+        final OperandStack stack = state.stack();
+        stack.push(new Popped(stack.pop()));
     }
 
 }
