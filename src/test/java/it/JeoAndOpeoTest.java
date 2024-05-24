@@ -25,12 +25,27 @@ package it;
 
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.eolang.jeo.representation.BytecodeRepresentation;
 import org.eolang.jeo.representation.XmirRepresentation;
 import org.eolang.jeo.representation.bytecode.Bytecode;
+import org.eolang.jeo.representation.xmir.XmlBytecodeEntry;
+import org.eolang.jeo.representation.xmir.XmlInstruction;
+import org.eolang.jeo.representation.xmir.XmlLabel;
+import org.eolang.jeo.representation.xmir.XmlMethod;
+import org.eolang.jeo.representation.xmir.XmlOperand;
 import org.eolang.jeo.representation.xmir.XmlProgram;
+import org.eolang.opeo.ast.Label;
+import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.compilation.JeoCompiler;
 import org.eolang.opeo.jeo.JeoDecompiler;
@@ -39,6 +54,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -84,7 +100,7 @@ final class JeoAndOpeoTest {
     }
 
     @ParameterizedTest
-    @CsvSource("xmir/disassembled/AsIsEscapeUtil.xmir")
+    @CsvSource({"xmir/disassembled/AsIsEscapeUtil.xmir", "xmir/disassembled/LongArrayAssert.xmir"})
     void decompilesCompilesAndKeppsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
         MatcherAssert.assertThat(
@@ -118,5 +134,104 @@ final class JeoAndOpeoTest {
             Matchers.equalTo(original)
         );
     }
+
+
+    @Test
+    void findTheProblem() {
+        final String base = "/Users/lombrozo/Workspace/EOlang/opeo-maven-plugin/target-standard/it/spring-fat/target/generated-sources/opeo-compile-xmir/org";
+        Path golden = Paths.get(
+            base
+        );
+
+        Path real = Paths.get(
+            "/Users/lombrozo/Workspace/EOlang/opeo-maven-plugin/target/it/spring-fat/target/generated-sources/opeo-compile-xmir/org"
+        );
+
+        try (final Stream<Path> all = Files.walk(golden).filter(Files::isRegularFile)) {
+            all.forEach(
+                path -> {
+                    final Path relative = golden.relativize(path);
+                    XMLDocument good = null;
+                    try {
+                        good = new XMLDocument(golden.resolve(relative));
+                    } catch (final FileNotFoundException exception) {
+                        throw new RuntimeException(exception);
+                    }
+                    XMLDocument bad = null;
+                    try {
+                        bad = new XMLDocument(real.resolve(relative));
+                    } catch (final FileNotFoundException exception) {
+                        throw new RuntimeException(exception);
+                    }
+
+                    final XmlProgram goodProgram = new XmlProgram(good);
+                    final XmlProgram badProgram = new XmlProgram(bad);
+                    final List<XmlMethod> goodMethods = goodProgram.top().methods();
+                    final List<XmlMethod> badMethods = badProgram.top().methods();
+                    for (int i = 0; i < goodMethods.size(); i++) {
+                        final XmlMethod goodMethod = goodMethods.get(i);
+                        final XmlMethod badMethod = badMethods.get(i);
+                        final List<XmlBytecodeEntry> goodInstructions = goodMethod.instructions();
+                        final List<XmlBytecodeEntry> badInstructions = badMethod.instructions();
+
+                        for (int j = 0; j < goodInstructions.size(); j++) {
+                            final XmlBytecodeEntry goodEntry = goodInstructions.get(j);
+                            final XmlBytecodeEntry badEntry = badInstructions.get(j);
+
+                            if (goodEntry instanceof XmlInstruction && badEntry instanceof XmlInstruction) {
+
+                                final XmlInstruction goodInstruction = (XmlInstruction) goodEntry;
+                                final XmlInstruction badInstruction = (XmlInstruction) badEntry;
+
+                                if (goodInstruction.opcode() != badInstruction.opcode()) {
+                                    throw new IllegalArgumentException(
+                                        String.format(
+                                            "The instructions '%s' and '%s' are differ in '%s'",
+                                            goodEntry,
+                                            badEntry,
+                                            relative
+                                        )
+                                    );
+                                }
+                                final List<XmlOperand> goodOperands = goodInstruction.operands();
+                                final List<XmlOperand> badOperands = badInstruction.operands();
+                                for (int k = 0; k < goodOperands.size(); k++) {
+                                    final XmlOperand goodOperand = goodOperands.get(k);
+                                    final XmlOperand badOperand = badOperands.get(k);
+
+                                    final String goodOperandString = goodOperand.toString();
+                                    final String badOperandString = badOperand.toString();
+                                    if (goodOperandString.contains(
+                                        "label") && badOperandString.contains("label"))
+                                        continue;
+                                    if (!goodOperandString.equals(badOperandString)) {
+                                        throw new IllegalArgumentException(
+                                            String.format(
+                                                "The operands '%s' and '%s' are differ in '%s'%n'%s'%n'%s',%n%s%n%s",
+                                                goodEntry,
+                                                badEntry,
+                                                relative,
+                                                goodOperand,
+                                                badOperand,
+                                                "file://" + golden.resolve(relative),
+                                                "file://" + real.resolve(relative)
+                                            )
+                                        );
+                                    }
+                                }
+
+                            }
+
+
+                        }
+
+                    }
+                }
+            );
+        } catch (final IOException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
 
 }

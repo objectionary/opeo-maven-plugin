@@ -66,24 +66,26 @@ public final class ConstructorDescriptor {
      * @return
      */
     private String combine() {
-        return Type.getMethodDescriptor(
-            Type.VOID_TYPE,
-            this.args.stream()
-                .peek(this::verify)
-                .map(Typed.class::cast)
-                .map(Typed::type)
-                .toArray(Type[]::new)
-        );
-//        if (this.descriptor.contains("org/eolang")
-//            || this.descriptor.contains("org.eolang")
-//            || this.descriptor.isEmpty()) {
-//            return Type.getMethodDescriptor(
-//                Type.VOID_TYPE,
-//                this.argumentTypes()
-//            );
-//        } else {
-//            return this.descriptor;
-//        }
+//        return Type.getMethodDescriptor(
+//            Type.VOID_TYPE,
+//            this.args.stream()
+//                .peek(this::verify)
+//                .map(Typed.class::cast)
+//                .map(Typed::type)
+//                .toArray(Type[]::new)
+//        );
+
+
+        if (this.descriptor.contains("org/eolang")
+            || this.descriptor.contains("org.eolang")
+            || this.descriptor.isEmpty()) {
+            return Type.getMethodDescriptor(
+                Type.VOID_TYPE,
+                this.argumentTypes()
+            );
+        } else {
+            return this.descriptor;
+        }
     }
 
 

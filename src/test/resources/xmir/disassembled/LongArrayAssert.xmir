@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-05-23T13:19:12.398747Z"
+         ms="1716470352398"
+         name="j$LongArrayAssert"
+         revision="0.0.0"
+         time="2024-05-23T13:19:12.398747Z"
+         version="0.0.0">
+   <listing>yv66vgAAADQAHwEAJG9yZy9hc3NlcnRqL2NvcmUvYXBpL0xvbmdBcnJheUFzc2VydAcAAQEAVkxvcmcvYXNzZXJ0ai9jb3JlL2FwaS9BYnN0cmFjdExvbmdBcnJheUFzc2VydDxMb3JnL2Fzc2VydGovY29yZS9hcGkvTG9uZ0FycmF5QXNzZXJ0Oz47AQAsb3JnL2Fzc2VydGovY29yZS9hcGkvQWJzdHJhY3RMb25nQXJyYXlBc3NlcnQHAAQBABRMb25nQXJyYXlBc3NlcnQuamF2YQEABjxpbml0PgEABShbSilWAQAWKFtKTGphdmEvbGFuZy9DbGFzczspVgwABwAJCgAFAAoBAAR0aGlzAQAmTG9yZy9hc3NlcnRqL2NvcmUvYXBpL0xvbmdBcnJheUFzc2VydDsBAAZhY3R1YWwBAAJbSgEAMChMamF2YS91dGlsL2NvbmN1cnJlbnQvYXRvbWljL0F0b21pY0xvbmdBcnJheTspVgEAHG9yZy9hc3NlcnRqL2NvcmUvdXRpbC9BcnJheXMHABEBAAVhcnJheQEAMShMamF2YS91dGlsL2NvbmN1cnJlbnQvYXRvbWljL0F0b21pY0xvbmdBcnJheTspW0oMABMAFAoAEgAVDAAHAAgKAAIAFwEALUxqYXZhL3V0aWwvY29uY3VycmVudC9hdG9taWMvQXRvbWljTG9uZ0FycmF5OwEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBABJMb2NhbFZhcmlhYmxlVGFibGUBAAlTaWduYXR1cmUBAApTb3VyY2VGaWxlACEAAgAFAAAAAAACAAEABwAIAAEAGgAAAEAAAwACAAAACCorEgK3AAuxAAAAAgAbAAAACgACAAAAIgAHACMAHAAAABYAAgAAAAgADAANAAAAAAAIAA4ADwABAAEABwAQAAEAGgAAAEEAAgACAAAACSoruAAWtwAYsQAAAAIAGwAAAAoAAgAAACYACAAnABwAAAAWAAIAAAAJAAwADQAAAAAACQAOABkAAQACAB0AAAACAAMAHgAAAAIABg==</listing>
+   <errors/>
+   <sheets/>
+   <license/>
+   <metas>
+      <meta>
+         <head>package</head>
+         <tail>org.assertj.core.api</tail>
+         <part>org.assertj.core.api</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.opcode</tail>
+         <part>org.eolang.jeo.opcode</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.label</tail>
+         <part>org.eolang.jeo.label</part>
+      </meta>
+   </metas>
+   <objects>
+      <o abstract="" name="j$LongArrayAssert">
+         <o base="int" data="bytes" name="version">00 00 00 00 00 00 00 34</o>
+         <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 21</o>
+         <o base="string" data="bytes" name="signature">4C 6F 72 67 2F 61 73 73 65 72 74 6A 2F 63 6F 72 65 2F 61 70 69 2F 41 62 73 74 72 61 63 74 4C 6F 6E 67 41 72 72 61 79 41 73 73 65 72 74 3C 4C 6F 72 67 2F 61 73 73 65 72 74 6A 2F 63 6F 72 65 2F 61 70 69 2F 4C 6F 6E 67 41 72 72 61 79 41 73 73 65 72 74 3B 3E 3B</o>
+         <o base="string" data="bytes" name="supername">6F 72 67 2F 61 73 73 65 72 74 6A 2F 63 6F 72 65 2F 61 70 69 2F 41 62 73 74 72 61 63 74 4C 6F 6E 67 41 72 72 61 79 41 73 73 65 72 74</o>
+         <o base="tuple" name="interfaces" star=""/>
+         <o abstract="" name="new">
+            <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 01</o>
+            <o base="string" data="bytes" name="descriptor">28 4C 6A 61 76 61 2F 75 74 69 6C 2F 63 6F 6E 63 75 72 72 65 6E 74 2F 61 74 6F 6D 69 63 2F 41 74 6F 6D 69 63 4C 6F 6E 67 41 72 72 61 79 3B 29 56</o>
+            <o base="string" data="bytes" name="signature"/>
+            <o base="tuple" name="exceptions" star=""/>
+            <o name="maxs">
+               <o base="int" data="bytes" name="stack">00 00 00 00 00 00 00 02</o>
+               <o base="int" data="bytes" name="locals">00 00 00 00 00 00 00 02</o>
+            </o>
+            <o abstract=""
+               name="arg__Ljava/util/concurrent/atomic/AtomicLongArray;__0"/>
+            <o base="seq" name="@">
+               <o base="tuple" star="">
+                  <o base="opcode" line="999" name="ALOAD-2322A7">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 00</o>
+                  </o>
+                  <o base="opcode" line="999" name="ALOAD-2322A9">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 01</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKESTATIC-2322AA">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B8</o>
+                     <o base="string" data="bytes">6F 72 67 2F 61 73 73 65 72 74 6A 2F 63 6F 72 65 2F 75 74 69 6C 2F 41 72 72 61 79 73</o>
+                     <o base="string" data="bytes">61 72 72 61 79</o>
+                     <o base="string" data="bytes">28 4C 6A 61 76 61 2F 75 74 69 6C 2F 63 6F 6E 63 75 72 72 65 6E 74 2F 61 74 6F 6D 69 63 2F 41 74 6F 6D 69 63 4C 6F 6E 67 41 72 72 61 79 3B 29 5B 4A</o>
+                     <o base="bool" data="bytes">00</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKESPECIAL-2322AB">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B7</o>
+                     <o base="string" data="bytes">6F 72 67 2F 61 73 73 65 72 74 6A 2F 63 6F 72 65 2F 61 70 69 2F 4C 6F 6E 67 41 72 72 61 79 41 73 73 65 72 74</o>
+                     <o base="string" data="bytes">3C 69 6E 69 74 3E</o>
+                     <o base="string" data="bytes">28 5B 4A 29 56</o>
+                     <o base="bool" data="bytes">00</o>
+                  </o>
+                  <o base="opcode" line="999" name="RETURN-2322AF">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B1</o>
+                  </o>
+               </o>
+            </o>
+         </o>
+      </o>
+   </objects>
+</program>
