@@ -23,11 +23,13 @@
  */
 package org.eolang.opeo.jeo;
 
+import java.util.Arrays;
 import org.eolang.jeo.representation.xmir.XmlBytecodeEntry;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlLabel;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.opeo.Instruction;
+import org.eolang.opeo.ast.OpcodeName;
 
 /**
  * Class that represents the instructions provided by jeo maven plugin.
@@ -48,6 +50,13 @@ public final class JeoInstructions {
      */
     public JeoInstructions(final XmlMethod method) {
         this.method = method;
+    }
+
+    public String[] instuctionNames() {
+        return Arrays.stream(this.instructions())
+            .map(Instruction::opcode)
+            .map(OpcodeName::new)
+            .map(OpcodeName::simplified).toArray(String[]::new);
     }
 
     /**

@@ -23,15 +23,23 @@
  */
 package it;
 
+import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.eolang.jeo.representation.BytecodeRepresentation;
 import org.eolang.jeo.representation.XmirRepresentation;
 import org.eolang.jeo.representation.bytecode.Bytecode;
+import org.eolang.jeo.representation.xmir.XmlProgram;
+import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.compilation.JeoCompiler;
 import org.eolang.opeo.jeo.JeoDecompiler;
+import org.eolang.opeo.jeo.JeoInstructions;
+import org.hamcrest.Matcher;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -73,6 +81,39 @@ final class JeoAndOpeoTest {
                 ).asBytes())).compile()
             ).toBytecode(),
             "We expect that the pipeline 'already-compiled-xmir' -> (compile) -> (assemble) ->'.class' will not throw any exceptions."
+        );
+    }
+
+
+    @ParameterizedTest
+    @CsvSource("xmir/disassembled/AsIsEscapeUtil.xmir")
+    void decompilesCompiles(final String path) throws Exception {
+        MatcherAssert.assertThat(
+            "The original and compiled instructions are not equal",
+            new JeoInstructions(
+                new XmlProgram(
+                    new JeoCompiler(
+                        new JeoDecompiler(
+                            new XMLDocument(
+                                new BytesOf(
+                                    new ResourceOf(path)
+                                ).asBytes()
+                            )
+                        ).decompile()
+                    ).compile()
+                ).top().methods().get(0)
+            ).instuctionNames(),
+            Matchers.equalTo(
+                new JeoInstructions(
+                    new XmlProgram(
+                        new XMLDocument(
+                            new BytesOf(
+                                new ResourceOf(path)
+                            ).asBytes()
+                        )
+                    ).top().methods().get(0)
+                ).instuctionNames()
+            )
         );
     }
 

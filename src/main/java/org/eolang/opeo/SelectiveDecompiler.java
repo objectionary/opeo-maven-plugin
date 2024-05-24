@@ -139,7 +139,7 @@ public final class SelectiveDecompiler implements Decompiler {
             entry -> {
                 final XmirEntry res;
                 final List<String> found = entry.xpath(this.xpath());
-                if (found.isEmpty()) {
+                if (found.isEmpty() && !this.excluded(entry.relative())) {
                     res = entry.transform(
                         xml -> new JeoDecompiler(xml, entry.relative()).decompile()
                     );
@@ -160,14 +160,20 @@ public final class SelectiveDecompiler implements Decompiler {
 
     private boolean excluded(final String relative) {
         return Stream.of(
-            "ch", "com", "javax", "net",
+            // All commented packages were added to the build. Вот эти зависимостри были проверены - они не создают проблем
+            //            "junit",
 
-            "aopalliance", "apiguardian", "assertj", "eolang", "hamcrest", "json", "junit",
-            "mockito", "objectweb", "objenesis", "opentest4j", "slf4j", "xmlunit"
 
-            , "springframework"
+            "ch", "com", "javax",
 
-            , "yaml"
+//            "net",
+
+//            То что ниже исключено из билда, то что посередине, добавлено.
+//            Если билд фейлится, то одна из зависимостей выше инициировала падение
+            "aopalliance", "apiguardian", "assertj", "eolang", "hamcrest", "json",
+            "mockito", "objectweb", "objenesis", "opentest4j", "slf4j", "xmlunit",
+
+            "springframework", "yaml"
         ).anyMatch(relative::contains);
     }
 
