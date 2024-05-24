@@ -28,6 +28,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.eolang.opeo.decompilation.Decompiler;
 import org.eolang.opeo.decompilation.handlers.RouterHandler;
 import org.eolang.opeo.jeo.JeoDecompiler;
@@ -139,7 +140,6 @@ public final class SelectiveDecompiler implements Decompiler {
                 final XmirEntry res;
                 final List<String> found = entry.xpath(this.xpath());
                 if (found.isEmpty()) {
-                    entry.relative();
                     res = entry.transform(
                         xml -> new JeoDecompiler(xml, entry.relative()).decompile()
                     );
@@ -156,6 +156,19 @@ public final class SelectiveDecompiler implements Decompiler {
                 this.storage.save(res);
             }
         );
+    }
+
+    private boolean excluded(final String relative) {
+        return Stream.of(
+            "ch", "com", "javax", "net",
+
+            "aopalliance", "apiguardian", "assertj", "eolang", "hamcrest", "json", "junit",
+            "mockito", "objectweb", "objenesis", "opentest4j", "slf4j", "xmlunit"
+
+            , "springframework"
+
+            , "yaml"
+        ).anyMatch(relative::contains);
     }
 
     /**

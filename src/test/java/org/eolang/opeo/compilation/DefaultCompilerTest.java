@@ -23,9 +23,12 @@
  */
 package org.eolang.opeo.compilation;
 
+import com.jcabi.xml.XMLDocument;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.eolang.opeo.ast.Opcode;

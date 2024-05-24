@@ -25,6 +25,7 @@ package org.eolang.opeo.compilation;
 
 import com.jcabi.log.Logger;
 import java.nio.file.Path;
+import java.util.stream.Stream;
 import org.eolang.opeo.storage.CompilationStorage;
 import org.eolang.opeo.storage.Storage;
 import org.eolang.opeo.storage.XmirEntry;
@@ -85,8 +86,50 @@ public class DefaultCompiler implements Compiler {
      * @return Number of compiled files.
      */
     private int compile(final XmirEntry xmir) {
-        this.storage.save(xmir.transform(xml -> new JeoCompiler(xml).compile()));
+//        if (!this.excluded(xmir.relative())) {
+//            Logger.info(this, "COMPILER CANDIDATE %s", xmir.relative());
+            this.storage.save(xmir.transform(xml -> new JeoCompiler(xml).compile()));
+//        } else {
+//            this.storage.save(xmir);
+//        }
         return 1;
+    }
+
+
+    private boolean excluded(final String relative) {
+        return Stream.of(
+
+//            NOT HERE
+            "javax",
+//            "javax/servlet",
+//            "javax/activation",
+//            "javax/activation",
+//            "javax/el",
+//            "javax/security",
+//            "javax/websocket",
+//            "javax/xml",
+
+            "ch",
+            "com",
+
+//PROBLEM HERE?
+//            "net/minidev",
+//            "net/bytebuddy",
+
+
+//            Hm excluding them didn't give any results
+            "aopalliance", "apiguardian", "assertj", "eolang", "hamcrest", "json",
+//            "junit",
+            "mockito", "objectweb", "objenesis", "opentest4j", "slf4j", "xmlunit"
+//
+            ,
+
+//            Seems that Problem not with spring
+            "springframework"
+//
+//            WORKS FINE
+            , "yaml", "net"
+        ).anyMatch(relative::contains);
     }
 
 }

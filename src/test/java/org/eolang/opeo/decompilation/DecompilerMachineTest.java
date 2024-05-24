@@ -485,5 +485,6 @@ final class DecompilerMachineTest {
         ) {
             mismatch.appendText("was ").appendValue(this.actual.get());
         }
+
     }
 }
