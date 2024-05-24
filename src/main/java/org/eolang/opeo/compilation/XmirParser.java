@@ -249,13 +249,13 @@ final class XmirParser {
                 )
             );
             final List<AstNode> args = this.args(inner);
-//            final String descriptor = node.attribute("scope")
-//                .map(Attributes::new)
-//                .map(Attributes::descriptor)
-//                .map(descr -> new ConstructorDescriptor(descr, args))
-//                .orElseGet(() -> new ConstructorDescriptor(args)).toString();
+            final String descriptor = node.attribute("scope")
+                .map(Attributes::new)
+                .map(Attributes::descriptor)
+                .map(descr -> new ConstructorDescriptor(descr, args))
+                .orElseGet(() -> new ConstructorDescriptor(args)).toString();
             final Attributes attributes = new Attributes()
-                .descriptor(new ConstructorDescriptor(args).toString())
+                .descriptor(descriptor)
                 .interfaced(false);
             result = new Constructor(type, attributes, args);
         } else if (".array".equals(base)) {
