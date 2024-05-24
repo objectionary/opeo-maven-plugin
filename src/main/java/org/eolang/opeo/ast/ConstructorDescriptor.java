@@ -34,20 +34,38 @@ import org.objectweb.asm.Type;
 public final class ConstructorDescriptor {
 
     /**
+     * Original descriptor.
+     */
+    private final String descriptor;
+
+    /**
      * Constructor arguments.
      */
     private final List<AstNode> args;
+
+    public ConstructorDescriptor(final List<AstNode> args) {
+        this("", args);
+    }
 
     /**
      * Constructor.
      * @param arguments Constructor arguments.
      */
-    public ConstructorDescriptor(final List<AstNode> arguments) {
+    public ConstructorDescriptor(final String descriptor, final List<AstNode> arguments) {
+        this.descriptor = descriptor;
         this.args = arguments;
     }
 
     @Override
     public String toString() {
+        return this.combine();
+    }
+
+    /**
+     * TODO: explain
+     * @return
+     */
+    private String combine() {
         return Type.getMethodDescriptor(
             Type.VOID_TYPE,
             this.args.stream()
@@ -56,6 +74,25 @@ public final class ConstructorDescriptor {
                 .map(Typed::type)
                 .toArray(Type[]::new)
         );
+//        if (this.descriptor.contains("org/eolang")
+//            || this.descriptor.contains("org.eolang")
+//            || this.descriptor.isEmpty()) {
+//            return Type.getMethodDescriptor(
+//                Type.VOID_TYPE,
+//                this.argumentTypes()
+//            );
+//        } else {
+//            return this.descriptor;
+//        }
+    }
+
+
+    private Type[] argumentTypes() {
+        return this.args.stream()
+            .peek(this::verify)
+            .map(Typed.class::cast)
+            .map(Typed::type)
+            .toArray(Type[]::new);
     }
 
     /**

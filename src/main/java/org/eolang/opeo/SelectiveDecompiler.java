@@ -139,7 +139,7 @@ public final class SelectiveDecompiler implements Decompiler {
             entry -> {
                 final XmirEntry res;
                 final List<String> found = entry.xpath(this.xpath());
-                if (found.isEmpty() && !this.excluded(entry.relative())) {
+                if (found.isEmpty()) {
                     res = entry.transform(
                         xml -> new JeoDecompiler(xml, entry.relative()).decompile()
                     );
