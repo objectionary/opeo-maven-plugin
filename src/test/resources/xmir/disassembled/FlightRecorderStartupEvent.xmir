@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-05-23T13:18:58.449136Z"
+         ms="1716470338449"
+         name="j$FlightRecorderStartupEvent"
+         revision="0.0.0"
+         time="2024-05-23T13:18:58.449136Z"
+         version="0.0.0">
+   <listing>yv66vgAAADQALgoACAAlCAAmCQAHACcJAAcAKAkABwApCQAHACoHACsHACwBAAdldmVudElkAQABSgEACHBhcmVudElkAQAEbmFtZQEAEkxqYXZhL2xhbmcvU3RyaW5nOwEAGVJ1bnRpbWVWaXNpYmxlQW5ub3RhdGlvbnMBAA9MamRrL2pmci9MYWJlbDsBAAV2YWx1ZQEABE5hbWUBAAR0YWdzAQAEVGFncwEABjxpbml0PgEAFyhKTGphdmEvbGFuZy9TdHJpbmc7SilWAQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEAEkxvY2FsVmFyaWFibGVUYWJsZQEABHRoaXMBAEFMb3JnL3NwcmluZ2ZyYW1ld29yay9jb3JlL21ldHJpY3MvamZyL0ZsaWdodFJlY29yZGVyU3RhcnR1cEV2ZW50OwEAEE1ldGhvZFBhcmFtZXRlcnMBAAdzZXRUYWdzAQAVKExqYXZhL2xhbmcvU3RyaW5nOylWAQAKU291cmNlRmlsZQEAH0ZsaWdodFJlY29yZGVyU3RhcnR1cEV2ZW50LmphdmEBABJMamRrL2pmci9DYXRlZ29yeTsBABJTcHJpbmcgQXBwbGljYXRpb24BAAxTdGFydHVwIFN0ZXABABVMamRrL2pmci9EZXNjcmlwdGlvbjsBABpTcHJpbmcgQXBwbGljYXRpb24gU3RhcnR1cAwAFAAtAQAADAASAA0MAAwADQwACQAKDAALAAoBAD9vcmcvc3ByaW5nZnJhbWV3b3JrL2NvcmUvbWV0cmljcy9qZnIvRmxpZ2h0UmVjb3JkZXJTdGFydHVwRXZlbnQBAA1qZGsvamZyL0V2ZW50AQADKClWACAABwAIAAAABAARAAkACgAAABEACwAKAAAAEQAMAA0AAQAOAAAACwABAA8AAQAQcwARAAAAEgANAAEADgAAAAsAAQAPAAEAEHMAEwACAAEAFAAVAAIAFgAAAHcAAwAGAAAAGyq3AAEqEgK1AAMqLbUABCoftQAFKhYEtQAGsQAAAAIAFwAAABoABgAAADEABAAuAAoAMgAPADMAFAA0ABoANQAYAAAAKgAEAAAAGwAZABoAAAAAABsACQAKAAEAAAAbAAwADQADAAAAGwALAAoABAAbAAAADQMACQAAAAwAAAALAAAAAQAcAB0AAgAWAAAAPgACAAIAAAAGKiu1AAOxAAAAAgAXAAAACgACAAAAOAAFADkAGAAAABYAAgAAAAYAGQAaAAAAAAAGABIADQABABsAAAAFAQASAAAAAgAeAAAAAgAfAA4AAAAgAAMAIAABABBbAAFzACEADwABABBzACIAIwABABBzACQ=</listing>
+   <errors/>
+   <sheets/>
+   <license/>
+   <metas>
+      <meta>
+         <head>package</head>
+         <tail>org.springframework.core.metrics.jfr</tail>
+         <part>org.springframework.core.metrics.jfr</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.opcode</tail>
+         <part>org.eolang.jeo.opcode</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.label</tail>
+         <part>org.eolang.jeo.label</part>
+      </meta>
+   </metas>
+   <objects>
+      <o abstract="" name="j$FlightRecorderStartupEvent">
+         <o base="int" data="bytes" name="version">00 00 00 00 00 00 00 34</o>
+         <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 20</o>
+         <o base="string" data="bytes" name="supername">6A 64 6B 2F 6A 66 72 2F 45 76 65 6E 74</o>
+         <o base="tuple" name="interfaces" star=""/>
+         <o base="field" name="j$eventId">
+            <o base="int" data="bytes" name="access-j$eventId">00 00 00 00 00 00 00 11</o>
+            <o base="string" data="bytes" name="descriptor-j$eventId">4A</o>
+            <o base="string" data="bytes" name="signature-j$eventId"/>
+            <o base="long"
+               data="bytes"
+               name="value-j$eventId"
+               scope="nullable"/>
+         </o>
+         <o base="field" name="j$parentId">
+            <o base="int" data="bytes" name="access-j$parentId">00 00 00 00 00 00 00 11</o>
+            <o base="string" data="bytes" name="descriptor-j$parentId">4A</o>
+            <o base="string" data="bytes" name="signature-j$parentId"/>
+            <o base="long"
+               data="bytes"
+               name="value-j$parentId"
+               scope="nullable"/>
+         </o>
+         <o base="field" name="j$name">
+            <o base="int" data="bytes" name="access-j$name">00 00 00 00 00 00 00 11</o>
+            <o base="string" data="bytes" name="descriptor-j$name">4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B</o>
+            <o base="string" data="bytes" name="signature-j$name"/>
+            <o base="string" data="bytes" name="value-j$name" scope="nullable"/>
+            <o base="tuple" name="annotations" star="">
+               <o base="annotation">
+                  <o base="string" data="bytes" name="descriptor">4C 6A 64 6B 2F 6A 66 72 2F 4C 61 62 65 6C 3B</o>
+                  <o base="bool" data="bytes" name="visible">01</o>
+               </o>
+            </o>
+         </o>
+         <o base="field" name="j$tags">
+            <o base="int" data="bytes" name="access-j$tags">00 00 00 00 00 00 00 00</o>
+            <o base="string" data="bytes" name="descriptor-j$tags">4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B</o>
+            <o base="string" data="bytes" name="signature-j$tags"/>
+            <o base="string" data="bytes" name="value-j$tags" scope="nullable"/>
+            <o base="tuple" name="annotations" star="">
+               <o base="annotation">
+                  <o base="string" data="bytes" name="descriptor">4C 6A 64 6B 2F 6A 66 72 2F 4C 61 62 65 6C 3B</o>
+                  <o base="bool" data="bytes" name="visible">01</o>
+               </o>
+            </o>
+         </o>
+         <o abstract="" name="new">
+            <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 01</o>
+            <o base="string" data="bytes" name="descriptor">28 4A 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 4A 29 56</o>
+            <o base="string" data="bytes" name="signature"/>
+            <o base="tuple" name="exceptions" star=""/>
+            <o name="maxs">
+               <o base="int" data="bytes" name="stack">00 00 00 00 00 00 00 03</o>
+               <o base="int" data="bytes" name="locals">00 00 00 00 00 00 00 06</o>
+            </o>
+            <o abstract="" name="arg__J__0"/>
+            <o abstract="" name="arg__Ljava/lang/String;__1"/>
+            <o abstract="" name="arg__J__2"/>
+            <o base="seq" name="@">
+               <o base="tuple" star="">
+                  <o base="opcode" line="999" name="ALOAD-1A8123">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 00</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKESPECIAL-1A8124">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B7</o>
+                     <o base="string" data="bytes">6A 64 6B 2F 6A 66 72 2F 45 76 65 6E 74</o>
+                     <o base="string" data="bytes">3C 69 6E 69 74 3E</o>
+                     <o base="string" data="bytes">28 29 56</o>
+                     <o base="bool" data="bytes">00</o>
+                  </o>
+                  <o base="opcode" line="999" name="ALOAD-1A8125">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 00</o>
+                  </o>
+                  <o base="opcode" line="999" name="LDC-1A8126">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 12</o>
+                     <o base="string" data="bytes"/>
+                  </o>
+                  <o base="opcode" line="999" name="PUTFIELD-1A8127">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B5</o>
+                     <o base="string" data="bytes">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 72 65 2F 6D 65 74 72 69 63 73 2F 6A 66 72 2F 46 6C 69 67 68 74 52 65 63 6F 72 64 65 72 53 74 61 72 74 75 70 45 76 65 6E 74</o>
+                     <o base="string" data="bytes">74 61 67 73</o>
+                     <o base="string" data="bytes">4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B</o>
+                  </o>
+                  <o base="label" data="bytes">34 36 30 36 64 35 39 64 2D 35 39 66 66 2D 34 39 38 61 2D 39 32 32 63 2D 34 66 35 66 37 30 63 36 31 33 66 63</o>
+                  <o base="opcode" line="999" name="ALOAD-1A8128">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 00</o>
+                  </o>
+                  <o base="opcode" line="999" name="ALOAD-1A8129">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 03</o>
+                  </o>
+                  <o base="opcode" line="999" name="PUTFIELD-1A812A">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B5</o>
+                     <o base="string" data="bytes">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 72 65 2F 6D 65 74 72 69 63 73 2F 6A 66 72 2F 46 6C 69 67 68 74 52 65 63 6F 72 64 65 72 53 74 61 72 74 75 70 45 76 65 6E 74</o>
+                     <o base="string" data="bytes">6E 61 6D 65</o>
+                     <o base="string" data="bytes">4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B</o>
+                  </o>
+                  <o base="opcode" line="999" name="ALOAD-1A812B">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 00</o>
+                  </o>
+                  <o base="opcode" line="999" name="LLOAD-1A812C">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 16</o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 01</o>
+                  </o>
+                  <o base="opcode" line="999" name="PUTFIELD-1A812D">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B5</o>
+                     <o base="string" data="bytes">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 72 65 2F 6D 65 74 72 69 63 73 2F 6A 66 72 2F 46 6C 69 67 68 74 52 65 63 6F 72 64 65 72 53 74 61 72 74 75 70 45 76 65 6E 74</o>
+                     <o base="string" data="bytes">65 76 65 6E 74 49 64</o>
+                     <o base="string" data="bytes">4A</o>
+                  </o>
+                  <o base="opcode" line="999" name="ALOAD-1A812E">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 00</o>
+                  </o>
+                  <o base="opcode" line="999" name="LLOAD-1A812F">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 16</o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 04</o>
+                  </o>
+                  <o base="opcode" line="999" name="PUTFIELD-1A8130">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B5</o>
+                     <o base="string" data="bytes">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 72 65 2F 6D 65 74 72 69 63 73 2F 6A 66 72 2F 46 6C 69 67 68 74 52 65 63 6F 72 64 65 72 53 74 61 72 74 75 70 45 76 65 6E 74</o>
+                     <o base="string" data="bytes">70 61 72 65 6E 74 49 64</o>
+                     <o base="string" data="bytes">4A</o>
+                  </o>
+                  <o base="opcode" line="999" name="RETURN-1A8131">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B1</o>
+                  </o>
+               </o>
+            </o>
+         </o>
+      </o>
+   </objects>
+</program>

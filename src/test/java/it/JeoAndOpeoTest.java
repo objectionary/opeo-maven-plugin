@@ -107,6 +107,7 @@ final class JeoAndOpeoTest {
         "xmir/disassembled/AssertionsKt$sam$i$org_junit_jupiter_api_function_Executable$0.xmir",
         "xmir/disassembled/App.xmir",
         "xmir/disassembled/SmartLifecycle.xmir",
+        "xmir/disassembled/FlightRecorderStartupEvent.xmir"
     })
     void decompilesCompilesAndKeepsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
