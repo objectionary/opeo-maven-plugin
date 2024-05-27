@@ -70,9 +70,13 @@ eo:
         [] > arg__[Ljava/lang/String;__0
         seq > @
           *
-            com/example/B
+            duplicated
+              "com/example/B"
+              .new-type
             .new
-              com/example/A
+              duplicated
+                "com/example/A"
+                .new-type
               .new
                 42
             .bar

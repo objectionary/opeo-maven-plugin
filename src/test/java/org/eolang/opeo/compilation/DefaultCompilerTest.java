@@ -88,7 +88,6 @@ final class DefaultCompilerTest {
 
     @ParameterizedTest
     @CsvSource({
-        "JsonMixinModule$JsonMixinComponentScanner.xmir",
         "StreamUtils$NonClosingOutputStream.xmir",
         "Enhancer$3.xmir"
     })

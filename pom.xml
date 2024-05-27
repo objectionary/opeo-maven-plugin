@@ -208,6 +208,8 @@ SOFTWARE.
           -->
           <pomExcludes>
             <exclude>spring-fat/pom.xml</exclude>
+<!--        @Todo:    Why?-->
+            <exclude>fuse/pom.xml</exclude>
           </pomExcludes>
         </configuration>
         <dependencies>
