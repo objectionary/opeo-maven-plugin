@@ -44,7 +44,7 @@ final class ConstructorTest {
                 String.join(
                     "\n",
                     "<o base='.new'>",
-                    "  <o base='A'/>",
+                    "  <o base='.new-type'><o base='string' data='bytes'>41</o></o>",
                     "  <o base='string' data='bytes'>66 69 72 73 74</o>",
                     "  <o base='string' data='bytes'>73 65 63 6F 6E 64</o>",
                     "  <o base='int' data='bytes'>00 00 00 00 00 00 00 03</o>",
@@ -62,8 +62,8 @@ final class ConstructorTest {
             ).xml(),
             XhtmlMatchers.hasXPaths(
                 "/o[@base='.new']",
-                "/o[@base='.new']/o[@base='A']",
-                "/o[@base='.new']/o[@base='string' and @data='bytes']",
+                "/o[@base='.new']/o[@base='.new-type']",
+                "/o[@base='.new']/o[@base='.new-type']/o[@base='string' and @data='bytes' and text()='41']",
                 "/o[@base='.new']/o[@base='int' and @data='bytes']"
             )
         );

@@ -3,6 +3,7 @@ package org.eolang.opeo.ast;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.objectweb.asm.Opcodes;
@@ -10,15 +11,15 @@ import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
-public final class Duplicate implements AstNode, Typed {
+public final class Duplicate implements AstNode, Typed, Linked {
 
     private final AtomicBoolean convertedToOpcodes;
     private final AtomicBoolean convertedToXmir;
 
-    private final AstNode original;
+    private final AtomicReference<AstNode> original;
 
     public Duplicate(final AstNode original) {
-        this.original = original;
+        this.original = new AtomicReference<>(original);
         this.convertedToOpcodes = new AtomicBoolean(false);
         this.convertedToXmir = new AtomicBoolean(false);
     }
@@ -29,15 +30,16 @@ public final class Duplicate implements AstNode, Typed {
             return Collections.emptyList();
         }
         return Stream.concat(
-            this.original.opcodes().stream(),
+            this.original.get().opcodes().stream(),
             Stream.of(new Opcode(Opcodes.DUP))
         ).collect(Collectors.toList());
+//        return this.original.get().opcodes().stream().collect(Collectors.toList());
     }
 
     @Override
     public Type type() {
-        if (this.original instanceof Typed) {
-            return ((Typed) this.original).type();
+        if (this.original.get() instanceof Typed) {
+            return ((Typed) this.original.get()).type();
         } else {
             throw new IllegalArgumentException();
         }
@@ -45,17 +47,27 @@ public final class Duplicate implements AstNode, Typed {
 
     @Override
     public Iterable<Directive> toXmir() {
-        if (convertedToXmir.getAndSet(true)) {
+        if (this.convertedToXmir.getAndSet(true)) {
             return Collections.emptyList();
         }
         return new Directives()
             .add("o")
             .attr("base", "duplicated")
-            .append(this.original.toXmir())
+            .append(this.original.get().toXmir())
             .up();
     }
 
     public AstNode origin() {
-        return this.original;
+        return this.original.get();
+    }
+
+    @Override
+    public void link(final AstNode node) {
+        this.original.set(node);
+    }
+
+    @Override
+    public AstNode current() {
+        return this.original.get();
     }
 }

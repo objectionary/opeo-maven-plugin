@@ -104,9 +104,10 @@ final class JeoAndOpeoTest {
     @CsvSource({
         "xmir/disassembled/AsIsEscapeUtil.xmir",
         "xmir/disassembled/LongArrayAssert.xmir",
-        "xmir/disassembled/AssertionsKt$sam$i$org_junit_jupiter_api_function_Executable$0.xmir"
+        "xmir/disassembled/AssertionsKt$sam$i$org_junit_jupiter_api_function_Executable$0.xmir",
+        "xmir/disassembled/App.xmir"
     })
-    void decompilesCompilesAndKeppsTheSameInstructions(final String path) throws Exception {
+    void decompilesCompilesAndKeepsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
         final XML decompiled = new JeoDecompiler(original).decompile();
         System.out.println(decompiled);

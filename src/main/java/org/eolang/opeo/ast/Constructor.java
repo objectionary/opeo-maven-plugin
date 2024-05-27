@@ -40,7 +40,7 @@ public final class Constructor implements AstNode, Typed {
     /**
      * Constructor type.
      */
-    private final String ctype;
+    private final AstNode ctype;
 
     /**
      * Constructor attributes.
@@ -98,9 +98,17 @@ public final class Constructor implements AstNode, Typed {
         final Attributes attrs,
         final List<AstNode> args
     ) {
-        this.ctype = type;
-        this.attributes = attrs;
-        this.arguments = args;
+        this(new NewAddress(type), attrs, args);
+    }
+
+    public Constructor(
+        final AstNode ctype,
+        final Attributes attributes,
+        final List<AstNode> arguments
+    ) {
+        this.ctype = ctype;
+        this.attributes = attributes;
+        this.arguments = arguments;
     }
 
     @Override
@@ -109,9 +117,7 @@ public final class Constructor implements AstNode, Typed {
         directives.add("o")
             .attr("base", ".new")
             .attr("scope", this.attributes)
-            .add("o")
-            .attr("base", this.ctype)
-            .up();
+            .append(this.ctype.toXmir());
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
     }
@@ -119,13 +125,14 @@ public final class Constructor implements AstNode, Typed {
     @Override
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(0);
-        res.add(new Opcode(Opcodes.NEW, this.ctype));
-        res.add(new Opcode(Opcodes.DUP));
+        res.addAll(this.ctype.opcodes());
+//        res.add(new Opcode(Opcodes.NEW, this.ctype));
+//        res.add(new Opcode(Opcodes.DUP));
         this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
         res.add(
             new Opcode(
                 Opcodes.INVOKESPECIAL,
-                this.ctype,
+                this.opcodeType(this.ctype),
                 "<init>",
                 this.attributes.descriptor(),
                 this.attributes.interfaced()
@@ -136,6 +143,23 @@ public final class Constructor implements AstNode, Typed {
 
     @Override
     public Type type() {
-        return Type.getObjectType(this.ctype);
+        return ((Typed) this.ctype).type();
+    }
+
+    private String opcodeType(final AstNode node) {
+        if (node instanceof NewAddress) {
+            return ((NewAddress) node).typeString();
+        } else if (node instanceof Reference) {
+            return opcodeType(((Reference) node).object());
+        } else if (node instanceof Duplicate) {
+            return opcodeType(((Duplicate) node).origin());
+        } else {
+            throw new IllegalStateException(
+                String.format(
+                    "Unexpected node type: %s",
+                    node.getClass().getCanonicalName()
+                )
+            );
+        }
     }
 }

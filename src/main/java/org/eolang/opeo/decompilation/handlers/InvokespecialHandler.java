@@ -30,6 +30,7 @@ import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.ast.Labeled;
+import org.eolang.opeo.ast.Linked;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
@@ -65,13 +66,16 @@ public final class InvokespecialHandler implements InstructionHandler {
                 new Super(target, args, descriptor, type, name)
             );
         } else {
+            final Linked linked = this.findLinked(target);
             final AstNode constructor = new Constructor(
-                type,
+                linked.current(),
                 new Attributes().descriptor(descriptor).interfaced(interfaced),
                 args
             );
+            linked.link(constructor);
+//            state.stack().push(constructor);
 
-            findRef(target).link(constructor);
+
 //            if (target instanceof Reference) {
 //                ((Reference) target).link(constructor);
 //            } else if (target instanceof Labeled) {
@@ -89,13 +93,11 @@ public final class InvokespecialHandler implements InstructionHandler {
         }
     }
 
-    private Reference findRef(final AstNode node) {
-        if (node instanceof Reference) {
-            return (Reference) node;
+    private Linked findLinked(final AstNode node) {
+        if (node instanceof Linked) {
+            return (Linked) node;
         } else if (node instanceof Labeled) {
-            return findRef((((Labeled) node).origin()));
-        } else if (node instanceof Duplicate) {
-            return findRef((((Duplicate) node).origin()));
+            return this.findLinked((((Labeled) node).origin()));
         } else {
             throw new IllegalStateException(String.format("Can find reference for node %s", node));
         }

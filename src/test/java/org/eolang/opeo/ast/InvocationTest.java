@@ -48,9 +48,8 @@ final class InvocationTest {
                     "\n",
                     "<o base='.bar'>",
                     "  <o base='.new'>",
-                    "    <o base='foo'/>",
+                    "    <o base='.new-type'><o base='string' data='bytes'>62 61 7A</o></o>",
                     "  </o>",
-                    "  <o base='string' data='bytes'>62 61 7A</o>",
                     "</o>"
                 )
             ),

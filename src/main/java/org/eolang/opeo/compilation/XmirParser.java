@@ -49,6 +49,7 @@ import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.LocalVariable;
+import org.eolang.opeo.ast.NewAddress;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Popped;
 import org.eolang.opeo.ast.RawXml;
@@ -160,6 +161,8 @@ final class XmirParser {
         );
         if (".ignore-result".equals(base)) {
             result = new Popped(this.node(node.firstChild()));
+        } else if (".new-type".equals(base)) {
+            result = new NewAddress(node);
         } else if ("duplicated".equals(base)) {
             result = new Duplicate(this.node(node.firstChild()));
         } else if (".plus".equals(base)) {
@@ -243,14 +246,16 @@ final class XmirParser {
             result = new LocalVariable(node);
         } else if (".new".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final String type = inner.get(0).attribute("base").orElseThrow(
-                () -> new IllegalArgumentException(
-                    String.format(
-                        "Can't find type of '%s'",
-                        base
-                    )
-                )
-            );
+//            final String type = inner.get(0).attribute("base").orElseThrow(
+//                () -> new IllegalArgumentException(
+//                    String.format(
+//                        "Can't find type of '%s'",
+//                        base
+//                    )
+//                )
+//            );
+
+            final AstNode target = node(inner.get(0));
             final List<AstNode> args = this.args(inner);
             final String descriptor = node.attribute("scope")
                 .map(Attributes::new)
@@ -260,7 +265,7 @@ final class XmirParser {
             final Attributes attributes = new Attributes()
                 .descriptor(descriptor)
                 .interfaced(false);
-            result = new Constructor(type, attributes, args);
+            result = new Constructor(target, attributes, args);
         } else if (".array-node".equals(base)) {
             final List<XmlNode> children = node.children().collect(Collectors.toList());
             final String type = new HexString(children.get(0).text()).decode();

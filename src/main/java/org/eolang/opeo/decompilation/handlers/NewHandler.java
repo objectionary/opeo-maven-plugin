@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.decompilation.handlers;
 
+import org.eolang.opeo.ast.NewAddress;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
@@ -35,7 +36,7 @@ public final class NewHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {
-        state.stack().push(new Reference());
+        state.stack().push(new NewAddress(state.operand(0).toString()));
     }
 
 }
