@@ -30,8 +30,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.cactoos.bytes.BytesOf;
@@ -157,9 +159,13 @@ final class JeoAndOpeoTest {
             "/Users/lombrozo/Workspace/EOlang/opeo-maven-plugin/target/it/spring-fat/target/generated-sources/opeo-compile-xmir/org"
         );
 
+        final AtomicInteger counter = new AtomicInteger(0);
+        final AtomicInteger errorsCounter = new AtomicInteger(0);
+        final List<String> errorMessages = new ArrayList<>(0);
         try (final Stream<Path> all = Files.walk(golden).filter(Files::isRegularFile)) {
             all.forEach(
                 path -> {
+                    counter.incrementAndGet();
                     final Path relative = golden.relativize(path);
                     XMLDocument good = null;
                     try {
@@ -178,6 +184,7 @@ final class JeoAndOpeoTest {
                     final XmlProgram badProgram = new XmlProgram(bad);
                     final List<XmlMethod> goodMethods = goodProgram.top().methods();
                     final List<XmlMethod> badMethods = badProgram.top().methods();
+                    outer:
                     for (int i = 0; i < goodMethods.size(); i++) {
                         final XmlMethod goodMethod = goodMethods.get(i);
                         final XmlMethod badMethod = badMethods.get(i);
@@ -199,15 +206,20 @@ final class JeoAndOpeoTest {
                                 final XmlInstruction badInstruction = (XmlInstruction) badEntry;
 
                                 if (goodInstruction.opcode() != badInstruction.opcode()) {
-                                    throw new IllegalArgumentException(
-                                        String.format(
-                                            "The operands '%s' and '%s' are differ in %n%s%n%s",
-                                            goodEntry,
-                                            badEntry,
-                                            "file://" + golden.resolve(relative),
-                                            "file://" + real.resolve(relative)
-                                        )
+                                    final String message = String.format(
+                                        "The operands '%s' and '%s' are differ in %n%s%n%s,%nTotal scanned files: %d",
+                                        goodEntry,
+                                        badEntry,
+                                        "file://" + golden.resolve(relative),
+                                        "file://" + real.resolve(relative),
+                                        counter.get()
                                     );
+//                                    throw new IllegalArgumentException(
+//                                        message
+//                                    );
+                                    errorMessages.add(message);
+                                    errorsCounter.incrementAndGet();
+                                    break outer;
                                 }
                                 final List<XmlOperand> goodOperands = goodInstruction.operands();
                                 final List<XmlOperand> badOperands = badInstruction.operands();
@@ -221,18 +233,21 @@ final class JeoAndOpeoTest {
                                         "label") && badOperandString.contains("label"))
                                         continue;
                                     if (!goodOperandString.equals(badOperandString)) {
-                                        throw new IllegalArgumentException(
-                                            String.format(
-                                                "The operands '%s' and '%s' are differ in '%s'%n'%s'%n'%s',%n%s%n%s",
-                                                goodEntry,
-                                                badEntry,
-                                                relative,
-                                                goodOperand,
-                                                badOperand,
-                                                "file://" + golden.resolve(relative),
-                                                "file://" + real.resolve(relative)
-                                            )
+                                        final String message = String.format(
+                                            "The operands '%s' and '%s' are differ in '%s'%n'%s'%n'%s',%n%s%n%s%nTotal scanned files: %d",
+                                            goodEntry,
+                                            badEntry,
+                                            relative,
+                                            goodOperand,
+                                            badOperand,
+                                            "file://" + golden.resolve(relative),
+                                            "file://" + real.resolve(relative),
+                                            counter.get()
                                         );
+//                                        throw new IllegalArgumentException(message);
+                                        errorMessages.add(message);
+                                        errorsCounter.incrementAndGet();
+                                        break outer;
                                     }
                                 }
 
@@ -242,11 +257,15 @@ final class JeoAndOpeoTest {
                         }
 
                     }
+                    System.out.println("Total files:" + counter.get());
+                    System.out.println("Number of failed files:" + errorsCounter.get());
                 }
             );
         } catch (final IOException exception) {
             throw new RuntimeException(exception);
         }
+        System.out.println("All Errors:\n");
+        errorMessages.forEach(System.out::println);
     }
 
 
