@@ -161,12 +161,17 @@ public final class Invocation implements AstNode, Typed {
                     this.source
                 )
             );
+        }//todo: why?
+        final String owner;
+        if (this.attributes.toString().contains("owner")) {
+            owner = this.attributes.owner();
+        } else {
+            owner = ((Typed) this.source).type().getClassName();
         }
-        final Typed owner = (Typed) this.source;
         res.add(
             new Opcode(
                 Opcodes.INVOKEVIRTUAL,
-                owner.type().getClassName().replace('.', '/'),
+                owner.replace('.', '/'),
                 this.attributes.name(),
                 this.attributes.descriptor(),
                 this.attributes.interfaced()

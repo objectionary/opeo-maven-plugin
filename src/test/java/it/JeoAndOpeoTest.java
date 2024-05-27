@@ -109,7 +109,9 @@ final class JeoAndOpeoTest {
         "xmir/disassembled/AssertionsKt$sam$i$org_junit_jupiter_api_function_Executable$0.xmir",
         "xmir/disassembled/App.xmir",
         "xmir/disassembled/SmartLifecycle.xmir",
-        "xmir/disassembled/FlightRecorderStartupEvent.xmir"
+        "xmir/disassembled/FlightRecorderStartupEvent.xmir",
+        "xmir/disassembled/SimpleLog.xmir",
+        "xmir/disassembled/OpenSSLContext$1.xmir",
     })
     void decompilesCompilesAndKeepsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
@@ -130,6 +132,40 @@ final class JeoAndOpeoTest {
                 ).instuctionNames()
             )
         );
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "xmir/disassembled/SimpleLog.xmir",
+//        "xmir/disassembled/OpenSSLContext$1.xmir",
+    })
+    void decompilesCompilesAndKeepsTheSameInstructionsWithTheSameOperands(
+        final String path
+    ) throws Exception {
+        final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
+        Opcode.disableCounting();
+        final List<XmlBytecodeEntry> actual = new XmlProgram(
+            new JeoCompiler(
+                new JeoDecompiler(original).decompile()
+            ).compile()
+        ).top().methods().get(0).instructions();
+        final List<XmlBytecodeEntry> expected = new XmlProgram(original).top().methods().get(0)
+            .instructions();
+
+        final int size = expected.size();
+        for (int index = 0; index < size; ++index) {
+            final XmlBytecodeEntry expect = expected.get(index);
+            final XmlBytecodeEntry act = actual.get(index);
+            if(expect instanceof XmlLabel && act instanceof XmlLabel) {
+                continue;
+            }
+            MatcherAssert.assertThat(
+                "The original and compiled instructions are not equal",
+                act,
+                Matchers.equalTo(expect)
+            );
+
+        }
     }
 
     @Disabled

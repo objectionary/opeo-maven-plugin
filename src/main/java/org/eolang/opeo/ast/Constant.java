@@ -24,7 +24,12 @@ public final class Constant implements AstNode, Typed {
 
     @Override
     public List<AstNode> opcodes() {
-        return Collections.singletonList(new Opcode(Opcodes.LDC, this.value));
+//        if (this.value instanceof Type) {
+//            return Collections.singletonList(
+//                new Opcode(Opcodes.LDC, ((Type) this.value).getClass()));
+//        } else {
+            return Collections.singletonList(new Opcode(Opcodes.LDC, this.value));
+//        }
     }
 
     @Override
@@ -37,7 +42,11 @@ public final class Constant implements AstNode, Typed {
 
     @Override
     public Type type() {
-        return Type.getType(this.value.getClass());
+        if (this.value instanceof Type) {
+            return (Type) this.value;
+        } else {
+            return Type.getType(this.value.getClass());
+        }
     }
 
     private static Object parse(final XmlNode node) {
