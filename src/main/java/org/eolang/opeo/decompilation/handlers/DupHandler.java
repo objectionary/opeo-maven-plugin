@@ -39,7 +39,7 @@ public final class DupHandler implements InstructionHandler {
     public void handle(final DecompilerState state) {
         final OperandStack stack = state.stack();
         stack.push(new Duplicate(stack.pop()));
-        stack.dup();
+//        stack.dup();
     }
 
 }

@@ -33,6 +33,7 @@ import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
+import org.eolang.opeo.ast.Constant;
 import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.Invocation;
@@ -401,7 +402,7 @@ final class DecompilerMachineTest {
                             )
                             .owner("java/io/PrintStream")
                             .interfaced(false),
-                        new Literal("Number is %s"),
+                        new Constant("Number is %s"),
                         new StoreArray(
                             new ArrayConstructor(
                                 new Literal(1),

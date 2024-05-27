@@ -38,6 +38,7 @@ import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Cast;
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.ClassName;
+import org.eolang.opeo.ast.Constant;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.ConstructorDescriptor;
 import org.eolang.opeo.ast.Duplicate;
@@ -161,6 +162,8 @@ final class XmirParser {
         );
         if (".ignore-result".equals(base)) {
             result = new Popped(this.node(node.firstChild()));
+        } else if ("load-constant".equals(base)) {
+            result = new Constant(node);
         } else if (".new-type".equals(base)) {
             result = new NewAddress(node);
         } else if ("duplicated".equals(base)) {

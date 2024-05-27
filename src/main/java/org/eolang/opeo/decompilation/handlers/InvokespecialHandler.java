@@ -66,14 +66,14 @@ public final class InvokespecialHandler implements InstructionHandler {
                 new Super(target, args, descriptor, type, name)
             );
         } else {
-            final Linked linked = this.findLinked(target);
+//            final Linked linked = this.findLinked(target);
             final AstNode constructor = new Constructor(
-                linked.current(),
+                target,
                 new Attributes().descriptor(descriptor).interfaced(interfaced),
                 args
             );
-            linked.link(constructor);
-//            state.stack().push(constructor);
+//            linked.link(constructor);
+            state.stack().push(constructor);
 
 
 //            if (target instanceof Reference) {

@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.decompilation.handlers;
 
+import org.eolang.opeo.ast.Constant;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
@@ -35,7 +36,8 @@ public final class LdcHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {
-        state.stack().push(new Literal(state.operand(0)));
+        final Object operand = state.operand(0);
+        state.stack().push(new Constant(operand));
     }
 
 }

@@ -24,6 +24,7 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.xml.XMLDocument;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
@@ -41,9 +42,17 @@ final class InvocationTest {
 
     @Test
     void transformsToXmir() throws ImpossibleModificationException {
+        final String actual = new Xembler(
+            new Invocation(
+                new Constructor("foo"),
+                "bar",
+                new Literal("baz")
+            ).toXmir(),
+            new Transformers.Node()
+        ).xml();
         MatcherAssert.assertThat(
             String.format(
-                "We expect the following XMIRl to be generated:%n%s%n",
+                "We expect the following XMIRl to be generated:%n%s%n, but was: %n%s%n",
                 String.join(
                     "\n",
                     "<o base='.bar'>",
@@ -51,18 +60,12 @@ final class InvocationTest {
                     "    <o base='.new-type'><o base='string' data='bytes'>62 61 7A</o></o>",
                     "  </o>",
                     "</o>"
-                )
+                ),
+                new XMLDocument(actual)
             ),
-            new Xembler(
-                new Invocation(
-                    new Constructor("foo"),
-                    "bar",
-                    new Literal("baz")
-                ).toXmir(),
-                new Transformers.Node()
-            ).xml(),
+            actual,
             XhtmlMatchers.hasXPaths(
-                "/o[@base='.bar']/o[@base='.new']/o[@base='foo']",
+                "/o[@base='.bar']/o[@base='.new']/o[@base='.new-type']/o[text()='66 6F 6F']",
                 "/o[@base='.bar']/o[@base='string' and @data='bytes' and text()='62 61 7A']"
             )
         );

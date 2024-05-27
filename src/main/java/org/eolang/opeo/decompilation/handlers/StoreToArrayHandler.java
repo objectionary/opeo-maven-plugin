@@ -47,6 +47,7 @@ public final class StoreToArrayHandler implements InstructionHandler {
         final AstNode array = state.stack().pop();
         final Reference ref = findRef(array);
         ref.link(new StoreArray(ref.object(), index, value));
+        state.stack().push(ref);
     }
 
     private Reference findRef(final AstNode node) {
