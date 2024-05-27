@@ -24,6 +24,8 @@
 package org.eolang.opeo.decompilation.handlers;
 
 import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Duplicate;
+import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.decompilation.DecompilerState;
@@ -43,7 +45,20 @@ public final class StoreToArrayHandler implements InstructionHandler {
         final AstNode value = state.stack().pop();
         final AstNode index = state.stack().pop();
         final AstNode array = state.stack().pop();
-        final Reference ref = (Reference) array;
+        final Reference ref = findRef(array);
         ref.link(new StoreArray(ref.object(), index, value));
     }
+
+    private Reference findRef(final AstNode node) {
+        if (node instanceof Reference) {
+            return (Reference) node;
+        } else if (node instanceof Labeled) {
+            return findRef((((Labeled) node).origin()));
+        } else if (node instanceof Duplicate) {
+            return findRef((((Duplicate) node).origin()));
+        } else {
+            throw new IllegalStateException(String.format("Can find reference for node %s", node));
+        }
+    }
+
 }

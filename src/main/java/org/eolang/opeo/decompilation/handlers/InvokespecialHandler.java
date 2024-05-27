@@ -28,6 +28,7 @@ import java.util.List;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Constructor;
+import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Super;
@@ -69,20 +70,37 @@ public final class InvokespecialHandler implements InstructionHandler {
                 new Attributes().descriptor(descriptor).interfaced(interfaced),
                 args
             );
-            if (target instanceof Reference) {
-                ((Reference) target).link(constructor);
-            } else if (target instanceof Labeled) {
-                ((Reference) ((Labeled) target).origin()).link(constructor);
-            } else {
-                throw new IllegalStateException(
-                    String.format(
-                        "Unexpected target type: %s",
-                        target.getClass().getCanonicalName()
-                    )
-                );
-            }
+
+            findRef(target).link(constructor);
+//            if (target instanceof Reference) {
+//                ((Reference) target).link(constructor);
+//            } else if (target instanceof Labeled) {
+//                ((Reference) ((Labeled) target).origin()).link(constructor);
+//            } else if (target instanceof Duplicate) {
+//
+//            } else {
+//                throw new IllegalStateException(
+//                    String.format(
+//                        "Unexpected target type: %s",
+//                        target.getClass().getCanonicalName()
+//                    )
+//                );
+//            }
         }
     }
+
+    private Reference findRef(final AstNode node) {
+        if (node instanceof Reference) {
+            return (Reference) node;
+        } else if (node instanceof Labeled) {
+            return findRef((((Labeled) node).origin()));
+        } else if (node instanceof Duplicate) {
+            return findRef((((Duplicate) node).origin()));
+        } else {
+            throw new IllegalStateException(String.format("Can find reference for node %s", node));
+        }
+    }
+
 
     /**
      * Check if the node is "this".

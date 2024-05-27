@@ -32,6 +32,7 @@ import org.eolang.jeo.representation.xmir.XmlClass;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.jeo.representation.xmir.XmlProgram;
+import org.eolang.opeo.Instruction;
 import org.eolang.opeo.decompilation.DecompilerMachine;
 import org.eolang.opeo.decompilation.LocalVariables;
 import org.objectweb.asm.Type;

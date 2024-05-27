@@ -46,6 +46,7 @@
                name="arg__Ljava/util/concurrent/atomic/AtomicLongArray;__0"/>
             <o base="seq" name="@">
                <o base="tuple" star="">
+                  <o base="label" data="bytes">30 34 39 30 62 35 39 30 2D 33 65 35 66 2D 34 39 39 39 2D 62 63 35 36 2D 64 39 38 62 38 62 36 63 38 65 63 37</o>
                   <o base="opcode" line="999" name="ALOAD-2322A7">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
                      <o base="int" data="bytes">00 00 00 00 00 00 00 00</o>
@@ -68,9 +69,11 @@
                      <o base="string" data="bytes">28 5B 4A 29 56</o>
                      <o base="bool" data="bytes">00</o>
                   </o>
+                  <o base="label" data="bytes">34 30 35 37 30 64 62 35 2D 64 61 36 34 2D 34 33 65 61 2D 62 30 63 31 2D 64 39 39 64 38 38 35 63 37 37 38 66</o>
                   <o base="opcode" line="999" name="RETURN-2322AF">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 B1</o>
                   </o>
+                  <o base="label" data="bytes">61 30 30 31 65 30 33 62 2D 63 30 36 39 2D 34 30 31 33 2D 39 38 34 32 2D 61 62 64 30 64 65 35 64 33 61 61 34</o>
                </o>
             </o>
          </o>

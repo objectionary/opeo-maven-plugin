@@ -32,6 +32,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
@@ -100,7 +101,11 @@ final class JeoAndOpeoTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"xmir/disassembled/AsIsEscapeUtil.xmir", "xmir/disassembled/LongArrayAssert.xmir"})
+    @CsvSource({
+        "xmir/disassembled/AsIsEscapeUtil.xmir",
+        "xmir/disassembled/LongArrayAssert.xmir",
+        "xmir/disassembled/AssertionsKt$sam$i$org_junit_jupiter_api_function_Executable$0.xmir"
+    })
     void decompilesCompilesAndKeppsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
         final XML decompiled = new JeoDecompiler(original).decompile();
@@ -141,9 +146,8 @@ final class JeoAndOpeoTest {
     @Test
     @Disabled
     void findTheProblem() {
-        final String base = "/Users/lombrozo/Workspace/EOlang/opeo-maven-plugin/target-standard/it/spring-fat/target/generated-sources/opeo-compile-xmir/org";
         Path golden = Paths.get(
-            base
+            "/Users/lombrozo/Workspace/EOlang/opeo-maven-plugin/target-standard/it/spring-fat/target/generated-sources/opeo-compile-xmir/org"
         );
 
         Path real = Paths.get(
@@ -174,9 +178,14 @@ final class JeoAndOpeoTest {
                     for (int i = 0; i < goodMethods.size(); i++) {
                         final XmlMethod goodMethod = goodMethods.get(i);
                         final XmlMethod badMethod = badMethods.get(i);
-                        final List<XmlBytecodeEntry> goodInstructions = goodMethod.instructions();
-                        final List<XmlBytecodeEntry> badInstructions = badMethod.instructions();
-
+                        final List<XmlBytecodeEntry> goodInstructions = goodMethod.instructions()
+                            .stream()
+                            .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
+                            .collect(Collectors.toList());
+                        final List<XmlBytecodeEntry> badInstructions = badMethod.instructions()
+                            .stream()
+                            .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
+                            .collect(Collectors.toList());
                         for (int j = 0; j < goodInstructions.size(); j++) {
                             final XmlBytecodeEntry goodEntry = goodInstructions.get(j);
                             final XmlBytecodeEntry badEntry = badInstructions.get(j);
@@ -189,10 +198,11 @@ final class JeoAndOpeoTest {
                                 if (goodInstruction.opcode() != badInstruction.opcode()) {
                                     throw new IllegalArgumentException(
                                         String.format(
-                                            "The instructions '%s' and '%s' are differ in '%s'",
+                                            "The operands '%s' and '%s' are differ in %n%s%n%s",
                                             goodEntry,
                                             badEntry,
-                                            relative
+                                            "file://" + golden.resolve(relative),
+                                            "file://" + real.resolve(relative)
                                         )
                                     );
                                 }

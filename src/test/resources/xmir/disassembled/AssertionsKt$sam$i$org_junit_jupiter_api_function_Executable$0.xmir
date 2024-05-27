@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-05-23T13:18:44.298234Z"
+  ms="1716470324298"
+  name="j$AssertionsKt$sam$i$org_junit_jupiter_api_function_Executable$0"
+  revision="0.0.0"
+  time="2024-05-23T13:18:44.298234Z"
+  version="0.0.0">
+  <listing>yv66vgAAADQANQEAVG9yZy9qdW5pdC9qdXBpdGVyL2FwaS9Bc3NlcnRpb25zS3Qkc2FtJGkkb3JnX2p1bml0X2p1cGl0ZXJfYXBpX2Z1bmN0aW9uX0V4ZWN1dGFibGUkMAcAAQEAEGphdmEvbGFuZy9PYmplY3QHAAMBAClvcmcvanVuaXQvanVwaXRlci9hcGkvZnVuY3Rpb24vRXhlY3V0YWJsZQcABQEAEUxrb3RsaW4vTWV0YWRhdGE7AQACbXYDAAAAAQMAAAASAQACYnYDAAAAAAMAAAADAQABawEAIm9yZy9qdW5pdC9qdXBpdGVyL2FwaS9Bc3NlcnRpb25zS3QHAA8BAAdjb252ZXJ0AQAoKExqYXZhL3V0aWwvQ29sbGVjdGlvbjspTGphdmEvdXRpbC9MaXN0OwwAEQASAQAIZnVuY3Rpb24BACBMa290bGluL2p2bS9mdW5jdGlvbnMvRnVuY3Rpb24wOwEABjxpbml0PgEAIyhMa290bGluL2p2bS9mdW5jdGlvbnMvRnVuY3Rpb24wOylWAQADKClWDAAWABgKAAQAGQwAFAAVCQACABsBAAdleGVjdXRlAQAea290bGluL2p2bS9mdW5jdGlvbnMvRnVuY3Rpb24wBwAeAQAGaW52b2tlAQAUKClMamF2YS9sYW5nL09iamVjdDsMACAAIQsAHwAiAQALaW52b2tlKC4uLikIACQBAB5rb3RsaW4vanZtL2ludGVybmFsL0ludHJpbnNpY3MHACYBAB1jaGVja0V4cHJlc3Npb25WYWx1ZUlzTm90TnVsbAEAJyhMamF2YS9sYW5nL09iamVjdDtMamF2YS9sYW5nL1N0cmluZzspVgwAKAApCgAnACoBAAR0aGlzAQArTG9yZy9qdW5pdC9qdXBpdGVyL2FwaS9mdW5jdGlvbi9FeGVjdXRhYmxlOwEADUFzc2VydGlvbnMua3QBAARDb2RlAQASTG9jYWxWYXJpYWJsZVRhYmxlAQAMSW5uZXJDbGFzc2VzAQAPRW5jbG9zaW5nTWV0aG9kAQAKU291cmNlRmlsZQEAGVJ1bnRpbWVWaXNpYmxlQW5ub3RhdGlvbnMAMQACAAQAAQAGAAEQEgAUABUAAAACAAEAFgAXAAEALwAAABYAAgACAAAACiq3ABoqK7UAHLEAAAAAEBEAHQAYAAEALwAAAC8AAwABAAAAESq0ABy5ACMBAFkSJbgAK1exAAAAAQAwAAAADAABAAAAEQAsAC0AAAAEADEAAAAKAAEAAgAAAAAAMQAyAAAABAAQABMAMwAAAAIALgA0AAAAJwABAAcAAwAIWwADSQAJSQAJSQAKAAtbAANJAAlJAAxJAA0ADkkADQ==
+  </listing>
+  <errors/>
+  <sheets/>
+  <license/>
+  <metas>
+    <meta>
+      <head>package</head>
+      <tail>org.junit.jupiter.api</tail>
+      <part>org.junit.jupiter.api</part>
+    </meta>
+    <meta>
+      <head>alias</head>
+      <tail>org.eolang.jeo.opcode</tail>
+      <part>org.eolang.jeo.opcode</part>
+    </meta>
+    <meta>
+      <head>alias</head>
+      <tail>org.eolang.jeo.label</tail>
+      <part>org.eolang.jeo.label</part>
+    </meta>
+  </metas>
+  <objects>
+    <o abstract=""
+      name="j$AssertionsKt$sam$i$org_junit_jupiter_api_function_Executable$0">
+      <o base="int" data="bytes" name="version">00 00 00 00 00 00 00 34</o>
+      <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 31</o>
+      <o base="string" data="bytes" name="supername">6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>
+      <o base="tuple" name="interfaces" star="">
+        <o base="string" data="bytes">6F 72 67 2F 6A 75 6E 69 74 2F 6A 75 70 69 74 65 72 2F 61 70 69 2F 66 75 6E 63 74 69 6F 6E 2F 45 78 65 63 75 74 61 62 6C 65</o>
+      </o>
+      <o base="field" name="j$function">
+        <o base="int" data="bytes" name="access-j$function">00 00 00 00 00 00 10 12</o>
+        <o base="string" data="bytes" name="descriptor-j$function">4C 6B 6F 74 6C 69 6E 2F 6A 76 6D 2F 66 75 6E 63 74 69 6F 6E 73 2F 46 75 6E 63 74 69 6F 6E 30 3B</o>
+        <o base="string" data="bytes" name="signature-j$function"/>
+        <o base="class"
+          data="bytes"
+          name="value-j$function"
+          scope="nullable"/>
+      </o>
+      <o abstract="" name="j$execute">
+        <o base="int" data="bytes" name="access">00 00 00 00 00 00 10 11</o>
+        <o base="string" data="bytes" name="descriptor">28 29 56</o>
+        <o base="string" data="bytes" name="signature"/>
+        <o base="tuple" name="exceptions" star=""/>
+        <o name="maxs">
+          <o base="int" data="bytes" name="stack">00 00 00 00 00 00 00 03</o>
+          <o base="int" data="bytes" name="locals">00 00 00 00 00 00 00 01</o>
+        </o>
+        <o base="seq" name="@">
+          <o base="tuple" star="">
+            <o base="label" data="bytes">37 65 37 65 35 62 63 31 2D 37 35 63 32 2D 34 65 33 37 2D 39 63 38 33 2D 66 32 36 63 34 65 35 38 37 31 35 33</o>
+            <o base="opcode" line="999" name="ALOAD-11340A">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
+              <o base="int" data="bytes">00 00 00 00 00 00 00 00</o>
+            </o>
+            <o base="opcode" line="999" name="GETFIELD-11340B">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 B4</o>
+              <o base="string" data="bytes">6F 72 67 2F 6A 75 6E 69 74 2F 6A 75 70 69 74 65 72 2F 61 70 69 2F 41 73 73 65 72 74 69 6F 6E 73 4B 74 24 73 61 6D 24 69 24 6F 72 67 5F 6A 75 6E 69 74 5F 6A 75 70 69 74 65 72 5F 61 70 69 5F 66 75 6E 63 74 69 6F 6E 5F 45 78 65 63 75 74 61 62 6C 65 24 30</o>
+              <o base="string" data="bytes">66 75 6E 63 74 69 6F 6E</o>
+              <o base="string" data="bytes">4C 6B 6F 74 6C 69 6E 2F 6A 76 6D 2F 66 75 6E 63 74 69 6F 6E 73 2F 46 75 6E 63 74 69 6F 6E 30 3B</o>
+            </o>
+            <o base="opcode" line="999" name="INVOKEINTERFACE-11340C">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 B9</o>
+              <o base="string" data="bytes">6B 6F 74 6C 69 6E 2F 6A 76 6D 2F 66 75 6E 63 74 69 6F 6E 73 2F 46 75 6E 63 74 69 6F 6E 30</o>
+              <o base="string" data="bytes">69 6E 76 6F 6B 65</o>
+              <o base="string" data="bytes">28 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74 3B</o>
+              <o base="bool" data="bytes">01</o>
+            </o>
+            <o base="opcode" line="999" name="DUP-11340D">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 59</o>
+            </o>
+            <o base="opcode" line="999" name="LDC-11340E">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 12</o>
+              <o base="string" data="bytes">69 6E 76 6F 6B 65 28 2E 2E 2E 29</o>
+            </o>
+            <o base="opcode" line="999" name="INVOKESTATIC-11340F">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 B8</o>
+              <o base="string" data="bytes">6B 6F 74 6C 69 6E 2F 6A 76 6D 2F 69 6E 74 65 72 6E 61 6C 2F 49 6E 74 72 69 6E 73 69 63 73</o>
+              <o base="string" data="bytes">63 68 65 63 6B 45 78 70 72 65 73 73 69 6F 6E 56 61 6C 75 65 49 73 4E 6F 74 4E 75 6C 6C</o>
+              <o base="string" data="bytes">28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74 3B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 29 56</o>
+              <o base="bool" data="bytes">00</o>
+            </o>
+            <o base="opcode" line="999" name="POP-113410">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 57</o>
+            </o>
+            <o base="opcode" line="999" name="RETURN-113411">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 B1</o>
+            </o>
+            <o base="label" data="bytes">37 31 64 37 30 36 62 30 2D 62 39 64 63 2D 34 64 32 63 2D 38 36 30 61 2D 66 31 35 33 31 30 31 30 39 38 35 33</o>
+          </o>
+        </o>
+      </o>
+    </o>
+  </objects>
+</program>

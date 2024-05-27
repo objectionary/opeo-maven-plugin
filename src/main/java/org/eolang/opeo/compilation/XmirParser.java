@@ -40,6 +40,7 @@ import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.ClassName;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.ConstructorDescriptor;
+import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.FieldRetrieval;
@@ -159,6 +160,8 @@ final class XmirParser {
         );
         if (".ignore-result".equals(base)) {
             result = new Popped(this.node(node.firstChild()));
+        } else if ("duplicated".equals(base)) {
+            result = new Duplicate(this.node(node.firstChild()));
         } else if (".plus".equals(base)) {
             result = new Add(node, this::node);
         } else if (".minus".equals(base)) {
