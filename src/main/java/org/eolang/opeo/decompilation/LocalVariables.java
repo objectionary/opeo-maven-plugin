@@ -66,7 +66,7 @@ public final class LocalVariables {
      * @param descriptor Method descriptor.
      */
     public LocalVariables(final int modifiers, final String descriptor, final String name) {
-        this(modifiers, Type.getArgumentTypes(descriptor), Type.getType(name));
+        this(modifiers, new VariablesArray(modifiers, descriptor).array(), Type.getType(name));
     }
 
 
@@ -76,14 +76,14 @@ public final class LocalVariables {
      * @param descriptor Method descriptor.
      */
     public LocalVariables(final int modifiers, final String descriptor) {
-        this(modifiers, Type.getArgumentTypes(descriptor));
+        this(modifiers, new VariablesArray(modifiers, descriptor).array());
     }
 
     /**
      * Constructor.
      */
     LocalVariables() {
-        this(Opcodes.ACC_PUBLIC, new Type[0]);
+        this(Opcodes.ACC_PUBLIC, Type.getType(Object.class));
     }
 
     /**
@@ -164,17 +164,73 @@ public final class LocalVariables {
      */
     private Optional<Type> argumentType(final int index) {
         final Optional<Type> result;
-        final int real;
-        if (this.isInstanceMethod()) {
-            real = index - 1;
-        } else {
-            real = index;
-        }
-        if (real > -1 && real < this.types.length) {
-            result = Optional.of(this.types[real]);
-        } else {
+        if (index < 0 || index >= this.types.length) {
             result = Optional.empty();
+        } else {
+            result = Optional.ofNullable(this.types[index]);
         }
+//        final Optional<Type> result;
+//        final int real;
+//        if (this.isInstanceMethod()) {
+//            real = index - 1;
+//        } else {
+//            real = index;
+//        }
+//        if (real > -1 && real < this.types.length) {
+//            result = Optional.ofNullable(this.types[real]);
+//        } else {
+//            result = Optional.empty();
+//        }
+//        return result;
         return result;
+    }
+
+
+    private static class VariablesArray {
+
+        private final int modifiers;
+        private final String descriptor;
+
+        public VariablesArray(final int modifiers, final String descriptor) {
+            this.modifiers = modifiers;
+            this.descriptor = descriptor;
+        }
+
+        public Type[] array() {
+            final Type[] types = Type.getArgumentTypes(this.descriptor);
+            final Type[] result = new Type[this.size()];
+            int offset = 0;
+            if (this.isInstanceMethod()) {
+                offset++;
+            }
+            for (int index = 0; index < types.length; index++) {
+                final Type current = types[index];
+                result[index + offset] = current;
+                if (current.getSize() > 1) {
+                    offset = offset + 1;
+                    result[index + offset] = current;
+                }
+            }
+            return result;
+        }
+
+
+        private int size() {
+            final int result;
+            final int res = Arrays.stream(Type.getArgumentTypes(this.descriptor))
+                .mapToInt(Type::getSize)
+                .sum();
+            if (this.isInstanceMethod()) {
+                result = res + 1;
+            } else {
+                result = res;
+            }
+            return result;
+        }
+
+        private boolean isInstanceMethod() {
+            return (this.modifiers & Opcodes.ACC_STATIC) == 0;
+        }
+
     }
 }
