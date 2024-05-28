@@ -23,7 +23,9 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.Collections;
 import java.util.List;
+import org.xembly.Directive;
 
 /**
  * Abstract syntax tree node.
@@ -36,4 +38,21 @@ public interface AstNode extends Xmir {
      * @return List of opcodes.
      */
     List<AstNode> opcodes();
+
+    /**
+     * Empty node that does nothing.
+     * @since 0.2
+     */
+    final class Empty implements AstNode {
+
+        @Override
+        public List<AstNode> opcodes() {
+            return Collections.emptyList();
+        }
+
+        @Override
+        public Iterable<Directive> toXmir() {
+            return Collections.emptyList();
+        }
+    }
 }

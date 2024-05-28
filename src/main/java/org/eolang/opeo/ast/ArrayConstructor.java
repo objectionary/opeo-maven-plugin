@@ -60,7 +60,7 @@ public final class ArrayConstructor implements AstNode {
     public Iterable<Directive> toXmir() {
         final Directives directives = new Directives();
         directives.add("o")
-            .attr("base", ".array")
+            .attr("base", ".array-node")
             .append(new DirectivesData(this.type))
             .append(this.size.toXmir());
         return directives.up();

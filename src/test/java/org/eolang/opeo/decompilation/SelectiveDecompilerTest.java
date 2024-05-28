@@ -168,4 +168,13 @@ final class SelectiveDecompilerTest {
             Matchers.arrayWithSize(2)
         );
     }
+
+    @Test
+    void identifiesUnsupportedOpcodes() {
+        MatcherAssert.assertThat(
+            "We expect that the supported opcodes won't contain the 'GOTO' opcode since we don't support it yet.",
+            new RouterHandler(false).supportedOpcodes(),
+            Matchers.not(Matchers.arrayContaining("GOTO"))
+        );
+    }
 }

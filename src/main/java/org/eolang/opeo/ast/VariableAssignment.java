@@ -60,7 +60,7 @@ public final class VariableAssignment implements AstNode {
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
-            .attr("base", ".write")
+            .attr("base", ".write-local-var")
             .append(this.left.toXmir())
             .append(this.right.toXmir())
             .up();

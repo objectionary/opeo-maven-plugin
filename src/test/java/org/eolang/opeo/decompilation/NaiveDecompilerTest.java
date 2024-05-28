@@ -63,7 +63,10 @@ final class NaiveDecompilerTest {
         final String name = "BeanMethod$NonOverridableMethodError.xmir";
         final Path input = temp.resolve("xmir").resolve(name);
         Files.createDirectories(input.getParent());
-        Files.write(input, new BytesOf(new ResourceOf(String.format("xmir/%s", name))).asBytes());
+        Files.write(
+            input,
+            new BytesOf(new ResourceOf(String.format("xmir/disassembled/%s", name))).asBytes()
+        );
         new NaiveDecompiler(temp).decompile();
         final Path expected = temp.resolve("opeo-xmir").resolve(name);
         MatcherAssert.assertThat(

@@ -88,5 +88,4 @@ public class DefaultCompiler implements Compiler {
         this.storage.save(xmir.transform(xml -> new JeoCompiler(xml).compile()));
         return 1;
     }
-
 }

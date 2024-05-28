@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-05-23T13:19:12.974113Z"
+         ms="1716470352974"
+         name="j$SmartLifecycle"
+         revision="0.0.0"
+         time="2024-05-23T13:19:12.974113Z"
+         version="0.0.0">
+   <listing>yv66vgAAADQAJwcAHAsABAAdCwAeAB8HACADf////wcAIQcAIgcAIwEADURFRkFVTFRfUEhBU0UBAAFJAQANQ29uc3RhbnRWYWx1ZQEADWlzQXV0b1N0YXJ0dXABAAMoKVoBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQASTG9jYWxWYXJpYWJsZVRhYmxlAQAEdGhpcwEALExvcmcvc3ByaW5nZnJhbWV3b3JrL2NvbnRleHQvU21hcnRMaWZlY3ljbGU7AQAEc3RvcAEAFyhMamF2YS9sYW5nL1J1bm5hYmxlOylWAQAIY2FsbGJhY2sBABRMamF2YS9sYW5nL1J1bm5hYmxlOwEAEE1ldGhvZFBhcmFtZXRlcnMBAAhnZXRQaGFzZQEAAygpSQEAClNvdXJjZUZpbGUBABNTbWFydExpZmVjeWNsZS5qYXZhAQARamF2YS9sYW5nL0ludGVnZXIMABMAJAcAJQwAJgAkAQAqb3JnL3NwcmluZ2ZyYW1ld29yay9jb250ZXh0L1NtYXJ0TGlmZWN5Y2xlAQAQamF2YS9sYW5nL09iamVjdAEAJW9yZy9zcHJpbmdmcmFtZXdvcmsvY29udGV4dC9MaWZlY3ljbGUBACJvcmcvc3ByaW5nZnJhbWV3b3JrL2NvbnRleHQvUGhhc2VkAQADKClWAQASamF2YS9sYW5nL1J1bm5hYmxlAQADcnVuBgEABAAGAAIABwAIAAEAGQAJAAoAAQALAAAAAgAFAAMAAQAMAA0AAQAOAAAALAABAAEAAAACBKwAAAACAA8AAAAGAAEAAABgABAAAAAMAAEAAAACABEAEgAAAAEAEwAUAAIADgAAAEkAAQACAAAADSq5AAIBACu5AAMBALEAAAACAA8AAAAOAAMAAAB1AAYAdgAMAHcAEAAAABYAAgAAAA0AEQASAAAAAAANABUAFgABABcAAAAFAQAVAAAAAQAYABkAAQAOAAAALQABAAEAAAADEgWsAAAAAgAPAAAABgABAAAAhQAQAAAADAABAAAAAwARABIAAAABABoAAAACABs=</listing>
+   <errors/>
+   <sheets/>
+   <license/>
+   <metas>
+      <meta>
+         <head>package</head>
+         <tail>org.springframework.context</tail>
+         <part>org.springframework.context</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.opcode</tail>
+         <part>org.eolang.jeo.opcode</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.label</tail>
+         <part>org.eolang.jeo.label</part>
+      </meta>
+   </metas>
+   <objects>
+      <o abstract="" name="j$SmartLifecycle">
+         <o base="int" data="bytes" name="version">00 00 00 00 00 00 00 34</o>
+         <o base="int" data="bytes" name="access">00 00 00 00 00 00 06 01</o>
+         <o base="string" data="bytes" name="supername">6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>
+         <o base="tuple" name="interfaces" star="">
+            <o base="string" data="bytes">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 6E 74 65 78 74 2F 4C 69 66 65 63 79 63 6C 65</o>
+            <o base="string" data="bytes">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 6E 74 65 78 74 2F 50 68 61 73 65 64</o>
+         </o>
+         <o base="field" name="j$DEFAULT_PHASE">
+            <o base="int" data="bytes" name="access-j$DEFAULT_PHASE">00 00 00 00 00 00 00 19</o>
+            <o base="string" data="bytes" name="descriptor-j$DEFAULT_PHASE">49</o>
+            <o base="string" data="bytes" name="signature-j$DEFAULT_PHASE"/>
+            <o base="int" data="bytes" name="value-j$DEFAULT_PHASE">00 00 00 00 7F FF FF FF</o>
+         </o>
+         <o abstract="" name="j$getPhase">
+            <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 01</o>
+            <o base="string" data="bytes" name="descriptor">28 29 49</o>
+            <o base="string" data="bytes" name="signature"/>
+            <o base="tuple" name="exceptions" star=""/>
+            <o name="maxs">
+               <o base="int" data="bytes" name="stack">00 00 00 00 00 00 00 01</o>
+               <o base="int" data="bytes" name="locals">00 00 00 00 00 00 00 01</o>
+            </o>
+            <o base="seq" name="@">
+               <o base="tuple" star="">
+                  <o base="label" data="bytes">37 39 63 30 61 33 66 65 2D 38 64 65 38 2D 34 62 35 36 2D 39 35 33 31 2D 61 30 36 30 62 64 39 38 37 64 32 39</o>
+                  <o base="opcode" line="999" name="LDC-2366EE">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 12</o>
+                     <o base="int" data="bytes">00 00 00 00 7F FF FF FF</o>
+                  </o>
+                  <o base="opcode" line="999" name="IRETURN-2366EF">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 AC</o>
+                  </o>
+                  <o base="label" data="bytes">65 35 31 38 61 32 34 32 2D 36 63 31 64 2D 34 65 35 34 2D 38 31 39 31 2D 61 34 65 62 38 31 37 31 61 34 31 65</o>
+               </o>
+            </o>
+         </o>
+      </o>
+   </objects>
+</program>

@@ -32,7 +32,7 @@ import org.xembly.Directive;
  * Object reference in the stack.
  * @since 0.1
  */
-public final class Reference implements AstNode, Typed {
+public final class Reference implements AstNode, Typed, Linked {
 
     /**
      * Object itself.
@@ -63,12 +63,14 @@ public final class Reference implements AstNode, Typed {
         this.ref = ref;
     }
 
-    /**
-     * Link this reference with the given object.
-     * @param node Object to link with.
-     */
+    @Override
     public void link(final AstNode node) {
         this.ref.set(node);
+    }
+
+    @Override
+    public AstNode current() {
+        return this.ref.get();
     }
 
     /**

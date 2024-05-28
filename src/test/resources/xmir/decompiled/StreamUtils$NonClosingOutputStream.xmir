@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-05-22T11:05:34.300700Z"
+         ms="1716375934300"
+         name="j$StreamUtils$NonClosingOutputStream"
+         revision="0.0.0"
+         time="2024-05-22T11:05:34.300700Z"
+         version="0.0.0">
+   <listing>yv66vgAAADQAKQoABQAfCQAEACAKACEAIgcAJAcAJQEABjxpbml0PgEAGShMamF2YS9pby9PdXRwdXRTdHJlYW07KVYBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQASTG9jYWxWYXJpYWJsZVRhYmxlAQAEdGhpcwEAFk5vbkNsb3NpbmdPdXRwdXRTdHJlYW0BAAxJbm5lckNsYXNzZXMBAD1Mb3JnL3NwcmluZ2ZyYW1ld29yay91dGlsL1N0cmVhbVV0aWxzJE5vbkNsb3NpbmdPdXRwdXRTdHJlYW07AQADb3V0AQAWTGphdmEvaW8vT3V0cHV0U3RyZWFtOwEAEE1ldGhvZFBhcmFtZXRlcnMBAAV3cml0ZQEAByhbQklJKVYBAAFiAQACW0IBAANvZmYBAAFJAQADbGV0AQAKRXhjZXB0aW9ucwcAJgEABWNsb3NlAQADKClWAQAKU291cmNlRmlsZQEAEFN0cmVhbVV0aWxzLmphdmEMAAYABwwADwAQBwAnDAASABMHACgBADtvcmcvc3ByaW5nZnJhbWV3b3JrL3V0aWwvU3RyZWFtVXRpbHMkTm9uQ2xvc2luZ091dHB1dFN0cmVhbQEAGmphdmEvaW8vRmlsdGVyT3V0cHV0U3RyZWFtAQATamF2YS9pby9JT0V4Y2VwdGlvbgEAFGphdmEvaW8vT3V0cHV0U3RyZWFtAQAkb3JnL3NwcmluZ2ZyYW1ld29yay91dGlsL1N0cmVhbVV0aWxzACAABAAFAAAAAAADAAEABgAHAAIACAAAAD4AAgACAAAABiortwABsQAAAAIACQAAAAoAAgAAARkABQEaAAoAAAAWAAIAAAAGAAsADgAAAAAABgAPABAAAQARAAAABQEADwAAAAEAEgATAAMACAAAAFcABAAEAAAACyq0AAIrHB22AAOxAAAAAgAJAAAACgACAAABHwAKASAACgAAACoABAAAAAsACwAOAAAAAAALABQAFQABAAAACwAWABcAAgAAAAsAGAAXAAMAGQAAAAQAAQAaABEAAAANAwAUAAAAFgAAABgAAAABABsAHAACAAgAAAArAAAAAQAAAAGxAAAAAgAJAAAABgABAAABJAAKAAAADAABAAAAAQALAA4AAAAZAAAABAABABoAAgAdAAAAAgAeAA0AAAAKAAEABAAjAAwACg==</listing>
+   <errors/>
+   <sheets/>
+   <license/>
+   <metas>
+      <meta>
+         <head>package</head>
+         <tail>org.springframework.util</tail>
+         <part>org.springframework.util</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.opcode</tail>
+         <part>org.eolang.jeo.opcode</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.label</tail>
+         <part>org.eolang.jeo.label</part>
+      </meta>
+   </metas>
+   <objects>
+      <o abstract="" name="j$StreamUtils$NonClosingOutputStream">
+         <o base="int" data="bytes" line="999" name="version">00 00 00 00 00 00 00 34</o>
+         <o base="int" data="bytes" line="999" name="access">00 00 00 00 00 00 00 20</o>
+         <o base="string" data="bytes" line="999" name="supername">6A 61 76 61 2F 69 6F 2F 46 69 6C 74 65 72 4F 75 74 70 75 74 53 74 72 65 61 6D</o>
+         <o base="tuple" line="999" name="interfaces" star=""/>
+         <o abstract="" name="j$write">
+            <o base="int" data="bytes" line="999" name="access">00 00 00 00 00 00 00 01</o>
+            <o base="string" data="bytes" line="999" name="descriptor">28 5B 42 49 49 29 56</o>
+            <o base="string" data="bytes" line="999" name="signature"/>
+            <o base="tuple" line="999" name="exceptions" star="">
+               <o base="string" data="bytes" line="999">6A 61 76 61 2F 69 6F 2F 49 4F 45 78 63 65 70 74 69 6F 6E</o>
+            </o>
+            <o abstract="" name="maxs">
+               <o base="int" data="bytes" line="999" name="stack">00 00 00 00 00 00 00 04</o>
+               <o base="int" data="bytes" line="999" name="locals">00 00 00 00 00 00 00 04</o>
+            </o>
+            <o abstract="" name="arg__[B__0"/>
+            <o abstract="" name="arg__I__1"/>
+            <o abstract="" name="arg__I__2"/>
+            <o base="seq" line="999" name="@">
+               <o base="tuple" line="999" star="">
+                  <o base="label" data="bytes" line="999">62 33 65 38 62 32 36 66 2D 34 66 33 31 2D 34 36 32 66 2D 61 63 36 38 2D 32 61 63 64 64 66 37 36 35 31 66 38</o>
+                  <o base=".write"
+                     line="999"
+                     scope="descriptor=([BII)V|interfaced=false|name=write|owner=java/io/OutputStream|type=method">
+                     <o base=".get-field" line="999">
+                        <o base=".out"
+                           line="999"
+                           scope="descriptor=Ljava/io/OutputStream;|name=out|owner=org/springframework/util/StreamUtils$NonClosingOutputStream|type=field">
+                           <o base="$" line="999" scope="descriptor=java.lang.Object"/>
+                        </o>
+                     </o>
+                     <o base="local1" line="999" scope="descriptor=[B|type=local"/>
+                     <o base="local2" line="999" scope="descriptor=I|type=local"/>
+                     <o base="local3" line="999" scope="descriptor=I|type=local"/>
+                  </o>
+                  <o base="label" data="bytes" line="999">36 34 64 64 31 36 66 64 2D 63 61 63 66 2D 34 61 64 31 2D 61 64 30 36 2D 61 62 30 61 34 32 64 34 63 38 61 62</o>
+                  <o base="opcode" line="999" name="RETURN">
+                     <o base="int" data="bytes" line="999">00 00 00 00 00 00 00 B1</o>
+                  </o>
+                  <o base="label" data="bytes" line="999">38 62 32 30 34 62 30 66 2D 37 36 33 61 2D 34 61 66 37 2D 38 34 34 62 2D 30 64 63 64 35 64 36 65 34 63 32 30</o>
+               </o>
+            </o>
+         </o>
+         <o base="tuple" line="999" name="attributes" star="">
+            <o base="InnerClass">
+               <o base="string" data="bytes" line="999" name="name">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 75 74 69 6C 2F 53 74 72 65 61 6D 55 74 69 6C 73 24 4E 6F 6E 43 6C 6F 73 69 6E 67 4F 75 74 70 75 74 53 74 72 65 61 6D</o>
+               <o base="string" data="bytes" line="999" name="outer">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 75 74 69 6C 2F 53 74 72 65 61 6D 55 74 69 6C 73</o>
+               <o base="string" data="bytes" line="999" name="inner">4E 6F 6E 43 6C 6F 73 69 6E 67 4F 75 74 70 75 74 53 74 72 65 61 6D</o>
+               <o base="int" data="bytes" line="999" name="access">00 00 00 00 00 00 00 0A</o>
+            </o>
+         </o>
+      </o>
+   </objects>
+</program>

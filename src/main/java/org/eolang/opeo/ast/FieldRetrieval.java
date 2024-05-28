@@ -78,7 +78,7 @@ public final class FieldRetrieval implements AstNode, Typed {
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
-            .attr("base", ".getfield")
+            .attr("base", ".get-field")
             .append(this.field.toXmir())
             .up();
     }

@@ -52,11 +52,9 @@ public final class LoadHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {
+        final Integer index = (Integer) state.operand(0);
         state.stack().push(
-            state.variable(
-                (Integer) state.operand(0),
-                this.type
-            )
+            state.variable(index, this.type)
         );
     }
 }

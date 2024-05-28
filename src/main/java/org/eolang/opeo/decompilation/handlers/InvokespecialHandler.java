@@ -29,7 +29,6 @@ import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.Labeled;
-import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.decompilation.DecompilerState;
@@ -64,23 +63,13 @@ public final class InvokespecialHandler implements InstructionHandler {
                 new Super(target, args, descriptor, type, name)
             );
         } else {
-            final AstNode constructor = new Constructor(
-                type,
-                new Attributes().descriptor(descriptor).interfaced(interfaced),
-                args
+            state.stack().push(
+                new Constructor(
+                    target,
+                    new Attributes().descriptor(descriptor).interfaced(interfaced),
+                    args
+                )
             );
-            if (target instanceof Reference) {
-                ((Reference) target).link(constructor);
-            } else if (target instanceof Labeled) {
-                ((Reference) ((Labeled) target).origin()).link(constructor);
-            } else {
-                throw new IllegalStateException(
-                    String.format(
-                        "Unexpected target type: %s",
-                        target.getClass().getCanonicalName()
-                    )
-                );
-            }
         }
     }
 

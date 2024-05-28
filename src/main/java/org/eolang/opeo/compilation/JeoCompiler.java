@@ -24,6 +24,7 @@
 package org.eolang.opeo.compilation;
 
 import com.jcabi.xml.XML;
+import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.jeo.representation.xmir.XmlClass;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlNode;
@@ -71,11 +72,36 @@ public final class JeoCompiler {
      *
      * @param method The method to compile.
      * @return The compiled method.
+     * @todo #229:90min Refactor {@link #compile} method to handle exceptions appropriately.
+     *  The method {@link #compile} is catching generic exceptions which is bad.
+     *  We should refactor it to simplify the code and remove duplicated catch blocks.
+     *  After, don't forget to remove the Checkstyle and PMD tags.
+     * @todo #229:90min Optimize Labels Generation.
+     *  Here we clean the cache of labels before compiling a method. This is a workaround
+     *  to avoid a bug in the generation of labels. When we have lot's of methods, the cache grows
+     *  and the compilation time increases significantly.
+     * @todo #229:90min Calculate the Max Stack Size.
+     *  We should calculate the max stack size of the method and set it in the compiled method.
+     *  This is important to avoid runtime errors when running the compiled code.
+     *  We used to use 'withoutMaxs()' method to avoid this, but it causes some errors.
+     *  Actually, you can try to use it to see the errors.
+     * @checkstyle IllegalCatch (50 lines)
      */
+    @SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.IdenticalCatchBranches"})
     private static XmlMethod compile(final XmlMethod method) {
         try {
-            return method.withoutMaxs().withInstructions(
+            new AllLabels().clearCache();
+            return method.withInstructions(
                 new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
+            );
+        } catch (final ClassCastException exception) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "Failed to compile method %s: %s",
+                    method.name(),
+                    method
+                ),
+                exception
             );
         } catch (final IllegalArgumentException exception) {
             throw new IllegalArgumentException(
@@ -87,6 +113,15 @@ public final class JeoCompiler {
                 exception
             );
         } catch (final IllegalStateException exception) {
+            throw new IllegalStateException(
+                String.format(
+                    "Failed to compile method %s: %s",
+                    method.name(),
+                    method
+                ),
+                exception
+            );
+        } catch (final Exception exception) {
             throw new IllegalStateException(
                 String.format(
                     "Failed to compile method %s: %s",

@@ -51,5 +51,4 @@ final class JeoCompilerTest {
             Matchers.equalTo(expected)
         );
     }
-
 }

@@ -208,6 +208,13 @@ SOFTWARE.
           -->
           <pomExcludes>
             <exclude>spring-fat/pom.xml</exclude>
+            <!--
+              @todo #229:90min Enable the fuse integration test.
+               The 'fuse' integration test is disabled in the default profile.
+               It uses outdated format of XMIR representation of bytecode.
+               We should either update the representation generated or just remove the test.
+            -->
+            <exclude>fuse/pom.xml</exclude>
           </pomExcludes>
         </configuration>
         <dependencies>

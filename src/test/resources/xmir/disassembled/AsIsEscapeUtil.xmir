@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-05-23T13:18:07.661766Z"
+         ms="1716470287661"
+         name="j$AsIsEscapeUtil"
+         revision="0.0.0"
+         time="2024-05-23T13:18:07.661766Z"
+         version="0.0.0">
+   <listing>yv66vgAAADIAJwoABgAbCAAcCgAdAB4KAB0AHwcAIAcAIQcAIgEABjxpbml0PgEAAygpVgEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBABJMb2NhbFZhcmlhYmxlVGFibGUBAAR0aGlzAQAxTGNoL3Fvcy9sb2diYWNrL2NvcmUvcGF0dGVybi91dGlsL0FzSXNFc2NhcGVVdGlsOwEABmVzY2FwZQEALyhMamF2YS9sYW5nL1N0cmluZztMamF2YS9sYW5nL1N0cmluZ0J1ZmZlcjtDSSlWAQALZXNjYXBlQ2hhcnMBABJMamF2YS9sYW5nL1N0cmluZzsBAANidWYBABhMamF2YS9sYW5nL1N0cmluZ0J1ZmZlcjsBAARuZXh0AQABQwEAB3BvaW50ZXIBAAFJAQAKU291cmNlRmlsZQEAE0FzSXNFc2NhcGVVdGlsLmphdmEMAAgACQEAAVwHACMMACQAJQwAJAAmAQAvY2gvcW9zL2xvZ2JhY2svY29yZS9wYXR0ZXJuL3V0aWwvQXNJc0VzY2FwZVV0aWwBABBqYXZhL2xhbmcvT2JqZWN0AQAsY2gvcW9zL2xvZ2JhY2svY29yZS9wYXR0ZXJuL3V0aWwvSUVzY2FwZVV0aWwBABZqYXZhL2xhbmcvU3RyaW5nQnVmZmVyAQAGYXBwZW5kAQAsKExqYXZhL2xhbmcvU3RyaW5nOylMamF2YS9sYW5nL1N0cmluZ0J1ZmZlcjsBABsoQylMamF2YS9sYW5nL1N0cmluZ0J1ZmZlcjsAIQAFAAYAAQAHAAAAAgABAAgACQABAAoAAAAvAAEAAQAAAAUqtwABsQAAAAIACwAAAAYAAQAAABMADAAAAAwAAQAAAAUADQAOAAAAAQAPABAAAQAKAAAAaAACAAUAAAAOLBICtgADVywdtgAEV7EAAAACAAsAAAAOAAMAAAAeAAcAIAANACEADAAAADQABQAAAA4ADQAOAAAAAAAOABEAEgABAAAADgATABQAAgAAAA4AFQAWAAMAAAAOABcAGAAEAAEAGQAAAAIAGg==</listing>
+   <errors/>
+   <sheets/>
+   <license/>
+   <metas>
+      <meta>
+         <head>package</head>
+         <tail>ch.qos.logback.core.pattern.util</tail>
+         <part>ch.qos.logback.core.pattern.util</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.opcode</tail>
+         <part>org.eolang.jeo.opcode</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.label</tail>
+         <part>org.eolang.jeo.label</part>
+      </meta>
+   </metas>
+   <objects>
+      <o abstract="" name="j$AsIsEscapeUtil">
+         <o base="int" data="bytes" name="version">00 00 00 00 00 00 00 32</o>
+         <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 21</o>
+         <o base="string" data="bytes" name="supername">6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>
+         <o base="tuple" name="interfaces" star="">
+            <o base="string" data="bytes">63 68 2F 71 6F 73 2F 6C 6F 67 62 61 63 6B 2F 63 6F 72 65 2F 70 61 74 74 65 72 6E 2F 75 74 69 6C 2F 49 45 73 63 61 70 65 55 74 69 6C</o>
+         </o>
+         <o abstract="" name="j$escape">
+            <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 01</o>
+            <o base="string" data="bytes" name="descriptor">28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 42 75 66 66 65 72 3B 43 49 29 56</o>
+            <o base="string" data="bytes" name="signature"/>
+            <o base="tuple" name="exceptions" star=""/>
+            <o name="maxs">
+               <o base="int" data="bytes" name="stack">00 00 00 00 00 00 00 02</o>
+               <o base="int" data="bytes" name="locals">00 00 00 00 00 00 00 05</o>
+            </o>
+            <o abstract="" name="arg__Ljava/lang/String;__0"/>
+            <o abstract="" name="arg__Ljava/lang/StringBuffer;__1"/>
+            <o abstract="" name="arg__C__2"/>
+            <o abstract="" name="arg__I__3"/>
+            <o base="seq" name="@">
+               <o base="tuple" star="">
+                  <o base="opcode" line="999" name="ALOAD">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 02</o>
+                  </o>
+                  <o base="opcode" line="999" name="LDC">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 12</o>
+                     <o base="string" data="bytes">5C</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKEVIRTUAL">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B6</o>
+                     <o base="string" data="bytes">6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 42 75 66 66 65 72</o>
+                     <o base="string" data="bytes">61 70 70 65 6E 64</o>
+                     <o base="string" data="bytes">28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 42 75 66 66 65 72 3B</o>
+                     <o base="bool" data="bytes">00</o>
+                  </o>
+                  <o base="opcode" line="999" name="POP">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 57</o>
+                  </o>
+                  <o base="opcode" line="999" name="ALOAD">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 02</o>
+                  </o>
+                  <o base="opcode" line="999" name="ILOAD">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 15</o>
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 03</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKEVIRTUAL">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B6</o>
+                     <o base="string" data="bytes">6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 42 75 66 66 65 72</o>
+                     <o base="string" data="bytes">61 70 70 65 6E 64</o>
+                     <o base="string" data="bytes">28 43 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 42 75 66 66 65 72 3B</o>
+                     <o base="bool" data="bytes">00</o>
+                  </o>
+                  <o base="opcode" line="999" name="POP">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 57</o>
+                  </o>
+                  <o base="opcode" line="999" name="RETURN">
+                     <o base="int" data="bytes">00 00 00 00 00 00 00 B1</o>
+                  </o>
+               </o>
+            </o>
+         </o>
+      </o>
+   </objects>
+</program>

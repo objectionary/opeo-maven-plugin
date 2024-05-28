@@ -23,8 +23,10 @@
  */
 package org.eolang.opeo.decompilation.handlers;
 
+import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
+import org.eolang.opeo.decompilation.OperandStack;
 
 /**
  * Dup instruction handler.
@@ -34,7 +36,8 @@ public final class DupHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {
-        state.stack().dup();
+        final OperandStack stack = state.stack();
+        stack.push(new Duplicate(stack.pop()));
     }
 
 }

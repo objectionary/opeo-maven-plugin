@@ -115,7 +115,6 @@ public final class Opcode implements AstNode {
     public List<AstNode> opcodes() {
         switch (this.bytecode) {
             case Opcodes.INVOKEVIRTUAL:
-            case Opcodes.INVOKEDYNAMIC:
             case Opcodes.INVOKEINTERFACE:
             case Opcodes.INVOKESPECIAL:
             case Opcodes.INVOKESTATIC:

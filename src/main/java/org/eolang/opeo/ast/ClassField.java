@@ -63,7 +63,7 @@ public final class ClassField implements AstNode, Typed {
     public Iterable<Directive> toXmir() {
         return new Directives()
             .add("o")
-            .attr("base", "staticfield")
+            .attr("base", "static-field")
             .attr("scope", this.attributes)
             .up();
     }

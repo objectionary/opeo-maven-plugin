@@ -198,6 +198,10 @@ public final class Literal implements AstNode, Typed {
         return this.ltype;
     }
 
+    public Object value() {
+        return this.lvalue;
+    }
+
     /**
      * Convert integer into an opcode.
      * @param value Integer value.

@@ -38,8 +38,10 @@ import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Cast;
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.ClassName;
+import org.eolang.opeo.ast.Constant;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.ConstructorDescriptor;
+import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.FieldRetrieval;
@@ -48,7 +50,9 @@ import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.LocalVariable;
+import org.eolang.opeo.ast.NewAddress;
 import org.eolang.opeo.ast.Opcode;
+import org.eolang.opeo.ast.Popped;
 import org.eolang.opeo.ast.RawXml;
 import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
@@ -62,6 +66,7 @@ import org.xembly.Xembler;
  * High-level representation of Opeo nodes.
  *
  * @since 0.1
+ * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class XmirParser {
@@ -156,7 +161,15 @@ final class XmirParser {
                 )
             )
         );
-        if (".plus".equals(base)) {
+        if (".ignore-result".equals(base)) {
+            result = new Popped(this.node(node.firstChild()));
+        } else if ("load-constant".equals(base)) {
+            result = new Constant(node);
+        } else if (".new-type".equals(base)) {
+            result = new NewAddress(node);
+        } else if ("duplicated".equals(base)) {
+            result = new Duplicate(this.node(node.firstChild()));
+        } else if (".plus".equals(base)) {
             result = new Add(node, this::node);
         } else if (".minus".equals(base)) {
             result = new Substraction(node, this::node);
@@ -200,20 +213,20 @@ final class XmirParser {
             );
         } else if ("$".equals(base)) {
             result = new This(node);
-        } else if ("staticfield".equals(base)) {
+        } else if ("static-field".equals(base)) {
             result = new ClassField(new Attributes(node.attribute("scope").orElseThrow()));
-        } else if (".writearray".equals(base)) {
+        } else if (".write-array".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode array = this.node(inner.get(0));
             final AstNode index = this.node(inner.get(1));
             final AstNode value = this.node(inner.get(2));
             result = new StoreArray(array, index, value);
-        } else if (".write".equals(base)) {
+        } else if (".write-local-var".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode target = this.node(inner.get(0));
             final AstNode value = this.node(inner.get(1));
             result = new VariableAssignment((LocalVariable) target, value);
-        } else if (".getfield".equals(base)) {
+        } else if (".get-field".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final XmlNode field = inner.get(0);
             result = new FieldRetrieval(
@@ -222,7 +235,7 @@ final class XmirParser {
                     new Attributes(field.attribute("scope").orElseThrow())
                 )
             );
-        } else if (".writefield".equals(base)) {
+        } else if (".write-field".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final XmlNode field = inner.get(0);
             final AstNode value = this.node(inner.get(1));
@@ -237,20 +250,18 @@ final class XmirParser {
             result = new LocalVariable(node);
         } else if (".new".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final String type = inner.get(0).attribute("base").orElseThrow(
-                () -> new IllegalArgumentException(
-                    String.format(
-                        "Can't find type of '%s'",
-                        base
-                    )
-                )
-            );
+            final AstNode target = this.node(inner.get(0));
             final List<AstNode> args = this.args(inner);
+            final String descriptor = node.attribute("scope")
+                .map(Attributes::new)
+                .map(Attributes::descriptor)
+                .map(descr -> new ConstructorDescriptor(descr, args))
+                .orElseGet(() -> new ConstructorDescriptor(args)).toString();
             final Attributes attributes = new Attributes()
-                .descriptor(new ConstructorDescriptor(args).toString())
+                .descriptor(descriptor)
                 .interfaced(false);
-            result = new Constructor(type, attributes, args);
-        } else if (".array".equals(base)) {
+            result = new Constructor(target, attributes, args);
+        } else if (".array-node".equals(base)) {
             final List<XmlNode> children = node.children().collect(Collectors.toList());
             final String type = new HexString(children.get(0).text()).decode();
             final AstNode size = this.node(children.get(1));

@@ -33,6 +33,7 @@ import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
+import org.eolang.opeo.ast.Constant;
 import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.Invocation;
@@ -40,6 +41,7 @@ import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Owner;
+import org.eolang.opeo.ast.Popped;
 import org.eolang.opeo.ast.Root;
 import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
@@ -387,37 +389,38 @@ final class DecompilerMachineTest {
                 ),
             new SameNode(
                 new Root(
-                    new Invocation(
-                        new ClassField(
-                            "java/lang/System",
-                            "out",
-                            "Ljava/io/PrintStream;"
-                        ),
-                        new Attributes()
-                            .name("printf")
-                            .descriptor(
-                                "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;"
-                            )
-                            .owner("java/io/PrintStream")
-                            .interfaced(false),
-                        new Literal("Number is %s"),
-                        new StoreArray(
-                            new ArrayConstructor(
-                                new Literal(1),
-                                type
+                    new Popped(
+                        new Invocation(
+                            new ClassField(
+                                "java/lang/System",
+                                "out",
+                                "Ljava/io/PrintStream;"
                             ),
-                            new Literal(0),
-                            new StaticInvocation(
-                                new Attributes()
-                                    .owner("java/lang/Integer")
-                                    .name("valueOf")
-                                    .descriptor("(I)Ljava/lang/Integer;")
-                                    .interfaced(false),
-                                new Owner("java/lang/Integer"),
-                                new Literal(2)
+                            new Attributes()
+                                .name("printf")
+                                .descriptor(
+                                    "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;"
+                                )
+                                .owner("java/io/PrintStream")
+                                .interfaced(false),
+                            new Constant("Number is %s"),
+                            new StoreArray(
+                                new ArrayConstructor(
+                                    new Literal(1),
+                                    type
+                                ),
+                                new Literal(0),
+                                new StaticInvocation(
+                                    new Attributes()
+                                        .owner("java/lang/Integer")
+                                        .name("valueOf")
+                                        .descriptor("(I)Ljava/lang/Integer;")
+                                        .interfaced(false),
+                                    new Owner("java/lang/Integer"),
+                                    new Literal(2)
+                                )
                             )
-                        )
-                    ),
+                        )),
                     new Opcode(Opcodes.RETURN, false)
                 )
             )
@@ -485,5 +488,6 @@ final class DecompilerMachineTest {
         ) {
             mismatch.appendText("was ").appendValue(this.actual.get());
         }
+
     }
 }

@@ -55,19 +55,35 @@ public final class LocalVariables {
     private final Map<Integer, AstNode> cache;
 
     /**
+     * Class type.
+     * We need a class name to correctly generate the 'this' reference with the correct type.
+     */
+    private final Type clazz;
+
+    /**
+     * Constructor.
+     * @param modifiers Method access modifiers.
+     * @param descriptor Method descriptor.
+     * @param type Method type.
+     */
+    public LocalVariables(final int modifiers, final String descriptor, final String type) {
+        this(modifiers, new VariablesArray(modifiers, descriptor).array(), Type.getType(type));
+    }
+
+    /**
      * Constructor.
      * @param modifiers Method access modifiers.
      * @param descriptor Method descriptor.
      */
     public LocalVariables(final int modifiers, final String descriptor) {
-        this(modifiers, Type.getArgumentTypes(descriptor));
+        this(modifiers, new VariablesArray(modifiers, descriptor).array());
     }
 
     /**
      * Constructor.
      */
     LocalVariables() {
-        this(Opcodes.ACC_PUBLIC, new Type[0]);
+        this(Opcodes.ACC_PUBLIC, Type.getType(Object.class));
     }
 
     /**
@@ -76,9 +92,24 @@ public final class LocalVariables {
      * @param types Method argument types.
      */
     private LocalVariables(final int modifiers, final Type... types) {
+        this(modifiers, types, Type.getType(Object.class));
+    }
+
+    /**
+     * Constructor.
+     * @param modifiers Method access modifiers.
+     * @param types Method argument types.
+     * @param clazz Class type.
+     */
+    public LocalVariables(
+        final int modifiers,
+        final Type[] types,
+        final Type clazz
+    ) {
         this.modifiers = modifiers;
         this.types = Arrays.copyOf(types, types.length);
         this.cache = new HashMap<>(0);
+        this.clazz = clazz;
     }
 
     /**
@@ -116,7 +147,7 @@ public final class LocalVariables {
         final Type type = this.argumentType(index).orElse(fallback);
         final AstNode result;
         if (index == 0 && this.isInstanceMethod()) {
-            result = new This(type);
+            result = new This(this.clazz);
         } else {
             result = new LocalVariable(index, type);
         }
@@ -139,17 +170,91 @@ public final class LocalVariables {
      */
     private Optional<Type> argumentType(final int index) {
         final Optional<Type> result;
-        final int real;
-        if (this.isInstanceMethod()) {
-            real = index - 1;
-        } else {
-            real = index;
-        }
-        if (real > -1 && real < this.types.length) {
-            result = Optional.of(this.types[real]);
-        } else {
+        if (index < 0 || index >= this.types.length) {
             result = Optional.empty();
+        } else {
+            result = Optional.ofNullable(this.types[index]);
         }
         return result;
+    }
+
+    /**
+     * Variables array with types.
+     * @since 0.2
+     */
+    private static final class VariablesArray {
+
+        /**
+         * Method modifiers.
+         */
+        private final int modifiers;
+
+        /**
+         * Method descriptor.
+         */
+        private final String descriptor;
+
+        /**
+         * Constructor.
+         * @param modifiers Method modifiers.
+         * @param descriptor Method descriptor.
+         */
+        private VariablesArray(final int modifiers, final String descriptor) {
+            this.modifiers = modifiers;
+            this.descriptor = descriptor;
+        }
+
+        /**
+         * Convert descriptor to an array of types.
+         * In bytecode:
+         * - aload_0 is used to load the reference to this onto the stack.
+         * So index 0 is reserved for this.
+         * - 'long' and 'double' values occupy two local variable slots each because
+         * they are 64-bit values.
+         *
+         * @return Array of types.
+         */
+        Type[] array() {
+            final Type[] types = Type.getArgumentTypes(this.descriptor);
+            final Type[] result = new Type[this.size()];
+            int offset = 0;
+            if (this.isInstanceMethod()) {
+                offset = offset + 1;
+            }
+            for (int index = 0; index < types.length; ++index) {
+                final Type current = types[index];
+                result[index + offset] = current;
+                if (current.getSize() > 1) {
+                    offset = offset + 1;
+                    result[index + offset] = current;
+                }
+            }
+            return result;
+        }
+
+        /**
+         * Calculate the size of the array with types.
+         * @return Size.
+         */
+        private int size() {
+            final int result;
+            final int res = Arrays.stream(Type.getArgumentTypes(this.descriptor))
+                .mapToInt(Type::getSize)
+                .sum();
+            if (this.isInstanceMethod()) {
+                result = res + 1;
+            } else {
+                result = res;
+            }
+            return result;
+        }
+
+        /**
+         * Is it an instance method?
+         * @return True if it is an instance method.
+         */
+        private boolean isInstanceMethod() {
+            return (this.modifiers & Opcodes.ACC_STATIC) == 0;
+        }
     }
 }

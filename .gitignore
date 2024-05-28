@@ -1,4 +1,5 @@
 .idea
 target
-target-failed
+target-failed*
+target-standard*
 !src/it/decompile-compile/target

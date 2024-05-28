@@ -90,9 +90,9 @@ final class ArrayConstructorTest {
             ),
             xmir,
             XhtmlMatchers.hasXPaths(
-                "./o[@base='.array']",
-                "./o[@base='.array']/o[@base='string' and @data='bytes']",
-                "./o[@base='.array']/o[@base='.plus']"
+                "./o[@base='.array-node']",
+                "./o[@base='.array-node']/o[@base='string' and @data='bytes']",
+                "./o[@base='.array-node']/o[@base='.plus']"
             )
         );
     }

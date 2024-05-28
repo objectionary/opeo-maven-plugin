@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-05-27T09:15:56.713307Z"
+  ms="1716801356723"
+  name="j$App"
+  revision="0.0.0"
+  time="2024-05-27T09:15:56.713307Z"
+  version="0.0.0">
+  <listing>yv66vgAAADcAHwoAAgADBwAEDAAFAAYBABBqYXZhL2xhbmcvT2JqZWN0AQAGPGluaXQ+AQADKClWBwAIAQAWb3JnL2VvbGFuZy9iZW5jaG1hcmsvQgcACgEAFm9yZy9lb2xhbmcvYmVuY2htYXJrL0EKAAkADAwABQANAQAEKEkpVgoABwAPDAAFABABABsoTG9yZy9lb2xhbmcvYmVuY2htYXJrL0Y7KVYKAAcAEgwAEwAUAQADYmFyAQADKClJBwAWAQAYb3JnL2VvbGFuZy9iZW5jaG1hcmsvQXBwAQAEQ29kZQEAD0xpbmVOdW1iZXJUYWJsZQEAEkxvY2FsVmFyaWFibGVUYWJsZQEABHRoaXMBABpMb3JnL2VvbGFuZy9iZW5jaG1hcmsvQXBwOwEAA3J1bgEAClNvdXJjZUZpbGUBAAhBcHAuamF2YQAgABUAAgAAAAAAAgAAAAUABgABABcAAAAvAAEAAQAAAAUqtwABsQAAAAIAGAAAAAYAAQAAABoAGQAAAAwAAQAAAAUAGgAbAAAAAAAcABQAAQAXAAAAPgAFAAEAAAAUuwAHWbsACVkQKrcAC7cADrYAEawAAAACABgAAAAGAAEAAAAcABkAAAAMAAEAAAAUABoAGwAAAAEAHQAAAAIAHg==</listing>
+  <errors/>
+  <sheets/>
+  <license/>
+  <metas>
+    <meta>
+      <head>package</head>
+      <tail>org.eolang.benchmark</tail>
+      <part>org.eolang.benchmark</part>
+    </meta>
+    <meta>
+      <head>alias</head>
+      <tail>org.eolang.jeo.opcode</tail>
+      <part>org.eolang.jeo.opcode</part>
+    </meta>
+    <meta>
+      <head>alias</head>
+      <tail>org.eolang.jeo.label</tail>
+      <part>org.eolang.jeo.label</part>
+    </meta>
+  </metas>
+  <objects>
+    <o abstract="" name="j$App">
+      <o base="int" data="bytes" name="version">00 00 00 00 00 00 00 37</o>
+      <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 20</o>
+      <o base="string" data="bytes" name="supername">6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>
+      <o base="tuple" name="interfaces" star=""/>
+      <o abstract="" name="j$run">
+        <o base="int" data="bytes" name="access">00 00 00 00 00 00 00 00</o>
+        <o base="string" data="bytes" name="descriptor">28 29 49</o>
+        <o base="string" data="bytes" name="signature"/>
+        <o base="tuple" name="exceptions" star=""/>
+        <o name="maxs">
+          <o base="int" data="bytes" name="stack">00 00 00 00 00 00 00 05</o>
+          <o base="int" data="bytes" name="locals">00 00 00 00 00 00 00 01</o>
+        </o>
+        <o base="seq" name="@">
+          <o base="tuple" star="">
+            <o base="opcode" line="999" name="NEW-4A">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 BB</o>
+              <o base="string" data="bytes">6F 72 67 2F 65 6F 6C 61 6E 67 2F 62 65 6E 63 68 6D 61 72 6B 2F 42</o>
+            </o>
+            <o base="opcode" line="999" name="DUP-4E">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 59</o>
+            </o>
+            <o base="opcode" line="999" name="NEW-4F">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 BB</o>
+              <o base="string" data="bytes">6F 72 67 2F 65 6F 6C 61 6E 67 2F 62 65 6E 63 68 6D 61 72 6B 2F 41</o>
+            </o>
+            <o base="opcode" line="999" name="DUP-51">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 59</o>
+            </o>
+            <o base="opcode" line="999" name="BIPUSH-54">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 10</o>
+              <o base="int" data="bytes">00 00 00 00 00 00 00 2A</o>
+            </o>
+            <o base="opcode" line="999" name="INVOKESPECIAL-58">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 B7</o>
+              <o base="string" data="bytes">6F 72 67 2F 65 6F 6C 61 6E 67 2F 62 65 6E 63 68 6D 61 72 6B 2F 41</o>
+              <o base="string" data="bytes">3C 69 6E 69 74 3E</o>
+              <o base="string" data="bytes">28 49 29 56</o>
+              <o base="bool" data="bytes">00</o>
+            </o>
+            <o base="opcode" line="999" name="INVOKESPECIAL-60">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 B7</o>
+              <o base="string" data="bytes">6F 72 67 2F 65 6F 6C 61 6E 67 2F 62 65 6E 63 68 6D 61 72 6B 2F 42</o>
+              <o base="string" data="bytes">3C 69 6E 69 74 3E</o>
+              <o base="string" data="bytes">28 4C 6F 72 67 2F 65 6F 6C 61 6E 67 2F 62 65 6E 63 68 6D 61 72 6B 2F 46 3B 29 56</o>
+              <o base="bool" data="bytes">00</o>
+            </o>
+            <o base="opcode" line="999" name="INVOKEVIRTUAL-63">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 B6</o>
+              <o base="string" data="bytes">6F 72 67 2F 65 6F 6C 61 6E 67 2F 62 65 6E 63 68 6D 61 72 6B 2F 42</o>
+              <o base="string" data="bytes">62 61 72</o>
+              <o base="string" data="bytes">28 29 49</o>
+              <o base="bool" data="bytes">00</o>
+            </o>
+            <o base="opcode" line="999" name="IRETURN-6C">
+              <o base="int" data="bytes">00 00 00 00 00 00 00 AC</o>
+            </o>
+          </o>
+        </o>
+      </o>
+    </o>
+  </objects>
+</program>

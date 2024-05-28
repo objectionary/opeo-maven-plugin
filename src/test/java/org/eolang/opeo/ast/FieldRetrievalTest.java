@@ -55,8 +55,8 @@ final class FieldRetrievalTest {
             actual,
             XhtmlMatchers.hasXPaths(
                 "./o[@name='method']",
-                "./o[@name='method']/o[@base='.getfield']/o[@base='.bar']",
-                "./o[@name='method']/o[@base='.getfield']/o[@base='.bar']/o[@base='$']"
+                "./o[@name='method']/o[@base='.get-field']/o[@base='.bar']",
+                "./o[@name='method']/o[@base='.get-field']/o[@base='.bar']/o[@base='$']"
             )
         );
     }

@@ -32,6 +32,7 @@ import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.jeo.representation.xmir.XmlProgram;
 import org.eolang.opeo.decompilation.DecompilerMachine;
 import org.eolang.opeo.decompilation.LocalVariables;
+import org.objectweb.asm.Type;
 import org.w3c.dom.Node;
 import org.xembly.Transformers;
 import org.xembly.Xembler;
@@ -49,12 +50,28 @@ public final class JeoDecompiler {
     private final XML prog;
 
     /**
+     * Program package.
+     */
+    private final String pckg;
+
+    /**
      * Constructor.
      *
      * @param prog Program in XMIR format received from jeo maven plugin.
      */
     public JeoDecompiler(final XML prog) {
+        this(prog, "java.lang.Object");
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param prog Program in XMIR format received from jeo maven plugin.
+     * @param pckg Program package.
+     */
+    public JeoDecompiler(final XML prog, final String pckg) {
         this.prog = prog;
+        this.pckg = pckg;
     }
 
     /**
@@ -64,9 +81,11 @@ public final class JeoDecompiler {
      */
     public XML decompile() {
         final Node node = this.prog.node();
-        new XmlProgram(node).top()
-            .methods()
-            .forEach(this::decompile);
+        final String descriptor = Type.getObjectType(
+            this.pckg.replace(".xmir", "").replace(".", "/")
+        ).getDescriptor();
+        new XmlProgram(node).top().methods()
+            .forEach(method -> this.decompile(method, descriptor));
         return new XMLDocument(node);
     }
 
@@ -74,15 +93,16 @@ public final class JeoDecompiler {
      * Decompile method.
      *
      * @param method Method.
+     * @param clazz Class name.
      */
-    private void decompile(final XmlMethod method) {
+    private void decompile(final XmlMethod method, final String clazz) {
         try {
             if (!method.instructions().isEmpty()) {
                 method.withInstructions(
                     new XmlNode(
                         new Xembler(
                             new DecompilerMachine(
-                                new LocalVariables(method.access(), method.descriptor()),
+                                new LocalVariables(method.access(), method.descriptor(), clazz),
                                 Map.of("counting", "false")
                             ).decompile(new JeoInstructions(method).instructions()),
                             new Transformers.Node()

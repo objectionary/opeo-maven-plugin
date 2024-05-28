@@ -70,12 +70,17 @@ eo:
         [] > arg__[Ljava/lang/String;__0
         seq > @
           *
-            com/example/B
+            duplicated
+              "com/example/B"
+              .new-type
             .new
-              com/example/A
+              duplicated
+                "com/example/A"
+                .new-type
               .new
                 42
             .bar
+            .ignore-result
             opcode > RETURN
               177
 
@@ -114,7 +119,7 @@ eo:
             .super
             $
             .x
-            .writefield
+            .write-field
               local1
             opcode > RETURN
               177
@@ -133,7 +138,7 @@ eo:
             times
               $
               .x
-              .getfield
+              .get-field
               2
             opcode > IRETURN
               172
@@ -173,7 +178,7 @@ eo:
             .super
             $
             .a
-            .writefield
+            .write-field
               local1
             opcode > RETURN
               177
@@ -191,7 +196,7 @@ eo:
           *
             $
             .a
-            .getfield
+            .get-field
             .foo
             .plus
               1

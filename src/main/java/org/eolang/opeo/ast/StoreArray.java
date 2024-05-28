@@ -69,7 +69,7 @@ public final class StoreArray implements AstNode {
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
-            .attr("base", ".writearray")
+            .attr("base", ".write-array")
             .append(this.array.toXmir())
             .append(this.index.toXmir())
             .append(this.value.toXmir())

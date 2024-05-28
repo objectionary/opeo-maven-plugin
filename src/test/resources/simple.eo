@@ -38,10 +38,14 @@
     [] > arg__[Ljava/lang/String;__0
     seq > @
       *
-        java/lang/StringBuilder
+        duplicated
+          "java/lang/StringBuilder"
+          .new-type
         .new
-          "abc"
+          load-constant
+            "abc"
         .append
           1
+        .ignore-result
         opcode > RETURN
           177

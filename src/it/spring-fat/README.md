@@ -93,13 +93,53 @@ This might be helpful to exclude an optimization influence.
 
 Here is the summary of the first results of the `spring-fat` integration test:
 
+### Total
+
 - The application starts and runs successfully.
-- The average test time is approximately **826 seconds (13 minutes)**.
+- Time is **11:08 min**.
 - The total number of classes is **19511**.
-- The Disassembly phase takes approximately **1 minute**.
-- The Decompile phase takes approximately **K minutes**.
-- The Compile phase takes approximately **L minutes**.
-- The Assembly phase takes approximately **56 seconds**.
+- Phases: **disassemble**, **decompile**, **optimize**, **phi**, **compile**, *
+  *assemble**.
+
+### Disassemble
+
+- All classes are successfully disassembled.
+- The total number of classes is **19511**.
+- The Disassembly phase takes **50s**.
+
+### Decompile
+
+- Some classes are not decompiled due to unsupported instructions. We skip a
+  file if it contains at least one instruction we don't support yet. Skipped
+  files are copied as is from the disassembled directory to the decompiled.
+- The total number of truly decompiled classes is **4672**.
+- The Decompile phase takes **? min**.
+
+### Optimize
+
+- We used the "staticize" optimization from the `ineo-maven-plugin`.
+- The total number of optimized classes is **1**.
+- The Optimize phase takes **? min**.
+
+### Phi
+
+- We print PHI expressions for all truly decompiled classes.
+- Some classes are not printed due to some issues with the XMIR representation.
+  We skip a file if it contains at least one issue.
+- The total number of classes with PHI expressions is **4153**.
+- The Phi phase takes **? min**.
+
+### Compile
+
+- We compile all the classes from different XMIR representations.
+- The total number of compiled classes is **19511**.
+- The Compile phase takes **? min**.
+
+### Assemble
+
+- We assemble all the classes back to the bytecode.
+- The total number of assembled classes is **19511**.
+- The Assembly phase takes **57s**.
 
 ## Developer Notes
 
