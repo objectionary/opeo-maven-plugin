@@ -146,8 +146,8 @@ final class JeoAndOpeoTest {
     void decompilesCompilesAndKeepsTheSameInstructionsWithTheSameOperands(
         final String path
     ) throws Exception {
-        final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
         Opcode.disableCounting();
+        final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
         final List<XmlBytecodeEntry> actual = new XmlProgram(
             new JeoCompiler(
                 new JeoDecompiler(original).decompile()
