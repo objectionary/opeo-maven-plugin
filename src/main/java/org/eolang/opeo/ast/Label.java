@@ -25,6 +25,8 @@ package org.eolang.opeo.ast;
 
 import java.util.Collections;
 import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.eolang.jeo.representation.directives.DirectivesData;
 import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.jeo.representation.xmir.HexString;
@@ -35,6 +37,8 @@ import org.xembly.Directive;
  * Label ast node.
  * @since 0.1
  */
+@ToString
+@EqualsAndHashCode
 public final class Label implements AstNode {
 
     /**
