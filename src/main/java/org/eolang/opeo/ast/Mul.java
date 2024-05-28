@@ -25,6 +25,9 @@ package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -43,6 +46,10 @@ public final class Mul implements AstNode {
      * Right operand.
      */
     private final AstNode right;
+
+    public Mul(final XmlNode node, Function<XmlNode, AstNode> search) {
+        this(Mul.xleft(node, search), xright(node, search));
+    }
 
     /**
      * Constructor.
@@ -69,5 +76,26 @@ public final class Mul implements AstNode {
         res.addAll(this.left.opcodes());
         res.addAll(this.right.opcodes());
         return res;
+    }
+
+    /**
+     * Extracts the first value.
+     * @param node XMIR node where to extract the value.
+     * @param search Search function
+     * @return Value.
+     */
+    private static AstNode xright(final XmlNode node, final Function<XmlNode, AstNode> search) {
+        final List<XmlNode> all = node.children().collect(Collectors.toList());
+        return search.apply(all.get(all.size() - 1));
+    }
+
+    /**
+     * Extracts the left value.
+     * @param node XMIR node where to extract the value.
+     * @param search Search function
+     * @return Value.
+     */
+    private static AstNode xleft(final XmlNode node, final Function<XmlNode, AstNode> search) {
+        return search.apply(node.firstChild());
     }
 }

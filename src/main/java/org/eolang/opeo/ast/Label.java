@@ -72,4 +72,8 @@ public final class Label implements AstNode {
         return Collections.singletonList(this);
     }
 
+    public org.objectweb.asm.Label toAsmLabel() {
+        return new AllLabels().label(this.identifier);
+    }
+
 }

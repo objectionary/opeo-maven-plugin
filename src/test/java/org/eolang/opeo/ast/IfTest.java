@@ -106,7 +106,7 @@ class IfTest {
             Matchers.hasItems(
                 new Opcode(Opcodes.ICONST_1),
                 new Opcode(Opcodes.ICONST_2),
-                new Opcode(Opcodes.IF_ICMPGT, label)
+                new Opcode(Opcodes.IF_ICMPGT, label.toAsmLabel())
             )
         );
     }

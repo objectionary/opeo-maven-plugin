@@ -45,11 +45,13 @@ import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.FieldRetrieval;
+import org.eolang.opeo.ast.If;
 import org.eolang.opeo.ast.InterfaceInvocation;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.LocalVariable;
+import org.eolang.opeo.ast.Mul;
 import org.eolang.opeo.ast.NewAddress;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Popped;
@@ -163,6 +165,10 @@ final class XmirParser {
         );
         if (".ignore-result".equals(base)) {
             result = new Popped(this.node(node.firstChild()));
+        } else if ("times".equals(base)) {
+            result = new Mul(node, this::node);
+        } else if (".if".equals(base)) {
+            result = new If(node, this::node);
         } else if ("load-constant".equals(base)) {
             result = new Constant(node);
         } else if (".new-type".equals(base)) {

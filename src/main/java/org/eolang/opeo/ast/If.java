@@ -29,6 +29,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.eolang.jeo.representation.HexData;
+import org.eolang.jeo.representation.xmir.AllLabels;
+import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
@@ -74,8 +77,18 @@ public final class If implements AstNode {
     public If(
         final AstNode first,
         final AstNode second,
-        final Label target
+        final org.objectweb.asm.Label target
     ) {
+        this(first, second, new Label(new HexData(new AllLabels().uid(target)).value()));
+    }
+
+    /**
+     * Constructor.
+     * @param first First value.
+     * @param second Second value.
+     * @param target Target label.
+     */
+    public If(final AstNode first, final AstNode second, final Label target) {
         this.first = first;
         this.second = second;
         this.target = target;
@@ -88,7 +101,7 @@ public final class If implements AstNode {
                 this.first.opcodes().stream(),
                 this.second.opcodes().stream()
             ),
-            Stream.of(new Opcode(Opcodes.IF_ICMPGT, this.target))
+            Stream.of(new Opcode(Opcodes.IF_ICMPGT, this.target.toAsmLabel()))
         ).collect(Collectors.toList());
     }
 
@@ -123,7 +136,6 @@ public final class If implements AstNode {
         final List<XmlNode> children = node.child("base", ".gt").children()
             .collect(Collectors.toList());
         return search.apply(children.get(children.size() - 1));
-
     }
 
     /**
