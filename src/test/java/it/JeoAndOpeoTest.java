@@ -23,7 +23,6 @@
  */
 package it;
 
-import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -31,7 +30,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -47,8 +45,6 @@ import org.eolang.jeo.representation.xmir.XmlLabel;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlOperand;
 import org.eolang.jeo.representation.xmir.XmlProgram;
-import org.eolang.opeo.ast.Label;
-import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.compilation.JeoCompiler;
 import org.eolang.opeo.jeo.JeoDecompiler;
@@ -65,6 +61,12 @@ import org.junit.jupiter.params.provider.CsvSource;
  * Integration tests for JEO and OPEO transformations.
  * This class is rather useful for bug identification on different transformation stages.
  * @since 0.2
+ * @todo #229:90min Refactor JeoAndOpeoTest.
+ *  In orderd to check the correctness of the transformation from JEO to OPEO,
+ *  we created this class. Since we didn't have time to write it properly,
+ *  we need to refactor it. The main goal is to make the tests more readable and
+ *  to make the test names more descriptive. Moreover, the test
+ *  {@link #findTheProblem(String, String)} should be moved into a separate place.
  */
 final class JeoAndOpeoTest {
 
@@ -115,14 +117,12 @@ final class JeoAndOpeoTest {
     })
     void decompilesCompilesAndKeepsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
-        final XML decompiled = new JeoDecompiler(original).decompile();
-        System.out.println(decompiled);
         MatcherAssert.assertThat(
             "The original and compiled instructions are not equal",
             new JeoInstructions(
                 new XmlProgram(
                     new JeoCompiler(
-                        decompiled
+                        new JeoDecompiler(original).decompile()
                     ).compile()
                 ).top().methods().get(0)
             ).instuctionNames(),
@@ -137,7 +137,7 @@ final class JeoAndOpeoTest {
     @ParameterizedTest
     @CsvSource({
         "xmir/disassembled/SimpleLog.xmir",
-//        "xmir/disassembled/OpenSSLContext$1.xmir",
+        "xmir/disassembled/OpenSSLContext$1.xmir",
     })
     void decompilesCompilesAndKeepsTheSameInstructionsWithTheSameOperands(
         final String path
@@ -151,12 +151,11 @@ final class JeoAndOpeoTest {
         ).top().methods().get(0).instructions();
         final List<XmlBytecodeEntry> expected = new XmlProgram(original).top().methods().get(0)
             .instructions();
-
         final int size = expected.size();
         for (int index = 0; index < size; ++index) {
             final XmlBytecodeEntry expect = expected.get(index);
             final XmlBytecodeEntry act = actual.get(index);
-            if(expect instanceof XmlLabel && act instanceof XmlLabel) {
+            if (expect instanceof XmlLabel && act instanceof XmlLabel) {
                 continue;
             }
             MatcherAssert.assertThat(
@@ -164,7 +163,6 @@ final class JeoAndOpeoTest {
                 act,
                 Matchers.equalTo(expect)
             );
-
         }
     }
 
@@ -186,123 +184,109 @@ final class JeoAndOpeoTest {
 
     @Test
     @Disabled
-    void findTheProblem() {
-        Path golden = Paths.get(
-            "/Users/lombrozo/Workspace/EOlang/opeo-maven-plugin/target-standard/it/spring-fat/target/generated-sources/opeo-compile-xmir/org"
-        );
-
-        Path real = Paths.get(
-            "/Users/lombrozo/Workspace/EOlang/opeo-maven-plugin/target/it/spring-fat/target/generated-sources/opeo-compile-xmir/org"
-        );
-
+    @ParameterizedTest
+    @CsvSource(
+        "./target-standard/it/spring-fat/target/generated-sources/opeo-compile-xmir, ./target/it/spring-fat/target/generated-sources/opeo-compile-xmir"
+    )
+    void findTheProblem(final String etalon, final String target) {
+        final Path golden = Paths.get(etalon);
+        final Path real = Paths.get(target);
         final AtomicInteger counter = new AtomicInteger(0);
-        final AtomicInteger errorsCounter = new AtomicInteger(0);
-        final List<String> errorMessages = new ArrayList<>(0);
+        final AtomicInteger ecounter = new AtomicInteger(0);
+        final List<String> errors = new ArrayList<>(0);
         try (final Stream<Path> all = Files.walk(golden).filter(Files::isRegularFile)) {
             all.forEach(
                 path -> {
                     counter.incrementAndGet();
                     final Path relative = golden.relativize(path);
-                    XMLDocument good = null;
+                    XMLDocument bad;
+                    XMLDocument good;
                     try {
                         good = new XMLDocument(golden.resolve(relative));
-                    } catch (final FileNotFoundException exception) {
-                        throw new RuntimeException(exception);
-                    }
-                    XMLDocument bad = null;
-                    try {
                         bad = new XMLDocument(real.resolve(relative));
                     } catch (final FileNotFoundException exception) {
-                        throw new RuntimeException(exception);
+                        throw new IllegalArgumentException(
+                            String.format("File not found: %s", relative),
+                            exception
+                        );
                     }
-
-                    final XmlProgram goodProgram = new XmlProgram(good);
-                    final XmlProgram badProgram = new XmlProgram(bad);
-                    final List<XmlMethod> goodMethods = goodProgram.top().methods();
-                    final List<XmlMethod> badMethods = badProgram.top().methods();
+                    final XmlProgram gprogram = new XmlProgram(good);
+                    final XmlProgram bprogram = new XmlProgram(bad);
+                    final List<XmlMethod> gmethods = gprogram.top().methods();
+                    final List<XmlMethod> bmethods = bprogram.top().methods();
+                    final int size = gmethods.size();
                     outer:
-                    for (int i = 0; i < goodMethods.size(); i++) {
-                        final XmlMethod goodMethod = goodMethods.get(i);
-                        final XmlMethod badMethod = badMethods.get(i);
-                        final List<XmlBytecodeEntry> goodInstructions = goodMethod.instructions()
+                    for (int index = 0; index < size; ++index) {
+                        final XmlMethod gmethod = gmethods.get(index);
+                        final XmlMethod bmethod = bmethods.get(index);
+                        final List<XmlBytecodeEntry> ginstuctions = gmethod.instructions()
                             .stream()
                             .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
                             .collect(Collectors.toList());
-                        final List<XmlBytecodeEntry> badInstructions = badMethod.instructions()
+                        final List<XmlBytecodeEntry> binstructions = bmethod.instructions()
                             .stream()
                             .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
                             .collect(Collectors.toList());
-                        for (int j = 0; j < goodInstructions.size(); j++) {
-                            final XmlBytecodeEntry goodEntry = goodInstructions.get(j);
-                            final XmlBytecodeEntry badEntry = badInstructions.get(j);
-
-                            if (goodEntry instanceof XmlInstruction && badEntry instanceof XmlInstruction) {
-
-                                final XmlInstruction goodInstruction = (XmlInstruction) goodEntry;
-                                final XmlInstruction badInstruction = (XmlInstruction) badEntry;
-
-                                if (goodInstruction.opcode() != badInstruction.opcode()) {
+                        final int isize = ginstuctions.size();
+                        for (int jindex = 0; jindex < isize; ++jindex) {
+                            final XmlBytecodeEntry gentry = ginstuctions.get(jindex);
+                            final XmlBytecodeEntry bentry = binstructions.get(jindex);
+                            if (gentry instanceof XmlInstruction
+                                && bentry instanceof XmlInstruction) {
+                                final XmlInstruction ginstruction = (XmlInstruction) gentry;
+                                final XmlInstruction binstruction = (XmlInstruction) bentry;
+                                if (ginstruction.opcode() != binstruction.opcode()) {
                                     final String message = String.format(
                                         "The operands '%s' and '%s' are differ in %n%s%n%s,%nTotal scanned files: %d",
-                                        goodEntry,
-                                        badEntry,
-                                        "file://" + golden.resolve(relative),
-                                        "file://" + real.resolve(relative),
+                                        gentry,
+                                        bentry,
+                                        String.format("file://%s", golden.resolve(relative)),
+                                        String.format("file://%s", real.resolve(relative)),
                                         counter.get()
                                     );
-//                                    throw new IllegalArgumentException(
-//                                        message
-//                                    );
-                                    errorMessages.add(message);
-                                    errorsCounter.incrementAndGet();
+                                    errors.add(message);
+                                    ecounter.incrementAndGet();
                                     break outer;
                                 }
-                                final List<XmlOperand> goodOperands = goodInstruction.operands();
-                                final List<XmlOperand> badOperands = badInstruction.operands();
-                                for (int k = 0; k < goodOperands.size(); k++) {
-                                    final XmlOperand goodOperand = goodOperands.get(k);
-                                    final XmlOperand badOperand = badOperands.get(k);
-
+                                final List<XmlOperand> goodOperands = ginstruction.operands();
+                                final List<XmlOperand> badOperands = binstruction.operands();
+                                for (int kindex = 0; kindex < goodOperands.size(); ++kindex) {
+                                    final XmlOperand goodOperand = goodOperands.get(kindex);
+                                    final XmlOperand badOperand = badOperands.get(kindex);
                                     final String goodOperandString = goodOperand.toString();
                                     final String badOperandString = badOperand.toString();
-                                    if (goodOperandString.contains(
-                                        "label") && badOperandString.contains("label"))
+                                    if (goodOperandString.contains("label")
+                                        && badOperandString.contains("label"))
                                         continue;
                                     if (!goodOperandString.equals(badOperandString)) {
                                         final String message = String.format(
                                             "The operands '%s' and '%s' are differ in '%s'%n'%s'%n'%s',%n%s%n%s%nTotal scanned files: %d",
-                                            goodEntry,
-                                            badEntry,
+                                            gentry,
+                                            bentry,
                                             relative,
                                             goodOperand,
                                             badOperand,
-                                            "file://" + golden.resolve(relative),
-                                            "file://" + real.resolve(relative),
+                                            String.format("file://%s", golden.resolve(relative)),
+                                            String.format("file://%s", real.resolve(relative)),
                                             counter.get()
                                         );
-//                                        throw new IllegalArgumentException(message);
-                                        errorMessages.add(message);
-                                        errorsCounter.incrementAndGet();
+                                        errors.add(message);
+                                        ecounter.incrementAndGet();
                                         break outer;
                                     }
                                 }
-
                             }
-
-
                         }
 
                     }
-                    System.out.println("Total files:" + counter.get());
-                    System.out.println("Number of failed files:" + errorsCounter.get());
+                    System.out.printf("Total files:%d%n", counter.get());
+                    System.out.printf("Number of failed files:%d%n", ecounter.get());
                 }
             );
         } catch (final IOException exception) {
-            throw new RuntimeException(exception);
+            throw new IllegalStateException("Can't walk through the files", exception);
         }
-        System.out.println("All Errors:\n");
-        errorMessages.forEach(System.out::println);
+        System.out.println("All Found Errors:\n");
+        errors.forEach(System.out::println);
     }
-
-
 }
