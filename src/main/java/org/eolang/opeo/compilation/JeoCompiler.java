@@ -76,19 +76,24 @@ public final class JeoCompiler {
      *  The method {@link #compile} is catching generic exceptions which is bad.
      *  We should refactor it to simplify the code and remove duplicated catch blocks.
      *  After, don't forget to remove the Checkstyle and PMD tags.
+     * @todo #229:90min Optimize Labels Generation.
+     *  Here we clean the cache of labels before compiling a method. This is a workaround
+     *  to avoid a bug in the generation of labels. When we have lot's of methods, the cache grows
+     *  and the compilation time increases significantly.
+     * @todo #229:90min Calculate the Max Stack Size.
+     *  We should calculate the max stack size of the method and set it in the compiled method.
+     *  This is important to avoid runtime errors when running the compiled code.
+     *  We used to use 'withoutMaxs()' method to avoid this, but it causes some errors.
+     *  Actually, you can try to use it to see the errors.
      * @checkstyle IllegalCatch (50 lines)
      */
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.IdenticalCatchBranches"})
     private static XmlMethod compile(final XmlMethod method) {
         try {
-            //todo! explain
             new AllLabels().clearCache();
-            //todo! explain
-            return method
-//                .withoutMaxs()
-                .withInstructions(
-                    new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
-                );
+            return method.withInstructions(
+                new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
+            );
         } catch (final ClassCastException exception) {
             throw new IllegalArgumentException(
                 String.format(

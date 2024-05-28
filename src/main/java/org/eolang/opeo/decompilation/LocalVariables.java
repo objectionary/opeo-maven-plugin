@@ -56,7 +56,7 @@ public final class LocalVariables {
 
     /**
      * Class type.
-     * todo! explain
+     * We need a class name to correctly generate the 'this' reference with the correct type.
      */
     private final Type clazz;
 
@@ -64,11 +64,11 @@ public final class LocalVariables {
      * Constructor.
      * @param modifiers Method access modifiers.
      * @param descriptor Method descriptor.
+     * @param type Method type.
      */
-    public LocalVariables(final int modifiers, final String descriptor, final String name) {
-        this(modifiers, new VariablesArray(modifiers, descriptor).array(), Type.getType(name));
+    public LocalVariables(final int modifiers, final String descriptor, final String type) {
+        this(modifiers, new VariablesArray(modifiers, descriptor).array(), Type.getType(type));
     }
-
 
     /**
      * Constructor.
@@ -95,6 +95,12 @@ public final class LocalVariables {
         this(modifiers, types, Type.getType(Object.class));
     }
 
+    /**
+     * Constructor.
+     * @param modifiers Method access modifiers.
+     * @param types Method argument types.
+     * @param clazz Class type.
+     */
     public LocalVariables(
         final int modifiers,
         final Type[] types,
@@ -169,41 +175,53 @@ public final class LocalVariables {
         } else {
             result = Optional.ofNullable(this.types[index]);
         }
-//        final Optional<Type> result;
-//        final int real;
-//        if (this.isInstanceMethod()) {
-//            real = index - 1;
-//        } else {
-//            real = index;
-//        }
-//        if (real > -1 && real < this.types.length) {
-//            result = Optional.ofNullable(this.types[real]);
-//        } else {
-//            result = Optional.empty();
-//        }
-//        return result;
         return result;
     }
 
+    /**
+     * Variables array with types.
+     * @since 0.2
+     */
+    private static final class VariablesArray {
 
-    private static class VariablesArray {
-
+        /**
+         * Method modifiers.
+         */
         private final int modifiers;
+
+        /**
+         * Method descriptor.
+         */
         private final String descriptor;
 
-        public VariablesArray(final int modifiers, final String descriptor) {
+        /**
+         * Constructor.
+         * @param modifiers Method modifiers.
+         * @param descriptor Method descriptor.
+         */
+        private VariablesArray(final int modifiers, final String descriptor) {
             this.modifiers = modifiers;
             this.descriptor = descriptor;
         }
 
-        public Type[] array() {
+        /**
+         * Convert descriptor to an array of types.
+         * In bytecode:
+         * - aload_0 is used to load the reference to this onto the stack.
+         * So index 0 is reserved for this.
+         * - 'long' and 'double' values occupy two local variable slots each because
+         * they are 64-bit values.
+         *
+         * @return Array of types.
+         */
+        Type[] array() {
             final Type[] types = Type.getArgumentTypes(this.descriptor);
             final Type[] result = new Type[this.size()];
             int offset = 0;
             if (this.isInstanceMethod()) {
-                offset++;
+                offset = offset + 1;
             }
-            for (int index = 0; index < types.length; index++) {
+            for (int index = 0; index < types.length; ++index) {
                 final Type current = types[index];
                 result[index + offset] = current;
                 if (current.getSize() > 1) {
@@ -214,7 +232,10 @@ public final class LocalVariables {
             return result;
         }
 
-
+        /**
+         * Calculate the size of the array with types.
+         * @return Size.
+         */
         private int size() {
             final int result;
             final int res = Arrays.stream(Type.getArgumentTypes(this.descriptor))
@@ -228,9 +249,12 @@ public final class LocalVariables {
             return result;
         }
 
+        /**
+         * Is it an instance method?
+         * @return True if it is an instance method.
+         */
         private boolean isInstanceMethod() {
             return (this.modifiers & Opcodes.ACC_STATIC) == 0;
         }
-
     }
 }

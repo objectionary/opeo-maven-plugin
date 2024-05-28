@@ -96,9 +96,13 @@ final class JeoAndOpeoTest {
     void compilesAlreadyCompiledAndAssembles(final String path) {
         Assertions.assertDoesNotThrow(
             () -> new XmirRepresentation(
-                new JeoCompiler(new XMLDocument(new BytesOf(
-                    new ResourceOf(String.format("xmir/compiled/%s", path))
-                ).asBytes())).compile()
+                new JeoCompiler(
+                    new XMLDocument(
+                        new BytesOf(
+                            new ResourceOf(String.format("xmir/compiled/%s", path))
+                        ).asBytes()
+                    )
+                ).compile()
             ).toBytecode(),
             "We expect that the pipeline 'already-compiled-xmir' -> (compile) -> (assemble) ->'.class' will not throw any exceptions."
         );
@@ -113,7 +117,7 @@ final class JeoAndOpeoTest {
         "xmir/disassembled/SmartLifecycle.xmir",
         "xmir/disassembled/FlightRecorderStartupEvent.xmir",
         "xmir/disassembled/SimpleLog.xmir",
-        "xmir/disassembled/OpenSSLContext$1.xmir",
+        "xmir/disassembled/OpenSSLContext$1.xmir"
     })
     void decompilesCompilesAndKeepsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
@@ -137,7 +141,7 @@ final class JeoAndOpeoTest {
     @ParameterizedTest
     @CsvSource({
         "xmir/disassembled/SimpleLog.xmir",
-        "xmir/disassembled/OpenSSLContext$1.xmir",
+        "xmir/disassembled/OpenSSLContext$1.xmir"
     })
     void decompilesCompilesAndKeepsTheSameInstructionsWithTheSameOperands(
         final String path
@@ -168,7 +172,9 @@ final class JeoAndOpeoTest {
 
     @Disabled
     @ParameterizedTest
-    @CsvSource("xmir/disassembled/SimpleTypeConverter.xmir, org.springframework.beans.SimpleTypeConverter")
+    @CsvSource(
+        "xmir/disassembled/SimpleTypeConverter.xmir, org.springframework.beans.SimpleTypeConverter"
+    )
     void decompilesCompilesAndKeepsExactlyTheSameContent(
         final String path, final String pckg
     ) throws Exception {
@@ -181,26 +187,35 @@ final class JeoAndOpeoTest {
         );
     }
 
-
+    /**
+     * This test is used to find the problem in the transformation from JEO to OPEO.
+     * @param etalon The path to the golden files.
+     * @param target The path to the real files.
+     * @checkstyle NestedForDepthCheck (100 lines)
+     * @checkstyle JavaNCSSCheck (100 lines)
+     * @checkstyle CyclomaticComplexityCheck (100 lines)
+     * @checkstyle ExecutableStatementCountCheck (100 lines)
+     */
     @Test
     @Disabled
     @ParameterizedTest
     @CsvSource(
         "./target-standard/it/spring-fat/target/generated-sources/opeo-compile-xmir, ./target/it/spring-fat/target/generated-sources/opeo-compile-xmir"
     )
+    @SuppressWarnings({"PMD.SystemPrintln", "PMD.CognitiveComplexity"})
     void findTheProblem(final String etalon, final String target) {
         final Path golden = Paths.get(etalon);
         final Path real = Paths.get(target);
         final AtomicInteger counter = new AtomicInteger(0);
         final AtomicInteger ecounter = new AtomicInteger(0);
         final List<String> errors = new ArrayList<>(0);
-        try (final Stream<Path> all = Files.walk(golden).filter(Files::isRegularFile)) {
+        try (Stream<Path> all = Files.walk(golden).filter(Files::isRegularFile)) {
             all.forEach(
                 path -> {
                     counter.incrementAndGet();
                     final Path relative = golden.relativize(path);
-                    XMLDocument bad;
-                    XMLDocument good;
+                    final XMLDocument bad;
+                    final XMLDocument good;
                     try {
                         good = new XMLDocument(golden.resolve(relative));
                         bad = new XMLDocument(real.resolve(relative));
@@ -219,23 +234,23 @@ final class JeoAndOpeoTest {
                     for (int index = 0; index < size; ++index) {
                         final XmlMethod gmethod = gmethods.get(index);
                         final XmlMethod bmethod = bmethods.get(index);
-                        final List<XmlBytecodeEntry> ginstuctions = gmethod.instructions()
+                        final List<XmlBytecodeEntry> ginstrs = gmethod.instructions()
                             .stream()
                             .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
                             .collect(Collectors.toList());
-                        final List<XmlBytecodeEntry> binstructions = bmethod.instructions()
+                        final List<XmlBytecodeEntry> binstrs = bmethod.instructions()
                             .stream()
                             .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
                             .collect(Collectors.toList());
-                        final int isize = ginstuctions.size();
+                        final int isize = ginstrs.size();
                         for (int jindex = 0; jindex < isize; ++jindex) {
-                            final XmlBytecodeEntry gentry = ginstuctions.get(jindex);
-                            final XmlBytecodeEntry bentry = binstructions.get(jindex);
+                            final XmlBytecodeEntry gentry = ginstrs.get(jindex);
+                            final XmlBytecodeEntry bentry = binstrs.get(jindex);
                             if (gentry instanceof XmlInstruction
                                 && bentry instanceof XmlInstruction) {
-                                final XmlInstruction ginstruction = (XmlInstruction) gentry;
-                                final XmlInstruction binstruction = (XmlInstruction) bentry;
-                                if (ginstruction.opcode() != binstruction.opcode()) {
+                                final XmlInstruction ginstr = (XmlInstruction) gentry;
+                                final XmlInstruction binstr = (XmlInstruction) bentry;
+                                if (ginstr.opcode() != binstr.opcode()) {
                                     final String message = String.format(
                                         "The operands '%s' and '%s' are differ in %n%s%n%s,%nTotal scanned files: %d",
                                         gentry,
@@ -248,24 +263,25 @@ final class JeoAndOpeoTest {
                                     ecounter.incrementAndGet();
                                     break outer;
                                 }
-                                final List<XmlOperand> goodOperands = ginstruction.operands();
-                                final List<XmlOperand> badOperands = binstruction.operands();
-                                for (int kindex = 0; kindex < goodOperands.size(); ++kindex) {
-                                    final XmlOperand goodOperand = goodOperands.get(kindex);
-                                    final XmlOperand badOperand = badOperands.get(kindex);
-                                    final String goodOperandString = goodOperand.toString();
-                                    final String badOperandString = badOperand.toString();
-                                    if (goodOperandString.contains("label")
-                                        && badOperandString.contains("label"))
+                                final List<XmlOperand> goperands = ginstr.operands();
+                                final List<XmlOperand> boperands = binstr.operands();
+                                for (int kindex = 0; kindex < goperands.size(); ++kindex) {
+                                    final XmlOperand goperand = goperands.get(kindex);
+                                    final XmlOperand boperand = boperands.get(kindex);
+                                    final String gsoperand = goperand.toString();
+                                    final String bsoperand = boperand.toString();
+                                    if (gsoperand.contains("label")
+                                        && bsoperand.contains("label")) {
                                         continue;
-                                    if (!goodOperandString.equals(badOperandString)) {
+                                    }
+                                    if (!gsoperand.equals(bsoperand)) {
                                         final String message = String.format(
                                             "The operands '%s' and '%s' are differ in '%s'%n'%s'%n'%s',%n%s%n%s%nTotal scanned files: %d",
                                             gentry,
                                             bentry,
                                             relative,
-                                            goodOperand,
-                                            badOperand,
+                                            goperand,
+                                            boperand,
                                             String.format("file://%s", golden.resolve(relative)),
                                             String.format("file://%s", real.resolve(relative)),
                                             counter.get()
@@ -277,7 +293,6 @@ final class JeoAndOpeoTest {
                                 }
                             }
                         }
-
                     }
                     System.out.printf("Total files:%d%n", counter.get());
                     System.out.printf("Number of failed files:%d%n", ecounter.get());

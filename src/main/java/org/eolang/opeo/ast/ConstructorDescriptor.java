@@ -30,6 +30,11 @@ import org.objectweb.asm.Type;
 /**
  * Constructor descriptor.
  * @since 0.2
+ * @todo #229:90min Generalize ConstructorDescriptor to be used in all cases.
+ *  Currently we have a workarond for classes in `org.eolang` package.
+ *  See {@link #toString()} method.
+ *  As you can see, we have a check for `org/eolang` in the descriptor.
+ *  We should remove this crutch and make it work for all cases.
  */
 public final class ConstructorDescriptor {
 
@@ -43,12 +48,17 @@ public final class ConstructorDescriptor {
      */
     private final List<AstNode> args;
 
+    /**
+     * Constructor.
+     * @param args Constructor arguments.
+     */
     public ConstructorDescriptor(final List<AstNode> args) {
         this("", args);
     }
 
     /**
      * Constructor.
+     * @param descriptor Descriptor.
      * @param arguments Constructor arguments.
      */
     public ConstructorDescriptor(final String descriptor, final List<AstNode> arguments) {
@@ -58,43 +68,22 @@ public final class ConstructorDescriptor {
 
     @Override
     public String toString() {
-        return this.combine();
-    }
-
-    /**
-     * TODO: explain
-     * @return
-     */
-    private String combine() {
-//        return Type.getMethodDescriptor(
-//            Type.VOID_TYPE,
-//            this.args.stream()
-//                .peek(this::verify)
-//                .map(Typed.class::cast)
-//                .map(Typed::type)
-//                .toArray(Type[]::new)
-//        );
-
-
+        final String result;
         if (this.descriptor.contains("org/eolang")
             || this.descriptor.contains("org.eolang")
             || this.descriptor.isEmpty()) {
-            return Type.getMethodDescriptor(
+            result = Type.getMethodDescriptor(
                 Type.VOID_TYPE,
-                this.argumentTypes()
+                this.args.stream()
+                    .peek(this::verify)
+                    .map(Typed.class::cast)
+                    .map(Typed::type)
+                    .toArray(Type[]::new)
             );
         } else {
-            return this.descriptor;
+            result = this.descriptor;
         }
-    }
-
-
-    private Type[] argumentTypes() {
-        return this.args.stream()
-            .peek(this::verify)
-            .map(Typed.class::cast)
-            .map(Typed::type)
-            .toArray(Type[]::new);
+        return result;
     }
 
     /**

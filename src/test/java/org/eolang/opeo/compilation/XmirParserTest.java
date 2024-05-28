@@ -147,7 +147,8 @@ final class XmirParserTest {
     void parsesInvokeDynamicInstruction() {
         Opcode.disableCounting();
         final XmlNode node = new XmlNode(
-            String.join("\n",
+            String.join(
+                "\n",
                 "<o base='opcode' line='999' name='INVOKEDYNAMIC'>",
                 "  <o base='int' data='bytes'>00 00 00 00 00 00 00 BA</o>",
                 "  <o base='string' data='bytes'>61 70 70 6C 79 41 73 49 6E 74</o>",
@@ -171,10 +172,9 @@ final class XmirParserTest {
                 " </o>"
             )
         );
-        final List<XmlNode> nodes = new XmirParser(Collections.singletonList(node)).toJeoNodes();
         MatcherAssert.assertThat(
             "We expect to retrieve exactly 1 opcode INVOKEDYNAMIC (without changes), but got something else instead",
-            nodes.get(0),
+            new XmirParser(Collections.singletonList(node)).toJeoNodes().get(0),
             Matchers.equalTo(node)
         );
     }

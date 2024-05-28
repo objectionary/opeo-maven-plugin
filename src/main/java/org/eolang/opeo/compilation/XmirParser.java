@@ -66,6 +66,7 @@ import org.xembly.Xembler;
  * High-level representation of Opeo nodes.
  *
  * @since 0.1
+ * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class XmirParser {
@@ -249,16 +250,7 @@ final class XmirParser {
             result = new LocalVariable(node);
         } else if (".new".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-//            final String type = inner.get(0).attribute("base").orElseThrow(
-//                () -> new IllegalArgumentException(
-//                    String.format(
-//                        "Can't find type of '%s'",
-//                        base
-//                    )
-//                )
-//            );
-
-            final AstNode target = node(inner.get(0));
+            final AstNode target = this.node(inner.get(0));
             final List<AstNode> args = this.args(inner);
             final String descriptor = node.attribute("scope")
                 .map(Attributes::new)

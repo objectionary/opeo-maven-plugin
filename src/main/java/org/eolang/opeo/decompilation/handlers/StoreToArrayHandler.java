@@ -45,21 +45,28 @@ public final class StoreToArrayHandler implements InstructionHandler {
         final AstNode value = state.stack().pop();
         final AstNode index = state.stack().pop();
         final AstNode array = state.stack().pop();
-        final Reference ref = findRef(array);
+        final Reference ref = this.findRef(array);
         ref.link(new StoreArray(ref.object(), index, value));
         state.stack().push(ref);
     }
 
+    /**
+     * Find reference.
+     * @param node Node where to search for reference.
+     * @return Reference.
+     */
     private Reference findRef(final AstNode node) {
+        final Reference result;
         if (node instanceof Reference) {
-            return (Reference) node;
+            result = (Reference) node;
         } else if (node instanceof Labeled) {
-            return findRef((((Labeled) node).origin()));
+            result = this.findRef(((Labeled) node).origin());
         } else if (node instanceof Duplicate) {
-            return findRef((((Duplicate) node).origin()));
+            result = this.findRef(((Duplicate) node).origin());
         } else {
             throw new IllegalStateException(String.format("Can find reference for node %s", node));
         }
+        return result;
     }
 
 }

@@ -63,10 +63,6 @@ public final class Reference implements AstNode, Typed, Linked {
         this.ref = ref;
     }
 
-    /**
-     * Link this reference with the given object.
-     * @param node Object to link with.
-     */
     @Override
     public void link(final AstNode node) {
         this.ref.set(node);

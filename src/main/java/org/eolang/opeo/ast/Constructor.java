@@ -101,6 +101,12 @@ public final class Constructor implements AstNode, Typed {
         this(new NewAddress(type), attrs, args);
     }
 
+    /**
+     * Constructor.
+     * @param ctype Constructor type
+     * @param attributes Constructor attributes
+     * @param arguments Constructor arguments
+     */
     public Constructor(
         final AstNode ctype,
         final Attributes attributes,
@@ -126,13 +132,11 @@ public final class Constructor implements AstNode, Typed {
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.ctype.opcodes());
-//        res.add(new Opcode(Opcodes.NEW, this.ctype));
-//        res.add(new Opcode(Opcodes.DUP));
         this.arguments.stream().map(AstNode::opcodes).forEach(res::addAll);
         res.add(
             new Opcode(
                 Opcodes.INVOKESPECIAL,
-                this.opcodeType(this.ctype),
+                this.type(this.ctype),
                 "<init>",
                 this.attributes.descriptor(),
                 this.attributes.interfaced()
@@ -146,13 +150,19 @@ public final class Constructor implements AstNode, Typed {
         return ((Typed) this.ctype).type();
     }
 
-    private String opcodeType(final AstNode node) {
+    /**
+     * Get a type of constructor.
+     * @param node Constructor node.
+     * @return Type of constructor.
+     */
+    private String type(final AstNode node) {
+        final String result;
         if (node instanceof NewAddress) {
-            return ((NewAddress) node).typeString();
+            result = ((NewAddress) node).typeAsString();
         } else if (node instanceof Reference) {
-            return opcodeType(((Reference) node).object());
+            result = this.type(((Reference) node).object());
         } else if (node instanceof Duplicate) {
-            return opcodeType(((Duplicate) node).origin());
+            result = this.type(((Duplicate) node).origin());
         } else {
             throw new IllegalStateException(
                 String.format(
@@ -161,5 +171,6 @@ public final class Constructor implements AstNode, Typed {
                 )
             );
         }
+        return result;
     }
 }

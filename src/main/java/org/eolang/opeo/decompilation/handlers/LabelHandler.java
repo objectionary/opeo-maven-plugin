@@ -36,9 +36,8 @@ import org.eolang.opeo.decompilation.InstructionHandler;
 public final class LabelHandler implements InstructionHandler {
     @Override
     public void handle(final DecompilerState state) {
-        final AstNode node1 = state.stack().popOpt().orElse(new AstNode.Empty());
         final Labeled node = new Labeled(
-            node1,
+            state.stack().first().orElse(new AstNode.Empty()),
             new Label(String.class.cast(state.operand(0)))
         );
         state.stack().push(node);

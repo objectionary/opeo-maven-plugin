@@ -39,8 +39,11 @@ public interface AstNode extends Xmir {
      */
     List<AstNode> opcodes();
 
-
-    class Empty implements AstNode {
+    /**
+     * Empty node that does nothing.
+     * @since 0.2
+     */
+    final class Empty implements AstNode {
 
         @Override
         public List<AstNode> opcodes() {

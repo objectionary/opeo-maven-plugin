@@ -24,7 +24,6 @@
 package org.eolang.opeo.decompilation.handlers;
 
 import org.eolang.opeo.ast.NewAddress;
-import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
 

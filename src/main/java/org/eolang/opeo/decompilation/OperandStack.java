@@ -66,13 +66,18 @@ public final class OperandStack {
         this.stack = original;
     }
 
-
-    public Optional<AstNode> popOpt() {
+    /**
+     * Pop one node from the stack or return empty.
+     * @return Optional node.
+     */
+    public Optional<AstNode> first() {
+        final Optional<AstNode> result;
         if (this.stack.isEmpty()) {
-            return Optional.empty();
+            result = Optional.empty();
         } else {
-            return Optional.ofNullable(this.stack.pop());
+            result = Optional.ofNullable(this.stack.pop());
         }
+        return result;
     }
 
     /**

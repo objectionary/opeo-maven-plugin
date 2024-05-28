@@ -36,7 +36,6 @@ public final class PopHandler implements InstructionHandler {
 
     @Override
     public void handle(final DecompilerState state) {
-        // We do nothing here to keep the stack contains previous computations.
         final OperandStack stack = state.stack();
         stack.push(new Popped(stack.pop()));
     }

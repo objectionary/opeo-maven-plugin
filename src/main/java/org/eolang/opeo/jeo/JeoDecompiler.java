@@ -27,12 +27,9 @@ import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.eolang.jeo.representation.ClassName;
-import org.eolang.jeo.representation.xmir.XmlClass;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.jeo.representation.xmir.XmlProgram;
-import org.eolang.opeo.Instruction;
 import org.eolang.opeo.decompilation.DecompilerMachine;
 import org.eolang.opeo.decompilation.LocalVariables;
 import org.objectweb.asm.Type;
@@ -52,6 +49,9 @@ public final class JeoDecompiler {
      */
     private final XML prog;
 
+    /**
+     * Program package.
+     */
     private final String pckg;
 
     /**
@@ -67,12 +67,12 @@ public final class JeoDecompiler {
      * Constructor.
      *
      * @param prog Program in XMIR format received from jeo maven plugin.
+     * @param pckg Program package.
      */
     public JeoDecompiler(final XML prog, final String pckg) {
         this.prog = prog;
         this.pckg = pckg;
     }
-
 
     /**
      * Decompile program.
@@ -81,10 +81,10 @@ public final class JeoDecompiler {
      */
     public XML decompile() {
         final Node node = this.prog.node();
-        final XmlClass top = new XmlProgram(node).top();
-        final String clazz1 = this.pckg.replace(".xmir", "").replace(".", "/");
-        final String descriptor = Type.getObjectType(clazz1).getDescriptor();
-        top.methods()
+        final String descriptor = Type.getObjectType(
+            this.pckg.replace(".xmir", "").replace(".", "/")
+        ).getDescriptor();
+        new XmlProgram(node).top().methods()
             .forEach(method -> this.decompile(method, descriptor));
         return new XMLDocument(node);
     }
@@ -93,6 +93,7 @@ public final class JeoDecompiler {
      * Decompile method.
      *
      * @param method Method.
+     * @param clazz Class name.
      */
     private void decompile(final XmlMethod method, final String clazz) {
         try {

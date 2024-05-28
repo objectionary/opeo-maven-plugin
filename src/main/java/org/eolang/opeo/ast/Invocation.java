@@ -161,7 +161,12 @@ public final class Invocation implements AstNode, Typed {
                     this.source
                 )
             );
-        }//todo: why?
+        }
+        //@checkstyle MethodBodyCommentsCheck (10 line)
+        // @todo #229:90min Avoid using the owner from the attributes.
+        //  Instead, use the owner from the source.
+        //  This will allow us to avoid using the owner in the attributes.
+        //  Right now we have ad-hoc logic to determine the owner.
         final String owner;
         if (this.attributes.toString().contains("owner")) {
             owner = this.attributes.owner();

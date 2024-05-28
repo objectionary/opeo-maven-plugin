@@ -389,37 +389,38 @@ final class DecompilerMachineTest {
                 ),
             new SameNode(
                 new Root(
-                    new Popped(new Invocation(
-                        new ClassField(
-                            "java/lang/System",
-                            "out",
-                            "Ljava/io/PrintStream;"
-                        ),
-                        new Attributes()
-                            .name("printf")
-                            .descriptor(
-                                "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;"
-                            )
-                            .owner("java/io/PrintStream")
-                            .interfaced(false),
-                        new Constant("Number is %s"),
-                        new StoreArray(
-                            new ArrayConstructor(
-                                new Literal(1),
-                                type
+                    new Popped(
+                        new Invocation(
+                            new ClassField(
+                                "java/lang/System",
+                                "out",
+                                "Ljava/io/PrintStream;"
                             ),
-                            new Literal(0),
-                            new StaticInvocation(
-                                new Attributes()
-                                    .owner("java/lang/Integer")
-                                    .name("valueOf")
-                                    .descriptor("(I)Ljava/lang/Integer;")
-                                    .interfaced(false),
-                                new Owner("java/lang/Integer"),
-                                new Literal(2)
+                            new Attributes()
+                                .name("printf")
+                                .descriptor(
+                                    "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;"
+                                )
+                                .owner("java/io/PrintStream")
+                                .interfaced(false),
+                            new Constant("Number is %s"),
+                            new StoreArray(
+                                new ArrayConstructor(
+                                    new Literal(1),
+                                    type
+                                ),
+                                new Literal(0),
+                                new StaticInvocation(
+                                    new Attributes()
+                                        .owner("java/lang/Integer")
+                                        .name("valueOf")
+                                        .descriptor("(I)Ljava/lang/Integer;")
+                                        .interfaced(false),
+                                    new Owner("java/lang/Integer"),
+                                    new Literal(2)
+                                )
                             )
-                        )
-                    )),
+                        )),
                     new Opcode(Opcodes.RETURN, false)
                 )
             )

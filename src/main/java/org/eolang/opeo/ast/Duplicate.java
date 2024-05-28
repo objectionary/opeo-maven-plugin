@@ -73,13 +73,16 @@ public final class Duplicate implements AstNode, Typed, Linked {
 
     @Override
     public List<AstNode> opcodes() {
+        final List<AstNode> result;
         if (this.compiled.getAndSet(true)) {
-            return Collections.emptyList();
+            result = Collections.emptyList();
+        } else {
+            result = Stream.concat(
+                this.original.get().opcodes().stream(),
+                Stream.of(new Opcode(Opcodes.DUP))
+            ).collect(Collectors.toList());
         }
-        return Stream.concat(
-            this.original.get().opcodes().stream(),
-            Stream.of(new Opcode(Opcodes.DUP))
-        ).collect(Collectors.toList());
+        return result;
     }
 
     @Override
@@ -93,14 +96,17 @@ public final class Duplicate implements AstNode, Typed, Linked {
 
     @Override
     public Iterable<Directive> toXmir() {
+        final Iterable<Directive> result;
         if (this.decompiled.getAndSet(true)) {
-            return Collections.emptyList();
+            result = Collections.emptyList();
+        } else {
+            result = new Directives()
+                .add("o")
+                .attr("base", "duplicated")
+                .append(this.original.get().toXmir())
+                .up();
         }
-        return new Directives()
-            .add("o")
-            .attr("base", "duplicated")
-            .append(this.original.get().toXmir())
-            .up();
+        return result;
     }
 
     @Override

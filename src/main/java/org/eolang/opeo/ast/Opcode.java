@@ -118,7 +118,6 @@ public final class Opcode implements AstNode {
             case Opcodes.INVOKEINTERFACE:
             case Opcodes.INVOKESPECIAL:
             case Opcodes.INVOKESTATIC:
-//            case Opcodes.INVOKEDYNAMIC:
                 this.appendInterfaced();
                 break;
             default:

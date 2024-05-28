@@ -81,11 +81,13 @@ public final class Constant implements AstNode, Typed {
 
     @Override
     public Type type() {
+        final Type result;
         if (this.value instanceof Type) {
-            return (Type) this.value;
+            result = (Type) this.value;
         } else {
-            return Type.getType(this.value.getClass());
+            result = Type.getType(this.value.getClass());
         }
+        return result;
     }
 
     /**
