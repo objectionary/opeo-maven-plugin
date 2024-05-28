@@ -124,7 +124,9 @@ Here is the summary of the first results of the `spring-fat` integration test:
 ### Phi
 
 - We print PHI expressions for all truly decompiled classes.
-- The total number of classes with PHI expressions is **4672**.
+- Some classes are not printed due to some issues with the XMIR representation.
+  We skip a file if it contains at least one issue.
+- The total number of classes with PHI expressions is **4153**.
 - The Phi phase takes **? min**.
 
 ### Compile

@@ -28,7 +28,6 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.eolang.opeo.decompilation.Decompiler;
 import org.eolang.opeo.decompilation.handlers.RouterHandler;
 import org.eolang.opeo.jeo.JeoDecompiler;
@@ -156,25 +155,6 @@ public final class SelectiveDecompiler implements Decompiler {
                 this.storage.save(res);
             }
         );
-    }
-
-    private boolean excluded(final String relative) {
-        return Stream.of(
-            // All commented packages were added to the build. Вот эти зависимостри были проверены - они не создают проблем
-            //            "junit",
-
-
-            "ch", "com", "javax",
-
-//            "net",
-
-//            То что ниже исключено из билда, то что посередине, добавлено.
-//            Если билд фейлится, то одна из зависимостей выше инициировала падение
-            "aopalliance", "apiguardian", "assertj", "eolang", "hamcrest", "json",
-            "mockito", "objectweb", "objenesis", "opentest4j", "slf4j", "xmlunit",
-
-            "springframework", "yaml"
-        ).anyMatch(relative::contains);
     }
 
     /**
