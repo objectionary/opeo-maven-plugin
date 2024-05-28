@@ -81,6 +81,7 @@ public final class RouterHandler implements InstructionHandler {
                 new MapEntry<>(Opcodes.FSUB, new SubstractionHandler()),
                 new MapEntry<>(Opcodes.DSUB, new SubstractionHandler()),
                 new MapEntry<>(Opcodes.IMUL, new MulHandler(counting)),
+                new MapEntry<>(Opcodes.IF_ICMPGT, new IfHandler()),
                 new MapEntry<>(Opcodes.I2B, new CastHandler(Type.BYTE_TYPE)),
                 new MapEntry<>(Opcodes.I2C, new CastHandler(Type.CHAR_TYPE)),
                 new MapEntry<>(Opcodes.I2S, new CastHandler(Type.SHORT_TYPE)),
