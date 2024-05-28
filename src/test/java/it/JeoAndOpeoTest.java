@@ -202,7 +202,12 @@ final class JeoAndOpeoTest {
     @CsvSource(
         "./target-standard/it/spring-fat/target/generated-sources/opeo-compile-xmir, ./target/it/spring-fat/target/generated-sources/opeo-compile-xmir"
     )
-    @SuppressWarnings({"PMD.SystemPrintln", "PMD.CognitiveComplexity"})
+    @SuppressWarnings({
+        "PMD.SystemPrintln",
+        "PMD.CognitiveComplexity",
+        "JTCOP.RulePresentTense",
+        "JTCOP.RuleAssertionMessage"
+    })
     void findTheProblem(final String etalon, final String target) {
         final Path golden = Paths.get(etalon);
         final Path real = Paths.get(target);
