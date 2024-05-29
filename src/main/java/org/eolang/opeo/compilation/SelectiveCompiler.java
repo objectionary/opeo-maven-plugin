@@ -37,7 +37,8 @@ public final class SelectiveCompiler implements Compiler {
 
     private int compile(final XmirEntry entry) {
         final XmirEntry res;
-        if (entry.xpath(this.xpath()).isEmpty()) {
+        if (entry.xpath(this.unsupportedOpcodes()).isEmpty() || entry.xpath(this.trycatches())
+            .isEmpty()) {
             res = entry.transform(xml -> new JeoCompiler(xml).compile());
         } else {
             Logger.info(
@@ -55,10 +56,18 @@ public final class SelectiveCompiler implements Compiler {
      * Xpath to find all opcodes that are not supported.
      * @return Xpath.
      */
-    private String xpath() {
+    private String unsupportedOpcodes() {
         return String.format(
             "//o[@base='opcode'][not(contains('%s', substring-before(concat(@name, '-'), '-'))) ]/@name",
             Arrays.stream(this.supported).collect(Collectors.joining(" "))
         );
+    }
+
+    /**
+     * Xpath to find all try-catch blocks.
+     * @return Xpath.
+     */
+    private String trycatches() {
+        return "//o[@base='tuple' and @name='trycatchblocks']/@name";
     }
 }

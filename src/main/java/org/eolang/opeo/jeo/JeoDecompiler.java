@@ -119,6 +119,15 @@ public final class JeoDecompiler {
                 ),
                 exception
             );
+        } catch (final IllegalStateException exception) {
+            throw new IllegalStateException(
+                String.format(
+                    "Failed to decompile method '%s' from the following XMIR: '%s'",
+                    method,
+                    this.prog
+                ),
+                exception
+            );
         }
     }
 }

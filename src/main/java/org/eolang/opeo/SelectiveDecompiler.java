@@ -137,8 +137,9 @@ public final class SelectiveDecompiler implements Decompiler {
         this.storage.all().parallel().forEach(
             entry -> {
                 final XmirEntry res;
-                final List<String> found = entry.xpath(this.xpath());
-                if (found.isEmpty()) {
+                final List<String> opcodes = entry.xpath(this.unsupportedOpcodes());
+                final List<String> trycatches = entry.xpath(this.trycatches());
+                if (opcodes.isEmpty() && trycatches.isEmpty()) {
                     res = entry.transform(
                         xml -> new JeoDecompiler(xml, entry.relative()).decompile()
                     );
@@ -146,9 +147,10 @@ public final class SelectiveDecompiler implements Decompiler {
                 } else {
                     Logger.info(
                         this,
-                        "Skipping %s, because of unsupported opcodes: %s",
+                        "Skipping %s, because of unsupported opcodes: %s, or try-catch blocks: %s",
                         entry,
-                        found
+                        opcodes,
+                        trycatches
                     );
                     res = entry;
                 }
@@ -161,10 +163,19 @@ public final class SelectiveDecompiler implements Decompiler {
      * Xpath to find all opcodes that are not supported.
      * @return Xpath.
      */
-    private String xpath() {
+    private String unsupportedOpcodes() {
         return String.format(
             "//o[@base='opcode'][not(contains('%s', substring-before(concat(@name, '-'), '-'))) ]/@name",
             Arrays.stream(this.supported).collect(Collectors.joining(" "))
         );
+    }
+
+    /**
+     * Xpath to find all try-catch blocks.
+     * @return Xpath.
+     * !todo!why?
+     */
+    private String trycatches() {
+        return "//o[@base='tuple' and @name='trycatchblocks']/@name";
     }
 }

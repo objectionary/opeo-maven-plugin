@@ -23,6 +23,7 @@
  */
 package it;
 
+import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -122,13 +123,17 @@ final class JeoAndOpeoTest {
     })
     void decompilesCompilesAndKeepsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
+        final XML decompiled = new JeoDecompiler(original).decompile();
+        System.out.println(decompiled);
+        final XML compiled = new JeoCompiler(
+            decompiled
+        ).compile();
+        System.out.println(compiled);
         MatcherAssert.assertThat(
             "The original and compiled instructions are not equal",
             new JeoInstructions(
                 new XmlProgram(
-                    new JeoCompiler(
-                        new JeoDecompiler(original).decompile()
-                    ).compile()
+                    compiled
                 ).top().methods().get(0)
             ).instuctionNames(),
             Matchers.equalTo(

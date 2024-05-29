@@ -76,4 +76,7 @@ public final class Label implements AstNode {
         return new AllLabels().label(this.identifier);
     }
 
+    public String identifier(){
+        return identifier;
+    }
 }

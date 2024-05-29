@@ -24,8 +24,13 @@
 package org.eolang.opeo.ast;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.eolang.jeo.representation.xmir.XmlNode;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -38,7 +43,9 @@ import org.xembly.Directives;
  * implementation.
  * @since 0.2
  */
-public final class Labeled implements AstNode {
+@EqualsAndHashCode
+@ToString
+public final class Labeled implements AstNode, Typed {
 
     /**
      * Original node.
@@ -49,6 +56,24 @@ public final class Labeled implements AstNode {
      * Attached label.
      */
     private final Label label;
+
+    public Labeled(final XmlNode node, Function<XmlNode, AstNode> search) {
+        this(xnode(node, search), xlabel(node));
+    }
+
+    private static AstNode xnode(final XmlNode root, final Function<XmlNode, AstNode> search) {
+        if (root.children().count() > 1) {
+            return search.apply(root.firstChild());
+        } else {
+            return new Empty();
+        }
+    }
+
+    private static Label xlabel(final XmlNode root) {
+        final List<XmlNode> all = root.children().collect(Collectors.toList());
+        final XmlNode last = all.get(all.size() - 1);
+        return new Label(last);
+    }
 
     /**
      * Constructor.
@@ -70,14 +95,29 @@ public final class Labeled implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
-        return Stream.concat(
+        final List<AstNode> re = Stream.concat(
             this.node.opcodes().stream(),
             this.label.opcodes().stream()
         ).collect(Collectors.toList());
+
+        return re;
     }
 
     @Override
     public Iterable<Directive> toXmir() {
-        return new Directives().append(this.node.toXmir()).append(this.label.toXmir());
+        return new Directives()
+            .add("o").attr("base", "labeled")
+            .append(this.node.toXmir())
+            .append(this.label.toXmir())
+            .up();
+    }
+
+    @Override
+    public Type type() {
+        if (this.node instanceof Typed) {
+            return ((Typed) this.node).type();
+        } else {
+            throw new IllegalStateException(String.format("Node '%s' is not typed", this.node));
+        }
     }
 }

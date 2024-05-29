@@ -49,6 +49,7 @@ import org.eolang.opeo.ast.If;
 import org.eolang.opeo.ast.InterfaceInvocation;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
+import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Mul;
@@ -165,6 +166,8 @@ final class XmirParser {
         );
         if (".ignore-result".equals(base)) {
             result = new Popped(this.node(node.firstChild()));
+        } else if ("labeled".equals(base)) {
+            result = new Labeled(node, this::node);
         } else if ("times".equals(base)) {
             result = new Mul(node, this::node);
         } else if (".if".equals(base)) {

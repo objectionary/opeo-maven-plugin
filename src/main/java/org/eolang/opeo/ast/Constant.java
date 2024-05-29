@@ -25,6 +25,8 @@ package org.eolang.opeo.ast;
 
 import java.util.Collections;
 import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.eolang.jeo.representation.DataType;
 import org.eolang.jeo.representation.directives.DirectivesData;
 import org.eolang.jeo.representation.xmir.XmlNode;
@@ -43,6 +45,8 @@ import org.xembly.Directives;
  *  If we can't remove this class, we need to add more tests to cover all the cases
  *  where {@link Constant} is used.
  */
+@ToString
+@EqualsAndHashCode
 public final class Constant implements AstNode, Typed {
 
     /**
