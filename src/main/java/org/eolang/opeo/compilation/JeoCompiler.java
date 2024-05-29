@@ -86,17 +86,20 @@ public final class JeoCompiler {
      *  to avoid a bug in the generation of labels. When we have lot's of methods, the cache grows
      *  and the compilation time increases significantly.
      * @todo #229:90min Calculate the Max Stack Size.
-     *  We should calculate the max stack size of the method and set it in the compiled method.
+     *  We should calculate the max stack size of the method and set it into the compiled method.
+     *  To enforce jeo to calculate the max stack size, we use 'withoutMaxs()' method.
      *  This is important to avoid runtime errors when running the compiled code.
-     *  We used to use 'withoutMaxs()' method to avoid this, but it causes some errors.
-     *  Actually, you can try to use it to see the errors.
+     *  Currently we calculate max stack size only for methods in the org.eolang package.
+     *  This is done intentionally because all the classes for the org.eolang package are
+     *  placed in the classpath and we can actually calculate the max stack size.
+     *  Other packages, for example, spring framework, have some 'optional' dependencies
+     *  that are not in the classpath and byt this reason, jeo can't calculate the max stack size.
      * @checkstyle IllegalCatch (50 lines)
      */
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.IdenticalCatchBranches"})
     private static XmlMethod compile(final XmlMethod method, final String pckg) {
         try {
             new AllLabels().clearCache();
-            //@todo: explain!
             if (pckg.contains("org.eolang")) {
                 return method.withoutMaxs().withInstructions(
                     new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
