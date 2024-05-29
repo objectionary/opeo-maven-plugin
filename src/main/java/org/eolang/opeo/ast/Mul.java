@@ -35,6 +35,10 @@ import org.xembly.Directives;
 /**
  * Multiplication.
  * @since 0.1
+ * @todo #284:90min Add types for Multiplication.
+ *  Currently we support only integer multiplication.
+ *  We need to add support for other types, such as floating point numbers, longs, etc.
+ *  Don't forget to add tests for the new types.
  */
 public final class Mul implements AstNode {
 
