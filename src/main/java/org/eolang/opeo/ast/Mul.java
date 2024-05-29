@@ -52,6 +52,11 @@ public final class Mul implements AstNode {
      */
     private final AstNode right;
 
+    /**
+     * Constructor.
+     * @param node XMIR node where to extract the value.
+     * @param search Search function.
+     */
     public Mul(final XmlNode node, Function<XmlNode, AstNode> search) {
         this(Mul.xleft(node, search), xright(node, search));
     }

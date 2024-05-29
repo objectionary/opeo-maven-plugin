@@ -26,9 +26,11 @@ package org.eolang.opeo.compilation;
 import com.jcabi.xml.XML;
 import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.jeo.representation.xmir.XmlClass;
+import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.jeo.representation.xmir.XmlProgram;
+import org.objectweb.asm.Opcodes;
 
 /**
  * Compiler of high-level EO programs to low-level EO suitable for jeo-maven-plugin.
@@ -91,9 +93,12 @@ public final class JeoCompiler {
     private static XmlMethod compile(final XmlMethod method) {
         try {
             new AllLabels().clearCache();
-            return method.withInstructions(
-                new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
-            );
+                return method.withoutMaxs().withInstructions(
+                    new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
+                );
+//                return method.withoutMaxs().withInstructions(
+//                    new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
+//                );
         } catch (final ClassCastException exception) {
             throw new IllegalArgumentException(
                 String.format(
