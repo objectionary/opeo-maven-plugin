@@ -60,9 +60,12 @@ public final class JeoCompiler {
      */
     public XML compile() {
         final XmlProgram program = new XmlProgram(this.opeo.node());
+        final String pckg = program.toXml().xpath("//meta[head='package']/tail/text()").stream()
+            .findFirst()
+            .orElse("");
         final XmlClass clazz = program.top();
         final XmlMethod[] methods = clazz.methods().stream()
-            .map(JeoCompiler::compile)
+            .map(method -> JeoCompiler.compile(method, pckg))
             .toArray(XmlMethod[]::new);
         return program.replaceTopClass(
             clazz.replaceMethods(methods)
@@ -90,15 +93,19 @@ public final class JeoCompiler {
      * @checkstyle IllegalCatch (50 lines)
      */
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.IdenticalCatchBranches"})
-    private static XmlMethod compile(final XmlMethod method) {
+    private static XmlMethod compile(final XmlMethod method, final String pckg) {
         try {
             new AllLabels().clearCache();
+            //@todo: explain!
+            if (pckg.contains("org.eolang")) {
                 return method.withoutMaxs().withInstructions(
                     new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
                 );
-//                return method.withoutMaxs().withInstructions(
-//                    new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
-//                );
+            } else {
+                return method.withInstructions(
+                    new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
+                );
+            }
         } catch (final ClassCastException exception) {
             throw new IllegalArgumentException(
                 String.format(
