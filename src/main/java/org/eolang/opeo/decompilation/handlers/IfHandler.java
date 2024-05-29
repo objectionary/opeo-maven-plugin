@@ -44,8 +44,8 @@ public final class IfHandler implements InstructionHandler {
     public void handle(final DecompilerState state) {
         if (state.instruction().opcode() == Opcodes.IF_ICMPGT) {
             final OperandStack stack = state.stack();
-            final AstNode first = stack.pop();
             final AstNode second = stack.pop();
+            final AstNode first = stack.pop();
             final Label operand = (Label) state.operand(0);
             stack.push(new If(first, second, operand));
         } else {

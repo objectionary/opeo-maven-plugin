@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -75,6 +76,7 @@ public final class Mul implements AstNode {
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.left.opcodes());
         res.addAll(this.right.opcodes());
+        res.add(new Opcode(Opcodes.IMUL));
         return res;
     }
 
