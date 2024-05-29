@@ -110,16 +110,7 @@ public final class JeoDecompiler {
                     ).children().collect(Collectors.toList()).toArray(XmlNode[]::new)
                 );
             }
-        } catch (final ClassCastException exception) {
-            throw new IllegalStateException(
-                String.format(
-                    "Failed to decompile method '%s' from the following XMIR: '%s'",
-                    method,
-                    this.prog
-                ),
-                exception
-            );
-        } catch (final IllegalStateException exception) {
+        } catch (final ClassCastException | IllegalStateException exception) {
             throw new IllegalStateException(
                 String.format(
                     "Failed to decompile method '%s' from the following XMIR: '%s'",

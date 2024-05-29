@@ -30,7 +30,6 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.eolang.opeo.compilation.Compiler;
-import org.eolang.opeo.compilation.DefaultCompiler;
 import org.eolang.opeo.compilation.DummyCompiler;
 import org.eolang.opeo.compilation.SelectiveCompiler;
 

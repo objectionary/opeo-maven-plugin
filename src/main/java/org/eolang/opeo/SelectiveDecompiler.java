@@ -138,7 +138,7 @@ public final class SelectiveDecompiler implements Decompiler {
             entry -> {
                 final XmirEntry res;
                 final List<String> opcodes = entry.xpath(this.unsupportedOpcodes());
-                final List<String> trycatches = entry.xpath(this.trycatches());
+                final List<String> trycatches = entry.xpath(SelectiveDecompiler.trycatches());
                 if (opcodes.isEmpty() && trycatches.isEmpty()) {
                     res = entry.transform(
                         xml -> new JeoDecompiler(xml, entry.relative()).decompile()
@@ -173,9 +173,12 @@ public final class SelectiveDecompiler implements Decompiler {
     /**
      * Xpath to find all try-catch blocks.
      * @return Xpath.
-     * !todo!why?
+     * @todo #284:90min Decompile try-catch blocks.
+     *  Currently we skip decompilation of methods that contain try-catch blocks.
+     *  We need to implement decompilation of try-catch blocks.
+     *  Don't forget to add tests for the new functionality.
      */
-    private String trycatches() {
+    private static String trycatches() {
         return "//o[@base='tuple' and @name='trycatchblocks']/@name";
     }
 }

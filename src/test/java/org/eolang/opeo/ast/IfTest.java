@@ -36,7 +36,7 @@ import org.xembly.Xembler;
  * Test case for {@link If}.
  * @since 0.2
  */
-class IfTest {
+final class IfTest {
 
     /**
      * Xmir for the 'if' statement.
@@ -74,15 +74,18 @@ class IfTest {
     void createsIfStatementFromXmir() {
         MatcherAssert.assertThat(
             "Can create 'if' statement from XMIR",
-            new If(new XmlNode(IfTest.XMIR), xml -> {
-                final AstNode result;
-                if (xml.text().contains("1")) {
-                    result = new Literal(1);
-                } else {
-                    result = new Literal(2);
+            new If(
+                new XmlNode(IfTest.XMIR),
+                xml -> {
+                    final AstNode result;
+                    if (xml.text().contains("1")) {
+                        result = new Literal(1);
+                    } else {
+                        result = new Literal(2);
+                    }
+                    return result;
                 }
-                return result;
-            }),
+            ),
             Matchers.equalTo(
                 new If(
                     new Literal(1),

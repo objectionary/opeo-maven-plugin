@@ -26,11 +26,9 @@ package org.eolang.opeo.compilation;
 import com.jcabi.xml.XML;
 import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.jeo.representation.xmir.XmlClass;
-import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.jeo.representation.xmir.XmlProgram;
-import org.objectweb.asm.Opcodes;
 
 /**
  * Compiler of high-level EO programs to low-level EO suitable for jeo-maven-plugin.
@@ -76,6 +74,7 @@ public final class JeoCompiler {
      * Compiles a single method.
      *
      * @param method The method to compile.
+     * @param pckg The package of the method.
      * @return The compiled method.
      * @todo #229:90min Refactor {@link #compile} method to handle exceptions appropriately.
      *  The method {@link #compile} is catching generic exceptions which is bad.
@@ -99,16 +98,18 @@ public final class JeoCompiler {
     @SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.IdenticalCatchBranches"})
     private static XmlMethod compile(final XmlMethod method, final String pckg) {
         try {
+            final XmlMethod result;
             new AllLabels().clearCache();
             if (pckg.contains("org.eolang")) {
-                return method.withoutMaxs().withInstructions(
+                result = method.withoutMaxs().withInstructions(
                     new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
                 );
             } else {
-                return method.withInstructions(
+                result = method.withInstructions(
                     new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
                 );
             }
+            return result;
         } catch (final ClassCastException exception) {
             throw new IllegalArgumentException(
                 String.format(

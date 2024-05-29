@@ -31,7 +31,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.jeo.representation.HexData;
 import org.eolang.jeo.representation.xmir.AllLabels;
-import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
@@ -43,6 +42,7 @@ import org.xembly.Directives;
  */
 @ToString
 @EqualsAndHashCode
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class If implements AstNode {
 
     /**
@@ -63,8 +63,9 @@ public final class If implements AstNode {
     /**
      * Constructor.
      * @param node XMIR node.
+     * @param search Search function.
      */
-    public If(final XmlNode node, Function<XmlNode, AstNode> search) {
+    public If(final XmlNode node, final Function<XmlNode, AstNode> search) {
         this(If.xfirst(node, search), If.xsecond(node, search), If.xtarget(node));
     }
 
@@ -121,18 +122,20 @@ public final class If implements AstNode {
     /**
      * Extracts the first value.
      * @param node XMIR node where to extract the value.
+     * @param search Search function to parse child nodes.
      * @return Value.
      */
-    private static AstNode xfirst(final XmlNode node, Function<XmlNode, AstNode> search) {
+    private static AstNode xfirst(final XmlNode node, final Function<XmlNode, AstNode> search) {
         return search.apply(node.child("base", ".gt").firstChild());
     }
 
     /**
      * Extracts the second value.
      * @param node XMIR node where to extract the value.
+     * @param search Search function to parse child nodes.
      * @return Value.
      */
-    private static AstNode xsecond(final XmlNode node, Function<XmlNode, AstNode> search) {
+    private static AstNode xsecond(final XmlNode node, final Function<XmlNode, AstNode> search) {
         final List<XmlNode> children = node.child("base", ".gt").children()
             .collect(Collectors.toList());
         return search.apply(children.get(children.size() - 1));

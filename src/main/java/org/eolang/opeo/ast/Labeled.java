@@ -57,22 +57,13 @@ public final class Labeled implements AstNode, Typed {
      */
     private final Label label;
 
-    public Labeled(final XmlNode node, Function<XmlNode, AstNode> search) {
-        this(xnode(node, search), xlabel(node));
-    }
-
-    private static AstNode xnode(final XmlNode root, final Function<XmlNode, AstNode> search) {
-        if (root.children().count() > 1) {
-            return search.apply(root.firstChild());
-        } else {
-            return new Empty();
-        }
-    }
-
-    private static Label xlabel(final XmlNode root) {
-        final List<XmlNode> all = root.children().collect(Collectors.toList());
-        final XmlNode last = all.get(all.size() - 1);
-        return new Label(last);
+    /**
+     * Constructor.
+     * @param node Original node to parse.
+     * @param search Search function to parse child nodes.
+     */
+    public Labeled(final XmlNode node, final Function<XmlNode, AstNode> search) {
+        this(Labeled.xnode(node, search), Labeled.xlabel(node));
     }
 
     /**
@@ -95,12 +86,10 @@ public final class Labeled implements AstNode, Typed {
 
     @Override
     public List<AstNode> opcodes() {
-        final List<AstNode> re = Stream.concat(
+        return Stream.concat(
             this.node.opcodes().stream(),
             this.label.opcodes().stream()
         ).collect(Collectors.toList());
-
-        return re;
     }
 
     @Override
@@ -119,5 +108,32 @@ public final class Labeled implements AstNode, Typed {
         } else {
             throw new IllegalStateException(String.format("Node '%s' is not typed", this.node));
         }
+    }
+
+    /**
+     * Parse original node from XMIR.
+     * @param root Root node where the original node is placed.
+     * @param search Search function to parse child nodes.
+     * @return Original node.
+     */
+    private static AstNode xnode(final XmlNode root, final Function<XmlNode, AstNode> search) {
+        final AstNode result;
+        if (root.children().count() > 1) {
+            result = search.apply(root.firstChild());
+        } else {
+            result = new Empty();
+        }
+        return result;
+    }
+
+    /**
+     * Parse label from XMIR.
+     * @param root Root node where the label is placed.
+     * @return Label.
+     */
+    private static Label xlabel(final XmlNode root) {
+        final List<XmlNode> all = root.children().collect(Collectors.toList());
+        final XmlNode last = all.get(all.size() - 1);
+        return new Label(last);
     }
 }
