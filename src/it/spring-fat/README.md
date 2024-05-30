@@ -51,7 +51,7 @@ mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests -Di
 ```
 
 After running this command, you can find the PHI expressions in
-the `target/generated-sources/phi-expressions` directory.
+the `./target/it/spring-fat/target/generated-sources/phi-expressions` directory.
 
 **Pay attention!**
 You need to run this command from the root directory of the project, not from
