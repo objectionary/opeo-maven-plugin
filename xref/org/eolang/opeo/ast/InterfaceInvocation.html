@@ -118,86 +118,87 @@
 <a class="jxr_linenumber" name="L110" href="#L110">110</a>                 Opcodes.INVOKEINTERFACE,
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>                 owner.type().getClassName().replace('.', '/'),
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>                 <strong class="jxr_keyword">this</strong>.attrs.name(),
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>                 <strong class="jxr_keyword">this</strong>.attrs.descriptor()
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>             )
-<a class="jxr_linenumber" name="L115" href="#L115">115</a>         );
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>         <strong class="jxr_keyword">return</strong> res;
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>     }
-<a class="jxr_linenumber" name="L118" href="#L118">118</a> 
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>     @Override
-<a class="jxr_linenumber" name="L120" href="#L120">120</a>     <strong class="jxr_keyword">public</strong> Iterable&lt;Directive&gt; toXmir() {
-<a class="jxr_linenumber" name="L121" href="#L121">121</a>         <strong class="jxr_keyword">if</strong> (Objects.isNull(<strong class="jxr_keyword">this</strong>.source)) {
-<a class="jxr_linenumber" name="L122" href="#L122">122</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(
-<a class="jxr_linenumber" name="L123" href="#L123">123</a>                 String.format(
-<a class="jxr_linenumber" name="L124" href="#L124">124</a>                     <span class="jxr_string">"Source and method must not be null, but they are %s"</span>,
-<a class="jxr_linenumber" name="L125" href="#L125">125</a>                     <strong class="jxr_keyword">this</strong>
-<a class="jxr_linenumber" name="L126" href="#L126">126</a>                 )
-<a class="jxr_linenumber" name="L127" href="#L127">127</a>             );
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>         }
-<a class="jxr_linenumber" name="L129" href="#L129">129</a>         <strong class="jxr_keyword">final</strong> Directives directives = <strong class="jxr_keyword">new</strong> Directives();
-<a class="jxr_linenumber" name="L130" href="#L130">130</a>         directives.add(<span class="jxr_string">"o"</span>)
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>             .attr(<span class="jxr_string">"base"</span>, String.format(<span class="jxr_string">".%s"</span>, <strong class="jxr_keyword">this</strong>.attrs.name()))
-<a class="jxr_linenumber" name="L132" href="#L132">132</a>             .attr(<span class="jxr_string">"scope"</span>, <strong class="jxr_keyword">this</strong>.attrs)
-<a class="jxr_linenumber" name="L133" href="#L133">133</a>             .append(<strong class="jxr_keyword">this</strong>.source.toXmir());
-<a class="jxr_linenumber" name="L134" href="#L134">134</a>         <strong class="jxr_keyword">this</strong>.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
-<a class="jxr_linenumber" name="L135" href="#L135">135</a>         <strong class="jxr_keyword">return</strong> directives.up();
-<a class="jxr_linenumber" name="L136" href="#L136">136</a>     }
-<a class="jxr_linenumber" name="L137" href="#L137">137</a> 
-<a class="jxr_linenumber" name="L138" href="#L138">138</a>     @Override
-<a class="jxr_linenumber" name="L139" href="#L139">139</a>     <strong class="jxr_keyword">public</strong> Type type() {
-<a class="jxr_linenumber" name="L140" href="#L140">140</a>         <strong class="jxr_keyword">return</strong> Type.getReturnType(<strong class="jxr_keyword">this</strong>.attrs.descriptor());
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>     }
-<a class="jxr_linenumber" name="L142" href="#L142">142</a> 
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L144" href="#L144">144</a> <em class="jxr_javadoccomment">     * Extracts attributes from the node.</em>
-<a class="jxr_linenumber" name="L145" href="#L145">145</a> <em class="jxr_javadoccomment">     * @param node XML node</em>
-<a class="jxr_linenumber" name="L146" href="#L146">146</a> <em class="jxr_javadoccomment">     * @return Attributes</em>
-<a class="jxr_linenumber" name="L147" href="#L147">147</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L148" href="#L148">148</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a> xattrs(<strong class="jxr_keyword">final</strong> XmlNode node) {
-<a class="jxr_linenumber" name="L149" href="#L149">149</a>         <strong class="jxr_keyword">return</strong> node.attribute(<span class="jxr_string">"scope"</span>).map(Attributes::<strong class="jxr_keyword">new</strong>).orElseThrow(
-<a class="jxr_linenumber" name="L150" href="#L150">150</a>             () -&gt; <strong class="jxr_keyword">new</strong> IllegalArgumentException(
-<a class="jxr_linenumber" name="L151" href="#L151">151</a>                 String.format(
-<a class="jxr_linenumber" name="L152" href="#L152">152</a>                     <span class="jxr_string">"Can't retrieve interface invocation attributes from the node %s"</span>,
-<a class="jxr_linenumber" name="L153" href="#L153">153</a>                     node
-<a class="jxr_linenumber" name="L154" href="#L154">154</a>                 )
-<a class="jxr_linenumber" name="L155" href="#L155">155</a>             )
-<a class="jxr_linenumber" name="L156" href="#L156">156</a>         );
-<a class="jxr_linenumber" name="L157" href="#L157">157</a>     }
-<a class="jxr_linenumber" name="L158" href="#L158">158</a> 
-<a class="jxr_linenumber" name="L159" href="#L159">159</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L160" href="#L160">160</a> <em class="jxr_javadoccomment">     * Extracts source from the node.</em>
-<a class="jxr_linenumber" name="L161" href="#L161">161</a> <em class="jxr_javadoccomment">     * @param node XML node.</em>
-<a class="jxr_linenumber" name="L162" href="#L162">162</a> <em class="jxr_javadoccomment">     * @param parser Parser.</em>
-<a class="jxr_linenumber" name="L163" href="#L163">163</a> <em class="jxr_javadoccomment">     * @return Source.</em>
-<a class="jxr_linenumber" name="L164" href="#L164">164</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L165" href="#L165">165</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a name="AstNode" href="../../../../org/eolang/opeo/ast/AstNode.html#AstNode">AstNode</a> xsource(<strong class="jxr_keyword">final</strong> XmlNode node, <strong class="jxr_keyword">final</strong> Function&lt;XmlNode, AstNode&gt; parser) {
-<a class="jxr_linenumber" name="L166" href="#L166">166</a>         <strong class="jxr_keyword">final</strong> List&lt;XmlNode&gt; <strong class="jxr_keyword">inner</strong> = node.children().collect(Collectors.toList());
-<a class="jxr_linenumber" name="L167" href="#L167">167</a>         <strong class="jxr_keyword">return</strong> parser.apply(<strong class="jxr_keyword">inner</strong>.get(0));
-<a class="jxr_linenumber" name="L168" href="#L168">168</a>     }
-<a class="jxr_linenumber" name="L169" href="#L169">169</a> 
-<a class="jxr_linenumber" name="L170" href="#L170">170</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L171" href="#L171">171</a> <em class="jxr_javadoccomment">     * Convert XML nodes into a list of arguments.</em>
-<a class="jxr_linenumber" name="L172" href="#L172">172</a> <em class="jxr_javadoccomment">     * @param node XML node.</em>
-<a class="jxr_linenumber" name="L173" href="#L173">173</a> <em class="jxr_javadoccomment">     * @param parser Parser.</em>
-<a class="jxr_linenumber" name="L174" href="#L174">174</a> <em class="jxr_javadoccomment">     * @return List of arguments.</em>
-<a class="jxr_linenumber" name="L175" href="#L175">175</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> List&lt;AstNode&gt; xargs(
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>         <strong class="jxr_keyword">final</strong> XmlNode node,
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>         <strong class="jxr_keyword">final</strong> Function&lt;? <strong class="jxr_keyword">super</strong> XmlNode, ? <strong class="jxr_keyword">extends</strong> AstNode&gt; parser
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>     ) {
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>         <strong class="jxr_keyword">final</strong> List&lt;XmlNode&gt; all = node.children().collect(Collectors.toList());
-<a class="jxr_linenumber" name="L181" href="#L181">181</a>         <strong class="jxr_keyword">final</strong> List&lt;AstNode&gt; arguments;
-<a class="jxr_linenumber" name="L182" href="#L182">182</a>         <strong class="jxr_keyword">if</strong> (all.size() &gt; 1) {
-<a class="jxr_linenumber" name="L183" href="#L183">183</a>             arguments = all.subList(1, all.size())
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>                 .stream()
-<a class="jxr_linenumber" name="L185" href="#L185">185</a>                 .map(parser::apply)
-<a class="jxr_linenumber" name="L186" href="#L186">186</a>                 .collect(Collectors.toList());
-<a class="jxr_linenumber" name="L187" href="#L187">187</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L188" href="#L188">188</a>             arguments = Collections.emptyList();
-<a class="jxr_linenumber" name="L189" href="#L189">189</a>         }
-<a class="jxr_linenumber" name="L190" href="#L190">190</a>         <strong class="jxr_keyword">return</strong> arguments;
-<a class="jxr_linenumber" name="L191" href="#L191">191</a>     }
-<a class="jxr_linenumber" name="L192" href="#L192">192</a> }
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>                 <strong class="jxr_keyword">this</strong>.attrs.descriptor(),
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>                 <strong class="jxr_keyword">this</strong>.attrs.interfaced()
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>             )
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>         );
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>         <strong class="jxr_keyword">return</strong> res;
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>     }
+<a class="jxr_linenumber" name="L119" href="#L119">119</a> 
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>     @Override
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>     <strong class="jxr_keyword">public</strong> Iterable&lt;Directive&gt; toXmir() {
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>         <strong class="jxr_keyword">if</strong> (Objects.isNull(<strong class="jxr_keyword">this</strong>.source)) {
+<a class="jxr_linenumber" name="L123" href="#L123">123</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(
+<a class="jxr_linenumber" name="L124" href="#L124">124</a>                 String.format(
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>                     <span class="jxr_string">"Source and method must not be null, but they are %s"</span>,
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>                     <strong class="jxr_keyword">this</strong>
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>                 )
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>             );
+<a class="jxr_linenumber" name="L129" href="#L129">129</a>         }
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>         <strong class="jxr_keyword">final</strong> Directives directives = <strong class="jxr_keyword">new</strong> Directives();
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>         directives.add(<span class="jxr_string">"o"</span>)
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>             .attr(<span class="jxr_string">"base"</span>, String.format(<span class="jxr_string">".%s"</span>, <strong class="jxr_keyword">this</strong>.attrs.name()))
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>             .attr(<span class="jxr_string">"scope"</span>, <strong class="jxr_keyword">this</strong>.attrs)
+<a class="jxr_linenumber" name="L134" href="#L134">134</a>             .append(<strong class="jxr_keyword">this</strong>.source.toXmir());
+<a class="jxr_linenumber" name="L135" href="#L135">135</a>         <strong class="jxr_keyword">this</strong>.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>         <strong class="jxr_keyword">return</strong> directives.up();
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>     }
+<a class="jxr_linenumber" name="L138" href="#L138">138</a> 
+<a class="jxr_linenumber" name="L139" href="#L139">139</a>     @Override
+<a class="jxr_linenumber" name="L140" href="#L140">140</a>     <strong class="jxr_keyword">public</strong> Type type() {
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>         <strong class="jxr_keyword">return</strong> Type.getReturnType(<strong class="jxr_keyword">this</strong>.attrs.descriptor());
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>     }
+<a class="jxr_linenumber" name="L143" href="#L143">143</a> 
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L145" href="#L145">145</a> <em class="jxr_javadoccomment">     * Extracts attributes from the node.</em>
+<a class="jxr_linenumber" name="L146" href="#L146">146</a> <em class="jxr_javadoccomment">     * @param node XML node</em>
+<a class="jxr_linenumber" name="L147" href="#L147">147</a> <em class="jxr_javadoccomment">     * @return Attributes</em>
+<a class="jxr_linenumber" name="L148" href="#L148">148</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a> xattrs(<strong class="jxr_keyword">final</strong> XmlNode node) {
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>         <strong class="jxr_keyword">return</strong> node.attribute(<span class="jxr_string">"scope"</span>).map(Attributes::<strong class="jxr_keyword">new</strong>).orElseThrow(
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>             () -&gt; <strong class="jxr_keyword">new</strong> IllegalArgumentException(
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>                 String.format(
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>                     <span class="jxr_string">"Can't retrieve interface invocation attributes from the node %s"</span>,
+<a class="jxr_linenumber" name="L154" href="#L154">154</a>                     node
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>                 )
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>             )
+<a class="jxr_linenumber" name="L157" href="#L157">157</a>         );
+<a class="jxr_linenumber" name="L158" href="#L158">158</a>     }
+<a class="jxr_linenumber" name="L159" href="#L159">159</a> 
+<a class="jxr_linenumber" name="L160" href="#L160">160</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L161" href="#L161">161</a> <em class="jxr_javadoccomment">     * Extracts source from the node.</em>
+<a class="jxr_linenumber" name="L162" href="#L162">162</a> <em class="jxr_javadoccomment">     * @param node XML node.</em>
+<a class="jxr_linenumber" name="L163" href="#L163">163</a> <em class="jxr_javadoccomment">     * @param parser Parser.</em>
+<a class="jxr_linenumber" name="L164" href="#L164">164</a> <em class="jxr_javadoccomment">     * @return Source.</em>
+<a class="jxr_linenumber" name="L165" href="#L165">165</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a name="AstNode" href="../../../../org/eolang/opeo/ast/AstNode.html#AstNode">AstNode</a> xsource(<strong class="jxr_keyword">final</strong> XmlNode node, <strong class="jxr_keyword">final</strong> Function&lt;XmlNode, AstNode&gt; parser) {
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>         <strong class="jxr_keyword">final</strong> List&lt;XmlNode&gt; <strong class="jxr_keyword">inner</strong> = node.children().collect(Collectors.toList());
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>         <strong class="jxr_keyword">return</strong> parser.apply(<strong class="jxr_keyword">inner</strong>.get(0));
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>     }
+<a class="jxr_linenumber" name="L170" href="#L170">170</a> 
+<a class="jxr_linenumber" name="L171" href="#L171">171</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L172" href="#L172">172</a> <em class="jxr_javadoccomment">     * Convert XML nodes into a list of arguments.</em>
+<a class="jxr_linenumber" name="L173" href="#L173">173</a> <em class="jxr_javadoccomment">     * @param node XML node.</em>
+<a class="jxr_linenumber" name="L174" href="#L174">174</a> <em class="jxr_javadoccomment">     * @param parser Parser.</em>
+<a class="jxr_linenumber" name="L175" href="#L175">175</a> <em class="jxr_javadoccomment">     * @return List of arguments.</em>
+<a class="jxr_linenumber" name="L176" href="#L176">176</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> List&lt;AstNode&gt; xargs(
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>         <strong class="jxr_keyword">final</strong> XmlNode node,
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>         <strong class="jxr_keyword">final</strong> Function&lt;? <strong class="jxr_keyword">super</strong> XmlNode, ? <strong class="jxr_keyword">extends</strong> AstNode&gt; parser
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>     ) {
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>         <strong class="jxr_keyword">final</strong> List&lt;XmlNode&gt; all = node.children().collect(Collectors.toList());
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>         <strong class="jxr_keyword">final</strong> List&lt;AstNode&gt; arguments;
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>         <strong class="jxr_keyword">if</strong> (all.size() &gt; 1) {
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>             arguments = all.subList(1, all.size())
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>                 .stream()
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>                 .map(parser::apply)
+<a class="jxr_linenumber" name="L187" href="#L187">187</a>                 .collect(Collectors.toList());
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>             arguments = Collections.emptyList();
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>         }
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>         <strong class="jxr_keyword">return</strong> arguments;
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>     }
+<a class="jxr_linenumber" name="L193" href="#L193">193</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2023&#x2013;2024 <a href="https://github.com/objectionary/eo">EO</a>. All rights reserved.</div>

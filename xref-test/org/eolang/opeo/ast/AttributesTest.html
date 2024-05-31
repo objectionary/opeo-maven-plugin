@@ -46,8 +46,8 @@
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>      @ParameterizedTest(name = <span class="jxr_string">"Converts \&quot;{1}\&quot; attributes to a single string \&quot;{0}\&quot;"</span>)
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>      @CsvSource({
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>          <span class="jxr_string">"scope=foo, 'scope,foo,'"</span>,
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>          <span class="jxr_string">"descriptor=I|type=field|owner=Lorg/eolang/opeo/ast/Invocation;, 'descriptor,I,type,field,owner,Lorg/eolang/opeo/ast/Invocation;'"</span>,
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>          <span class="jxr_string">"descriptor=()V|type=method|owner=Lorg/eolang/opeo/ast/Invocation;, 'descriptor,()V,type,method,owner,Lorg/eolang/opeo/ast/Invocation;'"</span>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>          <span class="jxr_string">"descriptor=I|owner=Lorg/eolang/opeo/ast/Invocation;|type=field, 'descriptor,I,type,field,owner,Lorg/eolang/opeo/ast/Invocation;'"</span>,
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          <span class="jxr_string">"descriptor=()V|owner=Lorg/eolang/opeo/ast/Invocation;|type=method, 'descriptor,()V,type,method,owner,Lorg/eolang/opeo/ast/Invocation;'"</span>
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>      })
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>      <strong class="jxr_keyword">void</strong> convertsToString(<strong class="jxr_keyword">final</strong> String expected, <strong class="jxr_keyword">final</strong> String attributes) {
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>          MatcherAssert.assertThat(

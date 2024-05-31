@@ -43,7 +43,7 @@
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment"> * Test case for {@link ArrayConstructor}.</em>
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_javadoccomment"> * @since 0.1</em>
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">class</strong> <a name="ArrayConstructorTest" href="../../../../org/eolang/opeo/ast/ArrayConstructorTest.html#ArrayConstructorTest">ArrayConstructorTest</a> {
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="ArrayConstructorTest" href="../../../../org/eolang/opeo/ast/ArrayConstructorTest.html#ArrayConstructorTest">ArrayConstructorTest</a> {
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>      @Test
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>      <strong class="jxr_keyword">void</strong> compilesSimpleArrayCreation() {
@@ -98,9 +98,9 @@
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>              ),
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>              xmir,
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>              XhtmlMatchers.hasXPaths(
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>                  <span class="jxr_string">"./o[@base='.array']"</span>,
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>                  <span class="jxr_string">"./o[@base='.array']/o[@base='string' and @data='bytes']"</span>,
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>                  <span class="jxr_string">"./o[@base='.array']/o[@base='.plus']"</span>
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>                  <span class="jxr_string">"./o[@base='.array-node']"</span>,
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>                  <span class="jxr_string">"./o[@base='.array-node']/o[@base='string' and @data='bytes']"</span>,
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>                  <span class="jxr_string">"./o[@base='.array-node']/o[@base='.plus']"</span>
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>              )
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>          );
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>      }
