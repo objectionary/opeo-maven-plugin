@@ -24,26 +24,14 @@
 package it;
 
 import com.jcabi.xml.XMLDocument;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.eolang.jeo.representation.BytecodeRepresentation;
 import org.eolang.jeo.representation.XmirRepresentation;
 import org.eolang.jeo.representation.bytecode.Bytecode;
 import org.eolang.jeo.representation.xmir.XmlBytecodeEntry;
-import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlLabel;
-import org.eolang.jeo.representation.xmir.XmlMethod;
-import org.eolang.jeo.representation.xmir.XmlOperand;
 import org.eolang.jeo.representation.xmir.XmlProgram;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.compilation.JeoCompiler;
@@ -53,7 +41,6 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -61,12 +48,6 @@ import org.junit.jupiter.params.provider.CsvSource;
  * Integration tests for JEO and OPEO transformations.
  * This class is rather useful for bug identification on different transformation stages.
  * @since 0.2
- * @todo #229:90min Refactor JeoAndOpeoTest.
- *  In orderd to check the correctness of the transformation from JEO to OPEO,
- *  we created this class. Since we didn't have time to write it properly,
- *  we need to refactor it. The main goal is to make the tests more readable and
- *  to make the test names more descriptive. Moreover, the test
- *  {@link #findTheProblem(String, String)} should be moved into a separate place.
  * @todo #284:90min Enable {@link #decompilesAndCompilesTryCatchBlocks(String)} test.
  *  This test is disabled because the decompilation and compilation of bytecode with
  *  try-catch-blocks significantly differs from the plain bytecode.
@@ -199,7 +180,8 @@ final class JeoAndOpeoTest {
         "xmir/disassembled/SimpleTypeConverter.xmir, org.springframework.beans.SimpleTypeConverter"
     )
     void decompilesCompilesAndKeepsExactlyTheSameContent(
-        final String path, final String pckg
+        final String path,
+        final String pckg
     ) throws Exception {
         Opcode.disableCounting();
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
@@ -210,126 +192,5 @@ final class JeoAndOpeoTest {
         );
     }
 
-    /**
-     * This test is used to find the problem in the transformation from JEO to OPEO.
-     * @param etalon The path to the golden files.
-     * @param target The path to the real files.
-     * @checkstyle NestedForDepthCheck (100 lines)
-     * @checkstyle JavaNCSSCheck (100 lines)
-     * @checkstyle CyclomaticComplexityCheck (100 lines)
-     * @checkstyle ExecutableStatementCountCheck (100 lines)
-     */
-    @Test
-    @Disabled
-    @ParameterizedTest
-    @CsvSource(
-        "./target-standard/it/spring-fat/target/generated-sources/opeo-compile-xmir, ./target/it/spring-fat/target/generated-sources/opeo-compile-xmir"
-    )
-    @SuppressWarnings({
-        "PMD.SystemPrintln",
-        "PMD.CognitiveComplexity",
-        "JTCOP.RulePresentTense",
-        "JTCOP.RuleAssertionMessage"
-    })
-    void findTheProblem(final String etalon, final String target) {
-        final Path golden = Paths.get(etalon);
-        final Path real = Paths.get(target);
-        final AtomicInteger counter = new AtomicInteger(0);
-        final AtomicInteger ecounter = new AtomicInteger(0);
-        final List<String> errors = new ArrayList<>(0);
-        try (Stream<Path> all = Files.walk(golden).filter(Files::isRegularFile)) {
-            all.forEach(
-                path -> {
-                    counter.incrementAndGet();
-                    final Path relative = golden.relativize(path);
-                    final XMLDocument bad;
-                    final XMLDocument good;
-                    try {
-                        good = new XMLDocument(golden.resolve(relative));
-                        bad = new XMLDocument(real.resolve(relative));
-                    } catch (final FileNotFoundException exception) {
-                        throw new IllegalArgumentException(
-                            String.format("File not found: %s", relative),
-                            exception
-                        );
-                    }
-                    final XmlProgram gprogram = new XmlProgram(good);
-                    final XmlProgram bprogram = new XmlProgram(bad);
-                    final List<XmlMethod> gmethods = gprogram.top().methods();
-                    final List<XmlMethod> bmethods = bprogram.top().methods();
-                    final int size = gmethods.size();
-                    outer:
-                    for (int index = 0; index < size; ++index) {
-                        final XmlMethod gmethod = gmethods.get(index);
-                        final XmlMethod bmethod = bmethods.get(index);
-                        final List<XmlBytecodeEntry> ginstrs = gmethod.instructions()
-                            .stream()
-                            .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
-                            .collect(Collectors.toList());
-                        final List<XmlBytecodeEntry> binstrs = bmethod.instructions()
-                            .stream()
-                            .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
-                            .collect(Collectors.toList());
-                        final int isize = ginstrs.size();
-                        for (int jindex = 0; jindex < isize; ++jindex) {
-                            final XmlBytecodeEntry gentry = ginstrs.get(jindex);
-                            final XmlBytecodeEntry bentry = binstrs.get(jindex);
-                            if (gentry instanceof XmlInstruction
-                                && bentry instanceof XmlInstruction) {
-                                final XmlInstruction ginstr = (XmlInstruction) gentry;
-                                final XmlInstruction binstr = (XmlInstruction) bentry;
-                                if (ginstr.opcode() != binstr.opcode()) {
-                                    final String message = String.format(
-                                        "The operands '%s' and '%s' are differ in %n%s%n%s,%nTotal scanned files: %d",
-                                        gentry,
-                                        bentry,
-                                        String.format("file://%s", golden.resolve(relative)),
-                                        String.format("file://%s", real.resolve(relative)),
-                                        counter.get()
-                                    );
-                                    errors.add(message);
-                                    ecounter.incrementAndGet();
-                                    break outer;
-                                }
-                                final List<XmlOperand> goperands = ginstr.operands();
-                                final List<XmlOperand> boperands = binstr.operands();
-                                for (int kindex = 0; kindex < goperands.size(); ++kindex) {
-                                    final XmlOperand goperand = goperands.get(kindex);
-                                    final XmlOperand boperand = boperands.get(kindex);
-                                    final String gsoperand = goperand.toString();
-                                    final String bsoperand = boperand.toString();
-                                    if (gsoperand.contains("label")
-                                        && bsoperand.contains("label")) {
-                                        continue;
-                                    }
-                                    if (!gsoperand.equals(bsoperand)) {
-                                        final String message = String.format(
-                                            "The operands '%s' and '%s' are differ in '%s'%n'%s'%n'%s',%n%s%n%s%nTotal scanned files: %d",
-                                            gentry,
-                                            bentry,
-                                            relative,
-                                            goperand,
-                                            boperand,
-                                            String.format("file://%s", golden.resolve(relative)),
-                                            String.format("file://%s", real.resolve(relative)),
-                                            counter.get()
-                                        );
-                                        errors.add(message);
-                                        ecounter.incrementAndGet();
-                                        break outer;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    System.out.printf("Total files:%d%n", counter.get());
-                    System.out.printf("Number of failed files:%d%n", ecounter.get());
-                }
-            );
-        } catch (final IOException exception) {
-            throw new IllegalStateException("Can't walk through the files", exception);
-        }
-        System.out.println("All Found Errors:\n");
-        errors.forEach(System.out::println);
-    }
+
 }
