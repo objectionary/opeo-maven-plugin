@@ -58,7 +58,7 @@ import org.junit.jupiter.params.provider.CsvSource;
  * Please, remember to set the correct paths to the folders before running the test.
  * @since 0.2
  */
-final class Detective {
+final class DetectiveIT {
 
     /**
      * This test is used to find the problem in the transformation from JEO to OPEO.
@@ -124,40 +124,88 @@ final class Detective {
         }
     }
 
+    /**
+     * Pair of Xmir files to compare.
+     * @since 0.2
+     */
     private static final class XmirPair {
 
+        /**
+         * The path to the golden folder.
+         */
         private final Path golden;
-        private final Path real;
+
+        /**
+         * The path to the actual folder.
+         */
+        private final Path actual;
+
+        /**
+         * The full path to the file under comparison.
+         */
         private final Path current;
+
+        /**
+         * The comparison results.
+         */
         private final Results results;
 
-        public XmirPair(
-            final Path golden, final Path real, final Path current, final Results results
+        /**
+         * Constructor.
+         * @param golden The path to the golden folder.
+         * @param actual The path to the actual folder.
+         * @param current The full path to the file under comparison.
+         * @param results The comparison results.
+         */
+        private XmirPair(
+            final Path golden,
+            final Path actual,
+            final Path current,
+            final Results results
         ) {
             this.golden = golden;
-            this.real = real;
+            this.actual = actual;
             this.current = current;
             this.results = results;
         }
 
+        /**
+         * Compare the Xmir files.
+         * @since 0.2
+         */
         void compare() {
             try {
                 final Path relative = this.golden.relativize(this.current);
                 final Xmir gold = new Xmir(this.golden.resolve(relative), this.results);
-                gold.compare(new Xmir(this.real.resolve(relative), this.results));
+                gold.compare(new Xmir(this.actual.resolve(relative), this.results));
             } catch (final CompareException swallow) {
                 this.results.problem(swallow.getMessage());
             }
         }
     }
 
-
+    /**
+     * Xmir file to compare.
+     * @since 0.2
+     */
     private static final class Xmir {
 
+        /**
+         * The path to the file.
+         */
         private final Path path;
+
+        /**
+         * The comparison results.
+         */
         private final Results results;
 
-        public Xmir(
+        /**
+         * Constructor.
+         * @param path The path to the file.
+         * @param results The results.
+         */
+        private Xmir(
             final Path path,
             final Results results
         ) {
@@ -165,6 +213,11 @@ final class Detective {
             this.results = results;
         }
 
+        /**
+         * Create an XML document from the path.
+         * @param path The path to the file.
+         * @return The XML document.
+         */
         private XMLDocument xml(final Path path) {
             try {
                 return new XMLDocument(path);
@@ -176,17 +229,22 @@ final class Detective {
             }
         }
 
+        /**
+         * Compare the Xmir files.
+         * @param xmir The Xmir file to compare with.
+         * @throws CompareException If the files are different.
+         */
         void compare(final Xmir xmir) throws CompareException {
-            final Path goldenPath = path;
-            final Path realPath = xmir.path;
+            final Path gpath = this.path;
+            final Path rpath = xmir.path;
             try {
                 this.results.oneMore();
-                final List<XmlMethod> gmethods = new XmlProgram(
-                    this.xml(goldenPath)
-                ).top().methods();
-                final List<XmlMethod> bmethods = new XmlProgram(
-                    this.xml(realPath)
-                ).top().methods();
+                final List<XmlMethod> gmethods = new XmlProgram(this.xml(gpath))
+                    .top()
+                    .methods();
+                final List<XmlMethod> bmethods = new XmlProgram(this.xml(rpath))
+                    .top()
+                    .methods();
                 final int size = gmethods.size();
                 for (int index = 0; index < size; ++index) {
                     new Method(gmethods.get(index)).compare(new Method(bmethods.get(index)));
@@ -196,8 +254,8 @@ final class Detective {
                 throw new CompareException(
                     String.format(
                         "%nFiles are different: %n%s%n%s%n%s",
-                        goldenPath,
-                        realPath,
+                        gpath,
+                        rpath,
                         exception.getMessage()
                     ),
                     exception
@@ -207,14 +265,30 @@ final class Detective {
         }
     }
 
+    /**
+     * Method to compare.
+     * @since 0.2
+     */
     private static final class Method {
 
+        /**
+         * Xmir representation of a method.
+         */
         private final XmlMethod method;
 
-        public Method(final XmlMethod method) {
+        /**
+         * Constructor.
+         * @param method Xmir representation of a method.
+         */
+        private Method(final XmlMethod method) {
             this.method = method;
         }
 
+        /**
+         * Compare the methods.
+         * @param method The method to compare with.
+         * @throws CompareException If the methods are different.
+         */
         void compare(final Method method) throws CompareException {
             final List<Instruction> ginstrs = this.method.instructions()
                 .stream()
