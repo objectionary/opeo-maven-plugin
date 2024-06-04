@@ -32,6 +32,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -71,94 +72,19 @@ final class Detective {
     @Disabled
     @ParameterizedTest
     @CsvSource(
-        "./target-standard/it/spring-fat/target/generated-sources/opeo-compile-xmir, ./target/it/spring-fat/target/generated-sources/opeo-compile-xmir"
+        "./target/it/spring-fat/target/generated-sources/jeo-disassemble-xmir, ./target/it/spring-fat/target/generated-sources/opeo-compile-xmir"
     )
     void findTheProblem(final String etalon, final String target) {
         final Path golden = Paths.get(etalon);
         final Path real = Paths.get(target);
         final Results results = new Results();
-        try (Stream<Path> all = Files.walk(golden).filter(Files::isRegularFile)) {
+        try (Stream<Path> all = Files.walk(golden).filter(Files::isRegularFile).parallel()) {
             all.forEach(
                 path -> {
-                    results.oneMore();
                     final Path relative = golden.relativize(path);
-                    final XMLDocument bad;
-                    final XMLDocument good;
-                    try {
-                        good = new XMLDocument(golden.resolve(relative));
-                        bad = new XMLDocument(real.resolve(relative));
-                    } catch (final FileNotFoundException exception) {
-                        throw new IllegalArgumentException(
-                            String.format("File not found: %s", relative),
-                            exception
-                        );
-                    }
-                    final XmlProgram gprogram = new XmlProgram(good);
-                    final XmlProgram bprogram = new XmlProgram(bad);
-                    final List<XmlMethod> gmethods = gprogram.top().methods();
-                    final List<XmlMethod> bmethods = bprogram.top().methods();
-                    final int size = gmethods.size();
-                    outer:
-                    for (int index = 0; index < size; ++index) {
-                        final XmlMethod gmethod = gmethods.get(index);
-                        final XmlMethod bmethod = bmethods.get(index);
-                        final List<XmlBytecodeEntry> ginstrs = gmethod.instructions()
-                            .stream()
-                            .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
-                            .collect(Collectors.toList());
-                        final List<XmlBytecodeEntry> binstrs = bmethod.instructions()
-                            .stream()
-                            .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
-                            .collect(Collectors.toList());
-                        final int isize = ginstrs.size();
-                        for (int jindex = 0; jindex < isize; ++jindex) {
-                            final XmlBytecodeEntry gentry = ginstrs.get(jindex);
-                            final XmlBytecodeEntry bentry = binstrs.get(jindex);
-                            if (gentry instanceof XmlInstruction
-                                && bentry instanceof XmlInstruction) {
-                                final XmlInstruction ginstr = (XmlInstruction) gentry;
-                                final XmlInstruction binstr = (XmlInstruction) bentry;
-                                if (ginstr.opcode() != binstr.opcode()) {
-                                    final String message = String.format(
-                                        "The operands '%s' and '%s' are differ in %n%s%n%s,%nTotal scanned files: %d",
-                                        gentry,
-                                        bentry,
-                                        String.format("file://%s", golden.resolve(relative)),
-                                        String.format("file://%s", real.resolve(relative)),
-                                        );
-                                    results.problem(message);
-                                    break outer;
-                                }
-                                final List<XmlOperand> goperands = ginstr.operands();
-                                final List<XmlOperand> boperands = binstr.operands();
-                                for (int kindex = 0; kindex < goperands.size(); ++kindex) {
-                                    final XmlOperand goperand = goperands.get(kindex);
-                                    final XmlOperand boperand = boperands.get(kindex);
-                                    final String gsoperand = goperand.toString();
-                                    final String bsoperand = boperand.toString();
-                                    if (gsoperand.contains("label")
-                                        && bsoperand.contains("label")) {
-                                        continue;
-                                    }
-                                    if (!gsoperand.equals(bsoperand)) {
-                                        final String message = String.format(
-                                            "The operands '%s' and '%s' are differ in '%s'%n'%s'%n'%s',%n%s%n%s%n",
-                                            gentry,
-                                            bentry,
-                                            relative,
-                                            goperand,
-                                            boperand,
-                                            String.format("file://%s", golden.resolve(relative)),
-                                            String.format("file://%s", real.resolve(relative))
-                                        );
-                                        results.problem(message);
-                                        break outer;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    results.logCounters();
+                    final Xmir gold = new Xmir(golden.resolve(relative), results);
+                    gold.compare(new Xmir(real.resolve(relative), results));
+
                 }
             );
         } catch (final IOException exception) {
@@ -175,7 +101,7 @@ final class Detective {
         private Results() {
             this.total = new AtomicInteger(0);
             this.errors = new AtomicInteger(0);
-            this.logs = new ArrayList<>(0);
+            this.logs = new CopyOnWriteArrayList<>();
         }
 
         private void oneMore() {
@@ -190,9 +116,9 @@ final class Detective {
         private void logCounters() {
             Logger.info(
                 this,
-                "Total files scanned:%d%nTotal errors:%d%n",
+                "Total files scanned:%d, Total errors:%d%n",
                 this.total.get(),
-                this.errors
+                this.errors.get()
             );
         }
 
@@ -208,18 +134,103 @@ final class Detective {
     }
 
 
-    private static class DisassembledXmir {
+    private static class Xmir {
 
         private final Path path;
+        private final Results results;
 
-        private DisassembledXmir(final Path path) {
+        public Xmir(
+            final Path path,
+            final Results results
+        ) {
             this.path = path;
+            this.results = results;
         }
 
-        public void compare(final DisassembledXmir xmir) {
+        private XMLDocument xml(final Path path) {
+            try {
+                return new XMLDocument(path);
+            } catch (final FileNotFoundException exception) {
+                throw new IllegalArgumentException(
+                    String.format("File not found: %s", path),
+                    exception
+                );
+            }
+        }
 
+        public void compare(final Xmir xmir) {
+            this.results.oneMore();
+            final XMLDocument bad;
+            final XMLDocument good;
+            final Path goldenPath = path;
+            good = this.xml(goldenPath);
+            final Path realPath = xmir.path;
+            bad = this.xml(realPath);
+            final XmlProgram gprogram = new XmlProgram(good);
+            final XmlProgram bprogram = new XmlProgram(bad);
+            final List<XmlMethod> gmethods = gprogram.top().methods();
+            final List<XmlMethod> bmethods = bprogram.top().methods();
+            final int size = gmethods.size();
+            outer:
+            for (int index = 0; index < size; ++index) {
+                final XmlMethod gmethod = gmethods.get(index);
+                final XmlMethod bmethod = bmethods.get(index);
+                final List<XmlBytecodeEntry> ginstrs = gmethod.instructions()
+                    .stream()
+                    .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
+                    .collect(Collectors.toList());
+                final List<XmlBytecodeEntry> binstrs = bmethod.instructions()
+                    .stream()
+                    .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
+                    .collect(Collectors.toList());
+                final int isize = ginstrs.size();
+                for (int jindex = 0; jindex < isize; ++jindex) {
+                    final XmlBytecodeEntry gentry = ginstrs.get(jindex);
+                    final XmlBytecodeEntry bentry = binstrs.get(jindex);
+                    if (gentry instanceof XmlInstruction
+                        && bentry instanceof XmlInstruction) {
+                        final XmlInstruction ginstr = (XmlInstruction) gentry;
+                        final XmlInstruction binstr = (XmlInstruction) bentry;
+                        if (ginstr.opcode() != binstr.opcode()) {
+                            final String message = String.format(
+                                "The operands '%s' and '%s' are differ in %n%s%n%s",
+                                gentry,
+                                bentry,
+                                String.format("file://%s", goldenPath),
+                                String.format("file://%s", realPath)
+                            );
+                            this.results.problem(message);
+                            break outer;
+                        }
+                        final List<XmlOperand> goperands = ginstr.operands();
+                        final List<XmlOperand> boperands = binstr.operands();
+                        for (int kindex = 0; kindex < goperands.size(); ++kindex) {
+                            final XmlOperand goperand = goperands.get(kindex);
+                            final XmlOperand boperand = boperands.get(kindex);
+                            final String gsoperand = goperand.toString();
+                            final String bsoperand = boperand.toString();
+                            if (gsoperand.contains("label")
+                                && bsoperand.contains("label")) {
+                                continue;
+                            }
+                            if (!gsoperand.equals(bsoperand)) {
+                                final String message = String.format(
+                                    "The operands '%s' and '%s' are differ'%n'%s'%n'%s',%n%s%n%s%n",
+                                    gentry,
+                                    bentry,
+                                    goperand,
+                                    boperand,
+                                    String.format("file://%s", goldenPath),
+                                    String.format("file://%s", realPath)
+                                );
+                                this.results.problem(message);
+                                break outer;
+                            }
+                        }
+                    }
+                }
+            }
+            this.results.logCounters();
         }
     }
-
-
 }
