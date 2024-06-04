@@ -170,4 +170,12 @@ result, we skip bytecode verification for this test.
 You can read more about this problem [in
 the `jeo-maven-plugin` configuration](https://github.com/objectionary/jeo-maven-plugin/tree/master/src/it/spring-fat#bytecode-verification).
 
+## Troubleshooting
 
+If you have any questions or trouble with the plugin, please submit an issue.
+
+If you are a developer, and you have found a bug in a decompilation/compilation
+process, please try to
+run [this integration test](../../test/java/it/DetectiveIT.java) to
+specify the place where the bug is located. Moreover, this test can
+greatly help you to troubleshoot any problems with the plugin.
