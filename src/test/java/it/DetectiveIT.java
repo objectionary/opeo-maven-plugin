@@ -40,6 +40,8 @@ import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlOperand;
 import org.eolang.jeo.representation.xmir.XmlProgram;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -72,7 +74,7 @@ final class DetectiveIT {
     @CsvSource(
         "./target/it/spring-fat/target/generated-sources/jeo-disassemble-xmir, ./target/it/spring-fat/target/generated-sources/opeo-compile-xmir"
     )
-    void findTheProblem(final String etalon, final String target) {
+    void findsTheProblem(final String etalon, final String target) {
         final Path golden = Paths.get(etalon);
         final Path real = Paths.get(target);
         final Results results = new Results();
@@ -82,6 +84,11 @@ final class DetectiveIT {
             throw new IllegalStateException("Can't walk through the files", exception);
         }
         results.logSummary();
+        MatcherAssert.assertThat(
+            "There are some inconsistencies between the files",
+            results.hasErrors(),
+            Matchers.is(false)
+        );
     }
 
     /**
@@ -152,6 +159,10 @@ final class DetectiveIT {
                 Logger.info(this, "All Found Errors:\n");
                 this.logs.forEach(entry -> Logger.info(this, entry));
             }
+        }
+
+        private boolean hasErrors() {
+            return this.errors.get() > 0;
         }
     }
 
