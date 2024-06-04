@@ -143,9 +143,13 @@ final class Detective {
         }
 
         void compare() {
-            final Path relative = this.golden.relativize(this.current);
-            final Xmir gold = new Xmir(this.golden.resolve(relative), this.results);
-            gold.compare(new Xmir(this.real.resolve(relative), this.results));
+            try {
+                final Path relative = this.golden.relativize(this.current);
+                final Xmir gold = new Xmir(this.golden.resolve(relative), this.results);
+                gold.compare(new Xmir(this.real.resolve(relative), this.results));
+            } catch (final CompareException swallow) {
+                this.results.problem(swallow.getMessage());
+            }
         }
     }
 
@@ -174,79 +178,132 @@ final class Detective {
             }
         }
 
-        public void compare(final Xmir xmir) {
-            this.results.oneMore();
-            final XMLDocument bad;
-            final XMLDocument good;
+        public void compare(final Xmir xmir) throws CompareException {
             final Path goldenPath = path;
-            good = this.xml(goldenPath);
             final Path realPath = xmir.path;
-            bad = this.xml(realPath);
-            final XmlProgram gprogram = new XmlProgram(good);
-            final XmlProgram bprogram = new XmlProgram(bad);
-            final List<XmlMethod> gmethods = gprogram.top().methods();
-            final List<XmlMethod> bmethods = bprogram.top().methods();
-            final int size = gmethods.size();
-            outer:
-            for (int index = 0; index < size; ++index) {
-                final XmlMethod gmethod = gmethods.get(index);
-                final XmlMethod bmethod = bmethods.get(index);
-                final List<XmlBytecodeEntry> ginstrs = gmethod.instructions()
-                    .stream()
-                    .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
-                    .collect(Collectors.toList());
-                final List<XmlBytecodeEntry> binstrs = bmethod.instructions()
-                    .stream()
-                    .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
-                    .collect(Collectors.toList());
-                final int isize = ginstrs.size();
-                for (int jindex = 0; jindex < isize; ++jindex) {
-                    final XmlBytecodeEntry gentry = ginstrs.get(jindex);
-                    final XmlBytecodeEntry bentry = binstrs.get(jindex);
-                    if (gentry instanceof XmlInstruction
-                        && bentry instanceof XmlInstruction) {
-                        final XmlInstruction ginstr = (XmlInstruction) gentry;
-                        final XmlInstruction binstr = (XmlInstruction) bentry;
-                        if (ginstr.opcode() != binstr.opcode()) {
-                            final String message = String.format(
-                                "The operands '%s' and '%s' are differ in %n%s%n%s",
+            try {
+                this.results.oneMore();
+                final XMLDocument bad;
+                final XMLDocument good;
+                good = this.xml(goldenPath);
+                bad = this.xml(realPath);
+                final XmlProgram gprogram = new XmlProgram(good);
+                final XmlProgram bprogram = new XmlProgram(bad);
+                final List<XmlMethod> gmethods = gprogram.top().methods();
+                final List<XmlMethod> bmethods = bprogram.top().methods();
+                final int size = gmethods.size();
+                for (int index = 0; index < size; ++index) {
+                    new Method(gmethods.get(index)).compare(new Method(bmethods.get(index)));
+                }
+                this.results.logCounters();
+            } catch (final CompareException exception) {
+                throw new CompareException(
+                    String.format(
+                        "%nFiles are different: %n%s%n%s%n%s",
+                        goldenPath,
+                        realPath,
+                        exception.getMessage()
+                    ),
+                    exception
+                );
+            }
+
+        }
+    }
+
+    private static class Method {
+
+        private final XmlMethod method;
+
+        public Method(final XmlMethod method) {
+            this.method = method;
+        }
+
+
+        void compare(final Method method) throws CompareException {
+            final XmlMethod gmethod = this.method;
+            final XmlMethod bmethod = method.method;
+            final List<XmlBytecodeEntry> ginstrs = gmethod.instructions()
+                .stream()
+                .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
+                .collect(Collectors.toList());
+            final List<XmlBytecodeEntry> binstrs = bmethod.instructions()
+                .stream()
+                .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
+                .collect(Collectors.toList());
+            final int isize = ginstrs.size();
+            for (int jindex = 0; jindex < isize; ++jindex) {
+                final XmlBytecodeEntry gentry = ginstrs.get(jindex);
+                final XmlBytecodeEntry bentry = binstrs.get(jindex);
+                if (gentry instanceof XmlInstruction
+                    && bentry instanceof XmlInstruction) {
+                    final XmlInstruction ginstr = (XmlInstruction) gentry;
+                    final XmlInstruction binstr = (XmlInstruction) bentry;
+                    if (ginstr.opcode() != binstr.opcode()) {
+                        throw new CompareException(
+                            String.format(
+                                "The opcodes %n'%s'%n and %n'%s'%n are different",
                                 gentry,
-                                bentry,
-                                String.format("file://%s", goldenPath),
-                                String.format("file://%s", realPath)
-                            );
-                            this.results.problem(message);
-                            break outer;
+                                bentry
+                            )
+                        );
+
+//                        final String message = String.format(
+//                            "The operands '%s' and '%s' are differ in %n%s%n%s",
+//                            gentry,
+//                            bentry,
+//                            String.format("file://%s", goldenPath),
+//                            String.format("file://%s", realPath)
+//                        );
+//                        this.results.problem(message);
+//                        break outer;
+                    }
+                    final List<XmlOperand> goperands = ginstr.operands();
+                    final List<XmlOperand> boperands = binstr.operands();
+                    for (int kindex = 0; kindex < goperands.size(); ++kindex) {
+                        final XmlOperand goperand = goperands.get(kindex);
+                        final XmlOperand boperand = boperands.get(kindex);
+                        final String gsoperand = goperand.toString();
+                        final String bsoperand = boperand.toString();
+                        if (gsoperand.contains("label")
+                            && bsoperand.contains("label")) {
+                            continue;
                         }
-                        final List<XmlOperand> goperands = ginstr.operands();
-                        final List<XmlOperand> boperands = binstr.operands();
-                        for (int kindex = 0; kindex < goperands.size(); ++kindex) {
-                            final XmlOperand goperand = goperands.get(kindex);
-                            final XmlOperand boperand = boperands.get(kindex);
-                            final String gsoperand = goperand.toString();
-                            final String bsoperand = boperand.toString();
-                            if (gsoperand.contains("label")
-                                && bsoperand.contains("label")) {
-                                continue;
-                            }
-                            if (!gsoperand.equals(bsoperand)) {
-                                final String message = String.format(
-                                    "The operands '%s' and '%s' are differ'%n'%s'%n'%s',%n%s%n%s%n",
+                        if (!gsoperand.equals(bsoperand)) {
+                            throw new CompareException(
+                                String.format(
+                                    "The operands '%s' and '%s' are differ'%n'%s'%n'%s",
                                     gentry,
                                     bentry,
                                     goperand,
-                                    boperand,
-                                    String.format("file://%s", goldenPath),
-                                    String.format("file://%s", realPath)
-                                );
-                                this.results.problem(message);
-                                break outer;
-                            }
+                                    boperand
+                                )
+                            );
+//                            final String message = String.format(
+//                                "The operands '%s' and '%s' are differ'%n'%s'%n'%s',%n%s%n%s%n",
+//                                gentry,
+//                                bentry,
+//                                goperand,
+//                                boperand,
+//                                String.format("file://%s", goldenPath),
+//                                String.format("file://%s", realPath)
+//                            );
+//                            this.results.problem(message);
+//                            break outer;
                         }
                     }
                 }
             }
-            this.results.logCounters();
+        }
+    }
+
+    private static final class CompareException extends Exception {
+        public CompareException(final String message) {
+            super(message);
+        }
+
+        public CompareException(final String message, final CompareException cause) {
+            super(message, cause);
         }
     }
 }
