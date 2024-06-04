@@ -79,14 +79,7 @@ final class Detective {
         final Path real = Paths.get(target);
         final Results results = new Results();
         try (Stream<Path> all = Files.walk(golden).filter(Files::isRegularFile).parallel()) {
-            all.forEach(
-                path -> {
-                    final Path relative = golden.relativize(path);
-                    final Xmir gold = new Xmir(golden.resolve(relative), results);
-                    gold.compare(new Xmir(real.resolve(relative), results));
-
-                }
-            );
+            all.map(path -> new XmirPair(golden, real, path, results)).forEach(XmirPair::compare);
         } catch (final IOException exception) {
             throw new IllegalStateException("Can't walk through the files", exception);
         }
@@ -130,6 +123,29 @@ final class Detective {
                 Logger.info(this, "All Found Errors:\n");
                 this.logs.forEach(entry -> Logger.info(this, entry));
             }
+        }
+    }
+
+    private static class XmirPair {
+
+        private final Path golden;
+        private final Path real;
+        private final Path current;
+        private final Results results;
+
+        public XmirPair(
+            final Path golden, final Path real, final Path current, final Results results
+        ) {
+            this.golden = golden;
+            this.real = real;
+            this.current = current;
+            this.results = results;
+        }
+
+        void compare() {
+            final Path relative = this.golden.relativize(this.current);
+            final Xmir gold = new Xmir(this.golden.resolve(relative), this.results);
+            gold.compare(new Xmir(this.real.resolve(relative), this.results));
         }
     }
 
