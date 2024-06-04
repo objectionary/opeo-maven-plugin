@@ -191,6 +191,4 @@ final class JeoAndOpeoTest {
             Matchers.equalTo(original)
         );
     }
-
-
 }

@@ -84,26 +84,54 @@ final class DetectiveIT {
         results.logSummary();
     }
 
-    private static class Results {
+    /**
+     * Results of the comparison.
+     * @since 0.2
+     */
+    private static final class Results {
+        /**
+         * Total files scanned.
+         */
         private final AtomicInteger total;
+
+        /**
+         * Total errors found.
+         */
         private final AtomicInteger errors;
+
+        /**
+         * Error messages.
+         */
         private final List<String> logs;
 
+        /**
+         * Constructor.
+         */
         private Results() {
             this.total = new AtomicInteger(0);
             this.errors = new AtomicInteger(0);
             this.logs = new CopyOnWriteArrayList<>();
         }
 
+        /**
+         * Increment the total files scanned.
+         */
         private void oneMore() {
             this.total.incrementAndGet();
         }
 
+        /**
+         * Increment the total errors found.
+         * @param message The error message.
+         */
         private void problem(final String message) {
             this.errors.incrementAndGet();
             this.logs.add(message);
         }
 
+        /**
+         * Print the counters.
+         */
         private void logCounters() {
             Logger.info(
                 this,
@@ -113,6 +141,9 @@ final class DetectiveIT {
             );
         }
 
+        /**
+         * Print the summary.
+         */
         private void logSummary() {
             this.logCounters();
             if (this.logs.isEmpty()) {
@@ -156,6 +187,7 @@ final class DetectiveIT {
          * @param actual The path to the actual folder.
          * @param current The full path to the file under comparison.
          * @param results The comparison results.
+         * @checkstyle ParameterNumberCheck (5 lines)
          */
         private XmirPair(
             final Path golden,
@@ -214,29 +246,13 @@ final class DetectiveIT {
         }
 
         /**
-         * Create an XML document from the path.
-         * @param path The path to the file.
-         * @return The XML document.
-         */
-        private XMLDocument xml(final Path path) {
-            try {
-                return new XMLDocument(path);
-            } catch (final FileNotFoundException exception) {
-                throw new IllegalArgumentException(
-                    String.format("File not found: %s", path),
-                    exception
-                );
-            }
-        }
-
-        /**
          * Compare the Xmir files.
-         * @param xmir The Xmir file to compare with.
+         * @param other The Xmir file to compare with.
          * @throws CompareException If the files are different.
          */
-        void compare(final Xmir xmir) throws CompareException {
+        void compare(final Xmir other) throws CompareException {
             final Path gpath = this.path;
-            final Path rpath = xmir.path;
+            final Path rpath = other.path;
             try {
                 this.results.oneMore();
                 final List<XmlMethod> gmethods = new XmlProgram(this.xml(gpath))
@@ -261,7 +277,22 @@ final class DetectiveIT {
                     exception
                 );
             }
+        }
 
+        /**
+         * Create an XML document from the path.
+         * @param file The path to the file.
+         * @return The XML document.
+         */
+        private XMLDocument xml(final Path file) {
+            try {
+                return new XMLDocument(file);
+            } catch (final FileNotFoundException exception) {
+                throw new IllegalArgumentException(
+                    String.format("File not found: %s", file),
+                    exception
+                );
+            }
         }
     }
 
@@ -274,27 +305,27 @@ final class DetectiveIT {
         /**
          * Xmir representation of a method.
          */
-        private final XmlMethod method;
+        private final XmlMethod xmlmethod;
 
         /**
          * Constructor.
          * @param method Xmir representation of a method.
          */
         private Method(final XmlMethod method) {
-            this.method = method;
+            this.xmlmethod = method;
         }
 
         /**
          * Compare the methods.
-         * @param method The method to compare with.
+         * @param other The method to compare with.
          * @throws CompareException If the methods are different.
          */
-        void compare(final Method method) throws CompareException {
-            final List<Instruction> ginstrs = this.method.instructions()
+        void compare(final Method other) throws CompareException {
+            final List<Instruction> ginstrs = this.xmlmethod.instructions()
                 .stream()
                 .map(Instruction::new)
                 .collect(Collectors.toList());
-            final List<Instruction> binstrs = method.method.instructions()
+            final List<Instruction> binstrs = other.xmlmethod.instructions()
                 .stream()
                 .map(Instruction::new)
                 .collect(Collectors.toList());
@@ -374,24 +405,24 @@ final class DetectiveIT {
         /**
          * Xmir representation of an operand.
          */
-        private final XmlOperand operand;
+        private final XmlOperand xmloperand;
 
         /**
          * Constructor.
          * @param operand Xmir representation of an operand.
          */
         private Operand(final XmlOperand operand) {
-            this.operand = operand;
+            this.xmloperand = operand;
         }
 
         /**
          * Compare the operands.
-         * @param operand The operand to compare with.
+         * @param other The operand to compare with.
          * @throws CompareException If the operands are different.
          */
-        void compare(final Operand operand) throws CompareException {
-            final XmlOperand goperand = this.operand;
-            final XmlOperand boperand = operand.operand;
+        void compare(final Operand other) throws CompareException {
+            final XmlOperand goperand = this.xmloperand;
+            final XmlOperand boperand = other.xmloperand;
             final String gsoperand = goperand.toString();
             final String bsoperand = boperand.toString();
             if (gsoperand.contains("label") && bsoperand.contains("label")) {
@@ -414,6 +445,11 @@ final class DetectiveIT {
      * @since 0.2
      */
     private static final class CompareException extends Exception {
+
+        /**
+         * Serial version UID.
+         */
+        private static final long serialVersionUID = -8864163063612268641L;
 
         /**
          * Constructor.
