@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -38,7 +37,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.eolang.jeo.representation.xmir.XmlBytecodeEntry;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
-import org.eolang.jeo.representation.xmir.XmlLabel;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlOperand;
 import org.eolang.jeo.representation.xmir.XmlProgram;
@@ -126,7 +124,7 @@ final class Detective {
         }
     }
 
-    private static class XmirPair {
+    private static final class XmirPair {
 
         private final Path golden;
         private final Path real;
@@ -154,7 +152,7 @@ final class Detective {
     }
 
 
-    private static class Xmir {
+    private static final class Xmir {
 
         private final Path path;
         private final Results results;
@@ -178,19 +176,17 @@ final class Detective {
             }
         }
 
-        public void compare(final Xmir xmir) throws CompareException {
+        void compare(final Xmir xmir) throws CompareException {
             final Path goldenPath = path;
             final Path realPath = xmir.path;
             try {
                 this.results.oneMore();
-                final XMLDocument bad;
-                final XMLDocument good;
-                good = this.xml(goldenPath);
-                bad = this.xml(realPath);
-                final XmlProgram gprogram = new XmlProgram(good);
-                final XmlProgram bprogram = new XmlProgram(bad);
-                final List<XmlMethod> gmethods = gprogram.top().methods();
-                final List<XmlMethod> bmethods = bprogram.top().methods();
+                final List<XmlMethod> gmethods = new XmlProgram(
+                    this.xml(goldenPath)
+                ).top().methods();
+                final List<XmlMethod> bmethods = new XmlProgram(
+                    this.xml(realPath)
+                ).top().methods();
                 final int size = gmethods.size();
                 for (int index = 0; index < size; ++index) {
                     new Method(gmethods.get(index)).compare(new Method(bmethods.get(index)));
@@ -211,7 +207,7 @@ final class Detective {
         }
     }
 
-    private static class Method {
+    private static final class Method {
 
         private final XmlMethod method;
 
@@ -219,90 +215,146 @@ final class Detective {
             this.method = method;
         }
 
-
         void compare(final Method method) throws CompareException {
-            final XmlMethod gmethod = this.method;
-            final XmlMethod bmethod = method.method;
-            final List<XmlBytecodeEntry> ginstrs = gmethod.instructions()
+            final List<Instruction> ginstrs = this.method.instructions()
                 .stream()
-                .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
+                .map(Instruction::new)
                 .collect(Collectors.toList());
-            final List<XmlBytecodeEntry> binstrs = bmethod.instructions()
+            final List<Instruction> binstrs = method.method.instructions()
                 .stream()
-                .filter(xmlBytecodeEntry -> !(xmlBytecodeEntry instanceof XmlLabel))
+                .map(Instruction::new)
                 .collect(Collectors.toList());
             final int isize = ginstrs.size();
             for (int jindex = 0; jindex < isize; ++jindex) {
-                final XmlBytecodeEntry gentry = ginstrs.get(jindex);
-                final XmlBytecodeEntry bentry = binstrs.get(jindex);
-                if (gentry instanceof XmlInstruction
-                    && bentry instanceof XmlInstruction) {
-                    final XmlInstruction ginstr = (XmlInstruction) gentry;
-                    final XmlInstruction binstr = (XmlInstruction) bentry;
-                    if (ginstr.opcode() != binstr.opcode()) {
-                        throw new CompareException(
-                            String.format(
-                                "The opcodes %n'%s'%n and %n'%s'%n are different",
-                                gentry,
-                                bentry
-                            )
-                        );
-
-//                        final String message = String.format(
-//                            "The operands '%s' and '%s' are differ in %n%s%n%s",
-//                            gentry,
-//                            bentry,
-//                            String.format("file://%s", goldenPath),
-//                            String.format("file://%s", realPath)
-//                        );
-//                        this.results.problem(message);
-//                        break outer;
-                    }
-                    final List<XmlOperand> goperands = ginstr.operands();
-                    final List<XmlOperand> boperands = binstr.operands();
-                    for (int kindex = 0; kindex < goperands.size(); ++kindex) {
-                        final XmlOperand goperand = goperands.get(kindex);
-                        final XmlOperand boperand = boperands.get(kindex);
-                        final String gsoperand = goperand.toString();
-                        final String bsoperand = boperand.toString();
-                        if (gsoperand.contains("label")
-                            && bsoperand.contains("label")) {
-                            continue;
-                        }
-                        if (!gsoperand.equals(bsoperand)) {
-                            throw new CompareException(
-                                String.format(
-                                    "The operands '%s' and '%s' are differ'%n'%s'%n'%s",
-                                    gentry,
-                                    bentry,
-                                    goperand,
-                                    boperand
-                                )
-                            );
-//                            final String message = String.format(
-//                                "The operands '%s' and '%s' are differ'%n'%s'%n'%s',%n%s%n%s%n",
-//                                gentry,
-//                                bentry,
-//                                goperand,
-//                                boperand,
-//                                String.format("file://%s", goldenPath),
-//                                String.format("file://%s", realPath)
-//                            );
-//                            this.results.problem(message);
-//                            break outer;
-                        }
-                    }
-                }
+                final Instruction gentry = ginstrs.get(jindex);
+                final Instruction bentry = binstrs.get(jindex);
+                gentry.compare(bentry);
             }
         }
     }
 
+    /**
+     * Instruction to compare.
+     * @since 0.2
+     */
+    private static final class Instruction {
+
+        /**
+         * Xmir representation of an instruction.
+         */
+        private final XmlBytecodeEntry entry;
+
+        /**
+         * Constructor.
+         * @param entry Xmir representation of an instruction.
+         */
+        private Instruction(final XmlBytecodeEntry entry) {
+            this.entry = entry;
+        }
+
+        /**
+         * Compare the instructions.
+         * @param instruction The instruction to compare with.
+         * @throws CompareException If the instructions are different.
+         */
+        void compare(final Instruction instruction) throws CompareException {
+            final XmlBytecodeEntry gentry = this.entry;
+            final XmlBytecodeEntry bentry = instruction.entry;
+            if (gentry instanceof XmlInstruction && bentry instanceof XmlInstruction) {
+                final XmlInstruction ginstr = (XmlInstruction) gentry;
+                final XmlInstruction binstr = (XmlInstruction) bentry;
+                if (ginstr.opcode() != binstr.opcode()) {
+                    throw new CompareException(
+                        String.format(
+                            "The opcodes %n'%s'%n and %n'%s'%n are different",
+                            gentry,
+                            bentry
+                        )
+                    );
+                }
+                final List<Operand> goperands = ginstr.operands()
+                    .stream()
+                    .map(Operand::new)
+                    .collect(Collectors.toList());
+                final List<Operand> boperands = binstr
+                    .operands()
+                    .stream()
+                    .map(Operand::new)
+                    .collect(Collectors.toList());
+                for (int kindex = 0; kindex < goperands.size(); ++kindex) {
+                    final Operand goperand = goperands.get(kindex);
+                    final Operand boperand = boperands.get(kindex);
+                    goperand.compare(boperand);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Operand to compare.
+     * @since 0.2
+     */
+    private static final class Operand {
+
+        /**
+         * Xmir representation of an operand.
+         */
+        private final XmlOperand operand;
+
+        /**
+         * Constructor.
+         * @param operand Xmir representation of an operand.
+         */
+        private Operand(final XmlOperand operand) {
+            this.operand = operand;
+        }
+
+        /**
+         * Compare the operands.
+         * @param operand The operand to compare with.
+         * @throws CompareException If the operands are different.
+         */
+        void compare(final Operand operand) throws CompareException {
+            final XmlOperand goperand = this.operand;
+            final XmlOperand boperand = operand.operand;
+            final String gsoperand = goperand.toString();
+            final String bsoperand = boperand.toString();
+            if (gsoperand.contains("label") && bsoperand.contains("label")) {
+                return;
+            }
+            if (!gsoperand.equals(bsoperand)) {
+                throw new CompareException(
+                    String.format(
+                        "The operands '%s' and '%s' are different",
+                        goperand,
+                        boperand
+                    )
+                );
+            }
+        }
+    }
+
+    /**
+     * Exception to be thrown when the comparison fails.
+     * @since 0.2
+     */
     private static final class CompareException extends Exception {
-        public CompareException(final String message) {
+
+        /**
+         * Constructor.
+         * @param message The message to be shown.
+         */
+        private CompareException(final String message) {
             super(message);
         }
 
-        public CompareException(final String message, final CompareException cause) {
+        /**
+         * Constructor.
+         * @param message The message to be shown.
+         * @param cause The cause of the exception.
+         */
+        private CompareException(final String message, final CompareException cause) {
             super(message, cause);
         }
     }
