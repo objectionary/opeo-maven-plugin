@@ -46,8 +46,7 @@ eo:
         "()V" > descriptor
         "" > signature
         * > exceptions
-        # This is the default 64+ symbols comment in front of named abstract object.
-        [] > maxs
+        maxs
           1 > stack
           1 > locals
         seq > @
@@ -62,8 +61,7 @@ eo:
         "([Ljava/lang/String;)V" > descriptor
         "" > signature
         * > exceptions
-        # This is the default 64+ symbols comment in front of named abstract object.
-        [] > maxs
+        maxs
           5 > stack
           1 > locals
         # This is the default 64+ symbols comment in front of named abstract object.
@@ -107,8 +105,7 @@ eo:
         "(I)V" > descriptor
         "" > signature
         * > exceptions
-        # This is the default 64+ symbols comment in front of named abstract object.
-        [] > maxs
+        maxs
           2 > stack
           2 > locals
         # This is the default 64+ symbols comment in front of named abstract object.
@@ -129,8 +126,7 @@ eo:
         "()I" > descriptor
         "" > signature
         * > exceptions
-        # This is the default 64+ symbols comment in front of named abstract object.
-        [] > maxs
+        maxs
           2 > stack
           1 > locals
         seq > @
@@ -166,8 +162,7 @@ eo:
         "(Lcom/example/A;)V" > descriptor
         "" > signature
         * > exceptions
-        # This is the default 64+ symbols comment in front of named abstract object.
-        [] > maxs
+        maxs
           2 > stack
           2 > locals
         # This is the default 64+ symbols comment in front of named abstract object.
@@ -188,8 +183,7 @@ eo:
         "()I" > descriptor
         "" > signature
         * > exceptions
-        # This is the default 64+ symbols comment in front of named abstract object.
-        [] > maxs
+        maxs
           2 > stack
           1 > locals
         seq > @

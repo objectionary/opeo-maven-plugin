@@ -14,8 +14,7 @@
     "()V" > descriptor
     "" > signature
     * > exceptions
-    # This is the default 64+ symbols comment in front of named abstract object.
-    [] > maxs
+    maxs
       1 > stack
       1 > locals
     seq > @
@@ -30,8 +29,7 @@
     "([Ljava/lang/String;)V" > descriptor
     "" > signature
     * > exceptions
-    # This is the default 64+ symbols comment in front of named abstract object.
-    [] > maxs
+    maxs
       3 > stack
       1 > locals
     # This is the default 64+ symbols comment in front of named abstract object.

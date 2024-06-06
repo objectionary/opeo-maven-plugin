@@ -106,7 +106,7 @@
             <o base="string" data="bytes" name="descriptor">28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73 3B 5A 29 56</o>
             <o base="string" data="bytes" name="signature">28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73 3C 2A 3E 3B 5A 29 56</o>
             <o base="tuple" name="exceptions" star=""/>
-            <o name="maxs">
+            <o base="maxs">
                <o base="int" data="bytes" name="stack">00 00 00 00 00 00 00 0A</o>
                <o base="int" data="bytes" name="locals">00 00 00 00 00 00 00 0A</o>
             </o>
