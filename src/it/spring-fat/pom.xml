@@ -54,7 +54,7 @@ SOFTWARE.
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <jeo.version>0.4.5</jeo.version>
-    <ineo.version>0.3.0</ineo.version>
+    <ineo.version>0.3.1</ineo.version>
     <jeo.disassemble.output>${project.build.directory}/generated-sources/jeo-disassemble-xmir</jeo.disassemble.output>
     <opeo.decompile.output>${project.build.directory}/generated-sources/opeo-decompile-xmir</opeo.decompile.output>
     <opeo.modified>${project.build.directory}/generated-sources/opeo-decompile-modified-xmir</opeo.modified>
