@@ -27,6 +27,7 @@ import com.jcabi.log.Logger;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 /**
@@ -76,7 +77,7 @@ public final class CompilationStorage implements Storage {
     public void save(final XmirEntry xmir) {
         try {
             this.original.save(xmir);
-            final Path out = this.output.resolve(Path.of(xmir.relative()));
+            final Path out = this.output.resolve(Paths.get(xmir.relative()));
             Logger.info(this, "Compiled %[file]s (%[size]s)", out, Files.size(out));
         } catch (final IOException exception) {
             throw new IllegalStateException(

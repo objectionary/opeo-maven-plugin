@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.jeo;
 
+import java.util.Arrays;
 import java.util.List;
 import org.eolang.jeo.representation.xmir.XmlLabel;
 import org.eolang.opeo.Instruction;
@@ -68,6 +69,6 @@ public final class JeoLabel implements Instruction {
 
     @Override
     public List<Object> operands() {
-        return List.of(this.label.identifier());
+        return Arrays.asList(this.label.identifier());
     }
 }

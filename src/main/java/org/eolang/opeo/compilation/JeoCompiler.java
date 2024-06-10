@@ -102,11 +102,11 @@ public final class JeoCompiler {
             new AllLabels().clearCache();
             if (pckg.contains("org.eolang")) {
                 result = method.withoutMaxs().withInstructions(
-                    new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
+                    new XmirParser(method.nodes()).toJeoNodes().toArray(new XmlNode[0])
                 );
             } else {
                 result = method.withInstructions(
-                    new XmirParser(method.nodes()).toJeoNodes().toArray(XmlNode[]::new)
+                    new XmirParser(method.nodes()).toJeoNodes().toArray(new XmlNode[0])
                 );
             }
             return result;

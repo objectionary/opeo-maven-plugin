@@ -101,7 +101,10 @@ public final class Constant implements AstNode, Typed {
      */
     private static Object parse(final XmlNode node) {
         final XmlNode child = node.firstChild();
-        return DataType.find(child.attribute("base").orElseThrow())
-            .decode(child.text());
+        return DataType.find(
+            child.attribute("base").orElseThrow(
+                () -> new IllegalStateException("Constant node has no 'base' attribute")
+            )
+        ).decode(child.text());
     }
 }

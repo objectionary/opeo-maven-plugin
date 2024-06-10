@@ -375,7 +375,14 @@ public final class Literal implements AstNode, Typed {
      */
     private static Type xtype(final XmlNode node) {
         final Type result;
-        final String attribute = node.attribute("base").orElseThrow();
+        final String attribute = node.attribute("base").orElseThrow(
+            () -> new IllegalArgumentException(
+                String.format(
+                    "Can't to find 'base' attribute in '%s'",
+                    node
+                )
+            )
+        );
         switch (attribute) {
             case "string":
                 result = Type.getType(String.class);

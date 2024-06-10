@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.Arrays;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -96,7 +97,7 @@ public final class LocalVariable implements AstNode, Typed {
 
     @Override
     public List<AstNode> opcodes() {
-        return List.of(new Opcode(this.type().getOpcode(Opcodes.ILOAD), this.identifier));
+        return Arrays.asList(new Opcode(this.type().getOpcode(Opcodes.ILOAD), this.identifier));
     }
 
     @Override

@@ -25,6 +25,7 @@ package org.eolang.opeo.jeo;
 
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
+import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlMethod;
@@ -103,11 +104,11 @@ public final class JeoDecompiler {
                         new Xembler(
                             new DecompilerMachine(
                                 new LocalVariables(method.access(), method.descriptor(), clazz),
-                                Map.of("counting", "false")
+                                Collections.singletonMap("counting", "false")
                             ).decompile(new JeoInstructions(method).instructions()),
                             new Transformers.Node()
                         ).xmlQuietly()
-                    ).children().collect(Collectors.toList()).toArray(XmlNode[]::new)
+                    ).children().toArray(XmlNode[]::new)
                 );
             }
         } catch (final ClassCastException | IllegalStateException exception) {

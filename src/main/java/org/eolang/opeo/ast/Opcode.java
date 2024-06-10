@@ -123,7 +123,7 @@ public final class Opcode implements AstNode {
             default:
                 break;
         }
-        return List.of(this);
+        return Arrays.asList(this);
     }
 
     /**

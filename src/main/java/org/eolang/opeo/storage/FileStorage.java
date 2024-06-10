@@ -91,7 +91,7 @@ public final class FileStorage implements Storage {
 
     @Override
     public void save(final XmirEntry xmir) {
-        final Path out = this.output.resolve(Path.of(xmir.relative()));
+        final Path out = this.output.resolve(Paths.get(xmir.relative()));
         try {
             Files.createDirectories(out.getParent());
             Files.write(

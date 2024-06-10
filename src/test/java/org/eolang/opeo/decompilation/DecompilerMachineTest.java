@@ -23,7 +23,7 @@
  */
 package org.eolang.opeo.decompilation;
 
-import java.util.Map;
+import java.util.Collections;
 import java.util.concurrent.atomic.AtomicReference;
 import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.opeo.LabelInstruction;
@@ -358,7 +358,7 @@ final class DecompilerMachineTest {
         final String type = "java/lang/Object";
         MatcherAssert.assertThat(
             "Can't decompile vararg invocation",
-            new DecompilerMachine(Map.of("counting", "false"))
+            new DecompilerMachine(Collections.singletonMap("counting", "false"))
                 .decompile(
                     new OpcodeInstruction(
                         Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;"

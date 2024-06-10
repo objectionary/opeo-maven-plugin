@@ -184,6 +184,12 @@ public final class Cast implements AstNode, Typed {
         final XmlNode node,
         final Function<? super XmlNode, ? extends AstNode> target
     ) {
-        return target.apply(node.children().findFirst().orElseThrow());
+        return target.apply(
+            node.children().findFirst().orElseThrow(
+                () -> new IllegalArgumentException(
+                    String.format("Can't retrieve first child node from the node %s", node)
+                )
+            )
+        );
     }
 }

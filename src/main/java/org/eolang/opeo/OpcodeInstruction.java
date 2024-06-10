@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import lombok.ToString;
@@ -53,7 +54,7 @@ public final class OpcodeInstruction implements Instruction {
      * @param args Operands
      */
     public OpcodeInstruction(final int code, final Object... args) {
-        this(code, List.of(args));
+        this(code, Arrays.asList(args));
     }
 
     /**

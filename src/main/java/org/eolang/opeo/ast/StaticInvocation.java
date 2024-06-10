@@ -128,7 +128,7 @@ public final class StaticInvocation implements AstNode, Typed {
         final Owner owner,
         final AstNode... arguments
     ) {
-        this(attributes, owner, List.of(arguments));
+        this(attributes, owner, Arrays.asList(arguments));
     }
 
     /**

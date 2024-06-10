@@ -128,7 +128,9 @@ public final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
      */
     private boolean matches(final XmlNode node, final int index) {
         final boolean result;
-        final String base = node.attribute("base").orElseThrow();
+        final String base = node.attribute("base").orElseThrow(
+            () -> new IllegalStateException("Can't find base attribute")
+        );
         if ("opcode".equals(base)) {
             result = this.verifyName(node, index) && this.verifyOperands(node, index);
         } else {
