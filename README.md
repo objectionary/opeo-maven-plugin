@@ -51,7 +51,7 @@ Below, you will find examples demonstrating how to execute the plugin.
 ### Direct Command
 
 To execute the `opeo-maven-plugin`, you need a minimum of **Maven 3.1.+** and *
-*Java 11+** installed on your system.
+*Java 8+** installed on your system.
 You can initiate the plugin from the command line with a single command. For
 instance, to transform the output generated
 by the `jeo-maven-plugin` into high-level EO code, you can utilize the following
@@ -113,7 +113,7 @@ before sending us your pull request please run full Maven build:
 $ mvn clean install -Pqulice
 ```
 
-You will need [Maven 3.3+](https://maven.apache.org) and Java 11+ installed.
+You will need [Maven 3.3+](https://maven.apache.org) and Java 8+ installed.
 
 ## Troubleshooting
 
