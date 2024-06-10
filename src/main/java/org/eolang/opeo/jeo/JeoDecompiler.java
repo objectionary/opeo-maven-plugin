@@ -26,8 +26,6 @@ package org.eolang.opeo.jeo;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.util.Collections;
-import java.util.Map;
-import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.jeo.representation.xmir.XmlProgram;
