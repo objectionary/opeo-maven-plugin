@@ -215,6 +215,13 @@ SOFTWARE.
                We should either update the representation generated or just remove the test.
             -->
             <exclude>fuse/pom.xml</exclude>
+            <!--
+              @todo #290:30min Enable the 'staticize' and 'spring' integration tests.
+               The 'staticize' and 'spring' integration test are disabled in the default profile.
+               They are disabled because they depend on 'ineo-maven-plugin' wich supports only Java 11.
+               We need to add support for Java 8 to the 'ineo-maven-plugin' and enable these tests.
+               Check the progress here: https://github.com/objectionary/ineo-maven-plugin/pull/72
+            -->
             <exclude>staticize/pom.xml</exclude>
             <exclude>spring/pom.xml</exclude>
           </pomExcludes>
