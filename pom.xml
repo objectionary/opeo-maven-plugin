@@ -215,6 +215,8 @@ SOFTWARE.
                We should either update the representation generated or just remove the test.
             -->
             <exclude>fuse/pom.xml</exclude>
+            <exclude>staticize/pom.xml</exclude>
+            <exclude>spring/pom.xml</exclude>
           </pomExcludes>
         </configuration>
         <dependencies>
