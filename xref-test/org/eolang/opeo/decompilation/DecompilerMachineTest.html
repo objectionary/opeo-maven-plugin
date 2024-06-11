@@ -31,7 +31,7 @@
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">package</strong> org.eolang.opeo.decompilation;
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> java.util.Collections;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> java.util.concurrent.atomic.AtomicReference;
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.eolang.jeo.representation.xmir.AllLabels;
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.LabelInstruction;
@@ -366,7 +366,7 @@
 <a class="jxr_linenumber" name="L358" href="#L358">358</a>         <strong class="jxr_keyword">final</strong> String type = <span class="jxr_string">"java/lang/Object"</span>;
 <a class="jxr_linenumber" name="L359" href="#L359">359</a>         MatcherAssert.assertThat(
 <a class="jxr_linenumber" name="L360" href="#L360">360</a>             <span class="jxr_string">"Can't decompile vararg invocation"</span>,
-<a class="jxr_linenumber" name="L361" href="#L361">361</a>             <strong class="jxr_keyword">new</strong> DecompilerMachine(Map.of(<span class="jxr_string">"counting"</span>, <span class="jxr_string">"false"</span>))
+<a class="jxr_linenumber" name="L361" href="#L361">361</a>             <strong class="jxr_keyword">new</strong> DecompilerMachine(Collections.singletonMap(<span class="jxr_string">"counting"</span>, <span class="jxr_string">"false"</span>))
 <a class="jxr_linenumber" name="L362" href="#L362">362</a>                 .decompile(
 <a class="jxr_linenumber" name="L363" href="#L363">363</a>                     <strong class="jxr_keyword">new</strong> OpcodeInstruction(
 <a class="jxr_linenumber" name="L364" href="#L364">364</a>                         Opcodes.GETSTATIC, <span class="jxr_string">"java/lang/System"</span>, <span class="jxr_string">"out"</span>, <span class="jxr_string">"Ljava/io/PrintStream;"</span>
