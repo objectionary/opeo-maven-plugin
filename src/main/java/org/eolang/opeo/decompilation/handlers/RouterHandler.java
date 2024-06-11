@@ -57,7 +57,7 @@ public final class RouterHandler implements InstructionHandler {
      */
     public RouterHandler(final boolean counting) {
         this(
-            new MapOf<>(
+            new MapOf<Integer, InstructionHandler>(
                 new MapEntry<>(Opcodes.ICONST_M1, new ConstHandler(Type.INT_TYPE)),
                 new MapEntry<>(Opcodes.ICONST_0, new ConstHandler(Type.INT_TYPE)),
                 new MapEntry<>(Opcodes.ICONST_1, new ConstHandler(Type.INT_TYPE)),

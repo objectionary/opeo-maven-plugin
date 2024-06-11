@@ -48,6 +48,8 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
+import org.junit.jupiter.api.condition.EnabledOnJre;
+import org.junit.jupiter.api.condition.JRE;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 
@@ -66,6 +68,7 @@ final class TrasformationPacksTest {
     @ParameterizedTest
     @ClasspathSource(value = "packs", glob = "**.yaml")
     @EnabledIf(value = "hasJavaCompiler", disabledReason = "Java compiler is not available")
+    @EnabledOnJre(JRE.JAVA_11)
     void checksPack(final String pack, @TempDir final Path where) throws IOException {
         final JavaEoPack jeopack = new JavaEoPack(pack);
         //@checkstyle MethodBodyCommentsCheck (10 lines)
@@ -116,6 +119,7 @@ final class TrasformationPacksTest {
      * @throws IOException If fails.
      */
     @Test
+    @EnabledOnJre(JRE.JAVA_11)
     void decompilesSimpleExample(@TempDir final Path where) throws Exception {
         final XML decompiled = new JeoDecompiler(
             new BytecodeRepresentation(
