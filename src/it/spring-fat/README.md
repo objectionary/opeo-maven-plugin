@@ -38,7 +38,7 @@ In short, the process is as follows:
 To exclusively run this test, execute the command below:
 
 ```shell
-mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests 
+mvn clean integration-test -Dinvoker.test=spring-fat -DskipTests 
 ```
 
 ## PHI Expressions
@@ -47,7 +47,7 @@ If you are interested in how a Spring Application with all its dependencies
 looks using PHI expressions, you can use the following command:
 
 ```shell
-mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests -Dinvoker.invokerPropertiesFile="invoker.phi.properties"
+mvn clean integration-test -Dinvoker.test=spring-fat -DskipTests -Dinvoker.invokerPropertiesFile="invoker.phi.properties"
 ```
 
 After running this command, you can find the PHI expressions in
@@ -73,7 +73,7 @@ If you need to check only the current version of `jeo-maven-plugin`
 you can use the following command:
 
 ```shell
-mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests -Dinvoker.invokerPropertiesFile="invoker.jeo.only.properties"
+mvn clean integration-test -Dinvoker.test=spring-fat -DskipTests -Dinvoker.invokerPropertiesFile="invoker.jeo.only.properties"
 ```
 
 This might be helpful to ensure that the `jeo-maven-plugin` works correctly.
@@ -84,10 +84,19 @@ If you need to test **only** transformations without optimizations and
 PHI printing, you can use the following command:
 
 ```shell
-mvn clean integration-test invoker:run -Dinvoker.test=spring-fat -DskipTests -Dinvoker.invokerPropertiesFile="invoker.jeo.opeo.properties"
+mvn clean integration-test -Dinvoker.test=spring-fat -DskipTests -Dinvoker.invokerPropertiesFile="invoker.jeo.opeo.properties"
 ```
 
 This might be helpful to exclude an optimization influence.
+
+## Just Compile
+
+If you need to test **only** the compilation process, you can use the following
+command:
+
+```shell
+mvn clean integration-test -Dinvoker.test=spring-fat -DskipTests -Dinvoker.invokerPropertiesFile="invoker.nothing.properties"
+```
 
 ## The First Results
 

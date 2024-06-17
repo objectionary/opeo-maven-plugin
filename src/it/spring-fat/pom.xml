@@ -61,6 +61,7 @@ SOFTWARE.
     <opeo.compile.input>${opeo.decompile.output}</opeo.compile.input>
     <opeo.compile.output>${project.build.directory}/generated-sources/opeo-compile-xmir</opeo.compile.output>
     <eo.phi.output>${project.build.directory}/generated-sources/phi-expressions</eo.phi.output>
+    <skipITs/>
   </properties>
   <dependencies>
 <!--  <dependency>-->
@@ -359,6 +360,34 @@ SOFTWARE.
           </plugin>
         </plugins>
       </build>
+    </profile>
+    <profile>
+      <id>run-jar</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.3.0</version>
+            <executions>
+              <execution>
+                <id>run-old-app</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>java</goal>
+                </goals>
+                <configuration>
+                  <mainClass>org.eolang.jeo.spring.FactorialApplication</mainClass>
+                  <additionalClasspathElements>
+                  <classpathElement>${project.build.directory}/${project.build.finalName}.jar</classpathElement>
+</additionalClasspathElements>
+                  <includeProjectDependencies>false</includeProjectDependencies>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+        </build>
     </profile>
   </profiles>
 </project>
