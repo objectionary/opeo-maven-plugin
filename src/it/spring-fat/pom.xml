@@ -63,10 +63,20 @@ SOFTWARE.
     <eo.phi.output>${project.build.directory}/generated-sources/phi-expressions</eo.phi.output>
   </properties>
   <dependencies>
+<!--  <dependency>-->
+<!--      <groupId>org.springframework.boot</groupId>-->
+<!--      <artifactId>spring-boot-starter</artifactId>-->
+<!--  </dependency>-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-loader -->
+<!--    <dependency>-->
+<!--        <groupId>org.springframework.boot</groupId>-->
+<!--        <artifactId>spring-boot-loader</artifactId>-->
+<!--        <version>2.7.18</version>-->
+<!--    </dependency>-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -101,6 +111,21 @@ SOFTWARE.
           </execution>
         </executions>
       </plugin>
+<!--      <plugin>-->
+<!--        <groupId>org.springframework.boot</groupId>-->
+<!--        <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--        <version>2.7.18</version>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <goals>-->
+<!--              <goal>repackage</goal>-->
+<!--            </goals>-->
+<!--            <configuration>-->
+<!--              <excludeGroupIds>org.springframework.boot,org.ow2,org.junit,net.minidev,com.fasterxml,ch.qos,org.apache.tomcat,jakarta.annotation,org.springframework.boot,ch.qos.logback,org.slf4j,org.yaml</excludeGroupIds>-->
+<!--            </configuration>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--      </plugin>-->
     </plugins>
   </build>
   <profiles>
