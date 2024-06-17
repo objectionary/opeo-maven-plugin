@@ -98,6 +98,39 @@ command:
 mvn clean integration-test -Dinvoker.test=spring-fat -DskipTests -Dinvoker.invokerPropertiesFile="invoker.nothing.properties"
 ```
 
+## How to Run the Application Using Plain Java
+
+If you want to run the application using plain Java, you need to build the
+jar file first. First of all, you need to change the directory to the
+`./target/it/spring-fat` directory. Then, you can run the following command
+to compile fat-jar:
+
+```shell
+mvn clean package
+```
+
+After that, you can run the application using the following command:
+
+```shell
+java -cp target/opeo-spring-fat-it-@project.version@.jar org.eolang.jeo.spring.FactorialApplication 
+```
+
+We use [Spring Boot](https://spring.io/projects/spring-boot)
+to run the application.
+Spring Boot uses `spring.factories` configuration files in
+its ['starter' dependencies](https://github.com/spring-projects/spring-boot/blob/66ff668b4db9ec6b10f99cff344069711b618d57/spring-boot-project/spring-boot-starters/README.adoc)
+to determine which beans to use in the context.
+Since we copy and unpack all the dependencies to the `target/classes` directory,
+we overwrite the `target/classes/META-INF/spring.factories` file from several
+Spring Boot starters multiple times.
+As a result, when we start our application,
+it might use an incorrect `spring.factories` file and, therefore, incorrect
+beans.
+To avoid this issue, we explicitly added the required [spring.factories](src%2Fmain%2Fresources%2FMETA-INF%2Fspring.factories) file to
+the final jar file.
+You can read more about this
+problem [here](https://stackoverflow.com/questions/78618894/how-to-run-spring-boot-application-with-unpacked-dependencies).
+
 ## The First Results
 
 Here is the summary of the first results of the `spring-fat` integration test:
