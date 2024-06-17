@@ -23,6 +23,8 @@
  */
 //Check logs first.
 String log = new File(basedir, 'build.log').text;
-assert log.contains("BUILD SUCCESS")
-assert log.contains("sum=3628800")
+def success = log.contains("BUILD SUCCESS")
+def sumIsCorrect = log.contains("sum=3628800")
+assert success
+assert sumIsCorrect
 true

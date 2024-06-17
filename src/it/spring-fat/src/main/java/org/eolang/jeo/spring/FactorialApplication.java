@@ -26,12 +26,12 @@ package org.eolang.jeo.spring;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 
 /**
  * Spring Application Entry Point.
  * @since 0.2
  */
-@SpringBootApplication
 
 /**
  @ComponentScan( basePackages = {
@@ -133,12 +133,31 @@ import org.springframework.context.annotation.ComponentScan;
  */
 
 
-@ComponentScan(
-    basePackages = {
-        "org.springframework.boot.web",
-        "org.springframework.boot.logging",
-    }
-)
+//@ComponentScan(
+//    basePackages = {
+//        "org.springframework.boot.autoconfigure",
+//        "org.springframework.boot.autoconfigure.web",
+
+//        "org.springframework.boot.autoconfigure.web.embedded",
+//        "org.springframework.boot.autoconfigure.web.servlet",
+//        "org.apache",
+//    },
+//    excludeFilters = {
+//        @ComponentScan.Filter(type = FilterType.REGEX, pattern = "org\\.springframework\\.boot\\.autoconfigure\\.web\\.servlet\\..*"),
+//        @ComponentScan.Filter(type = FilterType.REGEX, pattern = "org\\.springframework\\.boot\\.autoconfigure\\.web\\.reactive\\..*")
+//    }
+
+
+//    ,
+//    excludeFilters = {
+//        @ComponentScan.Filter(
+//            type = FilterType.REGEX,
+//            pattern = "org.springframework.boot.autoconfigure.web.reactive"
+//        )
+//    }
+
+//)
+@SpringBootApplication
 public class FactorialApplication {
 
     /**
