@@ -354,15 +354,15 @@ SOFTWARE.
                 <configuration>
                   <mainClass>org.eolang.jeo.spring.FactorialApplication</mainClass>
                   <additionalClasspathElements>
-                  <classpathElement>${project.build.directory}/${project.build.finalName}.jar</classpathElement>
-</additionalClasspathElements>
+                    <classpathElement>${project.build.directory}/${project.build.finalName}.jar</classpathElement>
+                  </additionalClasspathElements>
                   <includeProjectDependencies>false</includeProjectDependencies>
                 </configuration>
               </execution>
             </executions>
           </plugin>
         </plugins>
-        </build>
+      </build>
     </profile>
   </profiles>
 </project>
