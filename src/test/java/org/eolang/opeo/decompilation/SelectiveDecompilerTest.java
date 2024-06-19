@@ -31,6 +31,8 @@ import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.eolang.opeo.SelectiveDecompiler;
 import org.eolang.opeo.decompilation.handlers.RouterHandler;
+import org.eolang.opeo.storage.InMemoryStorage;
+import org.eolang.opeo.storage.XmirEntry;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.io.FileMatchers;
@@ -61,44 +63,35 @@ final class SelectiveDecompilerTest {
         ).toArray(String[]::new);
 
     @Test
-    void decompiles(@TempDir final Path temp) throws Exception {
-        final byte[] known = new BytesOf(new ResourceOf("xmir/Bar.xmir")).asBytes();
-        final Path input = temp.resolve("input");
-        final Path output = temp.resolve("output");
-        Files.createDirectories(input);
-        Files.createDirectories(output);
-        Files.write(input.resolve("Bar.xmir"), known);
-        new SelectiveDecompiler(input, output, this.supported).decompile();
-        MatcherAssert.assertThat(
-            "We expect that decompiler will decompile the input file and store the result into the output folder.",
-            output.resolve("Bar.xmir").toFile(),
-            FileMatchers.anExistingFile()
-        );
+    void decompiles() {
+        final XmirEntry known = new XmirEntry(new ResourceOf("xmir/Bar.xmir"), "pckg");
+        final InMemoryStorage storage = new InMemoryStorage();
+        storage.save(known);
+        final InMemoryStorage modified = new InMemoryStorage();
+        new SelectiveDecompiler(storage, modified, this.supported).decompile();
         MatcherAssert.assertThat(
             "We expect that the decompiled file won't be the same as the input file. Since the decompiler should change the file.",
-            new BytesOf(output.resolve("Bar.xmir")).asBytes(),
+            modified.last(),
             Matchers.not(Matchers.equalTo(known))
         );
     }
 
     @Test
-    void decompilesNothing(@TempDir final Path temp) throws Exception {
-        final byte[] known = new BytesOf(new ResourceOf("xmir/Bar.xmir")).asBytes();
-        final Path input = temp.resolve("input");
-        final Path output = temp.resolve("output");
-        Files.createDirectories(input);
-        Files.createDirectories(output);
-        Files.write(input.resolve("Bar.xmir"), known);
-        new SelectiveDecompiler(input, output).decompile();
-        MatcherAssert.assertThat(
-            "We expect that decompiler will copy the input file and store the result into the output folder.",
-            output.resolve("Bar.xmir").toFile(),
-            FileMatchers.anExistingFile()
-        );
+    void decompilesNothing() {
+        final XmirEntry known = new XmirEntry(new ResourceOf("xmir/Bar.xmir"), "pckg");
+        final InMemoryStorage storage = new InMemoryStorage();
+        storage.save(known);
+        final InMemoryStorage modified = new InMemoryStorage();
+        new SelectiveDecompiler(storage, modified).decompile();
         MatcherAssert.assertThat(
             "We expect that the decompiled file will be the same as the input file. Since the decompiler doesn't know some instructions.",
-            new BytesOf(output.resolve("Bar.xmir")).asBytes(),
+            storage.last(),
             Matchers.equalTo(known)
+        );
+        MatcherAssert.assertThat(
+            "We expecte the 'modified' storage to be empty",
+            modified.all().count(),
+            Matchers.equalTo(0L)
         );
     }
 
