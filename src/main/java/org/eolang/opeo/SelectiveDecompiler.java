@@ -122,6 +122,17 @@ public final class SelectiveDecompiler implements Decompiler {
      * Constructor.
      * @param storage Storage from which retrieve the XMIRs and where to save the modified ones.
      * @param modified Storage where to save the modified of each decompiled file.
+     */
+    public SelectiveDecompiler(
+        final Storage storage, final Storage modified
+    ) {
+        this(storage, modified, new RouterHandler(false).supportedOpcodes());
+    }
+
+    /**
+     * Constructor.
+     * @param storage Storage from which retrieve the XMIRs and where to save the modified ones.
+     * @param modified Storage where to save the modified of each decompiled file.
      * @param supported Supported opcodes are used in selection.
      */
     public SelectiveDecompiler(

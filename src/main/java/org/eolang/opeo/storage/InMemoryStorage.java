@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.storage;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Stream;
@@ -57,7 +56,9 @@ public final class InMemoryStorage implements Storage {
 
     @Override
     public Stream<XmirEntry> all() {
-        return this.container.stream();
+        final Stream<XmirEntry> stream = this.container.stream();
+        this.container.clear();
+        return stream;
     }
 
     @Override
@@ -65,6 +66,10 @@ public final class InMemoryStorage implements Storage {
         this.container.add(xmir);
     }
 
+    /**
+     * Get the last saved entry.
+     * @return The last saved entry.
+     */
     public XmirEntry last() {
         if (!this.container.isEmpty()) {
             return this.container.get(this.container.size() - 1);

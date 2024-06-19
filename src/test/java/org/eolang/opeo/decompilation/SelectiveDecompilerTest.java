@@ -96,24 +96,25 @@ final class SelectiveDecompilerTest {
     }
 
     @Test
-    void decompilesOnlySomeFiles(@TempDir final Path temp) throws Exception {
-        final byte[] known = new BytesOf(new ResourceOf("xmir/Known.xmir")).asBytes();
-        final byte[] unknown = new BytesOf(new ResourceOf("xmir/Bar.xmir")).asBytes();
-        final Path input = temp.resolve("input");
-        final Path output = temp.resolve("output");
-        Files.createDirectories(input);
-        Files.createDirectories(output);
-        Files.write(input.resolve("Known.xmir"), known);
-        Files.write(input.resolve("Unknown.xmir"), unknown);
-        new SelectiveDecompiler(input, output).decompile();
+    void decompilesOnlySomeFiles() {
+        final XmirEntry known = new XmirEntry(new ResourceOf("xmir/Known.xmir"), "known");
+        final XmirEntry unknown = new XmirEntry(new ResourceOf("xmir/Bar.xmir"), "unknown");
+        final InMemoryStorage storage = new InMemoryStorage();
+        storage.save(known);
+        storage.save(unknown);
+        final InMemoryStorage modified = new InMemoryStorage();
+        new SelectiveDecompiler(storage, modified).decompile();
         MatcherAssert.assertThat(
             "We expect that the decompiled file will be changed since the decompiler knows all instructions.",
-            new BytesOf(output.resolve("Known.xmir")).asBytes(),
+            modified.last(),
             Matchers.not(Matchers.equalTo(known))
         );
         MatcherAssert.assertThat(
             "We expect that the decompiled file won't be changed since the decompiler doesn't know some instructions.",
-            new BytesOf(output.resolve("Unknown.xmir")).asBytes(),
+            storage.all()
+                .filter(entry -> "unknown".equals(entry.relative()))
+                .findFirst()
+                .get(),
             Matchers.equalTo(unknown)
         );
     }
