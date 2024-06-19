@@ -51,24 +51,13 @@ import org.junit.jupiter.api.io.TempDir;
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class SelectiveDecompilerTest {
 
-    /**
-     * Supported opcodes.
-     * Here we intentionally expand the list of supported opcodes to test the decompiler.
-     * Bar.xmir contains the IFLE instruction which is not supported by the decompiler yet.
-     */
-    private final String[] supported =
-        Stream.concat(
-            Arrays.stream(new RouterHandler(false).supportedOpcodes()),
-            Stream.of("IRETURN", "IFLE")
-        ).toArray(String[]::new);
-
     @Test
     void decompiles() {
-        final XmirEntry known = new XmirEntry(new ResourceOf("xmir/Bar.xmir"), "pckg");
+        final XmirEntry known = new XmirEntry(new ResourceOf("xmir/Known.xmir"), "pckg");
         final InMemoryStorage storage = new InMemoryStorage();
         storage.save(known);
         final InMemoryStorage modified = new InMemoryStorage();
-        new SelectiveDecompiler(storage, modified, this.supported).decompile();
+        new SelectiveDecompiler(storage, modified).decompile();
         MatcherAssert.assertThat(
             "We expect that the decompiled file won't be the same as the input file. Since the decompiler should change the file.",
             modified.last(),
@@ -129,7 +118,7 @@ final class SelectiveDecompilerTest {
         Files.createDirectories(output);
         Files.createDirectories(copy);
         Files.write(input.resolve("Known.xmir"), known);
-        new SelectiveDecompiler(input, output, copy, this.supported).decompile();
+        new SelectiveDecompiler(input, output, copy).decompile();
         MatcherAssert.assertThat(
             "We expect that the decompiled file will be stored in the output folder.",
             output.resolve("Known.xmir").toFile(),
@@ -155,7 +144,7 @@ final class SelectiveDecompilerTest {
         Files.createDirectories(input);
         Files.createDirectories(output);
         Files.write(input.resolve("Known.xmir"), known);
-        new SelectiveDecompiler(input, output, this.supported).decompile();
+        new SelectiveDecompiler(input, output).decompile();
         MatcherAssert.assertThat(
             "We expect that nothing additional will be stored in the folder instead of 'input' and 'output' folders.",
             temp.toFile().listFiles(),
