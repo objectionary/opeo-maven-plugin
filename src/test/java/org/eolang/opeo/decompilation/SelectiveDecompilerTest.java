@@ -109,30 +109,26 @@ final class SelectiveDecompilerTest {
     }
 
     @Test
-    void copiesDecompiledFiles(@TempDir final Path temp) throws Exception {
-        final byte[] known = new BytesOf(new ResourceOf("xmir/Known.xmir")).asBytes();
-        final Path input = temp.resolve("input");
-        final Path output = temp.resolve("output");
-        final Path copy = temp.resolve("copy");
-        Files.createDirectories(input);
-        Files.createDirectories(output);
-        Files.createDirectories(copy);
-        Files.write(input.resolve("Known.xmir"), known);
-        new SelectiveDecompiler(input, output, copy).decompile();
+    void copiesDecompiledFiles() {
+        final XmirEntry known = new XmirEntry(new ResourceOf("xmir/Known.xmir"), "known");
+        final InMemoryStorage storage = new InMemoryStorage();
+        storage.save(known);
+        final InMemoryStorage modified = new InMemoryStorage();
+        new SelectiveDecompiler(storage, modified).decompile();
         MatcherAssert.assertThat(
-            "We expect that the decompiled file will be stored in the output folder.",
-            output.resolve("Known.xmir").toFile(),
-            FileMatchers.anExistingFile()
+            "We expect that the decompiled file will be stored in the output folder, but it should be modified",
+            storage.last(),
+            Matchers.not(Matchers.equalTo(known))
         );
         MatcherAssert.assertThat(
-            "We expect that the decompiled file will be stored in the copy folder.",
-            copy.resolve("Known.xmir").toFile(),
-            FileMatchers.anExistingFile()
+            "We expect that the decompiled file will be stored in the copy folder, but it should be modified",
+            modified.last(),
+            Matchers.not(Matchers.equalTo(known))
         );
         MatcherAssert.assertThat(
             "We expect that the decompiled file will be the same in the output and copy folders.",
-            new BytesOf(output.resolve("Known.xmir")).asBytes(),
-            Matchers.equalTo(new BytesOf(copy.resolve("Known.xmir")).asBytes())
+            storage.last(),
+            Matchers.equalTo(modified.last())
         );
     }
 
