@@ -35,18 +35,25 @@ import org.junit.jupiter.api.Test;
 /**
  * Test cases for {@link org.eolang.opeo.SelectiveDecompiler}.
  * @since 0.1
- * @todo #226:90min Refactor SelectiveDecompilerTest.
- *  This test has a lot of string literals that are duplicated.
- *  Moreover, it has a {@link SelectiveDecompilerTest#supported} field that should be removed.
- *  See the javadoc for 'supported' field.
- *  Also we have some sort of duplication between method initializations.
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class SelectiveDecompilerTest {
+
+    /**
+     * Xmir with known instructions.
+     */
+    private static final String KNOWN = "xmir/Known.xmir";
+
+    /**
+     * Xmir with unknown instructions.
+     */
+    private static final String UNKNOWN = "xmir/Bar.xmir";
 
     @Test
     void decompiles() {
-        final XmirEntry known = new XmirEntry(new ResourceOf("xmir/Known.xmir"), "pckg");
+        final XmirEntry known = new XmirEntry(
+            new ResourceOf(SelectiveDecompilerTest.KNOWN),
+            "pckg"
+        );
         final InMemoryStorage storage = new InMemoryStorage();
         storage.save(known);
         final InMemoryStorage modified = new InMemoryStorage();
@@ -79,8 +86,12 @@ final class SelectiveDecompilerTest {
 
     @Test
     void decompilesOnlySomeFiles() {
-        final XmirEntry known = new XmirEntry(new ResourceOf("xmir/Known.xmir"), "known");
-        final XmirEntry unknown = new XmirEntry(new ResourceOf("xmir/Bar.xmir"), "unknown");
+        final XmirEntry known = new XmirEntry(
+            new ResourceOf(SelectiveDecompilerTest.KNOWN), "known"
+        );
+        final XmirEntry unknown = new XmirEntry(
+            new ResourceOf(SelectiveDecompilerTest.UNKNOWN), "unknown"
+        );
         final InMemoryStorage storage = new InMemoryStorage();
         storage.save(known);
         storage.save(unknown);
@@ -103,7 +114,9 @@ final class SelectiveDecompilerTest {
 
     @Test
     void copiesDecompiledFiles() {
-        final XmirEntry known = new XmirEntry(new ResourceOf("xmir/Known.xmir"), "known");
+        final XmirEntry known = new XmirEntry(
+            new ResourceOf(SelectiveDecompilerTest.KNOWN), "known"
+        );
         final InMemoryStorage storage = new InMemoryStorage();
         storage.save(known);
         final InMemoryStorage modified = new InMemoryStorage();

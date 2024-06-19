@@ -71,10 +71,10 @@ public final class InMemoryStorage implements Storage {
      * @return The last saved entry.
      */
     public XmirEntry last() {
-        if (!this.container.isEmpty()) {
-            return this.container.get(this.container.size() - 1);
-        } else {
+        if (this.container.isEmpty()) {
             throw new IllegalStateException("Storage is empty");
+        } else {
+            return this.container.get(this.container.size() - 1);
         }
     }
 }
