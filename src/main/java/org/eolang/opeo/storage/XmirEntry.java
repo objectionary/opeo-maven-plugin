@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.function.Function;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.cactoos.Input;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Synced;
 import org.cactoos.scalar.Unchecked;
@@ -70,6 +71,15 @@ public final class XmirEntry {
      */
     XmirEntry(final XML xmir, final String pckg) {
         this(XmirEntry.fromXml(xmir), pckg);
+    }
+
+    /**
+     * Constructor.
+     * @param input Input.
+     * @param pckg Package name.
+     */
+    public XmirEntry(final Input input, final String pckg) {
+        this(XmirEntry.fromInput(input), pckg);
     }
 
     /**
@@ -135,6 +145,21 @@ public final class XmirEntry {
                             );
                         }
                     }
+                )
+            )
+        );
+    }
+
+    /**
+     * Prestructor from input.
+     * @param input Input.
+     * @return Lazy XMIR entry.
+     */
+    private static Unchecked<XML> fromInput(final Input input) {
+        return new Unchecked<>(
+            new Synced<>(
+                new Sticky<>(
+                    () -> new XMLDocument(input.stream())
                 )
             )
         );
