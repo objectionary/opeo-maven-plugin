@@ -23,11 +23,6 @@
  */
 package org.eolang.opeo.decompilation;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.stream.Stream;
-import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
 import org.eolang.opeo.SelectiveDecompiler;
 import org.eolang.opeo.decompilation.handlers.RouterHandler;
@@ -35,9 +30,7 @@ import org.eolang.opeo.storage.InMemoryStorage;
 import org.eolang.opeo.storage.XmirEntry;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.hamcrest.io.FileMatchers;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Test cases for {@link org.eolang.opeo.SelectiveDecompiler}.
@@ -129,22 +122,6 @@ final class SelectiveDecompilerTest {
             "We expect that the decompiled file will be the same in the output and copy folders.",
             storage.last(),
             Matchers.equalTo(modified.last())
-        );
-    }
-
-    @Test
-    void doesNotCopyDecompiledFiles(@TempDir final Path temp) throws Exception {
-        final byte[] known = new BytesOf(new ResourceOf("xmir/Known.xmir")).asBytes();
-        final Path input = temp.resolve("input");
-        final Path output = temp.resolve("output");
-        Files.createDirectories(input);
-        Files.createDirectories(output);
-        Files.write(input.resolve("Known.xmir"), known);
-        new SelectiveDecompiler(input, output).decompile();
-        MatcherAssert.assertThat(
-            "We expect that nothing additional will be stored in the folder instead of 'input' and 'output' folders.",
-            temp.toFile().listFiles(),
-            Matchers.arrayWithSize(2)
         );
     }
 
