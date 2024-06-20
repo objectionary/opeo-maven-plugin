@@ -90,7 +90,6 @@ final class ConstructorTest {
 
 
     @Test
-    @Disabled
     void createsConstructorFromXmir() {
         final String xml = String.join(
             "\n",

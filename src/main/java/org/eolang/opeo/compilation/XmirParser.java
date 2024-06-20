@@ -280,18 +280,7 @@ final class XmirParser implements Parser {
         } else if (base.contains("local")) {
             result = new LocalVariable(node);
         } else if (".new".equals(base)) {
-            final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final AstNode target = this.parse(inner.get(0));
-            final List<AstNode> args = new Arguments(node, this, 1).toList();
-            final String descriptor = node.attribute("scope")
-                .map(Attributes::new)
-                .map(Attributes::descriptor)
-                .map(descr -> new ConstructorDescriptor(descr, args))
-                .orElseGet(() -> new ConstructorDescriptor(args)).toString();
-            final Attributes attributes = new Attributes()
-                .descriptor(descriptor)
-                .interfaced(false);
-            result = new Constructor(target, attributes, args);
+            result = new Constructor(node, this);
         } else if (".array-node".equals(base)) {
             final List<XmlNode> children = node.children().collect(Collectors.toList());
             final String type = new HexString(children.get(0).text()).decode();

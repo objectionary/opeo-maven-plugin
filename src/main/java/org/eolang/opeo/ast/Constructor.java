@@ -111,7 +111,7 @@ public final class Constructor implements AstNode, Typed {
     public Constructor(final XmlNode node, final Parser parser) {
         this(
             Constructor.xtarget(node, parser),
-            new Attributes(node),
+            Constructor.xattrs(node, parser),
             new Arguments(node, parser, 1).toList()
         );
     }
@@ -197,5 +197,29 @@ public final class Constructor implements AstNode, Typed {
             );
         }
         return result;
+    }
+
+    /**
+     * Get attributes from XML node.
+     * @param node XML node.
+     * @param parser Parser.
+     * @return Attributes.
+     * @todo #316:90min Refactor {@link Constructor#xattrs(XmlNode, Parser)} method.
+     *  It is too complex and hard to understand.
+     *  We need to refactor it to make it more readable and maintainable.
+     *  As you can see here we create several Attributes classes which looks strange.
+     */
+    private static Attributes xattrs(final XmlNode node, final Parser parser) {
+        final Attributes attrs = new Attributes(
+            node,
+            new Attributes().descriptor("").interfaced(false)
+        );
+        attrs.descriptor(
+            new ConstructorDescriptor(
+                attrs.descriptor(),
+                new Arguments(node, parser, 1).toList()
+            ).toString()
+        );
+        return attrs;
     }
 }

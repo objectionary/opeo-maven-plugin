@@ -72,6 +72,15 @@ public final class Attributes {
 
     /**
      * Constructor.
+     * @param node Xmir representation of attributes.
+     * @param fallback Fallback attributes.
+     */
+    public Attributes(final XmlNode node, final Attributes fallback) {
+        this(Attributes.fromXmir(node, fallback));
+    }
+
+    /**
+     * Constructor.
      * @param all All attributes.
      */
     public Attributes(final Map<String, String> all) {
@@ -237,6 +246,15 @@ public final class Attributes {
                     )
                 )
         );
+    }
+
+    /**
+     * Parse attributes from Xmir.
+     * @param node Xmir node with attributes.
+     * @return Map of attributes.
+     */
+    private static Map<String, String> fromXmir(final XmlNode node, final Attributes fallback) {
+        return node.attribute("scope").map(Attributes::parse).orElse(fallback.all);
     }
 
     /**
