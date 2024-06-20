@@ -29,6 +29,7 @@ import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlLabel;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.opeo.Instruction;
+import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.ast.OpcodeName;
 
 /**
@@ -91,7 +92,7 @@ public final class JeoInstructions {
         if (entry instanceof XmlInstruction) {
             result = new JeoInstruction((XmlInstruction) entry);
         } else if (entry instanceof XmlLabel) {
-            result = new JeoLabel((XmlLabel) entry);
+            result = new LabelInstruction((XmlLabel) entry);
         } else {
             throw new IllegalArgumentException(
                 String.format("Unknown bytecode entry: %s, class is %s", entry, entry.getClass())

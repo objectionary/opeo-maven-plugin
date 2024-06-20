@@ -26,11 +26,11 @@ package org.eolang.opeo.decompilation.handlers;
 import java.util.Map;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
+import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.OpcodeName;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.jeo.JeoLabel;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
@@ -123,7 +123,7 @@ public final class RouterHandler implements InstructionHandler {
                 new MapEntry<>(Opcodes.POP, new PopHandler()),
                 new MapEntry<>(Opcodes.RETURN, new ReturnHandler(counting)),
                 new MapEntry<>(Opcodes.IRETURN, new ReturnHandler(counting)),
-                new MapEntry<>(JeoLabel.LABEL_OPCODE, new LabelHandler()),
+                new MapEntry<>(LabelInstruction.LABEL_OPCODE, new LabelHandler()),
                 new MapEntry<>(RouterHandler.UNIMPLEMENTED, new UnimplementedHandler(counting))
             )
         );

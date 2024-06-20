@@ -26,36 +26,52 @@ package org.eolang.opeo;
 import java.util.Collections;
 import java.util.List;
 import org.eolang.jeo.representation.xmir.AllLabels;
-import org.eolang.opeo.jeo.JeoLabel;
+import org.eolang.jeo.representation.xmir.XmlLabel;
 import org.objectweb.asm.Label;
 
 /**
  * Label instruction.
+ * This class mimics the bytecode instruction, although it is not an instruction.
  * @since 0.1
- * @todo #122:90min Remove code duplication between LabelInstruction and JeoLabel.
- *  LabelInstruction and JeoLabel are almost the same. We need to refactor them
- *  and remove the code duplication. Don't forget to remove this puzzle after
- *  refactoring. Alongside with the removing code duplication, we need to
- *  add unit tests for LabelInstruction class.
  */
 public final class LabelInstruction implements Instruction {
 
     /**
-     * Label.
+     * Opcode number to mimic the bytecode instruction.
+     * Should be higher than any number of the real instructions.
+     * See:
+     * <a href="https://en.wikipedia.org/wiki/List_of_Java_bytecode_instructions">instructions</a>
      */
-    private final Label label;
+    public static final int LABEL_OPCODE = 1001;
+
+    /**
+     * Label identifier.
+     */
+    private final String identifier;
+
+    public LabelInstruction(final XmlLabel xml) {
+        this(xml.identifier());
+    }
 
     /**
      * Constructor.
      * @param label Label.
      */
     public LabelInstruction(final Label label) {
-        this.label = label;
+        this(new AllLabels().uid(label));
+    }
+
+    /**
+     * Constructor.
+     * @param identifier Label identifier.
+     */
+    public LabelInstruction(final String identifier) {
+        this.identifier = identifier;
     }
 
     @Override
     public int opcode() {
-        return JeoLabel.LABEL_OPCODE;
+        return LabelInstruction.LABEL_OPCODE;
     }
 
     @Override
@@ -65,6 +81,6 @@ public final class LabelInstruction implements Instruction {
 
     @Override
     public List<Object> operands() {
-        return Collections.singletonList(new AllLabels().uid(this.label));
+        return Collections.singletonList(this.identifier);
     }
 }
