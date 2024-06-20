@@ -111,6 +111,7 @@ public final class Constructor implements AstNode, Typed {
     /**
      * Constructor.
      * @param node Xmir representation of constructor.
+     * @param parser Parser that understands how to parse subnodes.
      */
     public Constructor(final XmlNode node, final Parser parser) {
         this(
@@ -118,16 +119,6 @@ public final class Constructor implements AstNode, Typed {
             Constructor.xattrs(node, parser),
             new Arguments(node, parser, 1).toList()
         );
-    }
-
-    /**
-     * Get target node.
-     * @param node Constructor node.
-     * @param parser Parser, which can extract AstNode from XmlNode.
-     * @return Target node.
-     */
-    private static AstNode xtarget(final XmlNode node, final Parser parser) {
-        return parser.parse(node.children().collect(Collectors.toList()).get(0));
     }
 
     /**
@@ -225,5 +216,15 @@ public final class Constructor implements AstNode, Typed {
             ).toString()
         );
         return attrs;
+    }
+
+    /**
+     * Get target node.
+     * @param node Constructor node.
+     * @param parser Parser, which can extract AstNode from XmlNode.
+     * @return Target node.
+     */
+    private static AstNode xtarget(final XmlNode node, final Parser parser) {
+        return parser.parse(node.children().collect(Collectors.toList()).get(0));
     }
 }

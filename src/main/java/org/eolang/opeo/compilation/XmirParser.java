@@ -24,7 +24,6 @@
 package org.eolang.opeo.compilation;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.HexString;
@@ -41,7 +40,6 @@ import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.ClassName;
 import org.eolang.opeo.ast.Constant;
 import org.eolang.opeo.ast.Constructor;
-import org.eolang.opeo.ast.ConstructorDescriptor;
 import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
@@ -106,34 +104,6 @@ final class XmirParser implements Parser {
     }
 
     /**
-     * Convert to XML nodes.
-     *
-     * @return XML nodes.
-     */
-    List<XmlNode> toJeoNodes() {
-        return this.nodes.stream()
-            .map(this::opcodes)
-            .flatMap(List::stream)
-            .collect(Collectors.toList());
-    }
-
-    /**
-     * Convert XmlNode into a list of opcodes.
-     *
-     * @param node XmlNode
-     * @return List of opcodes
-     */
-    private List<XmlNode> opcodes(final XmlNode node) {
-        return this.parse(node).opcodes()
-            .stream()
-            .map(AstNode::toXmir)
-            .map(Xembler::new)
-            .map(Xembler::xmlQuietly)
-            .map(XmlNode::new)
-            .collect(Collectors.toList());
-    }
-
-    /**
      * Convert XmlNode to AstNode.
      *
      * @param node XmlNode
@@ -153,6 +123,7 @@ final class XmirParser implements Parser {
      * @checkstyle JavaNCSSCheck (200 lines)
      * @checkstyle NestedIfDepthCheck (200 lines)
      * @checkstyle MethodLengthCheck (200 lines)     *
+     * @checkstyle NoJavadocForOverriddenMethodsCheck (200 lines)
      */
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength", "PMD.CognitiveComplexity"})
     @Override
@@ -305,5 +276,33 @@ final class XmirParser implements Parser {
             );
         }
         return result;
+    }
+
+    /**
+     * Convert to XML nodes.
+     *
+     * @return XML nodes.
+     */
+    List<XmlNode> toJeoNodes() {
+        return this.nodes.stream()
+            .map(this::opcodes)
+            .flatMap(List::stream)
+            .collect(Collectors.toList());
+    }
+
+    /**
+     * Convert XmlNode into a list of opcodes.
+     *
+     * @param node XmlNode
+     * @return List of opcodes
+     */
+    private List<XmlNode> opcodes(final XmlNode node) {
+        return this.parse(node).opcodes()
+            .stream()
+            .map(AstNode::toXmir)
+            .map(Xembler::new)
+            .map(Xembler::xmlQuietly)
+            .map(XmlNode::new)
+            .collect(Collectors.toList());
     }
 }

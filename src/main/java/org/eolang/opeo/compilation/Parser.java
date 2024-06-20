@@ -37,5 +37,5 @@ public interface Parser {
      * @param node XML node
      * @return AST node
      */
-    AstNode parse(final XmlNode node);
+    AstNode parse(XmlNode node);
 }

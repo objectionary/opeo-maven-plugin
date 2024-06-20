@@ -251,6 +251,7 @@ public final class Attributes {
     /**
      * Parse attributes from Xmir.
      * @param node Xmir node with attributes.
+     * @param fallback Use this attributes if there are no attributes in the node.
      * @return Map of attributes.
      */
     private static Map<String, String> fromXmir(final XmlNode node, final Attributes fallback) {

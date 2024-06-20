@@ -24,10 +24,8 @@
 package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.ToString;
 import org.eolang.jeo.representation.xmir.XmlNode;

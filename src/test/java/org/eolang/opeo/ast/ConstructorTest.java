@@ -27,7 +27,6 @@ import com.jcabi.matchers.XhtmlMatchers;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Transformers;
@@ -101,23 +100,31 @@ final class ConstructorTest {
             new Constructor(
                 new XmlNode(ConstructorTest.CONSTRUCTOR),
                 node -> {
+                    final AstNode result;
                     if (node.equals(
-                        new XmlNode("<o base='string' data='bytes'>66 69 72 73 74</o>"))) {
-                        return new Literal("first");
+                        new XmlNode("<o base='string' data='bytes'>66 69 72 73 74</o>")
+                    )) {
+                        result = new Literal("first");
                     } else if (node.equals(
-                        new XmlNode("<o base='string' data='bytes'>73 65 63 6F 6E 64</o>"))) {
-                        return new Literal("second");
+                        new XmlNode("<o base='string' data='bytes'>73 65 63 6F 6E 64</o>")
+                    )) {
+                        result = new Literal("second");
                     } else if (node.equals(
-                        new XmlNode("<o base='int' data='bytes'>00 00 00 00 00 00 00 03</o>"))) {
-                        return new Literal(3);
-                    } else if (node.equals(new XmlNode(
-                        "<o base='.new-type'><o base='string' data='bytes'>41</o></o>"))) {
-                        return new NewAddress("A");
+                        new XmlNode("<o base='int' data='bytes'>00 00 00 00 00 00 00 03</o>")
+                    )) {
+                        result = new Literal(3);
+                    } else if (node.equals(
+                        new XmlNode(
+                            "<o base='.new-type'><o base='string' data='bytes'>41</o></o>"
+                        )
+                    )) {
+                        result = new NewAddress("A");
                     } else {
                         throw new IllegalArgumentException(
                             String.format("Can't parse constructor from node %s", node)
                         );
                     }
+                    return result;
                 }
             ),
             Matchers.equalTo(
