@@ -25,6 +25,7 @@ package org.eolang.opeo;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.jeo.representation.xmir.XmlLabel;
 import org.objectweb.asm.Label;
@@ -48,6 +49,14 @@ public final class LabelInstruction implements Instruction {
      * Label identifier.
      */
     private final String identifier;
+
+    /**
+     * Constructor.
+     * Creates a random label.
+     */
+    public LabelInstruction() {
+        this(UUID.randomUUID().toString());
+    }
 
     /**
      * Constructor.
