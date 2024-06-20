@@ -71,12 +71,6 @@ final class TrasformationPacksTest {
     @EnabledOnJre(JRE.JAVA_11)
     void checksPack(final String pack, @TempDir final Path where) throws IOException {
         final JavaEoPack jeopack = new JavaEoPack(pack);
-        //@checkstyle MethodBodyCommentsCheck (10 lines)
-        // @todo #6:90min Apply decompilation for packs test.
-        //  Currently we just apply jeo in order to transform java bytecode into EO.
-        //  We don't apply decompilation. Thus, we still have a dummy assertion in this test.
-        //  We have to apply decompilation and make the assertion more precise and applicable
-        //  for this test.
         final List<Program> java = jeopack.java();
         final List<String> decompiled = TrasformationPacksTest.compile(where, java)
             .stream()
