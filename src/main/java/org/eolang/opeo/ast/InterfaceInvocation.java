@@ -31,6 +31,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.ToString;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.compilation.Parser;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -67,7 +68,7 @@ public final class InterfaceInvocation implements AstNode, Typed {
      * @param node XML node.
      * @param parser Parser, which can extract AstNode from XmlNode.
      */
-    public InterfaceInvocation(final XmlNode node, final Function<XmlNode, AstNode> parser) {
+    public InterfaceInvocation(final XmlNode node, final Parser parser) {
         this(
             InterfaceInvocation.xsource(node, parser),
             new Attributes(node),
@@ -147,9 +148,9 @@ public final class InterfaceInvocation implements AstNode, Typed {
      * @param parser Parser.
      * @return Source.
      */
-    private static AstNode xsource(final XmlNode node, final Function<XmlNode, AstNode> parser) {
+    private static AstNode xsource(final XmlNode node, final Parser parser) {
         final List<XmlNode> inner = node.children().collect(Collectors.toList());
-        return parser.apply(inner.get(0));
+        return parser.parse(inner.get(0));
     }
 
     /**
@@ -160,14 +161,14 @@ public final class InterfaceInvocation implements AstNode, Typed {
      */
     private static List<AstNode> xargs(
         final XmlNode node,
-        final Function<? super XmlNode, ? extends AstNode> parser
+        final Parser parser
     ) {
         final List<XmlNode> all = node.children().collect(Collectors.toList());
         final List<AstNode> arguments;
         if (all.size() > 1) {
             arguments = all.subList(1, all.size())
                 .stream()
-                .map(parser::apply)
+                .map(parser::parse)
                 .collect(Collectors.toList());
         } else {
             arguments = Collections.emptyList();

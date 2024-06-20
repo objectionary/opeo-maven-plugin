@@ -297,17 +297,7 @@ final class XmirParser implements Parser {
             final AstNode size = this.parse(children.get(1));
             result = new ArrayConstructor(size, type);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
-            final Attributes attributes = new Attributes(
-                node.attribute("scope")
-                    .orElseThrow(
-                        () -> new IllegalArgumentException(
-                            String.format(
-                                "Can't find attributes of '%s'",
-                                base
-                            )
-                        )
-                    )
-            );
+            final Attributes attributes = new Attributes(node);
             if ("static".equals(attributes.type())) {
                 result = new StaticInvocation(
                     node, this.args(node.children().collect(Collectors.toList()))
