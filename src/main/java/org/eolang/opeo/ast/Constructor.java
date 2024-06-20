@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.Parser;
 import org.objectweb.asm.Opcodes;
@@ -38,6 +40,8 @@ import org.xembly.Directives;
  * Constructor output node.
  * @since 0.1
  */
+@ToString
+@EqualsAndHashCode
 public final class Constructor implements AstNode, Typed {
 
     /**

@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import com.jcabi.matchers.XhtmlMatchers;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.xembly.ImpossibleModificationException;
@@ -38,20 +39,25 @@ import org.xembly.Xembler;
  */
 final class ConstructorTest {
 
+    /**
+     * Constructor XMIR representation.
+     */
+    private static final String CONSTRUCTOR = String.join(
+        "\n",
+        "<o base='.new'>",
+        "  <o base='.new-type'><o base='string' data='bytes'>41</o></o>",
+        "  <o base='string' data='bytes'>66 69 72 73 74</o>",
+        "  <o base='string' data='bytes'>73 65 63 6F 6E 64</o>",
+        "  <o base='int' data='bytes'>00 00 00 00 00 00 00 03</o>",
+        "</o>"
+    );
+
     @Test
     void transformsIntoXmir() throws ImpossibleModificationException {
         MatcherAssert.assertThat(
             String.format(
                 "We expect the following XML to be generated:%n%s%n",
-                String.join(
-                    "\n",
-                    "<o base='.new'>",
-                    "  <o base='.new-type'><o base='string' data='bytes'>41</o></o>",
-                    "  <o base='string' data='bytes'>66 69 72 73 74</o>",
-                    "  <o base='string' data='bytes'>73 65 63 6F 6E 64</o>",
-                    "  <o base='int' data='bytes'>00 00 00 00 00 00 00 03</o>",
-                    "</o>"
-                )
+                ConstructorTest.CONSTRUCTOR
             ),
             new Xembler(
                 new Constructor(
@@ -88,25 +94,43 @@ final class ConstructorTest {
         );
     }
 
-
     @Test
     void createsConstructorFromXmir() {
-        final String xml = String.join(
-            "\n",
-            "<o base='.new'>",
-            "  <o base='.new-type'><o base='string' data='bytes'>41</o></o>",
-            "  <o base='string' data='bytes'>66 69 72 73 74</o>",
-            "  <o base='string' data='bytes'>73 65 63 6F 6E 64</o>",
-            "  <o base='int' data='bytes'>00 00 00 00 00 00 00 03</o>",
-            "</o>"
+        MatcherAssert.assertThat(
+            "Can't parse constructor from xmir representation",
+            new Constructor(
+                new XmlNode(ConstructorTest.CONSTRUCTOR),
+                node -> {
+                    if (node.equals(
+                        new XmlNode("<o base='string' data='bytes'>66 69 72 73 74</o>"))) {
+                        return new Literal("first");
+                    } else if (node.equals(
+                        new XmlNode("<o base='string' data='bytes'>73 65 63 6F 6E 64</o>"))) {
+                        return new Literal("second");
+                    } else if (node.equals(
+                        new XmlNode("<o base='int' data='bytes'>00 00 00 00 00 00 00 03</o>"))) {
+                        return new Literal(3);
+                    } else if (node.equals(new XmlNode(
+                        "<o base='.new-type'><o base='string' data='bytes'>41</o></o>"))) {
+                        return new NewAddress("A");
+                    } else {
+                        throw new IllegalArgumentException(
+                            String.format("Can't parse constructor from node %s", node)
+                        );
+                    }
+                }
+            ),
+            Matchers.equalTo(
+                new Constructor(
+                    "A",
+                    new Attributes()
+                        .descriptor("(Ljava/lang/String;Ljava/lang/String;I)V")
+                        .interfaced(false),
+                    new Literal("first"),
+                    new Literal("second"),
+                    new Literal(3)
+                )
+            )
         );
-        final XmlNode node = new XmlNode(xml);
-        new Constructor(
-            node,
-            xmir -> {
-                return new Literal();
-            }
-        );
-
     }
 }
