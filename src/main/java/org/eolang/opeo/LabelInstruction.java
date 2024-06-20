@@ -49,6 +49,10 @@ public final class LabelInstruction implements Instruction {
      */
     private final String identifier;
 
+    /**
+     * Constructor.
+     * @param xml XML representation of label.
+     */
     public LabelInstruction(final XmlLabel xml) {
         this(xml.identifier());
     }
