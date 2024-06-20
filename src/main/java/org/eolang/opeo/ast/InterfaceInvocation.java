@@ -72,7 +72,7 @@ public final class InterfaceInvocation implements AstNode, Typed {
         this(
             InterfaceInvocation.xsource(node, parser),
             new Attributes(node),
-            InterfaceInvocation.xargs(node, parser)
+            new Arguments(node, parser, 1).toList()
         );
     }
 
@@ -149,30 +149,6 @@ public final class InterfaceInvocation implements AstNode, Typed {
      * @return Source.
      */
     private static AstNode xsource(final XmlNode node, final Parser parser) {
-        final List<XmlNode> inner = node.children().collect(Collectors.toList());
-        return parser.parse(inner.get(0));
-    }
-
-    /**
-     * Convert XML nodes into a list of arguments.
-     * @param node XML node.
-     * @param parser Parser.
-     * @return List of arguments.
-     */
-    private static List<AstNode> xargs(
-        final XmlNode node,
-        final Parser parser
-    ) {
-        final List<XmlNode> all = node.children().collect(Collectors.toList());
-        final List<AstNode> arguments;
-        if (all.size() > 1) {
-            arguments = all.subList(1, all.size())
-                .stream()
-                .map(parser::parse)
-                .collect(Collectors.toList());
-        } else {
-            arguments = Collections.emptyList();
-        }
-        return arguments;
+        return parser.parse(node.children().collect(Collectors.toList()).get(0));
     }
 }

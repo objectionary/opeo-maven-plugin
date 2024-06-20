@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.Parser;
 import org.objectweb.asm.Opcodes;
@@ -111,16 +112,18 @@ public final class Constructor implements AstNode, Typed {
         this(
             Constructor.xtarget(node, parser),
             new Attributes(node),
-            Constructor.xargs(node, parser)
+            new Arguments(node, parser, 1).toList()
         );
     }
 
+    /**
+     * Get target node.
+     * @param node Constructor node.
+     * @param parser Parser, which can extract AstNode from XmlNode.
+     * @return Target node.
+     */
     private static AstNode xtarget(final XmlNode node, final Parser parser) {
-        return null;
-    }
-
-    private static List<AstNode> xargs(final XmlNode node, final Parser parser) {
-        return null;
+        return parser.parse(node.children().collect(Collectors.toList()).get(0));
     }
 
     /**
