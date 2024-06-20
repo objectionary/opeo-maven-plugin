@@ -65,7 +65,7 @@ public final class LocalVariable implements AstNode, Typed {
      * @param node The XML node that represents variable.
      */
     public LocalVariable(final XmlNode node) {
-        this(LocalVariable.videntifier(node), LocalVariable.vattributes(node));
+        this(LocalVariable.videntifier(node), new Attributes(node));
     }
 
     /**
@@ -129,25 +129,6 @@ public final class LocalVariable implements AstNode, Typed {
                     )
                 )
             ).substring(LocalVariable.PREFIX.length())
-        );
-    }
-
-    /**
-     * Get the attributes of the variable.
-     * @param node The XML node that represents variable.
-     * @return The attributes.
-     */
-    private static Attributes vattributes(final XmlNode node) {
-        return new Attributes(
-            node.attribute("scope")
-                .orElseThrow(
-                    () -> new IllegalArgumentException(
-                        String.format(
-                            "Can't recognize variable node: %n%s%nWe expected to find 'scope' attribute",
-                            node
-                        )
-                    )
-                )
         );
     }
 }

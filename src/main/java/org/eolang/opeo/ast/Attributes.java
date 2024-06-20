@@ -30,6 +30,7 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import org.cactoos.map.MapEntry;
+import org.eolang.jeo.representation.xmir.XmlNode;
 
 /**
  * Type attributes of AST nodes.
@@ -59,6 +60,14 @@ public final class Attributes {
      */
     public Attributes(final String... entries) {
         this(Attributes.fromEntries(entries));
+    }
+
+    /**
+     * Constructor.
+     * @param node Xmir representation of attributes.
+     */
+    public Attributes(final XmlNode node) {
+        this(Attributes.fromXmir(node));
     }
 
     /**
@@ -209,6 +218,25 @@ public final class Attributes {
             result = res;
         }
         return result;
+    }
+
+    /**
+     * Parse attributes from Xmir.
+     * @param node Xmir node with attributes.
+     * @return Map of attributes.
+     */
+    private static Map<String, String> fromXmir(final XmlNode node) {
+        return Attributes.parse(
+            node.attribute("scope")
+                .orElseThrow(
+                    () -> new IllegalArgumentException(
+                        String.format(
+                            "Can't retrieve attributes from the node %s",
+                            node
+                        )
+                    )
+                )
+        );
     }
 
     /**

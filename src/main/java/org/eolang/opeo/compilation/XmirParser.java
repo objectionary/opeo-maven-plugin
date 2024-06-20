@@ -72,7 +72,7 @@ import org.xembly.Xembler;
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-final class XmirParser {
+final class XmirParser implements Parser {
 
     /**
      * Opeo nodes.
@@ -123,7 +123,7 @@ final class XmirParser {
      * @return List of opcodes
      */
     private List<XmlNode> opcodes(final XmlNode node) {
-        return this.node(node).opcodes()
+        return this.parse(node).opcodes()
             .stream()
             .map(AstNode::toXmir)
             .map(Xembler::new)
@@ -154,7 +154,8 @@ final class XmirParser {
      * @checkstyle MethodLengthCheck (200 lines)     *
      */
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength", "PMD.CognitiveComplexity"})
-    private AstNode node(final XmlNode node) {
+    @Override
+    public AstNode parse(final XmlNode node) {
         final AstNode result;
         final String base = node.attribute("base").orElseThrow(
             () -> new IllegalArgumentException(
@@ -165,25 +166,25 @@ final class XmirParser {
             )
         );
         if (".ignore-result".equals(base)) {
-            result = new Popped(this.node(node.firstChild()));
+            result = new Popped(this.parse(node.firstChild()));
         } else if ("labeled".equals(base)) {
-            result = new Labeled(node, this::node);
+            result = new Labeled(node, this::parse);
         } else if ("times".equals(base)) {
-            result = new Mul(node, this::node);
+            result = new Mul(node, this::parse);
         } else if (".if".equals(base)) {
-            result = new If(node, this::node);
+            result = new If(node, this::parse);
         } else if ("load-constant".equals(base)) {
             result = new Constant(node);
         } else if (".new-type".equals(base)) {
             result = new NewAddress(node);
         } else if ("duplicated".equals(base)) {
-            result = new Duplicate(this.node(node.firstChild()));
+            result = new Duplicate(this.parse(node.firstChild()));
         } else if (".plus".equals(base)) {
-            result = new Add(node, this::node);
+            result = new Add(node, this::parse);
         } else if (".minus".equals(base)) {
-            result = new Substraction(node, this::node);
+            result = new Substraction(node, this::parse);
         } else if ("cast".equals(base)) {
-            result = new Cast(node, this::node);
+            result = new Cast(node, this::parse);
         } else if ("frame".equals(base)) {
             result = new RawXml(node);
         } else if ("opcode".equals(base)) {
@@ -208,7 +209,7 @@ final class XmirParser {
             result = new ClassName(node);
         } else if (".super".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final AstNode instance = this.node(inner.get(0));
+            final AstNode instance = this.parse(inner.get(0));
             result = new Super(
                 instance,
                 this.args(inner),
@@ -234,21 +235,21 @@ final class XmirParser {
             );
         } else if (".write-array".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final AstNode array = this.node(inner.get(0));
-            final AstNode index = this.node(inner.get(1));
-            final AstNode value = this.node(inner.get(2));
+            final AstNode array = this.parse(inner.get(0));
+            final AstNode index = this.parse(inner.get(1));
+            final AstNode value = this.parse(inner.get(2));
             result = new StoreArray(array, index, value);
         } else if (".write-local-var".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final AstNode target = this.node(inner.get(0));
-            final AstNode value = this.node(inner.get(1));
+            final AstNode target = this.parse(inner.get(0));
+            final AstNode value = this.parse(inner.get(1));
             result = new VariableAssignment((LocalVariable) target, value);
         } else if (".get-field".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final XmlNode field = inner.get(0);
             result = new FieldRetrieval(
                 new Field(
-                    this.node(field.children().collect(Collectors.toList()).get(0)),
+                    this.parse(field.children().collect(Collectors.toList()).get(0)),
                     new Attributes(
                         field.attribute("scope").orElseThrow(
                             () -> new IllegalArgumentException(
@@ -261,10 +262,10 @@ final class XmirParser {
         } else if (".write-field".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final XmlNode field = inner.get(0);
-            final AstNode value = this.node(inner.get(1));
+            final AstNode value = this.parse(inner.get(1));
             result = new FieldAssignment(
                 new Field(
-                    this.node(field.children().collect(Collectors.toList()).get(0)),
+                    this.parse(field.children().collect(Collectors.toList()).get(0)),
                     new Attributes(
                         field.attribute("scope").orElseThrow(
                             () -> new IllegalArgumentException(
@@ -279,7 +280,7 @@ final class XmirParser {
             result = new LocalVariable(node);
         } else if (".new".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final AstNode target = this.node(inner.get(0));
+            final AstNode target = this.parse(inner.get(0));
             final List<AstNode> args = this.args(inner);
             final String descriptor = node.attribute("scope")
                 .map(Attributes::new)
@@ -293,7 +294,7 @@ final class XmirParser {
         } else if (".array-node".equals(base)) {
             final List<XmlNode> children = node.children().collect(Collectors.toList());
             final String type = new HexString(children.get(0).text()).decode();
-            final AstNode size = this.node(children.get(1));
+            final AstNode size = this.parse(children.get(1));
             result = new ArrayConstructor(size, type);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
             final Attributes attributes = new Attributes(
@@ -312,10 +313,10 @@ final class XmirParser {
                     node, this.args(node.children().collect(Collectors.toList()))
                 );
             } else if ("interface".equals(attributes.type())) {
-                result = new InterfaceInvocation(node, this::node);
+                result = new InterfaceInvocation(node, this::parse);
             } else {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
-                final AstNode target = this.node(inner.get(0));
+                final AstNode target = this.parse(inner.get(0));
                 result = new Invocation(target, attributes, this.args(inner));
             }
         } else {
@@ -337,7 +338,7 @@ final class XmirParser {
         if (all.size() > 1) {
             arguments = all.subList(1, all.size())
                 .stream()
-                .map(this::node)
+                .map(this::parse)
                 .collect(Collectors.toList());
         } else {
             arguments = Collections.emptyList();

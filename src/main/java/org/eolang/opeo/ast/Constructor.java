@@ -26,6 +26,8 @@ package org.eolang.opeo.ast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.compilation.Parser;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -99,6 +101,26 @@ public final class Constructor implements AstNode, Typed {
         final List<AstNode> args
     ) {
         this(new NewAddress(type), attrs, args);
+    }
+
+    /**
+     * Constructor.
+     * @param node Xmir representation of constructor.
+     */
+    public Constructor(final XmlNode node, final Parser parser) {
+        this(
+            Constructor.xtarget(node, parser),
+            new Attributes(node),
+            Constructor.xargs(node, parser)
+        );
+    }
+
+    private static AstNode xtarget(final XmlNode node, final Parser parser) {
+        return null;
+    }
+
+    private static List<AstNode> xargs(final XmlNode node, final Parser parser) {
+        return null;
     }
 
     /**

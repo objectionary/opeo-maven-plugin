@@ -102,7 +102,7 @@ public final class StaticInvocation implements AstNode, Typed {
      */
     public StaticInvocation(final XmlNode node, final List<AstNode> arguments) {
         this(
-            StaticInvocation.xattrs(node),
+            new Attributes(node),
             StaticInvocation.xowner(node),
             arguments
         );
@@ -177,19 +177,6 @@ public final class StaticInvocation implements AstNode, Typed {
     @Override
     public Type type() {
         return Type.getReturnType(this.attributes.descriptor());
-    }
-
-    /**
-     * Extracts attributes from the node.
-     * @param node XML node
-     * @return Attributes
-     */
-    private static Attributes xattrs(final XmlNode node) {
-        return node.attribute("scope").map(Attributes::new).orElseThrow(
-            () -> new IllegalArgumentException(
-                String.format("Can't retrieve static invocation attributes from the node %s", node)
-            )
-        );
     }
 
     /**

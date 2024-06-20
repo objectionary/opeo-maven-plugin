@@ -70,7 +70,7 @@ public final class InterfaceInvocation implements AstNode, Typed {
     public InterfaceInvocation(final XmlNode node, final Function<XmlNode, AstNode> parser) {
         this(
             InterfaceInvocation.xsource(node, parser),
-            InterfaceInvocation.xattrs(node),
+            new Attributes(node),
             InterfaceInvocation.xargs(node, parser)
         );
     }
@@ -139,22 +139,6 @@ public final class InterfaceInvocation implements AstNode, Typed {
     @Override
     public Type type() {
         return Type.getReturnType(this.attrs.descriptor());
-    }
-
-    /**
-     * Extracts attributes from the node.
-     * @param node XML node
-     * @return Attributes
-     */
-    private static Attributes xattrs(final XmlNode node) {
-        return node.attribute("scope").map(Attributes::new).orElseThrow(
-            () -> new IllegalArgumentException(
-                String.format(
-                    "Can't retrieve interface invocation attributes from the node %s",
-                    node
-                )
-            )
-        );
     }
 
     /**

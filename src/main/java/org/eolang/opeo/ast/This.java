@@ -62,7 +62,7 @@ public final class This implements AstNode, Typed {
      * @param node XML node.
      */
     public This(final XmlNode node) {
-        this(This.xattrs(node));
+        this(new Attributes(node));
     }
 
     /**
@@ -98,20 +98,5 @@ public final class This implements AstNode, Typed {
     @Override
     public Type type() {
         return Type.getObjectType(this.attributes.descriptor());
-    }
-
-    /**
-     * Extracts attributes from the XML node.
-     * @param node XML node.
-     * @return Attributes.
-     */
-    private static Attributes xattrs(final XmlNode node) {
-        return new Attributes(
-            node.attribute("scope").orElseThrow(
-                () -> new IllegalStateException(
-                    String.format("No scope attribute in this node %s", node)
-                )
-            )
-        );
     }
 }

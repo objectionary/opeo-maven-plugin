@@ -24,7 +24,9 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Transformers;
@@ -84,5 +86,28 @@ final class ConstructorTest {
                 "/o[@base='.new' and @scope='descriptor=(Ljava/lang/String;)V']"
             )
         );
+    }
+
+
+    @Test
+    @Disabled
+    void createsConstructorFromXmir() {
+        final String xml = String.join(
+            "\n",
+            "<o base='.new'>",
+            "  <o base='.new-type'><o base='string' data='bytes'>41</o></o>",
+            "  <o base='string' data='bytes'>66 69 72 73 74</o>",
+            "  <o base='string' data='bytes'>73 65 63 6F 6E 64</o>",
+            "  <o base='int' data='bytes'>00 00 00 00 00 00 00 03</o>",
+            "</o>"
+        );
+        final XmlNode node = new XmlNode(xml);
+        new Constructor(
+            node,
+            xmir -> {
+                return new Literal();
+            }
+        );
+
     }
 }
