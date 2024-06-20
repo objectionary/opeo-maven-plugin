@@ -32,6 +32,7 @@ import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.jeo.representation.xmir.XmlOperand;
 import org.eolang.opeo.ast.Add;
+import org.eolang.opeo.ast.Arguments;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
@@ -212,7 +213,7 @@ final class XmirParser implements Parser {
             final AstNode instance = this.parse(inner.get(0));
             result = new Super(
                 instance,
-                this.args(inner),
+                new Arguments(node, this, 1).toList(),
                 new Attributes(
                     node.attribute("scope").orElseThrow(
                         () -> new IllegalArgumentException(
@@ -281,7 +282,7 @@ final class XmirParser implements Parser {
         } else if (".new".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode target = this.parse(inner.get(0));
-            final List<AstNode> args = this.args(inner);
+            final List<AstNode> args = new Arguments(node, this, 1).toList();
             final String descriptor = node.attribute("scope")
                 .map(Attributes::new)
                 .map(Attributes::descriptor)
@@ -300,14 +301,14 @@ final class XmirParser implements Parser {
             final Attributes attributes = new Attributes(node);
             if ("static".equals(attributes.type())) {
                 result = new StaticInvocation(
-                    node, this.args(node.children().collect(Collectors.toList()))
+                    node, new Arguments(node, this, 1).toList()
                 );
             } else if ("interface".equals(attributes.type())) {
                 result = new InterfaceInvocation(node, this::parse);
             } else {
                 final List<XmlNode> inner = node.children().collect(Collectors.toList());
                 final AstNode target = this.parse(inner.get(0));
-                result = new Invocation(target, attributes, this.args(inner));
+                result = new Invocation(target, attributes, new Arguments(node, this, 1).toList());
             }
         } else {
             throw new IllegalArgumentException(
@@ -315,24 +316,5 @@ final class XmirParser implements Parser {
             );
         }
         return result;
-    }
-
-    /**
-     * Convert XML nodes into a list of arguments.
-     *
-     * @param all XML nodes.
-     * @return List of arguments.
-     */
-    private List<AstNode> args(final List<XmlNode> all) {
-        final List<AstNode> arguments;
-        if (all.size() > 1) {
-            arguments = all.subList(1, all.size())
-                .stream()
-                .map(this::parse)
-                .collect(Collectors.toList());
-        } else {
-            arguments = Collections.emptyList();
-        }
-        return arguments;
     }
 }
