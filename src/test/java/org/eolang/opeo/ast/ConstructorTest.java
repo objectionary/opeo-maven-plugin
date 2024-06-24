@@ -24,6 +24,7 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -44,6 +45,7 @@ final class ConstructorTest {
     private static final String CONSTRUCTOR = String.join(
         "\n",
         "<o base='.new'>",
+        "  <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 49 29 56 7C 69 6E 74 65 72 66 61 63 65 64 3D 66 61 6C 73 65 0A</o>",
         "  <o base='.new-type'><o base='string' data='bytes'>41</o></o>",
         "  <o base='string' data='bytes'>66 69 72 73 74</o>",
         "  <o base='string' data='bytes'>73 65 63 6F 6E 64</o>",
@@ -77,18 +79,29 @@ final class ConstructorTest {
     }
 
     @Test
-    void transformsConstructorToXmirWithScope() throws ImpossibleModificationException {
+    void transformsConstructorToXmirWithAttributes() throws ImpossibleModificationException {
         MatcherAssert.assertThat(
             "We expect that constructor will be transformed to XMIR with scope attribute",
-            new Xembler(
-                new Constructor(
-                    "A",
-                    new Attributes().descriptor("(Ljava/lang/String;)V"),
-                    new Literal("first")
-                ).toXmir()
-            ).xml(),
-            XhtmlMatchers.hasXPaths(
-                "/o[@base='.new' and @scope='descriptor=(Ljava/lang/String;)V']"
+            new XMLDocument(
+                new Xembler(
+                    new Constructor(
+                        "A",
+                        new Attributes().descriptor("(Ljava/lang/String;)V"),
+                        new Literal("first")
+                    ).toXmir()
+                ).xml()
+            ),
+            Matchers.equalTo(
+                new XMLDocument(
+                    String.join(
+                        "\n",
+                        "<o base='.new'>",
+                        "  <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 29 56</o>",
+                        "  <o base='.new-type'><o base='string' data='bytes'>41</o></o>",
+                        "  <o base='string' data='bytes'>66 69 72 73 74</o>",
+                        "</o>"
+                    )
+                )
             )
         );
     }

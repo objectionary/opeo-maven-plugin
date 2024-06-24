@@ -30,7 +30,10 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import org.cactoos.map.MapEntry;
+import org.eolang.jeo.representation.directives.DirectivesData;
+import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.xembly.Directives;
 
 /**
  * Type attributes of AST nodes.
@@ -39,7 +42,7 @@ import org.eolang.jeo.representation.xmir.XmlNode;
  */
 @SuppressWarnings("PMD.TooManyMethods")
 @EqualsAndHashCode
-public final class Attributes {
+public final class Attributes implements Xmir {
 
     /**
      * All attributes.
@@ -68,15 +71,6 @@ public final class Attributes {
      */
     public Attributes(final XmlNode node) {
         this(Attributes.fromXmir(node));
-    }
-
-    /**
-     * Constructor.
-     * @param node Xmir representation of attributes.
-     * @param fallback Fallback attributes.
-     */
-    public Attributes(final XmlNode node, final Attributes fallback) {
-        this(Attributes.fromXmir(node, fallback));
     }
 
     /**
@@ -191,6 +185,11 @@ public final class Attributes {
         return this;
     }
 
+    @Override
+    public Directives toXmir() {
+        return new Directives(new DirectivesData(this.toString()));
+    }
+
     /**
      * Find attribute.
      * @param key Attribute key
@@ -246,6 +245,16 @@ public final class Attributes {
                     )
                 )
         );
+    }
+
+    /**
+     * Parse attributes from XMIR.
+     * In the new method attributes are placed as a first data element.
+     * @param node Xmir node attribute.
+     * @return Map of attributes.
+     */
+    public static Attributes fromXmirNew(final XmlNode node) {
+        return new Attributes(new HexString(node.text()).decode().replace("\n", ""));
     }
 
     /**
