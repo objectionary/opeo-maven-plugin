@@ -25,11 +25,14 @@ package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
 import com.jcabi.xml.XMLDocument;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
+import org.xembly.Directive;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Transformers;
 import org.xembly.Xembler;
@@ -40,35 +43,85 @@ import org.xembly.Xembler;
  */
 final class InvocationTest {
 
+    /**
+     * XMIR for the 'invocation' statement.
+     * new foo().bar("baz")
+     */
+    private static final String XMIR = String.join(
+        "",
+        "<o base='.bar'>",
+        "   <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 56 28 29 7C 6E 61 6D 65 3D 62 61 72 7C 74 79 70 65 3D 6D 65 74 68 6F 64</o>",
+        "   <o base='.new'>",
+        "      <o base='string' data='bytes'/>",
+        "      <o base='.new-type'>",
+        "         <o base='string' data='bytes'>66 6F 6F</o>",
+        "      </o>",
+        "   </o>",
+        "   <o base='string' data='bytes'>62 61 7A</o>",
+        "</o>"
+    );
+
     @Test
-    void transformsToXmir() throws ImpossibleModificationException {
-        final String actual = new Xembler(
-            new Invocation(
-                new Constructor("foo"),
-                "bar",
-                new Literal("baz")
-            ).toXmir(),
-            new Transformers.Node()
-        ).xml();
+    void createsFromXmir() {
         MatcherAssert.assertThat(
-            String.format(
-                "We expect the following XMIRl to be generated:%n%s%n, but was: %n%s%n",
-                String.join(
-                    "\n",
-                    "<o base='.bar'>",
-                    "  <o base='.new'>",
-                    "    <o base='.new-type'><o base='string' data='bytes'>62 61 7A</o></o>",
-                    "  </o>",
-                    "</o>"
+            "Can't parse 'invocation' statement from XMIR",
+            new Invocation(
+                new XmlNode(
+                    InvocationTest.XMIR
                 ),
-                new XMLDocument(actual)
+                (node) -> {
+                    if (node.attribute("base").equals("string")) {
+                        return new Literal(node);
+                    } else {
+                        return new Constructor("foo");
+                    }
+                }
             ),
-            actual,
-            XhtmlMatchers.hasXPaths(
-                "/o[@base='.bar']/o[@base='.new']/o[@base='.new-type']/o[text()='66 6F 6F']",
-                "/o[@base='.bar']/o[@base='string' and @data='bytes' and text()='62 61 7A']"
+            Matchers.equalTo(
+                new Invocation(
+                    new Constructor("foo"),
+                    "bar",
+                    new Literal("baz")
+                )
             )
         );
+    }
+
+    @Test
+    void transformsToXmir() throws ImpossibleModificationException {
+        MatcherAssert.assertThat(
+            "Can't transform 'invocation' to XMIR",
+            new XMLDocument(
+                new Xembler(
+                    new Invocation(
+                        new Constructor("foo"),
+                        "bar",
+                        new Literal("baz")
+                    ).toXmir(),
+                    new Transformers.Node()
+                ).xml()
+            ),
+            Matchers.equalTo(new XMLDocument(InvocationTest.XMIR))
+        );
+//        MatcherAssert.assertThat(
+//            String.format(
+//                "We expect the following XMIRl to be generated:%n%s%n, but was: %n%s%n",
+//                String.join(
+//                    "\n",
+//                    "<o base='.bar'>",
+//                    "  <o base='.new'>",
+//                    "    <o base='.new-type'><o base='string' data='bytes'>62 61 7A</o></o>",
+//                    "  </o>",
+//                    "</o>"
+//                ),
+//                new XMLDocument(actual)
+//            ),
+//            actual,
+//            XhtmlMatchers.hasXPaths(
+//                "/o[@base='.bar']/o[@base='.new']/o[@base='.new-type']/o[text()='66 6F 6F']",
+//                "/o[@base='.bar']/o[@base='string' and @data='bytes' and text()='62 61 7A']"
+//            )
+//        );
     }
 
     @Test

@@ -27,7 +27,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.ToString;
+import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.compilation.Parser;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -54,6 +57,19 @@ public final class Invocation implements AstNode, Typed {
      * Arguments.
      */
     private final List<AstNode> arguments;
+
+    /**
+     * Constructor.
+     * @param node XML node
+     * @param parser Parser for child nodes.
+     */
+    public Invocation(final XmlNode node, final Parser parser) {
+        this(
+            parser.parse(node.children().collect(Collectors.toList()).get(1)),
+            new Attributes(node.firstChild()),
+            new Arguments(node, parser, 2).toList()
+        );
+    }
 
     /**
      * Constructor.
@@ -143,7 +159,7 @@ public final class Invocation implements AstNode, Typed {
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", String.format(".%s", this.attributes.name()))
-            .attr("scope", this.attributes)
+            .append(this.attributes.toXmir())
             .append(this.source.toXmir());
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
