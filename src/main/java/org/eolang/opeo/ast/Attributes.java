@@ -70,7 +70,7 @@ public final class Attributes implements Xmir {
      * @param node Xmir representation of attributes.
      */
     public Attributes(final XmlNode node) {
-        this(Attributes.fromXmir(node));
+        this(Attributes.fromXmirNew(node));
     }
 
     /**
@@ -253,8 +253,9 @@ public final class Attributes implements Xmir {
      * @param node Xmir node attribute.
      * @return Map of attributes.
      */
-    public static Attributes fromXmirNew(final XmlNode node) {
-        return new Attributes(new HexString(node.text()).decode().replace("\n", ""));
+    private static String fromXmirNew(final XmlNode node) {
+        return new HexString(node.text().trim()).decode()
+            .replace("\n", "");
     }
 
     /**

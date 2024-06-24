@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.jeo.representation.xmir.XmlNode;
@@ -151,8 +152,8 @@ public final class StaticInvocation implements AstNode, Typed {
     public Iterable<Directive> toXmir() {
         final Directives directives = new Directives();
         directives.add("o")
-            .attr("base", String.format(".%s", this.attributes.name()))
-            .attr("scope", this.attributes);
+            .attr("base", String.format(".%s", this.attributes.name()));
+        directives.append(this.attributes.toXmir());
         directives.append(this.owner.toXmir());
         this.args.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
@@ -185,10 +186,13 @@ public final class StaticInvocation implements AstNode, Typed {
      * @return Owner
      */
     private static Owner xowner(final XmlNode node) {
-        return node.child("o").attribute("base").map(Owner::new).orElseThrow(
-            () -> new IllegalArgumentException(
-                String.format("Can't retrieve static invocation owner from the node %s", node)
-            )
-        );
+        return node.children().collect(Collectors.toList())
+            .get(1)
+            .attribute("base").map(Owner::new)
+            .orElseThrow(
+                () -> new IllegalArgumentException(
+                    String.format("Can't retrieve static invocation owner from the node %s", node)
+                )
+            );
     }
 }

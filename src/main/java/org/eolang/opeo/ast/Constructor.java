@@ -205,7 +205,7 @@ public final class Constructor implements AstNode, Typed {
      *  As you can see here we create several Attributes classes which looks strange.
      */
     private static Attributes xattrs(final XmlNode node, final Parser parser) {
-        final Attributes attrs = Attributes.fromXmirNew(node.firstChild());
+        final Attributes attrs = new Attributes(node.firstChild());
         attrs.descriptor(
             new ConstructorDescriptor(
                 attrs.descriptor(),
