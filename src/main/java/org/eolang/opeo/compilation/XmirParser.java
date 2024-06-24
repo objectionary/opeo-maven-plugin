@@ -220,32 +220,14 @@ final class XmirParser implements Parser {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final XmlNode field = inner.get(0);
             result = new FieldRetrieval(
-                new Field(
-                    this.parse(field.children().collect(Collectors.toList()).get(0)),
-                    new Attributes(
-                        field.attribute("scope").orElseThrow(
-                            () -> new IllegalArgumentException(
-                                "Can't find 'scope' attribute for field retrieval"
-                            )
-                        )
-                    )
-                )
+                new Field(field, this::parse)
             );
         } else if (".write-field".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final XmlNode field = inner.get(0);
             final AstNode value = this.parse(inner.get(1));
             result = new FieldAssignment(
-                new Field(
-                    this.parse(field.children().collect(Collectors.toList()).get(0)),
-                    new Attributes(
-                        field.attribute("scope").orElseThrow(
-                            () -> new IllegalArgumentException(
-                                "Can't find 'scope' attribute for field assignment"
-                            )
-                        )
-                    )
-                ),
+                new Field(field, this::parse),
                 value
             );
         } else if (base.contains("local")) {
