@@ -86,7 +86,7 @@ public final class This implements AstNode, Typed {
         return new Directives()
             .add("o")
             .attr("base", "$")
-            .attr("scope", this.attributes)
+            .append(this.attributes.toXmir())
             .up();
     }
 

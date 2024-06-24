@@ -23,8 +23,10 @@
  */
 package org.eolang.opeo.ast;
 
-import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.xml.XMLDocument;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
@@ -35,13 +37,32 @@ import org.xembly.Xembler;
  */
 final class ThisTest {
 
+    /**
+     * XMIR of the 'This' node.
+     */
+    private static final String XMIR = String.join(
+        "\n",
+        "<o base='$'>",
+        "<o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 6A 61 76 61 2E 6C 61 6E 67 2E 4F 62 6A 65 63 74</o>",
+        "</o>"
+    );
+
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
         final String xml = new Xembler(new This().toXmir()).xml();
         MatcherAssert.assertThat(
             String.format("Can't convert to correct XMIR, actual result is : %n%s%n", xml),
-            xml,
-            XhtmlMatchers.hasXPath("/o[@base='$']")
+            new XMLDocument(xml),
+            Matchers.equalTo(new XMLDocument(ThisTest.XMIR))
+        );
+    }
+
+    @Test
+    void convertsThisFromXmir() {
+        MatcherAssert.assertThat(
+            "Can't convert This from XMIR",
+            new This(new XmlNode(ThisTest.XMIR)),
+            Matchers.equalTo(new This(new Attributes().descriptor("java.lang.Object")))
         );
     }
 
