@@ -180,19 +180,20 @@ final class XmirParser implements Parser {
         } else if ("type".equals(base)) {
             result = new ClassName(node);
         } else if (".super".equals(base)) {
-            final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final AstNode instance = this.parse(inner.get(0));
-            result = new Super(
-                instance,
-                new Arguments(node, this, 1).toList(),
-                new Attributes(
-                    node.attribute("scope").orElseThrow(
-                        () -> new IllegalArgumentException(
-                            "Can't find descriptor for super invocation"
-                        )
-                    )
-                )
-            );
+//            final List<XmlNode> inner = node.children().collect(Collectors.toList());
+//            final AstNode instance = this.parse(inner.get(0));
+//            result = new Super(
+//                instance,
+//                new Arguments(node, this, 1).toList(),
+//                new Attributes(
+//                    node.attribute("scope").orElseThrow(
+//                        () -> new IllegalArgumentException(
+//                            "Can't find descriptor for super invocation"
+//                        )
+//                    )
+//                )
+//            );
+            result = new Super(node, this);
         } else if ("$".equals(base)) {
             result = new This(node);
         } else if ("static-field".equals(base)) {

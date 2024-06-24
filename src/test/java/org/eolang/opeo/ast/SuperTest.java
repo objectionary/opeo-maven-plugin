@@ -23,9 +23,13 @@
  */
 package org.eolang.opeo.ast;
 
-import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.xml.XMLDocument;
+import org.eolang.jeo.representation.HexData;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.HasInstructions;
+import org.eolang.opeo.compilation.Parser;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
@@ -38,28 +42,52 @@ import org.xembly.Xembler;
  */
 final class SuperTest {
 
+    /**
+     * XMIR for the 'super' statement.
+     */
+    private static final String XMIR = String.join(
+        "",
+        "<o base='.super'>",
+        "   <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 28 29 56 7C 6E 61 6D 65 3D 3C 69 6E 69 74 3E 7C 6F 77 6E 65 72 3D 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>",
+        "   <o base='$'>",
+        "      <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 6A 61 76 61 2E 6C 61 6E 67 2E 4F 62 6A 65 63 74</o>",
+        "   </o>",
+        "</o>"
+    );
+
+    /**
+     * Dummy parser for the 'super' statement.
+     */
+    private static final Parser PARSER = (node) -> new This();
+
+
+    @Test
+    void createsFromXmir() {
+        MatcherAssert.assertThat(
+            "Can't parse 'super' statement from XMIR",
+            new Super(new XmlNode(SuperTest.XMIR), SuperTest.PARSER),
+            Matchers.equalTo(new Super(new This()))
+        );
+    }
+
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
-        final String xmir = new Xembler(new Super(new This(), new Literal(1)).toXmir()).xml();
+        final String xmir = new Xembler(new Super(new This()).toXmir()).xml();
         MatcherAssert.assertThat(
             String.format(
                 "Can't convert 'super' statement to XMIR, result is wrong: %n%s%n",
                 xmir
             ),
-            xmir,
-            XhtmlMatchers.hasXPaths(
-                "./o[@base='.super']",
-                "./o[@base='.super' and @scope='descriptor=()V|name=<init>|owner=java/lang/Object']",
-                "./o[@base='.super']/o[@base='$']",
-                "./o[@base='.super']/o[@base='int' and contains(text(), '1')]"
-            )
+            new XMLDocument(xmir),
+            Matchers.equalTo(new XMLDocument(SuperTest.XMIR))
         );
     }
 
     @Test
     void convertsToXmirWithCustomDescriptor() throws ImpossibleModificationException {
+        final String descriptor = "(I)V";
         final String xmir = new Xembler(
-            new Super(new This(), "(I)V", new Literal(10)).toXmir()
+            new Super(new This(), descriptor, new Literal(10)).toXmir()
         ).xml();
         MatcherAssert.assertThat(
             String.format(
@@ -67,7 +95,7 @@ final class SuperTest {
                 xmir
             ),
             xmir,
-            XhtmlMatchers.hasXPaths("./o[@base='.super' and contains(@scope,'(I)V')]")
+            Matchers.containsString(new HexData(descriptor).value())
         );
     }
 

@@ -26,6 +26,11 @@ package org.eolang.opeo.ast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.compilation.Parser;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -38,6 +43,8 @@ import org.xembly.Directives;
  *  'descriptor' and 'intefaced' operands of the INVOKESPECIAL opcode.
  *  Moreover, we use hardcoded value for 'interfaced' which is dangerous.
  */
+@ToString
+@EqualsAndHashCode
 public final class Super implements AstNode {
 
     /**
@@ -54,6 +61,7 @@ public final class Super implements AstNode {
      * Attributes.
      */
     private final Attributes attributes;
+
 
     /**
      * Constructor.
@@ -132,12 +140,20 @@ public final class Super implements AstNode {
         this(instance, arguments, "()V");
     }
 
+    public Super(final XmlNode xmir, final Parser parser) {
+        this(
+            parser.parse(xmir.children().collect(Collectors.toList()).get(1).firstChild()),
+            new Arguments(xmir, parser, 2).toList(),
+            new Attributes(xmir.firstChild())
+        );
+    }
+
     @Override
     public Iterable<Directive> toXmir() {
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", ".super")
-            .attr("scope", this.attributes)
+            .append(this.attributes.toXmir())
             .append(this.instance.toXmir());
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
