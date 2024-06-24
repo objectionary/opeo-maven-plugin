@@ -51,7 +51,7 @@ SOFTWARE.
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
     <jeo.version>0.4.6</jeo.version>
-    <ineo.version>0.3.1</ineo.version>
+    <ineo.version>0.3.2</ineo.version>
     <opeo.version>@project.version@</opeo.version>
   </properties>
   <build>
