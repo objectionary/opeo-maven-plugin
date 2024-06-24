@@ -91,7 +91,7 @@ public final class LocalVariable implements AstNode, Typed {
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
             .attr("base", String.format("%s%d", LocalVariable.PREFIX, this.identifier))
-            .attr("scope", this.attributes)
+            .append(this.attributes.toXmir())
             .up();
     }
 
