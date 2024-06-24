@@ -25,6 +25,11 @@ package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.compilation.Parser;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -34,6 +39,8 @@ import org.xembly.Directives;
  * Access to a field.
  * @since 0.1
  */
+@ToString
+@EqualsAndHashCode
 public final class Field implements Xmir, Typed {
 
     /**
@@ -45,6 +52,17 @@ public final class Field implements Xmir, Typed {
      * Field attributes.
      */
     private final Attributes attributes;
+
+    public Field(final XmlNode node, final Parser parser) {
+        this(
+            Field.xinstance(node, parser),
+            new Attributes(node.firstChild())
+        );
+    }
+
+    private static AstNode xinstance(final XmlNode node, final Parser parser) {
+        return parser.parse(node.children().collect(Collectors.toList()).get(1));
+    }
 
     /**
      * Constructor.
@@ -61,7 +79,7 @@ public final class Field implements Xmir, Typed {
         return new Directives()
             .add("o")
             .attr("base", String.format(".%s", this.attributes.name()))
-            .attr("scope", this.attributes)
+            .append(this.attributes.toXmir())
             .append(this.inst.toXmir())
             .up();
     }
