@@ -196,15 +196,7 @@ final class XmirParser implements Parser {
         } else if ("$".equals(base)) {
             result = new This(node);
         } else if ("static-field".equals(base)) {
-            result = new ClassField(
-                new Attributes(
-                    node.attribute("scope").orElseThrow(
-                        () -> new IllegalArgumentException(
-                            "Can't find 'scope' attribute for static field"
-                        )
-                    )
-                )
-            );
+            result = new ClassField(node);
         } else if (".write-array".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final AstNode array = this.parse(inner.get(0));

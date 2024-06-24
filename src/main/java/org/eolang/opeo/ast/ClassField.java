@@ -25,6 +25,9 @@ package org.eolang.opeo.ast;
 
 import java.util.Collections;
 import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -34,6 +37,8 @@ import org.xembly.Directives;
  * Access to a static field.
  * @since 0.1
  */
+@ToString
+@EqualsAndHashCode
 public final class ClassField implements AstNode, Typed {
 
     /**
@@ -53,6 +58,14 @@ public final class ClassField implements AstNode, Typed {
 
     /**
      * Constructor.
+     * @param node XML node
+     */
+    public ClassField(final XmlNode node) {
+        this(new Attributes(node.firstChild()));
+    }
+
+    /**
+     * Constructor.
      * @param attributes Attributes.
      */
     public ClassField(final Attributes attributes) {
@@ -64,7 +77,7 @@ public final class ClassField implements AstNode, Typed {
         return new Directives()
             .add("o")
             .attr("base", "static-field")
-            .attr("scope", this.attributes)
+            .append(this.attributes.toXmir())
             .up();
     }
 
