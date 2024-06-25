@@ -24,9 +24,11 @@
 package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.Parser;
@@ -45,6 +47,7 @@ import org.xembly.Directives;
  *  {@link org.eolang.opeo.compilation.XmirParser#args} class.
  */
 @ToString
+@EqualsAndHashCode
 public final class InterfaceInvocation implements AstNode, Typed {
     /**
      * Source or target on which the invocation is performed.
@@ -69,9 +72,23 @@ public final class InterfaceInvocation implements AstNode, Typed {
     public InterfaceInvocation(final XmlNode node, final Parser parser) {
         this(
             InterfaceInvocation.xsource(node, parser),
-            new Attributes(node),
-            new Arguments(node, parser, 1).toList()
+            new Attributes(node.firstChild()),
+            new Arguments(node, parser, 2).toList()
         );
+    }
+
+    /**
+     * Constructor.
+     * @param source Source or target on which the invocation is performed
+     * @param attributes Method attributes.
+     * @param args Arguments of the method.
+     */
+    public InterfaceInvocation(
+        final AstNode source,
+        final Attributes attributes,
+        final AstNode... args
+    ) {
+        this(source, attributes, Arrays.asList(args));
     }
 
     /**
@@ -129,7 +146,7 @@ public final class InterfaceInvocation implements AstNode, Typed {
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", String.format(".%s", this.attrs.name()))
-            .attr("scope", this.attrs)
+            .append(this.attrs.toXmir())
             .append(this.source.toXmir());
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
@@ -147,6 +164,6 @@ public final class InterfaceInvocation implements AstNode, Typed {
      * @return Source.
      */
     private static AstNode xsource(final XmlNode node, final Parser parser) {
-        return parser.parse(node.children().collect(Collectors.toList()).get(0));
+        return parser.parse(node.children().collect(Collectors.toList()).get(1));
     }
 }
