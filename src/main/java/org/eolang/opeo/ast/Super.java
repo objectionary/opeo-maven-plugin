@@ -142,7 +142,7 @@ public final class Super implements AstNode {
 
     public Super(final XmlNode xmir, final Parser parser) {
         this(
-            parser.parse(xmir.children().collect(Collectors.toList()).get(1).firstChild()),
+            parser.parse(xmir.children().collect(Collectors.toList()).get(1)),
             new Arguments(xmir, parser, 2).toList(),
             new Attributes(xmir.firstChild())
         );

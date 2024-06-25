@@ -65,7 +65,7 @@ public final class LocalVariable implements AstNode, Typed {
      * @param node The XML node that represents variable.
      */
     public LocalVariable(final XmlNode node) {
-        this(LocalVariable.videntifier(node), new Attributes(node));
+        this(LocalVariable.videntifier(node), new Attributes(node.firstChild()));
     }
 
     /**

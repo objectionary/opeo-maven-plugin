@@ -62,7 +62,7 @@ public final class This implements AstNode, Typed {
      * @param node XML node.
      */
     public This(final XmlNode node) {
-        this(new Attributes(node));
+        this(new Attributes(node.firstChild()));
     }
 
     /**
