@@ -180,19 +180,6 @@ final class XmirParser implements Parser {
         } else if ("type".equals(base)) {
             result = new ClassName(node);
         } else if (".super".equals(base)) {
-//            final List<XmlNode> inner = node.children().collect(Collectors.toList());
-//            final AstNode instance = this.parse(inner.get(0));
-//            result = new Super(
-//                instance,
-//                new Arguments(node, this, 1).toList(),
-//                new Attributes(
-//                    node.attribute("scope").orElseThrow(
-//                        () -> new IllegalArgumentException(
-//                            "Can't find descriptor for super invocation"
-//                        )
-//                    )
-//                )
-//            );
             result = new Super(node, this);
         } else if ("$".equals(base)) {
             result = new This(node);
@@ -212,17 +199,12 @@ final class XmirParser implements Parser {
         } else if (".get-field".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final XmlNode field = inner.get(0);
-            result = new FieldRetrieval(
-                new Field(field, this::parse)
-            );
+            result = new FieldRetrieval(new Field(field, this));
         } else if (".write-field".equals(base)) {
             final List<XmlNode> inner = node.children().collect(Collectors.toList());
             final XmlNode field = inner.get(0);
             final AstNode value = this.parse(inner.get(1));
-            result = new FieldAssignment(
-                new Field(field, this::parse),
-                value
-            );
+            result = new FieldAssignment(new Field(field, this), value);
         } else if (base.contains("local")) {
             result = new LocalVariable(node);
         } else if (".new".equals(base)) {
@@ -239,11 +221,9 @@ final class XmirParser implements Parser {
                     node, new Arguments(node, this, 1).toList()
                 );
             } else if ("interface".equals(attributes.type())) {
-                result = new InterfaceInvocation(node, this::parse);
+                result = new InterfaceInvocation(node, this);
             } else {
-                final List<XmlNode> inner = node.children().collect(Collectors.toList());
-                final AstNode target = this.parse(inner.get(0));
-                result = new Invocation(target, attributes, new Arguments(node, this, 1).toList());
+                result = new Invocation(node, this);
             }
         } else {
             throw new IllegalArgumentException(

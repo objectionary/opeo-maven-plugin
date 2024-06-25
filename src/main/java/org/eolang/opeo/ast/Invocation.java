@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.Parser;
@@ -41,6 +42,7 @@ import org.xembly.Directives;
  * @since 0.1
  */
 @ToString
+@EqualsAndHashCode
 public final class Invocation implements AstNode, Typed {
 
     /**

@@ -66,11 +66,9 @@ final class InvocationTest {
         MatcherAssert.assertThat(
             "Can't parse 'invocation' statement from XMIR",
             new Invocation(
-                new XmlNode(
-                    InvocationTest.XMIR
-                ),
+                new XmlNode(InvocationTest.XMIR),
                 (node) -> {
-                    if (node.attribute("base").equals("string")) {
+                    if (node.attribute("base").map("string"::equals).orElse(false)) {
                         return new Literal(node);
                     } else {
                         return new Constructor("foo");
@@ -103,43 +101,25 @@ final class InvocationTest {
             ),
             Matchers.equalTo(new XMLDocument(InvocationTest.XMIR))
         );
-//        MatcherAssert.assertThat(
-//            String.format(
-//                "We expect the following XMIRl to be generated:%n%s%n, but was: %n%s%n",
-//                String.join(
-//                    "\n",
-//                    "<o base='.bar'>",
-//                    "  <o base='.new'>",
-//                    "    <o base='.new-type'><o base='string' data='bytes'>62 61 7A</o></o>",
-//                    "  </o>",
-//                    "</o>"
-//                ),
-//                new XMLDocument(actual)
-//            ),
-//            actual,
-//            XhtmlMatchers.hasXPaths(
-//                "/o[@base='.bar']/o[@base='.new']/o[@base='.new-type']/o[text()='66 6F 6F']",
-//                "/o[@base='.bar']/o[@base='string' and @data='bytes' and text()='62 61 7A']"
-//            )
-//        );
     }
 
     @Test
-    void savesDescriptorToScopeAttribute() {
+    void savesDescriptorToAttribute() {
+        final String xml = new Xembler(
+            new Invocation(
+                new This(),
+                new Attributes().name("bar")
+                    .descriptor("(Ljava/lang/String;)Ljava/lang/String;")
+                    .owner("some/Owner"),
+                new Literal("baz")
+            ).toXmir(),
+            new Transformers.Node()
+        ).xmlQuietly();
         MatcherAssert.assertThat(
-            "Can't save descriptor to scope attribute",
-            new Xembler(
-                new Invocation(
-                    new This(),
-                    new Attributes().name("bar")
-                        .descriptor("(Ljava/lang/String;)Ljava/lang/String;")
-                        .owner("some/Owner"),
-                    new Literal("baz")
-                ).toXmir(),
-                new Transformers.Node()
-            ).xmlQuietly(),
+            String.format("Can't save descriptor to '.bar' invocation attribute %s", xml),
+            xml,
             XhtmlMatchers.hasXPaths(
-                "/o[@base='.bar' and contains(@scope,'(Ljava/lang/String;)Ljava/lang/String;')]"
+                "./o[@base='.bar']/o[@base='string' and contains(text(),'28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B')]"
             )
         );
     }
