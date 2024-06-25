@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -235,8 +236,24 @@ public final class Attributes implements Xmir {
      * @return Map of attributes.
      */
     private static String fromXmirNew(final XmlNode node) {
-        return new HexString(node.text().trim()).decode()
-            .replace("\n", "");
+        final String replaced = node.text().trim().replace("\n", "");
+        if (replaced.trim().isEmpty()) {
+            return "";
+        } else {
+            try {
+                return new HexString(replaced).decode().replace("\n", "");
+            } catch (final NumberFormatException exception) {
+                throw new IllegalArgumentException(
+                    String.format(
+                        "Can't parse attributes '%s' from '%s' node, bytes %s",
+                        replaced,
+                        node,
+                        Arrays.toString(replaced.getBytes(StandardCharsets.UTF_8))
+                    ),
+                    exception
+                );
+            }
+        }
     }
 
     /**

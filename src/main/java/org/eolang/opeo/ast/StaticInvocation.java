@@ -103,7 +103,7 @@ public final class StaticInvocation implements AstNode, Typed {
      */
     public StaticInvocation(final XmlNode node, final List<AstNode> arguments) {
         this(
-            new Attributes(node),
+            new Attributes(node.firstChild()),
             StaticInvocation.xowner(node),
             arguments
         );

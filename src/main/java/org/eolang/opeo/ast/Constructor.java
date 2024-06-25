@@ -209,7 +209,7 @@ public final class Constructor implements AstNode, Typed {
         attrs.descriptor(
             new ConstructorDescriptor(
                 attrs.descriptor(),
-                new Arguments(node, parser, 1).toList()
+                new Arguments(node, parser, 2).toList()
             ).toString()
         );
         return attrs;
