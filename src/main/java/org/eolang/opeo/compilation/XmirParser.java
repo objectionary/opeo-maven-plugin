@@ -217,9 +217,7 @@ final class XmirParser implements Parser {
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
             final Attributes attributes = new Attributes(node);
             if ("static".equals(attributes.type())) {
-                result = new StaticInvocation(
-                    node, new Arguments(node, this, 1).toList()
-                );
+                result = new StaticInvocation(node, new Arguments(node, this, 1).toList());
             } else if ("interface".equals(attributes.type())) {
                 result = new InterfaceInvocation(node, this);
             } else {

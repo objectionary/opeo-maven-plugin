@@ -229,25 +229,6 @@ public final class Attributes implements Xmir {
     }
 
     /**
-     * Parse attributes from Xmir.
-     * @param node Xmir node with attributes.
-     * @return Map of attributes.
-     */
-    private static Map<String, String> fromXmir(final XmlNode node) {
-        return Attributes.parse(
-            node.attribute("scope")
-                .orElseThrow(
-                    () -> new IllegalArgumentException(
-                        String.format(
-                            "Can't retrieve attributes from the node %s",
-                            node
-                        )
-                    )
-                )
-        );
-    }
-
-    /**
      * Parse attributes from XMIR.
      * In the new method attributes are placed as a first data element.
      * @param node Xmir node attribute.
@@ -256,16 +237,6 @@ public final class Attributes implements Xmir {
     private static String fromXmirNew(final XmlNode node) {
         return new HexString(node.text().trim()).decode()
             .replace("\n", "");
-    }
-
-    /**
-     * Parse attributes from Xmir.
-     * @param node Xmir node with attributes.
-     * @param fallback Use this attributes if there are no attributes in the node.
-     * @return Map of attributes.
-     */
-    private static Map<String, String> fromXmir(final XmlNode node, final Attributes fallback) {
-        return node.attribute("scope").map(Attributes::parse).orElse(fallback.all);
     }
 
     /**
