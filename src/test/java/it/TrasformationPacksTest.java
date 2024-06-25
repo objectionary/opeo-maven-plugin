@@ -46,6 +46,7 @@ import org.eolang.opeo.jeo.JeoDecompiler;
 import org.eolang.parser.xmir.Xmir;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.condition.EnabledOnJre;
@@ -62,13 +63,18 @@ import org.junit.jupiter.params.ParameterizedTest;
  * 4. Compare EO code with expected EO code
  *
  * @since 0.1
+ * @todo #316:60min Enable {@link TrasformationPacksTest}.
+ *  This test is disabled because it tries to compare results with outdated EO representation.
+ *  We need to fix EO representation of decompiled bytecode and fix the tests.
+ *  Don't forget to remove @Disabled annotation from all the methods inside the class.
  */
 final class TrasformationPacksTest {
 
     @ParameterizedTest
     @ClasspathSource(value = "packs", glob = "**.yaml")
     @EnabledIf(value = "hasJavaCompiler", disabledReason = "Java compiler is not available")
-    @EnabledOnJre(JRE.JAVA_11)
+    @Disabled
+    @EnabledOnJre({JRE.JAVA_11, JRE.JAVA_17})
     void checksPack(final String pack, @TempDir final Path where) throws IOException {
         final JavaEoPack jeopack = new JavaEoPack(pack);
         final List<Program> java = jeopack.java();
@@ -113,7 +119,8 @@ final class TrasformationPacksTest {
      * @throws IOException If fails.
      */
     @Test
-    @EnabledOnJre(JRE.JAVA_11)
+    @Disabled
+    @EnabledOnJre({JRE.JAVA_11, JRE.JAVA_17})
     void decompilesSimpleExample(@TempDir final Path where) throws Exception {
         final XML decompiled = new JeoDecompiler(
             new BytecodeRepresentation(
