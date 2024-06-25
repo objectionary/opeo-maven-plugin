@@ -62,7 +62,6 @@ public final class Super implements AstNode {
      */
     private final Attributes attributes;
 
-
     /**
      * Constructor.
      * @param instance Target instance
@@ -140,6 +139,11 @@ public final class Super implements AstNode {
         this(instance, arguments, "()V");
     }
 
+    /**
+     * Constructor.
+     * @param xmir XMIR root node.
+     * @param parser Parser that can parse child nodes.
+     */
     public Super(final XmlNode xmir, final Parser parser) {
         this(
             parser.parse(xmir.children().collect(Collectors.toList()).get(1)),

@@ -71,7 +71,7 @@ final class InterfaceInvocationTest {
             "Can't parse correct interface invocation from XMIR",
             new InterfaceInvocation(
                 new XmlNode(InterfaceInvocationTest.XMIR),
-                (node) -> new This()
+                node -> new This()
             ),
             Matchers.equalTo(
                 new InterfaceInvocation(

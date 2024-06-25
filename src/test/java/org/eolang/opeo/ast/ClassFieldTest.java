@@ -24,11 +24,9 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.xml.XMLDocument;
-import lombok.val;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
@@ -67,6 +65,5 @@ final class ClassFieldTest {
                 new ClassField("java/lang/A", "x", "I")
             )
         );
-
     }
 }

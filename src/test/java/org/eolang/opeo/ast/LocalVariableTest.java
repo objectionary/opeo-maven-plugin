@@ -27,7 +27,6 @@ import com.jcabi.matchers.XhtmlMatchers;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.eolang.jeo.representation.HexData;
-import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;

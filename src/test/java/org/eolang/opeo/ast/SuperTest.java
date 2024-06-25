@@ -27,7 +27,6 @@ import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.HexData;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.HasInstructions;
-import org.eolang.opeo.compilation.Parser;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
@@ -55,17 +54,11 @@ final class SuperTest {
         "</o>"
     );
 
-    /**
-     * Dummy parser for the 'super' statement.
-     */
-    private static final Parser PARSER = (node) -> new This();
-
-
     @Test
     void createsFromXmir() {
         MatcherAssert.assertThat(
             "Can't parse 'super' statement from XMIR",
-            new Super(new XmlNode(SuperTest.XMIR), SuperTest.PARSER),
+            new Super(new XmlNode(SuperTest.XMIR), node -> new This()),
             Matchers.equalTo(new Super(new This()))
         );
     }

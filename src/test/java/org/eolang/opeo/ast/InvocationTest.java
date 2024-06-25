@@ -32,7 +32,6 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
-import org.xembly.Directive;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Transformers;
 import org.xembly.Xembler;
@@ -67,12 +66,14 @@ final class InvocationTest {
             "Can't parse 'invocation' statement from XMIR",
             new Invocation(
                 new XmlNode(InvocationTest.XMIR),
-                (node) -> {
+                node -> {
+                    final AstNode result;
                     if (node.attribute("base").map("string"::equals).orElse(false)) {
-                        return new Literal(node);
+                        result = new Literal(node);
                     } else {
-                        return new Constructor("foo");
+                        result = new Constructor("foo");
                     }
+                    return result;
                 }
             ),
             Matchers.equalTo(

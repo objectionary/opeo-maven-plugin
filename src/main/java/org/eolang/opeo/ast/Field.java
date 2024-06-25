@@ -53,15 +53,16 @@ public final class Field implements Xmir, Typed {
      */
     private final Attributes attributes;
 
+    /**
+     * Constructor.
+     * @param node XMIR root node of the field.
+     * @param parser Parser that will be used to parse the child nodes of the field.
+     */
     public Field(final XmlNode node, final Parser parser) {
         this(
-            Field.xinstance(node, parser),
+            parser.parse(node.children().collect(Collectors.toList()).get(1)),
             new Attributes(node.firstChild())
         );
-    }
-
-    private static AstNode xinstance(final XmlNode node, final Parser parser) {
-        return parser.parse(node.children().collect(Collectors.toList()).get(1));
     }
 
     /**

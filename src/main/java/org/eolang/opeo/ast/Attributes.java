@@ -71,7 +71,7 @@ public final class Attributes implements Xmir {
      * @param node Xmir representation of attributes.
      */
     public Attributes(final XmlNode node) {
-        this(Attributes.fromXmirNew(node));
+        this(Attributes.fromXmir(node));
     }
 
     /**
@@ -234,14 +234,22 @@ public final class Attributes implements Xmir {
      * In the new method attributes are placed as a first data element.
      * @param node Xmir node attribute.
      * @return Map of attributes.
+     * @todo #316:60min Simplify {@link Attributes#fromXmir(XmlNode)} method.
+     *  The method is too complex and hard to understand.
+     *  We need to simplify it.
+     *  We use trim() and replace() methods on strings many times here, which is bad.
+     *  So, this method is suboptimal that should be simplified.
+     *  Don't forget to remove PMD suppression after simplification.
      */
-    private static String fromXmirNew(final XmlNode node) {
+    @SuppressWarnings("PMD.InefficientEmptyStringCheck")
+    private static String fromXmir(final XmlNode node) {
+        final String result;
         final String replaced = node.text().trim().replace("\n", "");
         if (replaced.trim().isEmpty()) {
-            return "";
+            result = "";
         } else {
             try {
-                return new HexString(replaced).decode().replace("\n", "");
+                result = new HexString(replaced).decode().replace("\n", "");
             } catch (final NumberFormatException exception) {
                 throw new IllegalArgumentException(
                     String.format(
@@ -254,6 +262,7 @@ public final class Attributes implements Xmir {
                 );
             }
         }
+        return result;
     }
 
     /**
