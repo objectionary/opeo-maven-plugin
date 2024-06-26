@@ -38,10 +38,6 @@ import org.xembly.Directives;
 /**
  * Super output node.
  * @since 0.1
- * @todo #201:90min Add Attributes to the Super class.
- *  The Super class should have attributes that can be used to define the
- *  'descriptor' and 'intefaced' operands of the INVOKESPECIAL opcode.
- *  Moreover, we use hardcoded value for 'interfaced' which is dangerous.
  */
 @ToString
 @EqualsAndHashCode
