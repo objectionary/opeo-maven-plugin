@@ -24,8 +24,11 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.xml.XMLDocument;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directives;
@@ -38,26 +41,40 @@ import org.xembly.Xembler;
  */
 final class FieldRetrievalTest {
 
+    /**
+     * XMIR representation of the field retrieval.
+     */
+    private static final String XMIR = String.join(
+        "\n",
+        "   <o base='.get-field'>",
+        "      <o base='.bar'>",
+        "         <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 49 7C 6E 61 6D 65 3D 62 61 72 7C 74 79 70 65 3D 66 69 65 6C 64</o>",
+        "         <o base='$'>",
+        "            <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 6A 61 76 61 2E 6C 61 6E 67 2E 4F 62 6A 65 63 74</o>",
+        "         </o>",
+        "      </o>",
+        "</o>"
+    );
+
+    @Test
+    void createsFromXmir() {
+        MatcherAssert.assertThat(
+            "The field retrieval should be successfully created from XMIR",
+            new FieldRetrieval(new XmlNode(FieldRetrievalTest.XMIR), (node) -> new This()),
+            Matchers.equalTo(new FieldRetrieval(new This(), "bar"))
+        );
+    }
+
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
-        final String actual = new Xembler(
-            new Directives()
-                .add("o")
-                .attr("name", "method")
-                .append(new FieldRetrieval(new This(), "bar").toXmir())
-                .up()
-        ).xml();
+        final String actual = new Xembler(new FieldRetrieval(new This(), "bar").toXmir()).xml();
         MatcherAssert.assertThat(
             String.format(
                 "Can't convert to a field access construct, actual result is : %n%s%n",
                 actual
             ),
-            actual,
-            XhtmlMatchers.hasXPaths(
-                "./o[@name='method']",
-                "./o[@name='method']/o[@base='.get-field']/o[@base='.bar']",
-                "./o[@name='method']/o[@base='.get-field']/o[@base='.bar']/o[@base='$']"
-            )
+            new XMLDocument(actual),
+            Matchers.equalTo(new XMLDocument(FieldRetrievalTest.XMIR))
         );
     }
 

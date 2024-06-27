@@ -24,6 +24,10 @@
 package org.eolang.opeo.ast;
 
 import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.compilation.Parser;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -32,12 +36,23 @@ import org.xembly.Directives;
  * Field retrieval.
  * @since 0.2
  */
+@ToString
+@EqualsAndHashCode
 public final class FieldRetrieval implements AstNode, Typed {
 
     /**
      * The field to access.
      */
     private final Field field;
+
+    /**
+     * Constructor.
+     * @param node XML node
+     * @param parser Parser
+     */
+    public FieldRetrieval(final XmlNode node, final Parser parser) {
+        this(new Field(node.firstChild(), parser));
+    }
 
     /**
      * Constructor.
