@@ -25,6 +25,9 @@ package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.compilation.Parser;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -49,6 +52,28 @@ public final class StoreArray implements AstNode {
      * Value to store.
      */
     private final AstNode value;
+
+    /**
+     * Constructor.
+     * @param root Xmir representation of a store array element.
+     * @param parser Parser that will be used to parse the nodes of the store array element.
+     */
+    public StoreArray(final XmlNode root, final Parser parser) {
+        this(root.children().collect(Collectors.toList()), parser);
+    }
+
+    /**
+     * Constructor.
+     * @param children Children nodes that represent an array, an index and a value.
+     * @param parser Parser that will be used to parse the children nodes.
+     */
+    public StoreArray(final List<XmlNode> children, final Parser parser) {
+        this(
+            parser.parse(children.get(0)),
+            parser.parse(children.get(1)),
+            parser.parse(children.get(2))
+        );
+    }
 
     /**
      * Constructor.
