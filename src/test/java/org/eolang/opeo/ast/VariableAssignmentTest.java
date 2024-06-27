@@ -23,8 +23,10 @@
  */
 package org.eolang.opeo.ast;
 
-import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.xml.XMLDocument;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Type;
 import org.xembly.ImpossibleModificationException;
@@ -36,6 +38,43 @@ import org.xembly.Xembler;
  * @since 0.2
  */
 final class VariableAssignmentTest {
+
+    /**
+     * XMIR representation of the variable assignment.
+     */
+    private static final String XMIR = String.join(
+        "\n",
+        "<o base='.write-local-var'>",
+        "   <o base='local1'>",
+        "      <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 44 7C 74 79 70 65 3D 6C 6F 63 61 6C</o>",
+        "   </o>",
+        "   <o base='int' data='bytes'>00 00 00 00 00 00 00 02</o>",
+        "</o>"
+    );
+
+    @Test
+    void createsFromXmir() {
+        MatcherAssert.assertThat(
+            "Can't create correct variable assignment from XMIR",
+            new VariableAssignment(
+                new XmlNode(VariableAssignmentTest.XMIR),
+                node -> {
+                    if (node.hasAttribute("base", "int")) {
+                        return new Literal(2);
+                    } else {
+                        return new LocalVariable(node);
+                    }
+                }
+            ),
+            Matchers.equalTo(
+                new VariableAssignment(
+                    new LocalVariable(1, Type.DOUBLE_TYPE),
+                    new Literal(2)
+                )
+            )
+        );
+
+    }
 
     @Test
     void convertsToXmirCorrectly() throws ImpossibleModificationException {
@@ -51,12 +90,8 @@ final class VariableAssignmentTest {
                 "We expect the XMIR to be correct, but it's not:%n%s%n",
                 xml
             ),
-            xml,
-            XhtmlMatchers.hasXPaths(
-                "./o[@base='.write-local-var']",
-                "./o[@base='.write-local-var']/o[@base='local1']",
-                "./o[@base='.write-local-var']/o[@base='int']"
-            )
+            new XMLDocument(xml),
+            Matchers.equalTo(new XMLDocument(VariableAssignmentTest.XMIR))
         );
     }
 }

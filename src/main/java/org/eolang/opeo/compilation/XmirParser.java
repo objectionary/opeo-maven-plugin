@@ -177,10 +177,7 @@ final class XmirParser implements Parser {
         } else if (".write-array".equals(base)) {
             result = new StoreArray(node, this);
         } else if (".write-local-var".equals(base)) {
-            final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final AstNode target = this.parse(inner.get(0));
-            final AstNode value = this.parse(inner.get(1));
-            result = new VariableAssignment((LocalVariable) target, value);
+            result = new VariableAssignment(node, this);
         } else if (".get-field".equals(base)) {
             result = new FieldRetrieval(node, this);
         } else if (".write-field".equals(base)) {

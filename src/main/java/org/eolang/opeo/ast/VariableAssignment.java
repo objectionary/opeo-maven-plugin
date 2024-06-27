@@ -25,6 +25,11 @@ package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.compilation.Parser;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -35,6 +40,8 @@ import org.xembly.Directives;
  * }</p>
  * @since 0.2
  */
+@ToString
+@EqualsAndHashCode
 public final class VariableAssignment implements AstNode {
 
     /**
@@ -46,6 +53,24 @@ public final class VariableAssignment implements AstNode {
      * Right expression.
      */
     private final AstNode right;
+
+    /**
+     * Constructor.
+     * @param root Xmir representation of a variable assignment.
+     * @param parser Parser that will be used to parse the child nodes of the variable assignment.
+     */
+    public VariableAssignment(final XmlNode root, final Parser parser) {
+        this(root.children().collect(Collectors.toList()), parser);
+    }
+
+    /**
+     * Constructor.
+     * @param children Child nodes that represent the variable and the expression.
+     * @param parser Parser that will be used to parse the child nodes of the variable assignment.
+     */
+    public VariableAssignment(final List<XmlNode> children, final Parser parser) {
+        this((LocalVariable) parser.parse(children.get(0)), parser.parse(children.get(1)));
+    }
 
     /**
      * Constructor.
