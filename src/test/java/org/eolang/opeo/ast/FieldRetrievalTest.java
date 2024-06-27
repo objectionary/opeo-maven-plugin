@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.ast;
 
-import com.jcabi.matchers.XhtmlMatchers;
 import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.HasInstructions;
@@ -31,7 +30,6 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
-import org.xembly.Directives;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
@@ -60,7 +58,7 @@ final class FieldRetrievalTest {
     void createsFromXmir() {
         MatcherAssert.assertThat(
             "The field retrieval should be successfully created from XMIR",
-            new FieldRetrieval(new XmlNode(FieldRetrievalTest.XMIR), (node) -> new This()),
+            new FieldRetrieval(new XmlNode(FieldRetrievalTest.XMIR), node -> new This()),
             Matchers.equalTo(new FieldRetrieval(new This(), "bar"))
         );
     }

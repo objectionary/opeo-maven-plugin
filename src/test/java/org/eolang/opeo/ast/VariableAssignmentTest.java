@@ -59,11 +59,13 @@ final class VariableAssignmentTest {
             new VariableAssignment(
                 new XmlNode(VariableAssignmentTest.XMIR),
                 node -> {
+                    final AstNode result;
                     if (node.hasAttribute("base", "int")) {
-                        return new Literal(2);
+                        result = new Literal(2);
                     } else {
-                        return new LocalVariable(node);
+                        result = new LocalVariable(node);
                     }
+                    return result;
                 }
             ),
             Matchers.equalTo(
@@ -73,7 +75,6 @@ final class VariableAssignmentTest {
                 )
             )
         );
-
     }
 
     @Test

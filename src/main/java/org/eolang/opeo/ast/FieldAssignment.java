@@ -53,10 +53,12 @@ public final class FieldAssignment implements AstNode {
      */
     private final AstNode value;
 
-    public FieldAssignment(
-        final XmlNode node,
-        final Parser parser
-    ) {
+    /**
+     * Constructor.
+     * @param node Root node is an XMIR representation of a field assignment.
+     * @param parser Parser that will be used to parse the child nodes of the field assignment.
+     */
+    public FieldAssignment(final XmlNode node, final Parser parser) {
         this(
             new Field(node.firstChild(), parser),
             parser.parse(node.children().collect(Collectors.toList()).get(1))
@@ -68,10 +70,7 @@ public final class FieldAssignment implements AstNode {
      * @param left The field to assign to
      * @param right The value to assign
      */
-    public FieldAssignment(
-        final Field left,
-        final AstNode right
-    ) {
+    public FieldAssignment(final Field left, final AstNode right) {
         this.field = left;
         this.value = right;
     }

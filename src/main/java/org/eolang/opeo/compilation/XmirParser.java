@@ -26,10 +26,8 @@ package org.eolang.opeo.compilation;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Add;
-import org.eolang.opeo.ast.Arguments;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
@@ -67,7 +65,6 @@ import org.xembly.Xembler;
  * @since 0.1
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class XmirParser implements Parser {
 
     /**
@@ -105,25 +102,12 @@ final class XmirParser implements Parser {
      *
      * @param node XmlNode
      * @return Ast node
-     * @todo #77:90min Refactor this.node() method.
-     *  The parsing method this.node() looks overcomplicated and violates many
-     *  code quality standards. We should refactor the method and remove all
-     *  the checkstyle and PMD "suppressions" from the method.
-     * @todo #110:90min Remove ad-hoc solution for replacing descriptors and owners.
-     *  Currently we have an ad-hoc solution for replacing descriptors and owners.
-     *  It looks ugly and requires refactoring. To remove ad-hoc solution we need
-     *  to remove all the if statements that use concerete class names as:
-     *  - "org/eolang/benchmark/B"
-     *  - "org/eolang/benchmark/BA"
-     * @checkstyle CyclomaticComplexityCheck (200 lines)
-     * @checkstyle ExecutableStatementCountCheck (200 lines)
-     * @checkstyle JavaNCSSCheck (200 lines)
-     * @checkstyle NestedIfDepthCheck (200 lines)
-     * @checkstyle MethodLengthCheck (200 lines)     *
-     * @checkstyle NoJavadocForOverriddenMethodsCheck (200 lines)
+     * @checkstyle CyclomaticComplexityCheck (500 lines)
+     * @checkstyle JavaNCSSCheck (500 lines)
+     * @checkstyle NoJavadocForOverriddenMethodsCheck (500 lines)
      */
-    @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength", "PMD.CognitiveComplexity"})
     @Override
+    @SuppressWarnings("PMD.NcssCount")
     public AstNode parse(final XmlNode node) {
         final AstNode result;
         final String base = node.attribute("base").orElseThrow(

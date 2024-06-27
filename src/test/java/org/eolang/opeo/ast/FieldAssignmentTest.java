@@ -79,7 +79,6 @@ final class FieldAssignmentTest {
                 )
             )
         );
-
     }
 
     @Test
