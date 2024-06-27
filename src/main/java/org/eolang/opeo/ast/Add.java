@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -37,6 +39,8 @@ import org.xembly.Directives;
  * Add output node.
  * @since 0.1
  */
+@EqualsAndHashCode
+@ToString
 public final class Add implements AstNode, Typed {
 
     /**

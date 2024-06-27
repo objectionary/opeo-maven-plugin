@@ -194,10 +194,7 @@ final class XmirParser implements Parser {
         } else if (".new".equals(base)) {
             result = new Constructor(node, this);
         } else if (".array-node".equals(base)) {
-            final List<XmlNode> children = node.children().collect(Collectors.toList());
-            final String type = new HexString(children.get(0).text()).decode();
-            final AstNode size = this.parse(children.get(1));
-            result = new ArrayConstructor(size, type);
+            result = new ArrayConstructor(node, this);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
             final Attributes attributes = new Attributes(node.firstChild());
             if ("static".equals(attributes.type())) {

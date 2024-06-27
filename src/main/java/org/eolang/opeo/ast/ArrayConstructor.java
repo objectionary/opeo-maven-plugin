@@ -25,7 +25,13 @@ package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.eolang.jeo.representation.directives.DirectivesData;
+import org.eolang.jeo.representation.xmir.HexString;
+import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.compilation.Parser;
 import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -34,6 +40,8 @@ import org.xembly.Directives;
  * Array constructor.
  * @since 0.1
  */
+@ToString
+@EqualsAndHashCode
 public final class ArrayConstructor implements AstNode {
 
     /**
@@ -45,6 +53,18 @@ public final class ArrayConstructor implements AstNode {
      * Array type.
      */
     private final String type;
+
+    /**
+     * Constructor.
+     * @param node Xmir representation of an array constructor.
+     * @param parser Parser that will be used to parse the child nodes of the array constructor.
+     */
+    public ArrayConstructor(final XmlNode node, final Parser parser) {
+        this(
+            parser.parse(node.children().collect(Collectors.toList()).get(1)),
+            new HexString(node.firstChild().text()).decode()
+        );
+    }
 
     /**
      * Constructor.

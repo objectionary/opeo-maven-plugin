@@ -23,9 +23,11 @@
  */
 package org.eolang.opeo.ast;
 
-import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.xml.XMLDocument;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
 import org.xembly.ImpossibleModificationException;
@@ -36,6 +38,34 @@ import org.xembly.Xembler;
  * @since 0.1
  */
 final class ArrayConstructorTest {
+
+    /**
+     * XMIR representation of the array constructor.
+     */
+    private static final String XMIR = String.join(
+        "\n",
+        "<o base='.array-node'>",
+        "   <o base='string' data='bytes'>6A 61 76 61 2F 6C 61 6E 67 2F 49 6E 74 65 67 65 72</o>",
+        "   <o base='.plus'>",
+        "      <o base='int' data='bytes'>00 00 00 00 00 00 00 01</o>",
+        "      <o base='int' data='bytes'>00 00 00 00 00 00 00 02</o>",
+        "   </o>",
+        "</o>"
+    );
+
+    @Test
+    void createsArrayConstructorFromXmir() {
+        MatcherAssert.assertThat(
+            "Can't create array constructor from XMIR",
+            new ArrayConstructor(
+                new XmlNode(ArrayConstructorTest.XMIR),
+                node -> new Add(new Literal(1), new Literal(2))
+            ),
+            Matchers.equalTo(
+                new ArrayConstructor(new Add(new Literal(1), new Literal(2)), "java/lang/Integer")
+            )
+        );
+    }
 
     @Test
     void compilesSimpleArrayCreation() {
@@ -88,12 +118,8 @@ final class ArrayConstructorTest {
                 "We expect that array constructor will be correctly transformed to XMIR, but it didn't. Result is: %n%s%n",
                 xmir
             ),
-            xmir,
-            XhtmlMatchers.hasXPaths(
-                "./o[@base='.array-node']",
-                "./o[@base='.array-node']/o[@base='string' and @data='bytes']",
-                "./o[@base='.array-node']/o[@base='.plus']"
-            )
+            new XMLDocument(xmir),
+            Matchers.equalTo(new XMLDocument(ArrayConstructorTest.XMIR))
         );
     }
 }
