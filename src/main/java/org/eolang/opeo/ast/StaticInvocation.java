@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.compilation.Parser;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -94,6 +95,15 @@ public final class StaticInvocation implements AstNode, Typed {
             new Owner(owner),
             arguments
         );
+    }
+
+    /**
+     * Constructor.
+     * @param node XML node
+     * @param parser Parser that will be used to parse the child nodes of the invocation.
+     */
+    public StaticInvocation(final XmlNode node, final Parser parser) {
+        this(node, new Arguments(node, parser, 2).toList());
     }
 
     /**
