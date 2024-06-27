@@ -24,6 +24,11 @@
 package org.eolang.opeo.ast;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.compilation.Parser;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -34,6 +39,8 @@ import org.xembly.Directives;
  * }</p>
  * @since 0.2
  */
+@ToString
+@EqualsAndHashCode
 public final class FieldAssignment implements AstNode {
 
     /**
@@ -45,6 +52,16 @@ public final class FieldAssignment implements AstNode {
      * The value to assign.
      */
     private final AstNode value;
+
+    public FieldAssignment(
+        final XmlNode node,
+        final Parser parser
+    ) {
+        this(
+            new Field(node.firstChild(), parser),
+            parser.parse(node.children().collect(Collectors.toList()).get(1))
+        );
+    }
 
     /**
      * Constructor.

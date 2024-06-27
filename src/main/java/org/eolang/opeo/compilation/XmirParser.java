@@ -39,7 +39,6 @@ import org.eolang.opeo.ast.ClassName;
 import org.eolang.opeo.ast.Constant;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.Duplicate;
-import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.FieldRetrieval;
 import org.eolang.opeo.ast.If;
@@ -189,10 +188,7 @@ final class XmirParser implements Parser {
         } else if (".get-field".equals(base)) {
             result = new FieldRetrieval(node, this);
         } else if (".write-field".equals(base)) {
-            final List<XmlNode> inner = node.children().collect(Collectors.toList());
-            final XmlNode field = inner.get(0);
-            final AstNode value = this.parse(inner.get(1));
-            result = new FieldAssignment(new Field(field, this), value);
+            result = new FieldAssignment(node, this);
         } else if (base.contains("local")) {
             result = new LocalVariable(node);
         } else if (".new".equals(base)) {
