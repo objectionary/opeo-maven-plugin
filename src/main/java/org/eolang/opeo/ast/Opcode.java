@@ -31,7 +31,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.jeo.representation.directives.DirectivesInstruction;
-import org.objectweb.asm.Opcodes;
 import org.xembly.Directive;
 
 /**
@@ -113,16 +112,6 @@ public final class Opcode implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
-//        switch (this.bytecode) {
-//            case Opcodes.INVOKEVIRTUAL:
-//            case Opcodes.INVOKEINTERFACE:
-//            case Opcodes.INVOKESPECIAL:
-//            case Opcodes.INVOKESTATIC:
-//                this.appendInterfaced();
-//                break;
-//            default:
-//                break;
-//        }
         return Arrays.asList(this);
     }
 
@@ -137,19 +126,5 @@ public final class Opcode implements AstNode {
     @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
     public static void disableCounting() {
         Opcode.COUNTING.set(false);
-    }
-
-    /**
-     * Append 'interfaced' attribute.
-     * @todo #201:90 Remove the 'appendInterfaced' method from Opcode.
-     *  This method was added to hide problems in 'ineo-maven-plugin' optimizations implementation.
-     *  Also in 'opeo-maven-plugin' we also have some gaps related to 'interfaced' attribute.
-     *  We definitely should remove this method. Moreover, we shouldn't forget to clean
-     *  {@link #opcodes} method after.
-     */
-    private void appendInterfaced() {
-        if (!(this.operands.get(this.operands.size() - 1) instanceof Boolean)) {
-            this.operands.add(false);
-        }
     }
 }
