@@ -24,6 +24,8 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.xml.XMLDocument;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -37,21 +39,37 @@ import org.xembly.Xembler;
  */
 final class OpcodeTest {
 
+    /**
+     * XMIR representation of the opcode.
+     */
+    private static final String XMIR = String.join(
+        "\n",
+        "<o base='opcode' line='999' name='LDC'>",
+        "<o base='int' data='bytes'>00 00 00 00 00 00 00 12</o>",
+        "<o base='string' data='bytes'>68 65 6C 6C 6F</o>",
+        "</o>"
+    );
+
+    @Test
+    void createsFromXmir() {
+        MatcherAssert.assertThat(
+            "The LDC opcode should be created from XMIR",
+            new Opcode(new XmlNode(OpcodeTest.XMIR)),
+            Matchers.equalTo(
+                new Opcode(Opcodes.LDC, "hello")
+            )
+        );
+    }
+
     @Test
     void transformsToXml() {
+        Opcode.disableCounting();
         MatcherAssert.assertThat(
-            String.format(
-                "We expect the following XML to be generated: %s",
-                "<o base='opcode' name='LDC-1'><o base='int' data='bytes'>00 00 00 00 00 00 00 12</o><o base='string' data='bytes'>68 65 6C 6C 6F</o></o>"
+            String.format("We expect the following XML to be generated: %s", OpcodeTest.XMIR),
+            new XMLDocument(
+                new Xembler(new Opcode(Opcodes.LDC, "hello").toXmir()).xmlQuietly()
             ),
-            new Xembler(
-                new Opcode(Opcodes.LDC, "hello").toXmir(),
-                new Transformers.Node()
-            ).xmlQuietly(),
-            Matchers.allOf(
-                XhtmlMatchers.hasXPath("./o[@base='opcode']/o[@base='int']"),
-                XhtmlMatchers.hasXPath("./o[@base='opcode']/o[@base='string']")
-            )
+            Matchers.equalTo(new XMLDocument(OpcodeTest.XMIR))
         );
     }
 }

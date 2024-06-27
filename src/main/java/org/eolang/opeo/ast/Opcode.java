@@ -28,9 +28,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.jeo.representation.directives.DirectivesInstruction;
+import org.eolang.jeo.representation.xmir.XmlInstruction;
+import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.jeo.representation.xmir.XmlOperand;
 import org.xembly.Directive;
 
 /**
@@ -91,6 +95,28 @@ public final class Opcode implements AstNode {
      */
     public Opcode(final int opcode, final List<Object> operands) {
         this(opcode, operands, Opcode.COUNTING.get());
+    }
+
+    /**
+     * Constructor.
+     * @param node XMIR node.
+     */
+    public Opcode(final XmlNode node) {
+        this(new XmlInstruction(node));
+    }
+
+    /**
+     * Constructor.
+     * @param instruction XMIR instruction.
+     */
+    public Opcode(final XmlInstruction instruction) {
+        this(
+            instruction.opcode(),
+            instruction.operands()
+                .stream()
+                .map(XmlOperand::asObject)
+                .collect(Collectors.toList())
+        );
     }
 
     /**

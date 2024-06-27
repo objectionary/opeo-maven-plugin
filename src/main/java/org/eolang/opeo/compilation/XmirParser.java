@@ -27,9 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.HexString;
-import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
-import org.eolang.jeo.representation.xmir.XmlOperand;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.Arguments;
 import org.eolang.opeo.ast.ArrayConstructor;
@@ -160,15 +158,7 @@ final class XmirParser implements Parser {
         } else if ("frame".equals(base)) {
             result = new RawXml(node);
         } else if ("opcode".equals(base)) {
-            final XmlInstruction instruction = new XmlInstruction(node);
-            final int opcode = instruction.opcode();
-            result = new Opcode(
-                opcode,
-                instruction.operands()
-                    .stream()
-                    .map(XmlOperand::asObject)
-                    .collect(Collectors.toList())
-            );
+            result = new Opcode(node);
         } else if ("label".equals(base)) {
             result = new Label(node);
         } else if ("int".equals(base)) {
