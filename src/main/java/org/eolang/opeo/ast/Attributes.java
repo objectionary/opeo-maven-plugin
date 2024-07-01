@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import org.cactoos.map.MapEntry;
@@ -44,6 +45,11 @@ import org.xembly.Directives;
 @SuppressWarnings("PMD.TooManyMethods")
 @EqualsAndHashCode
 public final class Attributes implements Xmir {
+
+    /**
+     * New line pattern for replacing redundant symbols from hex strings.
+     */
+    private static final Pattern NEW_LINE = Pattern.compile("\n", Pattern.LITERAL);
 
     /**
      * All attributes.
@@ -234,35 +240,24 @@ public final class Attributes implements Xmir {
      * In the new method attributes are placed as a first data element.
      * @param node Xmir node attribute.
      * @return Map of attributes.
-     * @todo #316:60min Simplify {@link Attributes#fromXmir(XmlNode)} method.
-     *  The method is too complex and hard to understand.
-     *  We need to simplify it.
-     *  We use trim() and replace() methods on strings many times here, which is bad.
-     *  So, this method is suboptimal that should be simplified.
-     *  Don't forget to remove PMD suppression after simplification.
      */
-    @SuppressWarnings("PMD.InefficientEmptyStringCheck")
     private static String fromXmir(final XmlNode node) {
-        final String result;
-        final String replaced = node.text().trim().replace("\n", "");
-        if (replaced.trim().isEmpty()) {
-            result = "";
-        } else {
-            try {
-                result = new HexString(replaced).decode().replace("\n", "");
-            } catch (final NumberFormatException exception) {
-                throw new IllegalArgumentException(
-                    String.format(
-                        "Can't parse attributes '%s' from '%s' node, bytes %s",
-                        replaced,
-                        node,
-                        Arrays.toString(replaced.getBytes(StandardCharsets.UTF_8))
-                    ),
-                    exception
-                );
-            }
+        final String original = node.text();
+        try {
+            return Attributes.NEW_LINE.matcher(
+                new HexString(original.trim()).decode()
+            ).replaceAll("");
+        } catch (final NumberFormatException exception) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "Can't parse attributes '%s' from '%s' node, bytes %s",
+                    original,
+                    node,
+                    Arrays.toString(original.getBytes(StandardCharsets.UTF_8))
+                ),
+                exception
+            );
         }
-        return result;
     }
 
     /**
