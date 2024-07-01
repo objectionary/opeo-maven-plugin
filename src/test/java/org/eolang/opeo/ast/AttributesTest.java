@@ -23,11 +23,15 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.stream.Stream;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 /**
  * Test case for {@link Attributes}.
@@ -68,6 +72,42 @@ final class AttributesTest {
             "Can't parse owner from raw string",
             actual.owner(),
             Matchers.equalTo("Lorg/eolang/opeo/ast/Invocation;")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("xmirAttributes")
+    void parsesXmir(final String xmir, final String expected) {
+        final XmlNode node = new XmlNode(xmir);
+        MatcherAssert.assertThat(
+            String.format("Can't create correct attributes from node '%s'", node),
+            new Attributes(node).toString(),
+            Matchers.equalTo(expected)
+        );
+    }
+
+    /**
+     * Xmir representation of attribute objects.
+     * @return Stream of arguments for {@link #parsesXmir(String, String)} test.
+     */
+    private static Stream<Arguments> xmirAttributes() {
+        return Stream.of(
+            Arguments.of(
+                "<o base='string' data='bytes' line='999'>64 65 73 63 72 69 70 74 6F 72 3D 49 7C 74 79 70 65 3D 6C 6F 63 61 6C</o>",
+                "descriptor=I|type=local"
+            ),
+            Arguments.of(
+                "<o base='string' data='bytes' line='999'>64 65 73 63 72 69 70 74 6F 72 3D 49 7C 74 79 70 65 3D 6C 6F 63 61 6C   </o>",
+                "descriptor=I|type=local"
+            ),
+            Arguments.of(
+                "<o base='string' data='bytes' line='999'>64 65 73 63 72 69 70 74 6F 72 3D 49 7C 74 79 70 65 3D 6C 6F 63 61 6C\n\n\n</o>",
+                "descriptor=I|type=local"
+            ),
+            Arguments.of("<o base='string' data='bytes' line='999'></o>", ""),
+            Arguments.of("<o base='string' data='bytes' line='999'>\n\n\n</o>", ""),
+            Arguments.of("<o base='string' data='bytes' line='999'> \n \n </o>", ""),
+            Arguments.of("<o base='string' data='bytes' line='999'>\n</o>", "")
         );
     }
 }
