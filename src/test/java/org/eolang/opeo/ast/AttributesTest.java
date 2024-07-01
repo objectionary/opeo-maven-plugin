@@ -90,6 +90,7 @@ final class AttributesTest {
      * Xmir representation of attribute objects.
      * @return Stream of arguments for {@link #parsesXmir(String, String)} test.
      */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Stream<Arguments> xmirAttributes() {
         return Stream.of(
             Arguments.of(
