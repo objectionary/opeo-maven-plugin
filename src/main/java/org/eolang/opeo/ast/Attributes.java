@@ -273,6 +273,7 @@ public final class Attributes implements Xmir {
     private static Map<String, String> parse(final String raw) {
         try {
             return Arrays.stream(raw.split("\\|")).map(entry -> entry.split("="))
+                .filter(arr -> arr.length > 1)
                 .peek(Attributes::entrySize)
                 .map(entry -> new MapEntry<>(entry[0], entry[1]))
                 .collect(Collectors.toMap(MapEntry::getKey, MapEntry::getValue));
