@@ -126,8 +126,6 @@ SOFTWARE.
               <goal>xmir-to-phi</goal>
             </goals>
             <configuration>
-              <phiSkipFailed>true</phiSkipFailed>
-              <phiOptimize>false</phiOptimize>
               <phiInputDir>${project.build.directory}/generated-sources/opeo-decompile-modified-xmir</phiInputDir>
               <phiOutputDir>${project.build.directory}/generated-sources/phi-expressions</phiOutputDir>
             </configuration>

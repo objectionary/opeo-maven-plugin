@@ -102,7 +102,7 @@ public final class JeoDecompiler {
                         new Xembler(
                             new DecompilerMachine(
                                 new LocalVariables(method.access(), method.descriptor(), clazz),
-                                Collections.singletonMap("counting", "false")
+                                Collections.singletonMap("counting", "true")
                             ).decompile(new JeoInstructions(method).instructions()),
                             new Transformers.Node()
                         ).xmlQuietly()
