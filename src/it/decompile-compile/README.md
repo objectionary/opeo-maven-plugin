@@ -8,5 +8,5 @@ representation using `compile` goal.
 To run only this test, use the following command:
 
 ```shell
-mvn clean integration-test invoker:run -Dinvoker.test=decompile-compile -DskipTests
+mvn clean integration-test -Dinvoker.test=decompile-compile -DskipTests
 ```
