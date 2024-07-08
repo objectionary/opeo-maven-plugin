@@ -28,6 +28,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.OpcodeInstruction;
+import org.eolang.opeo.SameXml;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
@@ -49,7 +50,6 @@ import org.eolang.opeo.ast.This;
 import org.eolang.opeo.ast.VariableAssignment;
 import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -254,7 +254,7 @@ final class DecompilerMachineTest {
                         new OpcodeInstruction(Opcodes.ANEWARRAY, type)
                     )
             ).xml(),
-            Matchers.equalTo(
+            new SameXml(
                 new Xembler(
                     new Root(
                         new ArrayConstructor(
@@ -283,7 +283,7 @@ final class DecompilerMachineTest {
                         new OpcodeInstruction(Opcodes.AASTORE)
                     )
             ).xml(),
-            Matchers.equalTo(
+            new SameXml(
                 new Xembler(
                     new Root(
                         new StoreArray(
@@ -470,7 +470,7 @@ final class DecompilerMachineTest {
                 final String xpected = new Xembler(this.expected.toXmir()).xml();
                 this.actual.set(xactual);
                 this.exp.set(xpected);
-                return xactual.equals(xpected);
+                return new SameXml(xpected).matchesSafely(xactual);
             } catch (final ImpossibleModificationException exception) {
                 throw new IllegalStateException(
                     String.format(

@@ -23,8 +23,8 @@
  */
 package org.eolang.opeo.ast;
 
-import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.SameXml;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -94,8 +94,8 @@ final class FieldAssignmentTest {
                 "Can't convert 'this.bar = 3' statement to the correct xmir, result is wrong: %n%s%n",
                 xmir
             ),
-            new XMLDocument(xmir),
-            Matchers.equalTo(new XMLDocument(FieldAssignmentTest.XMIR))
+            xmir,
+            new SameXml(FieldAssignmentTest.XMIR)
         );
     }
 

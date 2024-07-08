@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 import org.eolang.opeo.decompilation.Decompiler;
 import org.eolang.opeo.decompilation.handlers.RouterHandler;
 import org.eolang.opeo.jeo.JeoDecompiler;
-import org.eolang.opeo.storage.DummyStorage;
 import org.eolang.opeo.storage.FileStorage;
 import org.eolang.opeo.storage.Storage;
 import org.eolang.opeo.storage.XmirEntry;
@@ -75,27 +74,6 @@ public final class SelectiveDecompiler implements Decompiler {
      * Constructor.
      * @param input Input folder with XMIRs.
      * @param output Output folder where to save the decompiled files.
-     */
-    public SelectiveDecompiler(final Path input, final Path output) {
-        this(input, output, new RouterHandler(false).supportedOpcodes());
-    }
-
-    /**
-     * Constructor.
-     * @param input Input folder with XMIRs.
-     * @param output Output folder where to save the decompiled files.
-     * @param supported Supported opcodes are used in selection.
-     */
-    public SelectiveDecompiler(
-        final Path input, final Path output, final String... supported
-    ) {
-        this(new FileStorage(input, output), supported);
-    }
-
-    /**
-     * Constructor.
-     * @param input Input folder with XMIRs.
-     * @param output Output folder where to save the decompiled files.
      * @param modified Folder where to save the modified XMIRs.
      * @param supported Supported opcodes are used in selection.
      * @checkstyle ParameterNumberCheck (5 lines)
@@ -107,15 +85,6 @@ public final class SelectiveDecompiler implements Decompiler {
         final String... supported
     ) {
         this(new FileStorage(input, output), new FileStorage(modified, modified), supported);
-    }
-
-    /**
-     * Constructor.
-     * @param storage Storage from which retrieve the XMIRs and where to save the modified ones.
-     * @param supported Supported opcodes are used in selection.
-     */
-    public SelectiveDecompiler(final Storage storage, final String... supported) {
-        this(storage, new DummyStorage(), supported);
     }
 
     /**
@@ -190,6 +159,6 @@ public final class SelectiveDecompiler implements Decompiler {
      *  Don't forget to add tests for the new functionality.
      */
     private static String trycatches() {
-        return "//o[@base='tuple' and @name='trycatchblocks']/@name";
+        return "//o[@base='tuple' and contains(@name,'trycatchblocks')]/@name";
     }
 }

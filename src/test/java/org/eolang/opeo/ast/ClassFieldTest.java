@@ -23,8 +23,8 @@
  */
 package org.eolang.opeo.ast;
 
-import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.SameXml;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -51,8 +51,8 @@ final class ClassFieldTest {
     void convertsToXmir() throws ImpossibleModificationException {
         MatcherAssert.assertThat(
             "Can't convert class field to xmir representation",
-            new XMLDocument(new Xembler(new ClassField("java/lang/A", "x", "I").toXmir()).xml()),
-            Matchers.equalTo(new XMLDocument(ClassFieldTest.XMIR))
+            new Xembler(new ClassField("java/lang/A", "x", "I").toXmir()).xml(),
+            new SameXml(ClassFieldTest.XMIR)
         );
     }
 

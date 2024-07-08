@@ -25,6 +25,7 @@ package org.eolang.opeo.ast;
 
 import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.SameXml;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -48,12 +49,10 @@ final class LabeledTest {
     void convertsToXmir() throws ImpossibleModificationException {
         MatcherAssert.assertThat(
             "Wrong XMIR is generated for labeled constant",
-            new XMLDocument(
-                new Xembler(
-                    new Labeled(new Constant(1), new Label("1")).toXmir()
-                ).xml()
-            ),
-            Matchers.equalTo(new XMLDocument(LabeledTest.XMIR))
+            new Xembler(
+                new Labeled(new Constant(1), new Label("1")).toXmir()
+            ).xml(),
+            new SameXml(new XMLDocument(LabeledTest.XMIR))
         );
     }
 

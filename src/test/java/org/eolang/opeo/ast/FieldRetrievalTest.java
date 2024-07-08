@@ -23,8 +23,8 @@
  */
 package org.eolang.opeo.ast;
 
-import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.SameXml;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -71,8 +71,8 @@ final class FieldRetrievalTest {
                 "Can't convert to a field access construct, actual result is : %n%s%n",
                 actual
             ),
-            new XMLDocument(actual),
-            Matchers.equalTo(new XMLDocument(FieldRetrievalTest.XMIR))
+            actual,
+            new SameXml(FieldRetrievalTest.XMIR)
         );
     }
 

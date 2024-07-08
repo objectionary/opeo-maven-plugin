@@ -53,7 +53,7 @@ SOFTWARE.
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <jeo.version>0.4.6</jeo.version>
+    <jeo.version>0.5.0</jeo.version>
     <ineo.version>0.3.1</ineo.version>
     <jeo.disassemble.output>${project.build.directory}/generated-sources/jeo-disassemble-xmir</jeo.disassemble.output>
     <opeo.decompile.output>${project.build.directory}/generated-sources/opeo-decompile-xmir</opeo.decompile.output>
@@ -225,8 +225,6 @@ SOFTWARE.
                   <goal>xmir-to-phi</goal>
                 </goals>
                 <configuration>
-                  <phiSkipFailed>true</phiSkipFailed>
-                  <phiOptimize>false</phiOptimize>
                   <phiInputDir>${opeo.modified}</phiInputDir>
                   <phiOutputDir>${eo.phi.output}</phiOutputDir>
                 </configuration>

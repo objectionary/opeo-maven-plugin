@@ -24,8 +24,8 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.SameXml;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -90,17 +90,15 @@ final class InvocationTest {
     void transformsToXmir() throws ImpossibleModificationException {
         MatcherAssert.assertThat(
             "Can't transform 'invocation' to XMIR",
-            new XMLDocument(
-                new Xembler(
-                    new Invocation(
-                        new Constructor("foo"),
-                        "bar",
-                        new Literal("baz")
-                    ).toXmir(),
-                    new Transformers.Node()
-                ).xml()
-            ),
-            Matchers.equalTo(new XMLDocument(InvocationTest.XMIR))
+            new Xembler(
+                new Invocation(
+                    new Constructor("foo"),
+                    "bar",
+                    new Literal("baz")
+                ).toXmir(),
+                new Transformers.Node()
+            ).xml(),
+            new SameXml(InvocationTest.XMIR)
         );
     }
 

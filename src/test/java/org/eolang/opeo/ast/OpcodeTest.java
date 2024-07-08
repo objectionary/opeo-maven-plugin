@@ -23,8 +23,8 @@
  */
 package org.eolang.opeo.ast;
 
-import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.SameXml;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -64,10 +64,8 @@ final class OpcodeTest {
         Opcode.disableCounting();
         MatcherAssert.assertThat(
             String.format("We expect the following XML to be generated: %s", OpcodeTest.XMIR),
-            new XMLDocument(
-                new Xembler(new Opcode(Opcodes.LDC, "hello").toXmir()).xmlQuietly()
-            ),
-            Matchers.equalTo(new XMLDocument(OpcodeTest.XMIR))
+            new Xembler(new Opcode(Opcodes.LDC, "hello").toXmir()).xmlQuietly(),
+            new SameXml(OpcodeTest.XMIR)
         );
     }
 }

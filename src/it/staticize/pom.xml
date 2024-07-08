@@ -50,7 +50,7 @@ SOFTWARE.
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
-    <jeo.version>0.4.6</jeo.version>
+    <jeo.version>0.5.0</jeo.version>
     <ineo.version>0.3.2</ineo.version>
     <opeo.version>@project.version@</opeo.version>
   </properties>
@@ -85,7 +85,7 @@ SOFTWARE.
             <configuration>
               <sourcesDir>${project.build.directory}/generated-sources/jeo-decompile-xmir</sourcesDir>
               <outputDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</outputDir>
-              <modifiedDir>${project.build.directory}/generated-sources/opep-decompile-xmir-modified</modifiedDir>
+              <modifiedDir>${project.build.directory}/generated-sources/opeo-decompile-xmir-modified</modifiedDir>
             </configuration>
           </execution>
           <execution>
@@ -97,6 +97,24 @@ SOFTWARE.
             <configuration>
               <sourcesDir>${project.build.directory}/generated-sources/ineo-staticize-xmir</sourcesDir>
               <outputDir>${project.build.directory}/generated-sources/opeo-compile-xmir</outputDir>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eolang</groupId>
+        <artifactId>eo-maven-plugin</artifactId>
+        <version>0.38.4</version>
+        <executions>
+          <execution>
+            <id>convert-xmir-to-phi</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>xmir-to-phi</goal>
+            </goals>
+            <configuration>
+              <phiInputDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</phiInputDir>
+              <phiOutputDir>${project.build.directory}/generated-sources/phi-expressions</phiOutputDir>
             </configuration>
           </execution>
         </executions>

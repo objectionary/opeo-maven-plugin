@@ -26,6 +26,7 @@ package org.eolang.opeo.compilation;
 import java.util.Collections;
 import java.util.List;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.SameXml;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Field;
@@ -174,8 +175,8 @@ final class XmirParserTest {
         );
         MatcherAssert.assertThat(
             "We expect to retrieve exactly 1 opcode INVOKEDYNAMIC (without changes), but got something else instead",
-            new XmirParser(Collections.singletonList(node)).toJeoNodes().get(0),
-            Matchers.equalTo(node)
+            new XmirParser(Collections.singletonList(node)).toJeoNodes().get(0).toString(),
+            new SameXml(node.toString())
         );
     }
 }

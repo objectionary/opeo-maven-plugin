@@ -25,6 +25,7 @@ package org.eolang.opeo.ast;
 
 import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.SameXml;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -53,18 +54,19 @@ final class FieldTest {
 
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
-        final XMLDocument actual = new XMLDocument(
-            new Xembler(
-                new Field(
-                    new This(),
-                    new Attributes("name", "foo")
-                ).toXmir()
-            ).xml()
-        );
+        final String actual = new Xembler(
+            new Field(
+                new This(),
+                new Attributes("name", "foo")
+            ).toXmir()
+        ).xml();
         MatcherAssert.assertThat(
-            String.format("Can't convert to correct XMIR, actual result is : %n%s%n", actual),
+            String.format(
+                "Can't convert to correct XMIR, actual result is : %n%s%n",
+                new XMLDocument(actual)
+            ),
             actual,
-            Matchers.equalTo(new XMLDocument(FieldTest.XMIR))
+            new SameXml(FieldTest.XMIR)
         );
     }
 

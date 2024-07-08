@@ -27,9 +27,9 @@ import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.TextOf;
+import org.eolang.opeo.SameXml;
 import org.eolang.opeo.ast.Opcode;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -47,8 +47,8 @@ final class JeoCompilerTest {
         );
         MatcherAssert.assertThat(
             "The compiled program is not equal to the expected one, but should since we provided already compiled program",
-            new JeoCompiler(expected).compile(),
-            Matchers.equalTo(expected)
+            new JeoCompiler(expected).compile().toString(),
+            new SameXml(expected)
         );
     }
 }

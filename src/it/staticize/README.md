@@ -6,7 +6,7 @@ optimizations. We utilize `staticize` optimization in this test.
 To run only this test, use the following command:
 
 ```shell
-mvn clean integration-test invoker:run -Dinvoker.test=staticize -DskipTests
+mvn clean integration-test -Dinvoker.test=staticize -DskipTests
 ```
 
 _____

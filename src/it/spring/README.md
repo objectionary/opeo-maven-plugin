@@ -23,7 +23,7 @@ In short, the test is organised as follows:
 To exclusively run this test, execute the command below:
 
 ```shell
-mvn clean integration-test invoker:run -Dinvoker.test=spring -DskipTests
+mvn clean integration-test -Dinvoker.test=spring -DskipTests
 ```
 
 ## PHI Expressions
