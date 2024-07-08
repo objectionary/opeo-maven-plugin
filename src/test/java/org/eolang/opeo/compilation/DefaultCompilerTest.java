@@ -23,11 +23,13 @@
  */
 package org.eolang.opeo.compilation;
 
+import com.jcabi.xml.XMLDocument;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
+import org.eolang.opeo.SameXml;
 import org.eolang.opeo.ast.Opcode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -78,8 +80,8 @@ final class DefaultCompilerTest {
         );
         MatcherAssert.assertThat(
             "The compiled file is not equal to the original, but should. This is because Bar.xmir is already a low-level xmir",
-            new BytesOf(output).asBytes(),
-            Matchers.equalTo(before)
+            new XMLDocument(output).toString(),
+            new SameXml(new XMLDocument(before))
         );
     }
 

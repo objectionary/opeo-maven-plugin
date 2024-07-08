@@ -25,6 +25,7 @@ package org.eolang.opeo.ast;
 
 import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.SameXml;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -118,8 +119,8 @@ final class ArrayConstructorTest {
                 "We expect that array constructor will be correctly transformed to XMIR, but it didn't. Result is: %n%s%n",
                 xmir
             ),
-            new XMLDocument(xmir),
-            Matchers.equalTo(new XMLDocument(ArrayConstructorTest.XMIR))
+            xmir,
+            new SameXml(ArrayConstructorTest.XMIR)
         );
     }
 }

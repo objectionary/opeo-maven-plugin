@@ -23,8 +23,8 @@
  */
 package org.eolang.opeo.ast;
 
-import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.SameXml;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -52,8 +52,8 @@ final class ThisTest {
         final String xml = new Xembler(new This().toXmir()).xml();
         MatcherAssert.assertThat(
             String.format("Can't convert to correct XMIR, actual result is : %n%s%n", xml),
-            new XMLDocument(xml),
-            Matchers.equalTo(new XMLDocument(ThisTest.XMIR))
+            xml,
+            new SameXml(ThisTest.XMIR)
         );
     }
 

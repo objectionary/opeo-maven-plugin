@@ -33,6 +33,7 @@ import org.eolang.jeo.representation.bytecode.Bytecode;
 import org.eolang.jeo.representation.xmir.XmlBytecodeEntry;
 import org.eolang.jeo.representation.xmir.XmlLabel;
 import org.eolang.jeo.representation.xmir.XmlProgram;
+import org.eolang.opeo.SameXml;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.compilation.JeoCompiler;
 import org.eolang.opeo.jeo.JeoDecompiler;
@@ -187,8 +188,8 @@ final class JeoAndOpeoTest {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
         MatcherAssert.assertThat(
             "The original and decompiled/compiled content are not equal",
-            new JeoCompiler(new JeoDecompiler(original, pckg).decompile()).compile(),
-            Matchers.equalTo(original)
+            new JeoCompiler(new JeoDecompiler(original, pckg).decompile()).compile().toString(),
+            new SameXml(original)
         );
     }
 }

@@ -24,6 +24,7 @@
 package org.eolang.opeo.ast;
 
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.SameXml;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -59,7 +60,7 @@ final class NewAddressTest {
         MatcherAssert.assertThat(
             "We expect, that new address will be successfully converted to XMIR",
             new Xembler(new NewAddress(NewAddressTest.TYPE).toXmir()).xml(),
-            Matchers.equalTo(NewAddressTest.XML)
+            new SameXml(NewAddressTest.XML)
         );
     }
 

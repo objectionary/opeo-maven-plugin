@@ -25,6 +25,7 @@ package org.eolang.opeo.ast;
 
 import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.SameXml;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -91,8 +92,8 @@ final class VariableAssignmentTest {
                 "We expect the XMIR to be correct, but it's not:%n%s%n",
                 xml
             ),
-            new XMLDocument(xml),
-            Matchers.equalTo(new XMLDocument(VariableAssignmentTest.XMIR))
+            xml,
+            new SameXml(VariableAssignmentTest.XMIR)
         );
     }
 }

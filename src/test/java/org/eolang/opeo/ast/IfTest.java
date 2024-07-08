@@ -25,6 +25,7 @@ package org.eolang.opeo.ast;
 
 import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.SameXml;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -59,14 +60,12 @@ final class IfTest {
     void convertsIfStatementToXmir() throws ImpossibleModificationException {
         MatcherAssert.assertThat(
             "Can convert 'if' statement to correct XMIR",
-            new XMLDocument(
-                new Xembler(
-                    new If(
-                        new Literal(1), new Literal(2), new Label("FF")
-                    ).toXmir()
-                ).xml()
-            ),
-            Matchers.equalTo(new XMLDocument(IfTest.XMIR))
+            new Xembler(
+                new If(
+                    new Literal(1), new Literal(2), new Label("FF")
+                ).toXmir()
+            ).xml(),
+            new SameXml(IfTest.XMIR)
         );
     }
 

@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.HexData;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.SameXml;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -71,8 +72,8 @@ final class SuperTest {
                 "Can't convert 'super' statement to XMIR, result is wrong: %n%s%n",
                 xmir
             ),
-            new XMLDocument(xmir),
-            Matchers.equalTo(new XMLDocument(SuperTest.XMIR))
+            xmir,
+            new SameXml(SuperTest.XMIR)
         );
     }
 
