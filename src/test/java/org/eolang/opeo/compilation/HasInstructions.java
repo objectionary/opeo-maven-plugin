@@ -32,6 +32,7 @@ import java.util.stream.IntStream;
 import org.eolang.jeo.representation.directives.DirectivesData;
 import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.SameXml;
 import org.eolang.opeo.ast.OpcodeName;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
@@ -164,7 +165,7 @@ public final class HasInstructions extends TypeSafeMatcher<List<XmlNode>> {
                         new DirectivesData(instruction.operands.get(operindex))
                     ).xmlQuietly()
                 );
-                if (!operand.equals(expected)) {
+                if (!new SameXml(expected.toString()).matchesSafely(operand.toString())) {
                     this.warnings.add(
                         String.format(
                             "Bytecode instruction at %d index should have opcode with operands %s but got %s instead, ('%s' != '%s')",
