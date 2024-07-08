@@ -50,7 +50,6 @@ import org.eolang.opeo.ast.This;
 import org.eolang.opeo.ast.VariableAssignment;
 import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

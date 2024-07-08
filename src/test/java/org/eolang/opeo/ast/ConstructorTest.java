@@ -24,7 +24,6 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
-import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.SameXml;
 import org.hamcrest.MatcherAssert;

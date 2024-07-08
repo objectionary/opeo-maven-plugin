@@ -26,7 +26,6 @@ package org.eolang.opeo.ast;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.SameXml;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Transformers;

@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.ast;
 
-import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.representation.HexData;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.SameXml;

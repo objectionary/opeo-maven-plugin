@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 import org.eolang.opeo.decompilation.Decompiler;
 import org.eolang.opeo.decompilation.handlers.RouterHandler;
 import org.eolang.opeo.jeo.JeoDecompiler;
-import org.eolang.opeo.storage.DummyStorage;
 import org.eolang.opeo.storage.FileStorage;
 import org.eolang.opeo.storage.Storage;
 import org.eolang.opeo.storage.XmirEntry;
