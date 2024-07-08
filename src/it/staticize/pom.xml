@@ -101,24 +101,24 @@ SOFTWARE.
           </execution>
         </executions>
       </plugin>
-        <plugin>
-                    <groupId>org.eolang</groupId>
-                    <artifactId>eo-maven-plugin</artifactId>
-                    <version>0.38.4</version>
-                    <executions>
-                      <execution>
-                        <id>convert-xmir-to-phi</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                          <goal>xmir-to-phi</goal>
-                        </goals>
-                        <configuration>
-                          <phiInputDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</phiInputDir>
-                          <phiOutputDir>${project.build.directory}/generated-sources/phi-expressions</phiOutputDir>
-                        </configuration>
-                      </execution>
-                    </executions>
-                  </plugin>
+      <plugin>
+        <groupId>org.eolang</groupId>
+        <artifactId>eo-maven-plugin</artifactId>
+        <version>0.38.4</version>
+        <executions>
+          <execution>
+            <id>convert-xmir-to-phi</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>xmir-to-phi</goal>
+            </goals>
+            <configuration>
+              <phiInputDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</phiInputDir>
+              <phiOutputDir>${project.build.directory}/generated-sources/phi-expressions</phiOutputDir>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.eolang</groupId>
         <artifactId>ineo-maven-plugin</artifactId>
