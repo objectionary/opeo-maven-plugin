@@ -73,7 +73,7 @@
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">     * @param node The XML node that represents variable.</em>
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>      <strong class="jxr_keyword">public</strong> <a name="LocalVariable" href="../../../../org/eolang/opeo/ast/LocalVariable.html#LocalVariable">LocalVariable</a>(<strong class="jxr_keyword">final</strong> XmlNode node) {
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>          <strong class="jxr_keyword">this</strong>(LocalVariable.videntifier(node), LocalVariable.vattributes(node));
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          <strong class="jxr_keyword">this</strong>(LocalVariable.videntifier(node), <strong class="jxr_keyword">new</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a>(node.firstChild()));
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>      }
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>  
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      <em class="jxr_javadoccomment">/**</em>
@@ -99,7 +99,7 @@
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>      <strong class="jxr_keyword">public</strong> Iterable&lt;Directive&gt; toXmir() {
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Directives().add(<span class="jxr_string">"o"</span>)
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>              .attr(<span class="jxr_string">"base"</span>, String.format(<span class="jxr_string">"%s%d"</span>, LocalVariable.PREFIX, <strong class="jxr_keyword">this</strong>.identifier))
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>              .attr(<span class="jxr_string">"scope"</span>, <strong class="jxr_keyword">this</strong>.attributes)
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>              .append(<strong class="jxr_keyword">this</strong>.attributes.toXmir())
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>              .up();
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>      }
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>  
@@ -139,26 +139,7 @@
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>             ).substring(LocalVariable.PREFIX.length())
 <a class="jxr_linenumber" name="L132" href="#L132">132</a>         );
 <a class="jxr_linenumber" name="L133" href="#L133">133</a>     }
-<a class="jxr_linenumber" name="L134" href="#L134">134</a> 
-<a class="jxr_linenumber" name="L135" href="#L135">135</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L136" href="#L136">136</a> <em class="jxr_javadoccomment">     * Get the attributes of the variable.</em>
-<a class="jxr_linenumber" name="L137" href="#L137">137</a> <em class="jxr_javadoccomment">     * @param node The XML node that represents variable.</em>
-<a class="jxr_linenumber" name="L138" href="#L138">138</a> <em class="jxr_javadoccomment">     * @return The attributes.</em>
-<a class="jxr_linenumber" name="L139" href="#L139">139</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L140" href="#L140">140</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a> vattributes(<strong class="jxr_keyword">final</strong> XmlNode node) {
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a>(
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>             node.attribute(<span class="jxr_string">"scope"</span>)
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>                 .orElseThrow(
-<a class="jxr_linenumber" name="L144" href="#L144">144</a>                     () -&gt; <strong class="jxr_keyword">new</strong> IllegalArgumentException(
-<a class="jxr_linenumber" name="L145" href="#L145">145</a>                         String.format(
-<a class="jxr_linenumber" name="L146" href="#L146">146</a>                             <span class="jxr_string">"Can't recognize variable node: %n%s%nWe expected to find 'scope' attribute"</span>,
-<a class="jxr_linenumber" name="L147" href="#L147">147</a>                             node
-<a class="jxr_linenumber" name="L148" href="#L148">148</a>                         )
-<a class="jxr_linenumber" name="L149" href="#L149">149</a>                     )
-<a class="jxr_linenumber" name="L150" href="#L150">150</a>                 )
-<a class="jxr_linenumber" name="L151" href="#L151">151</a>         );
-<a class="jxr_linenumber" name="L152" href="#L152">152</a>     }
-<a class="jxr_linenumber" name="L153" href="#L153">153</a> }
+<a class="jxr_linenumber" name="L134" href="#L134">134</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2023&#x2013;2024 <a href="https://github.com/objectionary/eo">EO</a>. All rights reserved.</div>

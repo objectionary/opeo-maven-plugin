@@ -36,28 +36,28 @@
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.eolang.jeo.representation.xmir.AllLabels;
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.LabelInstruction;
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.OpcodeInstruction;
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Add;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.ArrayConstructor;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.AstNode;
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Attributes;
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.ClassField;
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Constant;
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Field;
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.FieldAssignment;
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Invocation;
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Literal;
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.LocalVariable;
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Opcode;
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Owner;
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Popped;
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Root;
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.StaticInvocation;
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.StoreArray;
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.This;
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.VariableAssignment;
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>  <strong class="jxr_keyword">import</strong> org.hamcrest.Description;
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>  <strong class="jxr_keyword">import</strong> org.hamcrest.MatcherAssert;
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <strong class="jxr_keyword">import</strong> org.hamcrest.Matchers;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.SameXml;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Add;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.ArrayConstructor;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.AstNode;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Attributes;
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.ClassField;
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Constant;
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Field;
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.FieldAssignment;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Invocation;
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Literal;
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.LocalVariable;
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Opcode;
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Owner;
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Popped;
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Root;
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.StaticInvocation;
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.StoreArray;
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.This;
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.VariableAssignment;
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  <strong class="jxr_keyword">import</strong> org.hamcrest.Description;
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <strong class="jxr_keyword">import</strong> org.hamcrest.MatcherAssert;
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  <strong class="jxr_keyword">import</strong> org.hamcrest.TypeSafeMatcher;
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Assertions;
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Test;
@@ -262,7 +262,7 @@
 <a class="jxr_linenumber" name="L254" href="#L254">254</a>                         <strong class="jxr_keyword">new</strong> OpcodeInstruction(Opcodes.ANEWARRAY, type)
 <a class="jxr_linenumber" name="L255" href="#L255">255</a>                     )
 <a class="jxr_linenumber" name="L256" href="#L256">256</a>             ).xml(),
-<a class="jxr_linenumber" name="L257" href="#L257">257</a>             Matchers.equalTo(
+<a class="jxr_linenumber" name="L257" href="#L257">257</a>             <strong class="jxr_keyword">new</strong> SameXml(
 <a class="jxr_linenumber" name="L258" href="#L258">258</a>                 <strong class="jxr_keyword">new</strong> Xembler(
 <a class="jxr_linenumber" name="L259" href="#L259">259</a>                     <strong class="jxr_keyword">new</strong> Root(
 <a class="jxr_linenumber" name="L260" href="#L260">260</a>                         <strong class="jxr_keyword">new</strong> ArrayConstructor(
@@ -291,7 +291,7 @@
 <a class="jxr_linenumber" name="L283" href="#L283">283</a>                         <strong class="jxr_keyword">new</strong> OpcodeInstruction(Opcodes.AASTORE)
 <a class="jxr_linenumber" name="L284" href="#L284">284</a>                     )
 <a class="jxr_linenumber" name="L285" href="#L285">285</a>             ).xml(),
-<a class="jxr_linenumber" name="L286" href="#L286">286</a>             Matchers.equalTo(
+<a class="jxr_linenumber" name="L286" href="#L286">286</a>             <strong class="jxr_keyword">new</strong> SameXml(
 <a class="jxr_linenumber" name="L287" href="#L287">287</a>                 <strong class="jxr_keyword">new</strong> Xembler(
 <a class="jxr_linenumber" name="L288" href="#L288">288</a>                     <strong class="jxr_keyword">new</strong> Root(
 <a class="jxr_linenumber" name="L289" href="#L289">289</a>                         <strong class="jxr_keyword">new</strong> StoreArray(
@@ -478,7 +478,7 @@
 <a class="jxr_linenumber" name="L470" href="#L470">470</a>                 <strong class="jxr_keyword">final</strong> String xpected = <strong class="jxr_keyword">new</strong> Xembler(<strong class="jxr_keyword">this</strong>.expected.toXmir()).xml();
 <a class="jxr_linenumber" name="L471" href="#L471">471</a>                 <strong class="jxr_keyword">this</strong>.actual.set(xactual);
 <a class="jxr_linenumber" name="L472" href="#L472">472</a>                 <strong class="jxr_keyword">this</strong>.exp.set(xpected);
-<a class="jxr_linenumber" name="L473" href="#L473">473</a>                 <strong class="jxr_keyword">return</strong> xactual.equals(xpected);
+<a class="jxr_linenumber" name="L473" href="#L473">473</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> SameXml(xpected).matchesSafely(xactual);
 <a class="jxr_linenumber" name="L474" href="#L474">474</a>             } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> ImpossibleModificationException exception) {
 <a class="jxr_linenumber" name="L475" href="#L475">475</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(
 <a class="jxr_linenumber" name="L476" href="#L476">476</a>                     String.format(

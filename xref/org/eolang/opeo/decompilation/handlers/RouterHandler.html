@@ -34,11 +34,11 @@
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.cactoos.map.MapEntry;
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.cactoos.map.MapOf;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Opcode;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.OpcodeName;
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.decompilation.DecompilerState;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.decompilation.InstructionHandler;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.jeo.JeoLabel;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.LabelInstruction;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Opcode;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.OpcodeName;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.decompilation.DecompilerState;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.decompilation.InstructionHandler;
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.objectweb.asm.Opcodes;
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.objectweb.asm.Type;
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  
@@ -131,7 +131,7 @@
 <a class="jxr_linenumber" name="L123" href="#L123">123</a>                 <strong class="jxr_keyword">new</strong> MapEntry&lt;&gt;(Opcodes.POP, <strong class="jxr_keyword">new</strong> <a name="PopHandler" href="../../../../../org/eolang/opeo/decompilation/handlers/PopHandler.html#PopHandler">PopHandler</a>()),
 <a class="jxr_linenumber" name="L124" href="#L124">124</a>                 <strong class="jxr_keyword">new</strong> MapEntry&lt;&gt;(Opcodes.RETURN, <strong class="jxr_keyword">new</strong> <a name="ReturnHandler" href="../../../../../org/eolang/opeo/decompilation/handlers/ReturnHandler.html#ReturnHandler">ReturnHandler</a>(counting)),
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>                 <strong class="jxr_keyword">new</strong> MapEntry&lt;&gt;(Opcodes.IRETURN, <strong class="jxr_keyword">new</strong> <a name="ReturnHandler" href="../../../../../org/eolang/opeo/decompilation/handlers/ReturnHandler.html#ReturnHandler">ReturnHandler</a>(counting)),
-<a class="jxr_linenumber" name="L126" href="#L126">126</a>                 <strong class="jxr_keyword">new</strong> MapEntry&lt;&gt;(JeoLabel.LABEL_OPCODE, <strong class="jxr_keyword">new</strong> <a name="LabelHandler" href="../../../../../org/eolang/opeo/decompilation/handlers/LabelHandler.html#LabelHandler">LabelHandler</a>()),
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>                 <strong class="jxr_keyword">new</strong> MapEntry&lt;&gt;(LabelInstruction.LABEL_OPCODE, <strong class="jxr_keyword">new</strong> <a name="LabelHandler" href="../../../../../org/eolang/opeo/decompilation/handlers/LabelHandler.html#LabelHandler">LabelHandler</a>()),
 <a class="jxr_linenumber" name="L127" href="#L127">127</a>                 <strong class="jxr_keyword">new</strong> MapEntry&lt;&gt;(RouterHandler.UNIMPLEMENTED, <strong class="jxr_keyword">new</strong> UnimplementedHandler(counting))
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>             )
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>         );
