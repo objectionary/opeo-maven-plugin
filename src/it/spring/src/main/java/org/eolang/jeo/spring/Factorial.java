@@ -36,6 +36,14 @@ class Factorial {
 
     /**
      * Constructor.
+     */
+    Factorial() {
+        this(0);
+    }
+
+
+    /**
+     * Constructor.
      * @param d Value.
      */
     Factorial(int d) {
