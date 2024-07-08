@@ -159,6 +159,6 @@ public final class SelectiveDecompiler implements Decompiler {
      *  Don't forget to add tests for the new functionality.
      */
     private static String trycatches() {
-        return "//o[@base='tuple' and @name='trycatchblocks']/@name";
+        return "//o[@base='tuple' and contains(@name,'trycatchblocks')]/@name";
     }
 }
