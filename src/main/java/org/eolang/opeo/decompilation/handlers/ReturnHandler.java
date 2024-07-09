@@ -24,8 +24,11 @@
 package org.eolang.opeo.decompilation.handlers;
 
 import org.eolang.opeo.ast.Opcode;
+import org.eolang.opeo.ast.Return;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
+import org.eolang.opeo.decompilation.OperandStack;
+import org.objectweb.asm.Opcodes;
 
 /**
  * Return instruction handler.
@@ -33,27 +36,26 @@ import org.eolang.opeo.decompilation.InstructionHandler;
  */
 public final class ReturnHandler implements InstructionHandler {
 
-    /**
-     * Do we put numbers to opcodes?
-     */
-    private final boolean counting;
-
-    /**
-     * Constructor.
-     * @param counting Do we put numbers to opcodes?
-     */
-    ReturnHandler(final boolean counting) {
-        this.counting = counting;
-    }
-
     @Override
     public void handle(final DecompilerState state) {
-        state.stack().push(
-            new Opcode(
-                state.instruction().opcode(),
-                state.instruction().operands(),
-                this.counting
-            )
-        );
+        final int opcode = state.instruction().opcode();
+        final OperandStack stack = state.stack();
+        if (opcode == Opcodes.RETURN) {
+            stack.push(new Return());
+        } else if (opcode == Opcodes.IRETURN) {
+            stack.push(new Return(stack.pop()));
+        } else if (opcode == Opcodes.LRETURN) {
+            stack.push(new Return(stack.pop()));
+        } else if (opcode == Opcodes.FRETURN) {
+            stack.push(new Return(stack.pop()));
+        } else if (opcode == Opcodes.DRETURN) {
+            stack.push(new Return(stack.pop()));
+        } else if (opcode == Opcodes.ARETURN) {
+            stack.push(new Return(stack.pop()));
+        } else {
+            throw new IllegalStateException(
+                String.format("Unexpected opcode: %d", opcode)
+            );
+        }
     }
 }
