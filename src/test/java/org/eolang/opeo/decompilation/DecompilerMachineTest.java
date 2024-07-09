@@ -43,6 +43,7 @@ import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Owner;
 import org.eolang.opeo.ast.Popped;
+import org.eolang.opeo.ast.Return;
 import org.eolang.opeo.ast.Root;
 import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
@@ -421,7 +422,7 @@ final class DecompilerMachineTest {
                                 )
                             )
                         )),
-                    new Opcode(Opcodes.RETURN, false)
+                    new Return()
                 )
             )
         );

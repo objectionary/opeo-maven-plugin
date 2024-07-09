@@ -29,6 +29,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -40,7 +41,7 @@ import org.xembly.Directives;
  *  We need to add support for other types, such as floating point numbers, longs, etc.
  *  Don't forget to add tests for the new types.
  */
-public final class Mul implements AstNode {
+public final class Multiplication implements AstNode, Typed {
 
     /**
      * Left operand.
@@ -57,8 +58,8 @@ public final class Mul implements AstNode {
      * @param node XMIR node where to extract the value.
      * @param search Search function.
      */
-    public Mul(final XmlNode node, final Function<XmlNode, AstNode> search) {
-        this(Mul.xleft(node, search), xright(node, search));
+    public Multiplication(final XmlNode node, final Function<XmlNode, AstNode> search) {
+        this(Multiplication.xleft(node, search), xright(node, search));
     }
 
     /**
@@ -66,7 +67,7 @@ public final class Mul implements AstNode {
      * @param left Left operand
      * @param right Right operand
      */
-    public Mul(final AstNode left, final AstNode right) {
+    public Multiplication(final AstNode left, final AstNode right) {
         this.left = left;
         this.right = right;
     }
@@ -108,5 +109,10 @@ public final class Mul implements AstNode {
      */
     private static AstNode xleft(final XmlNode node, final Function<XmlNode, AstNode> search) {
         return search.apply(node.firstChild());
+    }
+
+    @Override
+    public Type type() {
+        return new ExpressionType(this.left, this.right).type();
     }
 }

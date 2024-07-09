@@ -94,13 +94,13 @@ public final class Return implements AstNode {
         final Type type = this.type();
         if (type.equals(Type.VOID_TYPE)) {
             return new Opcode(Opcodes.RETURN);
-        } else if (type.equals(Type.INT_TYPE)) {
+        } else if (type.equals(Type.INT_TYPE) || type.equals(Type.getType(Integer.class))) {
             return new Opcode(Opcodes.IRETURN);
-        } else if (type.equals(Type.LONG_TYPE)) {
+        } else if (type.equals(Type.LONG_TYPE) || type.equals(Type.getType(Long.class))) {
             return new Opcode(Opcodes.LRETURN);
-        } else if (type.equals(Type.FLOAT_TYPE)) {
+        } else if (type.equals(Type.FLOAT_TYPE) || type.equals(Type.getType(Float.class))) {
             return new Opcode(Opcodes.FRETURN);
-        } else if (type.equals(Type.DOUBLE_TYPE)) {
+        } else if (type.equals(Type.DOUBLE_TYPE) || type.equals(Type.getType(Double.class))) {
             return new Opcode(Opcodes.DRETURN);
         } else {
             return new Opcode(Opcodes.ARETURN);

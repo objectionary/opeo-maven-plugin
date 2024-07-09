@@ -46,11 +46,12 @@ import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.LocalVariable;
-import org.eolang.opeo.ast.Mul;
+import org.eolang.opeo.ast.Multiplication;
 import org.eolang.opeo.ast.NewAddress;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Popped;
 import org.eolang.opeo.ast.RawXml;
+import org.eolang.opeo.ast.Return;
 import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.ast.Substraction;
@@ -123,7 +124,7 @@ final class XmirParser implements Parser {
         } else if ("labeled".equals(base)) {
             result = new Labeled(node, this::parse);
         } else if ("times".equals(base)) {
-            result = new Mul(node, this::parse);
+            result = new Multiplication(node, this::parse);
         } else if (".if".equals(base)) {
             result = new If(node, this::parse);
         } else if ("load-constant".equals(base)) {
@@ -172,6 +173,8 @@ final class XmirParser implements Parser {
             result = new Constructor(node, this);
         } else if (".array-node".equals(base)) {
             result = new ArrayConstructor(node, this);
+        } else if ("return".equals(base)) {
+            result = new Return(node, this);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
             final Attributes attributes = new Attributes(node.firstChild());
             if ("static".equals(attributes.type())) {

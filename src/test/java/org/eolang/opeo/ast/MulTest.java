@@ -30,7 +30,7 @@ import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
 /**
- * Test case for {@link Mul}.
+ * Test case for {@link Multiplication}.
  * @since 0.1
  */
 final class MulTest {
@@ -38,7 +38,7 @@ final class MulTest {
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
         final String xmir = new Xembler(
-            new Mul(
+            new Multiplication(
                 new Literal(3),
                 new Literal(4)
             ).toXmir()

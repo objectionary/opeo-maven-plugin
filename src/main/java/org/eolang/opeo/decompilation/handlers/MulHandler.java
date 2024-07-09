@@ -24,7 +24,7 @@
 package org.eolang.opeo.decompilation.handlers;
 
 import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.Mul;
+import org.eolang.opeo.ast.Multiplication;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
@@ -54,7 +54,7 @@ public final class MulHandler implements InstructionHandler {
         if (state.instruction().opcode() == Opcodes.IMUL) {
             final AstNode right = state.stack().pop();
             final AstNode left = state.stack().pop();
-            state.stack().push(new Mul(left, right));
+            state.stack().push(new Multiplication(left, right));
         } else {
             state.stack().push(
                 new Opcode(
