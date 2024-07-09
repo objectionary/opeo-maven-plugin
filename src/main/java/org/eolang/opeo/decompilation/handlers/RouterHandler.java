@@ -109,6 +109,7 @@ public final class RouterHandler implements InstructionHandler {
                 new MapEntry<>(Opcodes.ASTORE, new StoreHandler(Type.getType(Object.class))),
                 new MapEntry<>(Opcodes.AASTORE, new StoreToArrayHandler()),
                 new MapEntry<>(Opcodes.ANEWARRAY, new NewArrayHandler()),
+                new MapEntry<>(Opcodes.CHECKCAST, new CheckCastHandler()),
                 new MapEntry<>(Opcodes.NEW, new NewHandler()),
                 new MapEntry<>(Opcodes.DUP, new DupHandler()),
                 new MapEntry<>(Opcodes.BIPUSH, new BipushHandler()),

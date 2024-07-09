@@ -82,7 +82,7 @@ public final class CheckCast implements AstNode, Typed {
 
     @Override
     public Iterable<Directive> toXmir() {
-        return new Directives().add("o").attr("base", "cast")
+        return new Directives().add("o").attr("base", "checkcast")
             .append(new DirectivesData(this.type))
             .append(this.value.toXmir())
             .up();

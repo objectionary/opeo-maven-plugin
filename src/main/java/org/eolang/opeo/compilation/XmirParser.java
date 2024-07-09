@@ -32,6 +32,7 @@ import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Cast;
+import org.eolang.opeo.ast.CheckCast;
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.ClassName;
 import org.eolang.opeo.ast.Constant;
@@ -175,6 +176,8 @@ final class XmirParser implements Parser {
             result = new ArrayConstructor(node, this);
         } else if ("return".equals(base)) {
             result = new Return(node, this);
+        } else if ("checkcast".equals(base)) {
+            result = new CheckCast(node, this);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
             final Attributes attributes = new Attributes(node.firstChild());
             if ("static".equals(attributes.type())) {

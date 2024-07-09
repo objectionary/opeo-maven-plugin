@@ -44,7 +44,7 @@ class CheckCastTest {
      */
     private static final String XMIR = String.join(
         "\n",
-        "<o base='cast'>",
+        "<o base='checkcast'>",
         "   <o base='type' data='bytes'>4A</o>",
         "   <o base='int' data='bytes'>00 00 00 00 00 00 00 03</o>",
         "</o>"
