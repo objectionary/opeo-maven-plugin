@@ -25,6 +25,7 @@ package org.eolang.opeo.ast;
 
 import java.util.Collections;
 import java.util.List;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 
 /**
@@ -43,7 +44,7 @@ public interface AstNode extends Xmir {
      * Empty node that does nothing.
      * @since 0.2
      */
-    final class Empty implements AstNode {
+    final class Empty implements AstNode, Typed {
 
         @Override
         public List<AstNode> opcodes() {
@@ -53,6 +54,11 @@ public interface AstNode extends Xmir {
         @Override
         public Iterable<Directive> toXmir() {
             return Collections.emptyList();
+        }
+
+        @Override
+        public Type type() {
+            return Type.VOID_TYPE;
         }
     }
 }

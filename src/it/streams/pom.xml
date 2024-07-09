@@ -120,7 +120,7 @@ SOFTWARE.
               <goal>exec</goal>
             </goals>
             <configuration>
-          <executable>mvn</executable>
+              <executable>mvn</executable>
               <arguments combine.children="append">
                 <argument>org.eolang:jeo-maven-plugin:${jeo.version}:assemble</argument>
                 <argument>-Djeo.assemble.sourcesDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>
