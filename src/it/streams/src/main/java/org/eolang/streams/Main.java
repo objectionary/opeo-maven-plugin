@@ -23,14 +23,19 @@
  */
 package org.eolang.streams;
 
+import java.util.Arrays;
+
 public class Main {
     public static void main(String... args) {
-        long total = Long.parseLong(args[0]);
-        long sum = 0L;
         long start = System.currentTimeMillis();
-        for (long i = 0; i < total; ++i) {
-            sum += new A(42).get();
+        String[] strings = new String[10];
+        for (int i = 0; i < strings.length; i++) {
+            strings[i] = String.valueOf(i);
         }
+        int sum = Arrays.stream(strings)
+            .filter(s -> !s.equals(""))
+            .mapToInt(s -> Integer.parseInt(s))
+            .sum();
         System.out.printf("sum=%d time=%d\n", sum, System.currentTimeMillis() - start);
     }
 }

@@ -74,6 +74,7 @@ SOFTWARE.
             <configuration>
               <sourcesDir>${project.build.directory}/generated-sources/jeo-decompile-xmir</sourcesDir>
               <outputDir>${project.build.directory}/generated-sources/opeo-decompile-xmir</outputDir>
+              <modifiedDir>${project.build.directory}/generated-sources/opeo-decompile-modified-xmir</modifiedDir>
             </configuration>
           </execution>
           <execution>
