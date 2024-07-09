@@ -27,4 +27,13 @@ String log = new File(basedir, 'build.log').text;
 assert log.contains("BUILD SUCCESS")
 assert log.contains("sum=")
 assert log.contains("time=")
+// Check all files.
+// Decompilation output.
+assert new File(basedir, 'target/generated-sources/opeo-decompile-xmir/org/eolang/streams/Main.xmir').exists()
+// Compilation output.
+assert new File(basedir, 'target/generated-sources/opeo-compile-xmir/org/eolang/streams/Main.xmir').exists()
+// Phi expressions output.
+assert new File(basedir, 'target/generated-sources/phi-expressions/org/eolang/streams/Main.phi').exists()
+// Check that we honestly decompiled and compiled the same file.
+assert new File(basedir, 'target/generated-sources/opeo-decompile-modified-xmir/org/eolang/streams/Main.xmir').exists()
 true

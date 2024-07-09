@@ -24,16 +24,16 @@
 package org.eolang.streams;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String... args) {
         long start = System.currentTimeMillis();
-        String[] strings = new String[10];
-        for (int i = 0; i < strings.length; i++) {
-            strings[i] = String.valueOf(i);
-        }
+        String[] strings = IntStream.range(0, 10)
+            .mapToObj(i -> String.valueOf(i))
+            .toArray(String[]::new);
         int sum = Arrays.stream(strings)
-            .filter(s -> !s.equals(""))
+            .filter(s -> Boolean.valueOf(s.equals("")).equals(false))
             .mapToInt(s -> Integer.parseInt(s))
             .sum();
         System.out.printf("sum=%d time=%d\n", sum, System.currentTimeMillis() - start);
