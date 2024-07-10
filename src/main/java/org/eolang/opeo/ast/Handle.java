@@ -2,12 +2,16 @@ package org.eolang.opeo.ast;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.eolang.jeo.representation.directives.DirectivesData;
 import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
+@ToString
+@EqualsAndHashCode
 public final class Handle implements Xmir {
 
     private final int tag;
@@ -32,15 +36,17 @@ public final class Handle implements Xmir {
     }
 
     private static String xowner(final XmlNode root) {
-        return root.attribute("base")
+        final String s1 = root.attribute("base")
             .map(s -> s.substring(0, s.lastIndexOf('.')))
             .orElseThrow(() -> new IllegalArgumentException("Owner is required"));
+        return s1.replace('.', '/');
     }
 
     private static String xname(final XmlNode root) {
-        return root.attribute("base")
-            .map(s -> s.substring(s.lastIndexOf('.')))
+        final String s1 = root.attribute("base")
+            .map(s -> s.substring(s.lastIndexOf('.') + 1))
             .orElseThrow(() -> new IllegalArgumentException("Name is required"));
+        return s1;
     }
 
     private static int xtag(final List<XmlNode> children) {

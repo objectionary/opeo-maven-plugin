@@ -42,6 +42,9 @@ import org.xembly.Xembler;
  */
 final class DynamicInvocationTest {
 
+    /**
+     * XMIR representation of the dynamic invocation.
+     */
     private final static String XMIR = String.join(
         "",
         "<o base='.run'>",
@@ -112,7 +115,6 @@ final class DynamicInvocationTest {
                         "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;",
                         false
                     ),
-                    "()Ljava/lang/Runnable;",
                     Type.getType("()V"),
                     new org.objectweb.asm.Handle(
                         6,

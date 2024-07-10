@@ -24,12 +24,14 @@
 package org.eolang.opeo.ast;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.eolang.jeo.representation.directives.DirectivesData;
 import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -44,7 +46,7 @@ public final class DynamicInvocation implements AstNode, Typed {
     private final Handle factory;
 
     private final Attributes attributes;
-    private final List<Xmir> arguments;
+    private final List<Object> arguments;
 
     public DynamicInvocation(final XmlNode root) {
         this(root, root.children().collect(Collectors.toList()));
@@ -61,9 +63,9 @@ public final class DynamicInvocation implements AstNode, Typed {
 
     private static List<Object> xarguments(final List<XmlNode> children) {
         List<Object> res = new ArrayList<>(3);
-        res.add(new HexString(children.get(2).text()).decode());
+        res.add(Type.getType(new HexString(children.get(2).text()).decode()));
         res.add(new Handle(children.get(3)).toAsm());
-        res.add(new HexString(children.get(4).text()).decode());
+        res.add(Type.getType(new HexString(children.get(4).text()).decode()));
         return res;
     }
 
@@ -92,7 +94,7 @@ public final class DynamicInvocation implements AstNode, Typed {
             .descriptor(descriptor)
             .type("dynamic");
         this.name = name;
-        this.arguments = this.toXmlArg(arguments);
+        this.arguments = arguments;
     }
 
     private List<Xmir> toXmlArg(final List<Object> arguments) {
@@ -113,7 +115,7 @@ public final class DynamicInvocation implements AstNode, Typed {
             .attr("base", String.format(".%s", this.name))
             .append(this.attributes.toXmir())
             .append(this.factory.toXmir());
-        this.arguments.stream()
+        this.toXmlArg(this.arguments).stream()
             .map(Xmir::toXmir)
             .forEach(directives::append);
         return directives.up();
@@ -121,7 +123,19 @@ public final class DynamicInvocation implements AstNode, Typed {
 
     @Override
     public List<AstNode> opcodes() {
-        return Collections.emptyList();
+        return Arrays.asList(
+            new Opcode(
+                Opcodes.INVOKEDYNAMIC,
+                Stream.concat(
+                    Stream.of(
+                        this.name,
+                        this.attributes.descriptor(),
+                        this.factory.toAsm()
+                    ),
+                    this.arguments.stream()
+                ).toArray()
+            )
+        );
     }
 
     @Override
