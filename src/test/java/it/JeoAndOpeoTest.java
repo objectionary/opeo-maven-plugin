@@ -104,7 +104,8 @@ final class JeoAndOpeoTest {
         "xmir/disassembled/SmartLifecycle.xmir",
         "xmir/disassembled/FlightRecorderStartupEvent.xmir",
         "xmir/disassembled/SimpleLog.xmir",
-        "xmir/disassembled/Factorial.xmir"
+        "xmir/disassembled/Factorial.xmir",
+        "xmir/disassembled/Lambda.xmir",
     })
     void decompilesCompilesAndKeepsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());

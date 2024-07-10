@@ -117,6 +117,7 @@ public final class RouterHandler implements InstructionHandler {
                 new MapEntry<>(Opcodes.INVOKEVIRTUAL, new InvokevirtualHandler()),
                 new MapEntry<>(Opcodes.INVOKESTATIC, new InvokestaticHander()),
                 new MapEntry<>(Opcodes.INVOKEINTERFACE, new InvokeinterfaceHandler()),
+                new MapEntry<>(Opcodes.INVOKEDYNAMIC, new InvokedynamicHandler()),
                 new MapEntry<>(Opcodes.GETFIELD, new GetFieldHandler()),
                 new MapEntry<>(Opcodes.PUTFIELD, new PutFieldHnadler()),
                 new MapEntry<>(Opcodes.GETSTATIC, new GetStaticHnadler()),
