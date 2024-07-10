@@ -38,6 +38,7 @@ import org.eolang.opeo.ast.ClassName;
 import org.eolang.opeo.ast.Constant;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.Duplicate;
+import org.eolang.opeo.ast.DynamicInvocation;
 import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.FieldRetrieval;
 import org.eolang.opeo.ast.If;
@@ -184,6 +185,8 @@ final class XmirParser implements Parser {
                 result = new StaticInvocation(node, this);
             } else if ("interface".equals(attributes.type())) {
                 result = new InterfaceInvocation(node, this);
+            } else if ("dynamic".equals(attributes.type())) {
+                result = new DynamicInvocation(node);
             } else {
                 result = new Invocation(node, this);
             }

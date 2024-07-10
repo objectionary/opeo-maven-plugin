@@ -81,10 +81,10 @@ final class DynamicInvocationTest {
                     "()Ljava/lang/Runnable;",
                     Arrays.asList(
                         Type.getType("()V"),
-                        new Handle(
+                        new org.objectweb.asm.Handle(
                             6,
-                            "lambda$run$0",
                             "org/eolang/streams/Lambda",
+                            "lambda$run$0",
                             "()V",
                             false
                         ),

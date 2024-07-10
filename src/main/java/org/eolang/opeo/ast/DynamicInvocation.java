@@ -100,8 +100,8 @@ public final class DynamicInvocation implements AstNode, Typed {
     private List<Xmir> toXmlArg(final List<Object> arguments) {
         return arguments.stream().map(
             node -> {
-                if (node instanceof Handle) {
-                    return (Xmir) node;
+                if (node instanceof org.objectweb.asm.Handle) {
+                    return new Handle((org.objectweb.asm.Handle) node);
                 } else {
                     return (Xmir) () -> new DirectivesData(node);
                 }
@@ -115,7 +115,8 @@ public final class DynamicInvocation implements AstNode, Typed {
             .attr("base", String.format(".%s", this.name))
             .append(this.attributes.toXmir())
             .append(this.factory.toXmir());
-        this.toXmlArg(this.arguments).stream()
+        final List<Xmir> xmlArg = this.toXmlArg(this.arguments);
+        xmlArg.stream()
             .map(Xmir::toXmir)
             .forEach(directives::append);
         return directives.up();

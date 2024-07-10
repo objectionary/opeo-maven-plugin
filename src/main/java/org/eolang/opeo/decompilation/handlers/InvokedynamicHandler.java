@@ -16,7 +16,8 @@ public final class InvokedynamicHandler implements InstructionHandler {
         final Handle factory = (Handle) operands.get(2);
         final List<Object> args = operands.subList(3, operands.size());
         final DynamicInvocation node = new DynamicInvocation(
-            name, new org.eolang.opeo.ast.Handle(factory),
+            name,
+            new org.eolang.opeo.ast.Handle(factory),
             descriptor,
             args
         );
