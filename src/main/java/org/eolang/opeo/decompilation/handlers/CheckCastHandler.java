@@ -40,6 +40,6 @@ public final class CheckCastHandler implements InstructionHandler {
     public void handle(final DecompilerState state) {
         final AstNode value = state.stack().pop();
         final Object type = state.operand(0);
-        state.stack().push(new CheckCast((Type) type, value));
+        state.stack().push(new CheckCast(Type.getType((String) type), value));
     }
 }

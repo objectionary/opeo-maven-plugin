@@ -33,6 +33,7 @@ import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.Parser;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -42,7 +43,7 @@ import org.xembly.Directives;
  */
 @ToString
 @EqualsAndHashCode
-public final class ArrayConstructor implements AstNode {
+public final class ArrayConstructor implements AstNode, Typed {
 
     /**
      * Array size.
@@ -94,4 +95,8 @@ public final class ArrayConstructor implements AstNode {
         return res;
     }
 
+    @Override
+    public Type type() {
+        return Type.getType(String.format("[L%s;", this.type));
+    }
 }
