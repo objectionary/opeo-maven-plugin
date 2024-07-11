@@ -39,7 +39,10 @@ import org.xembly.Directives;
  *   int local1;
  * }</p>
  * @since 0.2
- * @todo Test unboxing
+ * @todo #329:60min Test local variable unboxing.
+ *  We should add more tests for {@link #store()} and {@link #opcodes()} methods.
+ *  Now we test only primitive types.
+ *  It would be nice to test boxed types as well, for example {@link Integer} for ISTORE.
  */
 @ToString
 @EqualsAndHashCode
