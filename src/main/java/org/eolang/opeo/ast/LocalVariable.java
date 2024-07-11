@@ -39,6 +39,7 @@ import org.xembly.Directives;
  *   int local1;
  * }</p>
  * @since 0.2
+ * @todo Test unboxing
  */
 @ToString
 @EqualsAndHashCode
@@ -97,7 +98,18 @@ public final class LocalVariable implements AstNode, Typed {
 
     @Override
     public List<AstNode> opcodes() {
-        return Arrays.asList(new Opcode(this.type().getOpcode(Opcodes.ILOAD), this.identifier));
+        final Type type = this.type();
+        if (type.equals(Type.INT_TYPE) || type.equals(Type.getType(Integer.class))) {
+            return Arrays.asList(new Opcode(Opcodes.ILOAD, this.identifier));
+        } else if (type.equals(Type.LONG_TYPE) || type.equals(Type.getType(Long.class))) {
+            return Arrays.asList(new Opcode(Opcodes.LLOAD, this.identifier));
+        } else if (type.equals(Type.FLOAT_TYPE) || type.equals(Type.getType(Float.class))) {
+            return Arrays.asList(new Opcode(Opcodes.FLOAD, this.identifier));
+        } else if (type.equals(Type.DOUBLE_TYPE) || type.equals(Type.getType(Double.class))) {
+            return Arrays.asList(new Opcode(Opcodes.DLOAD, this.identifier));
+        } else {
+            return Arrays.asList(new Opcode(type.getOpcode(Opcodes.ILOAD), this.identifier));
+        }
     }
 
     @Override
@@ -111,7 +123,18 @@ public final class LocalVariable implements AstNode, Typed {
      * @return Opcode to store the variable. See {@link Opcode}.
      */
     public AstNode store() {
-        return new Opcode(this.type().getOpcode(Opcodes.ISTORE), this.identifier);
+        final Type type = this.type();
+        if (type.equals(Type.INT_TYPE) || type.equals(Type.getType(Integer.class))) {
+            return new Opcode(Opcodes.ISTORE, this.identifier);
+        } else if (type.equals(Type.LONG_TYPE) || type.equals(Type.getType(Long.class))) {
+            return new Opcode(Opcodes.LSTORE, this.identifier);
+        } else if (type.equals(Type.FLOAT_TYPE) || type.equals(Type.getType(Float.class))) {
+            return new Opcode(Opcodes.FSTORE, this.identifier);
+        } else if (type.equals(Type.DOUBLE_TYPE) || type.equals(Type.getType(Double.class))) {
+            return new Opcode(Opcodes.DSTORE, this.identifier);
+        } else {
+            return new Opcode(this.type().getOpcode(Opcodes.ISTORE), this.identifier);
+        }
     }
 
     /**

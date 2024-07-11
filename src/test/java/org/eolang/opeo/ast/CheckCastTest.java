@@ -81,7 +81,7 @@ class CheckCastTest {
             new CheckCast(type, new Literal((byte) 3)).opcodes(),
             Matchers.hasItems(
                 new Opcode(Opcodes.BIPUSH, (byte) 3),
-                new Opcode(Opcodes.CHECKCAST, type)
+                new Opcode(Opcodes.CHECKCAST, type.getDescriptor())
             )
         );
     }

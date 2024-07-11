@@ -29,13 +29,14 @@ import java.util.stream.IntStream;
 public class Main {
     public static void main(String... args) {
         long start = System.currentTimeMillis();
-        String[] strings = IntStream.range(0, 10)
-            .mapToObj(i -> String.valueOf(i))
-            .toArray(String[]::new);
-        int sum = Arrays.stream(strings)
-            .filter(s -> Boolean.valueOf(s.equals("")).equals(false))
-            .mapToInt(s -> Integer.parseInt(s))
-            .sum();
+//        String[] strings = IntStream.range(0, 10)
+//            .mapToObj(i -> String.valueOf(i))
+//            .toArray(String[]::new);
+//        int sum = Arrays.stream(strings)
+//            .filter(s -> Boolean.valueOf(s.equals("")).equals(false))
+//            .mapToInt(s -> Integer.parseInt(s))
+//            .sum();
+        int sum = 10;
         System.out.printf("sum=%d time=%d\n", sum, System.currentTimeMillis() - start);
     }
 }

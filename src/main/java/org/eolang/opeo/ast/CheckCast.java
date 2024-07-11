@@ -72,7 +72,7 @@ public final class CheckCast implements AstNode, Typed {
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(1);
         res.addAll(this.value.opcodes());
-        res.add(new Opcode(Opcodes.CHECKCAST, this.type));
+        res.add(new Opcode(Opcodes.CHECKCAST, this.type.getDescriptor()));
         return res;
     }
 

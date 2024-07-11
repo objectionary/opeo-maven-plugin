@@ -129,7 +129,10 @@ final class JeoAndOpeoTest {
     }
 
     @ParameterizedTest
-    @CsvSource("xmir/disassembled/SimpleLog.xmir")
+    @CsvSource({
+        "xmir/disassembled/SimpleLog.xmir",
+        "xmir/disassembled/Main.xmir"
+    })
     void decompilesCompilesAndKeepsTheSameInstructionsWithTheSameOperands(
         final String path
     ) throws Exception {
