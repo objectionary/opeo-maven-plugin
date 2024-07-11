@@ -51,10 +51,20 @@ public final class CheckCast implements AstNode, Typed {
      */
     private final AstNode value;
 
+    /**
+     * Constructor.
+     * @param node XMIR node to parse.
+     * @param parser Parser to use.
+     */
     public CheckCast(final XmlNode node, final Parser parser) {
         this(CheckCast.xtype(node), CheckCast.xvalue(node, parser));
     }
 
+    /**
+     * Constructor.
+     * @param type Type to check.
+     * @param value Value to cast.
+     */
     public CheckCast(final Type type, final AstNode value) {
         this.type = type;
         this.value = value;
@@ -81,10 +91,21 @@ public final class CheckCast implements AstNode, Typed {
         return this.type;
     }
 
+    /**
+     * Parse value from XMIR node.
+     * @param node XMIR node to parse.
+     * @param parser Parser to use.
+     * @return Parsed value.
+     */
     private static AstNode xvalue(final XmlNode node, final Parser parser) {
         return parser.parse(node.children().collect(Collectors.toList()).get(1));
     }
 
+    /**
+     * Parse checkcast type from XMIR node.
+     * @param node XMIR node to parse.
+     * @return Parsed type.
+     */
     private static Type xtype(final XmlNode node) {
         return Type.getType(
             new HexString(

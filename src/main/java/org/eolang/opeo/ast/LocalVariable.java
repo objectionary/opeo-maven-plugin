@@ -102,17 +102,19 @@ public final class LocalVariable implements AstNode, Typed {
     @Override
     public List<AstNode> opcodes() {
         final Type type = this.type();
+        final List<AstNode> result;
         if (type.equals(Type.INT_TYPE) || type.equals(Type.getType(Integer.class))) {
-            return Arrays.asList(new Opcode(Opcodes.ILOAD, this.identifier));
+            result = Arrays.asList(new Opcode(Opcodes.ILOAD, this.identifier));
         } else if (type.equals(Type.LONG_TYPE) || type.equals(Type.getType(Long.class))) {
-            return Arrays.asList(new Opcode(Opcodes.LLOAD, this.identifier));
+            result = Arrays.asList(new Opcode(Opcodes.LLOAD, this.identifier));
         } else if (type.equals(Type.FLOAT_TYPE) || type.equals(Type.getType(Float.class))) {
-            return Arrays.asList(new Opcode(Opcodes.FLOAD, this.identifier));
+            result = Arrays.asList(new Opcode(Opcodes.FLOAD, this.identifier));
         } else if (type.equals(Type.DOUBLE_TYPE) || type.equals(Type.getType(Double.class))) {
-            return Arrays.asList(new Opcode(Opcodes.DLOAD, this.identifier));
+            result = Arrays.asList(new Opcode(Opcodes.DLOAD, this.identifier));
         } else {
-            return Arrays.asList(new Opcode(type.getOpcode(Opcodes.ILOAD), this.identifier));
+            result = Arrays.asList(new Opcode(type.getOpcode(Opcodes.ILOAD), this.identifier));
         }
+        return result;
     }
 
     @Override
@@ -127,17 +129,19 @@ public final class LocalVariable implements AstNode, Typed {
      */
     public AstNode store() {
         final Type type = this.type();
+        final AstNode result;
         if (type.equals(Type.INT_TYPE) || type.equals(Type.getType(Integer.class))) {
-            return new Opcode(Opcodes.ISTORE, this.identifier);
+            result = new Opcode(Opcodes.ISTORE, this.identifier);
         } else if (type.equals(Type.LONG_TYPE) || type.equals(Type.getType(Long.class))) {
-            return new Opcode(Opcodes.LSTORE, this.identifier);
+            result = new Opcode(Opcodes.LSTORE, this.identifier);
         } else if (type.equals(Type.FLOAT_TYPE) || type.equals(Type.getType(Float.class))) {
-            return new Opcode(Opcodes.FSTORE, this.identifier);
+            result = new Opcode(Opcodes.FSTORE, this.identifier);
         } else if (type.equals(Type.DOUBLE_TYPE) || type.equals(Type.getType(Double.class))) {
-            return new Opcode(Opcodes.DSTORE, this.identifier);
+            result = new Opcode(Opcodes.DSTORE, this.identifier);
         } else {
-            return new Opcode(this.type().getOpcode(Opcodes.ISTORE), this.identifier);
+            result = new Opcode(this.type().getOpcode(Opcodes.ISTORE), this.identifier);
         }
+        return result;
     }
 
     /**

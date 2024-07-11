@@ -42,16 +42,40 @@ import org.xembly.Directives;
  */
 public final class DynamicInvocation implements AstNode, Typed {
 
+    /**
+     * Name of the method.
+     */
     private final String name;
+
+    /**
+     * Factory method reference.
+     */
     private final Handle factory;
 
+    /**
+     * Method attributes.
+     */
     private final Attributes attributes;
+
+    /**
+     * Factory method arguments.
+     */
     private final List<Object> arguments;
 
+    /**
+     * Constructor.
+     * @param root XMIR node to parse.
+     */
     public DynamicInvocation(final XmlNode root) {
         this(root, root.children().collect(Collectors.toList()));
     }
 
+    /**
+     * Constructor.
+     * Added for efficiency to receive children nodes only once.
+     * @param root XMIR node to parse.
+     * @param chldren XMIR node children.
+     */
     public DynamicInvocation(final XmlNode root, final List<XmlNode> chldren) {
         this(
             DynamicInvocation.xname(root),
@@ -61,28 +85,13 @@ public final class DynamicInvocation implements AstNode, Typed {
         );
     }
 
-    private static List<Object> xarguments(final List<XmlNode> children) {
-        List<Object> res = new ArrayList<>(3);
-        res.add(Type.getType(new HexString(children.get(2).text()).decode()));
-        res.add(new Handle(children.get(3)).toAsm());
-        res.add(Type.getType(new HexString(children.get(4).text()).decode()));
-        return res;
-    }
-
-    private static String xdescriptor(final List<XmlNode> root) {
-        return new Attributes(root.get(0)).descriptor();
-    }
-
-    private static Handle xfactory(final List<XmlNode> root) {
-        return new Handle(root.get(1));
-    }
-
-    private static String xname(final XmlNode root) {
-        return root.attribute("base")
-            .map(s -> s.substring(1))
-            .orElseThrow(() -> new IllegalArgumentException("Name is required"));
-    }
-
+    /**
+     * Constructor.
+     * @param name Name of the method.
+     * @param factory Factory method reference.
+     * @param descriptor Method descriptor.
+     * @param arguments Factory method arguments.
+     */
     public DynamicInvocation(
         final String name,
         final Handle factory,
@@ -97,28 +106,13 @@ public final class DynamicInvocation implements AstNode, Typed {
         this.arguments = arguments;
     }
 
-    private List<Xmir> toXmlArg(final List<Object> arguments) {
-        return arguments.stream().map(
-            node -> {
-                if (node instanceof org.objectweb.asm.Handle) {
-                    return new Handle((org.objectweb.asm.Handle) node);
-                } else {
-                    return (Xmir) () -> new DirectivesData(node);
-                }
-            }
-        ).collect(Collectors.toList());
-    }
-
     @Override
     public Iterable<Directive> toXmir() {
         final Directives directives = new Directives().add("o")
             .attr("base", String.format(".%s", this.name))
             .append(this.attributes.toXmir())
             .append(this.factory.toXmir());
-        final List<Xmir> xmlArg = this.toXmlArg(this.arguments);
-        xmlArg.stream()
-            .map(Xmir::toXmir)
-            .forEach(directives::append);
+        this.xmirArgs(this.arguments).stream().map(Xmir::toXmir).forEach(directives::append);
         return directives.up();
     }
 
@@ -142,5 +136,64 @@ public final class DynamicInvocation implements AstNode, Typed {
     @Override
     public Type type() {
         return Type.getReturnType(this.attributes.descriptor());
+    }
+
+    /**
+     * Parse the dynamic method name.
+     * @param root XMIR root node.
+     * @return Name.
+     */
+    private static String xname(final XmlNode root) {
+        return root.attribute("base")
+            .map(s -> s.substring(1))
+            .orElseThrow(() -> new IllegalArgumentException("Name is required"));
+    }
+
+    /**
+     * Parse a dynamic invocation descriptor.
+     * @param children XMIR root node children which we parse.
+     * @return Descriptor.
+     */
+    private static String xdescriptor(final List<XmlNode> children) {
+        return new Attributes(children.get(0)).descriptor();
+    }
+
+    /**
+     * Parse a factory method reference.
+     * @param children XMIR root node children which we parse.
+     * @return Factory method reference.
+     */
+    private static Handle xfactory(final List<XmlNode> children) {
+        return new Handle(children.get(1));
+    }
+
+    /**
+     * Parse a factory method arguments.
+     * @param children XMIR children.
+     * @return Arguments.
+     */
+    private static List<Object> xarguments(final List<XmlNode> children) {
+        final List<Object> res = new ArrayList<>(3);
+        res.add(Type.getType(new HexString(children.get(2).text()).decode()));
+        res.add(new Handle(children.get(3)).toAsm());
+        res.add(Type.getType(new HexString(children.get(4).text()).decode()));
+        return res;
+    }
+
+    /**
+     * Convert the factory method arguments to XMIR.
+     * @param arguments Arguments.
+     * @return XMIR arguments.
+     */
+    private List<Xmir> xmirArgs(final List<Object> arguments) {
+        return arguments.stream().map(
+            node -> {
+                if (node instanceof org.objectweb.asm.Handle) {
+                    return new Handle((org.objectweb.asm.Handle) node);
+                } else {
+                    return (Xmir) () -> new DirectivesData(node);
+                }
+            }
+        ).collect(Collectors.toList());
     }
 }
