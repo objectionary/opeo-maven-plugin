@@ -33,7 +33,7 @@ import org.xembly.Xembler;
  * Test case for {@link Multiplication}.
  * @since 0.1
  */
-final class MulTest {
+final class MultiplicationTest {
 
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
