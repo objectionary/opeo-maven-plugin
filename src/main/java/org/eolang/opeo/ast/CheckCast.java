@@ -57,8 +57,7 @@ public final class CheckCast implements AstNode, Typed {
 
     private static AstNode xvalue(final XmlNode node, final Parser parser) {
         return parser.parse(
-            node.children().findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("CheckCast should have a child."))
+            node.children().collect(Collectors.toList()).get(1)
         );
     }
 
