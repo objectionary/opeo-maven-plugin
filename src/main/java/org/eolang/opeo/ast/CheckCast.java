@@ -55,25 +55,6 @@ public final class CheckCast implements AstNode, Typed {
         this(CheckCast.xtype(node), CheckCast.xvalue(node, parser));
     }
 
-    private static AstNode xvalue(final XmlNode node, final Parser parser) {
-        return parser.parse(
-            node.children().collect(Collectors.toList()).get(1)
-        );
-    }
-
-    private static Type xtype(final XmlNode node) {
-        return Type.getType(
-            new HexString(
-                node.children().findFirst().orElseThrow(
-                    () -> new IllegalArgumentException(
-                        "CheckCast should have a first child for the type."
-                    )
-                ).text()
-            ).decode()
-        );
-    }
-
-
     public CheckCast(final Type type, final AstNode value) {
         this.type = type;
         this.value = value;
@@ -98,5 +79,21 @@ public final class CheckCast implements AstNode, Typed {
     @Override
     public Type type() {
         return this.type;
+    }
+
+    private static AstNode xvalue(final XmlNode node, final Parser parser) {
+        return parser.parse(node.children().collect(Collectors.toList()).get(1));
+    }
+
+    private static Type xtype(final XmlNode node) {
+        return Type.getType(
+            new HexString(
+                node.children().findFirst().orElseThrow(
+                    () -> new IllegalArgumentException(
+                        "CheckCast should have a first child for the type."
+                    )
+                ).text()
+            ).decode()
+        );
     }
 }
