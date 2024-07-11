@@ -90,6 +90,11 @@ public final class Multiplication implements AstNode, Typed {
         return res;
     }
 
+    @Override
+    public Type type() {
+        return new ExpressionType(this.left, this.right).type();
+    }
+
     /**
      * Extracts the first value.
      * @param node XMIR node where to extract the value.
@@ -109,10 +114,5 @@ public final class Multiplication implements AstNode, Typed {
      */
     private static AstNode xleft(final XmlNode node, final Function<XmlNode, AstNode> search) {
         return search.apply(node.firstChild());
-    }
-
-    @Override
-    public Type type() {
-        return new ExpressionType(this.left, this.right).type();
     }
 }

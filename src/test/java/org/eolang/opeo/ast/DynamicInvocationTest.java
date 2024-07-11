@@ -24,10 +24,8 @@
 package org.eolang.opeo.ast;
 
 import java.util.Arrays;
-import java.util.List;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.SameXml;
-import org.eolang.opeo.compilation.Parser;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -40,12 +38,13 @@ import org.xembly.Xembler;
  * Test case for {@link DynamicInvocation}.
  * @since 0.5
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class DynamicInvocationTest {
 
     /**
      * XMIR representation of the dynamic invocation.
      */
-    private final static String XMIR = String.join(
+    private static final String XMIR = String.join(
         "",
         "<o base='.run'>",
         "   <o base='string' data='bytes' line='306231171'>64 65 73 63 72 69 70 74 6F 72 3D 28 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 52 75 6E 6E 61 62 6C 65 3B 7C 74 79 70 65 3D 64 79 6E 61 6D 69 63</o>",

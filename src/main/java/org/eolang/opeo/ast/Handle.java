@@ -119,6 +119,7 @@ public final class Handle implements Xmir {
      * @param owner Owner of the method or field.
      * @param desc Descriptor of the method or field.
      * @param itf Is it an interface method?
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
     public Handle(
         final int tag,
@@ -132,6 +133,24 @@ public final class Handle implements Xmir {
         this.owner = owner;
         this.desc = desc;
         this.itf = itf;
+    }
+
+    @Override
+    public Iterable<Directive> toXmir() {
+        return new Directives().add("o")
+            .attr("base", String.format("%s.%s", this.owner.replace('/', '.'), this.name))
+            .append(new DirectivesData("", this.tag))
+            .append(new DirectivesData("", this.desc))
+            .append(new DirectivesData("", this.itf))
+            .up();
+    }
+
+    /**
+     * Convert to ASM handle.
+     * @return ASM handle.
+     */
+    public org.objectweb.asm.Handle toAsm() {
+        return new org.objectweb.asm.Handle(this.tag, this.owner, this.name, this.desc, this.itf);
     }
 
     /**
@@ -177,27 +196,9 @@ public final class Handle implements Xmir {
     /**
      * Parse isInterface from XMIR node.
      * @param children XMIR node children.
-     * @return true if it is an interface method.
+     * @return True if it is an interface method.
      */
     private static boolean xitf(final List<XmlNode> children) {
         return new HexString(children.get(2).text()).decodeAsBoolean();
-    }
-
-    /**
-     * Convert to ASM handle.
-     * @return ASM handle.
-     */
-    public org.objectweb.asm.Handle toAsm() {
-        return new org.objectweb.asm.Handle(this.tag, this.owner, this.name, this.desc, this.itf);
-    }
-
-    @Override
-    public Iterable<Directive> toXmir() {
-        return new Directives().add("o")
-            .attr("base", String.format("%s.%s", this.owner.replace('/', '.'), this.name))
-            .append(new DirectivesData("", this.tag))
-            .append(new DirectivesData("", this.desc))
-            .append(new DirectivesData("", this.itf))
-            .up();
     }
 }

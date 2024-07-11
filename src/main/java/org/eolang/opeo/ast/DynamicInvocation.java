@@ -91,6 +91,7 @@ public final class DynamicInvocation implements AstNode, Typed {
      * @param factory Factory method reference.
      * @param descriptor Method descriptor.
      * @param arguments Factory method arguments.
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
     public DynamicInvocation(
         final String name,
@@ -99,9 +100,7 @@ public final class DynamicInvocation implements AstNode, Typed {
         final List<Object> arguments
     ) {
         this.factory = factory;
-        this.attributes = new Attributes()
-            .descriptor(descriptor)
-            .type("dynamic");
+        this.attributes = new Attributes().descriptor(descriptor).type("dynamic");
         this.name = name;
         this.arguments = arguments;
     }
@@ -112,7 +111,8 @@ public final class DynamicInvocation implements AstNode, Typed {
             .attr("base", String.format(".%s", this.name))
             .append(this.attributes.toXmir())
             .append(this.factory.toXmir());
-        this.xmirArgs(this.arguments).stream().map(Xmir::toXmir).forEach(directives::append);
+        DynamicInvocation.xmirArgs(this.arguments).stream().map(Xmir::toXmir)
+            .forEach(directives::append);
         return directives.up();
     }
 
@@ -182,17 +182,19 @@ public final class DynamicInvocation implements AstNode, Typed {
 
     /**
      * Convert the factory method arguments to XMIR.
-     * @param arguments Arguments.
+     * @param args Arguments.
      * @return XMIR arguments.
      */
-    private List<Xmir> xmirArgs(final List<Object> arguments) {
-        return arguments.stream().map(
+    private static List<Xmir> xmirArgs(final List<Object> args) {
+        return args.stream().map(
             node -> {
+                final Xmir result;
                 if (node instanceof org.objectweb.asm.Handle) {
-                    return new Handle((org.objectweb.asm.Handle) node);
+                    result = new Handle((org.objectweb.asm.Handle) node);
                 } else {
-                    return (Xmir) () -> new DirectivesData(node);
+                    result = () -> new DirectivesData(node);
                 }
+                return result;
             }
         ).collect(Collectors.toList());
     }

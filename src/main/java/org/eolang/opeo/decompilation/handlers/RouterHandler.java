@@ -38,6 +38,7 @@ import org.objectweb.asm.Type;
  * General Instruction Handler.
  * This handler redirects handling of instructions depending on an incoming instruction.
  * @since 0.2
+ * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
 public final class RouterHandler implements InstructionHandler {
 

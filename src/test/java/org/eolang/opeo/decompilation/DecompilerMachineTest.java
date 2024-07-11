@@ -40,7 +40,6 @@ import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.LocalVariable;
-import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Owner;
 import org.eolang.opeo.ast.Popped;
 import org.eolang.opeo.ast.Return;

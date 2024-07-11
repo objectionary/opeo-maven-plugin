@@ -37,7 +37,7 @@ import org.xembly.Xembler;
  * Test case for {@link CheckCast}.
  * @since 0.5
  */
-class CheckCastTest {
+final class CheckCastTest {
 
     /**
      * XMIR representation of the CheckCast.
@@ -85,6 +85,4 @@ class CheckCastTest {
             )
         );
     }
-
-
 }

@@ -53,7 +53,7 @@ public final class ArrayConstructor implements AstNode, Typed {
     /**
      * Array type.
      */
-    private final String type;
+    private final String atype;
 
     /**
      * Constructor.
@@ -74,7 +74,7 @@ public final class ArrayConstructor implements AstNode, Typed {
      */
     public ArrayConstructor(final AstNode size, final String type) {
         this.size = size;
-        this.type = type;
+        this.atype = type;
     }
 
     @Override
@@ -82,7 +82,7 @@ public final class ArrayConstructor implements AstNode, Typed {
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", ".array-node")
-            .append(new DirectivesData(this.type))
+            .append(new DirectivesData(this.atype))
             .append(this.size.toXmir());
         return directives.up();
     }
@@ -91,12 +91,12 @@ public final class ArrayConstructor implements AstNode, Typed {
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.size.opcodes());
-        res.add(new Opcode(Opcodes.ANEWARRAY, this.type));
+        res.add(new Opcode(Opcodes.ANEWARRAY, this.atype));
         return res;
     }
 
     @Override
     public Type type() {
-        return Type.getType(String.format("[L%s;", this.type));
+        return Type.getType(String.format("[L%s;", this.atype));
     }
 }

@@ -33,12 +33,11 @@ import org.objectweb.asm.Opcodes;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
-
 /**
  * Test case for {@link Return}.
  * @since 0.5
  */
-class ReturnTest {
+final class ReturnTest {
 
     /**
      * Parser for all unit tests in this class.
@@ -47,7 +46,7 @@ class ReturnTest {
         final String base = node.attribute("base").orElseThrow(
             () -> new IllegalArgumentException("No base attribute")
         );
-        AstNode result;
+        final AstNode result;
         if (base.startsWith("int")) {
             result = new Literal(42);
         } else if (base.startsWith("string")) {
@@ -104,7 +103,8 @@ class ReturnTest {
             "Can't create typed return with int",
             new Return(
                 new XmlNode(
-                    "<o base='return'><o base='int' data='bytes'>00 00 00 00 00 00 00 2A</o></o>"),
+                    "<o base='return'><o base='int' data='bytes'>00 00 00 00 00 00 00 2A</o></o>"
+                ),
                 ReturnTest.PARSER
             ).opcodes(),
             Matchers.hasItems(
@@ -120,7 +120,8 @@ class ReturnTest {
             "Can't create typed return with string",
             new Return(
                 new XmlNode(
-                    "<o base='return'><o base='string' data='bytes'>66 6F 6F</o></o>"),
+                    "<o base='return'><o base='string' data='bytes'>66 6F 6F</o></o>"
+                ),
                 ReturnTest.PARSER
             ).opcodes(),
             Matchers.hasItems(
@@ -129,5 +130,4 @@ class ReturnTest {
             )
         );
     }
-
 }

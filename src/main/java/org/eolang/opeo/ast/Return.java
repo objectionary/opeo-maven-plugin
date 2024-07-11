@@ -92,19 +92,21 @@ public final class Return implements AstNode {
      */
     private Opcode opcode() {
         final Type type = this.type();
+        final Opcode result;
         if (type.equals(Type.VOID_TYPE)) {
-            return new Opcode(Opcodes.RETURN);
+            result = new Opcode(Opcodes.RETURN);
         } else if (type.equals(Type.INT_TYPE) || type.equals(Type.getType(Integer.class))) {
-            return new Opcode(Opcodes.IRETURN);
+            result = new Opcode(Opcodes.IRETURN);
         } else if (type.equals(Type.LONG_TYPE) || type.equals(Type.getType(Long.class))) {
-            return new Opcode(Opcodes.LRETURN);
+            result = new Opcode(Opcodes.LRETURN);
         } else if (type.equals(Type.FLOAT_TYPE) || type.equals(Type.getType(Float.class))) {
-            return new Opcode(Opcodes.FRETURN);
+            result = new Opcode(Opcodes.FRETURN);
         } else if (type.equals(Type.DOUBLE_TYPE) || type.equals(Type.getType(Double.class))) {
-            return new Opcode(Opcodes.DRETURN);
+            result = new Opcode(Opcodes.DRETURN);
         } else {
-            return new Opcode(Opcodes.ARETURN);
+            result = new Opcode(Opcodes.ARETURN);
         }
+        return result;
     }
 
     /**
@@ -122,11 +124,13 @@ public final class Return implements AstNode {
      * @return Parsed typed value.
      */
     private static AstNode xtype(final XmlNode node, final Parser parser) {
+        final AstNode result;
         final List<XmlNode> children = node.children().collect(Collectors.toList());
         if (children.isEmpty()) {
-            return new Empty();
+            result = new Empty();
         } else {
-            return parser.parse(children.get(0));
+            result = parser.parse(children.get(0));
         }
+        return result;
     }
 }

@@ -44,7 +44,7 @@ public final class CheckCast implements AstNode, Typed {
     /**
      * Type to cast to.
      */
-    private final Type type;
+    private final Type ctype;
 
     /**
      * Value to cast.
@@ -66,14 +66,14 @@ public final class CheckCast implements AstNode, Typed {
      * @param value Value to cast.
      */
     public CheckCast(final Type type, final AstNode value) {
-        this.type = type;
+        this.ctype = type;
         this.value = value;
     }
 
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o").attr("base", "checkcast")
-            .append(new DirectivesData(this.type))
+            .append(new DirectivesData(this.ctype))
             .append(this.value.toXmir())
             .up();
     }
@@ -82,13 +82,13 @@ public final class CheckCast implements AstNode, Typed {
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(1);
         res.addAll(this.value.opcodes());
-        res.add(new Opcode(Opcodes.CHECKCAST, this.type.getDescriptor()));
+        res.add(new Opcode(Opcodes.CHECKCAST, this.ctype.getDescriptor()));
         return res;
     }
 
     @Override
     public Type type() {
-        return this.type;
+        return this.ctype;
     }
 
     /**

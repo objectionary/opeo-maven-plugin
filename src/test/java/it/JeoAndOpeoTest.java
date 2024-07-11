@@ -24,7 +24,6 @@
 package it;
 
 import com.jcabi.xml.XMLDocument;
-import java.util.Arrays;
 import java.util.List;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
@@ -107,7 +106,7 @@ final class JeoAndOpeoTest {
         "xmir/disassembled/SimpleLog.xmir",
         "xmir/disassembled/Factorial.xmir",
         "xmir/disassembled/Lambda.xmir",
-        "xmir/disassembled/Main.xmir",
+        "xmir/disassembled/Main.xmir"
     })
     void decompilesCompilesAndKeepsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
