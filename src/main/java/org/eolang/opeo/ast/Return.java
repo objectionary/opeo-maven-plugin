@@ -103,6 +103,8 @@ public final class Return implements AstNode {
             result = new Opcode(Opcodes.FRETURN);
         } else if (type.equals(Type.DOUBLE_TYPE) || type.equals(Type.getType(Double.class))) {
             result = new Opcode(Opcodes.DRETURN);
+        } else if (type.equals(Type.BOOLEAN_TYPE) || type.equals(Type.getType(Boolean.class))) {
+            result = new Opcode(Opcodes.IRETURN);
         } else {
             result = new Opcode(Opcodes.ARETURN);
         }

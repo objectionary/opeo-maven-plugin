@@ -82,7 +82,7 @@ public final class SameXml extends TypeSafeMatcher<String> {
      * @param original Original XML document.
      * @return XML document without 'line' attributes.
      */
-    private static XML withoutLines(final XML original) {
+    public static XML withoutLines(final XML original) {
         try {
             return new XMLDocument(
                 new Xembler(

@@ -40,6 +40,7 @@ import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlOperand;
 import org.eolang.jeo.representation.xmir.XmlProgram;
+import org.eolang.opeo.SameXml;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
@@ -72,7 +73,8 @@ final class DetectiveIT {
     @Disabled
     @ParameterizedTest
     @CsvSource(
-        "./target/it/spring-fat/target/generated-sources/jeo-disassemble-xmir, ./target/it/spring-fat/target/generated-sources/opeo-compile-xmir"
+//        "./target/it/spring-fat/target/generated-sources/jeo-disassemble-xmir, ./target/it/spring-fat/target/generated-sources/opeo-compile-xmir"
+        "./target/it/streams/target/generated-sources/jeo-decompile-xmir/org/eolang/streams/Main.xmir, ./target/it/streams/target/generated-sources/opeo-compile-xmir/org/eolang/streams/Main.xmir"
     )
     void findsTheProblem(final String etalon, final String target) {
         final Path golden = Paths.get(etalon);
@@ -266,12 +268,12 @@ final class DetectiveIT {
             final Path rpath = other.path;
             try {
                 this.results.oneMore();
-                final List<XmlMethod> gmethods = new XmlProgram(this.xml(gpath))
-                    .top()
-                    .methods();
-                final List<XmlMethod> bmethods = new XmlProgram(this.xml(rpath))
-                    .top()
-                    .methods();
+                final List<XmlMethod> gmethods = new XmlProgram(
+                    SameXml.withoutLines(this.xml(gpath))
+                ).top().methods();
+                final List<XmlMethod> bmethods = new XmlProgram(
+                    SameXml.withoutLines(this.xml(rpath))
+                ).top().methods();
                 final int size = gmethods.size();
                 for (int index = 0; index < size; ++index) {
                     new Method(gmethods.get(index)).compare(new Method(bmethods.get(index)));
