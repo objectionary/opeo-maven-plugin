@@ -32,6 +32,7 @@ import lombok.ToString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.Parser;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -41,7 +42,7 @@ import org.xembly.Directives;
  */
 @ToString
 @EqualsAndHashCode
-public final class Super implements AstNode {
+public final class Super implements AstNode, Typed {
 
     /**
      * Super instance.
@@ -174,5 +175,10 @@ public final class Super implements AstNode {
             )
         );
         return res;
+    }
+
+    @Override
+    public Type type() {
+        return Type.getReturnType(this.attributes.descriptor());
     }
 }

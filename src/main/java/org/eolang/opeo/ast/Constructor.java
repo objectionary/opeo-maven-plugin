@@ -39,6 +39,7 @@ import org.xembly.Directives;
 /**
  * Constructor output node.
  * @since 0.1
+ * @todo ! repair 'spring-fat' it
  */
 @ToString
 @EqualsAndHashCode
