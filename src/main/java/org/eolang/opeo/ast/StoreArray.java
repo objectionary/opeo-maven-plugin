@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.Parser;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -36,7 +37,7 @@ import org.xembly.Directives;
  * Store array element.
  * @since 0.1
  */
-public final class StoreArray implements AstNode {
+public final class StoreArray implements AstNode, Typed {
 
     /**
      * Target array.
@@ -110,5 +111,10 @@ public final class StoreArray implements AstNode {
         res.addAll(this.value.opcodes());
         res.add(new Opcode(Opcodes.AASTORE));
         return res;
+    }
+
+    @Override
+    public Type type() {
+        return Type.VOID_TYPE;
     }
 }
