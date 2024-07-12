@@ -25,6 +25,7 @@ package org.eolang.opeo.decompilation.handlers;
 
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Duplicate;
+import org.eolang.opeo.ast.FieldRetrieval;
 import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.StoreArray;
@@ -37,6 +38,7 @@ import org.eolang.opeo.decompilation.InstructionHandler;
  * Opcodes: aastore
  * Stack [before]->[after]: "arrayref, index, value →"
  * @since 0.1
+ * @todo ! references? wtf?
  */
 public final class StoreToArrayHandler implements InstructionHandler {
 
@@ -45,9 +47,13 @@ public final class StoreToArrayHandler implements InstructionHandler {
         final AstNode value = state.stack().pop();
         final AstNode index = state.stack().pop();
         final AstNode array = state.stack().pop();
-        final Reference ref = this.findRef(array);
-        ref.link(new StoreArray(ref.object(), index, value));
-        state.stack().push(ref);
+//        try {
+            final Reference ref = this.findRef(array);
+            ref.link(new StoreArray(ref.object(), index, value));
+            state.stack().push(ref);
+//        } catch (final IllegalStateException exception) {
+//            state.stack().push(new Reference(new StoreArray(array, index, value)));
+//        }
     }
 
     /**
@@ -63,6 +69,8 @@ public final class StoreToArrayHandler implements InstructionHandler {
             result = this.findRef(((Labeled) node).origin());
         } else if (node instanceof Duplicate) {
             result = this.findRef(((Duplicate) node).origin());
+        } else if (node instanceof FieldRetrieval) {
+            result = new Reference(node);
         } else {
             throw new IllegalStateException(String.format("Can find reference for node %s", node));
         }

@@ -107,7 +107,8 @@ final class JeoAndOpeoTest {
         "xmir/disassembled/Factorial.xmir",
         "xmir/disassembled/Lambda.xmir",
         "xmir/disassembled/Main.xmir",
-        "xmir/disassembled/UndertowWebServerFactoryCustomizer$ServerOptions.xmir"
+        "xmir/disassembled/UndertowWebServerFactoryCustomizer$ServerOptions.xmir",
+        "xmir/disassembled/MutableCoercionConfig.xmir"
     })
     void decompilesCompilesAndKeepsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());

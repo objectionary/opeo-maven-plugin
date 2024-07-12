@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-07-12T11:23:35.543705Z"
+         ms="1720783415543"
+         name="j$MutableCoercionConfig"
+         revision="0.0.0"
+         time="2024-07-12T11:23:35.543705Z"
+         version="0.0.0">
+   <listing>yv66vgAAADQANwoACAAmCgAIACcHACgKAAMAKQkAAwAqCgArACwJAAMALQcALgcALwEAEHNlcmlhbFZlcnNpb25VSUQBAAFKAQANQ29uc3RhbnRWYWx1ZQUAAAAAAAAAAQEABjxpbml0PgEAAygpVgEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBABJMb2NhbFZhcmlhYmxlVGFibGUBAAR0aGlzAQA6TGNvbS9mYXN0ZXJ4bWwvamFja3Nvbi9kYXRhYmluZC9jZmcvTXV0YWJsZUNvZXJjaW9uQ29uZmlnOwEAPShMY29tL2Zhc3RlcnhtbC9qYWNrc29uL2RhdGFiaW5kL2NmZy9NdXRhYmxlQ29lcmNpb25Db25maWc7KVYBAANzcmMBAARjb3B5AQA8KClMY29tL2Zhc3RlcnhtbC9qYWNrc29uL2RhdGFiaW5kL2NmZy9NdXRhYmxlQ29lcmNpb25Db25maWc7AQALc2V0Q29lcmNpb24BAKYoTGNvbS9mYXN0ZXJ4bWwvamFja3Nvbi9kYXRhYmluZC9jZmcvQ29lcmNpb25JbnB1dFNoYXBlO0xjb20vZmFzdGVyeG1sL2phY2tzb24vZGF0YWJpbmQvY2ZnL0NvZXJjaW9uQWN0aW9uOylMY29tL2Zhc3RlcnhtbC9qYWNrc29uL2RhdGFiaW5kL2NmZy9NdXRhYmxlQ29lcmNpb25Db25maWc7AQAFc2hhcGUBADdMY29tL2Zhc3RlcnhtbC9qYWNrc29uL2RhdGFiaW5kL2NmZy9Db2VyY2lvbklucHV0U2hhcGU7AQAGYWN0aW9uAQAzTGNvbS9mYXN0ZXJ4bWwvamFja3Nvbi9kYXRhYmluZC9jZmcvQ29lcmNpb25BY3Rpb247AQAVc2V0QWNjZXB0QmxhbmtBc0VtcHR5AQBPKExqYXZhL2xhbmcvQm9vbGVhbjspTGNvbS9mYXN0ZXJ4bWwvamFja3Nvbi9kYXRhYmluZC9jZmcvTXV0YWJsZUNvZXJjaW9uQ29uZmlnOwEABXN0YXRlAQATTGphdmEvbGFuZy9Cb29sZWFuOwEAClNvdXJjZUZpbGUBABpNdXRhYmxlQ29lcmNpb25Db25maWcuamF2YQwADwAQDAAPADABADhjb20vZmFzdGVyeG1sL2phY2tzb24vZGF0YWJpbmQvY2ZnL011dGFibGVDb2VyY2lvbkNvbmZpZwwADwAWDAAxADIHADMMADQANQwANgAjAQAxY29tL2Zhc3RlcnhtbC9qYWNrc29uL2RhdGFiaW5kL2NmZy9Db2VyY2lvbkNvbmZpZwEAFGphdmEvaW8vU2VyaWFsaXphYmxlAQA2KExjb20vZmFzdGVyeG1sL2phY2tzb24vZGF0YWJpbmQvY2ZnL0NvZXJjaW9uQ29uZmlnOylWAQARX2NvZXJjaW9uc0J5U2hhcGUBADRbTGNvbS9mYXN0ZXJ4bWwvamFja3Nvbi9kYXRhYmluZC9jZmcvQ29lcmNpb25BY3Rpb247AQA1Y29tL2Zhc3RlcnhtbC9qYWNrc29uL2RhdGFiaW5kL2NmZy9Db2VyY2lvbklucHV0U2hhcGUBAAdvcmRpbmFsAQADKClJAQATX2FjY2VwdEJsYW5rQXNFbXB0eQAhAAMACAABAAkAAQAaAAoACwABAAwAAAACAA0ABQABAA8AEAABABEAAAAvAAEAAQAAAAUqtwABsQAAAAIAEgAAAAYAAQAAABAAEwAAAAwAAQAAAAUAFAAVAAAABAAPABYAAQARAAAAPgACAAIAAAAGKiu3AAKxAAAAAgASAAAACgACAAAAEwAFABQAEwAAABYAAgAAAAYAFAAVAAAAAAAGABcAFQABAAEAGAAZAAEAEQAAADMAAwABAAAACbsAA1kqtwAEsAAAAAIAEgAAAAYAAQAAABcAEwAAAAwAAQAAAAkAFAAVAAAAAQAaABsAAQARAAAATgADAAMAAAAMKrQABSu2AAYsUyqwAAAAAgASAAAACgACAAAAHAAKAB0AEwAAACAAAwAAAAwAFAAVAAAAAAAMABwAHQABAAAADAAeAB8AAgABACAAIQABABEAAAA/AAIAAgAAAAcqK7UAByqwAAAAAgASAAAACgACAAAAIQAFACIAEwAAABYAAgAAAAcAFAAVAAAAAAAHACIAIwABAAEAJAAAAAIAJQ==</listing>
+   <errors/>
+   <sheets/>
+   <license/>
+   <metas>
+      <meta>
+         <head>package</head>
+         <tail>com.fasterxml.jackson.databind.cfg</tail>
+         <part>com.fasterxml.jackson.databind.cfg</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.opcode</tail>
+         <part>org.eolang.jeo.opcode</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.label</tail>
+         <part>org.eolang.jeo.label</part>
+      </meta>
+   </metas>
+   <objects>
+      <o abstract="" name="j$MutableCoercionConfig">
+         <o base="int" data="bytes" line="332163027" name="version">00 00 00 00 00 00 00 34</o>
+         <o base="int" data="bytes" line="1022903720" name="access">00 00 00 00 00 00 00 21</o>
+         <o base="string" data="bytes" line="485512911" name="supername">63 6F 6D 2F 66 61 73 74 65 72 78 6D 6C 2F 6A 61 63 6B 73 6F 6E 2F 64 61 74 61 62 69 6E 64 2F 63 66 67 2F 43 6F 65 72 63 69 6F 6E 43 6F 6E 66 69 67</o>
+         <o base="tuple" name="interfaces" star="">
+            <o base="string" data="bytes" line="218270437">6A 61 76 61 2F 69 6F 2F 53 65 72 69 61 6C 69 7A 61 62 6C 65</o>
+         </o>
+         <o base="field" line="999" name="j$serialVersionUID">
+            <o base="int"
+               data="bytes"
+               line="1598342233"
+               name="access-j$serialVersionUID">00 00 00 00 00 00 00 1A</o>
+            <o base="string"
+               data="bytes"
+               line="1942480807"
+               name="descriptor-j$serialVersionUID">4A</o>
+            <o base="string"
+               data="bytes"
+               line="1205800287"
+               name="signature-j$serialVersionUID"/>
+            <o base="long"
+               data="bytes"
+               line="925558235"
+               name="value-j$serialVersionUID">00 00 00 00 00 00 00 01</o>
+         </o>
+
+         <o abstract=""
+            name="j$setCoercion-KExjb20vZmFzdGVyeG1sL2phY2tzb24vZGF0YWJpbmQvY2ZnL0NvZXJjaW9uSW5wdXRTaGFwZTtMY29tL2Zhc3RlcnhtbC9qYWNrc29uL2RhdGFiaW5kL2NmZy9Db2VyY2lvbkFjdGlvbjspTGNvbS9mYXN0ZXJ4bWwvamFja3Nvbi9kYXRhYmluZC9jZmcvTXV0YWJsZUNvZXJjaW9uQ29uZmlnOw==">
+            <o base="int" data="bytes" line="2113249341">00 00 00 00 00 00 00 01</o>
+            <o base="string" data="bytes" line="836551081">28 4C 63 6F 6D 2F 66 61 73 74 65 72 78 6D 6C 2F 6A 61 63 6B 73 6F 6E 2F 64 61 74 61 62 69 6E 64 2F 63 66 67 2F 43 6F 65 72 63 69 6F 6E 49 6E 70 75 74 53 68 61 70 65 3B 4C 63 6F 6D 2F 66 61 73 74 65 72 78 6D 6C 2F 6A 61 63 6B 73 6F 6E 2F 64 61 74 61 62 69 6E 64 2F 63 66 67 2F 43 6F 65 72 63 69 6F 6E 41 63 74 69 6F 6E 3B 29 4C 63 6F 6D 2F 66 61 73 74 65 72 78 6D 6C 2F 6A 61 63 6B 73 6F 6E 2F 64 61 74 61 62 69 6E 64 2F 63 66 67 2F 4D 75 74 61 62 6C 65 43 6F 65 72 63 69 6F 6E 43 6F 6E 66 69 67 3B</o>
+            <o base="string" data="bytes" line="1825514475"/>
+            <o base="tuple" star=""/>
+            <o base="maxs">
+               <o base="int" data="bytes" line="342158370">00 00 00 00 00 00 00 03</o>
+               <o base="int" data="bytes" line="1149872158">00 00 00 00 00 00 00 03</o>
+            </o>
+            <o abstract=""
+               name="arg__Lcom/fasterxml/jackson/databind/cfg/CoercionInputShape;__0"/>
+            <o abstract=""
+               name="arg__Lcom/fasterxml/jackson/databind/cfg/CoercionAction;__1"/>
+            <o base="seq" name="@">
+               <o base="tuple" star="">
+                  <o base="label" data="bytes" line="1308471552">35 39 36 35 34 62 61 35 2D 35 33 61 39 2D 34 38 63 30 2D 62 38 64 66 2D 31 62 62 66 37 66 38 62 32 34 33 33</o>
+                  <o base="opcode" line="999" name="ALOAD-C1206">
+                     <o base="int" data="bytes" line="1310198476">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes" line="563360445">00 00 00 00 00 00 00 00</o>
+                  </o>
+                  <o base="opcode" line="999" name="GETFIELD-C1207">
+                     <o base="int" data="bytes" line="202240674">00 00 00 00 00 00 00 B4</o>
+                     <o base="string" data="bytes" line="828914564">63 6F 6D 2F 66 61 73 74 65 72 78 6D 6C 2F 6A 61 63 6B 73 6F 6E 2F 64 61 74 61 62 69 6E 64 2F 63 66 67 2F 4D 75 74 61 62 6C 65 43 6F 65 72 63 69 6F 6E 43 6F 6E 66 69 67</o>
+                     <o base="string" data="bytes" line="870406936">5F 63 6F 65 72 63 69 6F 6E 73 42 79 53 68 61 70 65</o>
+                     <o base="string" data="bytes" line="1659030985">5B 4C 63 6F 6D 2F 66 61 73 74 65 72 78 6D 6C 2F 6A 61 63 6B 73 6F 6E 2F 64 61 74 61 62 69 6E 64 2F 63 66 67 2F 43 6F 65 72 63 69 6F 6E 41 63 74 69 6F 6E 3B</o>
+                  </o>
+                  <o base="opcode" line="999" name="ALOAD-C1208">
+                     <o base="int" data="bytes" line="1562630841">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes" line="25205358">00 00 00 00 00 00 00 01</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKEVIRTUAL-C1209">
+                     <o base="int" data="bytes" line="813633044">00 00 00 00 00 00 00 B6</o>
+                     <o base="string" data="bytes" line="1975607192">63 6F 6D 2F 66 61 73 74 65 72 78 6D 6C 2F 6A 61 63 6B 73 6F 6E 2F 64 61 74 61 62 69 6E 64 2F 63 66 67 2F 43 6F 65 72 63 69 6F 6E 49 6E 70 75 74 53 68 61 70 65</o>
+                     <o base="string" data="bytes" line="1839065569">6F 72 64 69 6E 61 6C</o>
+                     <o base="string" data="bytes" line="1702715822">28 29 49</o>
+                     <o base="bool" data="bytes" line="906190334">00</o>
+                  </o>
+                  <o base="opcode" line="999" name="ALOAD-C120A">
+                     <o base="int" data="bytes" line="1487457732">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes" line="221774146">00 00 00 00 00 00 00 02</o>
+                  </o>
+                  <o base="opcode" line="999" name="AASTORE-C120B">
+                     <o base="int" data="bytes" line="876813209">00 00 00 00 00 00 00 53</o>
+                  </o>
+                  <o base="label" data="bytes" line="877321883">31 36 63 66 37 66 62 32 2D 61 30 66 38 2D 34 64 35 64 2D 38 32 66 38 2D 39 37 64 31 62 38 36 37 31 65 38 37</o>
+                  <o base="opcode" line="999" name="ALOAD-C120C">
+                     <o base="int" data="bytes" line="897222852">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes" line="152164361">00 00 00 00 00 00 00 00</o>
+                  </o>
+                  <o base="opcode" line="999" name="ARETURN-C120D">
+                     <o base="int" data="bytes" line="1228436864">00 00 00 00 00 00 00 B0</o>
+                  </o>
+                  <o base="label" data="bytes" line="779461412">34 66 65 36 35 35 35 38 2D 35 34 32 33 2D 34 38 62 64 2D 61 61 35 63 2D 66 62 63 35 31 63 35 31 31 38 32 32</o>
+               </o>
+            </o>
+         </o>
+      </o>
+   </objects>
+</program>
