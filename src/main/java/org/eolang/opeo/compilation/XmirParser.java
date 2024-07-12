@@ -186,7 +186,7 @@ final class XmirParser implements Parser {
             } else if ("interface".equals(attributes.type())) {
                 result = new InterfaceInvocation(node, this);
             } else if ("dynamic".equals(attributes.type())) {
-                result = new DynamicInvocation(node);
+                result = new DynamicInvocation(node, this);
             } else {
                 result = new Invocation(node, this);
             }
