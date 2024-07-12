@@ -128,7 +128,8 @@ public final class DynamicInvocation implements AstNode, Typed {
      * @param name Name of the method.
      * @param factory Factory method reference.
      * @param descriptor Method descriptor.
-     * @param arguments Factory method arguments.
+     * @param farguments Factory method arguments.
+     * @param arguments Dynamic invocation method arguments.
      * @checkstyle ParameterNumberCheck (5 lines)
      */
     public DynamicInvocation(
