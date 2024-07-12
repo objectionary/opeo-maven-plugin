@@ -73,8 +73,7 @@ final class DetectiveIT {
     @Disabled
     @ParameterizedTest
     @CsvSource(
-//        "./target/it/spring-fat/target/generated-sources/jeo-disassemble-xmir, ./target/it/spring-fat/target/generated-sources/opeo-compile-xmir"
-        "./target/it/streams/target/generated-sources/jeo-decompile-xmir/org/eolang/streams/Main.xmir, ./target/it/streams/target/generated-sources/opeo-compile-xmir/org/eolang/streams/Main.xmir"
+        "./target/it/spring-fat/target/generated-sources/jeo-disassemble-xmir, ./target/it/spring-fat/target/generated-sources/opeo-compile-xmir"
     )
     void findsTheProblem(final String etalon, final String target) {
         final Path golden = Paths.get(etalon);

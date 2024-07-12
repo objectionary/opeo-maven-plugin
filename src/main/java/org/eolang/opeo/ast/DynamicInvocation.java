@@ -40,7 +40,10 @@ import org.xembly.Directives;
 /**
  * Dynamic invocation.
  * @since 0.5
- * @todo ! test args
+ * @todo #329:90min Add Unit Test To Test DynamicInvocation Arguments.
+ *  I added {@link DynamicInvocation#arguments} field althogether with parsing and translation
+ *  logic. But I didn't test this logic. We need to add unit tests for arguments parsing
+ *  and translation.
  */
 public final class DynamicInvocation implements AstNode, Typed {
 
@@ -74,12 +77,13 @@ public final class DynamicInvocation implements AstNode, Typed {
      * @param root XMIR node to parse.
      */
     public DynamicInvocation(final XmlNode root) {
-        this(root, (node) -> new Empty());
+        this(root, node -> new Empty());
     }
 
     /**
      * Constructor.
      * @param root XMIR node to parse.
+     * @param parser Parser to find AST nodes of children.
      */
     public DynamicInvocation(final XmlNode root, final Parser parser) {
         this(root, root.children().collect(Collectors.toList()), parser);
@@ -90,6 +94,7 @@ public final class DynamicInvocation implements AstNode, Typed {
      * Added for efficiency to receive children nodes only once.
      * @param root XMIR node to parse.
      * @param chldren XMIR node children.
+     * @param parser Parser to find AST nodes of children.
      */
     public DynamicInvocation(final XmlNode root, final List<XmlNode> chldren, final Parser parser) {
         this(
@@ -149,6 +154,7 @@ public final class DynamicInvocation implements AstNode, Typed {
      * @param attributes Method attributes.
      * @param farguments Factory method arguments.
      * @param arguments Dynamic invocation arguments.
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
     public DynamicInvocation(
         final String name,

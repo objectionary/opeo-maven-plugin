@@ -23,11 +23,8 @@
  */
 package org.eolang.opeo.ast;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
-import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
 
@@ -91,10 +88,6 @@ public final class Reference implements AstNode, Typed, Linked {
 
     @Override
     public List<AstNode> opcodes() {
-//        final List<AstNode> res = new ArrayList<>(0);
-//        res.addAll(this.ref.get().opcodes());
-//        res.add(new Opcode(Opcodes.DUP));
-//        return res;
         return this.ref.get().opcodes();
     }
 

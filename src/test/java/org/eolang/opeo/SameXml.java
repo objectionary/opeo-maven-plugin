@@ -81,7 +81,11 @@ public final class SameXml extends TypeSafeMatcher<String> {
      * Remove 'line' attributes from the XML document.
      * @param original Original XML document.
      * @return XML document without 'line' attributes.
+     * @todo #329:30min Avoid Using Public Static Method From SameXml Class.
+     *  I exposed this method to avoid the problem with XMIR comparision in {@link it.DetectiveIT}
+     *  test. But it's much better to hide this static method and invent more OOP-suitable solution.
      */
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
     public static XML withoutLines(final XML original) {
         try {
             return new XMLDocument(

@@ -38,7 +38,10 @@ import org.eolang.opeo.decompilation.InstructionHandler;
  * Opcodes: aastore
  * Stack [before]->[after]: "arrayref, index, value →"
  * @since 0.1
- * @todo ! references? wtf?
+ * @todo #329:90min Avoid using 'instance of' in {@link StoreToArrayHandler#findRef(AstNode)}.
+ *  Here we use 'instance of' statement to find a Reference.
+ *  The solution related to Reference looks incorrect, in general.
+ *  We should invent a proper solution without the use of this statement.
  */
 public final class StoreToArrayHandler implements InstructionHandler {
 
@@ -47,13 +50,9 @@ public final class StoreToArrayHandler implements InstructionHandler {
         final AstNode value = state.stack().pop();
         final AstNode index = state.stack().pop();
         final AstNode array = state.stack().pop();
-//        try {
-            final Reference ref = this.findRef(array);
-            ref.link(new StoreArray(ref.object(), index, value));
-            state.stack().push(ref);
-//        } catch (final IllegalStateException exception) {
-//            state.stack().push(new Reference(new StoreArray(array, index, value)));
-//        }
+        final Reference ref = this.findRef(array);
+        ref.link(new StoreArray(ref.object(), index, value));
+        state.stack().push(ref);
     }
 
     /**

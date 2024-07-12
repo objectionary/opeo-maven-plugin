@@ -89,6 +89,7 @@ public final class Return implements AstNode {
     /**
      * Get opcode.
      * @return Opcode.
+     * @checkstyle CyclomaticComplexityCheck (20 lines)
      */
     private Opcode opcode() {
         final Type type = this.type();
