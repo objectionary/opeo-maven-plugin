@@ -80,6 +80,7 @@ public final class SameXml extends TypeSafeMatcher<String> {
 
     /**
      * The same XML, but without lines.
+     * @since 0.3.1
      */
     public static final class WithoutLines implements Scalar<XML> {
 
@@ -90,7 +91,7 @@ public final class SameXml extends TypeSafeMatcher<String> {
 
         /**
          * Constructor.
-         * @param orgnl original XML
+         * @param orgnl Original XML
          */
         public WithoutLines(final XML orgnl) {
             this.original = orgnl;
