@@ -25,6 +25,7 @@ package org.eolang.opeo;
 
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
+import org.cactoos.Scalar;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.xembly.Directives;
@@ -66,8 +67,8 @@ public final class SameXml extends TypeSafeMatcher<String> {
 
     @Override
     public boolean matchesSafely(final String item) {
-        return SameXml.withoutLines(new XMLDocument(this.expected))
-            .equals(SameXml.withoutLines(new XMLDocument(item)));
+        return new SameXml.WithoutLines(new XMLDocument(this.expected)).value()
+            .equals(new SameXml.WithoutLines(new XMLDocument(item)).value());
     }
 
     @Override
@@ -78,23 +79,36 @@ public final class SameXml extends TypeSafeMatcher<String> {
     }
 
     /**
-     * Remove 'line' attributes from the XML document.
-     * @param original Original XML document.
-     * @return XML document without 'line' attributes.
-     * @todo #329:30min Avoid Using Public Static Method From SameXml Class.
-     *  I exposed this method to avoid the problem with XMIR comparision in {@link it.DetectiveIT}
-     *  test. But it's much better to hide this static method and invent more OOP-suitable solution.
+     * The same XML, but without lines.
      */
-    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
-    public static XML withoutLines(final XML original) {
-        try {
-            return new XMLDocument(
-                new Xembler(
-                    new Directives().xpath(".//o[@line]/@line").remove()
-                ).apply(original.node())
-            );
-        } catch (final ImpossibleModificationException exception) {
-            throw new IllegalStateException("Failed to remove 'line' attributes", exception);
+    public static final class WithoutLines implements Scalar<XML> {
+
+        /**
+         * The original.
+         */
+        private final XML original;
+
+        /**
+         * Constructor.
+         * @param orgnl original XML
+         */
+        public WithoutLines(final XML orgnl) {
+            this.original = orgnl;
+        }
+
+        @Override
+        public XML value() {
+            try {
+                return new XMLDocument(
+                    new Xembler(
+                        new Directives().xpath(".//o[@line]/@line").remove()
+                    ).apply(this.original.node())
+                );
+            } catch (final ImpossibleModificationException exception) {
+                throw new IllegalStateException(
+                    "Failed to remove 'line' attributes", exception
+                );
+            }
         }
     }
 }

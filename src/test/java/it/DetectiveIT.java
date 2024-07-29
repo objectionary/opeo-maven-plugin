@@ -268,10 +268,10 @@ final class DetectiveIT {
             try {
                 this.results.oneMore();
                 final List<XmlMethod> gmethods = new XmlProgram(
-                    SameXml.withoutLines(this.xml(gpath))
+                    new SameXml.WithoutLines(this.xml(gpath)).value()
                 ).top().methods();
                 final List<XmlMethod> bmethods = new XmlProgram(
-                    SameXml.withoutLines(this.xml(rpath))
+                    new SameXml.WithoutLines(this.xml(gpath)).value()
                 ).top().methods();
                 final int size = gmethods.size();
                 for (int index = 0; index < size; ++index) {
