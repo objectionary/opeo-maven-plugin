@@ -24,8 +24,8 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.xml.XMLDocument;
-import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.jeo.matchers.SameXml;
+import org.eolang.jeo.representation.xmir.XmlNode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
