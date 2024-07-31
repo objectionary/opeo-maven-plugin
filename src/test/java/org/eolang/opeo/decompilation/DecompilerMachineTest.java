@@ -25,10 +25,10 @@ package org.eolang.opeo.decompilation;
 
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicReference;
+import org.eolang.jeo.matchers.SameXml;
 import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.OpcodeInstruction;
-import org.eolang.opeo.SameXml;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;

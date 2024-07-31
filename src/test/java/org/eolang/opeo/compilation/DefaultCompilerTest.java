@@ -29,7 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.io.ResourceOf;
-import org.eolang.opeo.SameXml;
+import org.eolang.jeo.matchers.SameXml;
 import org.eolang.opeo.ast.Opcode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;

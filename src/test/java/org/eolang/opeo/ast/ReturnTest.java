@@ -24,7 +24,7 @@
 package org.eolang.opeo.ast;
 
 import org.eolang.jeo.representation.xmir.XmlNode;
-import org.eolang.opeo.SameXml;
+import org.eolang.jeo.matchers.SameXml;
 import org.eolang.opeo.compilation.Parser;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;

@@ -33,7 +33,7 @@ import org.eolang.jeo.representation.bytecode.Bytecode;
 import org.eolang.jeo.representation.xmir.XmlBytecodeEntry;
 import org.eolang.jeo.representation.xmir.XmlLabel;
 import org.eolang.jeo.representation.xmir.XmlProgram;
-import org.eolang.opeo.SameXml;
+import org.eolang.jeo.matchers.SameXml;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.compilation.JeoCompiler;
 import org.eolang.opeo.jeo.JeoDecompiler;

@@ -35,12 +35,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.eolang.jeo.matchers.WithoutLines;
 import org.eolang.jeo.representation.xmir.XmlBytecodeEntry;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlOperand;
 import org.eolang.jeo.representation.xmir.XmlProgram;
-import org.eolang.opeo.SameXml;
+import org.eolang.jeo.matchers.SameXml;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
@@ -268,10 +269,10 @@ final class DetectiveIT {
             try {
                 this.results.oneMore();
                 final List<XmlMethod> gmethods = new XmlProgram(
-                    new SameXml.WithoutLines(this.xml(gpath)).value()
+                    new WithoutLines(this.xml(gpath)).value()
                 ).top().methods();
                 final List<XmlMethod> bmethods = new XmlProgram(
-                    new SameXml.WithoutLines(this.xml(gpath)).value()
+                    new WithoutLines(this.xml(gpath)).value()
                 ).top().methods();
                 final int size = gmethods.size();
                 for (int index = 0; index < size; ++index) {

@@ -26,7 +26,7 @@ package org.eolang.opeo.compilation;
 import java.util.Collections;
 import java.util.List;
 import org.eolang.jeo.representation.xmir.XmlNode;
-import org.eolang.opeo.SameXml;
+import org.eolang.jeo.matchers.SameXml;
 import org.eolang.opeo.ast.Add;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Field;

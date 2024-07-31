@@ -27,7 +27,7 @@ import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.text.TextOf;
-import org.eolang.opeo.SameXml;
+import org.eolang.jeo.matchers.SameXml;
 import org.eolang.opeo.ast.Opcode;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;

@@ -32,7 +32,7 @@ import java.util.stream.IntStream;
 import org.eolang.jeo.representation.directives.DirectivesData;
 import org.eolang.jeo.representation.xmir.HexString;
 import org.eolang.jeo.representation.xmir.XmlNode;
-import org.eolang.opeo.SameXml;
+import org.eolang.jeo.matchers.SameXml;
 import org.eolang.opeo.ast.OpcodeName;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
