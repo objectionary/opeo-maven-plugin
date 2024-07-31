@@ -53,7 +53,7 @@ SOFTWARE.
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <jeo.version>0.5.0</jeo.version>
+    <jeo.version>0.5.1</jeo.version>
     <ineo.version>0.3.2</ineo.version>
     <jeo.disassemble.output>${project.build.directory}/generated-sources/jeo-disassemble-xmir</jeo.disassemble.output>
     <opeo.decompile.output>${project.build.directory}/generated-sources/opeo-decompile-xmir</opeo.decompile.output>
@@ -216,7 +216,7 @@ SOFTWARE.
           <plugin>
             <groupId>org.eolang</groupId>
             <artifactId>eo-maven-plugin</artifactId>
-            <version>0.38.4</version>
+            <version>0.39.0</version>
             <executions>
               <execution>
                 <id>convert-xmir-to-phi</id>

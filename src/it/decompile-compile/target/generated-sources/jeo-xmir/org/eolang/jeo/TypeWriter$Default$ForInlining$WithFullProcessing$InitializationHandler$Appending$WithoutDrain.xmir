@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<program dob="2024-05-17T13:02:02.138724Z"
-         ms="1715950922138"
-         name="j$TypeWriter$Default$ForInlining$WithFullProcessing$InitializationHandler$Appending$WithoutDrain"
-         revision="0.0.0"
-         time="2024-05-17T13:02:02.138724Z"
-         version="0.0.0">
-   <listing>yv66vgAAADEAQAEAfW5ldC9ieXRlYnVkZHkvZHluYW1pYy9zY2FmZm9sZC9UeXBlV3JpdGVyJERlZmF1bHQkRm9ySW5saW5pbmckV2l0aEZ1bGxQcm9jZXNzaW5nJEluaXRpYWxpemF0aW9uSGFuZGxlciRBcHBlbmRpbmckV2l0aG91dERyYWluBwABAQBwbmV0L2J5dGVidWRkeS9keW5hbWljL3NjYWZmb2xkL1R5cGVXcml0ZXIkRGVmYXVsdCRGb3JJbmxpbmluZyRXaXRoRnVsbFByb2Nlc3NpbmckSW5pdGlhbGl6YXRpb25IYW5kbGVyJEFwcGVuZGluZwcAAwEAD1R5cGVXcml0ZXIuamF2YQEAMW5ldC9ieXRlYnVkZHkvZHluYW1pYy9zY2FmZm9sZC9UeXBlV3JpdGVyJERlZmF1bHQHAAYBACluZXQvYnl0ZWJ1ZGR5L2R5bmFtaWMvc2NhZmZvbGQvVHlwZVdyaXRlcgcACAEAB0RlZmF1bHQBAD1uZXQvYnl0ZWJ1ZGR5L2R5bmFtaWMvc2NhZmZvbGQvVHlwZVdyaXRlciREZWZhdWx0JEZvcklubGluaW5nBwALAQALRm9ySW5saW5pbmcBAFBuZXQvYnl0ZWJ1ZGR5L2R5bmFtaWMvc2NhZmZvbGQvVHlwZVdyaXRlciREZWZhdWx0JEZvcklubGluaW5nJFdpdGhGdWxsUHJvY2Vzc2luZwcADgEAEldpdGhGdWxsUHJvY2Vzc2luZwEAZm5ldC9ieXRlYnVkZHkvZHluYW1pYy9zY2FmZm9sZC9UeXBlV3JpdGVyJERlZmF1bHQkRm9ySW5saW5pbmckV2l0aEZ1bGxQcm9jZXNzaW5nJEluaXRpYWxpemF0aW9uSGFuZGxlcgcAEQEAFUluaXRpYWxpemF0aW9uSGFuZGxlcgEACUFwcGVuZGluZwEADFdpdGhvdXREcmFpbgEAjm5ldC9ieXRlYnVkZHkvZHluYW1pYy9zY2FmZm9sZC9UeXBlV3JpdGVyJERlZmF1bHQkRm9ySW5saW5pbmckV2l0aEZ1bGxQcm9jZXNzaW5nJEluaXRpYWxpemF0aW9uSGFuZGxlciRBcHBlbmRpbmckV2l0aG91dERyYWluJFdpdGhBY3RpdmVSZWNvcmQHABYBABBXaXRoQWN0aXZlUmVjb3JkAQCRbmV0L2J5dGVidWRkeS9keW5hbWljL3NjYWZmb2xkL1R5cGVXcml0ZXIkRGVmYXVsdCRGb3JJbmxpbmluZyRXaXRoRnVsbFByb2Nlc3NpbmckSW5pdGlhbGl6YXRpb25IYW5kbGVyJEFwcGVuZGluZyRXaXRob3V0RHJhaW4kV2l0aG91dEFjdGl2ZVJlY29yZAcAGQEAE1dpdGhvdXRBY3RpdmVSZWNvcmQBADRuZXQvYnl0ZWJ1ZGR5L2R5bmFtaWMvc2NhZmZvbGQvVHlwZVdyaXRlciRNZXRob2RQb29sBwAcAQAKTWV0aG9kUG9vbAEAO25ldC9ieXRlYnVkZHkvZHluYW1pYy9zY2FmZm9sZC9UeXBlV3JpdGVyJE1ldGhvZFBvb2wkUmVjb3JkBwAfAQAGUmVjb3JkAQBEbmV0L2J5dGVidWRkeS9pbXBsZW1lbnRhdGlvbi9hdHRyaWJ1dGUvQW5ub3RhdGlvblZhbHVlRmlsdGVyJEZhY3RvcnkHACIBADxuZXQvYnl0ZWJ1ZGR5L2ltcGxlbWVudGF0aW9uL2F0dHJpYnV0ZS9Bbm5vdGF0aW9uVmFsdWVGaWx0ZXIHACQBAAdGYWN0b3J5AQAGPGluaXQ+AQDdKExuZXQvYnl0ZWJ1ZGR5L2phci9hc20vTWV0aG9kVmlzaXRvcjtMbmV0L2J5dGVidWRkeS9kZXNjcmlwdGlvbi90eXBlL1R5cGVEZXNjcmlwdGlvbjtMbmV0L2J5dGVidWRkeS9keW5hbWljL3NjYWZmb2xkL1R5cGVXcml0ZXIkTWV0aG9kUG9vbCRSZWNvcmQ7TG5ldC9ieXRlYnVkZHkvaW1wbGVtZW50YXRpb24vYXR0cmlidXRlL0Fubm90YXRpb25WYWx1ZUZpbHRlciRGYWN0b3J5O1paKVYMACcAKAoABAApAQAEdGhpcwEAf0xuZXQvYnl0ZWJ1ZGR5L2R5bmFtaWMvc2NhZmZvbGQvVHlwZVdyaXRlciREZWZhdWx0JEZvcklubGluaW5nJFdpdGhGdWxsUHJvY2Vzc2luZyRJbml0aWFsaXphdGlvbkhhbmRsZXIkQXBwZW5kaW5nJFdpdGhvdXREcmFpbjsBAA1tZXRob2RWaXNpdG9yAQAlTG5ldC9ieXRlYnVkZHkvamFyL2FzbS9NZXRob2RWaXNpdG9yOwEAEGluc3RydW1lbnRlZFR5cGUBADBMbmV0L2J5dGVidWRkeS9kZXNjcmlwdGlvbi90eXBlL1R5cGVEZXNjcmlwdGlvbjsBAAZyZWNvcmQBAD1MbmV0L2J5dGVidWRkeS9keW5hbWljL3NjYWZmb2xkL1R5cGVXcml0ZXIkTWV0aG9kUG9vbCRSZWNvcmQ7AQAcYW5ub3RhdGlvblZhbHVlRmlsdGVyRmFjdG9yeQEARkxuZXQvYnl0ZWJ1ZGR5L2ltcGxlbWVudGF0aW9uL2F0dHJpYnV0ZS9Bbm5vdGF0aW9uVmFsdWVGaWx0ZXIkRmFjdG9yeTsBAA1yZXF1aXJlRnJhbWVzAQABWgEADGV4cGFuZEZyYW1lcwEAB29uU3RhcnQBAAMoKVYBAAh2aXNpdEVuZAEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBABJMb2NhbFZhcmlhYmxlVGFibGUBAAxJbm5lckNsYXNzZXMBAApTb3VyY2VGaWxlBCEAAgAEAAAAAAADAAQAJwAoAAEAOwAAAHgABwAHAAAADiorLC0ZBBUFFQa3ACqxAAAAAgA8AAAACgACAAASBQANEgYAPQAAAEgABwAAAA4AKwAsAAAAAAAOAC0ALgABAAAADgAvADAAAgAAAA4AMQAyAAMAAAAOADMANAAEAAAADgA1ADYABQAAAA4ANwA2AAYABAA4ADkAAQA7AAAAKwAAAAEAAAABsQAAAAIAPAAAAAYAAQAAEgsAPQAAAAwAAQAAAAEAKwAsAAAAAQA6ADkAAQA7AAAAKwAAAAEAAAABsQAAAAIAPAAAAAYAAQAAEhAAPQAAAAwAAQAAAAEAKwAsAAAAAgA+AAAAWgALAAcACQAKBAkADAAHAA0ECQAPAAwAEAAMABIADwATBgwABAASABQECQACAAQAFQQMABcAAgAYAAwAGgACABsADAAdAAkAHgYJACAAHQAhBgkAIwAlACYGCQA/AAAAAgAF</listing>
+<program dob="2024-07-31T11:26:42.095170Z"
+  ms="1722425202095"
+  name="j$TypeWriter"
+  revision="0.0.0"
+  time="2024-07-31T11:26:42.095170Z"
+  version="0.0.0">
+   <listing>yv66vgAAADEAKgEAKW5ldC9ieXRlYnVkZHkvZHluYW1pYy9zY2FmZm9sZC9UeXBlV3JpdGVyBwABAQAoPFQ6TGphdmEvbGFuZy9PYmplY3Q7PkxqYXZhL2xhbmcvT2JqZWN0OwEAEGphdmEvbGFuZy9PYmplY3QHAAQBAA9UeXBlV3JpdGVyLmphdmEBADFuZXQvYnl0ZWJ1ZGR5L2R5bmFtaWMvc2NhZmZvbGQvVHlwZVdyaXRlciREZWZhdWx0BwAHAQAHRGVmYXVsdAEAPW5ldC9ieXRlYnVkZHkvZHluYW1pYy9zY2FmZm9sZC9UeXBlV3JpdGVyJFJlY29yZENvbXBvbmVudFBvb2wHAAoBABNSZWNvcmRDb21wb25lbnRQb29sAQA0bmV0L2J5dGVidWRkeS9keW5hbWljL3NjYWZmb2xkL1R5cGVXcml0ZXIkTWV0aG9kUG9vbAcADQEACk1ldGhvZFBvb2wBADNuZXQvYnl0ZWJ1ZGR5L2R5bmFtaWMvc2NhZmZvbGQvVHlwZVdyaXRlciRGaWVsZFBvb2wHABABAAlGaWVsZFBvb2wBADVuZXQvYnl0ZWJ1ZGR5L2R5bmFtaWMvVHlwZVJlc29sdXRpb25TdHJhdGVneSRSZXNvbHZlZAcAEwEALG5ldC9ieXRlYnVkZHkvZHluYW1pYy9UeXBlUmVzb2x1dGlvblN0cmF0ZWd5BwAVAQAIUmVzb2x2ZWQBACpuZXQvYnl0ZWJ1ZGR5L2R5bmFtaWMvRHluYW1pY1R5cGUkVW5sb2FkZWQHABgBACFuZXQvYnl0ZWJ1ZGR5L2R5bmFtaWMvRHluYW1pY1R5cGUHABoBAAhVbmxvYWRlZAEADURVTVBfUFJPUEVSVFkBABJMamF2YS9sYW5nL1N0cmluZzsBABJuZXQuYnl0ZWJ1ZGR5LmR1bXAIAB8BAARtYWtlAQBlKExuZXQvYnl0ZWJ1ZGR5L2R5bmFtaWMvVHlwZVJlc29sdXRpb25TdHJhdGVneSRSZXNvbHZlZDspTG5ldC9ieXRlYnVkZHkvZHluYW1pYy9EeW5hbWljVHlwZSRVbmxvYWRlZDsBAGooTG5ldC9ieXRlYnVkZHkvZHluYW1pYy9UeXBlUmVzb2x1dGlvblN0cmF0ZWd5JFJlc29sdmVkOylMbmV0L2J5dGVidWRkeS9keW5hbWljL0R5bmFtaWNUeXBlJFVubG9hZGVkPFRUOz47AQAEd3JhcAEAWyhMbmV0L2J5dGVidWRkeS9qYXIvYXNtL0NsYXNzVmlzaXRvcjtJSSlMbmV0L2J5dGVidWRkeS91dGlsaXR5L3Zpc2l0b3IvQ29udGV4dENsYXNzVmlzaXRvcjsBAA1Db25zdGFudFZhbHVlAQAJU2lnbmF0dXJlAQAMSW5uZXJDbGFzc2VzAQAKU291cmNlRmlsZQYBAAIABQAAAAEAGQAdAB4AAQAmAAAAAgAgAAIEAQAhACIAAQAnAAAAAgAjBAEAJAAlAAAAAwAoAAAAMgAGAAgAAgAJBAkACwACAAwGCQAOAAIADwYJABEAAgASBgkAFAAWABcGCQAZABsAHAYJACcAAAACAAMAKQAAAAIABg==</listing>
    <errors/>
    <sheets/>
    <license/>
@@ -15,86 +15,101 @@
          <tail>net.bytebuddy.dynamic.scaffold</tail>
          <part>net.bytebuddy.dynamic.scaffold</part>
       </meta>
-      <meta>
-         <head>alias</head>
-         <tail>org.eolang.jeo.opcode</tail>
-         <part>org.eolang.jeo.opcode</part>
-      </meta>
-      <meta>
-         <head>alias</head>
-         <tail>org.eolang.jeo.label</tail>
-         <part>org.eolang.jeo.label</part>
-      </meta>
    </metas>
    <objects>
-      <o abstract=""
-         name="j$TypeWriter$Default$ForInlining$WithFullProcessing$InitializationHandler$Appending$WithoutDrain">
-         <o base="int" data="bytes" name="version">00 00 00 00 00 00 00 31</o>
-         <o base="int" data="bytes" name="access">00 00 00 00 00 00 04 21</o>
-         <o base="string" data="bytes" name="supername">6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 73 63 61 66 66 6F 6C 64 2F 54 79 70 65 57 72 69 74 65 72 24 44 65 66 61 75 6C 74 24 46 6F 72 49 6E 6C 69 6E 69 6E 67 24 57 69 74 68 46 75 6C 6C 50 72 6F 63 65 73 73 69 6E 67 24 49 6E 69 74 69 61 6C 69 7A 61 74 69 6F 6E 48 61 6E 64 6C 65 72 24 41 70 70 65 6E 64 69 6E 67</o>
-         <o base="tuple" name="interfaces" star=""/>
-         <o abstract="" name="new">
-            <o base="int" data="bytes">00 00 00 00 00 00 00 04</o>
-            <o base="string" data="bytes">28 4C 6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 6A 61 72 2F 61 73 6D 2F 4D 65 74 68 6F 64 56 69 73 69 74 6F 72 3B 4C 6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 65 73 63 72 69 70 74 69 6F 6E 2F 74 79 70 65 2F 54 79 70 65 44 65 73 63 72 69 70 74 69 6F 6E 3B 4C 6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 73 63 61 66 66 6F 6C 64 2F 54 79 70 65 57 72 69 74 65 72 24 4D 65 74 68 6F 64 50 6F 6F 6C 24 52 65 63 6F 72 64 3B 4C 6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 69 6D 70 6C 65 6D 65 6E 74 61 74 69 6F 6E 2F 61 74 74 72 69 62 75 74 65 2F 41 6E 6E 6F 74 61 74 69 6F 6E 56 61 6C 75 65 46 69 6C 74 65 72 24 46 61 63 74 6F 72 79 3B 5A 5A 29 56</o>
-            <o base="string" data="bytes"/>
-            <o base="tuple" star=""/>
-            <o base="maxs">
-               <o base="int" data="bytes">00 00 00 00 00 00 00 07</o>
-               <o base="int" data="bytes">00 00 00 00 00 00 00 07</o>
+      <o abstract="" name="j$TypeWriter">
+         <o base="int" data="bytes" line="351334124" name="version">00 00 00 00 00 00 00 31</o>
+         <o base="int" data="bytes" line="1044140064" name="access">00 00 00 00 00 00 06 01</o>
+         <o base="string" data="bytes" line="1053000672" name="signature">3C 54 3A 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74 3B 3E 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74 3B</o>
+         <o base="string" data="bytes" line="421068064" name="supername">6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>
+         <o base="tuple" line="1700735720" name="interfaces" star=""/>
+         <o base="field" line="999" name="j$DUMP_PROPERTY">
+            <o base="int"
+              data="bytes"
+              line="1761541296"
+              name="access-j$DUMP_PROPERTY">00 00 00 00 00 00 00 19</o>
+            <o base="string"
+              data="bytes"
+              line="2036544054"
+              name="descriptor-j$DUMP_PROPERTY">4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B</o>
+            <o base="string"
+              data="bytes"
+              line="423456986"
+              name="signature-j$DUMP_PROPERTY"/>
+            <o base="string"
+              data="bytes"
+              line="329554155"
+              name="value-j$DUMP_PROPERTY">6E 65 74 2E 62 79 74 65 62 75 64 64 79 2E 64 75 6D 70</o>
+         </o>
+         <o abstract=""
+           name="j$make-KExuZXQvYnl0ZWJ1ZGR5L2R5bmFtaWMvVHlwZVJlc29sdXRpb25TdHJhdGVneSRSZXNvbHZlZDspTG5ldC9ieXRlYnVkZHkvZHluYW1pYy9EeW5hbWljVHlwZSRVbmxvYWRlZDs=">
+            <o base="int" data="bytes" line="1168236002" name="access">00 00 00 00 00 00 04 01</o>
+            <o base="string" data="bytes" line="1366420235" name="descriptor">28 4C 6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 54 79 70 65 52 65 73 6F 6C 75 74 69 6F 6E 53 74 72 61 74 65 67 79 24 52 65 73 6F 6C 76 65 64 3B 29 4C 6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 44 79 6E 61 6D 69 63 54 79 70 65 24 55 6E 6C 6F 61 64 65 64 3B</o>
+            <o base="string" data="bytes" line="2028539742" name="signature">28 4C 6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 54 79 70 65 52 65 73 6F 6C 75 74 69 6F 6E 53 74 72 61 74 65 67 79 24 52 65 73 6F 6C 76 65 64 3B 29 4C 6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 44 79 6E 61 6D 69 63 54 79 70 65 24 55 6E 6C 6F 61 64 65 64 3C 54 54 3B 3E 3B</o>
+            <o base="tuple" line="271777057" name="exceptions" star=""/>
+            <o abstract="" line="854195706" name="maxs">
+               <o base="int" data="bytes" line="461114235" name="stack">00 00 00 00 00 00 00 00</o>
+               <o base="int" data="bytes" line="499378954" name="locals">00 00 00 00 00 00 00 00</o>
             </o>
-            <o abstract="" name="arg__Lnet/bytebuddy/jar/asm/MethodVisitor;__0"/>
             <o abstract=""
-               name="arg__Lnet/bytebuddy/description/type/TypeDescription;__1"/>
-            <o abstract=""
-               name="arg__Lnet/bytebuddy/dynamic/scaffold/TypeWriter$MethodPool$Record;__2"/>
-            <o abstract=""
-               name="arg__Lnet/bytebuddy/implementation/attribute/AnnotationValueFilter$Factory;__3"/>
-            <o abstract="" name="arg__Z__4"/>
-            <o abstract="" name="arg__Z__5"/>
+              name="arg__Lnet/bytebuddy/dynamic/TypeResolutionStrategy$Resolved;__0"/>
             <o base="seq" name="@">
-               <o base="tuple" star="">
-                  <o base="label" data="bytes">64 34 33 35 30 35 62 34 2D 37 61 39 38 2D 34 38 39 63 2D 38 64 37 31 2D 66 35 30 36 30 37 65 62 34 62 65 64</o>
-                  <o base="opcode" line="999" name="ALOAD-22125C">
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 00</o>
-                  </o>
-                  <o base="opcode" line="999" name="ALOAD-22125D">
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 01</o>
-                  </o>
-                  <o base="opcode" line="999" name="ALOAD-22125E">
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 02</o>
-                  </o>
-                  <o base="opcode" line="999" name="ALOAD-22125F">
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 03</o>
-                  </o>
-                  <o base="opcode" line="999" name="ALOAD-221260">
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 04</o>
-                  </o>
-                  <o base="opcode" line="999" name="ILOAD-221261">
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 15</o>
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 05</o>
-                  </o>
-                  <o base="opcode" line="999" name="ILOAD-221262">
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 15</o>
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 06</o>
-                  </o>
-                  <o base="opcode" line="999" name="INVOKESPECIAL-221263">
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 B7</o>
-                     <o base="string" data="bytes">6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 73 63 61 66 66 6F 6C 64 2F 54 79 70 65 57 72 69 74 65 72 24 44 65 66 61 75 6C 74 24 46 6F 72 49 6E 6C 69 6E 69 6E 67 24 57 69 74 68 46 75 6C 6C 50 72 6F 63 65 73 73 69 6E 67 24 49 6E 69 74 69 61 6C 69 7A 61 74 69 6F 6E 48 61 6E 64 6C 65 72 24 41 70 70 65 6E 64 69 6E 67</o>
-                     <o base="string" data="bytes">3C 69 6E 69 74 3E</o>
-                     <o base="string" data="bytes">28 4C 6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 6A 61 72 2F 61 73 6D 2F 4D 65 74 68 6F 64 56 69 73 69 74 6F 72 3B 4C 6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 65 73 63 72 69 70 74 69 6F 6E 2F 74 79 70 65 2F 54 79 70 65 44 65 73 63 72 69 70 74 69 6F 6E 3B 4C 6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 73 63 61 66 66 6F 6C 64 2F 54 79 70 65 57 72 69 74 65 72 24 4D 65 74 68 6F 64 50 6F 6F 6C 24 52 65 63 6F 72 64 3B 4C 6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 69 6D 70 6C 65 6D 65 6E 74 61 74 69 6F 6E 2F 61 74 74 72 69 62 75 74 65 2F 41 6E 6E 6F 74 61 74 69 6F 6E 56 61 6C 75 65 46 69 6C 74 65 72 24 46 61 63 74 6F 72 79 3B 5A 5A 29 56</o>
-                     <o base="bool" data="bytes">00</o>
-                  </o>
-                  <o base="label" data="bytes">30 66 65 63 35 66 38 64 2D 66 35 64 36 2D 34 39 33 37 2D 38 31 35 61 2D 32 35 36 37 36 65 38 66 34 38 63 31</o>
-                  <o base="opcode" line="999" name="RETURN-221264">
-                     <o base="int" data="bytes">00 00 00 00 00 00 00 B1</o>
-                  </o>
-                  <o base="label" data="bytes">63 65 66 39 61 36 64 30 2D 66 65 61 30 2D 34 31 30 64 2D 61 62 31 65 2D 31 33 36 63 30 62 37 34 63 62 62 34</o>
-               </o>
+               <o base="tuple" line="895140063" name="instructions" star=""/>
+            </o>
+         </o>
+         <o abstract=""
+           name="j$wrap-KExuZXQvYnl0ZWJ1ZGR5L2phci9hc20vQ2xhc3NWaXNpdG9yO0lJKUxuZXQvYnl0ZWJ1ZGR5L3V0aWxpdHkvdmlzaXRvci9Db250ZXh0Q2xhc3NWaXNpdG9yOw==">
+            <o base="int" data="bytes" line="1149756195" name="access">00 00 00 00 00 00 04 01</o>
+            <o base="string" data="bytes" line="49870144" name="descriptor">28 4C 6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 6A 61 72 2F 61 73 6D 2F 43 6C 61 73 73 56 69 73 69 74 6F 72 3B 49 49 29 4C 6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 75 74 69 6C 69 74 79 2F 76 69 73 69 74 6F 72 2F 43 6F 6E 74 65 78 74 43 6C 61 73 73 56 69 73 69 74 6F 72 3B</o>
+            <o base="string" data="bytes" line="289833946" name="signature"/>
+            <o base="tuple" line="907944438" name="exceptions" star=""/>
+            <o abstract="" line="1730766301" name="maxs">
+               <o base="int" data="bytes" line="132477535" name="stack">00 00 00 00 00 00 00 00</o>
+               <o base="int" data="bytes" line="2106465894" name="locals">00 00 00 00 00 00 00 00</o>
+            </o>
+            <o abstract="" name="arg__Lnet/bytebuddy/jar/asm/ClassVisitor;__0"/>
+            <o abstract="" name="arg__I__1"/>
+            <o abstract="" name="arg__I__2"/>
+            <o base="seq" name="@">
+               <o base="tuple" line="357415831" name="instructions" star=""/>
+            </o>
+         </o>
+         <o base="tuple" line="49664255" name="attributes" star="">
+            <o base="InnerClass">
+               <o base="string" data="bytes" line="2012251626">6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 73 63 61 66 66 6F 6C 64 2F 54 79 70 65 57 72 69 74 65 72 24 44 65 66 61 75 6C 74</o>
+               <o base="string" data="bytes" line="161256895">6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 73 63 61 66 66 6F 6C 64 2F 54 79 70 65 57 72 69 74 65 72</o>
+               <o base="string" data="bytes" line="2125066573">44 65 66 61 75 6C 74</o>
+               <o base="int" data="bytes" line="937668826">00 00 00 00 00 00 04 09</o>
+            </o>
+            <o base="InnerClass">
+               <o base="string" data="bytes" line="1679100168">6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 73 63 61 66 66 6F 6C 64 2F 54 79 70 65 57 72 69 74 65 72 24 52 65 63 6F 72 64 43 6F 6D 70 6F 6E 65 6E 74 50 6F 6F 6C</o>
+               <o base="string" data="bytes" line="2103599213">6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 73 63 61 66 66 6F 6C 64 2F 54 79 70 65 57 72 69 74 65 72</o>
+               <o base="string" data="bytes" line="760685867">52 65 63 6F 72 64 43 6F 6D 70 6F 6E 65 6E 74 50 6F 6F 6C</o>
+               <o base="int" data="bytes" line="198775429">00 00 00 00 00 00 06 09</o>
+            </o>
+            <o base="InnerClass">
+               <o base="string" data="bytes" line="710240274">6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 73 63 61 66 66 6F 6C 64 2F 54 79 70 65 57 72 69 74 65 72 24 4D 65 74 68 6F 64 50 6F 6F 6C</o>
+               <o base="string" data="bytes" line="281626281">6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 73 63 61 66 66 6F 6C 64 2F 54 79 70 65 57 72 69 74 65 72</o>
+               <o base="string" data="bytes" line="2036684684">4D 65 74 68 6F 64 50 6F 6F 6C</o>
+               <o base="int" data="bytes" line="1520281834">00 00 00 00 00 00 06 09</o>
+            </o>
+            <o base="InnerClass">
+               <o base="string" data="bytes" line="903422785">6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 73 63 61 66 66 6F 6C 64 2F 54 79 70 65 57 72 69 74 65 72 24 46 69 65 6C 64 50 6F 6F 6C</o>
+               <o base="string" data="bytes" line="2055045904">6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 73 63 61 66 66 6F 6C 64 2F 54 79 70 65 57 72 69 74 65 72</o>
+               <o base="string" data="bytes" line="1118889465">46 69 65 6C 64 50 6F 6F 6C</o>
+               <o base="int" data="bytes" line="612009694">00 00 00 00 00 00 06 09</o>
+            </o>
+            <o base="InnerClass">
+               <o base="string" data="bytes" line="457608079">6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 54 79 70 65 52 65 73 6F 6C 75 74 69 6F 6E 53 74 72 61 74 65 67 79 24 52 65 73 6F 6C 76 65 64</o>
+               <o base="string" data="bytes" line="1563194179">6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 54 79 70 65 52 65 73 6F 6C 75 74 69 6F 6E 53 74 72 61 74 65 67 79</o>
+               <o base="string" data="bytes" line="2104580773">52 65 73 6F 6C 76 65 64</o>
+               <o base="int" data="bytes" line="1217982776">00 00 00 00 00 00 06 09</o>
+            </o>
+            <o base="InnerClass">
+               <o base="string" data="bytes" line="1421792397">6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 44 79 6E 61 6D 69 63 54 79 70 65 24 55 6E 6C 6F 61 64 65 64</o>
+               <o base="string" data="bytes" line="1930472722">6E 65 74 2F 62 79 74 65 62 75 64 64 79 2F 64 79 6E 61 6D 69 63 2F 44 79 6E 61 6D 69 63 54 79 70 65</o>
+               <o base="string" data="bytes" line="378733280">55 6E 6C 6F 61 64 65 64</o>
+               <o base="int" data="bytes" line="1150668156">00 00 00 00 00 00 06 09</o>
             </o>
          </o>
       </o>
