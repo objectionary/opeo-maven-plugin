@@ -119,8 +119,12 @@ public final class FormattingDecompiler implements Decompiler {
             .xpath(
                 "//o[@name='descriptor' or @name='visible' or (@base and not(@line) and not(@abstract))]"
             ).attr("line", "999");
-        return new XMLDocument(
-            new Xembler(lines).applyQuietly(input.node())
-        );
+        return new WithoutAliases(
+            new XMLDocument(
+                new Xembler(lines).applyQuietly(input.node())
+            )
+        ).toXml();
     }
+
+
 }

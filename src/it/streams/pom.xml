@@ -65,9 +65,6 @@ SOFTWARE.
         <groupId>org.eolang</groupId>
         <artifactId>opeo-maven-plugin</artifactId>
         <version>@project.version@</version>
-        <!--        <configuration>-->
-        <!--        <disabled>true</disabled>-->
-        <!--</configuration>-->
         <executions>
           <execution>
             <id>opeo-decompile</id>

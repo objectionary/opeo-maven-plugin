@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.eolang.opeo.decompilation.Decompiler;
+import org.eolang.opeo.decompilation.WithoutAliases;
 import org.eolang.opeo.decompilation.handlers.RouterHandler;
 import org.eolang.opeo.jeo.JeoDecompiler;
 import org.eolang.opeo.storage.FileStorage;
@@ -121,7 +122,9 @@ public final class SelectiveDecompiler implements Decompiler {
                 final List<String> trycatches = entry.xpath(SelectiveDecompiler.trycatches());
                 if (opcodes.isEmpty() && trycatches.isEmpty()) {
                     res = entry.transform(
-                        xml -> new JeoDecompiler(xml, entry.relative()).decompile()
+                        xml -> new WithoutAliases(
+                            new JeoDecompiler(xml, entry.relative()).decompile()
+                        ).toXml()
                     );
                     this.modified.save(res);
                 } else {
