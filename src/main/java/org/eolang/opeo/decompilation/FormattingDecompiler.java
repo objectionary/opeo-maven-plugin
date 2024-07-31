@@ -113,18 +113,15 @@ public final class FormattingDecompiler implements Decompiler {
      *  The crutch should be removed after the original problem that requires
      *  the crutch is fixed.
      *  You can read more about the problem here: https://github.com/objectionary/eo/issues/3189
+     * @todo #355:30min Remove the crutch related to aliases.
+     *  We use {@link WithoutAliases} class here and in the
+     *  {@link org.eolang.opeo.SelectiveDecompiler} to avoid the problem related to redundant
+     *  aliases in the XMIR. We should add aliases only when they are needed.
+     *  This is the similar problem to the one described in the
+     *  <a href="https://github.com/objectionary/jeo-maven-plugin/issues/647">issue</a>
      */
     private static XML format(final XML input) {
         return new WithoutAliases(input).toXml();
-//        final Directives lines = new Directives()
-//            .xpath(
-//                "//o[@name='descriptor' or @name='visible' or (@base and not(@line) and not(@abstract))]"
-//            ).attr("line", "999");
-//        return new WithoutAliases(
-//            new XMLDocument(
-//                new Xembler(lines).applyQuietly(input.node())
-//            )
-//        ).toXml();
     }
 
 
