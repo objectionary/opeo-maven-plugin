@@ -115,15 +115,16 @@ public final class FormattingDecompiler implements Decompiler {
      *  You can read more about the problem here: https://github.com/objectionary/eo/issues/3189
      */
     private static XML format(final XML input) {
-        final Directives lines = new Directives()
-            .xpath(
-                "//o[@name='descriptor' or @name='visible' or (@base and not(@line) and not(@abstract))]"
-            ).attr("line", "999");
-        return new WithoutAliases(
-            new XMLDocument(
-                new Xembler(lines).applyQuietly(input.node())
-            )
-        ).toXml();
+        return new WithoutAliases(input).toXml();
+//        final Directives lines = new Directives()
+//            .xpath(
+//                "//o[@name='descriptor' or @name='visible' or (@base and not(@line) and not(@abstract))]"
+//            ).attr("line", "999");
+//        return new WithoutAliases(
+//            new XMLDocument(
+//                new Xembler(lines).applyQuietly(input.node())
+//            )
+//        ).toXml();
     }
 
 
