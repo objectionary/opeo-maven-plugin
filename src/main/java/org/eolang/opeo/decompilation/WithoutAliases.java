@@ -28,14 +28,29 @@ import com.jcabi.xml.XMLDocument;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
+/**
+ * XMIR representation without aliases.
+ * @since 0.4
+ */
 public final class WithoutAliases {
 
+    /**
+     * Xmir with aliases.
+     */
     private final XML original;
 
+    /**
+     * Constructor.
+     * @param original Xmir with aliases.
+     */
     public WithoutAliases(final XML original) {
         this.original = original;
     }
 
+    /**
+     * Xmir without aliases.
+     * @return Xmir without aliases.
+     */
     public XML toXml() {
         return new XMLDocument(
             new Xembler(
