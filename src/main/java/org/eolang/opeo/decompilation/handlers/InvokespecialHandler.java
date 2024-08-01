@@ -63,18 +63,17 @@ public final class InvokespecialHandler implements InstructionHandler {
             state.stack().push(
                 new Super(target, args, descriptor, type, name)
             );
-        } else
-//            if ("<init>".equals(name) || "new".equals(name))
-            {
+        } else {
+//            state.stack().push(
+//                new Constructor(
+//                    target,
+//                    new Attributes().descriptor(descriptor).interfaced(interfaced),
+//                    args
+//                )
+//            );
             state.stack().push(
-                new Constructor(
-                    target,
-                    new Attributes().descriptor(descriptor).interfaced(interfaced),
-                    args
-                )
+                new Super(target, args, descriptor, type, name)
             );
-//        } else {
-//            state.stack().push(new Invocation(target, name, args, descriptor));
         }
     }
 
