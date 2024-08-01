@@ -26,22 +26,19 @@ package org.eolang.streams;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
-public class Main {
-    public static void main(String... args) {
-        long start = System.currentTimeMillis();
-        String[] strings = IntStream.range(0, 10)
-            .mapToObj(i -> String.valueOf(i))
-            .toArray(String[]::new);
-        int sum = Arrays.stream(strings)
-            .filter(s -> Boolean.valueOf(s.equals("")).equals(false))
-            .mapToInt(s -> Integer.parseInt(s))
-            .sum();
-        System.out.printf("sum=%d time=%d\n", sum, System.currentTimeMillis() - start);
-        // Here I test {@link Playground} class.
-        if (!new Playground(0).isAvailable()) {
-            throw new RuntimeException("Playground should be available");
-        } else {
-            System.out.println("Playground is available");
-        }
+public class Playground {
+
+    private final int d;
+
+    public Playground(final int d) {
+        this.d = d;
+    }
+
+    public boolean isAvailable() {
+        return isZero() || this.d > 10;
+    }
+
+    private boolean isZero() {
+        return this.d == 0;
     }
 }

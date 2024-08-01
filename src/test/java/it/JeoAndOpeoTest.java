@@ -96,6 +96,24 @@ final class JeoAndOpeoTest {
     }
 
     @ParameterizedTest
+    @CsvSource("WebProperties$Resources$Chain$Strategy$Content.xmir")
+    @Disabled
+    void compilesDecompiled(final String path) {
+        Assertions.assertDoesNotThrow(
+            () -> new XmirRepresentation(
+                new JeoCompiler(
+                    new XMLDocument(
+                        new BytesOf(
+                            new ResourceOf(String.format("xmir/decompiled/%s", path))
+                        ).asBytes()
+                    )
+                ).compile()
+            ).toBytecode(),
+            "We expect that the pipeline 'already-decompiled-xmir' -> (compile) -> (assemble) ->'.class' will not throw any exceptions."
+        );
+    }
+
+    @ParameterizedTest
     @CsvSource({
         "xmir/disassembled/AsIsEscapeUtil.xmir",
         "xmir/disassembled/LongArrayAssert.xmir",

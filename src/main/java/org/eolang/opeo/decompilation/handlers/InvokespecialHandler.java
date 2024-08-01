@@ -28,6 +28,7 @@ import java.util.List;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Constructor;
+import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
@@ -62,7 +63,9 @@ public final class InvokespecialHandler implements InstructionHandler {
             state.stack().push(
                 new Super(target, args, descriptor, type, name)
             );
-        } else {
+        } else
+//            if ("<init>".equals(name) || "new".equals(name))
+            {
             state.stack().push(
                 new Constructor(
                     target,
@@ -70,6 +73,8 @@ public final class InvokespecialHandler implements InstructionHandler {
                     args
                 )
             );
+//        } else {
+//            state.stack().push(new Invocation(target, name, args, descriptor));
         }
     }
 
