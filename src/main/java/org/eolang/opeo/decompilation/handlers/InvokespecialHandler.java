@@ -26,9 +26,6 @@ package org.eolang.opeo.decompilation.handlers;
 import java.util.Collections;
 import java.util.List;
 import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.Attributes;
-import org.eolang.opeo.ast.Constructor;
-import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
@@ -45,10 +42,34 @@ import org.objectweb.asm.Type;
  *  This is a clear sign that the class hierarchy is not well designed.
  *  The original problem lies in the {@link Labeled} class.
  *  We need to find more elegant solutions to handle labels in AST.
+ * @checkstyle NoJavadocForOverriddenMethodsCheck (500 lines)
+ * @checkstyle MultilineJavadocTagsCheck (500 lines)
  */
 public final class InvokespecialHandler implements InstructionHandler {
 
+    /**
+     * Handle invokespecial instruction.
+     * @param state Current instruction to handle together with operand stack and variables.
+     * @todo #344:90min Super and Constructor classes ambiguity.
+     *  Recently I removed the following code from this method:
+     *  {@code
+     *    state.stack().push(
+     *      new Constructor(
+     *        target,
+     *        new Attributes().descriptor(descriptor).interfaced(interfaced),
+     *        args
+     *      )
+     *    );
+     *  }
+     *  The reason behind this integration test with
+     *  WebProperties$Resources$Chain$Strategy$Content.xmir class.
+     *  See {@link JeoAndOpeoTest} for more info.
+     *  We need to use both Super and This classes.
+     *  Moreover, we might need to add some other representations.
+     *  Don't forget to remove suppressions.
+     */
     @Override
+    @SuppressWarnings("PMD.UnusedLocalVariable")
     public void handle(final DecompilerState state) {
         final String type = (String) state.operand(0);
         final String name = (String) state.operand(1);
@@ -64,13 +85,6 @@ public final class InvokespecialHandler implements InstructionHandler {
                 new Super(target, args, descriptor, type, name)
             );
         } else {
-//            state.stack().push(
-//                new Constructor(
-//                    target,
-//                    new Attributes().descriptor(descriptor).interfaced(interfaced),
-//                    args
-//                )
-//            );
             state.stack().push(
                 new Super(target, args, descriptor, type, name)
             );
