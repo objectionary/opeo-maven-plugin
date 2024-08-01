@@ -36,12 +36,8 @@ public class Main {
             .filter(s -> Boolean.valueOf(s.equals("")).equals(false))
             .mapToInt(s -> Integer.parseInt(s))
             .sum();
-        System.out.printf("sum=%d time=%d\n", sum, System.currentTimeMillis() - start);
+        System.out.printf("sum=%d time=%d%n", sum, System.currentTimeMillis() - start);
         // Here I test {@link Playground} class.
-        if (!new Playground(0).isAvailable()) {
-            throw new RuntimeException("Playground should be available");
-        } else {
-            System.out.println("Playground is available");
-        }
+        System.out.printf("Playground is available %b%n", new Playground(0).isAvailable());
     }
 }

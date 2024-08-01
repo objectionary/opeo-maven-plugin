@@ -35,10 +35,10 @@ public class Playground {
     }
 
     public boolean isAvailable() {
-        return isZero() || this.d > 10;
+        return isZero();
     }
 
     private boolean isZero() {
-        return this.d == 0;
+        return new Integer(0).equals(this.d);
     }
 }
