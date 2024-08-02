@@ -51,7 +51,7 @@ final class LocalVariableTest {
         MatcherAssert.assertThat(
             "We expect the xmir variable to be equal to <o base='local1'/>, but it wasn't",
             new Xembler(new LocalVariable(1, Type.INT_TYPE).toXmir()).xml(),
-            XhtmlMatchers.hasXPath("./o[@base='local1']")
+            XhtmlMatchers.hasXPath("./o[@base='local-1']")
         );
     }
 

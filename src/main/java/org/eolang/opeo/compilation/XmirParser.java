@@ -169,7 +169,7 @@ final class XmirParser implements Parser {
             result = new FieldRetrieval(node, this);
         } else if (".write-field".equals(base)) {
             result = new FieldAssignment(node, this);
-        } else if (base.contains("local")) {
+        } else if (base.startsWith("local-")) {
             result = new LocalVariable(node);
         } else if (".new".equals(base)) {
             result = new Constructor(node, this);

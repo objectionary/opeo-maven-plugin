@@ -80,7 +80,7 @@
                            <o base="string" data="bytes" line="999">64 65 73 63 72 69 70 74 6F 72 3D 6F 72 67 2E 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2E 63 67 6C 69 62 2E 70 72 6F 78 79 2E 45 6E 68 61 6E 63 65 72 24 33</o>
                         </o>
                      </o>
-                     <o base="local1" line="999">
+                     <o base="local-1" line="999">
                         <o base="string" data="bytes" line="999">64 65 73 63 72 69 70 74 6F 72 3D 4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 67 6C 69 62 2F 70 72 6F 78 79 2F 45 6E 68 61 6E 63 65 72 3B 7C 74 79 70 65 3D 6C 6F 63 61 6C</o>
                      </o>
                   </o>
@@ -91,7 +91,7 @@
                            <o base="string" data="bytes" line="999">64 65 73 63 72 69 70 74 6F 72 3D 6F 72 67 2E 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2E 63 67 6C 69 62 2E 70 72 6F 78 79 2E 45 6E 68 61 6E 63 65 72 24 33</o>
                         </o>
                      </o>
-                     <o base="local2" line="999">
+                     <o base="local-2" line="999">
                         <o base="string" data="bytes" line="999">64 65 73 63 72 69 70 74 6F 72 3D 4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 67 6C 69 62 2F 63 6F 72 65 2F 43 6F 64 65 45 6D 69 74 74 65 72 3B 7C 74 79 70 65 3D 6C 6F 63 61 6C</o>
                      </o>
                   </o>
@@ -140,7 +140,7 @@
                         <o base=".access$100" line="999">
                            <o base="string" data="bytes" line="999">64 65 73 63 72 69 70 74 6F 72 3D 28 49 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 7C 69 6E 74 65 72 66 61 63 65 64 3D 66 61 6C 73 65 7C 6E 61 6D 65 3D 61 63 63 65 73 73 24 31 30 30 7C 6F 77 6E 65 72 3D 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 67 6C 69 62 2F 70 72 6F 78 79 2F 45 6E 68 61 6E 63 65 72 7C 74 79 70 65 3D 73 74 61 74 69 63</o>
                            <o base="org.springframework.cglib.proxy.Enhancer" line="999"/>
-                           <o base="local1" line="999">
+                           <o base="local-1" line="999">
                               <o base="string" data="bytes" line="999">64 65 73 63 72 69 70 74 6F 72 3D 49 7C 74 79 70 65 3D 6C 6F 63 61 6C</o>
                            </o>
                         </o>
@@ -158,7 +158,7 @@
                               </o>
                            </o>
                         </o>
-                        <o base="local2" line="999">
+                        <o base="local-2" line="999">
                            <o base="string" data="bytes" line="999">64 65 73 63 72 69 70 74 6F 72 3D 4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 61 73 6D 2F 4C 61 62 65 6C 3B 7C 74 79 70 65 3D 6C 6F 63 61 6C</o>
                         </o>
                      </o>

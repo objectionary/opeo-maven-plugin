@@ -45,7 +45,7 @@ final class VariableAssignmentTest {
     private static final String XMIR = String.join(
         "\n",
         "<o base='.write-local-var'>",
-        "   <o base='local1'>",
+        "   <o base='local-1'>",
         "      <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 44 7C 74 79 70 65 3D 6C 6F 63 61 6C</o>",
         "   </o>",
         "   <o base='int' data='bytes'>00 00 00 00 00 00 00 02</o>",

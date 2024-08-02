@@ -51,7 +51,7 @@ public final class LocalVariable implements AstNode, Typed {
     /**
      * The prefix of the variable.
      */
-    private static final String PREFIX = "local";
+    private static final String PREFIX = "local-";
 
     /**
      * The identifier of the variable.
