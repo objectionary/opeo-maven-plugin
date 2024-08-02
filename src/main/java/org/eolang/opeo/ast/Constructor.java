@@ -187,6 +187,8 @@ public final class Constructor implements AstNode, Typed {
             result = this.type(((Reference) node).object());
         } else if (node instanceof Duplicate) {
             result = this.type(((Duplicate) node).origin());
+        } else if (node instanceof Labeled) {
+            result = this.type(((Labeled) node).origin());
         } else {
             throw new IllegalStateException(
                 String.format(

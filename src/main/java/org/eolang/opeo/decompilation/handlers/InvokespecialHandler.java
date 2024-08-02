@@ -108,11 +108,14 @@ public final class InvokespecialHandler implements InstructionHandler {
         }
     }
 
+    //todo wtf?
     private boolean isNewAddress(final AstNode target) {
         if (target instanceof NewAddress) {
             return true;
         } else if (target instanceof Duplicate) {
             return this.isNewAddress(((Duplicate) target).origin());
+        } else if (target instanceof Labeled) {
+            return this.isNewAddress(((Labeled) target).origin());
         } else {
             return false;
         }
@@ -129,6 +132,8 @@ public final class InvokespecialHandler implements InstructionHandler {
             result = true;
         } else if (candidate instanceof Labeled) {
             result = InvokespecialHandler.isThis(((Labeled) candidate).origin());
+        } else if (candidate instanceof Duplicate) {
+            result = InvokespecialHandler.isThis(((Duplicate) candidate).origin());
         } else {
             result = false;
         }

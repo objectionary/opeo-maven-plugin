@@ -34,36 +34,6 @@
          <o base="string" data="bytes" line="1186235895" name="signature">4C 6A 61 76 61 2F 6C 61 6E 67 2F 54 68 72 65 61 64 4C 6F 63 61 6C 3C 4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 53 70 72 69 6E 67 42 6F 6F 74 45 78 63 65 70 74 69 6F 6E 48 61 6E 64 6C 65 72 3B 3E 3B</o>
          <o base="string" data="bytes" line="32318002" name="supername">6A 61 76 61 2F 6C 61 6E 67 2F 54 68 72 65 61 64 4C 6F 63 61 6C</o>
          <o base="tuple" line="2061682097" name="interfaces" star=""/>
-         <o abstract="" name="new-KClW">
-            <o base="int" data="bytes" line="290603315" name="access">00 00 00 00 00 00 00 02</o>
-            <o base="string" data="bytes" line="580655118" name="descriptor">28 29 56</o>
-            <o base="string" data="bytes" line="1736363576" name="signature"/>
-            <o base="tuple" line="494772972" name="exceptions" star=""/>
-            <o abstract="" line="613044291" name="maxs">
-               <o base="int" data="bytes" line="541267990" name="stack">00 00 00 00 00 00 00 01</o>
-               <o base="int" data="bytes" line="146839987" name="locals">00 00 00 00 00 00 00 01</o>
-            </o>
-            <o base="seq" name="@">
-               <o base="tuple" line="529914821" name="instructions" star="">
-                  <o base="label" data="bytes" line="1559430744">38 38 61 61 32 63 36 66 2D 35 62 63 62 2D 34 35 39 37 2D 61 30 66 31 2D 30 35 30 63 63 65 30 37 33 37 35 63</o>
-                  <o base="opcode" line="999" name="ALOAD-1D5CE3">
-                     <o base="int" data="bytes" line="370598479">00 00 00 00 00 00 00 19</o>
-                     <o base="int" data="bytes" line="1520821785">00 00 00 00 00 00 00 00</o>
-                  </o>
-                  <o base="opcode" line="999" name="INVOKESPECIAL-1D5CE4">
-                     <o base="int" data="bytes" line="220420126">00 00 00 00 00 00 00 B7</o>
-                     <o base="string" data="bytes" line="1951602973">6A 61 76 61 2F 6C 61 6E 67 2F 54 68 72 65 61 64 4C 6F 63 61 6C</o>
-                     <o base="string" data="bytes" line="999205392">3C 69 6E 69 74 3E</o>
-                     <o base="string" data="bytes" line="40154958">28 29 56</o>
-                     <o base="bool" data="bytes" line="1989652186">00</o>
-                  </o>
-                  <o base="opcode" line="999" name="RETURN-1D5CE5">
-                     <o base="int" data="bytes" line="546686479">00 00 00 00 00 00 00 B1</o>
-                  </o>
-                  <o base="label" data="bytes" line="1474552711">61 62 39 31 66 37 33 31 2D 32 65 66 35 2D 34 39 65 61 2D 62 62 34 34 2D 65 34 35 33 33 65 38 61 36 66 39 65</o>
-               </o>
-            </o>
-         </o>
          <o abstract=""
             name="j$initialValue-KClMb3JnL3NwcmluZ2ZyYW1ld29yay9ib290L1NwcmluZ0Jvb3RFeGNlcHRpb25IYW5kbGVyOw==">
             <o base="int" data="bytes" line="764752937" name="access">00 00 00 00 00 00 00 04</o>
