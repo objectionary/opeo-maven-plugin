@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-08-02T08:48:31.991075Z"
+         ms="1722588511991"
+         name="j$OAuth2ClientRegistrationRepositoryConfiguration"
+         revision="0.0.0"
+         time="2024-08-02T08:48:31.991075Z"
+         version="0.0.0">
+   <listing>yv66vgAAADQAOgoACQAnBwAoCgApACoLACsALAoAAgAtBwAuCgAGAC8HADAHADEBAAY8aW5pdD4BAAMoKVYBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQASTG9jYWxWYXJpYWJsZVRhYmxlAQAEdGhpcwEAd0xvcmcvc3ByaW5nZnJhbWV3b3JrL2Jvb3QvYXV0b2NvbmZpZ3VyZS9zZWN1cml0eS9vYXV0aDIvY2xpZW50L3NlcnZsZXQvT0F1dGgyQ2xpZW50UmVnaXN0cmF0aW9uUmVwb3NpdG9yeUNvbmZpZ3VyYXRpb247AQAcY2xpZW50UmVnaXN0cmF0aW9uUmVwb3NpdG9yeQEAtihMb3JnL3NwcmluZ2ZyYW1ld29yay9ib290L2F1dG9jb25maWd1cmUvc2VjdXJpdHkvb2F1dGgyL2NsaWVudC9PQXV0aDJDbGllbnRQcm9wZXJ0aWVzOylMb3JnL3NwcmluZ2ZyYW1ld29yay9zZWN1cml0eS9vYXV0aDIvY2xpZW50L3JlZ2lzdHJhdGlvbi9Jbk1lbW9yeUNsaWVudFJlZ2lzdHJhdGlvblJlcG9zaXRvcnk7AQAKcHJvcGVydGllcwEAVkxvcmcvc3ByaW5nZnJhbWV3b3JrL2Jvb3QvYXV0b2NvbmZpZ3VyZS9zZWN1cml0eS9vYXV0aDIvY2xpZW50L09BdXRoMkNsaWVudFByb3BlcnRpZXM7AQANcmVnaXN0cmF0aW9ucwEAEExqYXZhL3V0aWwvTGlzdDsBABZMb2NhbFZhcmlhYmxlVHlwZVRhYmxlAQBeTGphdmEvdXRpbC9MaXN0PExvcmcvc3ByaW5nZnJhbWV3b3JrL3NlY3VyaXR5L29hdXRoMi9jbGllbnQvcmVnaXN0cmF0aW9uL0NsaWVudFJlZ2lzdHJhdGlvbjs+OwEAEE1ldGhvZFBhcmFtZXRlcnMBABlSdW50aW1lVmlzaWJsZUFubm90YXRpb25zAQAtTG9yZy9zcHJpbmdmcmFtZXdvcmsvY29udGV4dC9hbm5vdGF0aW9uL0JlYW47AQBLTG9yZy9zcHJpbmdmcmFtZXdvcmsvYm9vdC9hdXRvY29uZmlndXJlL2NvbmRpdGlvbi9Db25kaXRpb25hbE9uTWlzc2luZ0JlYW47AQAFdmFsdWUBAFZMb3JnL3NwcmluZ2ZyYW1ld29yay9zZWN1cml0eS9vYXV0aDIvY2xpZW50L3JlZ2lzdHJhdGlvbi9DbGllbnRSZWdpc3RyYXRpb25SZXBvc2l0b3J5OwEAClNvdXJjZUZpbGUBADRPQXV0aDJDbGllbnRSZWdpc3RyYXRpb25SZXBvc2l0b3J5Q29uZmlndXJhdGlvbi5qYXZhAQA2TG9yZy9zcHJpbmdmcmFtZXdvcmsvY29udGV4dC9hbm5vdGF0aW9uL0NvbmZpZ3VyYXRpb247AQAQcHJveHlCZWFuTWV0aG9kcwMAAAAAAQBLTG9yZy9zcHJpbmdmcmFtZXdvcmsvYm9vdC9jb250ZXh0L3Byb3BlcnRpZXMvRW5hYmxlQ29uZmlndXJhdGlvblByb3BlcnRpZXM7AQA0TG9yZy9zcHJpbmdmcmFtZXdvcmsvY29udGV4dC9hbm5vdGF0aW9uL0NvbmRpdGlvbmFsOwEAWkxvcmcvc3ByaW5nZnJhbWV3b3JrL2Jvb3QvYXV0b2NvbmZpZ3VyZS9zZWN1cml0eS9vYXV0aDIvY2xpZW50L0NsaWVudHNDb25maWd1cmVkQ29uZGl0aW9uOwwACgALAQATamF2YS91dGlsL0FycmF5TGlzdAcAMgwAMwA0BwA1DAA2ADcMAAoAOAEAXG9yZy9zcHJpbmdmcmFtZXdvcmsvc2VjdXJpdHkvb2F1dGgyL2NsaWVudC9yZWdpc3RyYXRpb24vSW5NZW1vcnlDbGllbnRSZWdpc3RyYXRpb25SZXBvc2l0b3J5DAAKADkBAHVvcmcvc3ByaW5nZnJhbWV3b3JrL2Jvb3QvYXV0b2NvbmZpZ3VyZS9zZWN1cml0eS9vYXV0aDIvY2xpZW50L3NlcnZsZXQvT0F1dGgyQ2xpZW50UmVnaXN0cmF0aW9uUmVwb3NpdG9yeUNvbmZpZ3VyYXRpb24BABBqYXZhL2xhbmcvT2JqZWN0AQBnb3JnL3NwcmluZ2ZyYW1ld29yay9ib290L2F1dG9jb25maWd1cmUvc2VjdXJpdHkvb2F1dGgyL2NsaWVudC9PQXV0aDJDbGllbnRQcm9wZXJ0aWVzUmVnaXN0cmF0aW9uQWRhcHRlcgEAFmdldENsaWVudFJlZ2lzdHJhdGlvbnMBAGcoTG9yZy9zcHJpbmdmcmFtZXdvcmsvYm9vdC9hdXRvY29uZmlndXJlL3NlY3VyaXR5L29hdXRoMi9jbGllbnQvT0F1dGgyQ2xpZW50UHJvcGVydGllczspTGphdmEvdXRpbC9NYXA7AQANamF2YS91dGlsL01hcAEABnZhbHVlcwEAGCgpTGphdmEvdXRpbC9Db2xsZWN0aW9uOwEAGShMamF2YS91dGlsL0NvbGxlY3Rpb247KVYBABMoTGphdmEvdXRpbC9MaXN0OylWACAACAAJAAAAAAACAAAACgALAAEADAAAAC8AAQABAAAABSq3AAGxAAAAAgANAAAABgABAAAAKwAOAAAADAABAAAABQAPABAAAAAAABEAEgADAAwAAAByAAMAAwAAABq7AAJZK7gAA7kABAEAtwAFTbsABlkstwAHsAAAAAMADQAAAA4AAwAAADAABQAxABEAMgAOAAAAIAADAAAAGgAPABAAAAAAABoAEwAUAAEAEQAJABUAFgACABcAAAAMAAEAEQAJABUAGAACABkAAAAFAQATAAAAGgAAABIAAgAbAAAAHAABAB1bAAFjAB4AAgAfAAAAAgAgABoAAAAjAAMAIQABACJaACMAJAABAB1bAAFjABQAJQABAB1bAAFjACY=</listing>
+   <errors/>
+   <sheets/>
+   <license/>
+   <metas>
+      <meta>
+         <head>package</head>
+         <tail>org.springframework.boot.autoconfigure.security.oauth2.client.servlet</tail>
+         <part>org.springframework.boot.autoconfigure.security.oauth2.client.servlet</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.opcode</tail>
+         <part>org.eolang.jeo.opcode</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.label</tail>
+         <part>org.eolang.jeo.label</part>
+      </meta>
+   </metas>
+   <objects>
+      <o abstract="" name="j$OAuth2ClientRegistrationRepositoryConfiguration">
+         <o base="int" data="bytes" line="436568185" name="version">00 00 00 00 00 00 00 34</o>
+         <o base="int" data="bytes" line="878623357" name="access">00 00 00 00 00 00 00 20</o>
+         <o base="string" data="bytes" line="1730229127" name="supername">6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>
+         <o base="tuple" line="182586351" name="interfaces" star=""/>
+         <o abstract=""
+            name="j$clientRegistrationRepository-KExvcmcvc3ByaW5nZnJhbWV3b3JrL2Jvb3QvYXV0b2NvbmZpZ3VyZS9zZWN1cml0eS9vYXV0aDIvY2xpZW50L09BdXRoMkNsaWVudFByb3BlcnRpZXM7KUxvcmcvc3ByaW5nZnJhbWV3b3JrL3NlY3VyaXR5L29hdXRoMi9jbGllbnQvcmVnaXN0cmF0aW9uL0luTWVtb3J5Q2xpZW50UmVnaXN0cmF0aW9uUmVwb3NpdG9yeTs=">
+            <o base="int" data="bytes" line="1992061352" name="access">00 00 00 00 00 00 00 00</o>
+            <o base="string" data="bytes" line="1712606209" name="descriptor">28 4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 61 75 74 6F 63 6F 6E 66 69 67 75 72 65 2F 73 65 63 75 72 69 74 79 2F 6F 61 75 74 68 32 2F 63 6C 69 65 6E 74 2F 4F 41 75 74 68 32 43 6C 69 65 6E 74 50 72 6F 70 65 72 74 69 65 73 3B 29 4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 73 65 63 75 72 69 74 79 2F 6F 61 75 74 68 32 2F 63 6C 69 65 6E 74 2F 72 65 67 69 73 74 72 61 74 69 6F 6E 2F 49 6E 4D 65 6D 6F 72 79 43 6C 69 65 6E 74 52 65 67 69 73 74 72 61 74 69 6F 6E 52 65 70 6F 73 69 74 6F 72 79 3B</o>
+            <o base="string" data="bytes" line="81318185" name="signature"/>
+            <o base="tuple" line="1816048112" name="exceptions" star=""/>
+            <o abstract="" line="926247097" name="maxs">
+               <o base="int" data="bytes" line="1968435092" name="stack">00 00 00 00 00 00 00 03</o>
+               <o base="int" data="bytes" line="689535766" name="locals">00 00 00 00 00 00 00 03</o>
+            </o>
+            <o abstract=""
+               name="arg__Lorg/springframework/boot/autoconfigure/security/oauth2/client/OAuth2ClientProperties;__0"/>
+            <o base="tuple" line="1381910398" name="annotations" star="">
+               <o base="annotation"
+                  line="670841571"
+                  name="org.eolang.jeo.representation.MethodName@1baa67ea">
+                  <o base="string" data="bytes" line="2075444539">4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 6E 74 65 78 74 2F 61 6E 6E 6F 74 61 74 69 6F 6E 2F 42 65 61 6E 3B</o>
+                  <o base="bool" data="bytes" line="1725616073">01</o>
+               </o>
+               <o base="annotation"
+                  line="1990938485"
+                  name="org.eolang.jeo.representation.MethodName@65864f3d">
+                  <o base="string" data="bytes" line="572181063">4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 61 75 74 6F 63 6F 6E 66 69 67 75 72 65 2F 63 6F 6E 64 69 74 69 6F 6E 2F 43 6F 6E 64 69 74 69 6F 6E 61 6C 4F 6E 4D 69 73 73 69 6E 67 42 65 61 6E 3B</o>
+                  <o base="bool" data="bytes" line="2075187511">01</o>
+                  <o base="annotation-property">
+                     <o base="string" data="bytes" line="1614909414">41 52 52 41 59</o>
+                     <o base="string" data="bytes" line="419122193">76 61 6C 75 65</o>
+                     <o base="annotation-property">
+                        <o base="string" data="bytes" line="907786869">50 4C 41 49 4E</o>
+                        <o base="string" data="bytes" line="1127194206"/>
+                        <o base="type" data="bytes" line="1014010516">4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 73 65 63 75 72 69 74 79 2F 6F 61 75 74 68 32 2F 63 6C 69 65 6E 74 2F 72 65 67 69 73 74 72 61 74 69 6F 6E 2F 43 6C 69 65 6E 74 52 65 67 69 73 74 72 61 74 69 6F 6E 52 65 70 6F 73 69 74 6F 72 79 3B</o>
+                     </o>
+                  </o>
+               </o>
+            </o>
+            <o base="seq" name="@">
+               <o base="tuple" line="1935205221" name="instructions" star="">
+                  <o base="label" data="bytes" line="564333696">64 62 37 36 66 66 63 63 2D 34 35 61 33 2D 34 65 38 36 2D 62 30 35 66 2D 66 65 32 66 31 34 62 33 35 35 36 35</o>
+                  <o base="opcode" line="999" name="NEW-20594A">
+                     <o base="int" data="bytes" line="1494577397">00 00 00 00 00 00 00 BB</o>
+                     <o base="string" data="bytes" line="1378219115">6A 61 76 61 2F 75 74 69 6C 2F 41 72 72 61 79 4C 69 73 74</o>
+                  </o>
+                  <o base="opcode" line="999" name="DUP-20594B">
+                     <o base="int" data="bytes" line="353527786">00 00 00 00 00 00 00 59</o>
+                  </o>
+                  <o base="opcode" line="999" name="ALOAD-20594C">
+                     <o base="int" data="bytes" line="231017686">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes" line="2028364686">00 00 00 00 00 00 00 01</o>
+                  </o>
+                  <o base="label" data="bytes" line="375959151">39 63 38 31 38 33 36 30 2D 62 63 62 32 2D 34 39 32 32 2D 61 37 66 65 2D 38 39 66 33 37 37 30 66 34 30 39 61</o>
+                  <o base="opcode" line="999" name="INVOKESTATIC-20594D">
+                     <o base="int" data="bytes" line="1005380490">00 00 00 00 00 00 00 B8</o>
+                     <o base="string" data="bytes" line="2105222171">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 61 75 74 6F 63 6F 6E 66 69 67 75 72 65 2F 73 65 63 75 72 69 74 79 2F 6F 61 75 74 68 32 2F 63 6C 69 65 6E 74 2F 4F 41 75 74 68 32 43 6C 69 65 6E 74 50 72 6F 70 65 72 74 69 65 73 52 65 67 69 73 74 72 61 74 69 6F 6E 41 64 61 70 74 65 72</o>
+                     <o base="string" data="bytes" line="479902244">67 65 74 43 6C 69 65 6E 74 52 65 67 69 73 74 72 61 74 69 6F 6E 73</o>
+                     <o base="string" data="bytes" line="2079394389">28 4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 61 75 74 6F 63 6F 6E 66 69 67 75 72 65 2F 73 65 63 75 72 69 74 79 2F 6F 61 75 74 68 32 2F 63 6C 69 65 6E 74 2F 4F 41 75 74 68 32 43 6C 69 65 6E 74 50 72 6F 70 65 72 74 69 65 73 3B 29 4C 6A 61 76 61 2F 75 74 69 6C 2F 4D 61 70 3B</o>
+                     <o base="bool" data="bytes" line="8625611">00</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKEINTERFACE-20594E">
+                     <o base="int" data="bytes" line="653133080">00 00 00 00 00 00 00 B9</o>
+                     <o base="string" data="bytes" line="2116097049">6A 61 76 61 2F 75 74 69 6C 2F 4D 61 70</o>
+                     <o base="string" data="bytes" line="1498637520">76 61 6C 75 65 73</o>
+                     <o base="string" data="bytes" line="982349757">28 29 4C 6A 61 76 61 2F 75 74 69 6C 2F 43 6F 6C 6C 65 63 74 69 6F 6E 3B</o>
+                     <o base="bool" data="bytes" line="377562132">01</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKESPECIAL-205950">
+                     <o base="int" data="bytes" line="217378051">00 00 00 00 00 00 00 B7</o>
+                     <o base="string" data="bytes" line="433765414">6A 61 76 61 2F 75 74 69 6C 2F 41 72 72 61 79 4C 69 73 74</o>
+                     <o base="string" data="bytes" line="1520735994">3C 69 6E 69 74 3E</o>
+                     <o base="string" data="bytes" line="1422781431">28 4C 6A 61 76 61 2F 75 74 69 6C 2F 43 6F 6C 6C 65 63 74 69 6F 6E 3B 29 56</o>
+                     <o base="bool" data="bytes" line="1369509245">00</o>
+                  </o>
+                  <o base="opcode" line="999" name="ASTORE-205953">
+                     <o base="int" data="bytes" line="941696742">00 00 00 00 00 00 00 3A</o>
+                     <o base="int" data="bytes" line="608652411">00 00 00 00 00 00 00 02</o>
+                  </o>
+                  <o base="label" data="bytes" line="466109936">61 38 31 61 61 36 34 36 2D 61 37 61 38 2D 34 33 62 66 2D 39 34 62 31 2D 34 31 37 63 31 39 37 64 31 63 31 61</o>
+                  <o base="opcode" line="999" name="NEW-205956">
+                     <o base="int" data="bytes" line="736346717">00 00 00 00 00 00 00 BB</o>
+                     <o base="string" data="bytes" line="1607339844">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 73 65 63 75 72 69 74 79 2F 6F 61 75 74 68 32 2F 63 6C 69 65 6E 74 2F 72 65 67 69 73 74 72 61 74 69 6F 6E 2F 49 6E 4D 65 6D 6F 72 79 43 6C 69 65 6E 74 52 65 67 69 73 74 72 61 74 69 6F 6E 52 65 70 6F 73 69 74 6F 72 79</o>
+                  </o>
+                  <o base="opcode" line="999" name="DUP-205957">
+                     <o base="int" data="bytes" line="1301457322">00 00 00 00 00 00 00 59</o>
+                  </o>
+                  <o base="opcode" line="999" name="ALOAD-205958">
+                     <o base="int" data="bytes" line="953791279">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes" line="205976961">00 00 00 00 00 00 00 02</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKESPECIAL-205959">
+                     <o base="int" data="bytes" line="1887896793">00 00 00 00 00 00 00 B7</o>
+                     <o base="string" data="bytes" line="1986184286">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 73 65 63 75 72 69 74 79 2F 6F 61 75 74 68 32 2F 63 6C 69 65 6E 74 2F 72 65 67 69 73 74 72 61 74 69 6F 6E 2F 49 6E 4D 65 6D 6F 72 79 43 6C 69 65 6E 74 52 65 67 69 73 74 72 61 74 69 6F 6E 52 65 70 6F 73 69 74 6F 72 79</o>
+                     <o base="string" data="bytes" line="623570361">3C 69 6E 69 74 3E</o>
+                     <o base="string" data="bytes" line="236312791">28 4C 6A 61 76 61 2F 75 74 69 6C 2F 4C 69 73 74 3B 29 56</o>
+                     <o base="bool" data="bytes" line="765209105">00</o>
+                  </o>
+                  <o base="opcode" line="999" name="ARETURN-20595D">
+                     <o base="int" data="bytes" line="1146763322">00 00 00 00 00 00 00 B0</o>
+                  </o>
+                  <o base="label" data="bytes" line="1297441005">61 65 37 35 36 37 32 36 2D 39 32 64 61 2D 34 38 64 33 2D 39 64 37 35 2D 64 35 38 38 62 32 37 38 65 33 34 61</o>
+               </o>
+            </o>
+         </o>
+         <o base="tuple" line="160602505" name="annotations" star="">
+            <o base="annotation"
+               line="1519775606"
+               name="org.eolang.jeo.representation.MethodName@16464752">
+               <o base="string" data="bytes" line="563596284">4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 6E 74 65 78 74 2F 61 6E 6E 6F 74 61 74 69 6F 6E 2F 43 6F 6E 66 69 67 75 72 61 74 69 6F 6E 3B</o>
+               <o base="bool" data="bytes" line="1182789067">01</o>
+               <o base="annotation-property">
+                  <o base="string" data="bytes" line="1519983931">50 4C 41 49 4E</o>
+                  <o base="string" data="bytes" line="620677076">70 72 6F 78 79 42 65 61 6E 4D 65 74 68 6F 64 73</o>
+                  <o base="bool" data="bytes" line="240774046">00</o>
+               </o>
+            </o>
+            <o base="annotation"
+               line="534447672"
+               name="org.eolang.jeo.representation.MethodName@78658812">
+               <o base="string" data="bytes" line="1192596517">4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 63 6F 6E 74 65 78 74 2F 70 72 6F 70 65 72 74 69 65 73 2F 45 6E 61 62 6C 65 43 6F 6E 66 69 67 75 72 61 74 69 6F 6E 50 72 6F 70 65 72 74 69 65 73 3B</o>
+               <o base="bool" data="bytes" line="1042354389">01</o>
+               <o base="annotation-property">
+                  <o base="string" data="bytes" line="783564442">41 52 52 41 59</o>
+                  <o base="string" data="bytes" line="1355363837">76 61 6C 75 65</o>
+                  <o base="annotation-property">
+                     <o base="string" data="bytes" line="1211756278">50 4C 41 49 4E</o>
+                     <o base="string" data="bytes" line="338635407"/>
+                     <o base="type" data="bytes" line="991630748">4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 61 75 74 6F 63 6F 6E 66 69 67 75 72 65 2F 73 65 63 75 72 69 74 79 2F 6F 61 75 74 68 32 2F 63 6C 69 65 6E 74 2F 4F 41 75 74 68 32 43 6C 69 65 6E 74 50 72 6F 70 65 72 74 69 65 73 3B</o>
+                  </o>
+               </o>
+            </o>
+            <o base="annotation"
+               line="352875121"
+               name="org.eolang.jeo.representation.MethodName@303825c3">
+               <o base="string" data="bytes" line="749497555">4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 6E 74 65 78 74 2F 61 6E 6E 6F 74 61 74 69 6F 6E 2F 43 6F 6E 64 69 74 69 6F 6E 61 6C 3B</o>
+               <o base="bool" data="bytes" line="417233784">01</o>
+               <o base="annotation-property">
+                  <o base="string" data="bytes" line="1230418428">41 52 52 41 59</o>
+                  <o base="string" data="bytes" line="318582758">76 61 6C 75 65</o>
+                  <o base="annotation-property">
+                     <o base="string" data="bytes" line="1260114570">50 4C 41 49 4E</o>
+                     <o base="string" data="bytes" line="1417551666"/>
+                     <o base="type" data="bytes" line="1016043998">4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 61 75 74 6F 63 6F 6E 66 69 67 75 72 65 2F 73 65 63 75 72 69 74 79 2F 6F 61 75 74 68 32 2F 63 6C 69 65 6E 74 2F 43 6C 69 65 6E 74 73 43 6F 6E 66 69 67 75 72 65 64 43 6F 6E 64 69 74 69 6F 6E 3B</o>
+                  </o>
+               </o>
+            </o>
+         </o>
+      </o>
+   </objects>
+</program>
