@@ -26,7 +26,11 @@ package org.eolang.opeo.decompilation.handlers;
 import java.util.Collections;
 import java.util.List;
 import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Attributes;
+import org.eolang.opeo.ast.Constructor;
+import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.ast.Labeled;
+import org.eolang.opeo.ast.NewAddress;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.decompilation.DecompilerState;
@@ -80,14 +84,37 @@ public final class InvokespecialHandler implements InstructionHandler {
         );
         Collections.reverse(args);
         final AstNode target = state.stack().pop();
-        if (InvokespecialHandler.isThis(target)) {
+        final boolean istarget = InvokespecialHandler.isThis(target);
+        if (istarget) {
             state.stack().push(
                 new Super(target, args, descriptor, type, name)
             );
+        } else if (this.isNewAddress(target)) {
+            state.stack().push(
+                new Constructor(
+                    target,
+                    new Attributes().descriptor(descriptor).interfaced(interfaced),
+                    args
+                )
+            );
+
         } else {
             state.stack().push(
                 new Super(target, args, descriptor, type, name)
             );
+//            state.stack().push(
+//                new Super(target, args, descriptor, type, name)
+//            );
+        }
+    }
+
+    private boolean isNewAddress(final AstNode target) {
+        if (target instanceof NewAddress) {
+            return true;
+        } else if (target instanceof Duplicate) {
+            return this.isNewAddress(((Duplicate) target).origin());
+        } else {
+            return false;
         }
     }
 
