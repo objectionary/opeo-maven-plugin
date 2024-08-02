@@ -84,8 +84,7 @@ public final class InvokespecialHandler implements InstructionHandler {
         );
         Collections.reverse(args);
         final AstNode target = state.stack().pop();
-        final boolean istarget = InvokespecialHandler.isThis(target);
-        if (istarget) {
+        if (InvokespecialHandler.isThis(target)) {
             state.stack().push(
                 new Super(target, args, descriptor, type, name)
             );
@@ -97,28 +96,33 @@ public final class InvokespecialHandler implements InstructionHandler {
                     args
                 )
             );
-
         } else {
             state.stack().push(
                 new Super(target, args, descriptor, type, name)
             );
-//            state.stack().push(
-//                new Super(target, args, descriptor, type, name)
-//            );
         }
     }
 
-    //todo wtf?
+    /**
+     * Check if the target is a new address.
+     * @param target Where to check if it is a new address.
+     * @return True if the target is a new address.
+     * @todo #344:90min Remove ugly {{@link #isNewAddress(AstNode)}} method.
+     *  We need to find a better algorithm to decompile Constructors and Super calls.
+     *  The usage of 'instanceof' tells us about pure design decisions made before.
+     */
     private boolean isNewAddress(final AstNode target) {
+        final boolean result;
         if (target instanceof NewAddress) {
-            return true;
+            result = true;
         } else if (target instanceof Duplicate) {
-            return this.isNewAddress(((Duplicate) target).origin());
+            result = this.isNewAddress(((Duplicate) target).origin());
         } else if (target instanceof Labeled) {
-            return this.isNewAddress(((Labeled) target).origin());
+            result = this.isNewAddress(((Labeled) target).origin());
         } else {
-            return false;
+            result = false;
         }
+        return result;
     }
 
     /**
