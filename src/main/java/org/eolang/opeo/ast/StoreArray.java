@@ -125,6 +125,6 @@ public final class StoreArray implements AstNode, Typed {
 
     @Override
     public Type type() {
-        return Type.VOID_TYPE;
+        return Typed.class.cast(this.array).type();
     }
 }
