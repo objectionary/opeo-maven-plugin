@@ -23,6 +23,7 @@
  */
 package it;
 
+import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.util.List;
 import org.cactoos.bytes.BytesOf;
@@ -133,16 +134,18 @@ final class JeoAndOpeoTest {
         "xmir/disassembled/SpringBootExceptionHandler$LoggedExceptionHandlerThreadLocal.xmir",
         "xmir/disassembled/ApplicationContextAssertProvider.xmir",
         "xmir/disassembled/Sum.xmir",
-        "xmir/disassembled/ArrayBuilders.xmir",
+        "xmir/disassembled/ArrayBuilders$ByteBuilder.xmir",
     })
     void decompilesCompilesAndKeepsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
+        final XML decompiled = new JeoDecompiler(original).decompile();
+        System.out.println(decompiled);
         MatcherAssert.assertThat(
             "The original and compiled instructions are not equal",
             new JeoInstructions(
                 new XmlProgram(
                     new JeoCompiler(
-                        new JeoDecompiler(original).decompile()
+                        decompiled
                     ).compile()
                 ).top().methods().get(0)
             ).instuctionNames(),

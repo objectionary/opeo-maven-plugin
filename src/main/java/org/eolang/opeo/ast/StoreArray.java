@@ -113,6 +113,8 @@ public final class StoreArray implements AstNode, Typed {
         final List<AstNode> res = new ArrayList<>(0);
         if (this.array instanceof FieldRetrieval) {
             res.addAll(this.array.opcodes());
+        } else if (this.array instanceof LocalVariable) {
+            res.addAll(this.array.opcodes());
         } else {
             res.addAll(this.array.opcodes());
             res.add(new Opcode(Opcodes.DUP));

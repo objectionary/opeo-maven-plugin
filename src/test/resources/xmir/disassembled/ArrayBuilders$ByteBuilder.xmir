@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-08-05T07:29:42.443396Z"
+  ms="1722842982443"
+  name="j$ArrayBuilders$ByteBuilder"
+  revision="0.0.0"
+  time="2024-08-05T07:29:42.443396Z"
+  version="0.0.0">
+   <listing>yv66vgAAADQAHQoABAAXCgADABgHABoHABsBAAY8aW5pdD4BAAMoKVYBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQASTG9jYWxWYXJpYWJsZVRhYmxlAQAEdGhpcwEAC0J5dGVCdWlsZGVyAQAMSW5uZXJDbGFzc2VzAQA/TGNvbS9mYXN0ZXJ4bWwvamFja3Nvbi9kYXRhYmluZC91dGlsL0FycmF5QnVpbGRlcnMkQnl0ZUJ1aWxkZXI7AQAPX2NvbnN0cnVjdEFycmF5AQAFKEkpW0IBAANsZW4BAAFJAQAVKEkpTGphdmEvbGFuZy9PYmplY3Q7AQAJU2lnbmF0dXJlAQA/TGNvbS9mYXN0ZXJ4bWwvamFja3Nvbi9kYXRhYmluZC91dGlsL1ByaW1pdGl2ZUFycmF5QnVpbGRlcjxbQj47AQAKU291cmNlRmlsZQEAEkFycmF5QnVpbGRlcnMuamF2YQwABQAGDAAOAA8HABwBAD1jb20vZmFzdGVyeG1sL2phY2tzb24vZGF0YWJpbmQvdXRpbC9BcnJheUJ1aWxkZXJzJEJ5dGVCdWlsZGVyAQA5Y29tL2Zhc3RlcnhtbC9qYWNrc29uL2RhdGFiaW5kL3V0aWwvUHJpbWl0aXZlQXJyYXlCdWlsZGVyAQAxY29tL2Zhc3RlcnhtbC9qYWNrc29uL2RhdGFiaW5kL3V0aWwvQXJyYXlCdWlsZGVycwAxAAMABAAAAAAAAwABAAUABgABAAcAAAAvAAEAAQAAAAUqtwABsQAAAAIACAAAAAYAAQAAAGQACQAAAAwAAQAAAAUACgANAAAAEQAOAA8AAQAHAAAAOAABAAIAAAAEG7wIsAAAAAIACAAAAAYAAQAAAGYACQAAABYAAgAAAAQACgANAAAAAAAEABAAEQABEEEADgASAAEABwAAADAAAgACAAAABiobtgACsAAAAAIACAAAAAYAAQAAAGEACQAAAAwAAQAAAAYACgANAAAAAwATAAAAAgAUABUAAAACABYADAAAAAoAAQADABkACwAZ</listing>
+   <errors/>
+   <sheets/>
+   <license/>
+   <metas>
+      <meta>
+         <head>package</head>
+         <tail>com.fasterxml.jackson.databind.util</tail>
+         <part>com.fasterxml.jackson.databind.util</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.opcode</tail>
+         <part>org.eolang.jeo.opcode</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.label</tail>
+         <part>org.eolang.jeo.label</part>
+      </meta>
+   </metas>
+   <objects>
+      <o abstract="" name="j$ArrayBuilders$ByteBuilder">
+         <o base="int" data="bytes" line="868004724" name="version">00 00 00 00 00 00 00 34</o>
+         <o base="int" data="bytes" line="1585976374" name="access">00 00 00 00 00 00 00 31</o>
+         <o base="string" data="bytes" line="838466357" name="signature">4C 63 6F 6D 2F 66 61 73 74 65 72 78 6D 6C 2F 6A 61 63 6B 73 6F 6E 2F 64 61 74 61 62 69 6E 64 2F 75 74 69 6C 2F 50 72 69 6D 69 74 69 76 65 41 72 72 61 79 42 75 69 6C 64 65 72 3C 5B 42 3E 3B</o>
+         <o base="string" data="bytes" line="1658815196" name="supername">63 6F 6D 2F 66 61 73 74 65 72 78 6D 6C 2F 6A 61 63 6B 73 6F 6E 2F 64 61 74 61 62 69 6E 64 2F 75 74 69 6C 2F 50 72 69 6D 69 74 69 76 65 41 72 72 61 79 42 75 69 6C 64 65 72</o>
+         <o base="tuple" line="1576630748" name="interfaces" star=""/>
+         <o abstract="" name="new-KClW">
+            <o base="int" data="bytes" line="446971947" name="access">00 00 00 00 00 00 00 01</o>
+            <o base="string" data="bytes" line="519506742" name="descriptor">28 29 56</o>
+            <o base="string" data="bytes" line="1767908946" name="signature"/>
+            <o base="tuple" line="970909946" name="exceptions" star=""/>
+            <o abstract="" line="1840294323" name="maxs">
+               <o base="int" data="bytes" line="440248870" name="stack">00 00 00 00 00 00 00 01</o>
+               <o base="int" data="bytes" line="452473583" name="locals">00 00 00 00 00 00 00 01</o>
+            </o>
+            <o base="seq" name="@">
+               <o base="tuple" line="2130045235" name="instructions" star="">
+                  <o base="label" data="bytes" line="1051300829">39 34 61 37 64 35 61 63 2D 64 62 38 33 2D 34 32 32 33 2D 39 63 34 31 2D 30 65 31 38 61 64 65 31 31 38 32 31</o>
+                  <o base="opcode" line="999" name="ALOAD-22FD07">
+                     <o base="int" data="bytes" line="1917665937">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes" line="1799943340">00 00 00 00 00 00 00 00</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKESPECIAL-22FD08">
+                     <o base="int" data="bytes" line="486106584">00 00 00 00 00 00 00 B7</o>
+                     <o base="string" data="bytes" line="713150446">63 6F 6D 2F 66 61 73 74 65 72 78 6D 6C 2F 6A 61 63 6B 73 6F 6E 2F 64 61 74 61 62 69 6E 64 2F 75 74 69 6C 2F 50 72 69 6D 69 74 69 76 65 41 72 72 61 79 42 75 69 6C 64 65 72</o>
+                     <o base="string" data="bytes" line="1308726733">3C 69 6E 69 74 3E</o>
+                     <o base="string" data="bytes" line="1996897977">28 29 56</o>
+                     <o base="bool" data="bytes" line="2107649375">00</o>
+                  </o>
+                  <o base="opcode" line="999" name="RETURN-22FD09">
+                     <o base="int" data="bytes" line="826892417">00 00 00 00 00 00 00 B1</o>
+                  </o>
+                  <o base="label" data="bytes" line="2002190295">39 64 31 34 65 30 63 30 2D 38 65 38 66 2D 34 65 63 63 2D 39 38 33 32 2D 35 38 38 65 61 35 34 61 31 64 63 39</o>
+               </o>
+            </o>
+         </o>
+         <o abstract="" name="j$_constructArray-KEkpW0I=">
+            <o base="int" data="bytes" line="778306450" name="access">00 00 00 00 00 00 00 11</o>
+            <o base="string" data="bytes" line="627343777" name="descriptor">28 49 29 5B 42</o>
+            <o base="string" data="bytes" line="226389754" name="signature"/>
+            <o base="tuple" line="1361857873" name="exceptions" star=""/>
+            <o abstract="" line="1555220077" name="maxs">
+               <o base="int" data="bytes" line="632114867" name="stack">00 00 00 00 00 00 00 01</o>
+               <o base="int" data="bytes" line="170113313" name="locals">00 00 00 00 00 00 00 02</o>
+            </o>
+            <o abstract="" name="arg__I__0"/>
+            <o base="seq" name="@">
+               <o base="tuple" line="386010500" name="instructions" star="">
+                  <o base="label" data="bytes" line="722816162">31 66 39 61 30 38 64 63 2D 62 30 64 38 2D 34 62 66 64 2D 39 38 33 39 2D 62 30 37 62 31 34 62 38 31 39 62 61</o>
+                  <o base="opcode" line="999" name="ILOAD-22FD0A">
+                     <o base="int" data="bytes" line="1356216656">00 00 00 00 00 00 00 15</o>
+                     <o base="int" data="bytes" line="1379763138">00 00 00 00 00 00 00 01</o>
+                  </o>
+                  <o base="opcode" line="999" name="NEWARRAY-22FD0B">
+                     <o base="int" data="bytes" line="345712082">00 00 00 00 00 00 00 BC</o>
+                     <o base="int" data="bytes" line="822390983">00 00 00 00 00 00 00 08</o>
+                  </o>
+                  <o base="opcode" line="999" name="ARETURN-22FD0C">
+                     <o base="int" data="bytes" line="1874133194">00 00 00 00 00 00 00 B0</o>
+                  </o>
+                  <o base="label" data="bytes" line="697489299">33 30 35 37 63 34 65 64 2D 32 32 65 36 2D 34 65 37 33 2D 39 36 65 35 2D 61 31 65 30 38 38 33 30 32 37 35 62</o>
+               </o>
+            </o>
+         </o>
+         <o abstract="" name="j$_constructArray-KEkpTGphdmEvbGFuZy9PYmplY3Q7">
+            <o base="int" data="bytes" line="939801534" name="access">00 00 00 00 00 00 10 41</o>
+            <o base="string" data="bytes" line="874147126" name="descriptor">28 49 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74 3B</o>
+            <o base="string" data="bytes" line="572503192" name="signature"/>
+            <o base="tuple" line="1055010183" name="exceptions" star=""/>
+            <o abstract="" line="1459860997" name="maxs">
+               <o base="int" data="bytes" line="2051967037" name="stack">00 00 00 00 00 00 00 02</o>
+               <o base="int" data="bytes" line="1988695426" name="locals">00 00 00 00 00 00 00 02</o>
+            </o>
+            <o abstract="" name="arg__I__0"/>
+            <o base="seq" name="@">
+               <o base="tuple" line="1049434827" name="instructions" star="">
+                  <o base="label" data="bytes" line="1357641620">63 33 35 37 38 36 66 63 2D 37 37 32 31 2D 34 66 61 63 2D 39 35 30 38 2D 31 66 64 33 38 36 30 66 33 39 36 32</o>
+                  <o base="opcode" line="999" name="ALOAD-22FD0D">
+                     <o base="int" data="bytes" line="52476040">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes" line="667332281">00 00 00 00 00 00 00 00</o>
+                  </o>
+                  <o base="opcode" line="999" name="ILOAD-22FD0E">
+                     <o base="int" data="bytes" line="189097248">00 00 00 00 00 00 00 15</o>
+                     <o base="int" data="bytes" line="531714928">00 00 00 00 00 00 00 01</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKEVIRTUAL-22FD0F">
+                     <o base="int" data="bytes" line="163206704">00 00 00 00 00 00 00 B6</o>
+                     <o base="string" data="bytes" line="107541979">63 6F 6D 2F 66 61 73 74 65 72 78 6D 6C 2F 6A 61 63 6B 73 6F 6E 2F 64 61 74 61 62 69 6E 64 2F 75 74 69 6C 2F 41 72 72 61 79 42 75 69 6C 64 65 72 73 24 42 79 74 65 42 75 69 6C 64 65 72</o>
+                     <o base="string" data="bytes" line="98093170">5F 63 6F 6E 73 74 72 75 63 74 41 72 72 61 79</o>
+                     <o base="string" data="bytes" line="1226122379">28 49 29 5B 42</o>
+                     <o base="bool" data="bytes" line="263085214">00</o>
+                  </o>
+                  <o base="opcode" line="999" name="ARETURN-22FD10">
+                     <o base="int" data="bytes" line="2016514516">00 00 00 00 00 00 00 B0</o>
+                  </o>
+                  <o base="label" data="bytes" line="315348924">39 65 63 30 64 62 62 65 2D 65 34 61 63 2D 34 38 39 37 2D 62 35 38 33 2D 32 62 64 32 39 63 38 33 38 36 63 34</o>
+               </o>
+            </o>
+         </o>
+         <o base="tuple" line="1967020108" name="attributes" star="">
+            <o base="InnerClass">
+               <o base="string" data="bytes" line="1584228824">63 6F 6D 2F 66 61 73 74 65 72 78 6D 6C 2F 6A 61 63 6B 73 6F 6E 2F 64 61 74 61 62 69 6E 64 2F 75 74 69 6C 2F 41 72 72 61 79 42 75 69 6C 64 65 72 73 24 42 79 74 65 42 75 69 6C 64 65 72</o>
+               <o base="string" data="bytes" line="223631637">63 6F 6D 2F 66 61 73 74 65 72 78 6D 6C 2F 6A 61 63 6B 73 6F 6E 2F 64 61 74 61 62 69 6E 64 2F 75 74 69 6C 2F 41 72 72 61 79 42 75 69 6C 64 65 72 73</o>
+               <o base="string" data="bytes" line="749388727">42 79 74 65 42 75 69 6C 64 65 72</o>
+               <o base="int" data="bytes" line="1393068984">00 00 00 00 00 00 00 19</o>
+            </o>
+         </o>
+      </o>
+   </objects>
+</program>

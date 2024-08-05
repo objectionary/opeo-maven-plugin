@@ -139,6 +139,18 @@ final class SelectiveDecompilerTest {
     }
 
     @Test
+    void avoidsDecompileLargeFileWithUnknownDependencies() {
+        final InMemoryStorage storage = new InMemoryStorage();
+        storage.save(
+            new XmirEntry(
+                new ResourceOf("xmir/disassembled/ArrayBuilders$ByteBuilder.xmir"),
+                "com.fasterxml.jackson.databind.util"
+            )
+        );
+        new SelectiveDecompiler(storage, storage).decompile();;
+    }
+
+    @Test
     void identifiesUnsupportedOpcodes() {
         MatcherAssert.assertThat(
             "We expect that the supported opcodes won't contain the 'GOTO' opcode since we don't support it yet.",
