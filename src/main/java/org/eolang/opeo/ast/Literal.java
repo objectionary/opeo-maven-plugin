@@ -329,6 +329,10 @@ public final class Literal implements AstNode, Typed {
             result = new HexString(node.text()).decodeAsBoolean();
         } else if (type.equals(Type.LONG_TYPE)) {
             result = Literal.parseLong(node.text());
+        } else if (type.equals(Type.DOUBLE_TYPE)) {
+            result = new HexString(node.text()).decodeAsDouble();
+        } else if (type.equals(Type.FLOAT_TYPE)) {
+            result = new HexString(node.text()).decodeAsFloat();
         } else {
             result = new HexString(node.text()).decode();
         }

@@ -131,7 +131,8 @@ final class JeoAndOpeoTest {
         "xmir/disassembled/OAuth2ClientRegistrationRepositoryConfiguration.xmir",
         "xmir/disassembled/DefaultRouterFunctionSpec.xmir",
         "xmir/disassembled/SpringBootExceptionHandler$LoggedExceptionHandlerThreadLocal.xmir",
-        "xmir/disassembled/ApplicationContextAssertProvider.xmir"
+        "xmir/disassembled/ApplicationContextAssertProvider.xmir",
+        "xmir/disassembled/Sum.xmir"
     })
     void decompilesCompilesAndKeepsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());

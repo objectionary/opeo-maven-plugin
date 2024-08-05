@@ -151,6 +151,8 @@ final class XmirParser implements Parser {
             result = new Literal(node);
         } else if ("string".equals(base)) {
             result = new Literal(node);
+        } else if ("double".equals(base)) {
+            result = new Literal(node);
         } else if ("long".equals(base)) {
             result = new Literal(node);
         } else if ("type".equals(base)) {
