@@ -23,7 +23,6 @@
  */
 package it;
 
-import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.util.List;
 import org.cactoos.bytes.BytesOf;
@@ -134,8 +133,6 @@ final class JeoAndOpeoTest {
         "xmir/disassembled/SpringBootExceptionHandler$LoggedExceptionHandlerThreadLocal.xmir",
         "xmir/disassembled/ApplicationContextAssertProvider.xmir",
         "xmir/disassembled/Sum.xmir"
-        //TODO:
-//        "xmir/disassembled/ArrayBuilders$ByteBuilder.xmir",
     })
     void decompilesCompilesAndKeepsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
@@ -167,11 +164,9 @@ final class JeoAndOpeoTest {
     ) throws Exception {
         Opcode.disableCounting();
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
-        final XML decompiled = new JeoDecompiler(original).decompile();
-        System.out.println(decompiled);
         final List<XmlBytecodeEntry> actual = new XmlProgram(
             new JeoCompiler(
-                decompiled
+                new JeoDecompiler(original).decompile()
             ).compile()
         ).top().methods().get(0).instructions();
         final List<XmlBytecodeEntry> expected = new XmlProgram(original).top().methods().get(0)
