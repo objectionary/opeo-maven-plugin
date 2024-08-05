@@ -95,7 +95,7 @@ SOFTWARE.
                 Otherwise the application of our solution will be limited to Java 8.
              -->
               <excludes>
-                module-info.class
+                **/module-info.class
               </excludes>
               <outputDirectory>${project.build.outputDirectory}</outputDirectory>
             </configuration>
