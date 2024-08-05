@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-08-05T06:23:47.879683Z"
+  ms="1722839027879"
+  name="j$ApplicationContextAssertProvider"
+  revision="0.0.0"
+  time="2024-08-05T06:23:47.879683Z"
+  version="0.0.0">
+  <listing>yv66vgAAADQAZggAPwoAQABBCgAIAEIIAEMKAEAARAgARQgARgcARwoASABJCgBIAEoHAEsKAAsATAoATQBOBwBPCwAOAFAHAFEHAFIHAFMHAFQBAAphc3NlcnRUaGF0AQBKKClMb3JnL3NwcmluZ2ZyYW1ld29yay9ib290L3Rlc3QvY29udGV4dC9hc3NlcnRqL0FwcGxpY2F0aW9uQ29udGV4dEFzc2VydDsBAApEZXByZWNhdGVkAQAJU2lnbmF0dXJlAQBPKClMb3JnL3NwcmluZ2ZyYW1ld29yay9ib290L3Rlc3QvY29udGV4dC9hc3NlcnRqL0FwcGxpY2F0aW9uQ29udGV4dEFzc2VydDxUQzs+OwEAGVJ1bnRpbWVWaXNpYmxlQW5ub3RhdGlvbnMBABZMamF2YS9sYW5nL0RlcHJlY2F0ZWQ7AQAbZ2V0U291cmNlQXBwbGljYXRpb25Db250ZXh0AQAyKClMb3JnL3NwcmluZ2ZyYW1ld29yay9jb250ZXh0L0FwcGxpY2F0aW9uQ29udGV4dDsBAAUoKVRDOwEAQyhMamF2YS9sYW5nL0NsYXNzOylMb3JnL3NwcmluZ2ZyYW1ld29yay9jb250ZXh0L0FwcGxpY2F0aW9uQ29udGV4dDsBABBNZXRob2RQYXJhbWV0ZXJzAQAMcmVxdWlyZWRUeXBlAQAiPFQ6VEM7PihMamF2YS9sYW5nL0NsYXNzPFRUOz47KVRUOwEAEWdldFN0YXJ0dXBGYWlsdXJlAQAXKClMamF2YS9sYW5nL1Rocm93YWJsZTsBAAVjbG9zZQEAAygpVgEAA2dldAEAkShMamF2YS9sYW5nL0NsYXNzO0xqYXZhL2xhbmcvQ2xhc3M7TGphdmEvdXRpbC9mdW5jdGlvbi9TdXBwbGllcjspTG9yZy9zcHJpbmdmcmFtZXdvcmsvYm9vdC90ZXN0L2NvbnRleHQvYXNzZXJ0ai9BcHBsaWNhdGlvbkNvbnRleHRBc3NlcnRQcm92aWRlcjsBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQASTG9jYWxWYXJpYWJsZVRhYmxlAQAEdHlwZQEAEUxqYXZhL2xhbmcvQ2xhc3M7AQALY29udGV4dFR5cGUBAA9jb250ZXh0U3VwcGxpZXIBAB1MamF2YS91dGlsL2Z1bmN0aW9uL1N1cHBsaWVyOwEACmludGVyZmFjZXMBABJbTGphdmEvbGFuZy9DbGFzczsBABZMb2NhbFZhcmlhYmxlVHlwZVRhYmxlAQAWTGphdmEvbGFuZy9DbGFzczxUVDs+OwEAF0xqYXZhL2xhbmcvQ2xhc3M8K1RDOz47AQAjTGphdmEvdXRpbC9mdW5jdGlvbi9TdXBwbGllcjwrVEM7PjsBABVbTGphdmEvbGFuZy9DbGFzczwqPjsBAOI8VDo6TG9yZy9zcHJpbmdmcmFtZXdvcmsvYm9vdC90ZXN0L2NvbnRleHQvYXNzZXJ0ai9BcHBsaWNhdGlvbkNvbnRleHRBc3NlcnRQcm92aWRlcjxUQzs+O0M6Okxvcmcvc3ByaW5nZnJhbWV3b3JrL2NvbnRleHQvQXBwbGljYXRpb25Db250ZXh0Oz4oTGphdmEvbGFuZy9DbGFzczxUVDs+O0xqYXZhL2xhbmcvQ2xhc3M8K1RDOz47TGphdmEvdXRpbC9mdW5jdGlvbi9TdXBwbGllcjwrVEM7PjspVFQ7AQAUKClMamF2YS9sYW5nL09iamVjdDsBAAR0aGlzAQBQTG9yZy9zcHJpbmdmcmFtZXdvcmsvYm9vdC90ZXN0L2NvbnRleHQvYXNzZXJ0ai9BcHBsaWNhdGlvbkNvbnRleHRBc3NlcnRQcm92aWRlcjsBAFVMb3JnL3NwcmluZ2ZyYW1ld29yay9ib290L3Rlc3QvY29udGV4dC9hc3NlcnRqL0FwcGxpY2F0aW9uQ29udGV4dEFzc2VydFByb3ZpZGVyPFRDOz47AQD+PEM6Okxvcmcvc3ByaW5nZnJhbWV3b3JrL2NvbnRleHQvQXBwbGljYXRpb25Db250ZXh0Oz5MamF2YS9sYW5nL09iamVjdDtMb3JnL3NwcmluZ2ZyYW1ld29yay9jb250ZXh0L0FwcGxpY2F0aW9uQ29udGV4dDtMb3JnL2Fzc2VydGovY29yZS9hcGkvQXNzZXJ0UHJvdmlkZXI8TG9yZy9zcHJpbmdmcmFtZXdvcmsvYm9vdC90ZXN0L2NvbnRleHQvYXNzZXJ0ai9BcHBsaWNhdGlvbkNvbnRleHRBc3NlcnQ8VEM7Pjs+O0xqYXZhL2lvL0Nsb3NlYWJsZTsBAApTb3VyY2VGaWxlAQAlQXBwbGljYXRpb25Db250ZXh0QXNzZXJ0UHJvdmlkZXIuamF2YQEAFVR5cGUgbXVzdCBub3QgYmUgbnVsbAcAVQwAVgBXDABYAFkBABlUeXBlIG11c3QgYmUgYW4gaW50ZXJmYWNlDABaAFsBABxDb250ZXh0VHlwZSBtdXN0IG5vdCBiZSBudWxsAQAgQ29udGV4dFR5cGUgbXVzdCBiZSBhbiBpbnRlcmZhY2UBAA9qYXZhL2xhbmcvQ2xhc3MHAFwMAF0AXgwAXwBgAQBfb3JnL3NwcmluZ2ZyYW1ld29yay9ib290L3Rlc3QvY29udGV4dC9hc3NlcnRqL0Fzc2VydFByb3ZpZGVyQXBwbGljYXRpb25Db250ZXh0SW52b2NhdGlvbkhhbmRsZXIMAGEAYgcAYwwAZABlAQBOb3JnL3NwcmluZ2ZyYW1ld29yay9ib290L3Rlc3QvY29udGV4dC9hc3NlcnRqL0FwcGxpY2F0aW9uQ29udGV4dEFzc2VydFByb3ZpZGVyDAAUABUBABBqYXZhL2xhbmcvT2JqZWN0AQAub3JnL3NwcmluZ2ZyYW1ld29yay9jb250ZXh0L0FwcGxpY2F0aW9uQ29udGV4dAEAI29yZy9hc3NlcnRqL2NvcmUvYXBpL0Fzc2VydFByb3ZpZGVyAQARamF2YS9pby9DbG9zZWFibGUBAB9vcmcvc3ByaW5nZnJhbWV3b3JrL3V0aWwvQXNzZXJ0AQAHbm90TnVsbAEAJyhMamF2YS9sYW5nL09iamVjdDtMamF2YS9sYW5nL1N0cmluZzspVgEAC2lzSW50ZXJmYWNlAQADKClaAQAGaXNUcnVlAQAWKFpMamF2YS9sYW5nL1N0cmluZzspVgEAEGphdmEvbGFuZy9UaHJlYWQBAA1jdXJyZW50VGhyZWFkAQAUKClMamF2YS9sYW5nL1RocmVhZDsBABVnZXRDb250ZXh0Q2xhc3NMb2FkZXIBABkoKUxqYXZhL2xhbmcvQ2xhc3NMb2FkZXI7AQAGPGluaXQ+AQAxKExqYXZhL2xhbmcvQ2xhc3M7TGphdmEvdXRpbC9mdW5jdGlvbi9TdXBwbGllcjspVgEAF2phdmEvbGFuZy9yZWZsZWN0L1Byb3h5AQAQbmV3UHJveHlJbnN0YW5jZQEAYihMamF2YS9sYW5nL0NsYXNzTG9hZGVyO1tMamF2YS9sYW5nL0NsYXNzO0xqYXZhL2xhbmcvcmVmbGVjdC9JbnZvY2F0aW9uSGFuZGxlcjspTGphdmEvbGFuZy9PYmplY3Q7BgEADgAQAAMAEQASABMAAAAHBAEAFAAVAAMAFgAAAAAAFwAAAAIAGAAZAAAABgABABoAAAQBABsAHAABABcAAAACAB0EAQAbAB4AAgAfAAAABQEAIAAAABcAAAACACEEAQAiACMAAAQBACQAJQAAAAkAJgAnAAMAKAAAAM4ABgAEAAAAQioSAbgAAiq2AAMSBLgABSsSBrgAAiu2AAMSB7gABQW9AAhZAypTWQQrU064AAm2AAotuwALWSsstwAMuAANwAAOsAAAAAMAKQAAABoABgAAAGsABgBsAA8AbQAVAG4AHgBvACsAcAAqAAAAKgAEAAAAQgArACwAAAAAAEIALQAsAAEAAABCAC4ALwACACsAFwAwADEAAwAyAAAAKgAEAAAAQgArADMAAAAAAEIALQA0AAEAAABCAC4ANQACACsAFwAwADYAAwAfAAAADQMAKwAAAC0AAAAuAAAAFwAAAAIANxBBABQAOAACACgAAABDAAEAAQAAAAcquQAPAQCwAAAAAwApAAAABgABAAAANAAqAAAADAABAAAABwA5ADoAAAAyAAAADAABAAAABwA5ADsAAAAZAAAABgABABoAAAACABcAAAACADwAPQAAAAIAPg==</listing>
+  <errors/>
+  <sheets/>
+  <license/>
+  <metas>
+    <meta>
+      <head>package</head>
+      <tail>org.springframework.boot.test.context.assertj</tail>
+      <part>org.springframework.boot.test.context.assertj</part>
+    </meta>
+    <meta>
+      <head>alias</head>
+      <tail>org.eolang.jeo.opcode</tail>
+      <part>org.eolang.jeo.opcode</part>
+    </meta>
+    <meta>
+      <head>alias</head>
+      <tail>org.eolang.jeo.label</tail>
+      <part>org.eolang.jeo.label</part>
+    </meta>
+  </metas>
+  <objects>
+    <o abstract="" name="j$ApplicationContextAssertProvider">
+      <o base="int" data="bytes" line="1527560990" name="version">00 00 00 00 00 00 00 34</o>
+      <o base="int" data="bytes" line="1070942136" name="access">00 00 00 00 00 00 06 01</o>
+      <o base="string" data="bytes" line="1768044089" name="signature">3C 43 3A 3A 4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 6E 74 65 78 74 2F 41 70 70 6C 69 63 61 74 69 6F 6E 43 6F 6E 74 65 78 74 3B 3E 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74 3B 4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 6E 74 65 78 74 2F 41 70 70 6C 69 63 61 74 69 6F 6E 43 6F 6E 74 65 78 74 3B 4C 6F 72 67 2F 61 73 73 65 72 74 6A 2F 63 6F 72 65 2F 61 70 69 2F 41 73 73 65 72 74 50 72 6F 76 69 64 65 72 3C 4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 74 65 73 74 2F 63 6F 6E 74 65 78 74 2F 61 73 73 65 72 74 6A 2F 41 70 70 6C 69 63 61 74 69 6F 6E 43 6F 6E 74 65 78 74 41 73 73 65 72 74 3C 54 43 3B 3E 3B 3E 3B 4C 6A 61 76 61 2F 69 6F 2F 43 6C 6F 73 65 61 62 6C 65 3B</o>
+      <o base="string" data="bytes" line="823803497" name="supername">6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>
+      <o base="tuple" line="461399637" name="interfaces" star="">
+        <o base="string" data="bytes" line="71115945">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 6E 74 65 78 74 2F 41 70 70 6C 69 63 61 74 69 6F 6E 43 6F 6E 74 65 78 74</o>
+        <o base="string" data="bytes" line="888467859">6F 72 67 2F 61 73 73 65 72 74 6A 2F 63 6F 72 65 2F 61 70 69 2F 41 73 73 65 72 74 50 72 6F 76 69 64 65 72</o>
+        <o base="string" data="bytes" line="325883263">6A 61 76 61 2F 69 6F 2F 43 6C 6F 73 65 61 62 6C 65</o>
+      </o>
+      <o abstract=""
+        name="j$get-KExqYXZhL2xhbmcvQ2xhc3M7TGphdmEvbGFuZy9DbGFzcztMamF2YS91dGlsL2Z1bmN0aW9uL1N1cHBsaWVyOylMb3JnL3NwcmluZ2ZyYW1ld29yay9ib290L3Rlc3QvY29udGV4dC9hc3NlcnRqL0FwcGxpY2F0aW9uQ29udGV4dEFzc2VydFByb3ZpZGVyOw==">
+        <o base="int" data="bytes" line="1952359033" name="access">00 00 00 00 00 00 00 09</o>
+        <o base="string" data="bytes" line="2054733612" name="descriptor">28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73 3B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73 3B 4C 6A 61 76 61 2F 75 74 69 6C 2F 66 75 6E 63 74 69 6F 6E 2F 53 75 70 70 6C 69 65 72 3B 29 4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 74 65 73 74 2F 63 6F 6E 74 65 78 74 2F 61 73 73 65 72 74 6A 2F 41 70 70 6C 69 63 61 74 69 6F 6E 43 6F 6E 74 65 78 74 41 73 73 65 72 74 50 72 6F 76 69 64 65 72 3B</o>
+        <o base="string" data="bytes" line="624776699" name="signature">3C 54 3A 3A 4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 74 65 73 74 2F 63 6F 6E 74 65 78 74 2F 61 73 73 65 72 74 6A 2F 41 70 70 6C 69 63 61 74 69 6F 6E 43 6F 6E 74 65 78 74 41 73 73 65 72 74 50 72 6F 76 69 64 65 72 3C 54 43 3B 3E 3B 43 3A 3A 4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 6E 74 65 78 74 2F 41 70 70 6C 69 63 61 74 69 6F 6E 43 6F 6E 74 65 78 74 3B 3E 28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73 3C 54 54 3B 3E 3B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73 3C 2B 54 43 3B 3E 3B 4C 6A 61 76 61 2F 75 74 69 6C 2F 66 75 6E 63 74 69 6F 6E 2F 53 75 70 70 6C 69 65 72 3C 2B 54 43 3B 3E 3B 29 54 54 3B</o>
+        <o base="tuple" line="2092181267" name="exceptions" star=""/>
+        <o abstract="" line="262361497" name="maxs">
+          <o base="int" data="bytes" line="2060219944" name="stack">00 00 00 00 00 00 00 06</o>
+          <o base="int" data="bytes" line="1369720710" name="locals">00 00 00 00 00 00 00 04</o>
+        </o>
+        <o abstract="" name="arg__Ljava/lang/Class;__0"/>
+        <o abstract="" name="arg__Ljava/lang/Class;__1"/>
+        <o abstract="" name="arg__Ljava/util/function/Supplier;__2"/>
+        <o base="seq" name="@">
+          <o base="tuple" line="101952352" name="instructions" star="">
+            <o base="label" data="bytes" line="1605861135">39 31 66 66 32 31 62 34 2D 39 37 30 31 2D 34 31 39 31 2D 39 64 39 38 2D 31 30 30 64 31 33 36 33 65 62 66 30</o>
+            <o base="opcode" line="999" name="ALOAD-1507EC">
+              <o base="int" data="bytes" line="1593652718">00 00 00 00 00 00 00 19</o>
+              <o base="int" data="bytes" line="1544911570">00 00 00 00 00 00 00 00</o>
+            </o>
+            <o base="opcode" line="999" name="LDC-1507ED">
+              <o base="int" data="bytes" line="2073710197">00 00 00 00 00 00 00 12</o>
+              <o base="string" data="bytes" line="1716244493">54 79 70 65 20 6D 75 73 74 20 6E 6F 74 20 62 65 20 6E 75 6C 6C</o>
+            </o>
+            <o base="opcode" line="999" name="INVOKESTATIC-1507EE">
+              <o base="int" data="bytes" line="1365512175">00 00 00 00 00 00 00 B8</o>
+              <o base="string" data="bytes" line="2036447089">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 75 74 69 6C 2F 41 73 73 65 72 74</o>
+              <o base="string" data="bytes" line="1603026063">6E 6F 74 4E 75 6C 6C</o>
+              <o base="string" data="bytes" line="1495105861">28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74 3B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 29 56</o>
+              <o base="bool" data="bytes" line="690626183">00</o>
+            </o>
+            <o base="label" data="bytes" line="1632809240">65 39 39 35 39 39 31 37 2D 62 66 32 30 2D 34 39 63 34 2D 39 63 36 37 2D 36 63 31 36 39 62 64 30 34 34 39 34</o>
+            <o base="opcode" line="999" name="ALOAD-1507EF">
+              <o base="int" data="bytes" line="2119469294">00 00 00 00 00 00 00 19</o>
+              <o base="int" data="bytes" line="1735506621">00 00 00 00 00 00 00 00</o>
+            </o>
+            <o base="opcode" line="999" name="INVOKEVIRTUAL-1507F0">
+              <o base="int" data="bytes" line="882516947">00 00 00 00 00 00 00 B6</o>
+              <o base="string" data="bytes" line="212997685">6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73</o>
+              <o base="string" data="bytes" line="1613681582">69 73 49 6E 74 65 72 66 61 63 65</o>
+              <o base="string" data="bytes" line="1240772649">28 29 5A</o>
+              <o base="bool" data="bytes" line="1869106055">00</o>
+            </o>
+            <o base="opcode" line="999" name="LDC-1507F1">
+              <o base="int" data="bytes" line="833065078">00 00 00 00 00 00 00 12</o>
+              <o base="string" data="bytes" line="163504413">54 79 70 65 20 6D 75 73 74 20 62 65 20 61 6E 20 69 6E 74 65 72 66 61 63 65</o>
+            </o>
+            <o base="opcode" line="999" name="INVOKESTATIC-1507F2">
+              <o base="int" data="bytes" line="335983720">00 00 00 00 00 00 00 B8</o>
+              <o base="string" data="bytes" line="534188064">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 75 74 69 6C 2F 41 73 73 65 72 74</o>
+              <o base="string" data="bytes" line="860998987">69 73 54 72 75 65</o>
+              <o base="string" data="bytes" line="1977972827">28 5A 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 29 56</o>
+              <o base="bool" data="bytes" line="186894564">00</o>
+            </o>
+            <o base="label" data="bytes" line="1403558734">63 38 38 65 30 61 65 33 2D 62 30 31 38 2D 34 62 65 65 2D 38 65 30 64 2D 30 62 33 36 30 31 32 66 37 62 62 38</o>
+            <o base="opcode" line="999" name="ALOAD-1507F3">
+              <o base="int" data="bytes" line="1545312341">00 00 00 00 00 00 00 19</o>
+              <o base="int" data="bytes" line="178622419">00 00 00 00 00 00 00 01</o>
+            </o>
+            <o base="opcode" line="999" name="LDC-1507F4">
+              <o base="int" data="bytes" line="757094167">00 00 00 00 00 00 00 12</o>
+              <o base="string" data="bytes" line="274311185">43 6F 6E 74 65 78 74 54 79 70 65 20 6D 75 73 74 20 6E 6F 74 20 62 65 20 6E 75 6C 6C</o>
+            </o>
+            <o base="opcode" line="999" name="INVOKESTATIC-1507F5">
+              <o base="int" data="bytes" line="2026289316">00 00 00 00 00 00 00 B8</o>
+              <o base="string" data="bytes" line="1273463255">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 75 74 69 6C 2F 41 73 73 65 72 74</o>
+              <o base="string" data="bytes" line="1044678878">6E 6F 74 4E 75 6C 6C</o>
+              <o base="string" data="bytes" line="1587888790">28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74 3B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 29 56</o>
+              <o base="bool" data="bytes" line="1964616421">00</o>
+            </o>
+            <o base="label" data="bytes" line="177319612">34 63 33 32 64 62 36 39 2D 62 32 34 64 2D 34 35 36 61 2D 38 61 30 36 2D 33 38 62 63 65 62 33 62 64 36 38 65</o>
+            <o base="opcode" line="999" name="ALOAD-1507F6">
+              <o base="int" data="bytes" line="1419068348">00 00 00 00 00 00 00 19</o>
+              <o base="int" data="bytes" line="2060727344">00 00 00 00 00 00 00 01</o>
+            </o>
+            <o base="opcode" line="999" name="INVOKEVIRTUAL-1507F7">
+              <o base="int" data="bytes" line="463707256">00 00 00 00 00 00 00 B6</o>
+              <o base="string" data="bytes" line="906766183">6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73</o>
+              <o base="string" data="bytes" line="272579424">69 73 49 6E 74 65 72 66 61 63 65</o>
+              <o base="string" data="bytes" line="286003127">28 29 5A</o>
+              <o base="bool" data="bytes" line="1647149898">00</o>
+            </o>
+            <o base="opcode" line="999" name="LDC-1507F8">
+              <o base="int" data="bytes" line="1369109316">00 00 00 00 00 00 00 12</o>
+              <o base="string" data="bytes" line="826085670">43 6F 6E 74 65 78 74 54 79 70 65 20 6D 75 73 74 20 62 65 20 61 6E 20 69 6E 74 65 72 66 61 63 65</o>
+            </o>
+            <o base="opcode" line="999" name="INVOKESTATIC-1507F9">
+              <o base="int" data="bytes" line="1787631279">00 00 00 00 00 00 00 B8</o>
+              <o base="string" data="bytes" line="1191878070">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 75 74 69 6C 2F 41 73 73 65 72 74</o>
+              <o base="string" data="bytes" line="322464483">69 73 54 72 75 65</o>
+              <o base="string" data="bytes" line="1888190492">28 5A 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 29 56</o>
+              <o base="bool" data="bytes" line="989999262">00</o>
+            </o>
+            <o base="label" data="bytes" line="32501036">64 38 37 64 30 37 32 39 2D 34 61 35 38 2D 34 38 31 63 2D 62 63 61 64 2D 38 34 36 34 36 62 63 39 64 31 35 36</o>
+            <o base="opcode" line="999" name="ICONST_2-1507FA">
+              <o base="int" data="bytes" line="259978486">00 00 00 00 00 00 00 05</o>
+            </o>
+            <o base="opcode" line="999" name="ANEWARRAY-1507FB">
+              <o base="int" data="bytes" line="1526140656">00 00 00 00 00 00 00 BD</o>
+              <o base="string" data="bytes" line="338848596">6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73</o>
+            </o>
+            <o base="opcode" line="999" name="DUP-1507FC">
+              <o base="int" data="bytes" line="115241298">00 00 00 00 00 00 00 59</o>
+            </o>
+            <o base="opcode" line="999" name="ICONST_0-1507FD">
+              <o base="int" data="bytes" line="1080980816">00 00 00 00 00 00 00 03</o>
+            </o>
+            <o base="opcode" line="999" name="ALOAD-1507FE">
+              <o base="int" data="bytes" line="1958765024">00 00 00 00 00 00 00 19</o>
+              <o base="int" data="bytes" line="2003370961">00 00 00 00 00 00 00 00</o>
+            </o>
+            <o base="opcode" line="999" name="AASTORE-1507FF">
+              <o base="int" data="bytes" line="1898204081">00 00 00 00 00 00 00 53</o>
+            </o>
+            <o base="opcode" line="999" name="DUP-150800">
+              <o base="int" data="bytes" line="1195019830">00 00 00 00 00 00 00 59</o>
+            </o>
+            <o base="opcode" line="999" name="ICONST_1-150801">
+              <o base="int" data="bytes" line="865927412">00 00 00 00 00 00 00 04</o>
+            </o>
+            <o base="opcode" line="999" name="ALOAD-150802">
+              <o base="int" data="bytes" line="653660292">00 00 00 00 00 00 00 19</o>
+              <o base="int" data="bytes" line="1009813937">00 00 00 00 00 00 00 01</o>
+            </o>
+            <o base="opcode" line="999" name="AASTORE-150803">
+              <o base="int" data="bytes" line="776000996">00 00 00 00 00 00 00 53</o>
+            </o>
+            <o base="opcode" line="999" name="ASTORE-150804">
+              <o base="int" data="bytes" line="1435960844">00 00 00 00 00 00 00 3A</o>
+              <o base="int" data="bytes" line="230209555">00 00 00 00 00 00 00 03</o>
+            </o>
+            <o base="label" data="bytes" line="1365047577">30 32 32 66 64 32 31 34 2D 63 32 34 61 2D 34 62 32 65 2D 39 66 37 62 2D 33 37 38 32 32 66 31 39 61 39 33 36</o>
+            <o base="opcode" line="999" name="INVOKESTATIC-150805">
+              <o base="int" data="bytes" line="321664376">00 00 00 00 00 00 00 B8</o>
+              <o base="string" data="bytes" line="1775257543">6A 61 76 61 2F 6C 61 6E 67 2F 54 68 72 65 61 64</o>
+              <o base="string" data="bytes" line="235133047">63 75 72 72 65 6E 74 54 68 72 65 61 64</o>
+              <o base="string" data="bytes" line="1285221386">28 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 54 68 72 65 61 64 3B</o>
+              <o base="bool" data="bytes" line="2090945435">00</o>
+            </o>
+            <o base="opcode" line="999" name="INVOKEVIRTUAL-150806">
+              <o base="int" data="bytes" line="955578542">00 00 00 00 00 00 00 B6</o>
+              <o base="string" data="bytes" line="639349845">6A 61 76 61 2F 6C 61 6E 67 2F 54 68 72 65 61 64</o>
+              <o base="string" data="bytes" line="1603866314">67 65 74 43 6F 6E 74 65 78 74 43 6C 61 73 73 4C 6F 61 64 65 72</o>
+              <o base="string" data="bytes" line="46964570">28 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73 4C 6F 61 64 65 72 3B</o>
+              <o base="bool" data="bytes" line="1628324490">00</o>
+            </o>
+            <o base="opcode" line="999" name="ALOAD-150807">
+              <o base="int" data="bytes" line="1751597599">00 00 00 00 00 00 00 19</o>
+              <o base="int" data="bytes" line="1410731204">00 00 00 00 00 00 00 03</o>
+            </o>
+            <o base="opcode" line="999" name="NEW-150808">
+              <o base="int" data="bytes" line="1749119967">00 00 00 00 00 00 00 BB</o>
+              <o base="string" data="bytes" line="352895102">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 74 65 73 74 2F 63 6F 6E 74 65 78 74 2F 61 73 73 65 72 74 6A 2F 41 73 73 65 72 74 50 72 6F 76 69 64 65 72 41 70 70 6C 69 63 61 74 69 6F 6E 43 6F 6E 74 65 78 74 49 6E 76 6F 63 61 74 69 6F 6E 48 61 6E 64 6C 65 72</o>
+            </o>
+            <o base="opcode" line="999" name="DUP-150809">
+              <o base="int" data="bytes" line="497212924">00 00 00 00 00 00 00 59</o>
+            </o>
+            <o base="opcode" line="999" name="ALOAD-15080A">
+              <o base="int" data="bytes" line="1181683723">00 00 00 00 00 00 00 19</o>
+              <o base="int" data="bytes" line="1293260659">00 00 00 00 00 00 00 01</o>
+            </o>
+            <o base="opcode" line="999" name="ALOAD-15080B">
+              <o base="int" data="bytes" line="792236820">00 00 00 00 00 00 00 19</o>
+              <o base="int" data="bytes" line="723872278">00 00 00 00 00 00 00 02</o>
+            </o>
+            <o base="opcode" line="999" name="INVOKESPECIAL-15080C">
+              <o base="int" data="bytes" line="856782121">00 00 00 00 00 00 00 B7</o>
+              <o base="string" data="bytes" line="669133331">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 74 65 73 74 2F 63 6F 6E 74 65 78 74 2F 61 73 73 65 72 74 6A 2F 41 73 73 65 72 74 50 72 6F 76 69 64 65 72 41 70 70 6C 69 63 61 74 69 6F 6E 43 6F 6E 74 65 78 74 49 6E 76 6F 63 61 74 69 6F 6E 48 61 6E 64 6C 65 72</o>
+              <o base="string" data="bytes" line="1710597231">3C 69 6E 69 74 3E</o>
+              <o base="string" data="bytes" line="1106539977">28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73 3B 4C 6A 61 76 61 2F 75 74 69 6C 2F 66 75 6E 63 74 69 6F 6E 2F 53 75 70 70 6C 69 65 72 3B 29 56</o>
+              <o base="bool" data="bytes" line="625198998">00</o>
+            </o>
+            <o base="opcode" line="999" name="INVOKESTATIC-15080D">
+              <o base="int" data="bytes" line="1443120217">00 00 00 00 00 00 00 B8</o>
+              <o base="string" data="bytes" line="155451048">6A 61 76 61 2F 6C 61 6E 67 2F 72 65 66 6C 65 63 74 2F 50 72 6F 78 79</o>
+              <o base="string" data="bytes" line="648097874">6E 65 77 50 72 6F 78 79 49 6E 73 74 61 6E 63 65</o>
+              <o base="string" data="bytes" line="1629918379">28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73 4C 6F 61 64 65 72 3B 5B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 43 6C 61 73 73 3B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 72 65 66 6C 65 63 74 2F 49 6E 76 6F 63 61 74 69 6F 6E 48 61 6E 64 6C 65 72 3B 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74 3B</o>
+              <o base="bool" data="bytes" line="1127544073">00</o>
+            </o>
+            <o base="opcode" line="999" name="CHECKCAST-15080E">
+              <o base="int" data="bytes" line="1185199493">00 00 00 00 00 00 00 C0</o>
+              <o base="string" data="bytes" line="1559847191">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 62 6F 6F 74 2F 74 65 73 74 2F 63 6F 6E 74 65 78 74 2F 61 73 73 65 72 74 6A 2F 41 70 70 6C 69 63 61 74 69 6F 6E 43 6F 6E 74 65 78 74 41 73 73 65 72 74 50 72 6F 76 69 64 65 72</o>
+            </o>
+            <o base="opcode" line="999" name="ARETURN-15080F">
+              <o base="int" data="bytes" line="281859692">00 00 00 00 00 00 00 B0</o>
+            </o>
+            <o base="label" data="bytes" line="683587303">39 65 66 30 31 34 36 37 2D 33 66 34 61 2D 34 61 31 35 2D 61 66 66 62 2D 62 62 35 64 66 32 37 61 35 33 38 38</o>
+          </o>
+        </o>
+      </o>
+    </o>
+  </objects>
+</program>
