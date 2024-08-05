@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.decompilation;
 
+import java.util.stream.Collectors;
 import org.cactoos.io.ResourceOf;
 import org.eolang.opeo.SelectiveDecompiler;
 import org.eolang.opeo.decompilation.handlers.RouterHandler;
@@ -141,13 +142,19 @@ final class SelectiveDecompilerTest {
     @Test
     void avoidsDecompileLargeFileWithUnknownDependencies() {
         final InMemoryStorage storage = new InMemoryStorage();
+        final InMemoryStorage modified = new InMemoryStorage();
         storage.save(
             new XmirEntry(
                 new ResourceOf("xmir/disassembled/ArrayBuilders$ByteBuilder.xmir"),
                 "com.fasterxml.jackson.databind.util"
             )
         );
-        new SelectiveDecompiler(storage, storage).decompile();;
+        new SelectiveDecompiler(storage, modified).decompile();
+        MatcherAssert.assertThat(
+            "We expect that the selective decompiler will skip this file because it doesn't understand NEWARRAY instruction",
+            modified.all().collect(Collectors.toList()),
+            Matchers.empty()
+        );
     }
 
     @Test

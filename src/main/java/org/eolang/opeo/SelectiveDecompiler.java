@@ -148,8 +148,10 @@ public final class SelectiveDecompiler implements Decompiler {
      */
     private String unsupportedOpcodes() {
         return String.format(
-            "//o[@base='opcode'][not(contains('%s', substring-before(concat(@name, '-'), '-'))) ]/@name",
-            Arrays.stream(this.supported).collect(Collectors.joining(" "))
+            "//o[@base='opcode' and not(%s)]/@name",
+            Arrays.stream(this.supported)
+                .map(s -> String.format("substring-before(concat(@name, '-'), '-') = '%s'", s))
+                .collect(Collectors.joining(" or "))
         );
     }
 
