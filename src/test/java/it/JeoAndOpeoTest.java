@@ -23,7 +23,6 @@
  */
 package it;
 
-import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.util.List;
 import org.cactoos.bytes.BytesOf;
@@ -136,7 +135,7 @@ final class JeoAndOpeoTest {
         "xmir/disassembled/ApplicationContextAssertProvider.xmir",
         "xmir/disassembled/Sum.xmir",
         "xmir/disassembled/CachingJupiterConfiguration2.xmir",
-        "xmir/disassembled/DateFormatterRegistrar$LongToDateConverter.xmir",
+        "xmir/disassembled/DateFormatterRegistrar$LongToDateConverter.xmir"
     })
     void decompilesCompilesAndKeepsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
@@ -175,10 +174,10 @@ final class JeoAndOpeoTest {
             ).compile()
         ).top().methods();
         final List<XmlMethod> methods = new XmlProgram(original).top().methods();
-        for (int i = 0; i < methods.size(); i++) {
-            final XmlMethod method = methods.get(i);
+        for (int mindex = 0; mindex < methods.size(); ++mindex) {
+            final XmlMethod method = methods.get(mindex);
             final List<XmlBytecodeEntry> expected = method.instructions();
-            final List<XmlBytecodeEntry> actual = amethods.get(i).instructions();
+            final List<XmlBytecodeEntry> actual = amethods.get(mindex).instructions();
             final int size = expected.size();
             for (int index = 0; index < size; ++index) {
                 final XmlBytecodeEntry expect = expected.get(index);
@@ -192,7 +191,6 @@ final class JeoAndOpeoTest {
                     Matchers.equalTo(expect)
                 );
             }
-
         }
     }
 

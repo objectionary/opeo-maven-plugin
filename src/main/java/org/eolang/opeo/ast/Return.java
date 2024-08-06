@@ -92,25 +92,6 @@ public final class Return implements AstNode {
      * @checkstyle CyclomaticComplexityCheck (20 lines)
      */
     private Opcode opcode() {
-//        final Type type = this.type();
-//        final Opcode result;
-//        if (type.equals(Type.VOID_TYPE)) {
-//            result = new Opcode(Opcodes.RETURN);
-//        } else if (type.equals(Type.INT_TYPE) || type.equals(Type.getType(Integer.class))) {
-//            result = new Opcode(Opcodes.IRETURN);
-//        } else if (type.equals(Type.LONG_TYPE) || type.equals(Type.getType(Long.class))) {
-//            result = new Opcode(Opcodes.LRETURN);
-//        } else if (type.equals(Type.FLOAT_TYPE) || type.equals(Type.getType(Float.class))) {
-//            result = new Opcode(Opcodes.FRETURN);
-//        } else if (type.equals(Type.DOUBLE_TYPE) || type.equals(Type.getType(Double.class))) {
-//            result = new Opcode(Opcodes.DRETURN);
-//        } else if (type.equals(Type.BOOLEAN_TYPE) || type.equals(Type.getType(Boolean.class))) {
-//            result = new Opcode(Opcodes.IRETURN);
-//        } else {
-//            result = new Opcode(Opcodes.ARETURN);
-//        }
-//        return result;
-
         final Type type = this.type();
         final Opcode result;
         if (type.equals(Type.VOID_TYPE)) {

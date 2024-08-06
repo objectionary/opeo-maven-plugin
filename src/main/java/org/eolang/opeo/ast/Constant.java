@@ -54,7 +54,10 @@ public final class Constant implements AstNode, Typed {
      */
     private final Object value;
 
-    private final Type type;
+    /**
+     * The constant value type.
+     */
+    private final Type vtype;
 
     /**
      * Constructor.
@@ -72,9 +75,14 @@ public final class Constant implements AstNode, Typed {
         this(value, Type.getType(value.getClass()));
     }
 
+    /**
+     * Constructor.
+     * @param value The constant value.
+     * @param type The constant value type.
+     */
     public Constant(final Object value, final Type type) {
         this.value = value;
-        this.type = type;
+        this.vtype = type;
     }
 
     @Override
@@ -92,16 +100,14 @@ public final class Constant implements AstNode, Typed {
 
     @Override
     public Type type() {
-        return this.type;
-//        final Type result;
-//        if (this.value instanceof Type) {
-//            result = (Type) this.value;
-//        } else {
-//            result = Type.getType(this.value.getClass());
-//        }
-//        return result;
+        return this.vtype;
     }
 
+    /**
+     * Parse the Constant type from XMIR representation.
+     * @param node The node to parse.
+     * @return The parsed type.
+     */
     private static Type xtype(final XmlNode node) {
         final XmlNode child = node.firstChild();
         final DataType type = DataType.find(
@@ -109,28 +115,40 @@ public final class Constant implements AstNode, Typed {
                 () -> new IllegalStateException("Constant node has no 'base' attribute")
             )
         );
+        final Type result;
         switch (type) {
             case INT:
-                return Type.INT_TYPE;
+                result = Type.INT_TYPE;
+                break;
             case LONG:
-                return Type.LONG_TYPE;
+                result = Type.LONG_TYPE;
+                break;
             case FLOAT:
-                return Type.FLOAT_TYPE;
+                result = Type.FLOAT_TYPE;
+                break;
             case DOUBLE:
-                return Type.DOUBLE_TYPE;
+                result = Type.DOUBLE_TYPE;
+                break;
             case CHAR:
-                return Type.CHAR_TYPE;
+                result = Type.CHAR_TYPE;
+                break;
             case BYTE:
-                return Type.BYTE_TYPE;
+                result = Type.BYTE_TYPE;
+                break;
             case SHORT:
-                return Type.SHORT_TYPE;
+                result = Type.SHORT_TYPE;
+                break;
             case STRING:
-                return Type.getType(String.class);
+                result = Type.getType(String.class);
+                break;
             case TYPE_REFERENCE:
-                return Type.getType(Type.class);
+                result = Type.getType(Type.class);
+                break;
             default:
-                return Type.getType(type.type());
+                result = Type.getType(type.type());
+                break;
         }
+        return result;
     }
 
     /**

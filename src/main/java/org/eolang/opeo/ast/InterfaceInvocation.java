@@ -45,6 +45,24 @@ import org.xembly.Directives;
  *  It means that we have a code duplication. We need to remove it somehow.
  *  Also pay attention that {@link #xargs} method is duplicate of the same method from
  *  {@link org.eolang.opeo.compilation.XmirParser#args} class.
+ * @todo #344:90min Interface Invocation Type Inference
+ *  We used to infer 'owner' of a interface method invocation from the {@link #source}.
+ *  However it led to failed tests.
+ *  <p> Here is how we did it:
+ *  {@code
+ *   final Typed owner = (Typed) this.source;
+ *   res.add(
+ *       new Opcode(
+ *           Opcodes.INVOKEINTERFACE,
+ *           owner.type().getClassName().replace('.', '/'),
+ *           this.attrs.name(),
+ *           this.attrs.descriptor(),
+ *           this.attrs.interfaced()
+ *       )
+ *   );
+ *  }
+ *  </p>
+ *  We should use the similar approach, but we also have to ensure that all the tests pass.
  */
 @ToString
 @EqualsAndHashCode
@@ -129,19 +147,6 @@ public final class InterfaceInvocation implements AstNode, Typed {
                 this.attrs.interfaced()
             )
         );
-
-
-//        final Typed owner = (Typed) this.source;
-//
-//        res.add(
-//            new Opcode(
-//                Opcodes.INVOKEINTERFACE,
-//                owner.type().getClassName().replace('.', '/'),
-//                this.attrs.name(),
-//                this.attrs.descriptor(),
-//                this.attrs.interfaced()
-//            )
-//        );
         return res;
     }
 
