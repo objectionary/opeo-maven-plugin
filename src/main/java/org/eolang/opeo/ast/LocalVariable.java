@@ -103,13 +103,13 @@ public final class LocalVariable implements AstNode, Typed {
     public List<AstNode> opcodes() {
         final Type type = this.type();
         final List<AstNode> result;
-        if (type.equals(Type.INT_TYPE) || type.equals(Type.getType(Integer.class))) {
+        if (type.equals(Type.INT_TYPE)) {
             result = Arrays.asList(new Opcode(Opcodes.ILOAD, this.identifier));
-        } else if (type.equals(Type.LONG_TYPE) || type.equals(Type.getType(Long.class))) {
+        } else if (type.equals(Type.LONG_TYPE)) {
             result = Arrays.asList(new Opcode(Opcodes.LLOAD, this.identifier));
-        } else if (type.equals(Type.FLOAT_TYPE) || type.equals(Type.getType(Float.class))) {
+        } else if (type.equals(Type.FLOAT_TYPE)) {
             result = Arrays.asList(new Opcode(Opcodes.FLOAD, this.identifier));
-        } else if (type.equals(Type.DOUBLE_TYPE) || type.equals(Type.getType(Double.class))) {
+        } else if (type.equals(Type.DOUBLE_TYPE)) {
             result = Arrays.asList(new Opcode(Opcodes.DLOAD, this.identifier));
         } else {
             result = Arrays.asList(new Opcode(type.getOpcode(Opcodes.ILOAD), this.identifier));

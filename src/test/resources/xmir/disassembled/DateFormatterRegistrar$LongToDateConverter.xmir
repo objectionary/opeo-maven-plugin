@@ -48,7 +48,6 @@
             <o abstract="" name="arg__Ljava/lang/Long;__0"/>
             <o base="seq" name="@">
                <o base="tuple" line="1925909822" name="instructions" star="">
-                  <o base="label" data="bytes" line="2045494741">63 63 33 62 35 36 64 31 2D 34 63 38 34 2D 34 66 32 63 2D 61 30 31 61 2D 31 65 33 62 64 33 39 62 64 32 38 37</o>
                   <o base="opcode" line="999" name="NEW-1C5548">
                      <o base="int" data="bytes" line="1481579125">00 00 00 00 00 00 00 BB</o>
                      <o base="string" data="bytes" line="1038953597">6A 61 76 61 2F 75 74 69 6C 2F 44 61 74 65</o>
@@ -77,7 +76,6 @@
                   <o base="opcode" line="999" name="ARETURN-1C554D">
                      <o base="int" data="bytes" line="1061728938">00 00 00 00 00 00 00 B0</o>
                   </o>
-                  <o base="label" data="bytes" line="662991420">39 66 65 36 63 62 61 35 2D 65 34 37 31 2D 34 36 63 35 2D 38 35 65 65 2D 66 33 62 32 38 37 63 66 34 61 30 31</o>
                </o>
             </o>
          </o>
