@@ -39,10 +39,6 @@ import org.xembly.Directives;
 /**
  * Constructor output node.
  * @since 0.1
- * @todo #329:90min Continue enable 'spring-fat' integration test.
- *  Currently 'spring-fat' integration test fails.
- *  Now it fails because some problems with Constructor transformation.
- *  We should fix them and continue to enable 'spring-fat' integration test.
  */
 @ToString
 @EqualsAndHashCode
