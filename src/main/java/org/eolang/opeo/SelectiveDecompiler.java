@@ -25,7 +25,6 @@ package org.eolang.opeo;
 
 import com.jcabi.log.Logger;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -150,14 +149,12 @@ public final class SelectiveDecompiler implements Decompiler {
      * @return Set of unsupported opcodes.
      */
     private Set<String> unsupported(final XmirEntry entry) {
-        final Set<String> all = entry.xpath(
-                "//o[@base='opcode']/@name")
+        final Set<String> all = entry.xpath("//o[@base='opcode']/@name")
             .stream()
             .map(s -> String.format("%s%s", s, "-"))
             .map(s -> s.substring(0, s.indexOf('-')))
             .collect(Collectors.toSet());
-        final Set<String> sup = Arrays.stream(this.supported).collect(Collectors.toSet());
-        all.removeAll(sup);
+        all.removeAll(Arrays.asList(this.supported));
         return all;
     }
 
