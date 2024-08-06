@@ -163,7 +163,7 @@ final class JeoAndOpeoTest {
         "xmir/disassembled/SimpleLog.xmir",
         "xmir/disassembled/Main.xmir",
         "xmir/disassembled/CachingJupiterConfiguration.xmir",
-        "xmir/disassembled/EngineDiscoveryRequestResolver$DefaultInitializationContext.xmir"
+        "xmir/disassembled/DateFormatterRegistrar$LongToDateConverter.xmir"
     })
     void decompilesCompilesAndKeepsTheSameInstructionsWithTheSameOperands(
         final String path

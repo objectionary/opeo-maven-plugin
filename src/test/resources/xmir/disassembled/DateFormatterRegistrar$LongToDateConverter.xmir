@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-08-06T07:58:33.543475Z"
+         ms="1722931113543"
+         name="j$DateFormatterRegistrar$LongToDateConverter"
+         revision="0.0.0"
+         time="2024-08-06T07:58:33.543475Z"
+         version="0.0.0">
+   <listing>yv66vgAAADQAMQoACAAiCgAJACIHACMKAAYAJAoAAwAlBwAmCgAIACcHACkHACoHACsBAAY8aW5pdD4BAAMoKVYBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQASTG9jYWxWYXJpYWJsZVRhYmxlAQAEdGhpcwEAE0xvbmdUb0RhdGVDb252ZXJ0ZXIBAAxJbm5lckNsYXNzZXMBAFBMb3JnL3NwcmluZ2ZyYW1ld29yay9mb3JtYXQvZGF0ZXRpbWUvRGF0ZUZvcm1hdHRlclJlZ2lzdHJhciRMb25nVG9EYXRlQ29udmVydGVyOwEAB2NvbnZlcnQBACIoTGphdmEvbGFuZy9Mb25nOylMamF2YS91dGlsL0RhdGU7AQAGc291cmNlAQAQTGphdmEvbGFuZy9Mb25nOwEAEE1ldGhvZFBhcmFtZXRlcnMBACYoTGphdmEvbGFuZy9PYmplY3Q7KUxqYXZhL2xhbmcvT2JqZWN0OwcALAEAQShMb3JnL3NwcmluZ2ZyYW1ld29yay9mb3JtYXQvZGF0ZXRpbWUvRGF0ZUZvcm1hdHRlclJlZ2lzdHJhciQxOylWAQACeDABAD5Mb3JnL3NwcmluZ2ZyYW1ld29yay9mb3JtYXQvZGF0ZXRpbWUvRGF0ZUZvcm1hdHRlclJlZ2lzdHJhciQxOwEACVNpZ25hdHVyZQEAakxqYXZhL2xhbmcvT2JqZWN0O0xvcmcvc3ByaW5nZnJhbWV3b3JrL2NvcmUvY29udmVydC9jb252ZXJ0ZXIvQ29udmVydGVyPExqYXZhL2xhbmcvTG9uZztMamF2YS91dGlsL0RhdGU7PjsBAApTb3VyY2VGaWxlAQAbRGF0ZUZvcm1hdHRlclJlZ2lzdHJhci5qYXZhDAALAAwBAA5qYXZhL3V0aWwvRGF0ZQwALQAuDAALAC8BAA5qYXZhL2xhbmcvTG9uZwwAFAAVBwAwAQBOb3JnL3NwcmluZ2ZyYW1ld29yay9mb3JtYXQvZGF0ZXRpbWUvRGF0ZUZvcm1hdHRlclJlZ2lzdHJhciRMb25nVG9EYXRlQ29udmVydGVyAQAQamF2YS9sYW5nL09iamVjdAEANG9yZy9zcHJpbmdmcmFtZXdvcmsvY29yZS9jb252ZXJ0L2NvbnZlcnRlci9Db252ZXJ0ZXIBADxvcmcvc3ByaW5nZnJhbWV3b3JrL2Zvcm1hdC9kYXRldGltZS9EYXRlRm9ybWF0dGVyUmVnaXN0cmFyJDEBAAlsb25nVmFsdWUBAAMoKUoBAAQoSilWAQA6b3JnL3NwcmluZ2ZyYW1ld29yay9mb3JtYXQvZGF0ZXRpbWUvRGF0ZUZvcm1hdHRlclJlZ2lzdHJhcgAgAAgACQABAAoAAAAEAAIACwAMAAEADQAAAC8AAQABAAAABSq3AAKxAAAAAgAOAAAABgABAAAAfQAPAAAADAABAAAABQAQABMAAAABABQAFQACAA0AAABAAAQAAgAAAAy7AANZK7YABLcABbAAAAACAA4AAAAGAAEAAACBAA8AAAAWAAIAAAAMABAAEwAAAAAADAAWABcAAQAYAAAABQEAFgAAEEEAFAAZAAIADQAAADMAAgACAAAACSorwAAGtgAHsAAAAAIADgAAAAYAAQAAAH0ADwAAAAwAAQAAAAkAEAATAAAAGAAAAAUBABYQABAAAAsAGwABAA0AAAA5AAEAAgAAAAUqtwABsQAAAAIADgAAAAYAAQAAAH0ADwAAABYAAgAAAAUAEAATAAAAAAAFABwAHQABAAMAHgAAAAIAHwAgAAAAAgAhABIAAAASAAIACAAoABEACgAaAAAAABAI</listing>
+   <errors/>
+   <sheets/>
+   <license/>
+   <metas>
+      <meta>
+         <head>package</head>
+         <tail>org.springframework.format.datetime</tail>
+         <part>org.springframework.format.datetime</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.opcode</tail>
+         <part>org.eolang.jeo.opcode</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.label</tail>
+         <part>org.eolang.jeo.label</part>
+      </meta>
+   </metas>
+   <objects>
+      <o abstract="" name="j$DateFormatterRegistrar$LongToDateConverter">
+         <o base="int" data="bytes" line="1690035899" name="version">00 00 00 00 00 00 00 34</o>
+         <o base="int" data="bytes" line="1071824818" name="access">00 00 00 00 00 00 00 20</o>
+         <o base="string" data="bytes" line="300724051" name="signature">4C 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74 3B 4C 6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 72 65 2F 63 6F 6E 76 65 72 74 2F 63 6F 6E 76 65 72 74 65 72 2F 43 6F 6E 76 65 72 74 65 72 3C 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4C 6F 6E 67 3B 4C 6A 61 76 61 2F 75 74 69 6C 2F 44 61 74 65 3B 3E 3B</o>
+         <o base="string" data="bytes" line="1087283678" name="supername">6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>
+         <o base="tuple" line="1458433201" name="interfaces" star="">
+            <o base="string" data="bytes" line="1087741193">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 63 6F 72 65 2F 63 6F 6E 76 65 72 74 2F 63 6F 6E 76 65 72 74 65 72 2F 43 6F 6E 76 65 72 74 65 72</o>
+         </o>
+         <o abstract=""
+            name="j$convert-KExqYXZhL2xhbmcvTG9uZzspTGphdmEvdXRpbC9EYXRlOw==">
+            <o base="int" data="bytes" line="1835817828" name="access">00 00 00 00 00 00 00 01</o>
+            <o base="string" data="bytes" line="1757875052" name="descriptor">28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4C 6F 6E 67 3B 29 4C 6A 61 76 61 2F 75 74 69 6C 2F 44 61 74 65 3B</o>
+            <o base="string" data="bytes" line="726494812" name="signature"/>
+            <o base="tuple" line="1852253434" name="exceptions" star=""/>
+            <o abstract="" line="1906085142" name="maxs">
+               <o base="int" data="bytes" line="1222566269" name="stack">00 00 00 00 00 00 00 04</o>
+               <o base="int" data="bytes" line="1442931693" name="locals">00 00 00 00 00 00 00 02</o>
+            </o>
+            <o abstract="" name="arg__Ljava/lang/Long;__0"/>
+            <o base="seq" name="@">
+               <o base="tuple" line="1925909822" name="instructions" star="">
+                  <o base="label" data="bytes" line="2045494741">63 63 33 62 35 36 64 31 2D 34 63 38 34 2D 34 66 32 63 2D 61 30 31 61 2D 31 65 33 62 64 33 39 62 64 32 38 37</o>
+                  <o base="opcode" line="999" name="NEW-1C5548">
+                     <o base="int" data="bytes" line="1481579125">00 00 00 00 00 00 00 BB</o>
+                     <o base="string" data="bytes" line="1038953597">6A 61 76 61 2F 75 74 69 6C 2F 44 61 74 65</o>
+                  </o>
+                  <o base="opcode" line="999" name="DUP-1C5549">
+                     <o base="int" data="bytes" line="45805570">00 00 00 00 00 00 00 59</o>
+                  </o>
+                  <o base="opcode" line="999" name="ALOAD-1C554A">
+                     <o base="int" data="bytes" line="1766649937">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes" line="499870819">00 00 00 00 00 00 00 01</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKEVIRTUAL-1C554B">
+                     <o base="int" data="bytes" line="2147463205">00 00 00 00 00 00 00 B6</o>
+                     <o base="string" data="bytes" line="651451830">6A 61 76 61 2F 6C 61 6E 67 2F 4C 6F 6E 67</o>
+                     <o base="string" data="bytes" line="167175775">6C 6F 6E 67 56 61 6C 75 65</o>
+                     <o base="string" data="bytes" line="1440344208">28 29 4A</o>
+                     <o base="bool" data="bytes" line="164640301">00</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKESPECIAL-1C554C">
+                     <o base="int" data="bytes" line="473196712">00 00 00 00 00 00 00 B7</o>
+                     <o base="string" data="bytes" line="1419979894">6A 61 76 61 2F 75 74 69 6C 2F 44 61 74 65</o>
+                     <o base="string" data="bytes" line="1281829171">3C 69 6E 69 74 3E</o>
+                     <o base="string" data="bytes" line="658855277">28 4A 29 56</o>
+                     <o base="bool" data="bytes" line="699153173">00</o>
+                  </o>
+                  <o base="opcode" line="999" name="ARETURN-1C554D">
+                     <o base="int" data="bytes" line="1061728938">00 00 00 00 00 00 00 B0</o>
+                  </o>
+                  <o base="label" data="bytes" line="662991420">39 66 65 36 63 62 61 35 2D 65 34 37 31 2D 34 36 63 35 2D 38 35 65 65 2D 66 33 62 32 38 37 63 66 34 61 30 31</o>
+               </o>
+            </o>
+         </o>
+         <o abstract=""
+            name="j$convert-KExqYXZhL2xhbmcvT2JqZWN0OylMamF2YS9sYW5nL09iamVjdDs=">
+            <o base="int" data="bytes" line="30293153" name="access">00 00 00 00 00 00 10 41</o>
+            <o base="string" data="bytes" line="1312685217" name="descriptor">28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74 3B 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74 3B</o>
+            <o base="string" data="bytes" line="271349437" name="signature"/>
+            <o base="tuple" line="1247572253" name="exceptions" star=""/>
+            <o abstract="" line="1748778204" name="maxs">
+               <o base="int" data="bytes" line="1902978243" name="stack">00 00 00 00 00 00 00 02</o>
+               <o base="int" data="bytes" line="440215690" name="locals">00 00 00 00 00 00 00 02</o>
+            </o>
+            <o abstract="" name="arg__Ljava/lang/Object;__0"/>
+            <o base="seq" name="@">
+               <o base="tuple" line="246633564" name="instructions" star="">
+                  <o base="label" data="bytes" line="1053994279">63 62 37 31 65 32 31 63 2D 62 38 31 32 2D 34 63 31 34 2D 39 65 39 37 2D 31 62 32 38 33 36 66 63 61 38 38 32</o>
+                  <o base="opcode" line="999" name="ALOAD-1C554E">
+                     <o base="int" data="bytes" line="99050981">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes" line="246935599">00 00 00 00 00 00 00 00</o>
+                  </o>
+                  <o base="opcode" line="999" name="ALOAD-1C554F">
+                     <o base="int" data="bytes" line="671072907">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes" line="62011927">00 00 00 00 00 00 00 01</o>
+                  </o>
+                  <o base="opcode" line="999" name="CHECKCAST-1C5550">
+                     <o base="int" data="bytes" line="394065753">00 00 00 00 00 00 00 C0</o>
+                     <o base="string" data="bytes" line="1081476544">6A 61 76 61 2F 6C 61 6E 67 2F 4C 6F 6E 67</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKEVIRTUAL-1C5551">
+                     <o base="int" data="bytes" line="496842474">00 00 00 00 00 00 00 B6</o>
+                     <o base="string" data="bytes" line="1835911490">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 66 6F 72 6D 61 74 2F 64 61 74 65 74 69 6D 65 2F 44 61 74 65 46 6F 72 6D 61 74 74 65 72 52 65 67 69 73 74 72 61 72 24 4C 6F 6E 67 54 6F 44 61 74 65 43 6F 6E 76 65 72 74 65 72</o>
+                     <o base="string" data="bytes" line="1561038678">63 6F 6E 76 65 72 74</o>
+                     <o base="string" data="bytes" line="1698274785">28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4C 6F 6E 67 3B 29 4C 6A 61 76 61 2F 75 74 69 6C 2F 44 61 74 65 3B</o>
+                     <o base="bool" data="bytes" line="545706107">00</o>
+                  </o>
+                  <o base="opcode" line="999" name="ARETURN-1C5552">
+                     <o base="int" data="bytes" line="808816709">00 00 00 00 00 00 00 B0</o>
+                  </o>
+                  <o base="label" data="bytes" line="985394796">36 61 64 31 39 37 37 31 2D 66 34 30 62 2D 34 65 38 62 2D 39 62 34 35 2D 65 62 35 36 62 65 61 37 65 32 36 32</o>
+               </o>
+            </o>
+         </o>
+         <o base="tuple" line="944017640" name="attributes" star="">
+            <o base="InnerClass">
+               <o base="string" data="bytes" line="653239898">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 66 6F 72 6D 61 74 2F 64 61 74 65 74 69 6D 65 2F 44 61 74 65 46 6F 72 6D 61 74 74 65 72 52 65 67 69 73 74 72 61 72 24 4C 6F 6E 67 54 6F 44 61 74 65 43 6F 6E 76 65 72 74 65 72</o>
+               <o base="string" data="bytes" line="644757377">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 66 6F 72 6D 61 74 2F 64 61 74 65 74 69 6D 65 2F 44 61 74 65 46 6F 72 6D 61 74 74 65 72 52 65 67 69 73 74 72 61 72</o>
+               <o base="string" data="bytes" line="1987233927">4C 6F 6E 67 54 6F 44 61 74 65 43 6F 6E 76 65 72 74 65 72</o>
+               <o base="int" data="bytes" line="1126503244">00 00 00 00 00 00 00 0A</o>
+            </o>
+            <o base="InnerClass">
+               <o base="string" data="bytes" line="1641610914">6F 72 67 2F 73 70 72 69 6E 67 66 72 61 6D 65 77 6F 72 6B 2F 66 6F 72 6D 61 74 2F 64 61 74 65 74 69 6D 65 2F 44 61 74 65 46 6F 72 6D 61 74 74 65 72 52 65 67 69 73 74 72 61 72 24 31</o>
+               <o base="string" data="bytes" line="1427232180"/>
+               <o base="string" data="bytes" line="150318617"/>
+               <o base="int" data="bytes" line="722703936">00 00 00 00 00 00 10 08</o>
+            </o>
+         </o>
+      </o>
+   </objects>
+</program>
