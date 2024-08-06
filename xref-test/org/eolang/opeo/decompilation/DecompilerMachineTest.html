@@ -33,10 +33,10 @@
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> java.util.Collections;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> java.util.concurrent.atomic.AtomicReference;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.eolang.jeo.representation.xmir.AllLabels;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.LabelInstruction;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.OpcodeInstruction;
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.SameXml;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.eolang.jeo.matchers.SameXml;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.eolang.jeo.representation.xmir.AllLabels;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.LabelInstruction;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.OpcodeInstruction;
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Add;
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.ArrayConstructor;
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.AstNode;
@@ -48,9 +48,9 @@
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Invocation;
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Literal;
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.LocalVariable;
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Opcode;
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Owner;
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Popped;
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Owner;
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Popped;
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Return;
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Root;
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.StaticInvocation;
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.StoreArray;
@@ -429,7 +429,7 @@
 <a class="jxr_linenumber" name="L421" href="#L421">421</a>                                 )
 <a class="jxr_linenumber" name="L422" href="#L422">422</a>                             )
 <a class="jxr_linenumber" name="L423" href="#L423">423</a>                         )),
-<a class="jxr_linenumber" name="L424" href="#L424">424</a>                     <strong class="jxr_keyword">new</strong> Opcode(Opcodes.RETURN, false)
+<a class="jxr_linenumber" name="L424" href="#L424">424</a>                     <strong class="jxr_keyword">new</strong> Return()
 <a class="jxr_linenumber" name="L425" href="#L425">425</a>                 )
 <a class="jxr_linenumber" name="L426" href="#L426">426</a>             )
 <a class="jxr_linenumber" name="L427" href="#L427">427</a>         );

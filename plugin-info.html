@@ -71,7 +71,7 @@
                                                                     </ul>
                                                     </li>
                                                                                                                         <li >
-                            <span>                        <a href="apidocs-0.3.0/index.html" title="Javadoc">Javadoc</a>
+                            <span>                        <a href="apidocs-0.3.1/index.html" title="Javadoc">Javadoc</a>
         </span>
                                                                                                                                                                 <ul>
                                                                     </ul>
@@ -111,13 +111,13 @@
                             </div>
                             <ul class="badges">
                                 <li>
-                                    <strong itemprop="version">0.3.0</strong>
+                                    <strong itemprop="version">0.3.1</strong>
                                 </li>
                                 <li>
                                     
-                                    <time itemprop="datePublished" datetime="2024-07-08T12:42:46Z">
+                                    <time itemprop="datePublished" datetime="2024-08-06T11:24:29Z">
                                         
-                                        08-Jul-2024
+                                        06-Aug-2024
                                     </time>
                                 </li>
                                 <li class="menu-button">menu</li>
@@ -130,6 +130,8 @@
                                                 <article itemprop="articleBody">
                             <section>
 <h2><a name="Plugin_Documentation"></a>Plugin Documentation</h2><a name="Plugin_Documentation"></a>
+<p>This report describes goals, parameters details, requirements and sample usage of this plugin.</p><section>
+<h3><a name="Goals"></a>Goals</h3><a name="Goals"></a>
 <p>Goals available for this plugin:</p>
 <table border="0" class="bodyTable">
 <tr class="a">
@@ -140,7 +142,7 @@
 <td>Compiles high-level EO representation into low-level representation. The output of this mojo is consumed by the "jeo-maven-plugin": <a href="https://github.com/objectionary/jeo-maven-plugin">link</a></td></tr>
 <tr class="a">
 <td align="left"><a href="./decompile-mojo.html">opeo:decompile</a></td>
-<td>Decompiles bytecode in EO representation into high-level EO representation. The input for this mojo produced by the "jeo-maven-plugin": <a href="https://github.com/objectionary/jeo-maven-plugin">link</a></td></tr></table><section>
+<td>Decompiles bytecode in EO representation into high-level EO representation. The input for this mojo produced by the "jeo-maven-plugin": <a href="https://github.com/objectionary/jeo-maven-plugin">link</a></td></tr></table></section><section>
 <h3><a name="System_Requirements"></a>System Requirements</h3><a name="System_Requirements"></a>
 <p>The following specifies the minimum requirements to run this Maven plugin:</p>
 <table border="0" class="bodyTable">
@@ -150,6 +152,21 @@
 <tr class="b">
 <td align="left">JDK</td>
 <td>1.8</td></tr></table></section><section>
+<h3><a name="System_Requirements_History"></a>System Requirements History</h3><a name="System_Requirements_History"></a>
+<p>The following specifies the minimum requirements to run this Maven plugin for historical versions:</p>
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>Plugin Version</th>
+<th>Maven</th>
+<th>JDK</th></tr>
+<tr class="b">
+<td align="left">from 0.2.2 to 0.3.0</td>
+<td>-</td>
+<td>8</td></tr>
+<tr class="a">
+<td align="left">from 0.0.1 to 0.2.1</td>
+<td>-</td>
+<td>11</td></tr></table></section><section>
 <h3><a name="Usage"></a>Usage</h3><a name="Usage"></a>
 <p>You should specify the version in your project's plugin configuration:</p>
 <div class="source">
@@ -162,7 +179,7 @@
         &lt;plugin&gt;
           &lt;groupId&gt;org.eolang&lt;/groupId&gt;
           &lt;artifactId&gt;opeo-maven-plugin&lt;/artifactId&gt;
-          &lt;version&gt;0.3.0&lt;/version&gt;
+          &lt;version&gt;0.3.1&lt;/version&gt;
         &lt;/plugin&gt;
         ...
       &lt;/plugins&gt;
