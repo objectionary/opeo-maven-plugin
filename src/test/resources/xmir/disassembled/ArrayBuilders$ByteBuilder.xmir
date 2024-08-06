@@ -51,7 +51,7 @@
                      <o base="int" data="bytes" line="1356216656">00 00 00 00 00 00 00 15</o>
                      <o base="int" data="bytes" line="1379763138">00 00 00 00 00 00 00 01</o>
                   </o>
-                  <o base="opcode" line="999" name="NEWARRAY-22FD0B">
+                  <o base="opcode" line="999" name="NEWARRAY">
                      <o base="int" data="bytes" line="345712082">00 00 00 00 00 00 00 BC</o>
                      <o base="int" data="bytes" line="822390983">00 00 00 00 00 00 00 08</o>
                   </o>

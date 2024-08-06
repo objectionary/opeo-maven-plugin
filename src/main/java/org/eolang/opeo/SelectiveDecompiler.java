@@ -25,8 +25,10 @@ package org.eolang.opeo;
 
 import com.jcabi.log.Logger;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.eolang.opeo.decompilation.Decompiler;
 import org.eolang.opeo.decompilation.WithoutAliases;
@@ -118,8 +120,8 @@ public final class SelectiveDecompiler implements Decompiler {
         this.storage.all().parallel().forEach(
             entry -> {
                 final XmirEntry res;
-                final List<String> opcodes = entry.xpath(this.unsupportedOpcodes());
                 final List<String> trycatches = entry.xpath(SelectiveDecompiler.trycatches());
+                final Set<String> opcodes = this.unsupported(entry);
                 if (opcodes.isEmpty() && trycatches.isEmpty()) {
                     res = entry.transform(
                         xml -> new WithoutAliases(
@@ -143,16 +145,20 @@ public final class SelectiveDecompiler implements Decompiler {
     }
 
     /**
-     * Xpath to find all opcodes that are not supported.
-     * @return Xpath.
+     * Find all opcodes that are not supported.
+     * @param entry XMIR entry.
+     * @return Set of unsupported opcodes.
      */
-    private String unsupportedOpcodes() {
-        return String.format(
-            "//o[@base='opcode' and not(%s)]/@name",
-            Arrays.stream(this.supported)
-                .map(s -> String.format("substring-before(concat(@name, '-'), '-') = '%s'", s))
-                .collect(Collectors.joining(" or "))
-        );
+    private Set<String> unsupported(final XmirEntry entry) {
+        final Set<String> all = entry.xpath(
+                "//o[@base='opcode']/@name")
+            .stream()
+            .map(s -> String.format("%s%s", s, "-"))
+            .map(s -> s.substring(0, s.indexOf('-')))
+            .collect(Collectors.toSet());
+        final Set<String> sup = Arrays.stream(this.supported).collect(Collectors.toSet());
+        all.removeAll(sup);
+        return all;
     }
 
     /**
