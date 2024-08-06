@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-08-06T06:27:02.486070Z"
+  ms="1722925622486"
+  name="j$CachingJupiterConfiguration"
+  revision="0.0.0"
+  time="2024-08-06T06:27:02.486070Z"
+  version="0.0.0">
+   <listing>yv66vgAAADQAzQoAAgADBwAEDAAFAAYBABBqYXZhL2xhbmcvT2JqZWN0AQAGPGluaXQ+AQADKClWBwAIAQAmamF2YS91dGlsL2NvbmN1cnJlbnQvQ29uY3VycmVudEhhc2hNYXAKAAcAAwkACwAMBwANDAAOAA8BADtvcmcvanVuaXQvanVwaXRlci9lbmdpbmUvY29uZmlnL0NhY2hpbmdKdXBpdGVyQ29uZmlndXJhdGlvbgEABWNhY2hlAQAoTGphdmEvdXRpbC9jb25jdXJyZW50L0NvbmN1cnJlbnRIYXNoTWFwOwkACwARDAASABMBAAhkZWxlZ2F0ZQEANkxvcmcvanVuaXQvanVwaXRlci9lbmdpbmUvY29uZmlnL0p1cGl0ZXJDb25maWd1cmF0aW9uOwsAFQAWBwAXDAAYABkBADRvcmcvanVuaXQvanVwaXRlci9lbmdpbmUvY29uZmlnL0p1cGl0ZXJDb25maWd1cmF0aW9uAQAcZ2V0UmF3Q29uZmlndXJhdGlvblBhcmFtZXRlcgEAKChMamF2YS9sYW5nL1N0cmluZzspTGphdmEvdXRpbC9PcHRpb25hbDsLABUAGwwAGAAcAQBFKExqYXZhL2xhbmcvU3RyaW5nO0xqYXZhL3V0aWwvZnVuY3Rpb24vRnVuY3Rpb247KUxqYXZhL3V0aWwvT3B0aW9uYWw7CAAeAQAoanVuaXQuanVwaXRlci5leGVjdXRpb24ucGFyYWxsZWwuZW5hYmxlZBIAAAAgDAAhACIBAAVhcHBseQEAXChMb3JnL2p1bml0L2p1cGl0ZXIvZW5naW5lL2NvbmZpZy9DYWNoaW5nSnVwaXRlckNvbmZpZ3VyYXRpb247KUxqYXZhL3V0aWwvZnVuY3Rpb24vRnVuY3Rpb247CgAHACQMACUAJgEAD2NvbXB1dGVJZkFic2VudAEAQyhMamF2YS9sYW5nL09iamVjdDtMamF2YS91dGlsL2Z1bmN0aW9uL0Z1bmN0aW9uOylMamF2YS9sYW5nL09iamVjdDsHACgBABFqYXZhL2xhbmcvQm9vbGVhbgoAJwAqDAArACwBAAxib29sZWFuVmFsdWUBAAMoKVoIAC4BAC5qdW5pdC5qdXBpdGVyLmV4dGVuc2lvbnMuYXV0b2RldGVjdGlvbi5lbmFibGVkEgABACAIADEBAC1qdW5pdC5qdXBpdGVyLmV4ZWN1dGlvbi5wYXJhbGxlbC5tb2RlLmRlZmF1bHQSAAIAIAcANAEALG9yZy9qdW5pdC9qdXBpdGVyL2FwaS9wYXJhbGxlbC9FeGVjdXRpb25Nb2RlCAA2AQA1anVuaXQuanVwaXRlci5leGVjdXRpb24ucGFyYWxsZWwubW9kZS5jbGFzc2VzLmRlZmF1bHQSAAMAIAgAOQEALGp1bml0Lmp1cGl0ZXIudGVzdGluc3RhbmNlLmxpZmVjeWNsZS5kZWZhdWx0EgAEACAHADwBACxvcmcvanVuaXQvanVwaXRlci9hcGkvVGVzdEluc3RhbmNlJExpZmVjeWNsZQgAPgEAI2p1bml0Lmp1cGl0ZXIuY29uZGl0aW9ucy5kZWFjdGl2YXRlEgAFACAHAEEBABxqYXZhL3V0aWwvZnVuY3Rpb24vUHJlZGljYXRlCABDAQAranVuaXQuanVwaXRlci5kaXNwbGF5bmFtZS5nZW5lcmF0b3IuZGVmYXVsdBIABgAgBwBGAQAqb3JnL2p1bml0L2p1cGl0ZXIvYXBpL0Rpc3BsYXlOYW1lR2VuZXJhdG9yCABIAQAmanVuaXQuanVwaXRlci50ZXN0bWV0aG9kLm9yZGVyLmRlZmF1bHQSAAcAIAcASwEAEmphdmEvdXRpbC9PcHRpb25hbAgATQEAJWp1bml0Lmp1cGl0ZXIudGVzdGNsYXNzLm9yZGVyLmRlZmF1bHQSAAgAIAsAFQBQDABRAFIBABpnZXREZWZhdWx0VGVzdENsYXNzT3JkZXJlcgEAFigpTGphdmEvdXRpbC9PcHRpb25hbDsLABUAVAwAVQBSAQAbZ2V0RGVmYXVsdFRlc3RNZXRob2RPcmRlcmVyCwAVAFcMAFgAWQEAHmdldERlZmF1bHREaXNwbGF5TmFtZUdlbmVyYXRvcgEALigpTG9yZy9qdW5pdC9qdXBpdGVyL2FwaS9EaXNwbGF5TmFtZUdlbmVyYXRvcjsLABUAWwwAXABdAQAbZ2V0RXhlY3V0aW9uQ29uZGl0aW9uRmlsdGVyAQAgKClMamF2YS91dGlsL2Z1bmN0aW9uL1ByZWRpY2F0ZTsLABUAXwwAYABhAQAfZ2V0RGVmYXVsdFRlc3RJbnN0YW5jZUxpZmVjeWNsZQEAMCgpTG9yZy9qdW5pdC9qdXBpdGVyL2FwaS9UZXN0SW5zdGFuY2UkTGlmZWN5Y2xlOwsAFQBjDABkAGUBAB5nZXREZWZhdWx0Q2xhc3Nlc0V4ZWN1dGlvbk1vZGUBADAoKUxvcmcvanVuaXQvanVwaXRlci9hcGkvcGFyYWxsZWwvRXhlY3V0aW9uTW9kZTsLABUAZwwAaABlAQAXZ2V0RGVmYXVsdEV4ZWN1dGlvbk1vZGULABUAagwAawAsAQAfaXNFeHRlbnNpb25BdXRvRGV0ZWN0aW9uRW5hYmxlZAoAJwBtDABuAG8BAAd2YWx1ZU9mAQAWKFopTGphdmEvbGFuZy9Cb29sZWFuOwsAFQBxDAByACwBABppc1BhcmFsbGVsRXhlY3V0aW9uRW5hYmxlZAEACVNpZ25hdHVyZQEATkxqYXZhL3V0aWwvY29uY3VycmVudC9Db25jdXJyZW50SGFzaE1hcDxMamF2YS9sYW5nL1N0cmluZztMamF2YS9sYW5nL09iamVjdDs+OwEAOShMb3JnL2p1bml0L2p1cGl0ZXIvZW5naW5lL2NvbmZpZy9KdXBpdGVyQ29uZmlndXJhdGlvbjspVgEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBABJMb2NhbFZhcmlhYmxlVGFibGUBAAR0aGlzAQA9TG9yZy9qdW5pdC9qdXBpdGVyL2VuZ2luZS9jb25maWcvQ2FjaGluZ0p1cGl0ZXJDb25maWd1cmF0aW9uOwEAA2tleQEAEkxqYXZhL2xhbmcvU3RyaW5nOwEAPChMamF2YS9sYW5nL1N0cmluZzspTGphdmEvdXRpbC9PcHRpb25hbDxMamF2YS9sYW5nL1N0cmluZzs+OwEAC3RyYW5zZm9ybWVyAQAdTGphdmEvdXRpbC9mdW5jdGlvbi9GdW5jdGlvbjsBABZMb2NhbFZhcmlhYmxlVHlwZVRhYmxlAQA0TGphdmEvdXRpbC9mdW5jdGlvbi9GdW5jdGlvbjxMamF2YS9sYW5nL1N0cmluZztUVDs+OwEAdzxUOkxqYXZhL2xhbmcvT2JqZWN0Oz4oTGphdmEvbGFuZy9TdHJpbmc7TGphdmEvdXRpbC9mdW5jdGlvbi9GdW5jdGlvbjxMamF2YS9sYW5nL1N0cmluZztUVDs+OylMamF2YS91dGlsL09wdGlvbmFsPFRUOz47AQBWKClMamF2YS91dGlsL2Z1bmN0aW9uL1ByZWRpY2F0ZTxMb3JnL2p1bml0L2p1cGl0ZXIvYXBpL2V4dGVuc2lvbi9FeGVjdXRpb25Db25kaXRpb247PjsBAD0oKUxqYXZhL3V0aWwvT3B0aW9uYWw8TG9yZy9qdW5pdC9qdXBpdGVyL2FwaS9NZXRob2RPcmRlcmVyOz47AQA8KClMamF2YS91dGlsL09wdGlvbmFsPExvcmcvanVuaXQvanVwaXRlci9hcGkvQ2xhc3NPcmRlcmVyOz47AQAjbGFtYmRhJGdldERlZmF1bHRUZXN0Q2xhc3NPcmRlcmVyJDgBACYoTGphdmEvbGFuZy9TdHJpbmc7KUxqYXZhL2xhbmcvT2JqZWN0OwEAJGxhbWJkYSRnZXREZWZhdWx0VGVzdE1ldGhvZE9yZGVyZXIkNwEAJ2xhbWJkYSRnZXREZWZhdWx0RGlzcGxheU5hbWVHZW5lcmF0b3IkNgEAJGxhbWJkYSRnZXRFeGVjdXRpb25Db25kaXRpb25GaWx0ZXIkNQEAKGxhbWJkYSRnZXREZWZhdWx0VGVzdEluc3RhbmNlTGlmZWN5Y2xlJDQBACdsYW1iZGEkZ2V0RGVmYXVsdENsYXNzZXNFeGVjdXRpb25Nb2RlJDMBACBsYW1iZGEkZ2V0RGVmYXVsdEV4ZWN1dGlvbk1vZGUkMgEAKGxhbWJkYSRpc0V4dGVuc2lvbkF1dG9EZXRlY3Rpb25FbmFibGVkJDEBACNsYW1iZGEkaXNQYXJhbGxlbEV4ZWN1dGlvbkVuYWJsZWQkMAEAClNvdXJjZUZpbGUBACBDYWNoaW5nSnVwaXRlckNvbmZpZ3VyYXRpb24uamF2YQEAGVJ1bnRpbWVWaXNpYmxlQW5ub3RhdGlvbnMBABlMb3JnL2FwaWd1YXJkaWFuL2FwaS9BUEk7AQAGc3RhdHVzAQAgTG9yZy9hcGlndWFyZGlhbi9hcGkvQVBJJFN0YXR1czsBAAhJTlRFUk5BTAEABXNpbmNlAQADNS40AQAQQm9vdHN0cmFwTWV0aG9kcw8GAJsKAJwAnQcAngwAnwCgAQAiamF2YS9sYW5nL2ludm9rZS9MYW1iZGFNZXRhZmFjdG9yeQEAC21ldGFmYWN0b3J5AQDMKExqYXZhL2xh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</listing>
+   <errors/>
+   <sheets/>
+   <license/>
+   <metas>
+      <meta>
+         <head>package</head>
+         <tail>org.junit.jupiter.engine.config</tail>
+         <part>org.junit.jupiter.engine.config</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.opcode</tail>
+         <part>org.eolang.jeo.opcode</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.label</tail>
+         <part>org.eolang.jeo.label</part>
+      </meta>
+   </metas>
+   <objects>
+      <o abstract="" name="j$CachingJupiterConfiguration">
+         <o base="int" data="bytes" line="21616660" name="version">00 00 00 00 00 00 00 34</o>
+         <o base="int" data="bytes" line="538746483" name="access">00 00 00 00 00 00 00 21</o>
+         <o base="string" data="bytes" line="451728290" name="supername">6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>
+         <o base="tuple" line="1712168514" name="interfaces" star="">
+            <o base="string" data="bytes" line="530878828">6F 72 67 2F 6A 75 6E 69 74 2F 6A 75 70 69 74 65 72 2F 65 6E 67 69 6E 65 2F 63 6F 6E 66 69 67 2F 4A 75 70 69 74 65 72 43 6F 6E 66 69 67 75 72 61 74 69 6F 6E</o>
+         </o>
+         <o base="field" line="999" name="j$cache">
+            <o base="int" data="bytes" line="1180874198" name="access-j$cache">00 00 00 00 00 00 00 12</o>
+            <o base="string"
+              data="bytes"
+              line="154953649"
+              name="descriptor-j$cache">4C 6A 61 76 61 2F 75 74 69 6C 2F 63 6F 6E 63 75 72 72 65 6E 74 2F 43 6F 6E 63 75 72 72 65 6E 74 48 61 73 68 4D 61 70 3B</o>
+            <o base="string"
+              data="bytes"
+              line="1717743117"
+              name="signature-j$cache">4C 6A 61 76 61 2F 75 74 69 6C 2F 63 6F 6E 63 75 72 72 65 6E 74 2F 43 6F 6E 63 75 72 72 65 6E 74 48 61 73 68 4D 61 70 3C 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74 3B 3E 3B</o>
+            <o base="class"
+              data="bytes"
+              line="1049757213"
+              name="value-j$cache"
+              scope="nullable"/>
+         </o>
+         <o base="field" line="999" name="j$delegate">
+            <o base="int"
+              data="bytes"
+              line="637923364"
+              name="access-j$delegate">00 00 00 00 00 00 00 12</o>
+            <o base="string"
+              data="bytes"
+              line="48213409"
+              name="descriptor-j$delegate">4C 6F 72 67 2F 6A 75 6E 69 74 2F 6A 75 70 69 74 65 72 2F 65 6E 67 69 6E 65 2F 63 6F 6E 66 69 67 2F 4A 75 70 69 74 65 72 43 6F 6E 66 69 67 75 72 61 74 69 6F 6E 3B</o>
+            <o base="string"
+              data="bytes"
+              line="50487485"
+              name="signature-j$delegate"/>
+            <o base="class"
+              data="bytes"
+              line="1528913226"
+              name="value-j$delegate"
+              scope="nullable"/>
+         </o>
+         <o abstract=""
+           name="j$lambda$isParallelExecutionEnabled$0-KExqYXZhL2xhbmcvU3RyaW5nOylMamF2YS9sYW5nL09iamVjdDs=">
+            <o base="int" data="bytes" line="1866326456" name="access">00 00 00 00 00 00 10 02</o>
+            <o base="string" data="bytes" line="393468237" name="descriptor">28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74 3B</o>
+            <o base="string" data="bytes" line="1351463114" name="signature"/>
+            <o base="tuple" line="392143076" name="exceptions" star=""/>
+            <o abstract="" line="849595374" name="maxs">
+               <o base="int" data="bytes" line="261954035" name="stack">00 00 00 00 00 00 00 01</o>
+               <o base="int" data="bytes" line="1483571055" name="locals">00 00 00 00 00 00 00 02</o>
+            </o>
+            <o abstract="" name="arg__Ljava/lang/String;__0"/>
+            <o base="seq" name="@">
+               <o base="tuple" line="646548627" name="instructions" star="">
+                  <o base="label" data="bytes" line="1817762244">32 66 65 35 63 38 61 36 2D 32 61 65 37 2D 34 34 33 66 2D 39 39 30 39 2D 37 32 37 39 65 33 63 36 62 66 61 64</o>
+                  <o base="opcode" line="999" name="ALOAD-207332">
+                     <o base="int" data="bytes" line="386358752">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes" line="595424193">00 00 00 00 00 00 00 00</o>
+                  </o>
+                  <o base="opcode" line="999" name="GETFIELD-207333">
+                     <o base="int" data="bytes" line="224094423">00 00 00 00 00 00 00 B4</o>
+                     <o base="string" data="bytes" line="597710034">6F 72 67 2F 6A 75 6E 69 74 2F 6A 75 70 69 74 65 72 2F 65 6E 67 69 6E 65 2F 63 6F 6E 66 69 67 2F 43 61 63 68 69 6E 67 4A 75 70 69 74 65 72 43 6F 6E 66 69 67 75 72 61 74 69 6F 6E</o>
+                     <o base="string" data="bytes" line="558972792">64 65 6C 65 67 61 74 65</o>
+                     <o base="string" data="bytes" line="861226521">4C 6F 72 67 2F 6A 75 6E 69 74 2F 6A 75 70 69 74 65 72 2F 65 6E 67 69 6E 65 2F 63 6F 6E 66 69 67 2F 4A 75 70 69 74 65 72 43 6F 6E 66 69 67 75 72 61 74 69 6F 6E 3B</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKEINTERFACE-207334">
+                     <o base="int" data="bytes" line="16914582">00 00 00 00 00 00 00 B9</o>
+                     <o base="string" data="bytes" line="267219780">6F 72 67 2F 6A 75 6E 69 74 2F 6A 75 70 69 74 65 72 2F 65 6E 67 69 6E 65 2F 63 6F 6E 66 69 67 2F 4A 75 70 69 74 65 72 43 6F 6E 66 69 67 75 72 61 74 69 6F 6E</o>
+                     <o base="string" data="bytes" line="372268234">69 73 50 61 72 61 6C 6C 65 6C 45 78 65 63 75 74 69 6F 6E 45 6E 61 62 6C 65 64</o>
+                     <o base="string" data="bytes" line="425838290">28 29 5A</o>
+                     <o base="bool" data="bytes" line="733598139">01</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKESTATIC-207335">
+                     <o base="int" data="bytes" line="1299975739">00 00 00 00 00 00 00 B8</o>
+                     <o base="string" data="bytes" line="715623634">6A 61 76 61 2F 6C 61 6E 67 2F 42 6F 6F 6C 65 61 6E</o>
+                     <o base="string" data="bytes" line="379585476">76 61 6C 75 65 4F 66</o>
+                     <o base="string" data="bytes" line="2062828882">28 5A 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 42 6F 6F 6C 65 61 6E 3B</o>
+                     <o base="bool" data="bytes" line="1052826321">00</o>
+                  </o>
+                  <o base="opcode" line="999" name="ARETURN-207336">
+                     <o base="int" data="bytes" line="459117116">00 00 00 00 00 00 00 B0</o>
+                  </o>
+                  <o base="label" data="bytes" line="275357337">39 37 38 66 39 64 63 37 2D 35 64 38 32 2D 34 36 34 34 2D 38 31 34 34 2D 31 32 33 36 36 66 31 33 33 64 62 32</o>
+               </o>
+            </o>
+         </o>
+         <o base="tuple" line="1882321859" name="annotations" star="">
+            <o base="annotation"
+              line="571964939"
+              name="org.eolang.jeo.representation.MethodName@1730a38f">
+               <o base="string" data="bytes" line="968610059">4C 6F 72 67 2F 61 70 69 67 75 61 72 64 69 61 6E 2F 61 70 69 2F 41 50 49 3B</o>
+               <o base="bool" data="bytes" line="897634766">01</o>
+               <o base="annotation-property">
+                  <o base="string" data="bytes" line="1599543944">45 4E 55 4D</o>
+                  <o base="string" data="bytes" line="833111236">73 74 61 74 75 73</o>
+                  <o base="string" data="bytes" line="773995423">4C 6F 72 67 2F 61 70 69 67 75 61 72 64 69 61 6E 2F 61 70 69 2F 41 50 49 24 53 74 61 74 75 73 3B</o>
+                  <o base="string" data="bytes" line="348950341">49 4E 54 45 52 4E 41 4C</o>
+               </o>
+               <o base="annotation-property">
+                  <o base="string" data="bytes" line="1692866022">50 4C 41 49 4E</o>
+                  <o base="string" data="bytes" line="822677547">73 69 6E 63 65</o>
+                  <o base="string" data="bytes" line="141091856">35 2E 34</o>
+               </o>
+            </o>
+         </o>
+         <o base="tuple" line="1825305738" name="attributes" star="">
+            <o base="InnerClass">
+               <o base="string" data="bytes" line="2145785915">6F 72 67 2F 6A 75 6E 69 74 2F 6A 75 70 69 74 65 72 2F 61 70 69 2F 54 65 73 74 49 6E 73 74 61 6E 63 65 24 4C 69 66 65 63 79 63 6C 65</o>
+               <o base="string" data="bytes" line="423290058">6F 72 67 2F 6A 75 6E 69 74 2F 6A 75 70 69 74 65 72 2F 61 70 69 2F 54 65 73 74 49 6E 73 74 61 6E 63 65</o>
+               <o base="string" data="bytes" line="2109813640">4C 69 66 65 63 79 63 6C 65</o>
+               <o base="int" data="bytes" line="562705156">00 00 00 00 00 00 40 19</o>
+            </o>
+            <o base="InnerClass">
+               <o base="string" data="bytes" line="896639058">6F 72 67 2F 61 70 69 67 75 61 72 64 69 61 6E 2F 61 70 69 2F 41 50 49 24 53 74 61 74 75 73</o>
+               <o base="string" data="bytes" line="1040693718">6F 72 67 2F 61 70 69 67 75 61 72 64 69 61 6E 2F 61 70 69 2F 41 50 49</o>
+               <o base="string" data="bytes" line="1153032249">53 74 61 74 75 73</o>
+               <o base="int" data="bytes" line="913675536">00 00 00 00 00 00 40 19</o>
+            </o>
+            <o base="InnerClass">
+               <o base="string" data="bytes" line="2140198840">6A 61 76 61 2F 6C 61 6E 67 2F 69 6E 76 6F 6B 65 2F 4D 65 74 68 6F 64 48 61 6E 64 6C 65 73 24 4C 6F 6F 6B 75 70</o>
+               <o base="string" data="bytes" line="212860455">6A 61 76 61 2F 6C 61 6E 67 2F 69 6E 76 6F 6B 65 2F 4D 65 74 68 6F 64 48 61 6E 64 6C 65 73</o>
+               <o base="string" data="bytes" line="1392198483">4C 6F 6F 6B 75 70</o>
+               <o base="int" data="bytes" line="462750284">00 00 00 00 00 00 00 19</o>
+            </o>
+         </o>
+      </o>
+   </objects>
+</program>

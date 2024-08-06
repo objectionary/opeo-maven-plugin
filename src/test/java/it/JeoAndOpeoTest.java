@@ -23,6 +23,7 @@
  */
 package it;
 
+import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
 import java.util.List;
 import org.cactoos.bytes.BytesOf;
@@ -33,6 +34,7 @@ import org.eolang.jeo.representation.XmirRepresentation;
 import org.eolang.jeo.representation.bytecode.Bytecode;
 import org.eolang.jeo.representation.xmir.XmlBytecodeEntry;
 import org.eolang.jeo.representation.xmir.XmlLabel;
+import org.eolang.jeo.representation.xmir.XmlMethod;
 import org.eolang.jeo.representation.xmir.XmlProgram;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.compilation.JeoCompiler;
@@ -132,16 +134,19 @@ final class JeoAndOpeoTest {
         "xmir/disassembled/DefaultRouterFunctionSpec.xmir",
         "xmir/disassembled/SpringBootExceptionHandler$LoggedExceptionHandlerThreadLocal.xmir",
         "xmir/disassembled/ApplicationContextAssertProvider.xmir",
-        "xmir/disassembled/Sum.xmir"
+        "xmir/disassembled/Sum.xmir",
+        "xmir/disassembled/CachingJupiterConfiguration2.xmir"
     })
     void decompilesCompilesAndKeepsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
+        final XML decompiled = new JeoDecompiler(original).decompile();
+        System.out.println(decompiled);
         MatcherAssert.assertThat(
             "The original and compiled instructions are not equal",
             new JeoInstructions(
                 new XmlProgram(
                     new JeoCompiler(
-                        new JeoDecompiler(original).decompile()
+                        decompiled
                     ).compile()
                 ).top().methods().get(0)
             ).instuctionNames(),
@@ -169,20 +174,22 @@ final class JeoAndOpeoTest {
                 new JeoDecompiler(original).decompile()
             ).compile()
         ).top().methods().get(0).instructions();
-        final List<XmlBytecodeEntry> expected = new XmlProgram(original).top().methods().get(0)
-            .instructions();
-        final int size = expected.size();
-        for (int index = 0; index < size; ++index) {
-            final XmlBytecodeEntry expect = expected.get(index);
-            final XmlBytecodeEntry act = actual.get(index);
-            if (expect instanceof XmlLabel && act instanceof XmlLabel) {
-                continue;
+        final List<XmlMethod> methods = new XmlProgram(original).top().methods();
+        for (final XmlMethod method : methods) {
+            final List<XmlBytecodeEntry> expected = method.instructions();
+            final int size = expected.size();
+            for (int index = 0; index < size; ++index) {
+                final XmlBytecodeEntry expect = expected.get(index);
+                final XmlBytecodeEntry act = actual.get(index);
+                if (expect instanceof XmlLabel && act instanceof XmlLabel) {
+                    continue;
+                }
+                MatcherAssert.assertThat(
+                    "The original and compiled instructions are not equal",
+                    act,
+                    Matchers.equalTo(expect)
+                );
             }
-            MatcherAssert.assertThat(
-                "The original and compiled instructions are not equal",
-                act,
-                Matchers.equalTo(expect)
-            );
         }
     }
 

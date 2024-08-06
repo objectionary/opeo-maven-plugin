@@ -54,12 +54,14 @@ public final class Constant implements AstNode, Typed {
      */
     private final Object value;
 
+    private final Type type;
+
     /**
      * Constructor.
      * @param node The XMIR node with value to parse.
      */
     public Constant(final XmlNode node) {
-        this(Constant.parse(node));
+        this(Constant.xvalue(node), Constant.xtype(node));
     }
 
     /**
@@ -67,7 +69,12 @@ public final class Constant implements AstNode, Typed {
      * @param value The constant value.
      */
     public Constant(final Object value) {
+        this(value, Type.getType(value.getClass()));
+    }
+
+    public Constant(final Object value, final Type type) {
         this.value = value;
+        this.type = type;
     }
 
     @Override
@@ -85,13 +92,45 @@ public final class Constant implements AstNode, Typed {
 
     @Override
     public Type type() {
-        final Type result;
-        if (this.value instanceof Type) {
-            result = (Type) this.value;
-        } else {
-            result = Type.getType(this.value.getClass());
+        return this.type;
+//        final Type result;
+//        if (this.value instanceof Type) {
+//            result = (Type) this.value;
+//        } else {
+//            result = Type.getType(this.value.getClass());
+//        }
+//        return result;
+    }
+
+    private static Type xtype(final XmlNode node) {
+        final XmlNode child = node.firstChild();
+        final DataType type = DataType.find(
+            child.attribute("base").orElseThrow(
+                () -> new IllegalStateException("Constant node has no 'base' attribute")
+            )
+        );
+        switch (type) {
+            case INT:
+                return Type.INT_TYPE;
+            case LONG:
+                return Type.LONG_TYPE;
+            case FLOAT:
+                return Type.FLOAT_TYPE;
+            case DOUBLE:
+                return Type.DOUBLE_TYPE;
+            case CHAR:
+                return Type.CHAR_TYPE;
+            case BYTE:
+                return Type.BYTE_TYPE;
+            case SHORT:
+                return Type.SHORT_TYPE;
+            case STRING:
+                return Type.getType(String.class);
+            case TYPE_REFERENCE:
+                return Type.getType(Type.class);
+            default:
+                return Type.getType(type.type());
         }
-        return result;
     }
 
     /**
@@ -99,12 +138,13 @@ public final class Constant implements AstNode, Typed {
      * @param node The node to parse.
      * @return The parsed value.
      */
-    private static Object parse(final XmlNode node) {
+    private static Object xvalue(final XmlNode node) {
         final XmlNode child = node.firstChild();
-        return DataType.find(
+        final DataType type = DataType.find(
             child.attribute("base").orElseThrow(
                 () -> new IllegalStateException("Constant node has no 'base' attribute")
             )
-        ).decode(child.text());
+        );
+        return type.decode(child.text());
     }
 }
