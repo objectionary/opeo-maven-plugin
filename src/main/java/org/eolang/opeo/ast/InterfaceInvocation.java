@@ -120,16 +120,28 @@ public final class InterfaceInvocation implements AstNode, Typed {
                 )
             );
         }
-        final Typed owner = (Typed) this.source;
         res.add(
             new Opcode(
                 Opcodes.INVOKEINTERFACE,
-                owner.type().getClassName().replace('.', '/'),
+                this.attrs.owner(),
                 this.attrs.name(),
                 this.attrs.descriptor(),
                 this.attrs.interfaced()
             )
         );
+
+
+//        final Typed owner = (Typed) this.source;
+//
+//        res.add(
+//            new Opcode(
+//                Opcodes.INVOKEINTERFACE,
+//                owner.type().getClassName().replace('.', '/'),
+//                this.attrs.name(),
+//                this.attrs.descriptor(),
+//                this.attrs.interfaced()
+//            )
+//        );
         return res;
     }
 

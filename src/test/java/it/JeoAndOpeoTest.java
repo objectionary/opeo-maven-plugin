@@ -162,7 +162,8 @@ final class JeoAndOpeoTest {
     @CsvSource({
         "xmir/disassembled/SimpleLog.xmir",
         "xmir/disassembled/Main.xmir",
-        "xmir/disassembled/CachingJupiterConfiguration.xmir"
+        "xmir/disassembled/CachingJupiterConfiguration.xmir",
+        "xmir/disassembled/EngineDiscoveryRequestResolver$DefaultInitializationContext.xmir"
     })
     void decompilesCompilesAndKeepsTheSameInstructionsWithTheSameOperands(
         final String path
