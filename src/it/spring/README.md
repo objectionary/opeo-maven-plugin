@@ -32,6 +32,15 @@ You might find PHI expressions in the `target/generated-sources/phi-expressions`
 directory.
 To generate them, you don't need to run any special command.
 
+### Run normalizer
+
+You can also run [normalizer](https://github.com/objectionary/normalizer) to
+check if transformation to PHI expressions was successfully performed:
+
+```shell
+normalizer dataize --recursive --minimize-stuck-terms --as-package target/it/spring/target/generated-sources/phi-expressions/org/eolang/jeo/spring/Factorial.phi
+```
+
 ## Notes
 
 It is the shortest version

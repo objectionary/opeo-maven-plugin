@@ -67,6 +67,15 @@ classes that either have unsupported instructions or have incorrect XMIR
 representation. Moreover, the current representation of the PHI expressions is
 not the final one. We are still working on improving it.
 
+### Run normalizer
+
+You can also run [normalizer](https://github.com/objectionary/normalizer) to
+check if transformation to PHI expressions was successfully performed:
+
+```shell
+normalizer dataize --recursive --minimize-stuck-terms --as-package target/it/spring/target/generated-sources/phi-expressions/org/eolang/jeo/spring/Factorial.phi
+```
+
 ## Jeo Only
 
 If you need to check only the current version of `jeo-maven-plugin`
@@ -126,7 +135,9 @@ Spring Boot starters multiple times.
 As a result, when we start our application,
 it might use an incorrect `spring.factories` file and, therefore, incorrect
 beans.
-To avoid this issue, we explicitly added the required [spring.factories](src%2Fmain%2Fresources%2FMETA-INF%2Fspring.factories) file to
+To avoid this issue, we explicitly added the
+required [spring.factories](src%2Fmain%2Fresources%2FMETA-INF%2Fspring.factories)
+file to
 the final jar file.
 You can read more about this
 problem [here](https://stackoverflow.com/questions/78618894/how-to-run-spring-boot-application-with-unpacked-dependencies).
