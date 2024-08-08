@@ -77,6 +77,7 @@ public final class Field implements Xmir, Typed {
 
     @Override
     public Iterable<Directive> toXmir() {
+        //fixme
         return new Directives()
             .add("o")
             .attr("base", String.format(".%s", this.attributes.name()))

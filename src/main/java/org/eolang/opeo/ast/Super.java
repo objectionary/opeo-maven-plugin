@@ -151,6 +151,7 @@ public final class Super implements AstNode, Typed {
 
     @Override
     public Iterable<Directive> toXmir() {
+        //fixme
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", ".super")

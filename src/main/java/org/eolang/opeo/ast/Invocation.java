@@ -150,6 +150,7 @@ public final class Invocation implements AstNode, Typed {
 
     @Override
     public Iterable<Directive> toXmir() {
+        //fixme
         if (Objects.isNull(this.source)) {
             throw new IllegalArgumentException(
                 String.format(
