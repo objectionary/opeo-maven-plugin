@@ -173,7 +173,6 @@ public final class DynamicInvocation implements AstNode, Typed {
 
     @Override
     public Iterable<Directive> toXmir() {
-        //fixme
         final Directives directives = new Directives().add("o")
             .attr("base", String.format(".%s", this.name))
             .append(this.attributes.toXmir())
