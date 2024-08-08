@@ -142,8 +142,8 @@ public final class Constructor implements AstNode, Typed {
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", ".new")
-            .append(this.ctype.toXmir())
-            .append(this.attributes.toXmir());
+            .append(this.attributes.toXmir())
+            .append(this.ctype.toXmir());
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
     }
