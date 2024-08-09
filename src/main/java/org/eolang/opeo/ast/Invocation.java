@@ -40,19 +40,6 @@ import org.xembly.Directives;
 /**
  * Invocation output node.
  * @since 0.1
- * @todo #371:90min Move Attributes From The First Position.
- *  Currently we save {@link #attributes} as a first object argument in EO representation.
- *  Sometimes it's wrong to do so. For example, if an object 'base' attribute begins with '.',
- *  then after some optimizations the first object argument will be moved. So, our
- *  {@link #attributes} will be moved to a wrong position making our EO representation ugly.
- *  We have this problem in the following classes:
- *  - {@link Invocation}
- *  - {@link DynamicInvocation}
- *  - {@link Constructor}
- *  - {@link StaticInvocation}
- *  - {@link InterfaceInvocation}
- *  - {@link Super}
- *  So, we have to move attributes to another position.
  */
 @ToString
 @EqualsAndHashCode
