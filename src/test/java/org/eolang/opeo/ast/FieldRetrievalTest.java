@@ -46,10 +46,10 @@ final class FieldRetrievalTest {
         "\n",
         "   <o base='.get-field'>",
         "      <o base='.bar'>",
-        "         <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 49 7C 6E 61 6D 65 3D 62 61 72 7C 74 79 70 65 3D 66 69 65 6C 64</o>",
         "         <o base='$'>",
         "            <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 6A 61 76 61 2E 6C 61 6E 67 2E 4F 62 6A 65 63 74</o>",
         "         </o>",
+        "         <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 49 7C 6E 61 6D 65 3D 62 61 72 7C 74 79 70 65 3D 66 69 65 6C 64</o>",
         "      </o>",
         "</o>"
     );

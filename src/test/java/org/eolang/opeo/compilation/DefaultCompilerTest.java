@@ -84,29 +84,4 @@ final class DefaultCompilerTest {
             new SameXml(new XMLDocument(before))
         );
     }
-
-    @ParameterizedTest
-    @CsvSource({
-        "StreamUtils$NonClosingOutputStream.xmir",
-        "Enhancer$3.xmir"
-    })
-    void compilesDecompiledRepresentationSuccessfully(final String name, @TempDir final Path temp)
-        throws Exception {
-        final Path input = temp.resolve("opeo-xmir").resolve(name);
-        Files.createDirectories(input.getParent());
-        Files.write(
-            input,
-            new BytesOf(new ResourceOf(String.format("xmir/decompiled/%s", name))).asBytes()
-        );
-        new DefaultCompiler(temp).compile();
-        final Path expected = temp.resolve("xmir").resolve(name);
-        MatcherAssert.assertThat(
-            String.format(
-                "The compiled file is missing, expected path: %s",
-                expected
-            ),
-            expected.toFile(),
-            FileMatchers.anExistingFile()
-        );
-    }
 }

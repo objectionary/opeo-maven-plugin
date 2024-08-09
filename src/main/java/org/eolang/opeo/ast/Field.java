@@ -60,8 +60,8 @@ public final class Field implements Xmir, Typed {
      */
     public Field(final XmlNode node, final Parser parser) {
         this(
-            parser.parse(node.children().collect(Collectors.toList()).get(1)),
-            new Attributes(node.firstChild())
+            parser.parse(node.firstChild()),
+            new Attributes(node.children().collect(Collectors.toList()).get(1))
         );
     }
 
@@ -80,8 +80,8 @@ public final class Field implements Xmir, Typed {
         return new Directives()
             .add("o")
             .attr("base", String.format(".%s", this.attributes.name()))
-            .append(this.attributes.toXmir())
             .append(this.inst.toXmir())
+            .append(this.attributes.toXmir())
             .up();
     }
 

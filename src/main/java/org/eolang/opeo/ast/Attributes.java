@@ -89,6 +89,11 @@ public final class Attributes implements Xmir {
     }
 
     @Override
+    public Directives toXmir() {
+        return new Directives(new DirectivesData(this.toString()));
+    }
+
+    @Override
     public String toString() {
         return this.all.entrySet().stream()
             .map(entry -> String.format("%s=%s", entry.getKey(), entry.getValue()))
@@ -190,11 +195,6 @@ public final class Attributes implements Xmir {
     public Attributes interfaced(final boolean interfaced) {
         this.all.put("interfaced", Boolean.toString(interfaced));
         return this;
-    }
-
-    @Override
-    public Directives toXmir() {
-        return new Directives(new DirectivesData(this.toString()));
     }
 
     /**
