@@ -62,8 +62,8 @@ final class StaticInvocationTest {
                     String.join(
                         "\n",
                         "<o base='.get'>",
-                        "<o base='string' data='bytes'>6E 61 6D 65 3D 67 65 74 7C 64 65 73 63 72 69 70 74 6F 72 3D 28 29 49 7C 74 79 70 65 3D 73 74 61 74 69 63</o>",
                         "<o base='java.lang.A'/>",
+                        "<o base='string' data='bytes'>6E 61 6D 65 3D 67 65 74 7C 64 65 73 63 72 69 70 74 6F 72 3D 28 29 49 7C 74 79 70 65 3D 73 74 61 74 69 63</o>",
                         "</o>"
                     )
                 )

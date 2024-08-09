@@ -182,7 +182,8 @@ final class XmirParser implements Parser {
         } else if ("checkcast".equals(base)) {
             result = new CheckCast(node, this);
         } else if (!base.isEmpty() && base.charAt(0) == '.') {
-            final Attributes attributes = new Attributes(node.firstChild());
+            final Attributes attributes = new Attributes(
+                node.children().collect(Collectors.toList()).get(1));
             if ("static".equals(attributes.type())) {
                 result = new StaticInvocation(node, this);
             } else if ("interface".equals(attributes.type())) {

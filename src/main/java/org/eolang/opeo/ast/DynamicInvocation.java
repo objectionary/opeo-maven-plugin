@@ -175,8 +175,8 @@ public final class DynamicInvocation implements AstNode, Typed {
     public Iterable<Directive> toXmir() {
         final Directives directives = new Directives().add("o")
             .attr("base", String.format(".%s", this.name))
-            .append(this.attributes.toXmir())
-            .append(this.factory.toXmir());
+            .append(this.factory.toXmir())
+            .append(this.attributes.toXmir());
         DynamicInvocation.xmirArgs(this.farguments).stream().map(Xmir::toXmir)
             .forEach(directives::append);
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
@@ -225,7 +225,7 @@ public final class DynamicInvocation implements AstNode, Typed {
      * @return Descriptor.
      */
     private static String xdescriptor(final List<XmlNode> children) {
-        return new Attributes(children.get(0)).descriptor();
+        return new Attributes(children.get(1)).descriptor();
     }
 
     /**
@@ -234,7 +234,7 @@ public final class DynamicInvocation implements AstNode, Typed {
      * @return Factory method reference.
      */
     private static Handle xfactory(final List<XmlNode> children) {
-        return new Handle(children.get(1));
+        return new Handle(children.get(0));
     }
 
     /**

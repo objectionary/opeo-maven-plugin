@@ -24,6 +24,7 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import com.jcabi.xml.XMLDocument;
 import org.eolang.jeo.matchers.SameXml;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.HasInstructions;
@@ -49,13 +50,13 @@ final class InvocationTest {
     private static final String XMIR = String.join(
         "",
         "<o base='.bar'>",
-        "   <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 56 28 29 7C 6E 61 6D 65 3D 62 61 72 7C 74 79 70 65 3D 6D 65 74 68 6F 64</o>",
         "   <o base='.new'>",
-        "      <o base='string' data='bytes'/>",
         "      <o base='.new-type'>",
         "         <o base='string' data='bytes'>66 6F 6F</o>",
         "      </o>",
+        "      <o base='string' data='bytes'/>",
         "   </o>",
+        "   <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 56 28 29 7C 6E 61 6D 65 3D 62 61 72 7C 74 79 70 65 3D 6D 65 74 68 6F 64</o>",
         "   <o base='string' data='bytes'>62 61 7A</o>",
         "</o>"
     );
@@ -88,16 +89,18 @@ final class InvocationTest {
 
     @Test
     void transformsToXmir() throws ImpossibleModificationException {
+        final String xml = new Xembler(
+            new Invocation(
+                new Constructor("foo"),
+                "bar",
+                new Literal("baz")
+            ).toXmir(),
+            new Transformers.Node()
+        ).xml();
+        System.out.println(new XMLDocument(xml));
         MatcherAssert.assertThat(
             "Can't transform 'invocation' to XMIR",
-            new Xembler(
-                new Invocation(
-                    new Constructor("foo"),
-                    "bar",
-                    new Literal("baz")
-                ).toXmir(),
-                new Transformers.Node()
-            ).xml(),
+            xml,
             new SameXml(InvocationTest.XMIR)
         );
     }

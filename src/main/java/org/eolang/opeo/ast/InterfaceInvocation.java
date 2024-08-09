@@ -90,7 +90,7 @@ public final class InterfaceInvocation implements AstNode, Typed {
     public InterfaceInvocation(final XmlNode node, final Parser parser) {
         this(
             InterfaceInvocation.xsource(node, parser),
-            new Attributes(node.firstChild()),
+            new Attributes(node.children().collect(Collectors.toList()).get(1)),
             new Arguments(node, parser, 2).toList()
         );
     }
@@ -163,8 +163,9 @@ public final class InterfaceInvocation implements AstNode, Typed {
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", String.format(".%s", this.attrs.name()))
+            .append(this.source.toXmir())
             .append(this.attrs.toXmir())
-            .append(this.source.toXmir());
+        ;
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
     }
@@ -181,6 +182,6 @@ public final class InterfaceInvocation implements AstNode, Typed {
      * @return Source.
      */
     private static AstNode xsource(final XmlNode node, final Parser parser) {
-        return parser.parse(node.children().collect(Collectors.toList()).get(1));
+        return parser.parse(node.children().collect(Collectors.toList()).get(0));
     }
 }

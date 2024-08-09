@@ -142,8 +142,9 @@ public final class Constructor implements AstNode, Typed {
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", ".new")
+            .append(this.ctype.toXmir())
             .append(this.attributes.toXmir())
-            .append(this.ctype.toXmir());
+        ;
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
     }
@@ -207,7 +208,9 @@ public final class Constructor implements AstNode, Typed {
      *  As you can see here we create several Attributes classes which looks strange.
      */
     private static Attributes xattrs(final XmlNode node, final Parser parser) {
-        final Attributes attrs = new Attributes(node.firstChild());
+        final Attributes attrs = new Attributes(
+            node.children().collect(Collectors.toList()).get(1)
+        );
         attrs.descriptor(
             new ConstructorDescriptor(
                 attrs.descriptor(),
@@ -224,6 +227,6 @@ public final class Constructor implements AstNode, Typed {
      * @return Target node.
      */
     private static AstNode xtarget(final XmlNode node, final Parser parser) {
-        return parser.parse(node.children().collect(Collectors.toList()).get(1));
+        return parser.parse(node.children().collect(Collectors.toList()).get(0));
     }
 }

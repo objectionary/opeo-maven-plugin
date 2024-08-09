@@ -113,7 +113,7 @@ public final class StaticInvocation implements AstNode, Typed {
      */
     public StaticInvocation(final XmlNode node, final List<AstNode> arguments) {
         this(
-            new Attributes(node.firstChild()),
+            new Attributes(node.children().collect(Collectors.toList()).get(1)),
             StaticInvocation.xowner(node),
             arguments
         );
@@ -163,8 +163,8 @@ public final class StaticInvocation implements AstNode, Typed {
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", String.format(".%s", this.attributes.name()));
-        directives.append(this.attributes.toXmir());
         directives.append(this.owner.toXmir());
+        directives.append(this.attributes.toXmir());
         this.args.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
     }
@@ -197,7 +197,7 @@ public final class StaticInvocation implements AstNode, Typed {
      */
     private static Owner xowner(final XmlNode node) {
         return node.children().collect(Collectors.toList())
-            .get(1)
+            .get(0)
             .attribute("base").map(Owner::new)
             .orElseThrow(
                 () -> new IllegalArgumentException(

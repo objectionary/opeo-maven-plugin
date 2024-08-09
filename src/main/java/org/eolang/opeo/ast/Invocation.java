@@ -48,7 +48,6 @@ import org.xembly.Directives;
  *  We have this problem in the following classes:
  *  - {@link Invocation}
  *  - {@link DynamicInvocation}
- *  - {@link Field}
  *  - {@link Constructor}
  *  - {@link StaticInvocation}
  *  - {@link InterfaceInvocation}
@@ -81,8 +80,8 @@ public final class Invocation implements AstNode, Typed {
      */
     public Invocation(final XmlNode node, final Parser parser) {
         this(
-            parser.parse(node.children().collect(Collectors.toList()).get(1)),
-            new Attributes(node.firstChild()),
+            parser.parse(node.children().collect(Collectors.toList()).get(0)),
+            new Attributes(node.children().collect(Collectors.toList()).get(1)),
             new Arguments(node, parser, 2).toList()
         );
     }
@@ -175,8 +174,9 @@ public final class Invocation implements AstNode, Typed {
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", String.format(".%s", this.attributes.name()))
+            .append(this.source.toXmir())
             .append(this.attributes.toXmir())
-            .append(this.source.toXmir());
+        ;
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
     }
