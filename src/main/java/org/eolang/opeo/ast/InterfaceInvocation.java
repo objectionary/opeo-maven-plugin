@@ -164,8 +164,7 @@ public final class InterfaceInvocation implements AstNode, Typed {
         directives.add("o")
             .attr("base", String.format(".%s", this.attrs.name()))
             .append(this.source.toXmir())
-            .append(this.attrs.toXmir())
-        ;
+            .append(this.attrs.toXmir());
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
     }

@@ -175,8 +175,7 @@ public final class Invocation implements AstNode, Typed {
         directives.add("o")
             .attr("base", String.format(".%s", this.attributes.name()))
             .append(this.source.toXmir())
-            .append(this.attributes.toXmir())
-        ;
+            .append(this.attributes.toXmir());
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
     }
