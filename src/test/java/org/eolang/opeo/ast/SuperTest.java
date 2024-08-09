@@ -47,10 +47,10 @@ final class SuperTest {
     private static final String XMIR = String.join(
         "",
         "<o base='.super'>",
-        "   <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 28 29 56 7C 6E 61 6D 65 3D 3C 69 6E 69 74 3E 7C 6F 77 6E 65 72 3D 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>",
         "   <o base='$'>",
         "      <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 6A 61 76 61 2E 6C 61 6E 67 2E 4F 62 6A 65 63 74</o>",
         "   </o>",
+        "   <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 28 29 56 7C 6E 61 6D 65 3D 3C 69 6E 69 74 3E 7C 6F 77 6E 65 72 3D 6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>",
         "</o>"
     );
 

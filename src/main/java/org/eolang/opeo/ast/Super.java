@@ -143,9 +143,9 @@ public final class Super implements AstNode, Typed {
      */
     public Super(final XmlNode xmir, final Parser parser) {
         this(
-            parser.parse(xmir.children().collect(Collectors.toList()).get(1)),
+            parser.parse(xmir.children().collect(Collectors.toList()).get(0)),
             new Arguments(xmir, parser, 2).toList(),
-            new Attributes(xmir.firstChild())
+            new Attributes(xmir.children().collect(Collectors.toList()).get(1))
         );
     }
 
@@ -154,8 +154,8 @@ public final class Super implements AstNode, Typed {
         final Directives directives = new Directives();
         directives.add("o")
             .attr("base", ".super")
-            .append(this.attributes.toXmir())
-            .append(this.instance.toXmir());
+            .append(this.instance.toXmir())
+            .append(this.attributes.toXmir());
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
         return directives.up();
     }
