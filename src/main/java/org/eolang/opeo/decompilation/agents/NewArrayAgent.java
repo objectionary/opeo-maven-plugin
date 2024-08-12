@@ -21,39 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
-import org.eolang.opeo.ast.Cast;
+import org.eolang.opeo.ast.ArrayConstructor;
+import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
-import org.objectweb.asm.Type;
+import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.OperandStack;
 
 /**
- * Cast instruction handler.
- * @since 0.2
+ * New array instruction handler.
+ * @since 0.1
  */
-public final class CastHandler implements InstructionHandler {
-
-    /**
-     * Target type.
-     */
-    private final Type target;
-
-    /**
-     * Constructor.
-     * @param target Target type
-     */
-    CastHandler(final Type target) {
-        this.target = target;
-    }
+public final class NewArrayAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        state.stack().push(
-            new Cast(
-                this.target,
-                state.stack().pop()
-            )
-        );
+        final String type = (String) state.operand(0);
+        final OperandStack stack = state.stack();
+        final AstNode size = stack.pop();
+        stack.push(new Reference(new ArrayConstructor(size, type)));
     }
+
 }

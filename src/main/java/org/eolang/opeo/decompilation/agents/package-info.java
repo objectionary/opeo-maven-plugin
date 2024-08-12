@@ -21,40 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
-
-import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
-import org.objectweb.asm.Type;
-
 /**
- * Instruction handler.
- * This handler might understand the following instructions:
- * aload: 1: index | → objectref | load a reference onto the stack from a local variable #index
- * aload_0: → objectref | load a reference onto the stack from local variable 0
- * ...
- * @since 0.1
+ * This package contains all the opcode instruction handlers.
+ * @since 0.2
+ * @todo #150:90min Continue handlers refactoring.
+ *  We need to rename some of the handlers in order to match them with instructions.
+ *  It would also be good to generalize some of the handlers. For example, AddHandler might
+ *  handle all the types, not only Integer and Long.
  */
-public final class LoadHandler implements InstructionHandler {
-
-    /**
-     * Type of the variable.
-     */
-    private final Type type;
-
-    /**
-     * Constructor.
-     * @param type Type of the variable.
-     */
-    public LoadHandler(final Type type) {
-        this.type = type;
-    }
-
-    @Override
-    public void handle(final DecompilerState state) {
-        final Integer index = (Integer) state.operand(0);
-        state.stack().push(
-            state.variable(index, this.type)
-        );
-    }
-}
+package org.eolang.opeo.decompilation.agents;

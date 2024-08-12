@@ -21,21 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
-import org.eolang.opeo.ast.NewAddress;
+import java.util.Collections;
+import java.util.List;
+import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Attributes;
+import org.eolang.opeo.ast.Owner;
+import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
+import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.objectweb.asm.Type;
 
 /**
- * New instruction handler.
+ * Invokestatic instruction handler.
  * @since 0.1
  */
-public final class NewHandler implements InstructionHandler {
+public final class InvokestaticAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        state.stack().push(new NewAddress(state.operand(0).toString()));
+        final String owner = (String) state.operand(0);
+        final String method = (String) state.operand(1);
+        final String descriptor = (String) state.operand(2);
+        final boolean interfaced = (boolean) state.operand(3);
+        final List<AstNode> args = state.stack().pop(Type.getArgumentCount(descriptor));
+        Collections.reverse(args);
+        state.stack().push(
+            new StaticInvocation(
+                new Attributes()
+                    .name(method)
+                    .descriptor(descriptor)
+                    .owner(owner)
+                    .interfaced(interfaced),
+                new Owner(owner),
+                args
+            )
+        );
     }
-
 }

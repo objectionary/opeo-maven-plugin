@@ -21,21 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
-import org.eolang.opeo.ast.Literal;
+import org.eolang.opeo.ast.Return;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
+import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.OperandStack;
+import org.objectweb.asm.Opcodes;
 
 /**
- * Bipush instruction handler.
+ * Return instruction handler.
  * @since 0.1
+ * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
-public final class BipushHandler implements InstructionHandler {
+public final class ReturnAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        state.stack().push(new Literal(state.operand(0)));
+        final int opcode = state.instruction().opcode();
+        final OperandStack stack = state.stack();
+        if (opcode == Opcodes.RETURN) {
+            stack.push(new Return());
+        } else if (opcode == Opcodes.IRETURN) {
+            stack.push(new Return(stack.pop()));
+        } else if (opcode == Opcodes.LRETURN) {
+            stack.push(new Return(stack.pop()));
+        } else if (opcode == Opcodes.FRETURN) {
+            stack.push(new Return(stack.pop()));
+        } else if (opcode == Opcodes.DRETURN) {
+            stack.push(new Return(stack.pop()));
+        } else if (opcode == Opcodes.ARETURN) {
+            stack.push(new Return(stack.pop()));
+        } else {
+            throw new IllegalStateException(
+                String.format("Unexpected opcode: %d", opcode)
+            );
+        }
     }
-
 }

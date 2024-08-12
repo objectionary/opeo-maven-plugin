@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
+import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
@@ -34,7 +34,7 @@ import org.objectweb.asm.Type;
  * Iconst instruction handler.
  * @since 0.1
  */
-public final class ConstHandler implements InstructionHandler {
+public final class ConstAgent implements DecompilationAgent {
 
     /**
      * Type of constant.
@@ -45,7 +45,7 @@ public final class ConstHandler implements InstructionHandler {
      * Constructor.
      * @param type Type of constant
      */
-    ConstHandler(final Type type) {
+    ConstAgent(final Type type) {
         this.type = type;
     }
 
@@ -54,13 +54,13 @@ public final class ConstHandler implements InstructionHandler {
         final int opcode = state.instruction().opcode();
         final AstNode res;
         if (this.type.equals(Type.INT_TYPE)) {
-            res = ConstHandler.intConstant(opcode);
+            res = ConstAgent.intConstant(opcode);
         } else if (this.type.equals(Type.LONG_TYPE)) {
-            res = ConstHandler.longConstant(opcode);
+            res = ConstAgent.longConstant(opcode);
         } else if (this.type.equals(Type.FLOAT_TYPE)) {
-            res = ConstHandler.floatConstant(opcode);
+            res = ConstAgent.floatConstant(opcode);
         } else if (this.type.equals(Type.DOUBLE_TYPE)) {
-            res = ConstHandler.doubleConstant(opcode);
+            res = ConstAgent.doubleConstant(opcode);
         } else {
             throw new UnsupportedOperationException(
                 String.format("Type %s is not supported yet", this.type)

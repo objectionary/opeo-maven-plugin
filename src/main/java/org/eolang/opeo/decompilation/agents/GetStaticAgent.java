@@ -21,23 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
-import org.eolang.opeo.ast.Popped;
+import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.OperandStack;
+import org.eolang.opeo.decompilation.DecompilationAgent;
 
 /**
- * Pop instruction handler.
+ * Getstatic instruction handler.
  * @since 0.1
  */
-public final class PopHandler implements InstructionHandler {
-
+public final class GetStaticAgent implements DecompilationAgent {
     @Override
     public void handle(final DecompilerState state) {
-        final OperandStack stack = state.stack();
-        stack.push(new Popped(stack.pop()));
+        final String klass = (String) state.operand(0);
+        final String method = (String) state.operand(1);
+        final String descriptor = (String) state.operand(2);
+        state.stack().push(new ClassField(klass, method, descriptor));
     }
-
 }

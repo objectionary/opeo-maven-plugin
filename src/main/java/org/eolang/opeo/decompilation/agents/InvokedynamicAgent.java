@@ -21,61 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
+import java.util.Collections;
+import java.util.List;
 import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.LocalVariable;
-import org.eolang.opeo.ast.Typed;
-import org.eolang.opeo.ast.VariableAssignment;
+import org.eolang.opeo.ast.DynamicInvocation;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.OperandStack;
+import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.objectweb.asm.Handle;
 import org.objectweb.asm.Type;
 
 /**
- * Store instruction handler.
- * @since 0.1
+ * Invokedynamic instruction handler.
+ * @since 0.5
  */
-public final class StoreHandler implements InstructionHandler {
-
-    /**
-     * Type of the variable.
-     */
-    private final Type type;
-
-    /**
-     * Constructor.
-     * @param type Type of the variable.
-     */
-    public StoreHandler(final Type type) {
-        this.type = type;
-    }
+public final class InvokedynamicAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        final OperandStack stack = state.stack();
-        final AstNode value = stack.pop();
-        stack.push(
-            new VariableAssignment(
-                (LocalVariable) state.variable((Integer) state.operand(0), this.infer(value)),
-                value
-            )
+        final List<Object> operands = state.instruction().operands();
+        final String descriptor = (String) operands.get(1);
+        final List<AstNode> args = state.stack().pop(Type.getArgumentTypes(descriptor).length);
+        Collections.reverse(args);
+        final DynamicInvocation node = new DynamicInvocation(
+            (String) operands.get(0),
+            new org.eolang.opeo.ast.Handle((Handle) operands.get(2)),
+            descriptor,
+            operands.subList(3, operands.size()),
+            args
         );
-    }
-
-    /**
-     * Infer type of the variable.
-     * @param value Value to infer type from.
-     * @return Inferred type.
-     */
-    private Type infer(final AstNode value) {
-        final Type result;
-        if (value instanceof Typed) {
-            result = ((Typed) value).type();
-        } else {
-            result = this.type;
-        }
-        return result;
+        state.stack().push(node);
     }
 
 }

@@ -21,34 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
-import org.eolang.opeo.ast.Attributes;
-import org.eolang.opeo.ast.FieldRetrieval;
+import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
+import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.OperandStack;
 
 /**
- * Getfield instruction handler.
+ * Dup instruction handler.
  * @since 0.1
  */
-public final class GetFieldHandler implements InstructionHandler {
+public final class DupAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        final String owner = (String) state.operand(0);
-        final String name = (String) state.operand(1);
-        final String descriptor = (String) state.operand(2);
-        state.stack().push(
-            new FieldRetrieval(
-                state.stack().pop(),
-                new Attributes()
-                    .name(name)
-                    .descriptor(descriptor)
-                    .owner(owner)
-                    .type("field")
-            )
-        );
+        final OperandStack stack = state.stack();
+        stack.push(new Duplicate(stack.pop()));
     }
 
 }

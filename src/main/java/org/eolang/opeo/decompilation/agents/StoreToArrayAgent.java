@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Duplicate;
@@ -30,7 +30,7 @@ import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
+import org.eolang.opeo.decompilation.DecompilationAgent;
 
 /**
  * Store to array instruction handler.
@@ -38,12 +38,12 @@ import org.eolang.opeo.decompilation.InstructionHandler;
  * Opcodes: aastore
  * Stack [before]->[after]: "arrayref, index, value →"
  * @since 0.1
- * @todo #329:90min Avoid using 'instance of' in {@link StoreToArrayHandler#findRef(AstNode)}.
+ * @todo #329:90min Avoid using 'instance of' in {@link StoreToArrayAgent#findRef(AstNode)}.
  *  Here we use 'instance of' statement to find a Reference.
  *  The solution related to Reference looks incorrect, in general.
  *  We should invent a proper solution without the use of this statement.
  */
-public final class StoreToArrayHandler implements InstructionHandler {
+public final class StoreToArrayAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {

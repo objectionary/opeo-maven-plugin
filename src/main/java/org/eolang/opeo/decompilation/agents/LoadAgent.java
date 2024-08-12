@@ -21,25 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
-import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.CheckCast;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
+import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.objectweb.asm.Type;
 
 /**
- * CheckCast instruction handler.
- *
- * @since 0.5
+ * Instruction handler.
+ * This handler might understand the following instructions:
+ * aload: 1: index | → objectref | load a reference onto the stack from a local variable #index
+ * aload_0: → objectref | load a reference onto the stack from local variable 0
+ * ...
+ * @since 0.1
  */
-public final class CheckCastHandler implements InstructionHandler {
+public final class LoadAgent implements DecompilationAgent {
+
+    /**
+     * Type of the variable.
+     */
+    private final Type type;
+
+    /**
+     * Constructor.
+     * @param type Type of the variable.
+     */
+    public LoadAgent(final Type type) {
+        this.type = type;
+    }
 
     @Override
     public void handle(final DecompilerState state) {
-        final AstNode value = state.stack().pop();
-        final Object type = state.operand(0);
-        state.stack().push(new CheckCast(Type.getObjectType((String) type), value));
+        final Integer index = (Integer) state.operand(0);
+        state.stack().push(
+            state.variable(index, this.type)
+        );
     }
 }

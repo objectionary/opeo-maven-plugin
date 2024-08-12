@@ -21,22 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
-import org.eolang.opeo.ast.ClassField;
+import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.If;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
+import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.OperandStack;
+import org.objectweb.asm.Label;
+import org.objectweb.asm.Opcodes;
 
 /**
- * Getstatic instruction handler.
- * @since 0.1
+ * If instruction handler.
+ * [value1, value2] → []
+ * If value1 is greater than value2, branch to instruction at branchoffset
+ * (signed short constructed from unsigned bytes branchbyte1 << 8 | branchbyte2)
+ * @since 0.2
  */
-public final class GetStaticHnadler implements InstructionHandler {
+public final class IfAgent implements DecompilationAgent {
+
     @Override
     public void handle(final DecompilerState state) {
-        final String klass = (String) state.operand(0);
-        final String method = (String) state.operand(1);
-        final String descriptor = (String) state.operand(2);
-        state.stack().push(new ClassField(klass, method, descriptor));
+        if (state.instruction().opcode() == Opcodes.IF_ICMPGT) {
+            final OperandStack stack = state.stack();
+            final AstNode second = stack.pop();
+            final AstNode first = stack.pop();
+            final Label operand = (Label) state.operand(0);
+            stack.push(new If(first, second, operand));
+        } else {
+            throw new UnsupportedOperationException(
+                String.format(
+                    "Unsupported opcode: %d",
+                    state.instruction().opcode()
+                )
+            );
+        }
     }
 }

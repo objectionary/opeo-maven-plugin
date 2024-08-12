@@ -21,23 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
-
-import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.Substraction;
-import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
+package org.eolang.opeo.decompilation;
 
 /**
- * Substraction instruction handler.
+ * An agent that tries to understand the current decompilation state and apply some changes to it.
  * @since 0.1
  */
-public final class SubstractionHandler implements InstructionHandler {
+@FunctionalInterface
+public interface DecompilationAgent {
 
-    @Override
-    public void handle(final DecompilerState state) {
-        final AstNode right = state.stack().pop();
-        final AstNode left = state.stack().pop();
-        state.stack().push(new Substraction(left, right));
-    }
+    /**
+     * Handle the current state.
+     * @param state Current state to handle together with operand stack and variables.
+     */
+    void handle(DecompilerState state);
 }

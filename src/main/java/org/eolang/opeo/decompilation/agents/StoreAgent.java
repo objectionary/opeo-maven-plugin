@@ -21,40 +21,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
 import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.Attributes;
-import org.eolang.opeo.ast.Field;
-import org.eolang.opeo.ast.FieldAssignment;
+import org.eolang.opeo.ast.LocalVariable;
+import org.eolang.opeo.ast.Typed;
+import org.eolang.opeo.ast.VariableAssignment;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
+import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.OperandStack;
+import org.objectweb.asm.Type;
 
 /**
- * Putfield instruction handler.
- * Stack [before]->[after]:  "objectref, value →"
+ * Store instruction handler.
  * @since 0.1
  */
-public final class PutFieldHnadler implements InstructionHandler {
+public final class StoreAgent implements DecompilationAgent {
+
+    /**
+     * Type of the variable.
+     */
+    private final Type type;
+
+    /**
+     * Constructor.
+     * @param type Type of the variable.
+     */
+    public StoreAgent(final Type type) {
+        this.type = type;
+    }
 
     @Override
     public void handle(final DecompilerState state) {
-        final AstNode value = state.stack().pop();
-        final String name = (String) state.operand(1);
-        final String owner = (String) state.operand(0);
-        final String descriptor = (String) state.operand(2);
-        state.stack().push(
-            new FieldAssignment(
-                new Field(
-                    state.stack().pop(),
-                    new Attributes()
-                        .name(name)
-                        .owner(owner)
-                        .descriptor(descriptor)
-                ),
+        final OperandStack stack = state.stack();
+        final AstNode value = stack.pop();
+        stack.push(
+            new VariableAssignment(
+                (LocalVariable) state.variable((Integer) state.operand(0), this.infer(value)),
                 value
             )
         );
+    }
+
+    /**
+     * Infer type of the variable.
+     * @param value Value to infer type from.
+     * @return Inferred type.
+     */
+    private Type infer(final AstNode value) {
+        final Type result;
+        if (value instanceof Typed) {
+            result = ((Typed) value).type();
+        } else {
+            result = this.type;
+        }
+        return result;
     }
 
 }

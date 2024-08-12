@@ -21,37 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
-import java.util.Collections;
-import java.util.List;
 import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.DynamicInvocation;
+import org.eolang.opeo.ast.CheckCast;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
-import org.objectweb.asm.Handle;
+import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.objectweb.asm.Type;
 
 /**
- * Invokedynamic instruction handler.
+ * CheckCast instruction handler.
+ *
  * @since 0.5
  */
-public final class InvokedynamicHandler implements InstructionHandler {
+public final class CheckCastAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        final List<Object> operands = state.instruction().operands();
-        final String descriptor = (String) operands.get(1);
-        final List<AstNode> args = state.stack().pop(Type.getArgumentTypes(descriptor).length);
-        Collections.reverse(args);
-        final DynamicInvocation node = new DynamicInvocation(
-            (String) operands.get(0),
-            new org.eolang.opeo.ast.Handle((Handle) operands.get(2)),
-            descriptor,
-            operands.subList(3, operands.size()),
-            args
-        );
-        state.stack().push(node);
+        final AstNode value = state.stack().pop();
+        final Object type = state.operand(0);
+        state.stack().push(new CheckCast(Type.getObjectType((String) type), value));
     }
-
 }

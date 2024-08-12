@@ -21,55 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
-import java.util.Collections;
-import java.util.List;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
-import org.eolang.opeo.ast.Invocation;
+import org.eolang.opeo.ast.Field;
+import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
-import org.objectweb.asm.Type;
+import org.eolang.opeo.decompilation.DecompilationAgent;
 
 /**
- * Invokevirtual instruction handler.
- * <p>
- *     Other bytes: 2: indexbyte1, indexbyte2
- * </p>
- * <p>
- *     objectref, [arg1, arg2, ...] → result
- * </p>
- * <p>
- *     Invoke virtual method on object objectref and puts the result on the stack (might be void).
- *     The method is identified by method reference index in constant pool
- *     (indexbyte1 << 8 | indexbyte2)
- * </p>
+ * Putfield instruction handler.
+ * Stack [before]->[after]:  "objectref, value →"
  * @since 0.1
  */
-public final class InvokevirtualHandler implements InstructionHandler {
+public final class PutFieldAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
+        final AstNode value = state.stack().pop();
+        final String name = (String) state.operand(1);
         final String owner = (String) state.operand(0);
-        final String method = (String) state.operand(1);
         final String descriptor = (String) state.operand(2);
-        final boolean interfaced = (Boolean) state.operand(3);
-        final List<AstNode> args = state.stack().pop(
-            Type.getArgumentCount(descriptor)
-        );
-        Collections.reverse(args);
-        final AstNode source = state.stack().pop();
         state.stack().push(
-            new Invocation(
-                source,
-                new Attributes()
-                    .name(method)
-                    .descriptor(descriptor)
-                    .owner(owner)
-                    .interfaced(interfaced),
-                args
+            new FieldAssignment(
+                new Field(
+                    state.stack().pop(),
+                    new Attributes()
+                        .name(name)
+                        .owner(owner)
+                        .descriptor(descriptor)
+                ),
+                value
             )
         );
     }
+
 }

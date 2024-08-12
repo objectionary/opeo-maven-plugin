@@ -21,12 +21,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package org.eolang.opeo.decompilation.agents;
+
+import org.eolang.opeo.ast.Cast;
+import org.eolang.opeo.decompilation.DecompilerState;
+import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.objectweb.asm.Type;
+
 /**
- * This package contains all the opcode instruction handlers.
+ * Cast instruction handler.
  * @since 0.2
- * @todo #150:90min Continue handlers refactoring.
- *  We need to rename some of the handlers in order to match them with instructions.
- *  It would also be good to generalize some of the handlers. For example, AddHandler might
- *  handle all the types, not only Integer and Long.
  */
-package org.eolang.opeo.decompilation.handlers;
+public final class CastAgent implements DecompilationAgent {
+
+    /**
+     * Target type.
+     */
+    private final Type target;
+
+    /**
+     * Constructor.
+     * @param target Target type
+     */
+    CastAgent(final Type target) {
+        this.target = target;
+    }
+
+    @Override
+    public void handle(final DecompilerState state) {
+        state.stack().push(
+            new Cast(
+                this.target,
+                state.stack().pop()
+            )
+        );
+    }
+}

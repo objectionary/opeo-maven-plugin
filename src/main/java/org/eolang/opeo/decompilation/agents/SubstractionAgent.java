@@ -21,40 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
 import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.If;
+import org.eolang.opeo.ast.Substraction;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
-import org.eolang.opeo.decompilation.OperandStack;
-import org.objectweb.asm.Label;
-import org.objectweb.asm.Opcodes;
+import org.eolang.opeo.decompilation.DecompilationAgent;
 
 /**
- * If instruction handler.
- * [value1, value2] → []
- * If value1 is greater than value2, branch to instruction at branchoffset
- * (signed short constructed from unsigned bytes branchbyte1 << 8 | branchbyte2)
- * @since 0.2
+ * Substraction instruction handler.
+ * @since 0.1
  */
-public final class IfHandler implements InstructionHandler {
+public final class SubstractionAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        if (state.instruction().opcode() == Opcodes.IF_ICMPGT) {
-            final OperandStack stack = state.stack();
-            final AstNode second = stack.pop();
-            final AstNode first = stack.pop();
-            final Label operand = (Label) state.operand(0);
-            stack.push(new If(first, second, operand));
-        } else {
-            throw new UnsupportedOperationException(
-                String.format(
-                    "Unsupported opcode: %d",
-                    state.instruction().opcode()
-                )
-            );
-        }
+        final AstNode right = state.stack().pop();
+        final AstNode left = state.stack().pop();
+        state.stack().push(new Substraction(left, right));
     }
 }

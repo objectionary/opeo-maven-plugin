@@ -26,7 +26,7 @@ package org.eolang.opeo.decompilation;
 import java.util.stream.Collectors;
 import org.cactoos.io.ResourceOf;
 import org.eolang.opeo.SelectiveDecompiler;
-import org.eolang.opeo.decompilation.handlers.RouterHandler;
+import org.eolang.opeo.decompilation.agents.RouterAgent;
 import org.eolang.opeo.storage.InMemoryStorage;
 import org.eolang.opeo.storage.XmirEntry;
 import org.hamcrest.MatcherAssert;
@@ -161,7 +161,7 @@ final class SelectiveDecompilerTest {
     void identifiesUnsupportedOpcodes() {
         MatcherAssert.assertThat(
             "We expect that the supported opcodes won't contain the 'GOTO' opcode since we don't support it yet.",
-            new RouterHandler(false).supportedOpcodes(),
+            new RouterAgent(false).supportedOpcodes(),
             Matchers.not(Matchers.arrayContaining("GOTO"))
         );
     }

@@ -21,23 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
-import org.eolang.opeo.ast.Duplicate;
+import org.eolang.opeo.ast.Popped;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
+import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.OperandStack;
 
 /**
- * Dup instruction handler.
+ * Pop instruction handler.
  * @since 0.1
  */
-public final class DupHandler implements InstructionHandler {
+public final class PopAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
         final OperandStack stack = state.stack();
-        stack.push(new Duplicate(stack.pop()));
+        stack.push(new Popped(stack.pop()));
     }
 
 }

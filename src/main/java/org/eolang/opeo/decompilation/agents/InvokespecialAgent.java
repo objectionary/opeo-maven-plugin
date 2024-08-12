@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +34,7 @@ import org.eolang.opeo.ast.NewAddress;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
+import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.objectweb.asm.Type;
 
 /**
@@ -42,14 +42,14 @@ import org.objectweb.asm.Type;
  *
  * @since 0.1
  * @todo #229:90min Is Labeled Class an Abstraction Failure?
- *  As you can see in {@link InvokespecialHandler} we use many 'instanceof' checks.
+ *  As you can see in {@link InvokespecialAgent} we use many 'instanceof' checks.
  *  This is a clear sign that the class hierarchy is not well designed.
  *  The original problem lies in the {@link Labeled} class.
  *  We need to find more elegant solutions to handle labels in AST.
  * @checkstyle NoJavadocForOverriddenMethodsCheck (500 lines)
  * @checkstyle MultilineJavadocTagsCheck (500 lines)
  */
-public final class InvokespecialHandler implements InstructionHandler {
+public final class InvokespecialAgent implements DecompilationAgent {
 
     /**
      * Handle invokespecial instruction.
@@ -84,7 +84,7 @@ public final class InvokespecialHandler implements InstructionHandler {
         );
         Collections.reverse(args);
         final AstNode target = state.stack().pop();
-        if (InvokespecialHandler.isThis(target)) {
+        if (InvokespecialAgent.isThis(target)) {
             state.stack().push(
                 new Super(target, args, descriptor, type, name)
             );
@@ -135,9 +135,9 @@ public final class InvokespecialHandler implements InstructionHandler {
         if (candidate instanceof This) {
             result = true;
         } else if (candidate instanceof Labeled) {
-            result = InvokespecialHandler.isThis(((Labeled) candidate).origin());
+            result = InvokespecialAgent.isThis(((Labeled) candidate).origin());
         } else if (candidate instanceof Duplicate) {
-            result = InvokespecialHandler.isThis(((Duplicate) candidate).origin());
+            result = InvokespecialAgent.isThis(((Duplicate) candidate).origin());
         } else {
             result = false;
         }

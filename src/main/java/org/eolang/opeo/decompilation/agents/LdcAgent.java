@@ -21,24 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
-import org.eolang.opeo.ast.Addition;
-import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Constant;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
+import org.eolang.opeo.decompilation.DecompilationAgent;
 
 /**
- * Add instruction handler.
+ * Ldc instruction handler.
  * @since 0.1
  */
-public final class AddHandler implements InstructionHandler {
+public final class LdcAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        final AstNode right = state.stack().pop();
-        final AstNode left = state.stack().pop();
-        state.stack().push(new Addition(left, right));
+        final Object operand = state.operand(0);
+        state.stack().push(new Constant(operand));
     }
 
 }

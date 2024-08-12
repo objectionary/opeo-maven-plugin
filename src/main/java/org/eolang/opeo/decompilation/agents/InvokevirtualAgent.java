@@ -21,34 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
 import java.util.Collections;
 import java.util.List;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
-import org.eolang.opeo.ast.InterfaceInvocation;
+import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
+import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.objectweb.asm.Type;
 
 /**
- * Invokeinterface instruction handler.
+ * Invokevirtual instruction handler.
  * <p>
- *   Other bytes: 4: indexbyte1, indexbyte2, count, 0
+ *     Other bytes: 2: indexbyte1, indexbyte2
  * </p>
  * <p>
- *   Stack: objectref, [arg1, arg2, ...] → result
+ *     objectref, [arg1, arg2, ...] → result
  * </p>
  * <p>
- *   Invokes an interface method on object objectref and puts the result on the stack,
- *   might be void;
- *   the interface method is identified by method reference index in constant
- *   pool (indexbyte1 << 8 | indexbyte2)
+ *     Invoke virtual method on object objectref and puts the result on the stack (might be void).
+ *     The method is identified by method reference index in constant pool
+ *     (indexbyte1 << 8 | indexbyte2)
  * </p>
- * @since 0.2
+ * @since 0.1
  */
-public final class InvokeinterfaceHandler implements InstructionHandler {
+public final class InvokevirtualAgent implements DecompilationAgent {
+
     @Override
     public void handle(final DecompilerState state) {
         final String owner = (String) state.operand(0);
@@ -61,13 +61,13 @@ public final class InvokeinterfaceHandler implements InstructionHandler {
         Collections.reverse(args);
         final AstNode source = state.stack().pop();
         state.stack().push(
-            new InterfaceInvocation(
+            new Invocation(
                 source,
                 new Attributes()
                     .name(method)
                     .descriptor(descriptor)
-                    .interfaced(interfaced)
-                    .owner(owner),
+                    .owner(owner)
+                    .interfaced(interfaced),
                 args
             )
         );

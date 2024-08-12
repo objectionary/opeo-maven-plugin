@@ -21,42 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
-import java.util.Collections;
-import java.util.List;
-import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
-import org.eolang.opeo.ast.Owner;
-import org.eolang.opeo.ast.StaticInvocation;
+import org.eolang.opeo.ast.FieldRetrieval;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
-import org.objectweb.asm.Type;
+import org.eolang.opeo.decompilation.DecompilationAgent;
 
 /**
- * Invokestatic instruction handler.
+ * Getfield instruction handler.
  * @since 0.1
  */
-public final class InvokestaticHander implements InstructionHandler {
+public final class GetFieldAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
         final String owner = (String) state.operand(0);
-        final String method = (String) state.operand(1);
+        final String name = (String) state.operand(1);
         final String descriptor = (String) state.operand(2);
-        final boolean interfaced = (boolean) state.operand(3);
-        final List<AstNode> args = state.stack().pop(Type.getArgumentCount(descriptor));
-        Collections.reverse(args);
         state.stack().push(
-            new StaticInvocation(
+            new FieldRetrieval(
+                state.stack().pop(),
                 new Attributes()
-                    .name(method)
+                    .name(name)
                     .descriptor(descriptor)
                     .owner(owner)
-                    .interfaced(interfaced),
-                new Owner(owner),
-                args
+                    .type("field")
             )
         );
     }
+
 }

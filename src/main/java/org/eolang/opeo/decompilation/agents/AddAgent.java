@@ -21,49 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.handlers;
+package org.eolang.opeo.decompilation.agents;
 
+import org.eolang.opeo.ast.Addition;
 import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.Multiplication;
-import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.eolang.opeo.decompilation.InstructionHandler;
-import org.objectweb.asm.Opcodes;
+import org.eolang.opeo.decompilation.DecompilationAgent;
 
 /**
- * Mul instruction handler.
+ * Add instruction handler.
  * @since 0.1
  */
-public final class MulHandler implements InstructionHandler {
-
-    /**
-     * Do we put numbers to opcodes?
-     */
-    private final boolean counting;
-
-    /**
-     * Constructor.
-     * @param counting Do we put numbers to opcodes?
-     */
-    MulHandler(final boolean counting) {
-        this.counting = counting;
-    }
+public final class AddAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        if (state.instruction().opcode() == Opcodes.IMUL) {
-            final AstNode right = state.stack().pop();
-            final AstNode left = state.stack().pop();
-            state.stack().push(new Multiplication(left, right));
-        } else {
-            state.stack().push(
-                new Opcode(
-                    state.instruction().opcode(),
-                    state.instruction().operands(),
-                    this.counting
-                )
-            );
-        }
+        final AstNode right = state.stack().pop();
+        final AstNode left = state.stack().pop();
+        state.stack().push(new Addition(left, right));
     }
 
 }

@@ -21,18 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation;
+package org.eolang.opeo.decompilation.agents;
+
+import org.eolang.opeo.ast.Literal;
+import org.eolang.opeo.decompilation.DecompilerState;
+import org.eolang.opeo.decompilation.DecompilationAgent;
 
 /**
- * Instruction handler.
+ * Bipush instruction handler.
  * @since 0.1
  */
-@FunctionalInterface
-public interface InstructionHandler {
+public final class BipushAgent implements DecompilationAgent {
 
-    /**
-     * Handle instruction.
-     * @param state Current instruction to handle together with operand stack and variables.
-     */
-    void handle(DecompilerState state);
+    @Override
+    public void handle(final DecompilerState state) {
+        state.stack().push(new Literal(state.operand(0)));
+    }
+
 }
