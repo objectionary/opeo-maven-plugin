@@ -57,7 +57,7 @@ public final class IfAgent implements DecompilationAgent {
             final AstNode first = stack.pop();
             final Label operand = (Label) state.operand(0);
             stack.push(new If(first, second, operand));
-            state.move();
+            state.decompileInstruction();
         }
     }
 }

@@ -49,7 +49,7 @@ public final class DupAgent implements DecompilationAgent {
         if (DupAgent.SUPPORTED.contains(state.instruction().opcode())) {
             final OperandStack stack = state.stack();
             stack.push(new Duplicate(stack.pop()));
-            state.move();
+            state.decompileInstruction();
         }
     }
 

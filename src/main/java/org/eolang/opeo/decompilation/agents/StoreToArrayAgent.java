@@ -67,7 +67,7 @@ public final class StoreToArrayAgent implements DecompilationAgent {
             } catch (final IllegalStateException exception) {
                 state.stack().push(new StoreArray(array, index, value));
             }
-            state.move();
+            state.decompileInstruction();
         }
     }
 

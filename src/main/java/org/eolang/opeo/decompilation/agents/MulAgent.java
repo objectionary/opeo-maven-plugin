@@ -28,7 +28,6 @@ import java.util.HashSet;
 import java.util.Set;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Multiplication;
-import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
@@ -54,7 +53,7 @@ public final class MulAgent implements DecompilationAgent {
             final AstNode right = state.stack().pop();
             final AstNode left = state.stack().pop();
             state.stack().push(new Multiplication(left, right));
-            state.move();
+            state.decompileInstruction();
         }
     }
 

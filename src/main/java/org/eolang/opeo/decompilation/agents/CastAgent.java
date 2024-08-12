@@ -27,8 +27,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.eolang.opeo.ast.Cast;
-import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Type;
 
 /**
@@ -37,6 +37,9 @@ import org.objectweb.asm.Type;
  */
 public final class CastAgent implements DecompilationAgent {
 
+    /**
+     * Supported opcodes.
+     */
     private static final Set<Integer> SUPPROTED = new HashSet<>(
         Arrays.asList(
             org.objectweb.asm.Opcodes.I2B,
@@ -67,34 +70,47 @@ public final class CastAgent implements DecompilationAgent {
                     state.stack().pop()
                 )
             );
-            state.move();
+            state.decompileInstruction();
         }
     }
 
+    /**
+     * Target type.
+     * @param opcode Opcode to handle.
+     * @return Target type.
+     */
     private static Type target(final int opcode) {
+        final Type result;
         switch (opcode) {
             case org.objectweb.asm.Opcodes.I2B:
-                return Type.BYTE_TYPE;
+                result = Type.BYTE_TYPE;
+                break;
             case org.objectweb.asm.Opcodes.I2C:
-                return Type.CHAR_TYPE;
+                result = Type.CHAR_TYPE;
+                break;
             case org.objectweb.asm.Opcodes.I2S:
-                return Type.SHORT_TYPE;
+                result = Type.SHORT_TYPE;
+                break;
             case org.objectweb.asm.Opcodes.I2L:
             case org.objectweb.asm.Opcodes.F2L:
             case org.objectweb.asm.Opcodes.D2L:
-                return Type.LONG_TYPE;
+                result = Type.LONG_TYPE;
+                break;
             case org.objectweb.asm.Opcodes.I2F:
             case org.objectweb.asm.Opcodes.L2F:
             case org.objectweb.asm.Opcodes.D2F:
-                return Type.FLOAT_TYPE;
+                result = Type.FLOAT_TYPE;
+                break;
             case org.objectweb.asm.Opcodes.I2D:
             case org.objectweb.asm.Opcodes.L2D:
             case org.objectweb.asm.Opcodes.F2D:
-                return Type.DOUBLE_TYPE;
+                result = Type.DOUBLE_TYPE;
+                break;
             case org.objectweb.asm.Opcodes.L2I:
             case org.objectweb.asm.Opcodes.F2I:
             case org.objectweb.asm.Opcodes.D2I:
-                return Type.INT_TYPE;
+                result = Type.INT_TYPE;
+                break;
             default:
                 throw new IllegalArgumentException(
                     String.format(
@@ -103,5 +119,6 @@ public final class CastAgent implements DecompilationAgent {
                     )
                 );
         }
+        return result;
     }
 }

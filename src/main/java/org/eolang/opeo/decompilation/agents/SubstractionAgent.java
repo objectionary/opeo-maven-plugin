@@ -54,7 +54,7 @@ public final class SubstractionAgent implements DecompilationAgent {
             final AstNode right = state.stack().pop();
             final AstNode left = state.stack().pop();
             state.stack().push(new Substraction(left, right));
-            state.move();
+            state.decompileInstruction();
         }
     }
 }

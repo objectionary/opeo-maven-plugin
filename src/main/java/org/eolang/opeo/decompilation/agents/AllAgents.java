@@ -32,12 +32,22 @@ import org.eolang.opeo.ast.OpcodeName;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
 
 /**
  * All agents that try to decompile incoming instructions.
  * @since 0.2
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
+ * @todo #376:90min Decompilation Finish Condition.
+ *  Currently we decompile until we out of instructions.
+ *  But this might be incorrect when we start decompile high-level constructs.
+ *  We should check decompilation stack instead.
+ *  If it changes, we should continue. Otherwise, we should stop.
+ *  The current implementation you can find here {@link #handle(DecompilerState)}.
+ * @todo #376:90min Unsupported Opcodes.
+ *  Currently we have the ugly map {@link #agents} that contains instructions we can handle.
+ *  We should refactor it to a more elegant solution.
+ *  For example, each agent might provide a list of instructions it can decompile.
+ *  By doing this we can infer the entire list of supported and unsupported instructions.
  */
 public final class AllAgents implements DecompilationAgent {
 
@@ -142,15 +152,9 @@ public final class AllAgents implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        //todo: until?
         while (state.hasInstructions()) {
             this.agents.values().forEach(agent -> agent.handle(state));
-//            state.move();
         }
-//        do {
-//            hash = state.hashCode();
-//        } while (hash != state.hashCode());
-//        this.agent(state.instruction().opcode()).handle(state);
     }
 
     /**
@@ -164,15 +168,6 @@ public final class AllAgents implements DecompilationAgent {
             .map(OpcodeName::simplified)
             .toArray(String[]::new);
     }
-
-    /**
-     * Get instruction handler.
-     * @param opcode Instruction opcode.
-     * @return Instruction handler.
-     */
-//    private DecompilationAgent agent(final int opcode) {
-//        return this.agents.getOrDefault(opcode, this.agents.get(AllAgents.UNIMPLEMENTED));
-//    }
 
     /**
      * Unimplemented instruction handler.
@@ -203,8 +198,7 @@ public final class AllAgents implements DecompilationAgent {
                         this.counting
                     )
                 );
-                state.move();
-
+                state.decompileInstruction();
             }
         }
     }

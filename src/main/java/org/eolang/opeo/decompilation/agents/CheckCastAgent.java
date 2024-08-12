@@ -52,7 +52,7 @@ public final class CheckCastAgent implements DecompilationAgent {
             final AstNode value = state.stack().pop();
             final Object type = state.operand(0);
             state.stack().push(new CheckCast(Type.getObjectType((String) type), value));
-            state.move();
+            state.decompileInstruction();
         }
     }
 }

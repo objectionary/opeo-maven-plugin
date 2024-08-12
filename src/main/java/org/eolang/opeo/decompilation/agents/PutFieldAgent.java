@@ -57,7 +57,7 @@ public final class PutFieldAgent implements DecompilationAgent {
                     value
                 )
             );
-            state.move();
+            state.decompileInstruction();
         }
     }
 }

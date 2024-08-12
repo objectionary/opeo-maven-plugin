@@ -59,7 +59,7 @@ public final class LoadAgent implements DecompilationAgent {
             state.stack().push(
                 state.variable(index, LoadAgent.type(opcode))
             );
-            state.move();
+            state.decompileInstruction();
         }
     }
 

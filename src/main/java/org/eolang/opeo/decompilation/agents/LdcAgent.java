@@ -39,7 +39,7 @@ public final class LdcAgent implements DecompilationAgent {
         if (state.instruction().opcode() == Opcodes.LDC) {
             final Object operand = state.operand(0);
             state.stack().push(new Constant(operand));
-            state.move();
+            state.decompileInstruction();
         }
     }
 

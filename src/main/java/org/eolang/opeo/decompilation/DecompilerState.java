@@ -24,15 +24,12 @@
 package org.eolang.opeo.decompilation;
 
 import java.util.Deque;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Optional;
-import javax.swing.text.html.Option;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Opcode;
-import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 /**
@@ -44,6 +41,11 @@ import org.objectweb.asm.Type;
 @EqualsAndHashCode
 public final class DecompilerState {
 
+    /**
+     * Remaining opcodes.
+     * Each method has an original list of opcodes which we decompile.
+     * When some agent decompiles an instruction, it removes it from this list.
+     */
     private final Deque<Opcode> opcodes;
 
     /**
@@ -74,6 +76,12 @@ public final class DecompilerState {
         this(new LinkedList<>(), operands, vars);
     }
 
+    /**
+     * Constructor.
+     * @param opcodes Remaining opcodes.
+     * @param stack Operand stack.
+     * @param vars Method local variables.
+     */
     public DecompilerState(
         final Deque<Opcode> opcodes,
         final OperandStack stack,
@@ -84,33 +92,30 @@ public final class DecompilerState {
         this.vars = vars;
     }
 
-    public boolean hasInstructions() {
-        return !this.opcodes.isEmpty();
-    }
-
-    public void move() {
-        if (!this.opcodes.isEmpty()) {
-            this.opcodes.pop();
-        }
-    }
-
     /**
      * Retrieve current bytecode instruction.
      * @return Current bytecode instruction.
      */
     public Opcode instruction() {
-        return Optional.ofNullable(this.opcodes.peek()).orElse(new Opcode(-100));
-//        final Iterator<AstNode> iterator = this.stack().iterator();
-//        while (iterator.hasNext()) {
-//            final AstNode next = iterator.next();
-//            if (next instanceof Opcode) {
-//                return (Opcode) next;
-//            }
-//        }
-//        throw new IllegalStateException(
-//            "No opcode found in the stack"
-//        );
-//        return (Opcode) this.stack().peek();
+        return Optional.ofNullable(this.opcodes.peek()).orElse(new Opcode(-1));
+    }
+
+    /**
+     * Check if there are any instructions left.
+     * @return True if there are instructions left.
+     */
+    public boolean hasInstructions() {
+        return !this.opcodes.isEmpty();
+    }
+
+    /**
+     * Remove current instruction from the list.
+     * This is used when we decompile an instruction.
+     */
+    public void decompileInstruction() {
+        if (!this.opcodes.isEmpty()) {
+            this.opcodes.pop();
+        }
     }
 
     /**
@@ -120,16 +125,6 @@ public final class DecompilerState {
      */
     public Object operand(final int index) {
         return this.instruction().operand(index);
-//        if (this.current.operands().size() <= index) {
-//            throw new IllegalStateException(
-//                String.format(
-//                    "Instruction '%s' doesn't have operand at index '%d'",
-//                    this.current,
-//                    index
-//                )
-//            );
-//        }
-//        return this.current.operand(index);
     }
 
     /**
