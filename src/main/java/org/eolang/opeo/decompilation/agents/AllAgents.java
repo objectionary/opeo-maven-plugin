@@ -59,54 +59,54 @@ public final class AllAgents implements DecompilationAgent {
         this(
             new MapOf<Integer, DecompilationAgent>(
                 new MapEntry<>(Opcodes.ICONST_M1, new ConstAgent()),
-                new MapEntry<>(Opcodes.ICONST_0, new ConstAgent()),
-                new MapEntry<>(Opcodes.ICONST_1, new ConstAgent()),
-                new MapEntry<>(Opcodes.ICONST_2, new ConstAgent()),
-                new MapEntry<>(Opcodes.ICONST_3, new ConstAgent()),
-                new MapEntry<>(Opcodes.ICONST_4, new ConstAgent()),
-                new MapEntry<>(Opcodes.ICONST_5, new ConstAgent()),
-                new MapEntry<>(Opcodes.LCONST_0, new ConstAgent()),
-                new MapEntry<>(Opcodes.LCONST_1, new ConstAgent()),
-                new MapEntry<>(Opcodes.FCONST_0, new ConstAgent()),
-                new MapEntry<>(Opcodes.FCONST_1, new ConstAgent()),
-                new MapEntry<>(Opcodes.FCONST_2, new ConstAgent()),
-                new MapEntry<>(Opcodes.DCONST_0, new ConstAgent()),
-                new MapEntry<>(Opcodes.DCONST_1, new ConstAgent()),
+//                new MapEntry<>(Opcodes.ICONST_0, new ConstAgent()),
+//                new MapEntry<>(Opcodes.ICONST_1, new ConstAgent()),
+//                new MapEntry<>(Opcodes.ICONST_2, new ConstAgent()),
+//                new MapEntry<>(Opcodes.ICONST_3, new ConstAgent()),
+//                new MapEntry<>(Opcodes.ICONST_4, new ConstAgent()),
+//                new MapEntry<>(Opcodes.ICONST_5, new ConstAgent()),
+//                new MapEntry<>(Opcodes.LCONST_0, new ConstAgent()),
+//                new MapEntry<>(Opcodes.LCONST_1, new ConstAgent()),
+//                new MapEntry<>(Opcodes.FCONST_0, new ConstAgent()),
+//                new MapEntry<>(Opcodes.FCONST_1, new ConstAgent()),
+//                new MapEntry<>(Opcodes.FCONST_2, new ConstAgent()),
+//                new MapEntry<>(Opcodes.DCONST_0, new ConstAgent()),
+//                new MapEntry<>(Opcodes.DCONST_1, new ConstAgent()),
                 new MapEntry<>(Opcodes.IADD, new AddAgent()),
-                new MapEntry<>(Opcodes.LADD, new AddAgent()),
-                new MapEntry<>(Opcodes.FADD, new AddAgent()),
-                new MapEntry<>(Opcodes.DADD, new AddAgent()),
+//                new MapEntry<>(Opcodes.LADD, new AddAgent()),
+//                new MapEntry<>(Opcodes.FADD, new AddAgent()),
+//                new MapEntry<>(Opcodes.DADD, new AddAgent()),
                 new MapEntry<>(Opcodes.ISUB, new SubstractionAgent()),
-                new MapEntry<>(Opcodes.LSUB, new SubstractionAgent()),
-                new MapEntry<>(Opcodes.FSUB, new SubstractionAgent()),
-                new MapEntry<>(Opcodes.DSUB, new SubstractionAgent()),
+//                new MapEntry<>(Opcodes.LSUB, new SubstractionAgent()),
+//                new MapEntry<>(Opcodes.FSUB, new SubstractionAgent()),
+//                new MapEntry<>(Opcodes.DSUB, new SubstractionAgent()),
                 new MapEntry<>(Opcodes.IMUL, new MulAgent()),
                 new MapEntry<>(Opcodes.IF_ICMPGT, new IfAgent()),
                 new MapEntry<>(Opcodes.I2B, new CastAgent()),
-                new MapEntry<>(Opcodes.I2C, new CastAgent()),
-                new MapEntry<>(Opcodes.I2S, new CastAgent()),
-                new MapEntry<>(Opcodes.I2L, new CastAgent()),
-                new MapEntry<>(Opcodes.I2F, new CastAgent()),
-                new MapEntry<>(Opcodes.I2D, new CastAgent()),
-                new MapEntry<>(Opcodes.L2I, new CastAgent()),
-                new MapEntry<>(Opcodes.L2F, new CastAgent()),
-                new MapEntry<>(Opcodes.L2D, new CastAgent()),
-                new MapEntry<>(Opcodes.F2I, new CastAgent()),
-                new MapEntry<>(Opcodes.F2L, new CastAgent()),
-                new MapEntry<>(Opcodes.F2D, new CastAgent()),
-                new MapEntry<>(Opcodes.D2I, new CastAgent()),
-                new MapEntry<>(Opcodes.D2L, new CastAgent()),
-                new MapEntry<>(Opcodes.D2F, new CastAgent()),
+//                new MapEntry<>(Opcodes.I2C, new CastAgent()),
+//                new MapEntry<>(Opcodes.I2S, new CastAgent()),
+//                new MapEntry<>(Opcodes.I2L, new CastAgent()),
+//                new MapEntry<>(Opcodes.I2F, new CastAgent()),
+//                new MapEntry<>(Opcodes.I2D, new CastAgent()),
+//                new MapEntry<>(Opcodes.L2I, new CastAgent()),
+//                new MapEntry<>(Opcodes.L2F, new CastAgent()),
+//                new MapEntry<>(Opcodes.L2D, new CastAgent()),
+//                new MapEntry<>(Opcodes.F2I, new CastAgent()),
+//                new MapEntry<>(Opcodes.F2L, new CastAgent()),
+//                new MapEntry<>(Opcodes.F2D, new CastAgent()),
+//                new MapEntry<>(Opcodes.D2I, new CastAgent()),
+//                new MapEntry<>(Opcodes.D2L, new CastAgent()),
+//                new MapEntry<>(Opcodes.D2F, new CastAgent()),
                 new MapEntry<>(Opcodes.ILOAD, new LoadAgent()),
-                new MapEntry<>(Opcodes.LLOAD, new LoadAgent()),
-                new MapEntry<>(Opcodes.FLOAD, new LoadAgent()),
-                new MapEntry<>(Opcodes.DLOAD, new LoadAgent()),
-                new MapEntry<>(Opcodes.ALOAD, new LoadAgent()),
+//                new MapEntry<>(Opcodes.LLOAD, new LoadAgent()),
+//                new MapEntry<>(Opcodes.FLOAD, new LoadAgent()),
+//                new MapEntry<>(Opcodes.DLOAD, new LoadAgent()),
+//                new MapEntry<>(Opcodes.ALOAD, new LoadAgent()),
                 new MapEntry<>(Opcodes.ISTORE, new StoreAgent()),
-                new MapEntry<>(Opcodes.LSTORE, new StoreAgent()),
-                new MapEntry<>(Opcodes.FSTORE, new StoreAgent()),
-                new MapEntry<>(Opcodes.DSTORE, new StoreAgent()),
-                new MapEntry<>(Opcodes.ASTORE, new StoreAgent()),
+//                new MapEntry<>(Opcodes.LSTORE, new StoreAgent()),
+//                new MapEntry<>(Opcodes.FSTORE, new StoreAgent()),
+//                new MapEntry<>(Opcodes.DSTORE, new StoreAgent()),
+//                new MapEntry<>(Opcodes.ASTORE, new StoreAgent()),
                 new MapEntry<>(Opcodes.AASTORE, new StoreToArrayAgent()),
                 new MapEntry<>(Opcodes.ANEWARRAY, new NewArrayAgent()),
                 new MapEntry<>(Opcodes.CHECKCAST, new CheckCastAgent()),
@@ -124,10 +124,10 @@ public final class AllAgents implements DecompilationAgent {
                 new MapEntry<>(Opcodes.LDC, new LdcAgent()),
                 new MapEntry<>(Opcodes.POP, new PopAgent()),
                 new MapEntry<>(Opcodes.RETURN, new ReturnAgent()),
-                new MapEntry<>(Opcodes.IRETURN, new ReturnAgent()),
-                new MapEntry<>(Opcodes.ARETURN, new ReturnAgent()),
-                new MapEntry<>(LabelInstruction.LABEL_OPCODE, new LabelAgent()),
-                new MapEntry<>(AllAgents.UNIMPLEMENTED, new UnimplementedAgent(counting))
+//                new MapEntry<>(Opcodes.IRETURN, new ReturnAgent()),
+//                new MapEntry<>(Opcodes.ARETURN, new ReturnAgent()),
+                new MapEntry<>(LabelInstruction.LABEL_OPCODE, new LabelAgent())
+//                , new MapEntry<>(AllAgents.UNIMPLEMENTED, new UnimplementedAgent(counting))
             )
         );
     }
@@ -143,7 +143,14 @@ public final class AllAgents implements DecompilationAgent {
     @Override
     public void handle(final DecompilerState state) {
         //todo: until?
-        this.agents.values().forEach(agent -> agent.handle(state));
+        int hash;
+        while (state.hasInstructions()) {
+            this.agents.values().forEach(agent -> agent.handle(state));
+            state.move();
+        }
+//        do {
+//            hash = state.hashCode();
+//        } while (hash != state.hashCode());
 //        this.agent(state.instruction().opcode()).handle(state);
     }
 

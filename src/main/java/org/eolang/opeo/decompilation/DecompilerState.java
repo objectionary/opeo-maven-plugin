@@ -23,8 +23,11 @@
  */
 package org.eolang.opeo.decompilation;
 
+import java.util.Deque;
+import java.util.Iterator;
+import java.util.LinkedList;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Opcode;
 import org.objectweb.asm.Type;
@@ -35,13 +38,16 @@ import org.objectweb.asm.Type;
  * @since 0.2
  */
 @ToString
+@EqualsAndHashCode
 public final class DecompilerState {
+
+    private final Deque<Opcode> opcodes;
 
     /**
      * Current operand stack.
      * It might have some values inside.
      */
-    private final OperandStack operands;
+    private final OperandStack stack;
 
     /**
      * Method local variables.
@@ -62,8 +68,25 @@ public final class DecompilerState {
      * @param vars Method local variables.
      */
     public DecompilerState(final OperandStack operands, final LocalVariables vars) {
-        this.operands = operands;
+        this(new LinkedList<>(), operands, vars);
+    }
+
+    public DecompilerState(
+        final Deque<Opcode> opcodes,
+        final OperandStack stack,
+        final LocalVariables vars
+    ) {
+        this.opcodes = opcodes;
+        this.stack = stack;
         this.vars = vars;
+    }
+
+    public boolean hasInstructions() {
+        return !this.opcodes.isEmpty();
+    }
+
+    public void move() {
+        this.opcodes.pop();
     }
 
     /**
@@ -71,7 +94,18 @@ public final class DecompilerState {
      * @return Current bytecode instruction.
      */
     public Opcode instruction() {
-        return (Opcode) this.stack().peek();
+        return this.opcodes.peek();
+//        final Iterator<AstNode> iterator = this.stack().iterator();
+//        while (iterator.hasNext()) {
+//            final AstNode next = iterator.next();
+//            if (next instanceof Opcode) {
+//                return (Opcode) next;
+//            }
+//        }
+//        throw new IllegalStateException(
+//            "No opcode found in the stack"
+//        );
+//        return (Opcode) this.stack().peek();
     }
 
     /**
@@ -108,6 +142,6 @@ public final class DecompilerState {
      * @return Operand stack.
      */
     public OperandStack stack() {
-        return this.operands;
+        return this.stack;
     }
 }

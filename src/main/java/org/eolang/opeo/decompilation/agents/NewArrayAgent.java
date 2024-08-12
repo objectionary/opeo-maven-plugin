@@ -43,7 +43,7 @@ public final class NewArrayAgent implements DecompilationAgent {
 
     private static final Set<Integer> SUPPORTED = new HashSet<>(
         Arrays.asList(
-            Opcodes.NEWARRAY
+            Opcodes.ANEWARRAY
         )
     );
 

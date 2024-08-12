@@ -40,7 +40,7 @@ public final class PutFieldAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        if (state.instruction().opcode() == Opcodes.GETFIELD) {
+        if (state.instruction().opcode() == Opcodes.PUTFIELD) {
             final AstNode value = state.stack().pop();
             final String name = (String) state.operand(1);
             final String owner = (String) state.operand(0);

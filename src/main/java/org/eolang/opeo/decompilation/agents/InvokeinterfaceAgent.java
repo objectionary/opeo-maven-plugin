@@ -52,7 +52,7 @@ import org.objectweb.asm.Type;
 public final class InvokeinterfaceAgent implements DecompilationAgent {
     @Override
     public void handle(final DecompilerState state) {
-        if (state.instruction().opcode() != Opcodes.INVOKEINTERFACE) {
+        if (state.instruction().opcode() == Opcodes.INVOKEINTERFACE) {
             final String owner = (String) state.operand(0);
             final String method = (String) state.operand(1);
             final String descriptor = (String) state.operand(2);

@@ -23,11 +23,11 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import jdk.internal.org.objectweb.asm.Opcodes;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.FieldRetrieval;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.objectweb.asm.Opcodes;
 
 /**
  * Getfield instruction handler.

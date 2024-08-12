@@ -23,6 +23,9 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import org.eolang.opeo.ast.Return;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
@@ -36,26 +39,39 @@ import org.objectweb.asm.Opcodes;
  */
 public final class ReturnAgent implements DecompilationAgent {
 
+    private final Set<Integer> SUPPORTED = new HashSet<>(
+        Arrays.asList(
+            Opcodes.RETURN,
+            Opcodes.IRETURN,
+            Opcodes.LRETURN,
+            Opcodes.FRETURN,
+            Opcodes.DRETURN,
+            Opcodes.ARETURN
+        )
+    );
+
     @Override
     public void handle(final DecompilerState state) {
         final int opcode = state.instruction().opcode();
-        final OperandStack stack = state.stack();
-        if (opcode == Opcodes.RETURN) {
-            stack.push(new Return());
-        } else if (opcode == Opcodes.IRETURN) {
-            stack.push(new Return(stack.pop()));
-        } else if (opcode == Opcodes.LRETURN) {
-            stack.push(new Return(stack.pop()));
-        } else if (opcode == Opcodes.FRETURN) {
-            stack.push(new Return(stack.pop()));
-        } else if (opcode == Opcodes.DRETURN) {
-            stack.push(new Return(stack.pop()));
-        } else if (opcode == Opcodes.ARETURN) {
-            stack.push(new Return(stack.pop()));
-        } else {
-            throw new IllegalStateException(
-                String.format("Unexpected opcode: %d", opcode)
-            );
+        if (this.SUPPORTED.contains(opcode)) {
+            final OperandStack stack = state.stack();
+            if (opcode == Opcodes.RETURN) {
+                stack.push(new Return());
+            } else if (opcode == Opcodes.IRETURN) {
+                stack.push(new Return(stack.pop()));
+            } else if (opcode == Opcodes.LRETURN) {
+                stack.push(new Return(stack.pop()));
+            } else if (opcode == Opcodes.FRETURN) {
+                stack.push(new Return(stack.pop()));
+            } else if (opcode == Opcodes.DRETURN) {
+                stack.push(new Return(stack.pop()));
+            } else if (opcode == Opcodes.ARETURN) {
+                stack.push(new Return(stack.pop()));
+            } else {
+                throw new IllegalStateException(
+                    String.format("Unexpected opcode: %d", opcode)
+                );
+            }
         }
     }
 }

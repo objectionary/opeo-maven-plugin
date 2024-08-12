@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.decompilation;
 
+import com.jcabi.xml.XMLDocument;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicReference;
 import org.eolang.jeo.matchers.SameXml;
@@ -243,17 +244,18 @@ final class DecompilerMachineTest {
     @Test
     void decompilesArrayCreation() throws ImpossibleModificationException {
         final String type = "java/lang/Object";
+        final String xml = new Xembler(
+            new DecompilerMachine()
+                .decompile(
+                    new OpcodeInstruction(Opcodes.ICONST_2),
+                    new OpcodeInstruction(Opcodes.ICONST_3),
+                    new OpcodeInstruction(Opcodes.IADD),
+                    new OpcodeInstruction(Opcodes.ANEWARRAY, type)
+                )
+        ).xml();
         MatcherAssert.assertThat(
             "Can't decompile array creation",
-            new Xembler(
-                new DecompilerMachine()
-                    .decompile(
-                        new OpcodeInstruction(Opcodes.ICONST_2),
-                        new OpcodeInstruction(Opcodes.ICONST_3),
-                        new OpcodeInstruction(Opcodes.IADD),
-                        new OpcodeInstruction(Opcodes.ANEWARRAY, type)
-                    )
-            ).xml(),
+            xml,
             new SameXml(
                 new Xembler(
                     new Root(

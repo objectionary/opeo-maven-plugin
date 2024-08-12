@@ -23,11 +23,11 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import jdk.internal.org.objectweb.asm.Opcodes;
 import org.eolang.opeo.ast.Popped;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.OperandStack;
+import org.objectweb.asm.Opcodes;
 
 /**
  * Pop instruction handler.

@@ -24,15 +24,12 @@
 package org.eolang.opeo.decompilation;
 
 import java.util.Arrays;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.cactoos.list.ListOf;
 import org.eolang.opeo.Instruction;
-import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Root;
 import org.eolang.opeo.decompilation.agents.AllAgents;
@@ -92,9 +89,10 @@ public final class DecompilerMachine {
      */
     public Iterable<Directive> decompile(final Instruction... instructions) {
         final DecompilerState initial = new DecompilerState(
-            new OperandStack(Arrays.stream(instructions)
+            Arrays.stream(instructions)
                 .map(Opcode::new)
-                .collect(Collectors.toCollection(LinkedList::new))),
+                .collect(Collectors.toCollection(LinkedList::new)),
+            new OperandStack(),
             this.locals
         );
         this.agents.handle(initial);

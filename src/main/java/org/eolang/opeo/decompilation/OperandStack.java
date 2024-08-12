@@ -24,11 +24,14 @@
 package org.eolang.opeo.decompilation;
 
 import java.util.ArrayDeque;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Label;
@@ -44,6 +47,7 @@ import org.eolang.opeo.ast.Labeled;
  * @since 0.2
  */
 @ToString
+@EqualsAndHashCode
 public final class OperandStack {
 
     /**
@@ -138,4 +142,5 @@ public final class OperandStack {
     Iterator<AstNode> descendingIterator() {
         return this.stack.descendingIterator();
     }
+
 }

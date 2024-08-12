@@ -23,6 +23,10 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import org.eolang.opeo.SelectiveDecompiler;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.decompilation.DecompilerState;
@@ -36,38 +40,60 @@ import org.objectweb.asm.Type;
  */
 public final class ConstAgent implements DecompilationAgent {
 
+    private final Set<Integer> SUPPORTED = new HashSet<>(
+        Arrays.asList(
+            Opcodes.ICONST_M1,
+            Opcodes.ICONST_0,
+            Opcodes.ICONST_1,
+            Opcodes.ICONST_2,
+            Opcodes.ICONST_3,
+            Opcodes.ICONST_4,
+            Opcodes.ICONST_5,
+            Opcodes.LCONST_0,
+            Opcodes.LCONST_1,
+            Opcodes.FCONST_0,
+            Opcodes.FCONST_1,
+            Opcodes.FCONST_2,
+            Opcodes.DCONST_0,
+            Opcodes.DCONST_1
+        )
+    );
+
     @Override
     public void handle(final DecompilerState state) {
         final int opcode = state.instruction().opcode();
-        final AstNode res;
-        switch (opcode) {
-            case Opcodes.ICONST_M1:
-            case Opcodes.ICONST_0:
-            case Opcodes.ICONST_1:
-            case Opcodes.ICONST_2:
-            case Opcodes.ICONST_3:
-            case Opcodes.ICONST_4:
-            case Opcodes.ICONST_5:
-                res = ConstAgent.intConstant(opcode);
-                state.stack().push(res);
-                break;
-            case Opcodes.LCONST_0:
-            case Opcodes.LCONST_1:
-                res = ConstAgent.longConstant(opcode);
-                state.stack().push(res);
-                break;
-            case Opcodes.FCONST_0:
-            case Opcodes.FCONST_1:
-            case Opcodes.FCONST_2:
-                res = ConstAgent.floatConstant(opcode);
-                state.stack().push(res);
-                break;
-            case Opcodes.DCONST_0:
-            case Opcodes.DCONST_1:
-                res = ConstAgent.doubleConstant(opcode);
-                state.stack().push(res);
-                break;
+        if (this.SUPPORTED.contains(opcode)) {
+            final AstNode res;
+            switch (opcode) {
+                case Opcodes.ICONST_M1:
+                case Opcodes.ICONST_0:
+                case Opcodes.ICONST_1:
+                case Opcodes.ICONST_2:
+                case Opcodes.ICONST_3:
+                case Opcodes.ICONST_4:
+                case Opcodes.ICONST_5:
+                    res = ConstAgent.intConstant(opcode);
+                    state.stack().push(res);
+                    break;
+                case Opcodes.LCONST_0:
+                case Opcodes.LCONST_1:
+                    res = ConstAgent.longConstant(opcode);
+                    state.stack().push(res);
+                    break;
+                case Opcodes.FCONST_0:
+                case Opcodes.FCONST_1:
+                case Opcodes.FCONST_2:
+                    res = ConstAgent.floatConstant(opcode);
+                    state.stack().push(res);
+                    break;
+                case Opcodes.DCONST_0:
+                case Opcodes.DCONST_1:
+                    res = ConstAgent.doubleConstant(opcode);
+                    state.stack().push(res);
+                    break;
+            }
         }
+
     }
 
     /**
