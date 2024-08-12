@@ -47,6 +47,7 @@ public final class BipushAgent implements DecompilationAgent {
     public void handle(final DecompilerState state) {
         if (BipushAgent.SUPPORTED.contains(state.instruction().opcode())) {
             state.stack().push(new Literal(state.operand(0)));
+            state.move();
         }
     }
 

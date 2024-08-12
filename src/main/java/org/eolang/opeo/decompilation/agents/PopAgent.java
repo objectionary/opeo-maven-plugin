@@ -40,6 +40,7 @@ public final class PopAgent implements DecompilationAgent {
         if (state.instruction().opcode() == Opcodes.POP) {
             final OperandStack stack = state.stack();
             stack.push(new Popped(stack.pop()));
+            state.move();
         }
     }
 

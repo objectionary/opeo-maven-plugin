@@ -67,6 +67,7 @@ public final class CastAgent implements DecompilationAgent {
                     state.stack().pop()
                 )
             );
+            state.move();
         }
     }
 

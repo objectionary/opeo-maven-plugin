@@ -103,6 +103,7 @@ public final class InvokespecialAgent implements DecompilationAgent {
                     new Super(target, args, descriptor, type, name)
                 );
             }
+            state.move();
         }
     }
 

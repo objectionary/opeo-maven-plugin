@@ -54,6 +54,7 @@ public final class InvokedynamicAgent implements DecompilationAgent {
                 args
             );
             state.stack().push(node);
+            state.move();
         }
     }
 

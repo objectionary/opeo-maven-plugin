@@ -73,6 +73,7 @@ public final class InvokeinterfaceAgent implements DecompilationAgent {
                     args
                 )
             );
+            state.move();
         }
     }
 }

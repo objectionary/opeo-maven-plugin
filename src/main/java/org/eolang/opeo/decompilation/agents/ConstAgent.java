@@ -92,6 +92,7 @@ public final class ConstAgent implements DecompilationAgent {
                     state.stack().push(res);
                     break;
             }
+            state.move();
         }
 
     }

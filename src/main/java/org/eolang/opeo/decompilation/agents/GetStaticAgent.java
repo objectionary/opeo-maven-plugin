@@ -40,6 +40,7 @@ public final class GetStaticAgent implements DecompilationAgent {
             final String method = (String) state.operand(1);
             final String descriptor = (String) state.operand(2);
             state.stack().push(new ClassField(klass, method, descriptor));
+            state.move();
         }
     }
 }

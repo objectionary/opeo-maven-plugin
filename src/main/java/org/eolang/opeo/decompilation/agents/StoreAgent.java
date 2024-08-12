@@ -65,6 +65,7 @@ public final class StoreAgent implements DecompilationAgent {
                     value
                 )
             );
+            state.move();
         }
 
     }

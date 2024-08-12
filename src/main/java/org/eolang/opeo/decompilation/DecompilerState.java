@@ -26,10 +26,13 @@ package org.eolang.opeo.decompilation;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Optional;
+import javax.swing.text.html.Option;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Opcode;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 /**
@@ -86,7 +89,9 @@ public final class DecompilerState {
     }
 
     public void move() {
-        this.opcodes.pop();
+        if (!this.opcodes.isEmpty()) {
+            this.opcodes.pop();
+        }
     }
 
     /**
@@ -94,7 +99,7 @@ public final class DecompilerState {
      * @return Current bytecode instruction.
      */
     public Opcode instruction() {
-        return this.opcodes.peek();
+        return Optional.ofNullable(this.opcodes.peek()).orElse(new Opcode(-100));
 //        final Iterator<AstNode> iterator = this.stack().iterator();
 //        while (iterator.hasNext()) {
 //            final AstNode next = iterator.next();

@@ -60,6 +60,7 @@ public final class InvokestaticAgent implements DecompilationAgent {
                     args
                 )
             );
+            state.move();
         }
     }
 }

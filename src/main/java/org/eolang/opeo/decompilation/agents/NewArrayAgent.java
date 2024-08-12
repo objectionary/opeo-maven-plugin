@@ -54,6 +54,7 @@ public final class NewArrayAgent implements DecompilationAgent {
             final OperandStack stack = state.stack();
             final AstNode size = stack.pop();
             stack.push(new Reference(new ArrayConstructor(size, type)));
+            state.move();
         }
     }
 }
