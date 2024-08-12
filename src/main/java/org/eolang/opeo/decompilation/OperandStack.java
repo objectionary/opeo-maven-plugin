@@ -109,6 +109,14 @@ public final class OperandStack {
     }
 
     /**
+     * Peek the higher value on the stack.
+     * @return Node.
+     */
+    public AstNode peek() {
+        return this.stack.peek();
+    }
+
+    /**
      * Push one more node to the stack.
      * @param node Node to add to the stack.
      */

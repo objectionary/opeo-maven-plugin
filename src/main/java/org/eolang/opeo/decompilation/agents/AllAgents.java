@@ -35,15 +35,14 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 /**
- * General Instruction Handler.
- * This handler redirects handling of instructions depending on an incoming instruction.
+ * All agents that try to decompile incoming instructions.
  * @since 0.2
  * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
-public final class RouterAgent implements DecompilationAgent {
+public final class AllAgents implements DecompilationAgent {
 
     /**
-     * Index of unimplemented handler.
+     * Index of unimplemented agent.
      */
     private static final int UNIMPLEMENTED = -1;
 
@@ -56,7 +55,7 @@ public final class RouterAgent implements DecompilationAgent {
      * Constructor.
      * @param counting Do we put numbers to opcodes?
      */
-    public RouterAgent(final boolean counting) {
+    public AllAgents(final boolean counting) {
         this(
             new MapOf<Integer, DecompilationAgent>(
                 new MapEntry<>(Opcodes.ICONST_M1, new ConstAgent(Type.INT_TYPE)),
@@ -128,22 +127,22 @@ public final class RouterAgent implements DecompilationAgent {
                 new MapEntry<>(Opcodes.IRETURN, new ReturnAgent()),
                 new MapEntry<>(Opcodes.ARETURN, new ReturnAgent()),
                 new MapEntry<>(LabelInstruction.LABEL_OPCODE, new LabelAgent()),
-                new MapEntry<>(RouterAgent.UNIMPLEMENTED, new UnimplementedHandler(counting))
+                new MapEntry<>(AllAgents.UNIMPLEMENTED, new UnimplementedAgent(counting))
             )
         );
     }
 
     /**
      * Constructor.
-     * @param handlers All handlers that will try to handle incoming instructions.
+     * @param agents All handlers that will try to handle incoming instructions.
      */
-    private RouterAgent(final Map<Integer, DecompilationAgent> handlers) {
-        this.handlers = handlers;
+    private AllAgents(final Map<Integer, DecompilationAgent> agents) {
+        this.handlers = agents;
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        this.handler(state.instruction().opcode()).handle(state);
+        this.agent(state.instruction().opcode()).handle(state);
     }
 
     /**
@@ -163,15 +162,15 @@ public final class RouterAgent implements DecompilationAgent {
      * @param opcode Instruction opcode.
      * @return Instruction handler.
      */
-    private DecompilationAgent handler(final int opcode) {
-        return this.handlers.getOrDefault(opcode, this.handlers.get(RouterAgent.UNIMPLEMENTED));
+    private DecompilationAgent agent(final int opcode) {
+        return this.handlers.getOrDefault(opcode, this.handlers.get(AllAgents.UNIMPLEMENTED));
     }
 
     /**
      * Unimplemented instruction handler.
      * @since 0.1
      */
-    private static final class UnimplementedHandler implements DecompilationAgent {
+    private static final class UnimplementedAgent implements DecompilationAgent {
 
         /**
          * Do we put numbers to opcodes?
@@ -182,7 +181,7 @@ public final class RouterAgent implements DecompilationAgent {
          * Constructor.
          * @param counting Flag which decides if we need to count opcodes.
          */
-        private UnimplementedHandler(final boolean counting) {
+        private UnimplementedAgent(final boolean counting) {
             this.counting = counting;
         }
 

@@ -29,7 +29,7 @@ import java.util.Map;
 import org.cactoos.list.ListOf;
 import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.Root;
-import org.eolang.opeo.decompilation.agents.RouterAgent;
+import org.eolang.opeo.decompilation.agents.AllAgents;
 import org.xembly.Directive;
 
 /**
@@ -47,7 +47,7 @@ public final class DecompilerMachine {
     /**
      * Handler that redirects instructions.
      */
-    private final RouterAgent router;
+    private final AllAgents agents;
 
     /**
      * Constructor.
@@ -73,7 +73,7 @@ public final class DecompilerMachine {
      */
     public DecompilerMachine(final LocalVariables locals, final Map<String, String> arguments) {
         this.locals = locals;
-        this.router = new RouterAgent(
+        this.agents = new AllAgents(
             "true".equals(arguments.getOrDefault("counting", "true"))
         );
     }
@@ -87,7 +87,7 @@ public final class DecompilerMachine {
     public Iterable<Directive> decompile(final Instruction... instructions) {
         final DecompilerState state = new DecompilerState(this.locals);
         Arrays.stream(instructions)
-            .forEach(inst -> this.router.handle(state.next(inst)));
+            .forEach(inst -> this.agents.handle(state.next(inst)));
         return new Root(new ListOf<>(state.stack().descendingIterator())).toXmir();
     }
 }
