@@ -72,7 +72,6 @@ public final class AllAgents implements DecompilationAgent {
                 new MapEntry<>(Opcodes.FCONST_2, new ConstAgent()),
                 new MapEntry<>(Opcodes.DCONST_0, new ConstAgent()),
                 new MapEntry<>(Opcodes.DCONST_1, new ConstAgent()),
-//
                 new MapEntry<>(Opcodes.IADD, new AddAgent()),
                 new MapEntry<>(Opcodes.LADD, new AddAgent()),
                 new MapEntry<>(Opcodes.FADD, new AddAgent()),
@@ -127,8 +126,8 @@ public final class AllAgents implements DecompilationAgent {
                 new MapEntry<>(Opcodes.RETURN, new ReturnAgent()),
                 new MapEntry<>(Opcodes.IRETURN, new ReturnAgent()),
                 new MapEntry<>(Opcodes.ARETURN, new ReturnAgent()),
-                new MapEntry<>(LabelInstruction.LABEL_OPCODE, new LabelAgent())
-//                , new MapEntry<>(AllAgents.UNIMPLEMENTED, new UnimplementedAgent(counting))
+                new MapEntry<>(LabelInstruction.LABEL_OPCODE, new LabelAgent()),
+                new MapEntry<>(AllAgents.UNIMPLEMENTED, new UnimplementedAgent(counting))
             )
         );
     }
@@ -179,7 +178,7 @@ public final class AllAgents implements DecompilationAgent {
      * Unimplemented instruction handler.
      * @since 0.1
      */
-    private static final class UnimplementedAgent implements DecompilationAgent {
+    private final static class UnimplementedAgent implements DecompilationAgent {
 
         /**
          * Do we put numbers to opcodes?
@@ -196,13 +195,17 @@ public final class AllAgents implements DecompilationAgent {
 
         @Override
         public void handle(final DecompilerState state) {
-            state.stack().push(
-                new Opcode(
-                    state.instruction().opcode(),
-                    state.instruction().params(),
-                    this.counting
-                )
-            );
+            if (!new AllAgents(false).agents.keySet().contains(state.instruction().opcode())) {
+                state.stack().push(
+                    new Opcode(
+                        state.instruction().opcode(),
+                        state.instruction().params(),
+                        this.counting
+                    )
+                );
+                state.move();
+
+            }
         }
     }
 }
