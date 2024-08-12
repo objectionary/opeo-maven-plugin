@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.decompilation;
 
-import com.jcabi.xml.XMLDocument;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicReference;
 import org.eolang.jeo.matchers.SameXml;

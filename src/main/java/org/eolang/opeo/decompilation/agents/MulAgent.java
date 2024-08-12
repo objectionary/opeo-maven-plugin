@@ -53,7 +53,7 @@ public final class MulAgent implements DecompilationAgent {
             final AstNode right = state.stack().pop();
             final AstNode left = state.stack().pop();
             state.stack().push(new Multiplication(left, right));
-            state.decompileInstruction();
+            state.popInstruction();
         }
     }
 

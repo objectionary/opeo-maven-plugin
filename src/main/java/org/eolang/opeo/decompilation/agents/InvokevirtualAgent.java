@@ -73,7 +73,7 @@ public final class InvokevirtualAgent implements DecompilationAgent {
                     args
                 )
             );
-            state.decompileInstruction();
+            state.popInstruction();
         }
     }
 }

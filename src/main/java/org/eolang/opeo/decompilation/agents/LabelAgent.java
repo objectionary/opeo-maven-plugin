@@ -43,7 +43,7 @@ public final class LabelAgent implements DecompilationAgent {
                 new Label(String.class.cast(state.operand(0)))
             );
             state.stack().push(node);
-            state.decompileInstruction();
+            state.popInstruction();
         }
     }
 }

@@ -112,7 +112,7 @@ public final class DecompilerState {
      * Remove current instruction from the list.
      * This is used when we decompile an instruction.
      */
-    public void decompileInstruction() {
+    public void popInstruction() {
         if (!this.opcodes.isEmpty()) {
             this.opcodes.pop();
         }

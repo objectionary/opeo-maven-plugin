@@ -29,6 +29,7 @@ import java.util.Set;
 import org.eolang.opeo.ast.Cast;
 import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 /**
@@ -42,21 +43,21 @@ public final class CastAgent implements DecompilationAgent {
      */
     private static final Set<Integer> SUPPROTED = new HashSet<>(
         Arrays.asList(
-            org.objectweb.asm.Opcodes.I2B,
-            org.objectweb.asm.Opcodes.I2C,
-            org.objectweb.asm.Opcodes.I2S,
-            org.objectweb.asm.Opcodes.I2L,
-            org.objectweb.asm.Opcodes.I2F,
-            org.objectweb.asm.Opcodes.I2D,
-            org.objectweb.asm.Opcodes.L2I,
-            org.objectweb.asm.Opcodes.L2F,
-            org.objectweb.asm.Opcodes.L2D,
-            org.objectweb.asm.Opcodes.F2I,
-            org.objectweb.asm.Opcodes.F2L,
-            org.objectweb.asm.Opcodes.F2D,
-            org.objectweb.asm.Opcodes.D2I,
-            org.objectweb.asm.Opcodes.D2L,
-            org.objectweb.asm.Opcodes.D2F
+            Opcodes.I2B,
+            Opcodes.I2C,
+            Opcodes.I2S,
+            Opcodes.I2L,
+            Opcodes.I2F,
+            Opcodes.I2D,
+            Opcodes.L2I,
+            Opcodes.L2F,
+            Opcodes.L2D,
+            Opcodes.F2I,
+            Opcodes.F2L,
+            Opcodes.F2D,
+            Opcodes.D2I,
+            Opcodes.D2L,
+            Opcodes.D2F
         )
     );
 
@@ -70,7 +71,7 @@ public final class CastAgent implements DecompilationAgent {
                     state.stack().pop()
                 )
             );
-            state.decompileInstruction();
+            state.popInstruction();
         }
     }
 
@@ -78,37 +79,38 @@ public final class CastAgent implements DecompilationAgent {
      * Target type.
      * @param opcode Opcode to handle.
      * @return Target type.
+     * @checkstyle CyclomaticComplexityCheck (100 lines)
      */
     private static Type target(final int opcode) {
         final Type result;
         switch (opcode) {
-            case org.objectweb.asm.Opcodes.I2B:
+            case Opcodes.I2B:
                 result = Type.BYTE_TYPE;
                 break;
-            case org.objectweb.asm.Opcodes.I2C:
+            case Opcodes.I2C:
                 result = Type.CHAR_TYPE;
                 break;
-            case org.objectweb.asm.Opcodes.I2S:
+            case Opcodes.I2S:
                 result = Type.SHORT_TYPE;
                 break;
-            case org.objectweb.asm.Opcodes.I2L:
-            case org.objectweb.asm.Opcodes.F2L:
-            case org.objectweb.asm.Opcodes.D2L:
+            case Opcodes.I2L:
+            case Opcodes.F2L:
+            case Opcodes.D2L:
                 result = Type.LONG_TYPE;
                 break;
-            case org.objectweb.asm.Opcodes.I2F:
-            case org.objectweb.asm.Opcodes.L2F:
-            case org.objectweb.asm.Opcodes.D2F:
+            case Opcodes.I2F:
+            case Opcodes.L2F:
+            case Opcodes.D2F:
                 result = Type.FLOAT_TYPE;
                 break;
-            case org.objectweb.asm.Opcodes.I2D:
-            case org.objectweb.asm.Opcodes.L2D:
-            case org.objectweb.asm.Opcodes.F2D:
+            case Opcodes.I2D:
+            case Opcodes.L2D:
+            case Opcodes.F2D:
                 result = Type.DOUBLE_TYPE;
                 break;
-            case org.objectweb.asm.Opcodes.L2I:
-            case org.objectweb.asm.Opcodes.F2I:
-            case org.objectweb.asm.Opcodes.D2I:
+            case Opcodes.L2I:
+            case Opcodes.F2I:
+            case Opcodes.D2I:
                 result = Type.INT_TYPE;
                 break;
             default:

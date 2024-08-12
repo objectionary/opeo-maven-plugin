@@ -28,8 +28,8 @@ import java.util.HashSet;
 import java.util.Set;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.CheckCast;
-import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
@@ -40,6 +40,9 @@ import org.objectweb.asm.Type;
  */
 public final class CheckCastAgent implements DecompilationAgent {
 
+    /**
+     * Supported opcodes.
+     */
     private static final Set<Integer> SUPPORTED = new HashSet<>(
         Arrays.asList(
             Opcodes.CHECKCAST
@@ -52,7 +55,7 @@ public final class CheckCastAgent implements DecompilationAgent {
             final AstNode value = state.stack().pop();
             final Object type = state.operand(0);
             state.stack().push(new CheckCast(Type.getObjectType((String) type), value));
-            state.decompileInstruction();
+            state.popInstruction();
         }
     }
 }

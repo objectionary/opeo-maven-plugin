@@ -48,7 +48,7 @@ public final class NewAgent implements DecompilationAgent {
     public void handle(final DecompilerState state) {
         if (NewAgent.SUPPORTED.contains(state.instruction().opcode())) {
             state.stack().push(new NewAddress(state.operand(0).toString()));
-            state.decompileInstruction();
+            state.popInstruction();
         }
     }
 

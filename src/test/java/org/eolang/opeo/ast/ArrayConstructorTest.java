@@ -62,7 +62,13 @@ final class ArrayConstructorTest {
                 node -> new Addition(new Literal(1), new Literal(2))
             ),
             Matchers.equalTo(
-                new ArrayConstructor(new Addition(new Literal(1), new Literal(2)), "java/lang/Integer")
+                new ArrayConstructor(
+                    new Addition(
+                        new Literal(1),
+                        new Literal(2)
+                    ),
+                    "java/lang/Integer"
+                )
             )
         );
     }

@@ -72,7 +72,7 @@ public final class ReturnAgent implements DecompilationAgent {
                     String.format("Unexpected opcode: %d", opcode)
                 );
             }
-            state.decompileInstruction();
+            state.popInstruction();
         }
     }
 }

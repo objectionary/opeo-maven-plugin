@@ -51,7 +51,7 @@ public final class GetFieldAgent implements DecompilationAgent {
                         .type("field")
                 )
             );
-            state.decompileInstruction();
+            state.popInstruction();
         }
     }
 

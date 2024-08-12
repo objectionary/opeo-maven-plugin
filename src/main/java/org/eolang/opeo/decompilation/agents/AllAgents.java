@@ -173,7 +173,7 @@ public final class AllAgents implements DecompilationAgent {
      * Unimplemented instruction handler.
      * @since 0.1
      */
-    private final static class UnimplementedAgent implements DecompilationAgent {
+    private static final class UnimplementedAgent implements DecompilationAgent {
 
         /**
          * Do we put numbers to opcodes?
@@ -198,7 +198,7 @@ public final class AllAgents implements DecompilationAgent {
                         this.counting
                     )
                 );
-                state.decompileInstruction();
+                state.popInstruction();
             }
         }
     }

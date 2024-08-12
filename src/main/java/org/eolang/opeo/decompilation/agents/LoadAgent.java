@@ -41,6 +41,9 @@ import org.objectweb.asm.Type;
  */
 public final class LoadAgent implements DecompilationAgent {
 
+    /**
+     * Supported opcodes.
+     */
     private static final Set<Integer> SUPPORTED = new HashSet<>(
         Arrays.asList(
             Opcodes.ILOAD,
@@ -59,26 +62,38 @@ public final class LoadAgent implements DecompilationAgent {
             state.stack().push(
                 state.variable(index, LoadAgent.type(opcode))
             );
-            state.decompileInstruction();
+            state.popInstruction();
         }
     }
 
+    /**
+     * Infer type from opcode.
+     * @param opcode Opcode
+     * @return Type
+     */
     private static Type type(final int opcode) {
+        final Type result;
         switch (opcode) {
             case Opcodes.ILOAD:
-                return Type.INT_TYPE;
+                result = Type.INT_TYPE;
+                break;
             case Opcodes.LLOAD:
-                return Type.LONG_TYPE;
+                result = Type.LONG_TYPE;
+                break;
             case Opcodes.FLOAD:
-                return Type.FLOAT_TYPE;
+                result = Type.FLOAT_TYPE;
+                break;
             case Opcodes.DLOAD:
-                return Type.DOUBLE_TYPE;
+                result = Type.DOUBLE_TYPE;
+                break;
             case Opcodes.ALOAD:
-                return Type.getType(Object.class);
+                result = Type.getType(Object.class);
+                break;
             default:
                 throw new IllegalArgumentException(
                     String.format("Unsupported opcode: %d", opcode)
                 );
         }
+        return result;
     }
 }
