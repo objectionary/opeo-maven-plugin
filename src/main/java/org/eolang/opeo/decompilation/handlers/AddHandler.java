@@ -23,7 +23,7 @@
  */
 package org.eolang.opeo.decompilation.handlers;
 
-import org.eolang.opeo.ast.Add;
+import org.eolang.opeo.ast.Addition;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.InstructionHandler;
@@ -38,7 +38,7 @@ public final class AddHandler implements InstructionHandler {
     public void handle(final DecompilerState state) {
         final AstNode right = state.stack().pop();
         final AstNode left = state.stack().pop();
-        state.stack().push(new Add(left, right));
+        state.stack().push(new Addition(left, right));
     }
 
 }

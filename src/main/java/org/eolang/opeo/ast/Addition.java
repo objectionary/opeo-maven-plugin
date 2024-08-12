@@ -41,7 +41,7 @@ import org.xembly.Directives;
  */
 @EqualsAndHashCode
 @ToString
-public final class Add implements AstNode, Typed {
+public final class Addition implements AstNode, Typed {
 
     /**
      * Left operand.
@@ -58,7 +58,7 @@ public final class Add implements AstNode, Typed {
      * @param node XML node
      * @param parser Parser
      */
-    public Add(final XmlNode node, final Function<XmlNode, AstNode> parser) {
+    public Addition(final XmlNode node, final Function<XmlNode, AstNode> parser) {
         this(
             parser.apply(node.children().collect(Collectors.toList()).get(0)),
             parser.apply(node.children().collect(Collectors.toList()).get(1))
@@ -70,7 +70,7 @@ public final class Add implements AstNode, Typed {
      * @param left Left operand
      * @param right Right operand
      */
-    public Add(final AstNode left, final AstNode right) {
+    public Addition(final AstNode left, final AstNode right) {
         this.left = left;
         this.right = right;
     }

@@ -29,7 +29,7 @@ import org.eolang.jeo.matchers.SameXml;
 import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.OpcodeInstruction;
-import org.eolang.opeo.ast.Add;
+import org.eolang.opeo.ast.Addition;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
@@ -258,7 +258,7 @@ final class DecompilerMachineTest {
                 new Xembler(
                     new Root(
                         new ArrayConstructor(
-                            new Add(new Literal(2), new Literal(3)),
+                            new Addition(new Literal(2), new Literal(3)),
                             type
                         )
                     ).toXmir()
@@ -317,7 +317,7 @@ final class DecompilerMachineTest {
                     ),
                     new VariableAssignment(
                         new LocalVariable(2, Type.INT_TYPE),
-                        new Add(
+                        new Addition(
                             new LocalVariable(2, Type.INT_TYPE),
                             new Literal(2)
                         )
