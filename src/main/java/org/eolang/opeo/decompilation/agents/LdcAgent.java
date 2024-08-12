@@ -24,8 +24,8 @@
 package org.eolang.opeo.decompilation.agents;
 
 import org.eolang.opeo.ast.Constant;
-import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 
 /**

@@ -32,8 +32,8 @@ import org.eolang.opeo.ast.FieldRetrieval;
 import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.StoreArray;
-import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.DecompilerState;
 
 /**
  * Store to array instruction handler.
@@ -48,6 +48,9 @@ import org.eolang.opeo.decompilation.DecompilationAgent;
  */
 public final class StoreToArrayAgent implements DecompilationAgent {
 
+    /**
+     * Supported opcodes.
+     */
     private static final Set<Integer> SUPPORTED = new HashSet<>(
         Arrays.asList(
             org.objectweb.asm.Opcodes.AASTORE

@@ -28,8 +28,8 @@ import java.util.HashSet;
 import java.util.Set;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.If;
-import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.OperandStack;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
@@ -43,6 +43,9 @@ import org.objectweb.asm.Opcodes;
  */
 public final class IfAgent implements DecompilationAgent {
 
+    /**
+     * Supported opcodes.
+     */
     private static final Set<Integer> SUPPORTED = new HashSet<>(
         Arrays.asList(
             Opcodes.IF_ICMPGT

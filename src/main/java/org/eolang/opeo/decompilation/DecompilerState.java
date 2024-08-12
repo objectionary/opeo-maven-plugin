@@ -52,7 +52,7 @@ public final class DecompilerState {
      * Current operand stack.
      * It might have some values inside.
      */
-    private final OperandStack stack;
+    private final OperandStack ostack;
 
     /**
      * Method local variables.
@@ -88,7 +88,7 @@ public final class DecompilerState {
         final LocalVariables vars
     ) {
         this.opcodes = opcodes;
-        this.stack = stack;
+        this.ostack = stack;
         this.vars = vars;
     }
 
@@ -142,6 +142,6 @@ public final class DecompilerState {
      * @return Operand stack.
      */
     public OperandStack stack() {
-        return this.stack;
+        return this.ostack;
     }
 }

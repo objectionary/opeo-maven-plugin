@@ -27,8 +27,8 @@ import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Labeled;
-import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.DecompilerState;
 
 /**
  * Label instruction handler.

@@ -29,14 +29,13 @@ import org.cactoos.map.MapOf;
 import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.OpcodeName;
-import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 
 /**
  * All agents that try to decompile incoming instructions.
  * @since 0.2
- * @checkstyle ClassFanOutComplexityCheck (500 lines)
  * @todo #376:90min Decompilation Finish Condition.
  *  Currently we decompile until we out of instructions.
  *  But this might be incorrect when we start decompile high-level constructs.
@@ -48,6 +47,7 @@ import org.objectweb.asm.Opcodes;
  *  We should refactor it to a more elegant solution.
  *  For example, each agent might provide a list of instructions it can decompile.
  *  By doing this we can infer the entire list of supported and unsupported instructions.
+ * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
 public final class AllAgents implements DecompilationAgent {
 

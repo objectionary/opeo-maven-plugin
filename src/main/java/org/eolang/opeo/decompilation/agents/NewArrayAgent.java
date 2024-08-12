@@ -29,8 +29,8 @@ import java.util.Set;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Reference;
-import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.OperandStack;
 import org.objectweb.asm.Opcodes;
 
@@ -40,6 +40,9 @@ import org.objectweb.asm.Opcodes;
  */
 public final class NewArrayAgent implements DecompilationAgent {
 
+    /**
+     * Supported opcodes.
+     */
     private static final Set<Integer> SUPPORTED = new HashSet<>(
         Arrays.asList(
             Opcodes.ANEWARRAY

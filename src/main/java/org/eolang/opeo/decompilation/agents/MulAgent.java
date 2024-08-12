@@ -38,6 +38,9 @@ import org.objectweb.asm.Opcodes;
  */
 public final class MulAgent implements DecompilationAgent {
 
+    /**
+     * Supported opcodes.
+     */
     private static final Set<Integer> SUPPORTED = new HashSet<>(
         Arrays.asList(
             Opcodes.IMUL,

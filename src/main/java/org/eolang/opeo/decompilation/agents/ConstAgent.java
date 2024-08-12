@@ -28,17 +28,21 @@ import java.util.HashSet;
 import java.util.Set;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Literal;
-import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 
 /**
  * Iconst instruction handler.
  * @since 0.1
+ * @checkstyle CyclomaticComplexityCheck (500 lines)
  */
 public final class ConstAgent implements DecompilationAgent {
 
-    private final Set<Integer> SUPPORTED = new HashSet<>(
+    /**
+     * Supported opcodes.
+     */
+    private static final Set<Integer> SUPPORTED = new HashSet<>(
         Arrays.asList(
             Opcodes.ICONST_M1,
             Opcodes.ICONST_0,
@@ -60,7 +64,7 @@ public final class ConstAgent implements DecompilationAgent {
     @Override
     public void handle(final DecompilerState state) {
         final int opcode = state.instruction().opcode();
-        if (this.SUPPORTED.contains(opcode)) {
+        if (ConstAgent.SUPPORTED.contains(opcode)) {
             final AstNode res;
             switch (opcode) {
                 case Opcodes.ICONST_M1:
@@ -89,10 +93,16 @@ public final class ConstAgent implements DecompilationAgent {
                     res = ConstAgent.doubleConstant(opcode);
                     state.stack().push(res);
                     break;
+                default:
+                    throw new UnsupportedOperationException(
+                        String.format(
+                            "Constant handler for opcode %s is not supported yet",
+                            opcode
+                        )
+                    );
             }
             state.popInstruction();
         }
-
     }
 
     /**

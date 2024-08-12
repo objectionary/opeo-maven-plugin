@@ -30,8 +30,8 @@ import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Typed;
 import org.eolang.opeo.ast.VariableAssignment;
-import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.OperandStack;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -64,13 +64,13 @@ public final class StoreAgent implements DecompilationAgent {
             stack.push(
                 new VariableAssignment(
                     (LocalVariable) state.variable(
-                        (Integer) state.operand(0), this.infer(value, opcode)),
+                        (Integer) state.operand(0), StoreAgent.infer(value, opcode)
+                    ),
                     value
                 )
             );
             state.popInstruction();
         }
-
     }
 
     /**
@@ -79,7 +79,7 @@ public final class StoreAgent implements DecompilationAgent {
      * @param opcode Opcode.
      * @return Inferred type.
      */
-    private Type infer(final AstNode value, final int opcode) {
+    private static Type infer(final AstNode value, final int opcode) {
         final Type result;
         if (value instanceof Typed) {
             result = ((Typed) value).type();

@@ -27,8 +27,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.eolang.opeo.ast.Return;
-import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.OperandStack;
 import org.objectweb.asm.Opcodes;
 
@@ -39,7 +39,10 @@ import org.objectweb.asm.Opcodes;
  */
 public final class ReturnAgent implements DecompilationAgent {
 
-    private final Set<Integer> SUPPORTED = new HashSet<>(
+    /**
+     * Supported opcodes.
+     */
+    private static final Set<Integer> SUPPORTED = new HashSet<>(
         Arrays.asList(
             Opcodes.RETURN,
             Opcodes.IRETURN,
@@ -53,7 +56,7 @@ public final class ReturnAgent implements DecompilationAgent {
     @Override
     public void handle(final DecompilerState state) {
         final int opcode = state.instruction().opcode();
-        if (this.SUPPORTED.contains(opcode)) {
+        if (ReturnAgent.SUPPORTED.contains(opcode)) {
             final OperandStack stack = state.stack();
             if (opcode == Opcodes.RETURN) {
                 stack.push(new Return());

@@ -33,8 +33,8 @@ import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.ast.NewAddress;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
-import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
