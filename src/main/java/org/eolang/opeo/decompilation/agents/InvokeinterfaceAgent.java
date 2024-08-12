@@ -28,8 +28,9 @@ import java.util.List;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.InterfaceInvocation;
-import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.DecompilerState;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 /**
@@ -51,25 +52,27 @@ import org.objectweb.asm.Type;
 public final class InvokeinterfaceAgent implements DecompilationAgent {
     @Override
     public void handle(final DecompilerState state) {
-        final String owner = (String) state.operand(0);
-        final String method = (String) state.operand(1);
-        final String descriptor = (String) state.operand(2);
-        final boolean interfaced = (Boolean) state.operand(3);
-        final List<AstNode> args = state.stack().pop(
-            Type.getArgumentCount(descriptor)
-        );
-        Collections.reverse(args);
-        final AstNode source = state.stack().pop();
-        state.stack().push(
-            new InterfaceInvocation(
-                source,
-                new Attributes()
-                    .name(method)
-                    .descriptor(descriptor)
-                    .interfaced(interfaced)
-                    .owner(owner),
-                args
-            )
-        );
+        if (state.instruction().opcode() != Opcodes.INVOKEINTERFACE) {
+            final String owner = (String) state.operand(0);
+            final String method = (String) state.operand(1);
+            final String descriptor = (String) state.operand(2);
+            final boolean interfaced = (Boolean) state.operand(3);
+            final List<AstNode> args = state.stack().pop(
+                Type.getArgumentCount(descriptor)
+            );
+            Collections.reverse(args);
+            final AstNode source = state.stack().pop();
+            state.stack().push(
+                new InterfaceInvocation(
+                    source,
+                    new Attributes()
+                        .name(method)
+                        .descriptor(descriptor)
+                        .interfaced(interfaced)
+                        .owner(owner),
+                    args
+                )
+            );
+        }
     }
 }

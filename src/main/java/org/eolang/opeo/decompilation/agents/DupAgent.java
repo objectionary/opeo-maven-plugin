@@ -23,10 +23,14 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.OperandStack;
+import org.objectweb.asm.Opcodes;
 
 /**
  * Dup instruction handler.
@@ -34,10 +38,18 @@ import org.eolang.opeo.decompilation.OperandStack;
  */
 public final class DupAgent implements DecompilationAgent {
 
+    private static final Set<Integer> SUPPORTED = new HashSet<>(
+        Arrays.asList(
+            Opcodes.DUP
+        )
+    );
+
     @Override
     public void handle(final DecompilerState state) {
-        final OperandStack stack = state.stack();
-        stack.push(new Duplicate(stack.pop()));
+        if (DupAgent.SUPPORTED.contains(state.instruction().opcode())) {
+            final OperandStack stack = state.stack();
+            stack.push(new Duplicate(stack.pop()));
+        }
     }
 
 }

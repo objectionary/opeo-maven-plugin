@@ -49,7 +49,7 @@ public final class AllAgents implements DecompilationAgent {
     /**
      * ALl instruction handlers.
      */
-    private final Map<Integer, DecompilationAgent> handlers;
+    private final Map<Integer, DecompilationAgent> agents;
 
     /**
      * Constructor.
@@ -58,20 +58,20 @@ public final class AllAgents implements DecompilationAgent {
     public AllAgents(final boolean counting) {
         this(
             new MapOf<Integer, DecompilationAgent>(
-                new MapEntry<>(Opcodes.ICONST_M1, new ConstAgent(Type.INT_TYPE)),
-                new MapEntry<>(Opcodes.ICONST_0, new ConstAgent(Type.INT_TYPE)),
-                new MapEntry<>(Opcodes.ICONST_1, new ConstAgent(Type.INT_TYPE)),
-                new MapEntry<>(Opcodes.ICONST_2, new ConstAgent(Type.INT_TYPE)),
-                new MapEntry<>(Opcodes.ICONST_3, new ConstAgent(Type.INT_TYPE)),
-                new MapEntry<>(Opcodes.ICONST_4, new ConstAgent(Type.INT_TYPE)),
-                new MapEntry<>(Opcodes.ICONST_5, new ConstAgent(Type.INT_TYPE)),
-                new MapEntry<>(Opcodes.LCONST_0, new ConstAgent(Type.LONG_TYPE)),
-                new MapEntry<>(Opcodes.LCONST_1, new ConstAgent(Type.LONG_TYPE)),
-                new MapEntry<>(Opcodes.FCONST_0, new ConstAgent(Type.FLOAT_TYPE)),
-                new MapEntry<>(Opcodes.FCONST_1, new ConstAgent(Type.FLOAT_TYPE)),
-                new MapEntry<>(Opcodes.FCONST_2, new ConstAgent(Type.FLOAT_TYPE)),
-                new MapEntry<>(Opcodes.DCONST_0, new ConstAgent(Type.DOUBLE_TYPE)),
-                new MapEntry<>(Opcodes.DCONST_1, new ConstAgent(Type.DOUBLE_TYPE)),
+                new MapEntry<>(Opcodes.ICONST_M1, new ConstAgent()),
+                new MapEntry<>(Opcodes.ICONST_0, new ConstAgent()),
+                new MapEntry<>(Opcodes.ICONST_1, new ConstAgent()),
+                new MapEntry<>(Opcodes.ICONST_2, new ConstAgent()),
+                new MapEntry<>(Opcodes.ICONST_3, new ConstAgent()),
+                new MapEntry<>(Opcodes.ICONST_4, new ConstAgent()),
+                new MapEntry<>(Opcodes.ICONST_5, new ConstAgent()),
+                new MapEntry<>(Opcodes.LCONST_0, new ConstAgent()),
+                new MapEntry<>(Opcodes.LCONST_1, new ConstAgent()),
+                new MapEntry<>(Opcodes.FCONST_0, new ConstAgent()),
+                new MapEntry<>(Opcodes.FCONST_1, new ConstAgent()),
+                new MapEntry<>(Opcodes.FCONST_2, new ConstAgent()),
+                new MapEntry<>(Opcodes.DCONST_0, new ConstAgent()),
+                new MapEntry<>(Opcodes.DCONST_1, new ConstAgent()),
                 new MapEntry<>(Opcodes.IADD, new AddAgent()),
                 new MapEntry<>(Opcodes.LADD, new AddAgent()),
                 new MapEntry<>(Opcodes.FADD, new AddAgent()),
@@ -80,33 +80,33 @@ public final class AllAgents implements DecompilationAgent {
                 new MapEntry<>(Opcodes.LSUB, new SubstractionAgent()),
                 new MapEntry<>(Opcodes.FSUB, new SubstractionAgent()),
                 new MapEntry<>(Opcodes.DSUB, new SubstractionAgent()),
-                new MapEntry<>(Opcodes.IMUL, new MulAgent(counting)),
+                new MapEntry<>(Opcodes.IMUL, new MulAgent()),
                 new MapEntry<>(Opcodes.IF_ICMPGT, new IfAgent()),
-                new MapEntry<>(Opcodes.I2B, new CastAgent(Type.BYTE_TYPE)),
-                new MapEntry<>(Opcodes.I2C, new CastAgent(Type.CHAR_TYPE)),
-                new MapEntry<>(Opcodes.I2S, new CastAgent(Type.SHORT_TYPE)),
-                new MapEntry<>(Opcodes.I2L, new CastAgent(Type.LONG_TYPE)),
-                new MapEntry<>(Opcodes.I2F, new CastAgent(Type.FLOAT_TYPE)),
-                new MapEntry<>(Opcodes.I2D, new CastAgent(Type.DOUBLE_TYPE)),
-                new MapEntry<>(Opcodes.L2I, new CastAgent(Type.INT_TYPE)),
-                new MapEntry<>(Opcodes.L2F, new CastAgent(Type.FLOAT_TYPE)),
-                new MapEntry<>(Opcodes.L2D, new CastAgent(Type.DOUBLE_TYPE)),
-                new MapEntry<>(Opcodes.F2I, new CastAgent(Type.INT_TYPE)),
-                new MapEntry<>(Opcodes.F2L, new CastAgent(Type.LONG_TYPE)),
-                new MapEntry<>(Opcodes.F2D, new CastAgent(Type.DOUBLE_TYPE)),
-                new MapEntry<>(Opcodes.D2I, new CastAgent(Type.INT_TYPE)),
-                new MapEntry<>(Opcodes.D2L, new CastAgent(Type.LONG_TYPE)),
-                new MapEntry<>(Opcodes.D2F, new CastAgent(Type.FLOAT_TYPE)),
-                new MapEntry<>(Opcodes.ILOAD, new LoadAgent(Type.INT_TYPE)),
-                new MapEntry<>(Opcodes.LLOAD, new LoadAgent(Type.LONG_TYPE)),
-                new MapEntry<>(Opcodes.FLOAD, new LoadAgent(Type.FLOAT_TYPE)),
-                new MapEntry<>(Opcodes.DLOAD, new LoadAgent(Type.DOUBLE_TYPE)),
-                new MapEntry<>(Opcodes.ALOAD, new LoadAgent(Type.getType(Object.class))),
-                new MapEntry<>(Opcodes.ISTORE, new StoreAgent(Type.INT_TYPE)),
-                new MapEntry<>(Opcodes.LSTORE, new StoreAgent(Type.LONG_TYPE)),
-                new MapEntry<>(Opcodes.FSTORE, new StoreAgent(Type.FLOAT_TYPE)),
-                new MapEntry<>(Opcodes.DSTORE, new StoreAgent(Type.DOUBLE_TYPE)),
-                new MapEntry<>(Opcodes.ASTORE, new StoreAgent(Type.getType(Object.class))),
+                new MapEntry<>(Opcodes.I2B, new CastAgent()),
+                new MapEntry<>(Opcodes.I2C, new CastAgent()),
+                new MapEntry<>(Opcodes.I2S, new CastAgent()),
+                new MapEntry<>(Opcodes.I2L, new CastAgent()),
+                new MapEntry<>(Opcodes.I2F, new CastAgent()),
+                new MapEntry<>(Opcodes.I2D, new CastAgent()),
+                new MapEntry<>(Opcodes.L2I, new CastAgent()),
+                new MapEntry<>(Opcodes.L2F, new CastAgent()),
+                new MapEntry<>(Opcodes.L2D, new CastAgent()),
+                new MapEntry<>(Opcodes.F2I, new CastAgent()),
+                new MapEntry<>(Opcodes.F2L, new CastAgent()),
+                new MapEntry<>(Opcodes.F2D, new CastAgent()),
+                new MapEntry<>(Opcodes.D2I, new CastAgent()),
+                new MapEntry<>(Opcodes.D2L, new CastAgent()),
+                new MapEntry<>(Opcodes.D2F, new CastAgent()),
+                new MapEntry<>(Opcodes.ILOAD, new LoadAgent()),
+                new MapEntry<>(Opcodes.LLOAD, new LoadAgent()),
+                new MapEntry<>(Opcodes.FLOAD, new LoadAgent()),
+                new MapEntry<>(Opcodes.DLOAD, new LoadAgent()),
+                new MapEntry<>(Opcodes.ALOAD, new LoadAgent()),
+                new MapEntry<>(Opcodes.ISTORE, new StoreAgent()),
+                new MapEntry<>(Opcodes.LSTORE, new StoreAgent()),
+                new MapEntry<>(Opcodes.FSTORE, new StoreAgent()),
+                new MapEntry<>(Opcodes.DSTORE, new StoreAgent()),
+                new MapEntry<>(Opcodes.ASTORE, new StoreAgent()),
                 new MapEntry<>(Opcodes.AASTORE, new StoreToArrayAgent()),
                 new MapEntry<>(Opcodes.ANEWARRAY, new NewArrayAgent()),
                 new MapEntry<>(Opcodes.CHECKCAST, new CheckCastAgent()),
@@ -137,12 +137,14 @@ public final class AllAgents implements DecompilationAgent {
      * @param agents All handlers that will try to handle incoming instructions.
      */
     private AllAgents(final Map<Integer, DecompilationAgent> agents) {
-        this.handlers = agents;
+        this.agents = agents;
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        this.agent(state.instruction().opcode()).handle(state);
+        //todo: until?
+        this.agents.values().forEach(agent -> agent.handle(state));
+//        this.agent(state.instruction().opcode()).handle(state);
     }
 
     /**
@@ -150,7 +152,7 @@ public final class AllAgents implements DecompilationAgent {
      * @return Supported opcodes.
      */
     public String[] supportedOpcodes() {
-        return this.handlers.keySet()
+        return this.agents.keySet()
             .stream()
             .map(OpcodeName::new)
             .map(OpcodeName::simplified)
@@ -162,9 +164,9 @@ public final class AllAgents implements DecompilationAgent {
      * @param opcode Instruction opcode.
      * @return Instruction handler.
      */
-    private DecompilationAgent agent(final int opcode) {
-        return this.handlers.getOrDefault(opcode, this.handlers.get(AllAgents.UNIMPLEMENTED));
-    }
+//    private DecompilationAgent agent(final int opcode) {
+//        return this.agents.getOrDefault(opcode, this.agents.get(AllAgents.UNIMPLEMENTED));
+//    }
 
     /**
      * Unimplemented instruction handler.
@@ -190,7 +192,7 @@ public final class AllAgents implements DecompilationAgent {
             state.stack().push(
                 new Opcode(
                     state.instruction().opcode(),
-                    state.instruction().operands(),
+                    state.instruction().params(),
                     this.counting
                 )
             );

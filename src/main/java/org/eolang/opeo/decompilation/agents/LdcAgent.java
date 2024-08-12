@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
+import jdk.internal.org.objectweb.asm.Opcodes;
 import org.eolang.opeo.ast.Constant;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
@@ -35,8 +36,10 @@ public final class LdcAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        final Object operand = state.operand(0);
-        state.stack().push(new Constant(operand));
+        if (state.instruction().opcode() == Opcodes.LDC) {
+            final Object operand = state.operand(0);
+            state.stack().push(new Constant(operand));
+        }
     }
 
 }

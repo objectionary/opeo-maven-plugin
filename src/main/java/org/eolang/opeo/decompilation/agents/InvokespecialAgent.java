@@ -35,6 +35,7 @@ import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 /**
@@ -75,31 +76,33 @@ public final class InvokespecialAgent implements DecompilationAgent {
     @Override
     @SuppressWarnings("PMD.UnusedLocalVariable")
     public void handle(final DecompilerState state) {
-        final String type = (String) state.operand(0);
-        final String name = (String) state.operand(1);
-        final String descriptor = (String) state.operand(2);
-        final boolean interfaced = (boolean) state.operand(3);
-        final List<AstNode> args = state.stack().pop(
-            Type.getArgumentCount(descriptor)
-        );
-        Collections.reverse(args);
-        final AstNode target = state.stack().pop();
-        if (InvokespecialAgent.isThis(target)) {
-            state.stack().push(
-                new Super(target, args, descriptor, type, name)
+        if (state.instruction().opcode() == Opcodes.INVOKESPECIAL) {
+            final String type = (String) state.operand(0);
+            final String name = (String) state.operand(1);
+            final String descriptor = (String) state.operand(2);
+            final boolean interfaced = (boolean) state.operand(3);
+            final List<AstNode> args = state.stack().pop(
+                Type.getArgumentCount(descriptor)
             );
-        } else if (this.isNewAddress(target)) {
-            state.stack().push(
-                new Constructor(
-                    target,
-                    new Attributes().descriptor(descriptor).interfaced(interfaced),
-                    args
-                )
-            );
-        } else {
-            state.stack().push(
-                new Super(target, args, descriptor, type, name)
-            );
+            Collections.reverse(args);
+            final AstNode target = state.stack().pop();
+            if (InvokespecialAgent.isThis(target)) {
+                state.stack().push(
+                    new Super(target, args, descriptor, type, name)
+                );
+            } else if (this.isNewAddress(target)) {
+                state.stack().push(
+                    new Constructor(
+                        target,
+                        new Attributes().descriptor(descriptor).interfaced(interfaced),
+                        args
+                    )
+                );
+            } else {
+                state.stack().push(
+                    new Super(target, args, descriptor, type, name)
+                );
+            }
         }
     }
 

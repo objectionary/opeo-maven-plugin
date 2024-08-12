@@ -30,6 +30,7 @@ import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 /**
@@ -51,25 +52,27 @@ public final class InvokevirtualAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        final String owner = (String) state.operand(0);
-        final String method = (String) state.operand(1);
-        final String descriptor = (String) state.operand(2);
-        final boolean interfaced = (Boolean) state.operand(3);
-        final List<AstNode> args = state.stack().pop(
-            Type.getArgumentCount(descriptor)
-        );
-        Collections.reverse(args);
-        final AstNode source = state.stack().pop();
-        state.stack().push(
-            new Invocation(
-                source,
-                new Attributes()
-                    .name(method)
-                    .descriptor(descriptor)
-                    .owner(owner)
-                    .interfaced(interfaced),
-                args
-            )
-        );
+        if (state.instruction().opcode() == Opcodes.INVOKEVIRTUAL) {
+            final String owner = (String) state.operand(0);
+            final String method = (String) state.operand(1);
+            final String descriptor = (String) state.operand(2);
+            final boolean interfaced = (Boolean) state.operand(3);
+            final List<AstNode> args = state.stack().pop(
+                Type.getArgumentCount(descriptor)
+            );
+            Collections.reverse(args);
+            final AstNode source = state.stack().pop();
+            state.stack().push(
+                new Invocation(
+                    source,
+                    new Attributes()
+                        .name(method)
+                        .descriptor(descriptor)
+                        .owner(owner)
+                        .interfaced(interfaced),
+                    args
+                )
+            );
+        }
     }
 }

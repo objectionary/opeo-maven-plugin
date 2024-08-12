@@ -23,11 +23,14 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Multiplication;
 import org.eolang.opeo.ast.Opcode;
-import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 
 /**
@@ -36,33 +39,22 @@ import org.objectweb.asm.Opcodes;
  */
 public final class MulAgent implements DecompilationAgent {
 
-    /**
-     * Do we put numbers to opcodes?
-     */
-    private final boolean counting;
-
-    /**
-     * Constructor.
-     * @param counting Do we put numbers to opcodes?
-     */
-    MulAgent(final boolean counting) {
-        this.counting = counting;
-    }
+    private static final Set<Integer> SUPPORTED = new HashSet<>(
+        Arrays.asList(
+            Opcodes.IMUL,
+            Opcodes.LMUL,
+            Opcodes.FMUL,
+            Opcodes.DMUL
+        )
+    );
 
     @Override
     public void handle(final DecompilerState state) {
-        if (state.instruction().opcode() == Opcodes.IMUL) {
+        if (MulAgent.SUPPORTED.contains(state.instruction().opcode())) {
             final AstNode right = state.stack().pop();
             final AstNode left = state.stack().pop();
             state.stack().push(new Multiplication(left, right));
-        } else {
-            state.stack().push(
-                new Opcode(
-                    state.instruction().opcode(),
-                    state.instruction().operands(),
-                    this.counting
-                )
-            );
+
         }
     }
 

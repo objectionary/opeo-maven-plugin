@@ -23,6 +23,9 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import org.eolang.opeo.ast.Cast;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
@@ -34,26 +37,70 @@ import org.objectweb.asm.Type;
  */
 public final class CastAgent implements DecompilationAgent {
 
-    /**
-     * Target type.
-     */
-    private final Type target;
-
-    /**
-     * Constructor.
-     * @param target Target type
-     */
-    CastAgent(final Type target) {
-        this.target = target;
-    }
+    private static final Set<Integer> SUPPROTED = new HashSet<>(
+        Arrays.asList(
+            org.objectweb.asm.Opcodes.I2B,
+            org.objectweb.asm.Opcodes.I2C,
+            org.objectweb.asm.Opcodes.I2S,
+            org.objectweb.asm.Opcodes.I2L,
+            org.objectweb.asm.Opcodes.I2F,
+            org.objectweb.asm.Opcodes.I2D,
+            org.objectweb.asm.Opcodes.L2I,
+            org.objectweb.asm.Opcodes.L2F,
+            org.objectweb.asm.Opcodes.L2D,
+            org.objectweb.asm.Opcodes.F2I,
+            org.objectweb.asm.Opcodes.F2L,
+            org.objectweb.asm.Opcodes.F2D,
+            org.objectweb.asm.Opcodes.D2I,
+            org.objectweb.asm.Opcodes.D2L,
+            org.objectweb.asm.Opcodes.D2F
+        )
+    );
 
     @Override
     public void handle(final DecompilerState state) {
-        state.stack().push(
-            new Cast(
-                this.target,
-                state.stack().pop()
-            )
-        );
+        final int opcode = state.instruction().opcode();
+        if (CastAgent.SUPPROTED.contains(opcode)) {
+            state.stack().push(
+                new Cast(
+                    CastAgent.target(opcode),
+                    state.stack().pop()
+                )
+            );
+        }
+    }
+
+    private static Type target(final int opcode) {
+        switch (opcode) {
+            case org.objectweb.asm.Opcodes.I2B:
+                return Type.BYTE_TYPE;
+            case org.objectweb.asm.Opcodes.I2C:
+                return Type.CHAR_TYPE;
+            case org.objectweb.asm.Opcodes.I2S:
+                return Type.SHORT_TYPE;
+            case org.objectweb.asm.Opcodes.I2L:
+            case org.objectweb.asm.Opcodes.F2L:
+            case org.objectweb.asm.Opcodes.D2L:
+                return Type.LONG_TYPE;
+            case org.objectweb.asm.Opcodes.I2F:
+            case org.objectweb.asm.Opcodes.L2F:
+            case org.objectweb.asm.Opcodes.D2F:
+                return Type.FLOAT_TYPE;
+            case org.objectweb.asm.Opcodes.I2D:
+            case org.objectweb.asm.Opcodes.L2D:
+            case org.objectweb.asm.Opcodes.F2D:
+                return Type.DOUBLE_TYPE;
+            case org.objectweb.asm.Opcodes.L2I:
+            case org.objectweb.asm.Opcodes.F2I:
+            case org.objectweb.asm.Opcodes.D2I:
+                return Type.INT_TYPE;
+            default:
+                throw new IllegalArgumentException(
+                    String.format(
+                        "Unsupported opcode: %d",
+                        opcode
+                    )
+                );
+        }
     }
 }

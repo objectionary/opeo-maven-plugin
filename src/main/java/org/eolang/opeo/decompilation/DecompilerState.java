@@ -26,6 +26,7 @@ package org.eolang.opeo.decompilation;
 import lombok.ToString;
 import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Opcode;
 import org.objectweb.asm.Type;
 
 /**
@@ -35,11 +36,6 @@ import org.objectweb.asm.Type;
  */
 @ToString
 public final class DecompilerState {
-
-    /**
-     * Current instruction.
-     */
-    private final Instruction current;
 
     /**
      * Current operand stack.
@@ -57,31 +53,25 @@ public final class DecompilerState {
      * @param vars Method local variables.
      */
     public DecompilerState(final LocalVariables vars) {
-        this(new Instruction.Nop(), new OperandStack(), vars);
+        this(new OperandStack(), vars);
     }
 
     /**
      * Constructor.
-     * @param current Current instruction.
-     * @param stack Operand stack.
-     * @param variables Method local variables.
+     * @param operands Operand stack.
+     * @param vars Method local variables.
      */
-    private DecompilerState(
-        final Instruction current,
-        final OperandStack stack,
-        final LocalVariables variables
-    ) {
-        this.current = current;
-        this.operands = stack;
-        this.vars = variables;
+    public DecompilerState(final OperandStack operands, final LocalVariables vars) {
+        this.operands = operands;
+        this.vars = vars;
     }
 
     /**
      * Retrieve current bytecode instruction.
      * @return Current bytecode instruction.
      */
-    public Instruction instruction() {
-        return this.current;
+    public Opcode instruction() {
+        return (Opcode) this.stack().peek();
     }
 
     /**
@@ -90,16 +80,17 @@ public final class DecompilerState {
      * @return Instruction operand.
      */
     public Object operand(final int index) {
-        if (this.current.operands().size() <= index) {
-            throw new IllegalStateException(
-                String.format(
-                    "Instruction '%s' doesn't have operand at index '%d'",
-                    this.current,
-                    index
-                )
-            );
-        }
-        return this.current.operand(index);
+        return this.instruction().operand(index);
+//        if (this.current.operands().size() <= index) {
+//            throw new IllegalStateException(
+//                String.format(
+//                    "Instruction '%s' doesn't have operand at index '%d'",
+//                    this.current,
+//                    index
+//                )
+//            );
+//        }
+//        return this.current.operand(index);
     }
 
     /**
@@ -118,14 +109,5 @@ public final class DecompilerState {
      */
     public OperandStack stack() {
         return this.operands;
-    }
-
-    /**
-     * Move the state to the next instruction.
-     * @param instruction Next instruction.
-     * @return New decompiler state with the next instruction.
-     */
-    DecompilerState next(final Instruction instruction) {
-        return new DecompilerState(instruction, this.operands, this.vars);
     }
 }

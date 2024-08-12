@@ -23,6 +23,9 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.ast.FieldRetrieval;
@@ -45,17 +48,25 @@ import org.eolang.opeo.decompilation.DecompilationAgent;
  */
 public final class StoreToArrayAgent implements DecompilationAgent {
 
+    private static final Set<Integer> SUPPORTED = new HashSet<>(
+        Arrays.asList(
+            org.objectweb.asm.Opcodes.AASTORE
+        )
+    );
+
     @Override
     public void handle(final DecompilerState state) {
-        final AstNode value = state.stack().pop();
-        final AstNode index = state.stack().pop();
-        final AstNode array = state.stack().pop();
-        try {
-            final Reference ref = this.findRef(array);
-            ref.link(new StoreArray(ref.object(), index, value));
-            state.stack().push(ref);
-        } catch (final IllegalStateException exception) {
-            state.stack().push(new StoreArray(array, index, value));
+        if (StoreToArrayAgent.SUPPORTED.contains(state.instruction().opcode())) {
+            final AstNode value = state.stack().pop();
+            final AstNode index = state.stack().pop();
+            final AstNode array = state.stack().pop();
+            try {
+                final Reference ref = this.findRef(array);
+                ref.link(new StoreArray(ref.object(), index, value));
+                state.stack().push(ref);
+            } catch (final IllegalStateException exception) {
+                state.stack().push(new StoreArray(array, index, value));
+            }
         }
     }
 

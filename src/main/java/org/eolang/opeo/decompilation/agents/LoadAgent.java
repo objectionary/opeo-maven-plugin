@@ -23,8 +23,12 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 /**
@@ -37,24 +41,43 @@ import org.objectweb.asm.Type;
  */
 public final class LoadAgent implements DecompilationAgent {
 
-    /**
-     * Type of the variable.
-     */
-    private final Type type;
-
-    /**
-     * Constructor.
-     * @param type Type of the variable.
-     */
-    public LoadAgent(final Type type) {
-        this.type = type;
-    }
+    private static final Set<Integer> SUPPORTED = new HashSet<>(
+        Arrays.asList(
+            Opcodes.ILOAD,
+            Opcodes.LLOAD,
+            Opcodes.FLOAD,
+            Opcodes.DLOAD,
+            Opcodes.ALOAD
+        )
+    );
 
     @Override
     public void handle(final DecompilerState state) {
-        final Integer index = (Integer) state.operand(0);
-        state.stack().push(
-            state.variable(index, this.type)
-        );
+        final int opcode = state.instruction().opcode();
+        if (LoadAgent.SUPPORTED.contains(opcode)) {
+            final Integer index = (Integer) state.operand(0);
+            state.stack().push(
+                state.variable(index, LoadAgent.type(opcode))
+            );
+        }
+    }
+
+    private static Type type(final int opcode) {
+        switch (opcode) {
+            case Opcodes.ILOAD:
+                return Type.INT_TYPE;
+            case Opcodes.LLOAD:
+                return Type.LONG_TYPE;
+            case Opcodes.FLOAD:
+                return Type.FLOAT_TYPE;
+            case Opcodes.DLOAD:
+                return Type.DOUBLE_TYPE;
+            case Opcodes.ALOAD:
+                return Type.getType(Object.class);
+            default:
+                throw new IllegalArgumentException(
+                    String.format("Unsupported opcode: %d", opcode)
+                );
+        }
     }
 }

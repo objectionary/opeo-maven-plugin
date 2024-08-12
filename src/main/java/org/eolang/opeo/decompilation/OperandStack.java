@@ -62,7 +62,7 @@ public final class OperandStack {
      * Constructor.
      * @param original Initial stack collection.
      */
-    private OperandStack(final Deque<AstNode> original) {
+    OperandStack(final Deque<AstNode> original) {
         this.stack = original;
     }
 

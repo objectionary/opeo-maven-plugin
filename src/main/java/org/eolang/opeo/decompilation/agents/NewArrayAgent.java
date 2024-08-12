@@ -23,12 +23,17 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import org.eolang.opeo.SelectiveDecompiler;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.OperandStack;
+import org.objectweb.asm.Opcodes;
 
 /**
  * New array instruction handler.
@@ -36,12 +41,19 @@ import org.eolang.opeo.decompilation.OperandStack;
  */
 public final class NewArrayAgent implements DecompilationAgent {
 
+    private static final Set<Integer> SUPPORTED = new HashSet<>(
+        Arrays.asList(
+            Opcodes.NEWARRAY
+        )
+    );
+
     @Override
     public void handle(final DecompilerState state) {
-        final String type = (String) state.operand(0);
-        final OperandStack stack = state.stack();
-        final AstNode size = stack.pop();
-        stack.push(new Reference(new ArrayConstructor(size, type)));
+        if (NewArrayAgent.SUPPORTED.contains(state.instruction().opcode())) {
+            final String type = (String) state.operand(0);
+            final OperandStack stack = state.stack();
+            final AstNode size = stack.pop();
+            stack.push(new Reference(new ArrayConstructor(size, type)));
+        }
     }
-
 }

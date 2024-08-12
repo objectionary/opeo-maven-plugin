@@ -31,6 +31,7 @@ import org.eolang.opeo.ast.Owner;
 import org.eolang.opeo.ast.StaticInvocation;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 /**
@@ -41,22 +42,24 @@ public final class InvokestaticAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        final String owner = (String) state.operand(0);
-        final String method = (String) state.operand(1);
-        final String descriptor = (String) state.operand(2);
-        final boolean interfaced = (boolean) state.operand(3);
-        final List<AstNode> args = state.stack().pop(Type.getArgumentCount(descriptor));
-        Collections.reverse(args);
-        state.stack().push(
-            new StaticInvocation(
-                new Attributes()
-                    .name(method)
-                    .descriptor(descriptor)
-                    .owner(owner)
-                    .interfaced(interfaced),
-                new Owner(owner),
-                args
-            )
-        );
+        if (state.instruction().opcode() == Opcodes.INVOKESTATIC) {
+            final String owner = (String) state.operand(0);
+            final String method = (String) state.operand(1);
+            final String descriptor = (String) state.operand(2);
+            final boolean interfaced = (boolean) state.operand(3);
+            final List<AstNode> args = state.stack().pop(Type.getArgumentCount(descriptor));
+            Collections.reverse(args);
+            state.stack().push(
+                new StaticInvocation(
+                    new Attributes()
+                        .name(method)
+                        .descriptor(descriptor)
+                        .owner(owner)
+                        .interfaced(interfaced),
+                    new Owner(owner),
+                    args
+                )
+            );
+        }
     }
 }

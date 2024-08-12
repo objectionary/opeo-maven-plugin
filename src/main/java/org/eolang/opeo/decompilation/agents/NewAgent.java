@@ -23,9 +23,13 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import org.eolang.opeo.ast.NewAddress;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.objectweb.asm.Opcodes;
 
 /**
  * New instruction handler.
@@ -33,9 +37,18 @@ import org.eolang.opeo.decompilation.DecompilationAgent;
  */
 public final class NewAgent implements DecompilationAgent {
 
+    private static final Set<Integer> SUPPORTED = new HashSet<>(
+        Arrays.asList(
+            Opcodes.NEW
+        )
+    );
+
+
     @Override
     public void handle(final DecompilerState state) {
-        state.stack().push(new NewAddress(state.operand(0).toString()));
+        if (NewAgent.SUPPORTED.contains(state.instruction().opcode())) {
+            state.stack().push(new NewAddress(state.operand(0).toString()));
+        }
     }
 
 }

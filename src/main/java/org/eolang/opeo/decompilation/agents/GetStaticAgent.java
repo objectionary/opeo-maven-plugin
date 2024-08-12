@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
+import jdk.internal.org.objectweb.asm.Opcodes;
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
@@ -34,9 +35,11 @@ import org.eolang.opeo.decompilation.DecompilationAgent;
 public final class GetStaticAgent implements DecompilationAgent {
     @Override
     public void handle(final DecompilerState state) {
-        final String klass = (String) state.operand(0);
-        final String method = (String) state.operand(1);
-        final String descriptor = (String) state.operand(2);
-        state.stack().push(new ClassField(klass, method, descriptor));
+        if (state.instruction().opcode() == Opcodes.GETSTATIC) {
+            final String klass = (String) state.operand(0);
+            final String method = (String) state.operand(1);
+            final String descriptor = (String) state.operand(2);
+            state.stack().push(new ClassField(klass, method, descriptor));
+        }
     }
 }

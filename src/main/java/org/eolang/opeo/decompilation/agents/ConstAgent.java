@@ -36,37 +36,38 @@ import org.objectweb.asm.Type;
  */
 public final class ConstAgent implements DecompilationAgent {
 
-    /**
-     * Type of constant.
-     */
-    private final Type type;
-
-    /**
-     * Constructor.
-     * @param type Type of constant
-     */
-    ConstAgent(final Type type) {
-        this.type = type;
-    }
-
     @Override
     public void handle(final DecompilerState state) {
         final int opcode = state.instruction().opcode();
         final AstNode res;
-        if (this.type.equals(Type.INT_TYPE)) {
-            res = ConstAgent.intConstant(opcode);
-        } else if (this.type.equals(Type.LONG_TYPE)) {
-            res = ConstAgent.longConstant(opcode);
-        } else if (this.type.equals(Type.FLOAT_TYPE)) {
-            res = ConstAgent.floatConstant(opcode);
-        } else if (this.type.equals(Type.DOUBLE_TYPE)) {
-            res = ConstAgent.doubleConstant(opcode);
-        } else {
-            throw new UnsupportedOperationException(
-                String.format("Type %s is not supported yet", this.type)
-            );
+        switch (opcode) {
+            case Opcodes.ICONST_M1:
+            case Opcodes.ICONST_0:
+            case Opcodes.ICONST_1:
+            case Opcodes.ICONST_2:
+            case Opcodes.ICONST_3:
+            case Opcodes.ICONST_4:
+            case Opcodes.ICONST_5:
+                res = ConstAgent.intConstant(opcode);
+                state.stack().push(res);
+                break;
+            case Opcodes.LCONST_0:
+            case Opcodes.LCONST_1:
+                res = ConstAgent.longConstant(opcode);
+                state.stack().push(res);
+                break;
+            case Opcodes.FCONST_0:
+            case Opcodes.FCONST_1:
+            case Opcodes.FCONST_2:
+                res = ConstAgent.floatConstant(opcode);
+                state.stack().push(res);
+                break;
+            case Opcodes.DCONST_0:
+            case Opcodes.DCONST_1:
+                res = ConstAgent.doubleConstant(opcode);
+                state.stack().push(res);
+                break;
         }
-        state.stack().push(res);
     }
 
     /**

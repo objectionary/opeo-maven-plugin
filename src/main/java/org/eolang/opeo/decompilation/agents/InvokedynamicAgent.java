@@ -30,6 +30,7 @@ import org.eolang.opeo.ast.DynamicInvocation;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.objectweb.asm.Handle;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 /**
@@ -40,18 +41,20 @@ public final class InvokedynamicAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        final List<Object> operands = state.instruction().operands();
-        final String descriptor = (String) operands.get(1);
-        final List<AstNode> args = state.stack().pop(Type.getArgumentTypes(descriptor).length);
-        Collections.reverse(args);
-        final DynamicInvocation node = new DynamicInvocation(
-            (String) operands.get(0),
-            new org.eolang.opeo.ast.Handle((Handle) operands.get(2)),
-            descriptor,
-            operands.subList(3, operands.size()),
-            args
-        );
-        state.stack().push(node);
+        if (state.instruction().opcode() == Opcodes.INVOKEDYNAMIC) {
+            final List<Object> operands = state.instruction().params();
+            final String descriptor = (String) operands.get(1);
+            final List<AstNode> args = state.stack().pop(Type.getArgumentTypes(descriptor).length);
+            Collections.reverse(args);
+            final DynamicInvocation node = new DynamicInvocation(
+                (String) operands.get(0),
+                new org.eolang.opeo.ast.Handle((Handle) operands.get(2)),
+                descriptor,
+                operands.subList(3, operands.size()),
+                args
+            );
+            state.stack().push(node);
+        }
     }
 
 }

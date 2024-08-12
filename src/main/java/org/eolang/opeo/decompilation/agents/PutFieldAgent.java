@@ -29,6 +29,7 @@ import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.objectweb.asm.Opcodes;
 
 /**
  * Putfield instruction handler.
@@ -39,22 +40,23 @@ public final class PutFieldAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        final AstNode value = state.stack().pop();
-        final String name = (String) state.operand(1);
-        final String owner = (String) state.operand(0);
-        final String descriptor = (String) state.operand(2);
-        state.stack().push(
-            new FieldAssignment(
-                new Field(
-                    state.stack().pop(),
-                    new Attributes()
-                        .name(name)
-                        .owner(owner)
-                        .descriptor(descriptor)
-                ),
-                value
-            )
-        );
+        if (state.instruction().opcode() == Opcodes.GETFIELD) {
+            final AstNode value = state.stack().pop();
+            final String name = (String) state.operand(1);
+            final String owner = (String) state.operand(0);
+            final String descriptor = (String) state.operand(2);
+            state.stack().push(
+                new FieldAssignment(
+                    new Field(
+                        state.stack().pop(),
+                        new Attributes()
+                            .name(name)
+                            .owner(owner)
+                            .descriptor(descriptor)
+                    ),
+                    value
+                )
+            );
+        }
     }
-
 }

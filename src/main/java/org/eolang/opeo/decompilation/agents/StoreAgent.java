@@ -23,6 +23,9 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Typed;
@@ -30,6 +33,7 @@ import org.eolang.opeo.ast.VariableAssignment;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.OperandStack;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 /**
@@ -38,44 +42,66 @@ import org.objectweb.asm.Type;
  */
 public final class StoreAgent implements DecompilationAgent {
 
-    /**
-     * Type of the variable.
-     */
-    private final Type type;
-
-    /**
-     * Constructor.
-     * @param type Type of the variable.
-     */
-    public StoreAgent(final Type type) {
-        this.type = type;
-    }
+    private static final Set<Integer> SUPPORTED = new HashSet<>(
+        Arrays.asList(
+            Opcodes.ISTORE,
+            Opcodes.LSTORE,
+            Opcodes.FSTORE,
+            Opcodes.DSTORE,
+            Opcodes.ASTORE
+        )
+    );
 
     @Override
     public void handle(final DecompilerState state) {
-        final OperandStack stack = state.stack();
-        final AstNode value = stack.pop();
-        stack.push(
-            new VariableAssignment(
-                (LocalVariable) state.variable((Integer) state.operand(0), this.infer(value)),
-                value
-            )
-        );
+        final int opcode = state.instruction().opcode();
+        if (StoreAgent.SUPPORTED.contains(opcode)) {
+            final OperandStack stack = state.stack();
+            final AstNode value = stack.pop();
+            stack.push(
+                new VariableAssignment(
+                    (LocalVariable) state.variable(
+                        (Integer) state.operand(0), this.infer(value, opcode)),
+                    value
+                )
+            );
+        }
+
     }
 
     /**
      * Infer type of the variable.
      * @param value Value to infer type from.
+     * @param opcode Opcode.
      * @return Inferred type.
      */
-    private Type infer(final AstNode value) {
+    private Type infer(final AstNode value, final int opcode) {
         final Type result;
         if (value instanceof Typed) {
             result = ((Typed) value).type();
         } else {
-            result = this.type;
+            result = StoreAgent.type(opcode);
         }
         return result;
     }
 
+
+    private static Type type(final int opcode) {
+        switch (opcode) {
+            case Opcodes.ISTORE:
+                return Type.INT_TYPE;
+            case Opcodes.LSTORE:
+                return Type.LONG_TYPE;
+            case Opcodes.FSTORE:
+                return Type.FLOAT_TYPE;
+            case Opcodes.DSTORE:
+                return Type.DOUBLE_TYPE;
+            case Opcodes.ASTORE:
+                return Type.getType(Object.class);
+            default:
+                throw new IllegalArgumentException(
+                    String.format("Unsupported opcode: %d", opcode)
+                );
+        }
+    }
 }
