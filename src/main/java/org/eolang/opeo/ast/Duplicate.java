@@ -25,6 +25,7 @@ package org.eolang.opeo.ast;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -143,11 +144,13 @@ public final class Duplicate implements AstNode, Typed, Linked {
     public Iterable<Directive> toXmir() {
         final Iterable<Directive> result;
         if (this.decompiled.getAndSet(true)) {
-            result = new Directives().add("o").attr("name", this.alias).up();
+            result = new Directives().add("o")
+                .attr("name", this.alias).up();
         } else {
             result = new Directives()
                 .add("o")
                 .attr("base", "duplicated")
+                .attr("line", new Random().nextInt(Integer.MAX_VALUE))
                 .attr("name", this.alias)
                 .append(this.original.get().toXmir())
                 .up();
