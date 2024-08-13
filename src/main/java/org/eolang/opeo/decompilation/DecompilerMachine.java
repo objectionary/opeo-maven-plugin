@@ -25,11 +25,14 @@ package org.eolang.opeo.decompilation;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.cactoos.list.ListOf;
 import org.eolang.opeo.Instruction;
+import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Root;
-import org.eolang.opeo.decompilation.handlers.RouterHandler;
+import org.eolang.opeo.decompilation.agents.AllAgents;
 import org.xembly.Directive;
 
 /**
@@ -47,7 +50,7 @@ public final class DecompilerMachine {
     /**
      * Handler that redirects instructions.
      */
-    private final RouterHandler router;
+    private final AllAgents agents;
 
     /**
      * Constructor.
@@ -73,7 +76,7 @@ public final class DecompilerMachine {
      */
     public DecompilerMachine(final LocalVariables locals, final Map<String, String> arguments) {
         this.locals = locals;
-        this.router = new RouterHandler(
+        this.agents = new AllAgents(
             "true".equals(arguments.getOrDefault("counting", "true"))
         );
     }
@@ -85,10 +88,15 @@ public final class DecompilerMachine {
      * @return Decompiled instructions.
      */
     public Iterable<Directive> decompile(final Instruction... instructions) {
-        final DecompilerState state = new DecompilerState(this.locals);
-        Arrays.stream(instructions)
-            .forEach(inst -> this.router.handle(state.next(inst)));
-        return new Root(new ListOf<>(state.stack().descendingIterator())).toXmir();
+        final DecompilerState initial = new DecompilerState(
+            Arrays.stream(instructions)
+                .map(Opcode::new)
+                .collect(Collectors.toCollection(LinkedList::new)),
+            new OperandStack(),
+            this.locals
+        );
+        this.agents.handle(initial);
+        return new Root(new ListOf<>(initial.stack().descendingIterator())).toXmir();
     }
 }
 

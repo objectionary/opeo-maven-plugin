@@ -30,6 +30,7 @@ import java.util.stream.Stream;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.jeo.representation.xmir.XmlNode;
+import org.eolang.opeo.decompilation.agents.InvokespecialAgent;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
 import org.xembly.Directives;
@@ -39,7 +40,7 @@ import org.xembly.Directives;
  * This class needed to avoid considering labels as separate nodes.
  * Maybe it's wrong to do so, but it's easier to implement this way, at least for now.
  * Pay attention, that {@link Labeled} class violates class hierarchy.
- * It is the most visible within {@link org.eolang.opeo.decompilation.handlers.InvokespecialHandler}
+ * It is the most visible within {@link InvokespecialAgent}
  * implementation.
  * @since 0.2
  */

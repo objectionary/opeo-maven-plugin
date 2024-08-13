@@ -27,7 +27,7 @@ import com.jcabi.log.Logger;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-import org.eolang.opeo.decompilation.handlers.RouterHandler;
+import org.eolang.opeo.decompilation.agents.AllAgents;
 import org.eolang.opeo.storage.CompilationStorage;
 import org.eolang.opeo.storage.Storage;
 import org.eolang.opeo.storage.XmirEntry;
@@ -65,7 +65,7 @@ public final class SelectiveCompiler implements Compiler {
      */
     public SelectiveCompiler(final Storage storage) {
         this.storage = storage;
-        this.supported = new RouterHandler(false).supportedOpcodes();
+        this.supported = new AllAgents(false).supportedOpcodes();
     }
 
     @Override

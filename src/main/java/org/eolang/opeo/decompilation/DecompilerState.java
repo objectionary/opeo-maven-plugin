@@ -23,9 +23,13 @@
  */
 package org.eolang.opeo.decompilation;
 
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Optional;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Opcode;
 import org.objectweb.asm.Type;
 
 /**
@@ -34,18 +38,21 @@ import org.objectweb.asm.Type;
  * @since 0.2
  */
 @ToString
+@EqualsAndHashCode
 public final class DecompilerState {
 
     /**
-     * Current instruction.
+     * Remaining opcodes.
+     * Each method has an original list of opcodes which we decompile.
+     * When some agent decompiles an instruction, it removes it from this list.
      */
-    private final Instruction current;
+    private final Deque<Opcode> opcodes;
 
     /**
      * Current operand stack.
      * It might have some values inside.
      */
-    private final OperandStack operands;
+    private final OperandStack ostack;
 
     /**
      * Method local variables.
@@ -57,31 +64,58 @@ public final class DecompilerState {
      * @param vars Method local variables.
      */
     public DecompilerState(final LocalVariables vars) {
-        this(new Instruction.Nop(), new OperandStack(), vars);
+        this(new OperandStack(), vars);
     }
 
     /**
      * Constructor.
-     * @param current Current instruction.
-     * @param stack Operand stack.
-     * @param variables Method local variables.
+     * @param operands Operand stack.
+     * @param vars Method local variables.
      */
-    private DecompilerState(
-        final Instruction current,
+    public DecompilerState(final OperandStack operands, final LocalVariables vars) {
+        this(new LinkedList<>(), operands, vars);
+    }
+
+    /**
+     * Constructor.
+     * @param opcodes Remaining opcodes.
+     * @param stack Operand stack.
+     * @param vars Method local variables.
+     */
+    public DecompilerState(
+        final Deque<Opcode> opcodes,
         final OperandStack stack,
-        final LocalVariables variables
+        final LocalVariables vars
     ) {
-        this.current = current;
-        this.operands = stack;
-        this.vars = variables;
+        this.opcodes = opcodes;
+        this.ostack = stack;
+        this.vars = vars;
     }
 
     /**
      * Retrieve current bytecode instruction.
      * @return Current bytecode instruction.
      */
-    public Instruction instruction() {
-        return this.current;
+    public Opcode instruction() {
+        return Optional.ofNullable(this.opcodes.peek()).orElse(new Opcode(-1));
+    }
+
+    /**
+     * Check if there are any instructions left.
+     * @return True if there are instructions left.
+     */
+    public boolean hasInstructions() {
+        return !this.opcodes.isEmpty();
+    }
+
+    /**
+     * Remove current instruction from the list.
+     * This is used when we decompile an instruction.
+     */
+    public void popInstruction() {
+        if (!this.opcodes.isEmpty()) {
+            this.opcodes.pop();
+        }
     }
 
     /**
@@ -90,16 +124,7 @@ public final class DecompilerState {
      * @return Instruction operand.
      */
     public Object operand(final int index) {
-        if (this.current.operands().size() <= index) {
-            throw new IllegalStateException(
-                String.format(
-                    "Instruction '%s' doesn't have operand at index '%d'",
-                    this.current,
-                    index
-                )
-            );
-        }
-        return this.current.operand(index);
+        return this.instruction().operand(index);
     }
 
     /**
@@ -117,15 +142,6 @@ public final class DecompilerState {
      * @return Operand stack.
      */
     public OperandStack stack() {
-        return this.operands;
-    }
-
-    /**
-     * Move the state to the next instruction.
-     * @param instruction Next instruction.
-     * @return New decompiler state with the next instruction.
-     */
-    DecompilerState next(final Instruction instruction) {
-        return new DecompilerState(instruction, this.operands, this.vars);
+        return this.ostack;
     }
 }

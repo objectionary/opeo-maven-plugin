@@ -31,7 +31,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.eolang.opeo.decompilation.Decompiler;
 import org.eolang.opeo.decompilation.WithoutAliases;
-import org.eolang.opeo.decompilation.handlers.RouterHandler;
+import org.eolang.opeo.decompilation.agents.AllAgents;
 import org.eolang.opeo.jeo.JeoDecompiler;
 import org.eolang.opeo.storage.FileStorage;
 import org.eolang.opeo.storage.Storage;
@@ -41,7 +41,7 @@ import org.eolang.opeo.storage.XmirEntry;
  * Selective decompiler.
  * Decompiler that decompiles ONLY fully understandable methods.
  * These methods contain only instructions that are
- * supported by {@link org.eolang.opeo.decompilation.handlers.RouterHandler}.
+ * supported by {@link AllAgents}.
  *
  * @since 0.1
  */
@@ -69,7 +69,7 @@ public final class SelectiveDecompiler implements Decompiler {
      * @param modified Folder where to save the modified XMIRs.
      */
     public SelectiveDecompiler(final Path input, final Path output, final Path modified) {
-        this(input, output, modified, new RouterHandler(false).supportedOpcodes());
+        this(input, output, modified, new AllAgents(false).supportedOpcodes());
     }
 
     /**
@@ -97,7 +97,7 @@ public final class SelectiveDecompiler implements Decompiler {
     public SelectiveDecompiler(
         final Storage storage, final Storage modified
     ) {
-        this(storage, modified, new RouterHandler(false).supportedOpcodes());
+        this(storage, modified, new AllAgents(false).supportedOpcodes());
     }
 
     /**

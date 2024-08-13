@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Label;
@@ -44,6 +45,7 @@ import org.eolang.opeo.ast.Labeled;
  * @since 0.2
  */
 @ToString
+@EqualsAndHashCode
 public final class OperandStack {
 
     /**
@@ -62,7 +64,7 @@ public final class OperandStack {
      * Constructor.
      * @param original Initial stack collection.
      */
-    private OperandStack(final Deque<AstNode> original) {
+    OperandStack(final Deque<AstNode> original) {
         this.stack = original;
     }
 
@@ -109,6 +111,14 @@ public final class OperandStack {
     }
 
     /**
+     * Peek the higher value on the stack.
+     * @return Node.
+     */
+    public AstNode peek() {
+        return this.stack.peek();
+    }
+
+    /**
      * Push one more node to the stack.
      * @param node Node to add to the stack.
      */
@@ -130,4 +140,5 @@ public final class OperandStack {
     Iterator<AstNode> descendingIterator() {
         return this.stack.descendingIterator();
     }
+
 }

@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import lombok.EqualsAndHashCode;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.This;
@@ -37,6 +38,7 @@ import org.objectweb.asm.Type;
  * Local variables.
  * @since 0.1
  */
+@EqualsAndHashCode
 public final class LocalVariables {
 
     /**

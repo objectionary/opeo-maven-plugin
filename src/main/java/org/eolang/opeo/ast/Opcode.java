@@ -35,6 +35,7 @@ import org.eolang.jeo.representation.directives.DirectivesInstruction;
 import org.eolang.jeo.representation.xmir.XmlInstruction;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.jeo.representation.xmir.XmlOperand;
+import org.eolang.opeo.Instruction;
 import org.xembly.Directive;
 
 /**
@@ -119,6 +120,10 @@ public final class Opcode implements AstNode {
         );
     }
 
+    public Opcode(final Instruction instruction) {
+        this(instruction.opcode(), instruction.operands());
+    }
+
     /**
      * Constructor.
      * @param bytecode Bytecode
@@ -139,6 +144,40 @@ public final class Opcode implements AstNode {
     @Override
     public List<AstNode> opcodes() {
         return Arrays.asList(this);
+    }
+
+    /**
+     * Opcode number.
+     * @return Opcode number.
+     */
+    public int opcode() {
+        return this.bytecode;
+    }
+
+    /**
+     * Opcode operands.
+     * @return Opcode operands.
+     */
+    public List<Object> params() {
+        return this.operands;
+    }
+
+    /**
+     * Instruction operand.
+     * @param index Operand index.
+     * @return Instruction operand.
+     */
+    public Object operand(final int index) {
+        if (this.operands.size() <= index) {
+            throw new IllegalStateException(
+                String.format(
+                    "Instruction '%s' doesn't have operand at index '%d'",
+                    this,
+                    index
+                )
+            );
+        }
+        return this.operands.get(index);
     }
 
     /**

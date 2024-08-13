@@ -59,10 +59,16 @@ final class ArrayConstructorTest {
             "Can't create array constructor from XMIR",
             new ArrayConstructor(
                 new XmlNode(ArrayConstructorTest.XMIR),
-                node -> new Add(new Literal(1), new Literal(2))
+                node -> new Addition(new Literal(1), new Literal(2))
             ),
             Matchers.equalTo(
-                new ArrayConstructor(new Add(new Literal(1), new Literal(2)), "java/lang/Integer")
+                new ArrayConstructor(
+                    new Addition(
+                        new Literal(1),
+                        new Literal(2)
+                    ),
+                    "java/lang/Integer"
+                )
             )
         );
     }
@@ -90,7 +96,7 @@ final class ArrayConstructorTest {
             "Can't compile array constructor with complex undefined length",
             new OpcodeNodes(
                 new ArrayConstructor(
-                    new Add(new Literal(1), new Literal(2)),
+                    new Addition(new Literal(1), new Literal(2)),
                     type
                 )
             ).opcodes(),
@@ -109,7 +115,7 @@ final class ArrayConstructorTest {
         final String type = "java/lang/Integer";
         final String xmir = new Xembler(
             new ArrayConstructor(
-                new Add(new Literal(1), new Literal(2)),
+                new Addition(new Literal(1), new Literal(2)),
                 type
             ).toXmir()
         ).xml();

@@ -27,7 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlNode;
-import org.eolang.opeo.ast.Add;
+import org.eolang.opeo.ast.Addition;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
@@ -136,7 +136,7 @@ final class XmirParser implements Parser {
         } else if ("duplicated".equals(base)) {
             result = new Duplicate(this.parse(node.firstChild()));
         } else if (".plus".equals(base)) {
-            result = new Add(node, this::parse);
+            result = new Addition(node, this::parse);
         } else if (".minus".equals(base)) {
             result = new Substraction(node, this::parse);
         } else if ("cast".equals(base)) {

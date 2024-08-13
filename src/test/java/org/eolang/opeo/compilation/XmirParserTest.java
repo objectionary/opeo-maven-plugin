@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import org.eolang.jeo.matchers.SameXml;
 import org.eolang.jeo.representation.xmir.XmlNode;
-import org.eolang.opeo.ast.Add;
+import org.eolang.opeo.ast.Addition;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
@@ -70,7 +70,7 @@ final class XmirParserTest {
     @Test
     void convertsAddition() {
         final List<XmlNode> nodes = new XmirParser(
-            new Add(new Literal(1), new Literal(2))
+            new Addition(new Literal(1), new Literal(2))
         ).toJeoNodes();
         MatcherAssert.assertThat(
             String.format(
@@ -96,12 +96,12 @@ final class XmirParserTest {
         MatcherAssert.assertThat(
             "We expect to retrieve 7 opcodes, but got something else instead",
             new XmirParser(
-                new Add(
-                    new Add(
+                new Addition(
+                    new Addition(
                         new Literal(1),
                         new Literal(2)
                     ),
-                    new Add(
+                    new Addition(
                         new Literal(3),
                         new Literal(4)
                     )
