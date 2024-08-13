@@ -81,7 +81,7 @@ public final class Duplicate implements AstNode, Typed, Linked {
      * @param alias Reference name that will be used to refer to this node.
      * @param original The original node to duplicate.
      */
-    Duplicate(final String alias, final AstNode original) {
+    public Duplicate(final String alias, final AstNode original) {
         this(
             alias,
             new AtomicBoolean(false),

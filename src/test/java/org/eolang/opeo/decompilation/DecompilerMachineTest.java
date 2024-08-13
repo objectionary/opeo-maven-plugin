@@ -35,6 +35,7 @@ import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.Constant;
+import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.Invocation;
@@ -271,6 +272,7 @@ final class DecompilerMachineTest {
     @Test
     void decompilesArrayInsertion() throws ImpossibleModificationException {
         final String type = "java/lang/Object";
+        final Duplicate ref = new Duplicate(new ArrayConstructor(new Literal(2), type));
         MatcherAssert.assertThat(
             "Can't decompile array insertion",
             new Xembler(
@@ -287,8 +289,9 @@ final class DecompilerMachineTest {
             new SameXml(
                 new Xembler(
                     new Root(
+                        ref,
                         new StoreArray(
-                            new ArrayConstructor(new Literal(2), type),
+                            ref,
                             new Literal(0),
                             new This()
                         )

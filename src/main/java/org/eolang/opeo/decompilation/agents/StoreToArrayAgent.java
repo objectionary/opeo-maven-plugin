@@ -63,13 +63,13 @@ public final class StoreToArrayAgent implements DecompilationAgent {
             final AstNode value = state.stack().pop();
             final AstNode index = state.stack().pop();
             final AstNode array = state.stack().pop();
-            try {
-                final Reference ref = this.findRef(array);
-                ref.link(new StoreArray(ref.object(), index, value));
-                state.stack().push(ref);
-            } catch (final IllegalStateException exception) {
-                state.stack().push(new StoreArray(array, index, value));
-            }
+            state.stack().push(new StoreArray(array, index, value));
+//            try {
+//                final Reference ref = this.findRef(array);
+//                ref.link(new StoreArray(ref.object(), index, value));
+//                state.stack().push(ref);
+//            } catch (final IllegalStateException exception) {
+//            }
             state.popInstruction();
         }
     }

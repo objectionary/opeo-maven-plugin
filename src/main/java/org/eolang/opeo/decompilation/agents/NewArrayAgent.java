@@ -28,7 +28,7 @@ import java.util.HashSet;
 import java.util.Set;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.Reference;
+import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.OperandStack;
@@ -55,7 +55,7 @@ public final class NewArrayAgent implements DecompilationAgent {
             final String type = (String) state.operand(0);
             final OperandStack stack = state.stack();
             final AstNode size = stack.pop();
-            stack.push(new Reference(new ArrayConstructor(size, type)));
+            stack.push(new ArrayConstructor(size, type));
             state.popInstruction();
         }
     }

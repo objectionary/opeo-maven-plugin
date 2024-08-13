@@ -42,13 +42,6 @@ public final class Reference implements AstNode, Typed, Linked {
 
     /**
      * Constructor.
-     */
-    public Reference() {
-        this(new AtomicReference<>());
-    }
-
-    /**
-     * Constructor.
      * @param object Object for which reference is created.
      */
     public Reference(final AstNode object) {
