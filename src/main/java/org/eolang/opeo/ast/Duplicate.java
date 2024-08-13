@@ -38,11 +38,6 @@ import org.xembly.Directives;
  * Duplicate.
  * This class represents the DUP instruction in the JVM bytecode.
  * @since 0.2
- * @todo #229:90min Do we need {@link Duplicate} class?
- *  We have three classes with rather similar semantics: {@link Duplicate},
- *  {@link Reference} and {@link Linked}.
- *  They have similar methods and fields. We need to investigate if we can
- *  remove one or two of these classes and use the remaining one instead.
  */
 public final class Duplicate implements AstNode, Typed, Linked {
 
