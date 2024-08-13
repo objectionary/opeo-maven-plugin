@@ -42,6 +42,12 @@ import org.xembly.Directives;
 public final class Duplicate implements AstNode, Typed, Linked {
 
     /**
+     * Alias.
+     * Used as a reference.
+     */
+    private final String alias;
+
+    /**
      * Flag to indicate if the node was compiled.
      */
     private final AtomicBoolean compiled;
@@ -61,9 +67,53 @@ public final class Duplicate implements AstNode, Typed, Linked {
      * @param original The original node to duplicate.
      */
     public Duplicate(final AstNode original) {
-        this.original = new AtomicReference<>(original);
-        this.compiled = new AtomicBoolean(false);
-        this.decompiled = new AtomicBoolean(false);
+        this(
+            Duplicate.randomName(),
+            new AtomicBoolean(false),
+            new AtomicBoolean(false),
+            new AtomicReference<>(original)
+        );
+    }
+
+    /**
+     * Constructor.
+     * @param alias Reference name that will be used to refer to this node.
+     * @param original The original node to duplicate.
+     */
+    Duplicate(final String alias, final AstNode original) {
+        this(
+            alias,
+            new AtomicBoolean(false),
+            new AtomicBoolean(false),
+            new AtomicReference<>(original)
+        );
+    }
+
+    /**
+     * Constructor.
+     * @param alias Reference name that will be used to refer to this node.
+     * @param compiled Flag to indicate if the node was compiled.
+     * @param decompiled Flag to indicate if the node was decompiled.
+     * @param original The original node to duplicate.
+     */
+    Duplicate(
+        final String alias,
+        final AtomicBoolean compiled,
+        final AtomicBoolean decompiled,
+        final AtomicReference<AstNode> original
+    ) {
+        this.alias = alias;
+        this.compiled = compiled;
+        this.decompiled = decompiled;
+        this.original = original;
+    }
+
+    /**
+     * Get the original node which was duplicated.
+     * @return The original node.
+     */
+    public AstNode origin() {
+        return this.original.get();
     }
 
     @Override
@@ -93,11 +143,12 @@ public final class Duplicate implements AstNode, Typed, Linked {
     public Iterable<Directive> toXmir() {
         final Iterable<Directive> result;
         if (this.decompiled.getAndSet(true)) {
-            result = Collections.emptyList();
+            result = new Directives().add("o").attr("name", this.alias).up();
         } else {
             result = new Directives()
                 .add("o")
                 .attr("base", "duplicated")
+                .attr("name", this.alias)
                 .append(this.original.get().toXmir())
                 .up();
         }
@@ -115,10 +166,15 @@ public final class Duplicate implements AstNode, Typed, Linked {
     }
 
     /**
-     * Get the original node which was duplicated.
-     * @return The original node.
+     * Generates random string alias.
+     * @return Random string.
      */
-    public AstNode origin() {
-        return this.original.get();
+    private static String randomName() {
+        char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        final StringBuilder name = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            name.append(alphabet[(int) (Math.random() * alphabet.length)]);
+        }
+        return name.toString();
     }
 }
