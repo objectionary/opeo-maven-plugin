@@ -180,7 +180,7 @@ public final class Constructor implements AstNode, Typed {
         if (node instanceof NewAddress) {
             result = ((NewAddress) node).typeAsString();
         } else if (node instanceof Duplicate) {
-            result = this.type(((Linked) node).current());
+            result = this.type(((Duplicate) node).current());
         } else if (node instanceof Labeled) {
             result = this.type(((Labeled) node).origin());
         } else {

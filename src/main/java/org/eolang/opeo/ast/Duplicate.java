@@ -25,15 +25,11 @@ package org.eolang.opeo.ast;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
@@ -44,15 +40,13 @@ import org.xembly.Directives;
  * This class represents the DUP instruction in the JVM bytecode.
  * @since 0.2
  */
-public final class Duplicate implements AstNode, Typed, Linked {
+public final class Duplicate implements AstNode, Typed {
 
     /**
      * Alias.
      * Used as a reference.
      */
     private final String alias;
-
-    private final int line = new Random().nextInt(Integer.MAX_VALUE);
 
     /**
      * Flag to indicate if the node was compiled.
@@ -87,7 +81,7 @@ public final class Duplicate implements AstNode, Typed, Linked {
      * @param alias Reference name that will be used to refer to this node.
      * @param original The original node to duplicate.
      */
-    public Duplicate(final String alias, final AstNode original) {
+    Duplicate(final String alias, final AstNode original) {
         this(
             alias,
             new AtomicBoolean(false),
@@ -134,13 +128,12 @@ public final class Duplicate implements AstNode, Typed, Linked {
         if (this.decompiled.getAndSet(true)) {
             result = new Directives().add("o")
                 .attr("base", this.alias)
-                .attr("line", this.line)
+                .attr("line", new Random().nextInt(Integer.MAX_VALUE))
                 .up();
         } else {
             result = new Directives()
                 .add("o")
                 .attr("base", "duplicated")
-                .attr("line", this.line)
                 .attr("name", this.alias)
                 .append(this.original.get().toXmir())
                 .up();
@@ -157,12 +150,18 @@ public final class Duplicate implements AstNode, Typed, Linked {
         }
     }
 
-    @Override
+    /**
+     * Link the node.
+     * @param node The node to link.
+     */
     public void link(final AstNode node) {
         this.original.set(node);
     }
 
-    @Override
+    /**
+     * Retrieve the current node.
+     * @return The current node.
+     */
     public AstNode current() {
         return this.original.get();
     }
@@ -175,7 +174,7 @@ public final class Duplicate implements AstNode, Typed, Linked {
         final char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
         final StringBuilder name = new StringBuilder(14);
         final SecureRandom random = new SecureRandom();
-        for (int i = 0; i < 10; i++) {
+        for (int index = 0; index < 10; ++index) {
             name.append(alphabet[random.nextInt(alphabet.length)]);
         }
         return String.format("ref-%s", name);

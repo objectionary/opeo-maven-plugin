@@ -30,7 +30,6 @@ import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.ast.Labeled;
-import org.eolang.opeo.ast.Linked;
 import org.eolang.opeo.ast.NewAddress;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
@@ -121,7 +120,7 @@ public final class InvokespecialAgent implements DecompilationAgent {
         if (target instanceof NewAddress) {
             result = true;
         } else if (target instanceof Duplicate) {
-            result = this.isNewAddress(((Linked) target).current());
+            result = this.isNewAddress(((Duplicate) target).current());
         } else if (target instanceof Labeled) {
             result = this.isNewAddress(((Labeled) target).origin());
         } else {
@@ -142,7 +141,7 @@ public final class InvokespecialAgent implements DecompilationAgent {
         } else if (candidate instanceof Labeled) {
             result = InvokespecialAgent.isThis(((Labeled) candidate).origin());
         } else if (candidate instanceof Duplicate) {
-            result = InvokespecialAgent.isThis(((Linked) candidate).current());
+            result = InvokespecialAgent.isThis(((Duplicate) candidate).current());
         } else {
             result = false;
         }
