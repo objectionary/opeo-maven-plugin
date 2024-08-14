@@ -24,7 +24,9 @@
 package org.eolang.opeo.compilation;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.ast.Addition;
@@ -76,6 +78,11 @@ final class XmirParser implements Parser {
     private final List<XmlNode> nodes;
 
     /**
+     * References.
+     */
+    private final Map<String, Duplicate> references;
+
+    /**
      * Constructor.
      *
      * @param nodes Opeo nodes.
@@ -98,6 +105,7 @@ final class XmirParser implements Parser {
      */
     XmirParser(final List<XmlNode> nodes) {
         this.nodes = nodes;
+        this.references = new HashMap<>(0);
     }
 
     /**
@@ -134,7 +142,19 @@ final class XmirParser implements Parser {
         } else if (".new-type".equals(base)) {
             result = new NewAddress(node);
         } else if ("duplicated".equals(base)) {
-            result = new Duplicate(this.parse(node.firstChild()));
+            final String name = node.attribute("name")
+                .orElseThrow(
+                    () -> new IllegalStateException(
+                        String.format("Name attribute is missing '%s'", node)
+                    )
+                );
+            if (this.references.containsKey(name)) {
+                result = this.references.get(name);
+            } else {
+                final Duplicate duplicate = new Duplicate(this.parse(node.firstChild()));
+                this.references.put(name, duplicate);
+                result = duplicate;
+            }
         } else if (".plus".equals(base)) {
             result = new Addition(node, this::parse);
         } else if (".minus".equals(base)) {

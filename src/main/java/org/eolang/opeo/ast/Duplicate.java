@@ -145,6 +145,8 @@ public final class Duplicate implements AstNode, Typed, Linked {
         final Iterable<Directive> result;
         if (this.decompiled.getAndSet(true)) {
             result = new Directives().add("o")
+                .attr("base", "duplicated")
+                .attr("line", new Random().nextInt(Integer.MAX_VALUE))
                 .attr("name", this.alias).up();
         } else {
             result = new Directives()
