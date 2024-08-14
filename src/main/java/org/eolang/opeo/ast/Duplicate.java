@@ -96,6 +96,7 @@ public final class Duplicate implements AstNode, Typed {
      * @param compiled Flag to indicate if the node was compiled.
      * @param decompiled Flag to indicate if the node was decompiled.
      * @param original The original node to duplicate.
+     * @checkstyle ParameterNumberCheck (5 lines)
      */
     Duplicate(
         final String alias,

@@ -117,7 +117,6 @@ public final class StoreArray implements AstNode, Typed {
             res.addAll(this.array.opcodes());
         } else {
             res.addAll(this.array.opcodes());
-//            res.add(new Opcode(Opcodes.DUP));
         }
         res.addAll(this.index.opcodes());
         res.addAll(this.value.opcodes());

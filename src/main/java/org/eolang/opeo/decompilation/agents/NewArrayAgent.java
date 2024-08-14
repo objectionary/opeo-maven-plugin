@@ -28,7 +28,6 @@ import java.util.HashSet;
 import java.util.Set;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.OperandStack;

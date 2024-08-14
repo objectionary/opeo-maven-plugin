@@ -32,7 +32,7 @@ import org.xembly.Xembler;
  * Test case for {@link Duplicate}.
  * @since 0.4
  */
-class DuplicateTest {
+final class DuplicateTest {
 
     /**
      * Reference name.

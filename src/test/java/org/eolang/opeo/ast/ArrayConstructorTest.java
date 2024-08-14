@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.ast;
 
-import java.util.List;
 import org.eolang.jeo.matchers.SameXml;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.HasInstructions;
@@ -92,16 +91,14 @@ final class ArrayConstructorTest {
     @Test
     void compilesArrayWithComplexLength() {
         final String type = "java/lang/Integer";
-        final List<XmlNode> opcodes = new OpcodeNodes(
-            new ArrayConstructor(
-                new Addition(new Literal(1), new Literal(2)),
-                type
-            )
-        ).opcodes();
-        System.out.println(opcodes);
         MatcherAssert.assertThat(
             "Can't compile array constructor with complex undefined length",
-            opcodes,
+            new OpcodeNodes(
+                new ArrayConstructor(
+                    new Addition(new Literal(1), new Literal(2)),
+                    type
+                )
+            ).opcodes(),
             new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.ICONST_1),
                 new HasInstructions.Instruction(Opcodes.ICONST_2),

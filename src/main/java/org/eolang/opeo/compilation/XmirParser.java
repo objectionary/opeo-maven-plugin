@@ -116,9 +116,10 @@ final class XmirParser implements Parser {
      * @checkstyle CyclomaticComplexityCheck (500 lines)
      * @checkstyle JavaNCSSCheck (500 lines)
      * @checkstyle NoJavadocForOverriddenMethodsCheck (500 lines)
+     * @checkstyle ExecutableStatementCountCheck (500 lines)
      */
     @Override
-    @SuppressWarnings("PMD.NcssCount")
+    @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     public AstNode parse(final XmlNode node) {
         final AstNode result;
         final String base = node.attribute("base").orElseThrow(
