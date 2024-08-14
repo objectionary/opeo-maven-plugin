@@ -37,7 +37,7 @@ import org.eolang.opeo.decompilation.DecompilerState;
  * Opcodes: aastore
  * Stack [before]->[after]: "arrayref, index, value →"
  * @since 0.1
- * @todo: Conflict between {@link StoreToArrayAgent} and {@link DupAgent}.
+ * @todo #277:90min Conflict between {@link StoreToArrayAgent} and {@link DupAgent}.
  *  We have a strange conflict between these two agents.
  *  - {@link StoreToArrayAgent} is supposed to leave stack empty, or at least do not push anything,
  *  but it pushes a new {@link StoreArray} object. Which is wrong.
