@@ -294,13 +294,12 @@ final class DecompilerMachineTest {
                 new Xembler(
                     DecompilerMachineTest.withoutRefNames(
                         new Root(
-                        ref,
-                        new StoreArray(
-                            ref,
-                            new Literal(0),
-                            new This()
-                        )
-                    ).toXmir())
+                            new StoreArray(
+                                ref,
+                                new Literal(0),
+                                new This()
+                            )
+                        ).toXmir())
                 ).xml()
             )
         );
@@ -381,23 +380,22 @@ final class DecompilerMachineTest {
                         .owner("java/io/PrintStream")
                         .interfaced(false),
                     new Constant("Number is %s"),
-                    new Duplicate(
-                        new StoreArray(
+                    new StoreArray(
+                        new Duplicate(
                             new ArrayConstructor(
                                 new Literal(1),
                                 type
                             )
-                            ,
-                            new Literal(0),
-                            new StaticInvocation(
-                                new Attributes()
-                                    .owner("java/lang/Integer")
-                                    .name("valueOf")
-                                    .descriptor("(I)Ljava/lang/Integer;")
-                                    .interfaced(false),
-                                new Owner("java/lang/Integer"),
-                                new Literal(2)
-                            )
+                        ),
+                        new Literal(0),
+                        new StaticInvocation(
+                            new Attributes()
+                                .owner("java/lang/Integer")
+                                .name("valueOf")
+                                .descriptor("(I)Ljava/lang/Integer;")
+                                .interfaced(false),
+                            new Owner("java/lang/Integer"),
+                            new Literal(2)
                         )
                     )
                 )

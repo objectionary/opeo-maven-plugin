@@ -24,11 +24,14 @@
 package org.eolang.opeo.ast;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.objectweb.asm.Opcodes;
@@ -112,35 +115,17 @@ public final class Duplicate implements AstNode, Typed, Linked {
         this.original = original;
     }
 
-    /**
-     * Get the original node which was duplicated.
-     * @return The original node.
-     */
-    public AstNode origin() {
-        return this.original.get();
-    }
-
     @Override
     public List<AstNode> opcodes() {
         final List<AstNode> result;
         if (this.compiled.getAndSet(true)) {
             result = Collections.emptyList();
         } else {
-            result = Stream.concat(
-                this.original.get().opcodes().stream(),
-                Stream.of(new Opcode(Opcodes.DUP))
-            ).collect(Collectors.toList());
+            result = new ArrayList<>(3);
+            result.addAll(this.original.get().opcodes());
+            result.add(new Opcode(Opcodes.DUP));
         }
         return result;
-    }
-
-    @Override
-    public Type type() {
-        if (this.original.get() instanceof Typed) {
-            return ((Typed) this.original.get()).type();
-        } else {
-            throw new IllegalArgumentException();
-        }
     }
 
     @Override
@@ -161,6 +146,15 @@ public final class Duplicate implements AstNode, Typed, Linked {
                 .up();
         }
         return result;
+    }
+
+    @Override
+    public Type type() {
+        if (this.original.get() instanceof Typed) {
+            return ((Typed) this.original.get()).type();
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
