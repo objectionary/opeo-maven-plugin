@@ -141,6 +141,12 @@ final class XmirParser implements Parser {
             result = new Constant(node);
         } else if (".new-type".equals(base)) {
             result = new NewAddress(node);
+        } else if (base.startsWith("ref-")) {
+            if (this.references.containsKey(base)) {
+                result = this.references.get(base);
+            } else {
+                throw new IllegalStateException(String.format("Reference not found '%s'", base));
+            }
         } else if ("duplicated".equals(base)) {
             final String name = node.attribute("name")
                 .orElseThrow(
@@ -148,13 +154,9 @@ final class XmirParser implements Parser {
                         String.format("Name attribute is missing '%s'", node)
                     )
                 );
-            if (this.references.containsKey(name)) {
-                result = this.references.get(name);
-            } else {
-                final Duplicate duplicate = new Duplicate(this.parse(node.firstChild()));
-                this.references.put(name, duplicate);
-                result = duplicate;
-            }
+            final Duplicate duplicate = new Duplicate(this.parse(node.firstChild()));
+            this.references.put(name, duplicate);
+            result = duplicate;
         } else if (".plus".equals(base)) {
             result = new Addition(node, this::parse);
         } else if (".minus".equals(base)) {

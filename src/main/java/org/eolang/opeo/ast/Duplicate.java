@@ -48,6 +48,8 @@ public final class Duplicate implements AstNode, Typed, Linked {
      */
     private final String alias;
 
+    private final int line = new Random().nextInt(Integer.MAX_VALUE);
+
     /**
      * Flag to indicate if the node was compiled.
      */
@@ -145,14 +147,14 @@ public final class Duplicate implements AstNode, Typed, Linked {
         final Iterable<Directive> result;
         if (this.decompiled.getAndSet(true)) {
             result = new Directives().add("o")
-                .attr("base", "duplicated")
-                .attr("line", new Random().nextInt(Integer.MAX_VALUE))
-                .attr("name", this.alias).up();
+                .attr("base", this.alias)
+                .attr("line", this.line)
+                .up();
         } else {
             result = new Directives()
                 .add("o")
                 .attr("base", "duplicated")
-                .attr("line", new Random().nextInt(Integer.MAX_VALUE))
+                .attr("line", this.line)
                 .attr("name", this.alias)
                 .append(this.original.get().toXmir())
                 .up();
@@ -180,6 +182,6 @@ public final class Duplicate implements AstNode, Typed, Linked {
         for (int i = 0; i < 10; i++) {
             name.append(alphabet[(int) (Math.random() * alphabet.length)]);
         }
-        return name.toString();
+        return String.format("ref-%s", name);
     }
 }
