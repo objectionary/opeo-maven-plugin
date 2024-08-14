@@ -27,10 +27,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.Duplicate;
-import org.eolang.opeo.ast.FieldRetrieval;
-import org.eolang.opeo.ast.Labeled;
-import org.eolang.opeo.ast.Reference;
 import org.eolang.opeo.ast.StoreArray;
 import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
@@ -41,10 +37,15 @@ import org.eolang.opeo.decompilation.DecompilerState;
  * Opcodes: aastore
  * Stack [before]->[after]: "arrayref, index, value →"
  * @since 0.1
- * @todo #329:90min Avoid using 'instance of' in {@link StoreToArrayAgent#findRef(AstNode)}.
- *  Here we use 'instance of' statement to find a Reference.
- *  The solution related to Reference looks incorrect, in general.
- *  We should invent a proper solution without the use of this statement.
+ * @todo: Conflict between {@link StoreToArrayAgent} and {@link DupAgent}.
+ *  We have a strange conflict between these two agents.
+ *  - {@link StoreToArrayAgent} is supposed to leave stack empty, or at least do not push anything,
+ *  but it pushes a new {@link StoreArray} object. Which is wrong.
+ *  - {@link DupAgent} is supposed to push a new object, but it does not push anything.
+ *  However both this bugs compensate each other somehow and our transformations work
+ *  as expected. But this is not a good practice. We should adhere to bytecode specification for
+ *  both agents: {@link DupAgent} should push a new object and {@link StoreToArrayAgent} should
+ *  not push anything.
  */
 public final class StoreToArrayAgent implements DecompilationAgent {
 
@@ -63,41 +64,8 @@ public final class StoreToArrayAgent implements DecompilationAgent {
             final AstNode value = state.stack().pop();
             final AstNode index = state.stack().pop();
             final AstNode array = state.stack().pop();
-//            state.stack().pop();
-
-
             state.stack().push(new StoreArray(array, index, value));
-
-//            final Duplicate ref = this.findRef(array);
-//            ref.link(new StoreArray(ref.current(), index, value));
-
-
-//            ref.link(new StoreArray(ref.origin(), index, value));
-//            state.stack().push(ref);
-
             state.popInstruction();
         }
     }
-
-    /**
-     * Find reference.
-     * @param node Node where to search for reference.
-     * @return Reference.
-     */
-    private Duplicate findRef(final AstNode node) {
-        final Duplicate result;
-        if (node instanceof Duplicate) {
-            result = (Duplicate) node;
-        } else if (node instanceof Labeled) {
-            result = this.findRef(((Labeled) node).origin());
-        } else if (node instanceof Reference) {
-            result = this.findRef(((Reference) node).object());
-        } else if (node instanceof FieldRetrieval) {
-            result = new Duplicate(node);
-        } else {
-            throw new IllegalStateException(String.format("Can find reference for node %s", node));
-        }
-        return result;
-    }
-
 }

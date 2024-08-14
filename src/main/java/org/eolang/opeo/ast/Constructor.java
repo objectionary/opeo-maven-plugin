@@ -179,8 +179,6 @@ public final class Constructor implements AstNode, Typed {
         final String result;
         if (node instanceof NewAddress) {
             result = ((NewAddress) node).typeAsString();
-        } else if (node instanceof Reference) {
-            result = this.type(((Linked) node).current());
         } else if (node instanceof Duplicate) {
             result = this.type(((Linked) node).current());
         } else if (node instanceof Labeled) {
