@@ -125,17 +125,19 @@ public final class Duplicate implements AstNode, Typed {
 
     @Override
     public Iterable<Directive> toXmir() {
+        final int line = new Random().nextInt(Integer.MAX_VALUE);
         final Iterable<Directive> result;
         if (this.decompiled.getAndSet(true)) {
             result = new Directives().add("o")
                 .attr("base", this.alias)
-                .attr("line", new Random().nextInt(Integer.MAX_VALUE))
+                .attr("line", line)
                 .up();
         } else {
             result = new Directives()
                 .add("o")
                 .attr("base", "duplicated")
                 .attr("name", this.alias)
+                .attr("line", line)
                 .append(this.original.get().toXmir())
                 .up();
         }
