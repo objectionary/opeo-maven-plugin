@@ -25,6 +25,7 @@ package org.eolang.opeo.decompilation;
 
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 import org.eolang.jeo.matchers.SameXml;
 import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.opeo.LabelInstruction;
@@ -41,6 +42,8 @@ import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.ast.LocalVariable;
+import org.eolang.opeo.ast.Opcode;
+import org.eolang.opeo.ast.OpcodeName;
 import org.eolang.opeo.ast.Owner;
 import org.eolang.opeo.ast.Popped;
 import org.eolang.opeo.ast.Return;
@@ -58,6 +61,7 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
+import org.xembly.Directives;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
@@ -276,7 +280,7 @@ final class DecompilerMachineTest {
         MatcherAssert.assertThat(
             "Can't decompile array insertion",
             new Xembler(
-                new DecompilerMachine()
+                DecompilerMachineTest.withoutRefNames(new DecompilerMachine()
                     .decompile(
                         new OpcodeInstruction(Opcodes.ICONST_2),
                         new OpcodeInstruction(Opcodes.ANEWARRAY, type),
@@ -284,18 +288,19 @@ final class DecompilerMachineTest {
                         new OpcodeInstruction(Opcodes.ICONST_0),
                         new OpcodeInstruction(Opcodes.ALOAD, 0),
                         new OpcodeInstruction(Opcodes.AASTORE)
-                    )
+                    ))
             ).xml(),
             new SameXml(
                 new Xembler(
-                    new Root(
+                    DecompilerMachineTest.withoutRefNames(
+                        new Root(
                         ref,
                         new StoreArray(
                             ref,
                             new Literal(0),
                             new This()
                         )
-                    ).toXmir()
+                    ).toXmir())
                 ).xml()
             )
         );
@@ -360,74 +365,86 @@ final class DecompilerMachineTest {
     @Test
     void decompilesVarargInvocation() {
         final String type = "java/lang/Object";
+        final Root expected = new Root(
+            new Popped(
+                new Invocation(
+                    new ClassField(
+                        "java/lang/System",
+                        "out",
+                        "Ljava/io/PrintStream;"
+                    ),
+                    new Attributes()
+                        .name("printf")
+                        .descriptor(
+                            "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;"
+                        )
+                        .owner("java/io/PrintStream")
+                        .interfaced(false),
+                    new Constant("Number is %s"),
+                    new Duplicate(
+                        new StoreArray(
+                            new ArrayConstructor(
+                                new Literal(1),
+                                type
+                            )
+                            ,
+                            new Literal(0),
+                            new StaticInvocation(
+                                new Attributes()
+                                    .owner("java/lang/Integer")
+                                    .name("valueOf")
+                                    .descriptor("(I)Ljava/lang/Integer;")
+                                    .interfaced(false),
+                                new Owner("java/lang/Integer"),
+                                new Literal(2)
+                            )
+                        )
+                    )
+                )
+            ),
+            new Return()
+        );
+
+        System.out.println(expected.opcodes().stream()
+            .map(a -> (Opcode) a)
+            .map(a -> a.opcode())
+            .map(OpcodeName::new)
+            .map(OpcodeName::simplified)
+            .collect(Collectors.toList()));
         MatcherAssert.assertThat(
             "Can't decompile vararg invocation",
-            new DecompilerMachine(Collections.singletonMap("counting", "false"))
-                .decompile(
-                    new OpcodeInstruction(
-                        Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;"
-                    ),
-                    new OpcodeInstruction(Opcodes.LDC, "Number is %s"),
-                    new OpcodeInstruction(Opcodes.ICONST_1),
-                    new OpcodeInstruction(Opcodes.ANEWARRAY, type),
-                    new OpcodeInstruction(Opcodes.DUP),
-                    new OpcodeInstruction(Opcodes.ICONST_0),
-                    new OpcodeInstruction(Opcodes.ICONST_2),
-                    new OpcodeInstruction(
-                        Opcodes.INVOKESTATIC,
-                        "java/lang/Integer",
-                        "valueOf",
-                        "(I)Ljava/lang/Integer;",
-                        false
-                    ),
-                    new OpcodeInstruction(Opcodes.AASTORE),
-                    new OpcodeInstruction(
-                        Opcodes.INVOKEVIRTUAL,
-                        "java/io/PrintStream",
-                        "printf",
-                        "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;",
-                        false
-                    ),
-                    new OpcodeInstruction(Opcodes.POP),
-                    new OpcodeInstruction(Opcodes.RETURN)
-                ),
-            new SameNode(
-                new Root(
-                    new Popped(
-                        new Invocation(
-                            new ClassField(
-                                "java/lang/System",
-                                "out",
-                                "Ljava/io/PrintStream;"
-                            ),
-                            new Attributes()
-                                .name("printf")
-                                .descriptor(
-                                    "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;"
-                                )
-                                .owner("java/io/PrintStream")
-                                .interfaced(false),
-                            new Constant("Number is %s"),
-                            new StoreArray(
-                                new ArrayConstructor(
-                                    new Literal(1),
-                                    type
-                                ),
-                                new Literal(0),
-                                new StaticInvocation(
-                                    new Attributes()
-                                        .owner("java/lang/Integer")
-                                        .name("valueOf")
-                                        .descriptor("(I)Ljava/lang/Integer;")
-                                        .interfaced(false),
-                                    new Owner("java/lang/Integer"),
-                                    new Literal(2)
-                                )
-                            )
-                        )),
-                    new Return()
-                )
-            )
+            DecompilerMachineTest.withoutRefNames(
+                new DecompilerMachine(Collections.singletonMap("counting", "false"))
+                    .decompile(
+                        new OpcodeInstruction(
+                            Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;"
+                        ),
+                        new OpcodeInstruction(Opcodes.LDC, "Number is %s"),
+                        new OpcodeInstruction(Opcodes.ICONST_1),
+                        new OpcodeInstruction(Opcodes.ANEWARRAY, type),
+                        new OpcodeInstruction(Opcodes.DUP),
+                        new OpcodeInstruction(Opcodes.ICONST_0),
+                        new OpcodeInstruction(Opcodes.ICONST_2),
+                        new OpcodeInstruction(
+                            Opcodes.INVOKESTATIC,
+                            "java/lang/Integer",
+                            "valueOf",
+                            "(I)Ljava/lang/Integer;",
+                            false
+                        ),
+                        new OpcodeInstruction(Opcodes.AASTORE),
+                        new OpcodeInstruction(
+                            Opcodes.INVOKEVIRTUAL,
+                            "java/io/PrintStream",
+                            "printf",
+                            "(Ljava/lang/String;[Ljava/lang/Object;)Ljava/io/PrintStream;",
+                            false
+                        ),
+                        new OpcodeInstruction(Opcodes.POP),
+                        new OpcodeInstruction(Opcodes.RETURN)
+                    )
+            ),
+            new SameNode(expected)
         );
     }
 
@@ -470,8 +487,12 @@ final class DecompilerMachineTest {
         @Override
         public boolean matchesSafely(final Iterable<Directive> item) {
             try {
-                final String xactual = new Xembler(item).xml();
-                final String xpected = new Xembler(this.expected.toXmir()).xml();
+                final String xactual = new Xembler(
+                    DecompilerMachineTest.withoutRefNames(item)
+                ).xml();
+                final String xpected = new Xembler(
+                    DecompilerMachineTest.withoutRefNames(this.expected.toXmir())
+                ).xml();
                 this.actual.set(xactual);
                 this.exp.set(xpected);
                 return new SameXml(xpected).matchesSafely(xactual);
@@ -493,5 +514,22 @@ final class DecompilerMachineTest {
             mismatch.appendText("was ").appendValue(this.actual.get());
         }
 
+    }
+
+    /**
+     * Removes names from reference names.
+     * @param directives Original XMIR directives with references.
+     * @return XMIR directives without reference names.
+     * @todo #277:60min Reference Names Generator.
+     *  Instead of removing refence names suffixes from the resulting XMIR,
+     *  it's better to invent some "Reference Namaes Generator" and pass it to
+     *  a {@link DecompilerMachine}. This generator should be able to generate as random names
+     *  as fixed names. After implementing such a generator we should use it in tests
+     *  and remove {@link #withoutRefNames(Iterable)} method.
+     */
+    private static Directives withoutRefNames(final Iterable<Directive> directives) {
+        return new Directives(directives)
+            .xpath("//o[starts-with(@name, 'ref-')]/@name").set("ref")
+            .xpath("//o[starts-with(@base, 'ref-')]/@base").set("ref");
     }
 }

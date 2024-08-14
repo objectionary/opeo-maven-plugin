@@ -63,13 +63,12 @@ public final class StoreToArrayAgent implements DecompilationAgent {
             final AstNode value = state.stack().pop();
             final AstNode index = state.stack().pop();
             final AstNode array = state.stack().pop();
-            state.stack().push(new StoreArray(array, index, value));
-//            try {
-//                final Reference ref = this.findRef(array);
-//                ref.link(new StoreArray(ref.object(), index, value));
-//                state.stack().push(ref);
-//            } catch (final IllegalStateException exception) {
-//            }
+
+//            state.stack().push(new StoreArray(array, index, value));
+            final Duplicate ref = this.findRef(array);
+            ref.link(new StoreArray(ref.origin(), index, value));
+//            state.stack().push(ref);
+
             state.popInstruction();
         }
     }
@@ -79,16 +78,16 @@ public final class StoreToArrayAgent implements DecompilationAgent {
      * @param node Node where to search for reference.
      * @return Reference.
      */
-    private Reference findRef(final AstNode node) {
-        final Reference result;
-        if (node instanceof Reference) {
-            result = (Reference) node;
+    private Duplicate findRef(final AstNode node) {
+        final Duplicate result;
+        if (node instanceof Duplicate) {
+            result = (Duplicate) node;
         } else if (node instanceof Labeled) {
             result = this.findRef(((Labeled) node).origin());
-        } else if (node instanceof Duplicate) {
-            result = this.findRef(((Duplicate) node).origin());
+        } else if (node instanceof Reference) {
+            result = this.findRef(((Reference) node).object());
         } else if (node instanceof FieldRetrieval) {
-            result = new Reference(node);
+            result = new Duplicate(node);
         } else {
             throw new IllegalStateException(String.format("Can find reference for node %s", node));
         }

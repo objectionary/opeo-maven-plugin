@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.xembly.Directive;
 import org.xembly.Directives;
 
@@ -82,7 +83,9 @@ public final class Root implements AstNode {
 
     @Override
     public List<AstNode> opcodes() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return this.children.stream()
+            .flatMap(node -> node.opcodes().stream())
+            .collect(Collectors.toList());
     }
 
     /**

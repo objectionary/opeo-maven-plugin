@@ -52,7 +52,7 @@ class DuplicateTest {
     /**
      * Literal reference.
      */
-    private static final String REF = String.format("<o base='duplicated' name='%s'/>", DuplicateTest.ALIAS);
+    private static final String REF = String.format("<o base='%s'/>", DuplicateTest.ALIAS);
 
     /**
      * Literal itself.

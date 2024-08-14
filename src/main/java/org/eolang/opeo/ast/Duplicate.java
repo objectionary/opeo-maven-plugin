@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import java.security.SecureRandom;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -177,10 +178,11 @@ public final class Duplicate implements AstNode, Typed, Linked {
      * @return Random string.
      */
     private static String randomName() {
-        char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-        final StringBuilder name = new StringBuilder();
+        final char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        final StringBuilder name = new StringBuilder(14);
+        final SecureRandom random = new SecureRandom();
         for (int i = 0; i < 10; i++) {
-            name.append(alphabet[(int) (Math.random() * alphabet.length)]);
+            name.append(alphabet[random.nextInt(alphabet.length)]);
         }
         return String.format("ref-%s", name);
     }

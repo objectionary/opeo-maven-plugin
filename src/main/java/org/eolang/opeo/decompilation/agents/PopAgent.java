@@ -39,6 +39,7 @@ public final class PopAgent implements DecompilationAgent {
     public void handle(final DecompilerState state) {
         if (state.instruction().opcode() == Opcodes.POP) {
             final OperandStack stack = state.stack();
+//            stack.pop();
             stack.push(new Popped(stack.pop()));
             state.popInstruction();
         }
