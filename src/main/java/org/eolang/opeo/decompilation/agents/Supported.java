@@ -23,36 +23,45 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.Multiplication;
-import org.eolang.opeo.decompilation.DecompilationAgent;
-import org.eolang.opeo.decompilation.DecompilerState;
-import org.objectweb.asm.Opcodes;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+import org.eolang.opeo.ast.Opcode;
 
 /**
- * Mul instruction handler.
- * @since 0.1
+ * Supported opcodes.
+ * Used to check if the instruction is supported.
+ * @since 0.4
  */
-public final class MulAgent implements DecompilationAgent {
+public final class Supported {
 
     /**
      * Supported opcodes.
      */
-    private static final Supported SUPPORTED = new Supported(
-        Opcodes.IMUL,
-        Opcodes.LMUL,
-        Opcodes.FMUL,
-        Opcodes.DMUL
-    );
+    private final Set<Integer> supported;
 
-    @Override
-    public void handle(final DecompilerState state) {
-        if (MulAgent.SUPPORTED.isSupported(state.instruction())) {
-            final AstNode right = state.stack().pop();
-            final AstNode left = state.stack().pop();
-            state.stack().push(new Multiplication(left, right));
-            state.popInstruction();
-        }
+    /**
+     * Constructor.
+     * @param supported Supported opcodes.
+     */
+    public Supported(final int... supported) {
+        this(Arrays.stream(supported).boxed().collect(Collectors.toSet()));
     }
 
+    /**
+     * Constructor.
+     * @param supported Supported opcodes.
+     */
+    public Supported(final Set<Integer> supported) {
+        this.supported = supported;
+    }
+
+    /**
+     * Check if the instruction is supported.
+     * @param opcode Instruction to check.
+     * @return True if the instruction is supported, false otherwise.
+     */
+    public boolean isSupported(final Opcode opcode) {
+        return this.supported.contains(opcode.opcode());
+    }
 }
