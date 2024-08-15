@@ -89,6 +89,7 @@ final class MultiplicationTest {
      * For test case {@link #convertsToOpcodesWithDifferentTypes(AstNode, AstNode, int)}
      * @return Test cases.
      */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Stream<org.junit.jupiter.params.provider.Arguments> multiplications() {
         return Stream.of(
             org.junit.jupiter.params.provider.Arguments.of(

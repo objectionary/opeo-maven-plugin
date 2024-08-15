@@ -96,19 +96,21 @@ public final class Multiplication implements AstNode, Typed {
      * @return Opcode.
      */
     private int opcode() {
+        final int result;
         final Type type = this.type();
         if (type.equals(Type.INT_TYPE)) {
-            return Opcodes.IMUL;
+            result = Opcodes.IMUL;
         } else if (type.equals(Type.LONG_TYPE)) {
-            return Opcodes.LMUL;
+            result = Opcodes.LMUL;
         } else if (type.equals(Type.FLOAT_TYPE)) {
-            return Opcodes.FMUL;
+            result = Opcodes.FMUL;
         } else if (type.equals(Type.DOUBLE_TYPE)) {
-            return Opcodes.DMUL;
+            result = Opcodes.DMUL;
+        } else {
+            throw new IllegalArgumentException(String.format("Unsupported type: %s", type));
         }
-        throw new IllegalArgumentException("Unsupported type: " + type);
+        return result;
     }
-
 
     /**
      * Extracts the first value.
