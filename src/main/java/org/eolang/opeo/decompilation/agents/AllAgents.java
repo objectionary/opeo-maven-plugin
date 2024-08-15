@@ -192,7 +192,7 @@ public final class AllAgents implements DecompilationAgent {
 
         @Override
         public void handle(final DecompilerState state) {
-            if (!new AllAgents(false).agents.keySet().contains(state.current().opcode())) {
+            if (!new AllAgents(false).supported().isSupported(state.current())) {
                 state.stack().push(
                     new Opcode(
                         state.current().opcode(),
