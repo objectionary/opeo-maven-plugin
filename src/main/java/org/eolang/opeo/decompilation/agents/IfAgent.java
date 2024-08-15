@@ -23,12 +23,8 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.If;
-import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.OperandStack;
 import org.objectweb.asm.Label;
@@ -46,15 +42,16 @@ public final class IfAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Set<Integer> SUPPORTED = new HashSet<>(
-        Arrays.asList(
-            Opcodes.IF_ICMPGT
-        )
-    );
+    private static final Supported SUPPORTED = new Supported(Opcodes.IF_ICMPGT);
+
+    @Override
+    public Supported supported() {
+        return IfAgent.SUPPORTED;
+    }
 
     @Override
     public void handle(final DecompilerState state) {
-        if (IfAgent.SUPPORTED.contains(state.instruction().opcode())) {
+        if (this.supported().isSupported(state.current())) {
             final OperandStack stack = state.stack();
             final AstNode second = stack.pop();
             final AstNode first = stack.pop();

@@ -23,13 +23,10 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.StoreArray;
-import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
+import org.objectweb.asm.Opcodes;
 
 /**
  * Store to array instruction handler.
@@ -52,15 +49,16 @@ public final class StoreToArrayAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Set<Integer> SUPPORTED = new HashSet<>(
-        Arrays.asList(
-            org.objectweb.asm.Opcodes.AASTORE
-        )
-    );
+    private static final Supported SUPPORTED = new Supported(Opcodes.AASTORE);
+
+    @Override
+    public Supported supported() {
+        return StoreToArrayAgent.SUPPORTED;
+    }
 
     @Override
     public void handle(final DecompilerState state) {
-        if (StoreToArrayAgent.SUPPORTED.contains(state.instruction().opcode())) {
+        if (this.supported().isSupported(state.current())) {
             final AstNode value = state.stack().pop();
             final AstNode index = state.stack().pop();
             final AstNode array = state.stack().pop();

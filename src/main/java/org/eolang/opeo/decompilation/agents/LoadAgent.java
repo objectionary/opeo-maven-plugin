@@ -26,7 +26,7 @@ package org.eolang.opeo.decompilation.agents;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -44,20 +44,24 @@ public final class LoadAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Set<Integer> SUPPORTED = new HashSet<>(
-        Arrays.asList(
-            Opcodes.ILOAD,
-            Opcodes.LLOAD,
-            Opcodes.FLOAD,
-            Opcodes.DLOAD,
-            Opcodes.ALOAD
-        )
+    private static final Supported SUPPORTED = new Supported(
+        Opcodes.ILOAD,
+        Opcodes.LLOAD,
+        Opcodes.FLOAD,
+        Opcodes.DLOAD,
+        Opcodes.ALOAD
     );
 
     @Override
+    public Supported supported() {
+        return LoadAgent.SUPPORTED;
+    }
+
+    @Override
     public void handle(final DecompilerState state) {
-        final int opcode = state.instruction().opcode();
-        if (LoadAgent.SUPPORTED.contains(opcode)) {
+        final Opcode instr = state.current();
+        final int opcode = instr.opcode();
+        if (this.supported().isSupported(instr)) {
             final Integer index = (Integer) state.operand(0);
             state.stack().push(
                 state.variable(index, LoadAgent.type(opcode))

@@ -27,7 +27,6 @@ import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
-import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 
@@ -39,8 +38,13 @@ import org.objectweb.asm.Opcodes;
 public final class PutFieldAgent implements DecompilationAgent {
 
     @Override
+    public Supported supported() {
+        return new Supported(Opcodes.PUTFIELD);
+    }
+
+    @Override
     public void handle(final DecompilerState state) {
-        if (state.instruction().opcode() == Opcodes.PUTFIELD) {
+        if (this.supported().isSupported(state.current())) {
             final AstNode value = state.stack().pop();
             final String name = (String) state.operand(1);
             final String owner = (String) state.operand(0);

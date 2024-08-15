@@ -23,11 +23,8 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import org.eolang.opeo.ast.Cast;
-import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -41,38 +38,41 @@ public final class CastAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Set<Integer> SUPPROTED = new HashSet<>(
-        Arrays.asList(
-            Opcodes.I2B,
-            Opcodes.I2C,
-            Opcodes.I2S,
-            Opcodes.I2L,
-            Opcodes.I2F,
-            Opcodes.I2D,
-            Opcodes.L2I,
-            Opcodes.L2F,
-            Opcodes.L2D,
-            Opcodes.F2I,
-            Opcodes.F2L,
-            Opcodes.F2D,
-            Opcodes.D2I,
-            Opcodes.D2L,
-            Opcodes.D2F
-        )
+    private static final Supported SUPPORTED = new Supported(
+        Opcodes.I2B,
+        Opcodes.I2C,
+        Opcodes.I2S,
+        Opcodes.I2L,
+        Opcodes.I2F,
+        Opcodes.I2D,
+        Opcodes.L2I,
+        Opcodes.L2F,
+        Opcodes.L2D,
+        Opcodes.F2I,
+        Opcodes.F2L,
+        Opcodes.F2D,
+        Opcodes.D2I,
+        Opcodes.D2L,
+        Opcodes.D2F
     );
 
     @Override
     public void handle(final DecompilerState state) {
-        final int opcode = state.instruction().opcode();
-        if (CastAgent.SUPPROTED.contains(opcode)) {
+        final Opcode instruction = state.current();
+        if (this.supported().isSupported(instruction)) {
             state.stack().push(
                 new Cast(
-                    CastAgent.target(opcode),
+                    CastAgent.target(instruction.opcode()),
                     state.stack().pop()
                 )
             );
             state.popInstruction();
         }
+    }
+
+    @Override
+    public Supported supported() {
+        return CastAgent.SUPPORTED;
     }
 
     /**

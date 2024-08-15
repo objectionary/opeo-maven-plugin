@@ -29,7 +29,6 @@ import org.cactoos.map.MapOf;
 import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.OpcodeName;
-import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 
@@ -86,10 +85,10 @@ public final class AllAgents implements DecompilationAgent {
                 new MapEntry<>(Opcodes.LADD, new AddAgent()),
                 new MapEntry<>(Opcodes.FADD, new AddAgent()),
                 new MapEntry<>(Opcodes.DADD, new AddAgent()),
-                new MapEntry<>(Opcodes.ISUB, new SubstractionAgent()),
-                new MapEntry<>(Opcodes.LSUB, new SubstractionAgent()),
-                new MapEntry<>(Opcodes.FSUB, new SubstractionAgent()),
-                new MapEntry<>(Opcodes.DSUB, new SubstractionAgent()),
+                new MapEntry<>(Opcodes.ISUB, new SubAgent()),
+                new MapEntry<>(Opcodes.LSUB, new SubAgent()),
+                new MapEntry<>(Opcodes.FSUB, new SubAgent()),
+                new MapEntry<>(Opcodes.DSUB, new SubAgent()),
                 new MapEntry<>(Opcodes.IMUL, new MulAgent()),
                 new MapEntry<>(Opcodes.IF_ICMPGT, new IfAgent()),
                 new MapEntry<>(Opcodes.I2B, new CastAgent()),
@@ -157,6 +156,13 @@ public final class AllAgents implements DecompilationAgent {
         }
     }
 
+    @Override
+    public Supported supported() {
+        return this.agents.values().stream()
+            .map(DecompilationAgent::supported).
+            reduce(new Supported(), Supported::merge);
+    }
+
     /**
      * Get supported opcodes.
      * @return Supported opcodes.
@@ -195,16 +201,21 @@ public final class AllAgents implements DecompilationAgent {
 
         @Override
         public void handle(final DecompilerState state) {
-            if (!new AllAgents(false).agents.keySet().contains(state.instruction().opcode())) {
+            if (!new AllAgents(false).agents.keySet().contains(state.current().opcode())) {
                 state.stack().push(
                     new Opcode(
-                        state.instruction().opcode(),
-                        state.instruction().params(),
+                        state.current().opcode(),
+                        state.current().params(),
                         this.counting
                     )
                 );
                 state.popInstruction();
             }
+        }
+
+        @Override
+        public Supported supported() {
+            return new Supported();
         }
     }
 }

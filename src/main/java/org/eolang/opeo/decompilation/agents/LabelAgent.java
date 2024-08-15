@@ -27,7 +27,6 @@ import org.eolang.opeo.LabelInstruction;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Labeled;
-import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
 
 /**
@@ -35,14 +34,21 @@ import org.eolang.opeo.decompilation.DecompilerState;
  * @since 0.1
  */
 public final class LabelAgent implements DecompilationAgent {
+
+    @Override
+    public Supported supported() {
+        return new Supported(LabelInstruction.LABEL_OPCODE);
+    }
+
     @Override
     public void handle(final DecompilerState state) {
-        if (state.instruction().opcode() == LabelInstruction.LABEL_OPCODE) {
-            final Labeled node = new Labeled(
-                state.stack().first().orElse(new AstNode.Empty()),
-                new Label(String.class.cast(state.operand(0)))
+        if (this.supported().isSupported(state.current())) {
+            state.stack().push(
+                new Labeled(
+                    state.stack().first().orElse(new AstNode.Empty()),
+                    new Label(String.class.cast(state.operand(0)))
+                )
             );
-            state.stack().push(node);
             state.popInstruction();
         }
     }

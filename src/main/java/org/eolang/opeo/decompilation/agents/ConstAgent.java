@@ -23,12 +23,9 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Literal;
-import org.eolang.opeo.decompilation.DecompilationAgent;
+import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 
@@ -42,29 +39,33 @@ public final class ConstAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Set<Integer> SUPPORTED = new HashSet<>(
-        Arrays.asList(
-            Opcodes.ICONST_M1,
-            Opcodes.ICONST_0,
-            Opcodes.ICONST_1,
-            Opcodes.ICONST_2,
-            Opcodes.ICONST_3,
-            Opcodes.ICONST_4,
-            Opcodes.ICONST_5,
-            Opcodes.LCONST_0,
-            Opcodes.LCONST_1,
-            Opcodes.FCONST_0,
-            Opcodes.FCONST_1,
-            Opcodes.FCONST_2,
-            Opcodes.DCONST_0,
-            Opcodes.DCONST_1
-        )
+    private static final Supported SUPPORTED = new Supported(
+        Opcodes.ICONST_M1,
+        Opcodes.ICONST_0,
+        Opcodes.ICONST_1,
+        Opcodes.ICONST_2,
+        Opcodes.ICONST_3,
+        Opcodes.ICONST_4,
+        Opcodes.ICONST_5,
+        Opcodes.LCONST_0,
+        Opcodes.LCONST_1,
+        Opcodes.FCONST_0,
+        Opcodes.FCONST_1,
+        Opcodes.FCONST_2,
+        Opcodes.DCONST_0,
+        Opcodes.DCONST_1
     );
 
     @Override
+    public Supported supported() {
+        return ConstAgent.SUPPORTED;
+    }
+
+    @Override
     public void handle(final DecompilerState state) {
-        final int opcode = state.instruction().opcode();
-        if (ConstAgent.SUPPORTED.contains(opcode)) {
+        final Opcode instr = state.current();
+        final int opcode = instr.opcode();
+        if (this.supported().isSupported(instr)) {
             final AstNode res;
             switch (opcode) {
                 case Opcodes.ICONST_M1:

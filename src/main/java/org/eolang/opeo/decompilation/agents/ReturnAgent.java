@@ -23,11 +23,8 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Return;
-import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.OperandStack;
 import org.objectweb.asm.Opcodes;
@@ -42,21 +39,25 @@ public final class ReturnAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Set<Integer> SUPPORTED = new HashSet<>(
-        Arrays.asList(
-            Opcodes.RETURN,
-            Opcodes.IRETURN,
-            Opcodes.LRETURN,
-            Opcodes.FRETURN,
-            Opcodes.DRETURN,
-            Opcodes.ARETURN
-        )
+    private static final Supported SUPPORTED = new Supported(
+        Opcodes.RETURN,
+        Opcodes.IRETURN,
+        Opcodes.LRETURN,
+        Opcodes.FRETURN,
+        Opcodes.DRETURN,
+        Opcodes.ARETURN
     );
 
     @Override
+    public Supported supported() {
+        return ReturnAgent.SUPPORTED;
+    }
+
+    @Override
     public void handle(final DecompilerState state) {
-        final int opcode = state.instruction().opcode();
-        if (ReturnAgent.SUPPORTED.contains(opcode)) {
+        final Opcode instr = state.current();
+        final int opcode = instr.opcode();
+        if (this.supported().isSupported(instr)) {
             final OperandStack stack = state.stack();
             if (opcode == Opcodes.RETURN) {
                 stack.push(new Return());

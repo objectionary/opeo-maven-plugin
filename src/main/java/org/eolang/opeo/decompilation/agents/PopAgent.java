@@ -24,7 +24,6 @@
 package org.eolang.opeo.decompilation.agents;
 
 import org.eolang.opeo.ast.Popped;
-import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.OperandStack;
 import org.objectweb.asm.Opcodes;
@@ -36,8 +35,13 @@ import org.objectweb.asm.Opcodes;
 public final class PopAgent implements DecompilationAgent {
 
     @Override
+    public Supported supported() {
+        return new Supported(Opcodes.POP);
+    }
+
+    @Override
     public void handle(final DecompilerState state) {
-        if (state.instruction().opcode() == Opcodes.POP) {
+        if (this.supported().isSupported(state.current())) {
             final OperandStack stack = state.stack();
             stack.push(new Popped(stack.pop()));
             state.popInstruction();

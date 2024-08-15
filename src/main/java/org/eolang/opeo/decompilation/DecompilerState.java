@@ -96,7 +96,7 @@ public final class DecompilerState {
      * Retrieve current bytecode instruction.
      * @return Current bytecode instruction.
      */
-    public Opcode instruction() {
+    public Opcode current() {
         return Optional.ofNullable(this.opcodes.peek()).orElse(new Opcode(-1));
     }
 
@@ -124,7 +124,7 @@ public final class DecompilerState {
      * @return Instruction operand.
      */
     public Object operand(final int index) {
-        return this.instruction().operand(index);
+        return this.current().operand(index);
     }
 
     /**

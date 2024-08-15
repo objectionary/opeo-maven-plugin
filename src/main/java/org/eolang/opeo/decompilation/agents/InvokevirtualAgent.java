@@ -28,7 +28,6 @@ import java.util.List;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Invocation;
-import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -51,8 +50,13 @@ import org.objectweb.asm.Type;
 public final class InvokevirtualAgent implements DecompilationAgent {
 
     @Override
+    public Supported supported() {
+        return new Supported(Opcodes.INVOKEVIRTUAL);
+    }
+
+    @Override
     public void handle(final DecompilerState state) {
-        if (state.instruction().opcode() == Opcodes.INVOKEVIRTUAL) {
+        if (this.supported().isSupported(state.current())) {
             final String owner = (String) state.operand(0);
             final String method = (String) state.operand(1);
             final String descriptor = (String) state.operand(2);

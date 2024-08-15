@@ -33,7 +33,6 @@ import org.eolang.opeo.ast.Labeled;
 import org.eolang.opeo.ast.NewAddress;
 import org.eolang.opeo.ast.Super;
 import org.eolang.opeo.ast.This;
-import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -51,6 +50,11 @@ import org.objectweb.asm.Type;
  * @checkstyle MultilineJavadocTagsCheck (500 lines)
  */
 public final class InvokespecialAgent implements DecompilationAgent {
+
+    @Override
+    public Supported supported() {
+        return new Supported(Opcodes.INVOKESPECIAL);
+    }
 
     /**
      * Handle invokespecial instruction.
@@ -76,7 +80,7 @@ public final class InvokespecialAgent implements DecompilationAgent {
     @Override
     @SuppressWarnings("PMD.UnusedLocalVariable")
     public void handle(final DecompilerState state) {
-        if (state.instruction().opcode() == Opcodes.INVOKESPECIAL) {
+        if (this.supported().isSupported(state.current())) {
             final String type = (String) state.operand(0);
             final String name = (String) state.operand(1);
             final String descriptor = (String) state.operand(2);

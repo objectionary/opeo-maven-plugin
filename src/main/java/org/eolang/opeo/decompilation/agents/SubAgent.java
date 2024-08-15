@@ -21,18 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation;
+package org.eolang.opeo.decompilation.agents;
+
+import org.eolang.opeo.ast.AstNode;
+import org.eolang.opeo.ast.Substraction;
+import org.eolang.opeo.decompilation.DecompilerState;
+import org.objectweb.asm.Opcodes;
 
 /**
- * An agent that tries to understand the current decompilation state and apply some changes to it.
+ * Substraction instruction handler.
  * @since 0.1
  */
-@FunctionalInterface
-public interface DecompilationAgent {
+public final class SubAgent implements DecompilationAgent {
 
     /**
-     * Handle the current state.
-     * @param state Current state to handle together with operand stack and variables.
+     * Supported opcodes.
      */
-    void handle(DecompilerState state);
+    private static final Supported SUPPORTED = new Supported(
+        Opcodes.ISUB,
+        Opcodes.LSUB,
+        Opcodes.FSUB,
+        Opcodes.DSUB
+    );
+
+    @Override
+    public Supported supported() {
+        return SubAgent.SUPPORTED;
+    }
+
+    @Override
+    public void handle(final DecompilerState state) {
+        if (this.supported().isSupported(state.current())) {
+            final AstNode right = state.stack().pop();
+            final AstNode left = state.stack().pop();
+            state.stack().push(new Substraction(left, right));
+            state.popInstruction();
+        }
+    }
 }

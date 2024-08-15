@@ -24,6 +24,7 @@
 package org.eolang.opeo.decompilation.agents;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.eolang.opeo.ast.Opcode;
@@ -63,5 +64,16 @@ final class Supported {
      */
     boolean isSupported(final Opcode opcode) {
         return this.all.contains(opcode.opcode());
+    }
+
+    /**
+     * Merge two supported sets.
+     * @param supported Supported to merge.
+     * @return Merged supported set.
+     */
+    Supported merge(final Supported supported) {
+        final Set<Integer> merged = new HashSet<>(this.all);
+        merged.addAll(supported.all);
+        return new Supported(merged);
     }
 }

@@ -28,7 +28,6 @@ import java.util.HashSet;
 import java.util.Set;
 import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.OperandStack;
 import org.objectweb.asm.Opcodes;
@@ -42,15 +41,16 @@ public final class NewArrayAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Set<Integer> SUPPORTED = new HashSet<>(
-        Arrays.asList(
-            Opcodes.ANEWARRAY
-        )
-    );
+    private static final Supported SUPPORTED = new Supported(Opcodes.ANEWARRAY);
+
+    @Override
+    public Supported supported() {
+        return NewArrayAgent.SUPPORTED;
+    }
 
     @Override
     public void handle(final DecompilerState state) {
-        if (NewArrayAgent.SUPPORTED.contains(state.instruction().opcode())) {
+        if (this.supported().isSupported(state.current())) {
             final String type = (String) state.operand(0);
             final OperandStack stack = state.stack();
             final AstNode size = stack.pop();

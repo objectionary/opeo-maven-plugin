@@ -25,7 +25,6 @@ package org.eolang.opeo.decompilation.agents;
 
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.FieldRetrieval;
-import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 
@@ -36,8 +35,13 @@ import org.objectweb.asm.Opcodes;
 public final class GetFieldAgent implements DecompilationAgent {
 
     @Override
+    public Supported supported() {
+        return new Supported(Opcodes.GETFIELD);
+    }
+
+    @Override
     public void handle(final DecompilerState state) {
-        if (state.instruction().opcode() == Opcodes.GETFIELD) {
+        if (this.supported().isSupported(state.current())) {
             final String owner = (String) state.operand(0);
             final String name = (String) state.operand(1);
             final String descriptor = (String) state.operand(2);

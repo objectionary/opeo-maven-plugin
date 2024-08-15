@@ -23,11 +23,7 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import org.eolang.opeo.ast.Literal;
-import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 
@@ -37,21 +33,17 @@ import org.objectweb.asm.Opcodes;
  */
 public final class BipushAgent implements DecompilationAgent {
 
-    /**
-     * Supported opcodes.
-     */
-    private static final Set<Integer> SUPPORTED = new HashSet<>(
-        Arrays.asList(
-            Opcodes.BIPUSH
-        )
-    );
-
     @Override
     public void handle(final DecompilerState state) {
-        if (BipushAgent.SUPPORTED.contains(state.instruction().opcode())) {
+        if (this.supported().isSupported(state.current())) {
             state.stack().push(new Literal(state.operand(0)));
             state.popInstruction();
         }
+    }
+
+    @Override
+    public Supported supported() {
+        return new Supported(Opcodes.BIPUSH);
     }
 
 }

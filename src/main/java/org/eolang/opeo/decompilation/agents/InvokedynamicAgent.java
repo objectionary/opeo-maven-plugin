@@ -27,7 +27,6 @@ import java.util.Collections;
 import java.util.List;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.DynamicInvocation;
-import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Handle;
 import org.objectweb.asm.Opcodes;
@@ -40,9 +39,14 @@ import org.objectweb.asm.Type;
 public final class InvokedynamicAgent implements DecompilationAgent {
 
     @Override
+    public Supported supported() {
+        return new Supported(Opcodes.INVOKEDYNAMIC);
+    }
+
+    @Override
     public void handle(final DecompilerState state) {
-        if (state.instruction().opcode() == Opcodes.INVOKEDYNAMIC) {
-            final List<Object> operands = state.instruction().params();
+        if (this.supported().isSupported(state.current())) {
+            final List<Object> operands = state.current().params();
             final String descriptor = (String) operands.get(1);
             final List<AstNode> args = state.stack().pop(Type.getArgumentTypes(descriptor).length);
             Collections.reverse(args);

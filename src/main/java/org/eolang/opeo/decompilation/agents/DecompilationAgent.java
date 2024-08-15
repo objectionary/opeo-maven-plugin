@@ -23,41 +23,23 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.Substraction;
-import org.eolang.opeo.decompilation.DecompilationAgent;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.objectweb.asm.Opcodes;
 
 /**
- * Substraction instruction handler.
- * @since 0.1
+ * An agent that tries to understand the current decompilation state and apply some changes to it.
+ * @since 0.4
  */
-public final class SubstractionAgent implements DecompilationAgent {
+public interface DecompilationAgent {
+
+    /**
+     * Handle the current state.
+     * @param state Current state to handle together with operand stack and variables.
+     */
+    void handle(DecompilerState state);
 
     /**
      * Supported opcodes.
+     * @return Supported opcodes.
      */
-    private static final Set<Integer> SUPPORTED = new HashSet<>(
-        Arrays.asList(
-            Opcodes.ISUB,
-            Opcodes.LSUB,
-            Opcodes.FSUB,
-            Opcodes.DSUB
-        )
-    );
-
-    @Override
-    public void handle(final DecompilerState state) {
-        final int opcode = state.instruction().opcode();
-        if (SubstractionAgent.SUPPORTED.contains(opcode)) {
-            final AstNode right = state.stack().pop();
-            final AstNode left = state.stack().pop();
-            state.stack().push(new Substraction(left, right));
-            state.popInstruction();
-        }
-    }
+    Supported supported();
 }
