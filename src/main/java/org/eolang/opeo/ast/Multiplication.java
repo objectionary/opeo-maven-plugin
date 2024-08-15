@@ -36,10 +36,6 @@ import org.xembly.Directives;
 /**
  * Multiplication.
  * @since 0.1
- * @todo #284:90min Add types for Multiplication.
- *  Currently we support only integer multiplication.
- *  We need to add support for other types, such as floating point numbers, longs, etc.
- *  Don't forget to add tests for the new types.
  */
 public final class Multiplication implements AstNode, Typed {
 
@@ -86,7 +82,7 @@ public final class Multiplication implements AstNode, Typed {
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.left.opcodes());
         res.addAll(this.right.opcodes());
-        res.add(new Opcode(Opcodes.IMUL));
+        res.add(new Opcode(this.opcode()));
         return res;
     }
 
@@ -94,6 +90,25 @@ public final class Multiplication implements AstNode, Typed {
     public Type type() {
         return new ExpressionType(this.left, this.right).type();
     }
+
+    /**
+     * Determines the opcode based on the argument types.
+     * @return Opcode.
+     */
+    private int opcode() {
+        final Type type = this.type();
+        if (type.equals(Type.INT_TYPE)) {
+            return Opcodes.IMUL;
+        } else if (type.equals(Type.LONG_TYPE)) {
+            return Opcodes.LMUL;
+        } else if (type.equals(Type.FLOAT_TYPE)) {
+            return Opcodes.FMUL;
+        } else if (type.equals(Type.DOUBLE_TYPE)) {
+            return Opcodes.DMUL;
+        }
+        throw new IllegalArgumentException("Unsupported type: " + type);
+    }
+
 
     /**
      * Extracts the first value.

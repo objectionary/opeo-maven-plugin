@@ -24,8 +24,14 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import java.util.List;
+import java.util.stream.Stream;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.objectweb.asm.Opcodes;
 import org.xembly.ImpossibleModificationException;
 import org.xembly.Xembler;
 
@@ -53,6 +59,57 @@ final class MultiplicationTest {
                 "./o[@base='times']",
                 "./o[@base='times']/o[@base='int' and contains(text(),'3')]",
                 "./o[@base='times']/o[@base='int' and contains(text(),'4')]"
+            )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("multiplications")
+    void convertsToOpcodesWithDifferentTypes(
+        final AstNode left,
+        final AstNode right,
+        final int expected
+    ) {
+        final List<AstNode> opcodes = new Multiplication(left, right).opcodes();
+        final AstNode last = opcodes.get(opcodes.size() - 1);
+        MatcherAssert.assertThat(
+            String.format(
+                "We expect that multiplication with two arguments ('%s' and '%s') will be converted to a opcode '%s'",
+                left,
+                right,
+                new OpcodeName(expected).simplified()
+            ),
+            last,
+            Matchers.equalTo(new Opcode(expected))
+        );
+    }
+
+    /**
+     * Provide multiplication test cases.
+     * For test case {@link #convertsToOpcodesWithDifferentTypes(AstNode, AstNode, int)}
+     * @return Test cases.
+     */
+    private static Stream<org.junit.jupiter.params.provider.Arguments> multiplications() {
+        return Stream.of(
+            org.junit.jupiter.params.provider.Arguments.of(
+                new Literal(1),
+                new Literal(2),
+                Opcodes.IMUL
+            ),
+            org.junit.jupiter.params.provider.Arguments.of(
+                new Literal(3L),
+                new Literal(4L),
+                Opcodes.LMUL
+            ),
+            org.junit.jupiter.params.provider.Arguments.of(
+                new Literal(5.0f),
+                new Literal(6.0f),
+                Opcodes.FMUL
+            ),
+            org.junit.jupiter.params.provider.Arguments.of(
+                new Literal(7.0),
+                new Literal(8.0),
+                Opcodes.DMUL
             )
         );
     }
