@@ -33,18 +33,18 @@ import org.eolang.opeo.ast.Opcode;
  * Used to check if the instruction is supported.
  * @since 0.4
  */
-public final class Supported {
+final class Supported {
 
     /**
      * Supported opcodes.
      */
-    private final Set<Integer> supported;
+    private final Set<Integer> all;
 
     /**
      * Constructor.
      * @param supported Supported opcodes.
      */
-    public Supported(final int... supported) {
+    Supported(final int... supported) {
         this(Arrays.stream(supported).boxed().collect(Collectors.toSet()));
     }
 
@@ -52,8 +52,8 @@ public final class Supported {
      * Constructor.
      * @param supported Supported opcodes.
      */
-    public Supported(final Set<Integer> supported) {
-        this.supported = supported;
+    Supported(final Set<Integer> supported) {
+        this.all = supported;
     }
 
     /**
@@ -61,7 +61,7 @@ public final class Supported {
      * @param opcode Instruction to check.
      * @return True if the instruction is supported, false otherwise.
      */
-    public boolean isSupported(final Opcode opcode) {
-        return this.supported.contains(opcode.opcode());
+    boolean isSupported(final Opcode opcode) {
+        return this.all.contains(opcode.opcode());
     }
 }
