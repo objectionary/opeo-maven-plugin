@@ -166,18 +166,9 @@ public final class AllAgents implements DecompilationAgent {
     /**
      * Get supported opcodes.
      * @return Supported opcodes.
-     * @todo #288:30min Refactor supportedOpcodes method.
-     *  Currently we keep the map of agents to be able to get supported opcodes.
-     *  This is not a good practice. We should refactor it to a more elegant solution.
-     *  For example, recently we added {@link Supported} class which might be used in each agent.
-     *  Then, each agent will be able to provide supported opcodes.
      */
     public String[] supportedOpcodes() {
-        return this.agents.keySet()
-            .stream()
-            .map(OpcodeName::new)
-            .map(OpcodeName::simplified)
-            .toArray(String[]::new);
+        return this.supported().names();
     }
 
     /**

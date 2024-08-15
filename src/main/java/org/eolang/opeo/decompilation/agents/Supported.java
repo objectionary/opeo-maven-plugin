@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.eolang.opeo.ast.Opcode;
+import org.eolang.opeo.ast.OpcodeName;
 
 /**
  * Supported opcodes.
@@ -76,4 +77,16 @@ final class Supported {
         merged.addAll(supported.all);
         return new Supported(merged);
     }
+
+    /**
+     * Simplified names of supported opcodes.
+     * @return Names of supported opcodes.
+     */
+    String[] names() {
+        return this.all.stream()
+            .map(OpcodeName::new)
+            .map(OpcodeName::simplified)
+            .toArray(String[]::new);
+    }
+
 }
