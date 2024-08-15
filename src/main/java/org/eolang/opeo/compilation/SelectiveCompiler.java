@@ -65,7 +65,7 @@ public final class SelectiveCompiler implements Compiler {
      */
     public SelectiveCompiler(final Storage storage) {
         this.storage = storage;
-        this.supported = new AllAgents(false).supportedOpcodes();
+        this.supported = new AllAgents().supportedOpcodes();
     }
 
     @Override

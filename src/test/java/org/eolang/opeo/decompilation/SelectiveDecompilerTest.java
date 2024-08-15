@@ -161,7 +161,7 @@ final class SelectiveDecompilerTest {
     void identifiesUnsupportedOpcodes() {
         MatcherAssert.assertThat(
             "We expect that the supported opcodes won't contain the 'GOTO' opcode since we don't support it yet.",
-            new AllAgents(false).supportedOpcodes(),
+            new AllAgents().supportedOpcodes(),
             Matchers.not(Matchers.arrayContaining("GOTO"))
         );
     }

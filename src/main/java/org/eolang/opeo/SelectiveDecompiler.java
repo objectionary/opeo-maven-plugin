@@ -69,7 +69,7 @@ public final class SelectiveDecompiler implements Decompiler {
      * @param modified Folder where to save the modified XMIRs.
      */
     public SelectiveDecompiler(final Path input, final Path output, final Path modified) {
-        this(input, output, modified, new AllAgents(false).supportedOpcodes());
+        this(input, output, modified, new AllAgents().supportedOpcodes());
     }
 
     /**
@@ -97,7 +97,7 @@ public final class SelectiveDecompiler implements Decompiler {
     public SelectiveDecompiler(
         final Storage storage, final Storage modified
     ) {
-        this(storage, modified, new AllAgents(false).supportedOpcodes());
+        this(storage, modified, new AllAgents().supportedOpcodes());
     }
 
     /**
