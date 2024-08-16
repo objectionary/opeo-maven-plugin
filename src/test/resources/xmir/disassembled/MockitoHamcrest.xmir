@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program dob="2024-08-16T09:44:07.232858Z"
+         ms="1723801447232"
+         name="j$MockitoHamcrest"
+         revision="0.0.0"
+         time="2024-08-16T09:44:07.232858Z"
+         version="0.0.0">
+   <listing>yv66vgAAADQAYgoACwBBCgAMAEIKAEMARAoARQBGCgBHAEgLAEkASgcASwoABwBMCwBNAE4KAAwATwcAUAcAUQEAB2FyZ1RoYXQBACooTG9yZy9oYW1jcmVzdC9NYXRjaGVyOylMamF2YS9sYW5nL09iamVjdDsBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQASTG9jYWxWYXJpYWJsZVRhYmxlAQAHbWF0Y2hlcgEAFkxvcmcvaGFtY3Jlc3QvTWF0Y2hlcjsBABZMb2NhbFZhcmlhYmxlVHlwZVRhYmxlAQAbTG9yZy9oYW1jcmVzdC9NYXRjaGVyPFRUOz47AQAJU2lnbmF0dXJlAQA2PFQ6TGphdmEvbGFuZy9PYmplY3Q7PihMb3JnL2hhbWNyZXN0L01hdGNoZXI8VFQ7PjspVFQ7AQAIY2hhclRoYXQBABkoTG9yZy9oYW1jcmVzdC9NYXRjaGVyOylDAQAtTG9yZy9oYW1jcmVzdC9NYXRjaGVyPExqYXZhL2xhbmcvQ2hhcmFjdGVyOz47AQAwKExvcmcvaGFtY3Jlc3QvTWF0Y2hlcjxMamF2YS9sYW5nL0NoYXJhY3Rlcjs+OylDAQALYm9vbGVhblRoYXQBABkoTG9yZy9oYW1jcmVzdC9NYXRjaGVyOylaAQArTG9yZy9oYW1jcmVzdC9NYXRjaGVyPExqYXZhL2xhbmcvQm9vbGVhbjs+OwEALihMb3JnL2hhbWNyZXN0L01hdGNoZXI8TGphdmEvbGFuZy9Cb29sZWFuOz47KVoBAAhieXRlVGhhdAEAGShMb3JnL2hhbWNyZXN0L01hdGNoZXI7KUIBAChMb3JnL2hhbWNyZXN0L01hdGNoZXI8TGphdmEvbGFuZy9CeXRlOz47AQArKExvcmcvaGFtY3Jlc3QvTWF0Y2hlcjxMamF2YS9sYW5nL0J5dGU7PjspQgEACXNob3J0VGhhdAEAGShMb3JnL2hhbWNyZXN0L01hdGNoZXI7KVMBAClMb3JnL2hhbWNyZXN0L01hdGNoZXI8TGphdmEvbGFuZy9TaG9ydDs+OwEALChMb3JnL2hhbWNyZXN0L01hdGNoZXI8TGphdmEvbGFuZy9TaG9ydDs+OylTAQAHaW50VGhhdAEAGShMb3JnL2hhbWNyZXN0L01hdGNoZXI7KUkBACtMb3JnL2hhbWNyZXN0L01hdGNoZXI8TGphdmEvbGFuZy9JbnRlZ2VyOz47AQAuKExvcmcvaGFtY3Jlc3QvTWF0Y2hlcjxMamF2YS9sYW5nL0ludGVnZXI7PjspSQEACGxvbmdUaGF0AQAZKExvcmcvaGFtY3Jlc3QvTWF0Y2hlcjspSgEAKExvcmcvaGFtY3Jlc3QvTWF0Y2hlcjxMamF2YS9sYW5nL0xvbmc7PjsBACsoTG9yZy9oYW1jcmVzdC9NYXRjaGVyPExqYXZhL2xhbmcvTG9uZzs+OylKAQAJZmxvYXRUaGF0AQAZKExvcmcvaGFtY3Jlc3QvTWF0Y2hlcjspRgEAKUxvcmcvaGFtY3Jlc3QvTWF0Y2hlcjxMamF2YS9sYW5nL0Zsb2F0Oz47AQAsKExvcmcvaGFtY3Jlc3QvTWF0Y2hlcjxMamF2YS9sYW5nL0Zsb2F0Oz47KUYBAApkb3VibGVUaGF0AQAZKExvcmcvaGFtY3Jlc3QvTWF0Y2hlcjspRAEAKkxvcmcvaGFtY3Jlc3QvTWF0Y2hlcjxMamF2YS9sYW5nL0RvdWJsZTs+OwEALShMb3JnL2hhbWNyZXN0L01hdGNoZXI8TGphdmEvbGFuZy9Eb3VibGU7PjspRAEADXJlcG9ydE1hdGNoZXIBABkoTG9yZy9oYW1jcmVzdC9NYXRjaGVyOylWAQA0PFQ6TGphdmEvbGFuZy9PYmplY3Q7PihMb3JnL2hhbWNyZXN0L01hdGNoZXI8VFQ7PjspVgEABjxpbml0PgEAAygpVgEABHRoaXMBACZMb3JnL21vY2tpdG8vaGFtY3Jlc3QvTW9ja2l0b0hhbWNyZXN0OwEAClNvdXJjZUZpbGUBABRNb2NraXRvSGFtY3Jlc3QuamF2YQwAOAA5DABSAFMHAFQMAFUAVgcAVwwAWABZBwBaDABbAFwHAF0MAF4AXwEANW9yZy9tb2NraXRvL2ludGVybmFsL2hhbWNyZXN0L0hhbWNyZXN0QXJndW1lbnRNYXRjaGVyDAA7ADkHAGAMADgAYQwAOwA8AQAkb3JnL21vY2tpdG8vaGFtY3Jlc3QvTW9ja2l0b0hhbWNyZXN0AQAQamF2YS9sYW5nL09iamVjdAEACGdldENsYXNzAQATKClMamF2YS9sYW5nL0NsYXNzOwEAOW9yZy9tb2NraXRvL2ludGVybmFsL2hhbWNyZXN0L01hdGNoZXJHZW5lcmljVHlwZUV4dHJhY3RvcgEAFGdlbmVyaWNUeXBlT2ZNYXRjaGVyAQAkKExqYXZhL2xhbmcvQ2xhc3M7KUxqYXZhL2xhbmcvQ2xhc3M7AQAkb3JnL21vY2tpdG8vaW50ZXJuYWwvdXRpbC9QcmltaXRpdmVzAQAMZGVmYXVsdFZhbHVlAQAlKExqYXZhL2xhbmcvQ2xhc3M7KUxqYXZhL2xhbmcvT2JqZWN0OwEAN29yZy9tb2NraXRvL2ludGVybmFsL3Byb2dyZXNzL1RocmVhZFNhZmVNb2NraW5nUHJvZ3Jlc3MBAA9tb2NraW5nUHJvZ3Jlc3MBADEoKUxvcmcvbW9ja2l0by9pbnRlcm5hbC9wcm9ncmVzcy9Nb2NraW5nUHJvZ3Jlc3M7AQAtb3JnL21vY2tpdG8vaW50ZXJuYWwvcHJvZ3Jlc3MvTW9ja2luZ1Byb2dyZXNzAQAZZ2V0QXJndW1lbnRNYXRjaGVyU3RvcmFnZQEAOCgpTG9yZy9tb2NraXRvL2ludGVybmFsL3Byb2dyZXNzL0FyZ3VtZW50TWF0Y2hlclN0b3JhZ2U7AQA0b3JnL21vY2tpdG8vaW50ZXJuYWwvcHJvZ3Jlc3MvQXJndW1lbnRNYXRjaGVyU3RvcmFnZQEAIChMb3JnL21vY2tpdG8vQXJndW1lbnRNYXRjaGVyOylWADEACwAMAAAAAAALAAkADQAOAAIADwAAAE8AAQABAAAADyq4AAEqtgACuAADuAAEsAAAAAMAEAAAAAoAAgAAAD0ABAA+ABEAAAAMAAEAAAAPABIAEwAAABQAAAAMAAEAAAAPABIAFQAAABYAAAACABcACQAYABkAAgAPAAAARgABAAEAAAAGKrgAAQOsAAAAAwAQAAAACgACAAAASwAEAEwAEQAAAAwAAQAAAAYAEgATAAAAFAAAAAwAAQAAAAYAEgAaAAAAFgAAAAIAGwAJABwAHQACAA8AAABGAAEAAQAAAAYquAABA6wAAAADABAAAAAKAAIAAABZAAQAWgARAAAADAABAAAABgASABMAAAAUAAAADAABAAAABgASAB4AAAAWAAAAAgAfAAkAIAAhAAIADwAAAEYAAQABAAAABiq4AAEDrAAAAAMAEAAAAAoAAgAAAGcABABoABEAAAAMAAEAAAAGABIAEwAAABQAAAAMAAEAAAAGABIAIgAAABYAAAACACMACQAkACUAAgAPAAAARgABAAEAAAAGKrgAAQOsAAAAAwAQAAAACgACAAAAdQAEAHYAEQAAAAwAAQAAAAYAEgATAAAAFAAAAAwAAQAAAAYAEgAmAAAAFgAAAAIAJwAJACgAKQACAA8AAABGAAEAAQAAAAYquAABA6wAAAADABAAAAAKAAIAAACDAAQAhAARAAAADAABAAAABgASABMAAAAUAAAADAABAAAABgASACoAAAAWAAAAAgArAAkALAAtAAIADwAAAEYAAgABAAAABiq4AAEJrQAAAAMAEAAAAAoAAgAAAJEABACSABEAAAAMAAEAAAAGABIAEwAAABQAAAAMAAEAAAAGABIALgAAABYAAAACAC8ACQAwADEAAgAPAAAARgABAAEAAAAGKrgAAQuuAAAAAwAQAAAACgACAAAAnwAEAKAAEQAAAAwAAQAAAAYAEgATAAAAFAAAAAwAAQAAAAYAEgAyAAAAFgAAAAIAMwAJADQANQACAA8AAABGAAIAAQAAAAYquAABDq8AAAADABAAAAAKAAIAAACtAAQArgARAAAADAABAAAABgASABMAAAAUAAAADAABAAAABgASADYAAAAWAAAAAgA3AAoAOAA5AAIADwAAAF4ABAABAAAAFrgABbkABgEAuwAHWSq3AAi5AAkCALEAAAADABAAAAASAAQAAACyAAMAswAQALQAFQC1ABEAAAAMAAEAAAAWABIAEwAAABQAAAAMAAEAAAAWABIAFQAAABYAAAACADoAAgA7ADwAAQAPAAAALwABAAEAAAAFKrcACrEAAAACABAAAAAGAAEAAAC3ABEAAAAMAAEAAAAFAD0APgAAAAEAPwAAAAIAQA==</listing>
+   <errors/>
+   <sheets/>
+   <license/>
+   <metas>
+      <meta>
+         <head>package</head>
+         <tail>org.mockito.hamcrest</tail>
+         <part>org.mockito.hamcrest</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.opcode</tail>
+         <part>org.eolang.jeo.opcode</part>
+      </meta>
+      <meta>
+         <head>alias</head>
+         <tail>org.eolang.jeo.label</tail>
+         <part>org.eolang.jeo.label</part>
+      </meta>
+   </metas>
+   <objects>
+      <o abstract="" name="j$MockitoHamcrest">
+         <o base="int" data="bytes" line="95116786" name="version">00 00 00 00 00 00 00 34</o>
+         <o base="int" data="bytes" line="1654430510" name="access">00 00 00 00 00 00 00 31</o>
+         <o base="string" data="bytes" line="1028563618" name="supername">6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>
+         <o base="tuple" line="1372515243" name="interfaces" star=""/>
+
+
+
+
+
+
+
+         <o abstract="" name="j$floatThat-KExvcmcvaGFtY3Jlc3QvTWF0Y2hlcjspRg==">
+            <o base="int" data="bytes" line="596228004" name="access">00 00 00 00 00 00 00 09</o>
+            <o base="string" data="bytes" line="828735238" name="descriptor">28 4C 6F 72 67 2F 68 61 6D 63 72 65 73 74 2F 4D 61 74 63 68 65 72 3B 29 46</o>
+            <o base="string" data="bytes" line="205436919" name="signature">28 4C 6F 72 67 2F 68 61 6D 63 72 65 73 74 2F 4D 61 74 63 68 65 72 3C 4C 6A 61 76 61 2F 6C 61 6E 67 2F 46 6C 6F 61 74 3B 3E 3B 29 46</o>
+            <o base="tuple" line="22153004" name="exceptions" star=""/>
+            <o abstract="" line="310105640" name="maxs">
+               <o base="int" data="bytes" line="2001596413" name="stack">00 00 00 00 00 00 00 01</o>
+               <o base="int" data="bytes" line="635488552" name="locals">00 00 00 00 00 00 00 01</o>
+            </o>
+            <o base="param" name="param-TG9yZy9oYW1jcmVzdC9NYXRjaGVyOw==-0"/>
+            <o base="seq" name="@">
+               <o base="tuple" line="541002226" name="instructions" star="">
+                  <o base="label" data="bytes" line="280153778">31 39 34 64 38 66 65 33 2D 36 35 33 39 2D 34 34 64 37 2D 61 36 64 33 2D 65 65 37 37 34 39 37 32 38 31 63 63</o>
+                  <o base="opcode" line="999" name="ALOAD-11C29">
+                     <o base="int" data="bytes" line="1063761316">00 00 00 00 00 00 00 19</o>
+                     <o base="int" data="bytes" line="1279368800">00 00 00 00 00 00 00 00</o>
+                  </o>
+                  <o base="opcode" line="999" name="INVOKESTATIC-11C2A">
+                     <o base="int" data="bytes" line="2140372175">00 00 00 00 00 00 00 B8</o>
+                     <o base="string" data="bytes" line="515635266">6F 72 67 2F 6D 6F 63 6B 69 74 6F 2F 68 61 6D 63 72 65 73 74 2F 4D 6F 63 6B 69 74 6F 48 61 6D 63 72 65 73 74</o>
+                     <o base="string" data="bytes" line="754377535">72 65 70 6F 72 74 4D 61 74 63 68 65 72</o>
+                     <o base="string" data="bytes" line="1901315157">28 4C 6F 72 67 2F 68 61 6D 63 72 65 73 74 2F 4D 61 74 63 68 65 72 3B 29 56</o>
+                     <o base="bool" data="bytes" line="1082049443">00</o>
+                  </o>
+                  <o base="label" data="bytes" line="697922747">37 64 66 39 65 66 32 38 2D 37 31 65 37 2D 34 33 38 64 2D 62 64 32 35 2D 61 65 34 33 64 39 62 31 33 38 64 38</o>
+                  <o base="opcode" line="999" name="FCONST_0-11C2B">
+                     <o base="int" data="bytes" line="1156992832">00 00 00 00 00 00 00 0B</o>
+                  </o>
+                  <o base="opcode" line="999" name="FRETURN-11C2C">
+                     <o base="int" data="bytes" line="1755065810">00 00 00 00 00 00 00 AE</o>
+                  </o>
+                  <o base="label" data="bytes" line="1890303947">63 34 30 63 63 39 33 37 2D 30 35 37 38 2D 34 31 62 39 2D 39 38 66 36 2D 64 31 38 65 35 31 64 61 35 35 64 62</o>
+               </o>
+            </o>
+         </o>
+      </o>
+   </objects>
+</program>

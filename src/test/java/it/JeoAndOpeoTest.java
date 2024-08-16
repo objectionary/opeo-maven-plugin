@@ -135,7 +135,8 @@ final class JeoAndOpeoTest {
         "xmir/disassembled/ApplicationContextAssertProvider.xmir",
         "xmir/disassembled/Sum.xmir",
         "xmir/disassembled/CachingJupiterConfiguration2.xmir",
-        "xmir/disassembled/DateFormatterRegistrar$LongToDateConverter.xmir"
+        "xmir/disassembled/DateFormatterRegistrar$LongToDateConverter.xmir",
+        "xmir/disassembled/MockitoHamcrest.xmir",
     })
     void decompilesCompilesAndKeepsTheSameInstructions(final String path) throws Exception {
         final XMLDocument original = new XMLDocument(new BytesOf(new ResourceOf(path)).asBytes());
