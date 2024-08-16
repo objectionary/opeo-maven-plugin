@@ -24,6 +24,7 @@
 package org.eolang.opeo.decompilation;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -56,8 +57,16 @@ public final class OperandStack {
     /**
      * Default constructor.
      */
-    OperandStack() {
+    public OperandStack() {
         this(new ArrayDeque<>(0));
+    }
+
+    /**
+     * Constructor.
+     * @param nodes Initial stack nodes.
+     */
+    public OperandStack(final AstNode... nodes) {
+        this(new ArrayDeque<>(Arrays.asList(nodes)));
     }
 
     /**
@@ -111,14 +120,6 @@ public final class OperandStack {
     }
 
     /**
-     * Peek the higher value on the stack.
-     * @return Node.
-     */
-    public AstNode peek() {
-        return this.stack.peek();
-    }
-
-    /**
      * Push one more node to the stack.
      * @param node Node to add to the stack.
      */
@@ -140,5 +141,6 @@ public final class OperandStack {
     Iterator<AstNode> descendingIterator() {
         return this.stack.descendingIterator();
     }
+
 
 }

@@ -60,10 +60,25 @@ public final class DecompilerState {
 
     /**
      * Constructor.
+     */
+    public DecompilerState() {
+        this(new LocalVariables());
+    }
+
+    /**
+     * Constructor.
      * @param vars Method local variables.
      */
     public DecompilerState(final LocalVariables vars) {
         this(new OperandStack(), vars);
+    }
+
+    /**
+     * Constructor.
+     * @param ostack Operand stack.
+     */
+    public DecompilerState(final OperandStack ostack) {
+        this(ostack, new LocalVariables());
     }
 
     /**

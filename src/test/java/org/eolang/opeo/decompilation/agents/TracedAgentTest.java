@@ -23,24 +23,37 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
+import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.DecompilerState;
+import org.eolang.opeo.decompilation.OperandStack;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
+import org.objectweb.asm.Opcodes;
 
 /**
- * An agent that tries to understand the current decompilation state and apply some changes to it.
- * @since 0.4
+ * Test case for {@link TracedAgent}.
  */
-public interface DecompilationAgent {
+class TracedAgentTest {
 
-    /**
-     * Handle the current state.
-     * @param state Current state to handle together with operand stack and variables.
-     */
-    void handle(DecompilerState state);
-
-    /**
-     * Supported opcodes.
-     * @return Supported opcodes.
-     */
-    Supported supported();
+    @Test
+    void tracesDecompilation() {
+        final TracedAgent.Container output = new TracedAgent.Container();
+        new TracedAgent(new DummyAgent(), output).handle(
+            new DecompilerState(
+                new OperandStack(
+                    new Opcode(Opcodes.LCONST_1), new Opcode(Opcodes.LRETURN)
+                )
+            )
+        );
+        MatcherAssert.assertThat(
+            "We should see the start and end messages together with the decompliation state",
+            output.messages(),
+            Matchers.containsInAnyOrder(
+                "1",
+                "2"
+            )
+        );
+    }
 
 }

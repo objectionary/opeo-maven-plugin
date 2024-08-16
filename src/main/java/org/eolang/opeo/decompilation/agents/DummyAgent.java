@@ -23,24 +23,21 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
+import com.jcabi.log.Logger;
 import org.eolang.opeo.decompilation.DecompilerState;
 
 /**
- * An agent that tries to understand the current decompilation state and apply some changes to it.
- * @since 0.4
+ * Dummy agent.
  */
-public interface DecompilationAgent {
+public class DummyAgent implements DecompilationAgent {
 
-    /**
-     * Handle the current state.
-     * @param state Current state to handle together with operand stack and variables.
-     */
-    void handle(DecompilerState state);
+    @Override
+    public void handle(final DecompilerState ignore) {
+        Logger.info(this, "Dummy agent is doing nothing");
+    }
 
-    /**
-     * Supported opcodes.
-     * @return Supported opcodes.
-     */
-    Supported supported();
-
+    @Override
+    public Supported supported() {
+        return new Supported();
+    }
 }
