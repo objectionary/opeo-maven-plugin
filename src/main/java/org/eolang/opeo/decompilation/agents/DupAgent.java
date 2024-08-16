@@ -37,11 +37,11 @@ public final class DupAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Supported SUPPORTED = new Supported(Opcodes.DUP);
+    private static final Supported OPCODES = new Supported(Opcodes.DUP);
 
     @Override
     public Supported supported() {
-        return DupAgent.SUPPORTED;
+        return DupAgent.OPCODES;
     }
 
     @Override

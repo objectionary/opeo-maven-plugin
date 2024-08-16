@@ -26,11 +26,7 @@ package org.eolang.opeo.decompilation.agents;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import org.cactoos.map.MapEntry;
-import org.eolang.opeo.LabelInstruction;
-import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.objectweb.asm.Opcodes;
 
 /**
  * All agents that try to decompile incoming instructions.
@@ -41,6 +37,7 @@ import org.objectweb.asm.Opcodes;
  *  We should check decompilation stack instead.
  *  If it changes, we should continue. Otherwise, we should stop.
  *  The current implementation you can find here {@link #handle(DecompilerState)}.
+ * @checkstyle ClassFanOutComplexityCheck (500 lines)
  */
 public final class AllAgents implements DecompilationAgent {
 
@@ -116,8 +113,8 @@ public final class AllAgents implements DecompilationAgent {
     @Override
     public Supported supported() {
         return this.agents.stream()
-            .map(DecompilationAgent::supported).
-            reduce(new Supported(), Supported::merge);
+            .map(DecompilationAgent::supported)
+            .reduce(new Supported(), Supported::merge);
     }
 
     /**
@@ -128,43 +125,4 @@ public final class AllAgents implements DecompilationAgent {
         return this.supported().names();
     }
 
-    /**
-     * Unimplemented instruction handler.
-     * @since 0.1
-     */
-    private static final class UnimplementedAgent implements DecompilationAgent {
-
-        /**
-         * Do we put numbers to opcodes?
-         */
-        private final boolean counting;
-
-        /**
-         * Constructor.
-         * @param counting Flag which decides if we need to count opcodes.
-         */
-        private UnimplementedAgent(final boolean counting) {
-            this.counting = counting;
-        }
-
-        @Override
-        public void handle(final DecompilerState state) {
-            final Supported supported = new AllAgents().supported();
-            if (state.hasInstructions() && !supported.isSupported(state.current())) {
-                state.stack().push(
-                    new Opcode(
-                        state.current().opcode(),
-                        state.current().params(),
-                        this.counting
-                    )
-                );
-                state.popInstruction();
-            }
-        }
-
-        @Override
-        public Supported supported() {
-            return new Supported();
-        }
-    }
 }

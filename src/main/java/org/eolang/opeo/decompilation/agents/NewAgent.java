@@ -36,11 +36,11 @@ public final class NewAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Supported SUPPORTED = new Supported(Opcodes.NEW);
+    private static final Supported OPCODES = new Supported(Opcodes.NEW);
 
     @Override
     public Supported supported() {
-        return NewAgent.SUPPORTED;
+        return NewAgent.OPCODES;
     }
 
     @Override

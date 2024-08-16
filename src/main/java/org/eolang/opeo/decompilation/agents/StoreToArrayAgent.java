@@ -49,11 +49,11 @@ public final class StoreToArrayAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Supported SUPPORTED = new Supported(Opcodes.AASTORE);
+    private static final Supported OPCODES = new Supported(Opcodes.AASTORE);
 
     @Override
     public Supported supported() {
-        return StoreToArrayAgent.SUPPORTED;
+        return StoreToArrayAgent.OPCODES;
     }
 
     @Override

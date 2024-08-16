@@ -39,7 +39,7 @@ public final class ConstAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Supported SUPPORTED = new Supported(
+    private static final Supported OPCODES = new Supported(
         Opcodes.ICONST_M1,
         Opcodes.ICONST_0,
         Opcodes.ICONST_1,
@@ -58,7 +58,7 @@ public final class ConstAgent implements DecompilationAgent {
 
     @Override
     public Supported supported() {
-        return ConstAgent.SUPPORTED;
+        return ConstAgent.OPCODES;
     }
 
     @Override

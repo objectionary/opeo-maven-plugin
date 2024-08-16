@@ -23,9 +23,6 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
@@ -44,7 +41,7 @@ public final class LoadAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Supported SUPPORTED = new Supported(
+    private static final Supported OPCODES = new Supported(
         Opcodes.ILOAD,
         Opcodes.LLOAD,
         Opcodes.FLOAD,
@@ -54,7 +51,7 @@ public final class LoadAgent implements DecompilationAgent {
 
     @Override
     public Supported supported() {
-        return LoadAgent.SUPPORTED;
+        return LoadAgent.OPCODES;
     }
 
     @Override

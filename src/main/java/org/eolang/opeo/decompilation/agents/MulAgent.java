@@ -37,7 +37,7 @@ public final class MulAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Supported SUPPORTED = new Supported(
+    private static final Supported OPCODES = new Supported(
         Opcodes.IMUL,
         Opcodes.LMUL,
         Opcodes.FMUL,
@@ -46,7 +46,7 @@ public final class MulAgent implements DecompilationAgent {
 
     @Override
     public Supported supported() {
-        return MulAgent.SUPPORTED;
+        return MulAgent.OPCODES;
     }
 
     @Override

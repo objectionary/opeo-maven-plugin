@@ -39,7 +39,7 @@ public final class CheckCastAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Supported SUPPORTED = new Supported(Opcodes.CHECKCAST);
+    private static final Supported OPCODES = new Supported(Opcodes.CHECKCAST);
 
     @Override
     public void handle(final DecompilerState state) {
@@ -53,6 +53,6 @@ public final class CheckCastAgent implements DecompilationAgent {
 
     @Override
     public Supported supported() {
-        return CheckCastAgent.SUPPORTED;
+        return CheckCastAgent.OPCODES;
     }
 }

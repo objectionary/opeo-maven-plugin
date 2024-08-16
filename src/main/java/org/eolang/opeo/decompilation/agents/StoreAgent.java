@@ -42,7 +42,7 @@ public final class StoreAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Supported SUPPORTED = new Supported(
+    private static final Supported OPCODES = new Supported(
         Opcodes.ISTORE,
         Opcodes.LSTORE,
         Opcodes.FSTORE,
@@ -52,7 +52,7 @@ public final class StoreAgent implements DecompilationAgent {
 
     @Override
     public Supported supported() {
-        return StoreAgent.SUPPORTED;
+        return StoreAgent.OPCODES;
     }
 
     @Override

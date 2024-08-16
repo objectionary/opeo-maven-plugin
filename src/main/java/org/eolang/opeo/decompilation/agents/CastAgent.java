@@ -38,7 +38,7 @@ public final class CastAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Supported SUPPORTED = new Supported(
+    private static final Supported OPCODES = new Supported(
         Opcodes.I2B,
         Opcodes.I2C,
         Opcodes.I2S,
@@ -72,7 +72,7 @@ public final class CastAgent implements DecompilationAgent {
 
     @Override
     public Supported supported() {
-        return CastAgent.SUPPORTED;
+        return CastAgent.OPCODES;
     }
 
     /**

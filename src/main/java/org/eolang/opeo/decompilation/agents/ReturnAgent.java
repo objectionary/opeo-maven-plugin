@@ -39,7 +39,7 @@ public final class ReturnAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Supported SUPPORTED = new Supported(
+    private static final Supported OPCODES = new Supported(
         Opcodes.RETURN,
         Opcodes.IRETURN,
         Opcodes.LRETURN,
@@ -50,7 +50,7 @@ public final class ReturnAgent implements DecompilationAgent {
 
     @Override
     public Supported supported() {
-        return ReturnAgent.SUPPORTED;
+        return ReturnAgent.OPCODES;
     }
 
     @Override

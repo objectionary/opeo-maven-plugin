@@ -42,11 +42,11 @@ public final class IfAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Supported SUPPORTED = new Supported(Opcodes.IF_ICMPGT);
+    private static final Supported OPCODES = new Supported(Opcodes.IF_ICMPGT);
 
     @Override
     public Supported supported() {
-        return IfAgent.SUPPORTED;
+        return IfAgent.OPCODES;
     }
 
     @Override

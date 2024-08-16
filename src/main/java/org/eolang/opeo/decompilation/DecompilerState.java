@@ -25,7 +25,6 @@ package org.eolang.opeo.decompilation;
 
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Optional;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.opeo.ast.AstNode;

@@ -38,11 +38,11 @@ public final class NewArrayAgent implements DecompilationAgent {
     /**
      * Supported opcodes.
      */
-    private static final Supported SUPPORTED = new Supported(Opcodes.ANEWARRAY);
+    private static final Supported OPCODES = new Supported(Opcodes.ANEWARRAY);
 
     @Override
     public Supported supported() {
-        return NewArrayAgent.SUPPORTED;
+        return NewArrayAgent.OPCODES;
     }
 
     @Override

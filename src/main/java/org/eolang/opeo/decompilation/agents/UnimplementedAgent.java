@@ -23,39 +23,45 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.Substraction;
+import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.DecompilerState;
-import org.objectweb.asm.Opcodes;
 
 /**
- * Substraction instruction handler.
+ * Unimplemented instruction handler.
  * @since 0.1
  */
-public final class SubAgent implements DecompilationAgent {
+final class UnimplementedAgent implements DecompilationAgent {
 
     /**
-     * Supported opcodes.
+     * Do we put numbers to opcodes?
      */
-    private static final Supported OPCODES = new Supported(
-        Opcodes.ISUB,
-        Opcodes.LSUB,
-        Opcodes.FSUB,
-        Opcodes.DSUB
-    );
+    private final boolean counting;
 
-    @Override
-    public Supported supported() {
-        return SubAgent.OPCODES;
+    /**
+     * Constructor.
+     * @param counting Flag which decides if we need to count opcodes.
+     */
+    UnimplementedAgent(final boolean counting) {
+        this.counting = counting;
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
-            final AstNode right = state.stack().pop();
-            final AstNode left = state.stack().pop();
-            state.stack().push(new Substraction(left, right));
+        final Supported supported = new AllAgents().supported();
+        if (state.hasInstructions() && !supported.isSupported(state.current())) {
+            state.stack().push(
+                new Opcode(
+                    state.current().opcode(),
+                    state.current().params(),
+                    this.counting
+                )
+            );
             state.popInstruction();
         }
+    }
+
+    @Override
+    public Supported supported() {
+        return new Supported();
     }
 }
