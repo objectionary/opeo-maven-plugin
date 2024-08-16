@@ -170,6 +170,8 @@ final class XmirParser implements Parser {
             result = new Opcode(node);
         } else if ("label".equals(base)) {
             result = new Label(node);
+        } else if ("float".equals(base)) {
+            result = new Literal(node);
         } else if ("int".equals(base)) {
             result = new Literal(node);
         } else if ("string".equals(base)) {

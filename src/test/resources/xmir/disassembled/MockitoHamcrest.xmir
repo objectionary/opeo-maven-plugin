@@ -32,13 +32,6 @@
          <o base="int" data="bytes" line="1654430510" name="access">00 00 00 00 00 00 00 31</o>
          <o base="string" data="bytes" line="1028563618" name="supername">6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>
          <o base="tuple" line="1372515243" name="interfaces" star=""/>
-
-
-
-
-
-
-
          <o abstract="" name="j$floatThat-KExvcmcvaGFtY3Jlc3QvTWF0Y2hlcjspRg==">
             <o base="int" data="bytes" line="596228004" name="access">00 00 00 00 00 00 00 09</o>
             <o base="string" data="bytes" line="828735238" name="descriptor">28 4C 6F 72 67 2F 68 61 6D 63 72 65 73 74 2F 4D 61 74 63 68 65 72 3B 29 46</o>
