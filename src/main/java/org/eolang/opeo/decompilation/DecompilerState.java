@@ -97,7 +97,10 @@ public final class DecompilerState {
      * @return Current bytecode instruction.
      */
     public Opcode current() {
-        return Optional.ofNullable(this.opcodes.peek()).orElse(new Opcode(-1));
+        if (this.opcodes.isEmpty()) {
+            throw new IllegalStateException("No instructions left");
+        }
+        return this.opcodes.peek();
     }
 
     /**

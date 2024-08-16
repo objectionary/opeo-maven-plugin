@@ -64,32 +64,32 @@ public final class AllAgents implements DecompilationAgent {
         this(
             new HashSet<>(
                 Arrays.asList(
-                    new ConstAgent(),
-                    new AddAgent(),
-                    new SubAgent(),
-                    new MulAgent(),
-                    new IfAgent(),
-                    new CastAgent(),
-                    new LoadAgent(),
-                    new StoreAgent(),
-                    new StoreToArrayAgent(),
-                    new NewArrayAgent(),
-                    new CheckCastAgent(),
-                    new NewAgent(),
-                    new DupAgent(),
-                    new BipushAgent(),
-                    new InvokespecialAgent(),
-                    new InvokevirtualAgent(),
-                    new InvokestaticAgent(),
-                    new InvokeinterfaceAgent(),
-                    new InvokedynamicAgent(),
-                    new GetFieldAgent(),
-                    new PutFieldAgent(),
-                    new GetStaticAgent(),
-                    new LdcAgent(),
-                    new PopAgent(),
-                    new ReturnAgent(),
-                    new LabelAgent(),
+                    new OpcodeAgent(new ConstAgent()),
+                    new OpcodeAgent(new AddAgent()),
+                    new OpcodeAgent(new SubAgent()),
+                    new OpcodeAgent(new MulAgent()),
+                    new OpcodeAgent(new IfAgent()),
+                    new OpcodeAgent(new CastAgent()),
+                    new OpcodeAgent(new LoadAgent()),
+                    new OpcodeAgent(new StoreAgent()),
+                    new OpcodeAgent(new StoreToArrayAgent()),
+                    new OpcodeAgent(new NewArrayAgent()),
+                    new OpcodeAgent(new CheckCastAgent()),
+                    new OpcodeAgent(new NewAgent()),
+                    new OpcodeAgent(new DupAgent()),
+                    new OpcodeAgent(new BipushAgent()),
+                    new OpcodeAgent(new InvokespecialAgent()),
+                    new OpcodeAgent(new InvokevirtualAgent()),
+                    new OpcodeAgent(new InvokestaticAgent()),
+                    new OpcodeAgent(new InvokeinterfaceAgent()),
+                    new OpcodeAgent(new InvokedynamicAgent()),
+                    new OpcodeAgent(new GetFieldAgent()),
+                    new OpcodeAgent(new PutFieldAgent()),
+                    new OpcodeAgent(new GetStaticAgent()),
+                    new OpcodeAgent(new LdcAgent()),
+                    new OpcodeAgent(new PopAgent()),
+                    new OpcodeAgent(new ReturnAgent()),
+                    new OpcodeAgent(new LabelAgent()),
                     new UnimplementedAgent(counting)
                 )
             )
@@ -106,9 +106,11 @@ public final class AllAgents implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
-        while (state.hasInstructions()) {
+        int hash;
+        do {
+            hash = state.hashCode();
             this.agents.forEach(agent -> agent.handle(state));
-        }
+        } while (hash != state.hashCode());
     }
 
     @Override
@@ -147,7 +149,8 @@ public final class AllAgents implements DecompilationAgent {
 
         @Override
         public void handle(final DecompilerState state) {
-            if (!new AllAgents().supported().isSupported(state.current())) {
+            final Supported supported = new AllAgents().supported();
+            if (state.hasInstructions() && !supported.isSupported(state.current())) {
                 state.stack().push(
                     new Opcode(
                         state.current().opcode(),
