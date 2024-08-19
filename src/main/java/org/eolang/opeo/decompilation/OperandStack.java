@@ -24,6 +24,8 @@
 package org.eolang.opeo.decompilation;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -34,6 +36,7 @@ import lombok.ToString;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Labeled;
+import org.eolang.opeo.ast.Opcode;
 
 /**
  * Operand stack.
@@ -56,8 +59,16 @@ public final class OperandStack {
     /**
      * Default constructor.
      */
-    OperandStack() {
+    public OperandStack() {
         this(new ArrayDeque<>(0));
+    }
+
+    /**
+     * Constructor.
+     * @param nodes Initial stack nodes.
+     */
+    public OperandStack(final AstNode... nodes) {
+        this(new ArrayDeque<>(Arrays.asList(nodes)));
     }
 
     /**
@@ -111,14 +122,6 @@ public final class OperandStack {
     }
 
     /**
-     * Peek the higher value on the stack.
-     * @return Node.
-     */
-    public AstNode peek() {
-        return this.stack.peek();
-    }
-
-    /**
      * Push one more node to the stack.
      * @param node Node to add to the stack.
      */
@@ -131,6 +134,22 @@ public final class OperandStack {
      */
     public void dup() {
         this.stack.push(this.stack.peek());
+    }
+
+    /**
+     * Pretty representation of the stack.
+     * @return Human-readable string that represents the stack state.
+     */
+    public String pretty() {
+        final List<String> res = new ArrayList<>(0);
+        for (final AstNode node : this.stack) {
+            if (node instanceof Opcode) {
+                res.add(((Opcode) node).pretty());
+            } else {
+                res.add(node.toString());
+            }
+        }
+        return String.join(" ", res);
     }
 
     /**

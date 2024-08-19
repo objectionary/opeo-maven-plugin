@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.This;
@@ -39,6 +40,7 @@ import org.objectweb.asm.Type;
  * @since 0.1
  */
 @EqualsAndHashCode
+@ToString
 public final class LocalVariables {
 
     /**
@@ -64,6 +66,13 @@ public final class LocalVariables {
 
     /**
      * Constructor.
+     */
+    public LocalVariables() {
+        this(Opcodes.ACC_PUBLIC, Type.getType(Object.class));
+    }
+
+    /**
+     * Constructor.
      * @param modifiers Method access modifiers.
      * @param descriptor Method descriptor.
      * @param type Method type.
@@ -79,13 +88,6 @@ public final class LocalVariables {
      */
     public LocalVariables(final int modifiers, final String descriptor) {
         this(modifiers, new VariablesArray(modifiers, descriptor).array());
-    }
-
-    /**
-     * Constructor.
-     */
-    LocalVariables() {
-        this(Opcodes.ACC_PUBLIC, Type.getType(Object.class));
     }
 
     /**
