@@ -28,7 +28,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.logging.Level;
 import org.eolang.opeo.decompilation.DecompilerState;
 
 /**
@@ -105,13 +104,27 @@ public final class TracedAgent implements DecompilationAgent {
         return this.original.supported();
     }
 
-
+    /**
+     * Output target.
+     * Target for the output of the traced agent.
+     * @since 0.4
+     */
     private interface Output {
-        void write(final String message);
+
+        /**
+         * Write a message.
+         * @param message Message to write.
+         */
+        void write(String message);
 
     }
 
-    public static class Log implements Output {
+    /**
+     * Log output.
+     * Output target that logs messages using DEBUG level.
+     * @since 0.4
+     */
+    public static final class Log implements Output {
 
         @Override
         public void write(final String message) {
@@ -119,15 +132,30 @@ public final class TracedAgent implements DecompilationAgent {
         }
     }
 
-    public static class Container implements Output {
+    /**
+     * Container output.
+     * Output target that stores messages in a container.
+     * @since 0.4
+     */
+    public static final class Container implements Output {
 
+        /**
+         * Message queue.
+         */
         private Deque<String> queue;
 
-        public Container() {
+        /**
+         * Default constructor.
+         */
+        Container() {
             this(new LinkedList<>());
         }
 
-        public Container(final Deque<String> queue) {
+        /**
+         * Constructor.
+         * @param queue Message queue.
+         */
+        Container(final Deque<String> queue) {
             this.queue = queue;
         }
 
@@ -136,10 +164,12 @@ public final class TracedAgent implements DecompilationAgent {
             this.queue.push(message);
         }
 
-        public Collection<String> messages() {
+        /**
+         * Get all messages.
+         * @return All messages.
+         */
+        Collection<String> messages() {
             return Collections.unmodifiableCollection(this.queue);
         }
     }
-
-
 }

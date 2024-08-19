@@ -38,8 +38,10 @@ import org.objectweb.asm.Opcodes;
 
 /**
  * Test case for {@link TracedAgent}.
+ *
+ * @since 0.4
  */
-class TracedAgentTest {
+final class TracedAgentTest {
 
     @Test
     void tracesDecompilation() {

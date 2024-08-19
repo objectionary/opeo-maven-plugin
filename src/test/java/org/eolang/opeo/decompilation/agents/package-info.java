@@ -21,26 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package org.eolang.opeo.decompilation.agents;
-
-import com.jcabi.log.Logger;
-import org.eolang.opeo.decompilation.DecompilerState;
-
 /**
- * Dummy agent.
- * It does nothing.
+ * Package for decompilation agents tests.
  *
  * @since 0.4
  */
-public final class DummyAgent implements DecompilationAgent {
-
-    @Override
-    public void handle(final DecompilerState ignore) {
-        Logger.info(this, "Dummy agent is doing nothing");
-    }
-
-    @Override
-    public Supported supported() {
-        return new Supported();
-    }
-}
+package org.eolang.opeo.decompilation.agents;
