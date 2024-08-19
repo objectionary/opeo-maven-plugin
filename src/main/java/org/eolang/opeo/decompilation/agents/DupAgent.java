@@ -45,12 +45,18 @@ public final class DupAgent implements DecompilationAgent {
     }
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
+        if (this.appropriate(state)) {
             final OperandStack stack = state.stack();
-            final Duplicate ref = new Duplicate(stack.pop());
-            stack.push(ref);
+            stack.push(new Duplicate(stack.pop()));
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 

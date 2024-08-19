@@ -46,9 +46,18 @@ final class UnimplementedAgent implements DecompilationAgent {
     }
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return state.hasInstructions() && !new AllAgents().supported().isSupported(state.current());
+    }
+
+    @Override
+    public Supported supported() {
+        return new Supported();
+    }
+
+    @Override
     public void handle(final DecompilerState state) {
-        final Supported supported = new AllAgents().supported();
-        if (state.hasInstructions() && !supported.isSupported(state.current())) {
+        if (this.appropriate(state)) {
             state.stack().push(
                 new Opcode(
                     state.current().opcode(),
@@ -57,11 +66,8 @@ final class UnimplementedAgent implements DecompilationAgent {
                 )
             );
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
-    }
-
-    @Override
-    public Supported supported() {
-        return new Supported();
     }
 }

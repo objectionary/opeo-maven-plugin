@@ -34,12 +34,6 @@ import org.eolang.opeo.decompilation.DecompilerState;
  * Agent that knows how to log additional information about a decompilation process.
  *
  * @since 0.4
- * @todo #393:90min Check Applicability of The Original Agent Before Printing.
- *  The {@link TracedAgent} prints the stack and instructions before and after the original agent
- *  tries to handle the state.
- *  So it prints the state even if the original agent is not applicable to the state.
- *  We should check if the original agent is applicable to the state before printing the state.
- *  This will avoid unnecessary prints and make the logs more readable.
  */
 public final class TracedAgent implements DecompilationAgent {
 
@@ -69,6 +63,16 @@ public final class TracedAgent implements DecompilationAgent {
     public TracedAgent(final DecompilationAgent original, final Output output) {
         this.original = original;
         this.output = output;
+    }
+
+    @Override
+    public boolean appropriate(final DecompilerState state) {
+        return this.original.appropriate(state);
+    }
+
+    @Override
+    public Supported supported() {
+        return this.original.supported();
     }
 
     @Override
@@ -103,11 +107,6 @@ public final class TracedAgent implements DecompilationAgent {
                 state.prettyOpcodes()
             )
         );
-    }
-
-    @Override
-    public Supported supported() {
-        return this.original.supported();
     }
 
     /**

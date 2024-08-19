@@ -46,10 +46,13 @@ public final class OpcodeAgent implements DecompilationAgent {
     }
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return state.hasInstructions() && this.original.supported().isSupported(state.current());
+    }
+
+    @Override
     public void handle(final DecompilerState state) {
-        if (state.hasInstructions() && this.original.supported().isSupported(state.current())) {
-            this.original.handle(state);
-        }
+        this.original.handle(state);
     }
 
     @Override

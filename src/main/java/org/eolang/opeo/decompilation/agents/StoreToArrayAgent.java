@@ -52,18 +52,25 @@ public final class StoreToArrayAgent implements DecompilationAgent {
     private static final Supported OPCODES = new Supported(Opcodes.AASTORE);
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public Supported supported() {
         return StoreToArrayAgent.OPCODES;
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
+        if (this.appropriate(state)) {
             final AstNode value = state.stack().pop();
             final AstNode index = state.stack().pop();
             final AstNode array = state.stack().pop();
             state.stack().push(new StoreArray(array, index, value));
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 }

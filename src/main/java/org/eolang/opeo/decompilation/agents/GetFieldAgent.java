@@ -40,8 +40,13 @@ public final class GetFieldAgent implements DecompilationAgent {
     }
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
+        if (this.appropriate(state)) {
             final String owner = (String) state.operand(0);
             final String name = (String) state.operand(1);
             final String descriptor = (String) state.operand(2);
@@ -56,6 +61,8 @@ public final class GetFieldAgent implements DecompilationAgent {
                 )
             );
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 

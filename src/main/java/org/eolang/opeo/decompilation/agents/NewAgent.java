@@ -39,15 +39,22 @@ public final class NewAgent implements DecompilationAgent {
     private static final Supported OPCODES = new Supported(Opcodes.NEW);
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public Supported supported() {
         return NewAgent.OPCODES;
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
+        if (this.appropriate(state)) {
             state.stack().push(new NewAddress(state.operand(0).toString()));
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 }

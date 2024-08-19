@@ -34,16 +34,23 @@ import org.objectweb.asm.Opcodes;
 public final class LdcAgent implements DecompilationAgent {
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public Supported supported() {
         return new Supported(Opcodes.LDC);
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
+        if (this.appropriate(state)) {
             final Object operand = state.operand(0);
             state.stack().push(new Constant(operand));
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 }

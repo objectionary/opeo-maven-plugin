@@ -23,29 +23,22 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import com.jcabi.log.Logger;
 import org.eolang.opeo.decompilation.DecompilerState;
 
 /**
- * Dummy agent.
- * It does nothing.
- *
+ * Illegal agent exception.
  * @since 0.4
  */
-public final class DummyAgent implements DecompilationAgent {
+final class IllegalAgentException extends RuntimeException {
 
-    @Override
-    public void handle(final DecompilerState ignore) {
-        Logger.info(this, "Dummy agent is doing nothing");
-    }
-
-    @Override
-    public Supported supported() {
-        return new Supported();
-    }
-
-    @Override
-    public boolean appropriate(final DecompilerState always) {
-        return true;
+    /**
+     * Constructor.
+     * @param agent The agent.
+     * @param state The state.
+     */
+    IllegalAgentException(final DecompilationAgent agent, final DecompilerState state) {
+        super(
+            String.format("Illegal agent: %s at %d", agent.getClass().getSimpleName(), state)
+        );
     }
 }

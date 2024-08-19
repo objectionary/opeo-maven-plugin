@@ -38,13 +38,18 @@ import org.objectweb.asm.Opcodes;
 public final class PutFieldAgent implements DecompilationAgent {
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public Supported supported() {
         return new Supported(Opcodes.PUTFIELD);
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
+        if (this.appropriate(state)) {
             final AstNode value = state.stack().pop();
             final String name = (String) state.operand(1);
             final String owner = (String) state.operand(0);
@@ -62,6 +67,8 @@ public final class PutFieldAgent implements DecompilationAgent {
                 )
             );
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 }

@@ -51,25 +51,32 @@ public final class StoreAgent implements DecompilationAgent {
     );
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public Supported supported() {
         return StoreAgent.OPCODES;
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        final Opcode instr = state.current();
-        if (this.supported().isSupported(instr)) {
+        if (this.appropriate(state)) {
             final OperandStack stack = state.stack();
             final AstNode value = stack.pop();
             stack.push(
                 new VariableAssignment(
                     (LocalVariable) state.variable(
-                        (Integer) state.operand(0), StoreAgent.infer(value, instr.opcode())
+                        (Integer) state.operand(0),
+                        StoreAgent.infer(value, state.current().opcode())
                     ),
                     value
                 )
             );
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 

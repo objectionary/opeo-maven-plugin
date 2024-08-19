@@ -40,11 +40,18 @@ public final class PopAgent implements DecompilationAgent {
     }
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
+        if (this.appropriate(state)) {
             final OperandStack stack = state.stack();
             stack.push(new Popped(stack.pop()));
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 

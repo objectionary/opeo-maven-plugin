@@ -45,19 +45,26 @@ public final class IfAgent implements DecompilationAgent {
     private static final Supported OPCODES = new Supported(Opcodes.IF_ICMPGT);
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public Supported supported() {
         return IfAgent.OPCODES;
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
+        if (this.appropriate(state)) {
             final OperandStack stack = state.stack();
             final AstNode second = stack.pop();
             final AstNode first = stack.pop();
             final Label operand = (Label) state.operand(0);
             stack.push(new If(first, second, operand));
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 }

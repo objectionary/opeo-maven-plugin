@@ -34,16 +34,23 @@ import org.objectweb.asm.Opcodes;
 public final class BipushAgent implements DecompilationAgent {
 
     @Override
-    public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
-            state.stack().push(new Literal(state.operand(0)));
-            state.popInstruction();
-        }
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
     }
 
     @Override
     public Supported supported() {
         return new Supported(Opcodes.BIPUSH);
+    }
+
+    @Override
+    public void handle(final DecompilerState state) {
+        if (this.appropriate(state)) {
+            state.stack().push(new Literal(state.operand(0)));
+            state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
+        }
     }
 
 }

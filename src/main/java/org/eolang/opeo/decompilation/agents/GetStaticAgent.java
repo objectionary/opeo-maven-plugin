@@ -34,18 +34,25 @@ import org.objectweb.asm.Opcodes;
 public final class GetStaticAgent implements DecompilationAgent {
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public Supported supported() {
         return new Supported(Opcodes.GETSTATIC);
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
+        if (this.appropriate(state)) {
             final String klass = (String) state.operand(0);
             final String method = (String) state.operand(1);
             final String descriptor = (String) state.operand(2);
             state.stack().push(new ClassField(klass, method, descriptor));
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 }

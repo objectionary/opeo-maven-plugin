@@ -50,20 +50,26 @@ public final class LoadAgent implements DecompilationAgent {
     );
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public Supported supported() {
         return LoadAgent.OPCODES;
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        final Opcode instr = state.current();
-        final int opcode = instr.opcode();
-        if (this.supported().isSupported(instr)) {
+        if (this.appropriate(state)) {
+            final int opcode = state.current().opcode();
             final Integer index = (Integer) state.operand(0);
             state.stack().push(
                 state.variable(index, LoadAgent.type(opcode))
             );
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 

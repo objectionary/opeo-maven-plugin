@@ -41,18 +41,25 @@ public final class NewArrayAgent implements DecompilationAgent {
     private static final Supported OPCODES = new Supported(Opcodes.ANEWARRAY);
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public Supported supported() {
         return NewArrayAgent.OPCODES;
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
+        if (this.appropriate(state)) {
             final String type = (String) state.operand(0);
             final OperandStack stack = state.stack();
             final AstNode size = stack.pop();
             stack.push(new ArrayConstructor(size, type));
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 }

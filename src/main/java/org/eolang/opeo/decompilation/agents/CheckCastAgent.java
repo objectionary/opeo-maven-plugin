@@ -42,12 +42,19 @@ public final class CheckCastAgent implements DecompilationAgent {
     private static final Supported OPCODES = new Supported(Opcodes.CHECKCAST);
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
+        if (this.appropriate(state)) {
             final AstNode value = state.stack().pop();
             final Object type = state.operand(0);
             state.stack().push(new CheckCast(Type.getObjectType((String) type), value));
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 

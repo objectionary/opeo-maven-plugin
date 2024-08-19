@@ -25,7 +25,6 @@ package org.eolang.opeo.decompilation.agents;
 
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Literal;
-import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 
@@ -57,15 +56,19 @@ public final class ConstAgent implements DecompilationAgent {
     );
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public Supported supported() {
         return ConstAgent.OPCODES;
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        final Opcode instr = state.current();
-        final int opcode = instr.opcode();
-        if (this.supported().isSupported(instr)) {
+        if (this.appropriate(state)) {
+            final int opcode = state.current().opcode();
             final AstNode res;
             switch (opcode) {
                 case Opcodes.ICONST_M1:
@@ -103,6 +106,8 @@ public final class ConstAgent implements DecompilationAgent {
                     );
             }
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 

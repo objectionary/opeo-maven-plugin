@@ -24,7 +24,6 @@
 package org.eolang.opeo.decompilation.agents;
 
 import org.eolang.opeo.ast.Cast;
-import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -57,22 +56,28 @@ public final class CastAgent implements DecompilationAgent {
     );
 
     @Override
-    public void handle(final DecompilerState state) {
-        final Opcode instruction = state.current();
-        if (this.supported().isSupported(instruction)) {
-            state.stack().push(
-                new Cast(
-                    CastAgent.target(instruction.opcode()),
-                    state.stack().pop()
-                )
-            );
-            state.popInstruction();
-        }
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
     }
 
     @Override
     public Supported supported() {
         return CastAgent.OPCODES;
+    }
+
+    @Override
+    public void handle(final DecompilerState state) {
+        if (this.appropriate(state)) {
+            state.stack().push(
+                new Cast(
+                    CastAgent.target(state.current().opcode()),
+                    state.stack().pop()
+                )
+            );
+            state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
+        }
     }
 
     /**

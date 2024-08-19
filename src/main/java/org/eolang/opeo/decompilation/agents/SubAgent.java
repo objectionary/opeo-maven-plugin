@@ -45,17 +45,24 @@ public final class SubAgent implements DecompilationAgent {
     );
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public Supported supported() {
         return SubAgent.OPCODES;
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
+        if (this.appropriate(state)) {
             final AstNode right = state.stack().pop();
             final AstNode left = state.stack().pop();
             state.stack().push(new Substraction(left, right));
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 }

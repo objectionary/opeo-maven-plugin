@@ -49,15 +49,19 @@ public final class ReturnAgent implements DecompilationAgent {
     );
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public Supported supported() {
         return ReturnAgent.OPCODES;
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        final Opcode instr = state.current();
-        final int opcode = instr.opcode();
-        if (this.supported().isSupported(instr)) {
+        if (this.appropriate(state)) {
+            final int opcode = state.current().opcode();
             final OperandStack stack = state.stack();
             if (opcode == Opcodes.RETURN) {
                 stack.push(new Return());
@@ -77,6 +81,8 @@ public final class ReturnAgent implements DecompilationAgent {
                 );
             }
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 }

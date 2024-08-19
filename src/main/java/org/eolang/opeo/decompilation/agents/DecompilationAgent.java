@@ -32,15 +32,23 @@ import org.eolang.opeo.decompilation.DecompilerState;
 public interface DecompilationAgent {
 
     /**
-     * Handle the current state.
-     * @param state Current state to handle together with operand stack and variables.
-     */
-    void handle(DecompilerState state);
-
-    /**
      * Supported opcodes.
      * @return Supported opcodes.
      */
     Supported supported();
+
+    /**
+     * Check if the agent is suitable for the current state.
+     * @param state Current state.
+     * @return True if the agent is suitable for the current state.
+     */
+    boolean appropriate(final DecompilerState state);
+
+
+    /**
+     * Handle the current state.
+     * @param state Current state to handle together with operand stack and variables.
+     */
+    void handle(DecompilerState state);
 
 }

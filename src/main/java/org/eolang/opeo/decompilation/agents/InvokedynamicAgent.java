@@ -39,13 +39,18 @@ import org.objectweb.asm.Type;
 public final class InvokedynamicAgent implements DecompilationAgent {
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public Supported supported() {
         return new Supported(Opcodes.INVOKEDYNAMIC);
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
+        if (this.appropriate(state)) {
             final List<Object> operands = state.current().params();
             final String descriptor = (String) operands.get(1);
             final List<AstNode> args = state.stack().pop(Type.getArgumentTypes(descriptor).length);
@@ -59,6 +64,8 @@ public final class InvokedynamicAgent implements DecompilationAgent {
             );
             state.stack().push(node);
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 

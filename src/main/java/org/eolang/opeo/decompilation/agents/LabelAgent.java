@@ -36,13 +36,18 @@ import org.eolang.opeo.decompilation.DecompilerState;
 public final class LabelAgent implements DecompilationAgent {
 
     @Override
+    public boolean appropriate(final DecompilerState state) {
+        return new SupportedOpcodes(this).isSupported(state);
+    }
+
+    @Override
     public Supported supported() {
         return new Supported(LabelInstruction.LABEL_OPCODE);
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        if (this.supported().isSupported(state.current())) {
+        if (this.appropriate(state)) {
             state.stack().push(
                 new Labeled(
                     state.stack().first().orElse(new AstNode.Empty()),
@@ -50,6 +55,8 @@ public final class LabelAgent implements DecompilationAgent {
                 )
             );
             state.popInstruction();
+        } else {
+            throw new IllegalAgentException(this, state);
         }
     }
 }

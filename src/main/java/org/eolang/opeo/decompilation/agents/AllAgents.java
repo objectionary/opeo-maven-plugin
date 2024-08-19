@@ -117,6 +117,11 @@ public final class AllAgents implements DecompilationAgent {
             .reduce(new Supported(), Supported::merge);
     }
 
+    @Override
+    public boolean appropriate(final DecompilerState always) {
+        return true;
+    }
+
     /**
      * Get supported opcodes.
      * @return Supported opcodes.
