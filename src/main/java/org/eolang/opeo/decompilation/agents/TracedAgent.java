@@ -38,9 +38,29 @@ import org.eolang.opeo.decompilation.DecompilerState;
  */
 public final class TracedAgent implements DecompilationAgent {
 
+    /**
+     * Original agent.
+     */
     private final DecompilationAgent original;
+
+    /**
+     * Output target.
+     */
     private final Output output;
 
+    /**
+     * Constructor.
+     * @param original Original agent.
+     */
+    public TracedAgent(final DecompilationAgent original) {
+        this(original, new Log());
+    }
+
+    /**
+     * Constructor.
+     * @param original Original agent.
+     * @param output Output target.
+     */
     public TracedAgent(final DecompilationAgent original, final Output output) {
         this.original = original;
         this.output = output;
@@ -50,17 +70,17 @@ public final class TracedAgent implements DecompilationAgent {
     public void handle(final DecompilerState state) {
         this.output.write(
             String.format(
-                "%s starts to decompile. Initial state: %s",
+                "Before %s: [%s]",
                 this.original.getClass().getSimpleName(),
-                state.stack()
+                state.stack().pretty()
             )
         );
         this.original.handle(state);
         this.output.write(
             String.format(
-                "%s ends decompilation. Final state: %s",
+                "After %s: [%s]",
                 this.original.getClass().getSimpleName(),
-                state.stack()
+                state.stack().pretty()
             )
         );
     }
@@ -76,29 +96,12 @@ public final class TracedAgent implements DecompilationAgent {
 
     }
 
-    public static class Stdout implements Output {
-        @Override
-        public void write(final String message) {
-            System.out.println(message);
-        }
-    }
-
-
     public static class Log implements Output {
 
-        private final Level level;
-
-        public Log() {
-            this(Level.INFO);
-        }
-
-        public Log(final Level level) {
-            this.level = level;
-        }
-
         @Override
         public void write(final String message) {
-            Logger.log(this.level, this, message);
+
+            Logger.debug(this, message);
         }
     }
 

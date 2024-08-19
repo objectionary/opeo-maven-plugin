@@ -24,17 +24,20 @@
 package org.eolang.opeo.decompilation;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Labeled;
+import org.eolang.opeo.ast.Opcode;
 
 /**
  * Operand stack.
@@ -135,12 +138,27 @@ public final class OperandStack {
     }
 
     /**
+     * Pretty representation of the stack.
+     * @return Human-readable string that represents the stack state.
+     */
+    public String pretty() {
+        final List<String> res = new ArrayList<>(0);
+        for (final AstNode node : this.stack) {
+            if (node instanceof Opcode) {
+                res.add(((Opcode) node).pretty());
+            } else {
+                res.add(node.toString());
+            }
+        }
+        return String.join(" ", res);
+    }
+
+    /**
      * Retrieve iterator of the stack in the reverse order.
      * @return Nodes iterator.
      */
     Iterator<AstNode> descendingIterator() {
         return this.stack.descendingIterator();
     }
-
 
 }

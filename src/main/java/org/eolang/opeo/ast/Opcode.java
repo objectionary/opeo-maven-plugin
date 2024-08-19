@@ -181,6 +181,14 @@ public final class Opcode implements AstNode {
     }
 
     /**
+     * Pretty representation.
+     * @return Human-readable string that represents the opcode.
+     */
+    public String pretty() {
+        return new OpcodeName(this.bytecode).simplified();
+    }
+
+    /**
      * Disable opcodes counting.
      * It is useful for tests.
      * @todo #65:30min Remove public static method 'disableCounting()' from Opcode.

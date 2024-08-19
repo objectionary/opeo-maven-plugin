@@ -28,6 +28,7 @@ import org.eolang.opeo.decompilation.DecompilerState;
 import org.eolang.opeo.decompilation.OperandStack;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.objectweb.asm.Opcodes;
 
@@ -50,9 +51,23 @@ class TracedAgentTest {
             "We should see the start and end messages together with the decompliation state",
             output.messages(),
             Matchers.containsInAnyOrder(
-                "1",
-                "2"
+                "Before DummyAgent: [LCONST_1 LRETURN]",
+                "After DummyAgent: [LCONST_1 LRETURN]"
             )
+        );
+    }
+
+    @Test
+    void printsDecompilationTraceToLogs() {
+        Assertions.assertDoesNotThrow(
+            () -> new TracedAgent(new DummyAgent()).handle(
+                new DecompilerState(
+                    new OperandStack(
+                        new Opcode(Opcodes.LCONST_1), new Opcode(Opcodes.LRETURN)
+                    )
+                )
+            ),
+            "Should not throw any exceptions"
         );
     }
 
