@@ -66,6 +66,13 @@ public final class LocalVariables {
 
     /**
      * Constructor.
+     */
+    public LocalVariables() {
+        this(Opcodes.ACC_PUBLIC, Type.getType(Object.class));
+    }
+
+    /**
+     * Constructor.
      * @param modifiers Method access modifiers.
      * @param descriptor Method descriptor.
      * @param type Method type.
@@ -81,13 +88,6 @@ public final class LocalVariables {
      */
     public LocalVariables(final int modifiers, final String descriptor) {
         this(modifiers, new VariablesArray(modifiers, descriptor).array());
-    }
-
-    /**
-     * Constructor.
-     */
-    LocalVariables() {
-        this(Opcodes.ACC_PUBLIC, Type.getType(Object.class));
     }
 
     /**

@@ -68,19 +68,34 @@ public final class TracedAgent implements DecompilationAgent {
 
     @Override
     public void handle(final DecompilerState state) {
+        final String name = this.original.getClass().getSimpleName();
         this.output.write(
             String.format(
-                "Before %s: [%s]",
-                this.original.getClass().getSimpleName(),
+                "Stack before %s: [%s]",
+                name,
                 state.stack().pretty()
+            )
+        );
+        this.output.write(
+            String.format(
+                "Instructions before %s: [%s]",
+                name,
+                state.prettyOpcodes()
             )
         );
         this.original.handle(state);
         this.output.write(
             String.format(
-                "After %s: [%s]",
-                this.original.getClass().getSimpleName(),
+                "Stack after %s: [%s]",
+                name,
                 state.stack().pretty()
+            )
+        );
+        this.output.write(
+            String.format(
+                "Instructions after %s: [%s]",
+                name,
+                state.prettyOpcodes()
             )
         );
     }
@@ -100,7 +115,6 @@ public final class TracedAgent implements DecompilationAgent {
 
         @Override
         public void write(final String message) {
-
             Logger.debug(this, message);
         }
     }

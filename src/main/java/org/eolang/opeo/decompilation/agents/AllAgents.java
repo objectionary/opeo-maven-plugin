@@ -87,7 +87,7 @@ public final class AllAgents implements DecompilationAgent {
                     new OpcodeAgent(new TracedAgent(new PopAgent())),
                     new OpcodeAgent(new TracedAgent(new ReturnAgent())),
                     new OpcodeAgent(new TracedAgent(new LabelAgent())),
-                    new TracedAgent(new UnimplementedAgent(counting))
+                    new UnimplementedAgent(counting)
                 )
             )
         );

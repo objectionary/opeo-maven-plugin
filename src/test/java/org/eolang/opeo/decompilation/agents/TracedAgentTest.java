@@ -23,8 +23,12 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
+import java.util.ArrayDeque;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.DecompilerState;
+import org.eolang.opeo.decompilation.LocalVariables;
 import org.eolang.opeo.decompilation.OperandStack;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -42,17 +46,22 @@ class TracedAgentTest {
         final TracedAgent.Container output = new TracedAgent.Container();
         new TracedAgent(new DummyAgent(), output).handle(
             new DecompilerState(
-                new OperandStack(
-                    new Opcode(Opcodes.LCONST_1), new Opcode(Opcodes.LRETURN)
-                )
+                Stream.of(
+                    new Opcode(Opcodes.LCONST_1),
+                    new Opcode(Opcodes.LRETURN)
+                ).collect(Collectors.toCollection(ArrayDeque::new)),
+                new OperandStack(),
+                new LocalVariables()
             )
         );
         MatcherAssert.assertThat(
             "We should see the start and end messages together with the decompliation state",
             output.messages(),
             Matchers.containsInAnyOrder(
-                "Before DummyAgent: [LCONST_1 LRETURN]",
-                "After DummyAgent: [LCONST_1 LRETURN]"
+                "Stack before DummyAgent: []",
+                "Instructions before DummyAgent: [LCONST_1 LRETURN]",
+                "Stack after DummyAgent: []",
+                "Instructions after DummyAgent: [LCONST_1 LRETURN]"
             )
         );
     }

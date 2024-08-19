@@ -25,6 +25,7 @@ package org.eolang.opeo.decompilation;
 
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.eolang.opeo.ast.AstNode;
@@ -160,5 +161,13 @@ public final class DecompilerState {
      */
     public OperandStack stack() {
         return this.ostack;
+    }
+
+    /**
+     * Print opcodes in a pretty way.
+     * @return Pretty opcodes string
+     */
+    public String prettyOpcodes() {
+        return this.opcodes.stream().map(Opcode::pretty).collect(Collectors.joining(" "));
     }
 }
