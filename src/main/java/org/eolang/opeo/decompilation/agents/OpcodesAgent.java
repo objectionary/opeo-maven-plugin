@@ -29,34 +29,34 @@ import org.eolang.opeo.decompilation.DecompilerState;
  * Agent that handles opcodes.
  * @since 0.4
  */
-public final class OpcodeAgent implements DecompilationAgent {
+public final class OpcodesAgent implements DecompilationAgent {
 
     /**
      * Original agent that supports some opcodes.
      * If the agent does not support the current opcode, it will be skipped.
      */
-    private final DecompilationAgent original;
+    private final DecompilationAgent agent;
 
     /**
      * Constructor.
      * @param original Original agent that supports some opcodes.
      */
-    public OpcodeAgent(final DecompilationAgent original) {
-        this.original = original;
+    public OpcodesAgent(final DecompilationAgent original) {
+        this.agent = original;
     }
 
     @Override
     public boolean appropriate(final DecompilerState state) {
-        return state.hasInstructions() && this.original.supported().isSupported(state.current());
+        return state.hasInstructions() && this.supported().isSupported(state.current());
     }
 
     @Override
     public void handle(final DecompilerState state) {
-        this.original.handle(state);
+        this.agent.handle(state);
     }
 
     @Override
     public Supported supported() {
-        return this.original.supported();
+        return this.agent.supported();
     }
 }

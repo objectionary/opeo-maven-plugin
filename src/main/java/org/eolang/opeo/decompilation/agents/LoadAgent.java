@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -51,7 +50,7 @@ public final class LoadAgent implements DecompilationAgent {
 
     @Override
     public boolean appropriate(final DecompilerState state) {
-        return new SupportedOpcodes(this).isSupported(state);
+        return new OpcodesAgent(this).appropriate(state);
     }
 
     @Override

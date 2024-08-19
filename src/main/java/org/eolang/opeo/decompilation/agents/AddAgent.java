@@ -41,7 +41,7 @@ public final class AddAgent implements DecompilationAgent {
 
     @Override
     public boolean appropriate(final DecompilerState state) {
-        return new SupportedOpcodes(this).isSupported(state);
+        return new OpcodesAgent(this).appropriate(state);
     }
 
     @Override
