@@ -32,6 +32,11 @@ import org.eolang.opeo.decompilation.DecompilerState;
 final class IllegalAgentException extends RuntimeException {
 
     /**
+     * Serial version UID.
+     */
+    private static final long serialVersionUID = -4263092892181211424L;
+
+    /**
      * Constructor.
      * @param agent The agent.
      * @param state The state.

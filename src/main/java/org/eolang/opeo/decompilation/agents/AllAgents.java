@@ -87,7 +87,7 @@ public final class AllAgents implements DecompilationAgent {
                     new TracedAgent(new PopAgent()),
                     new TracedAgent(new ReturnAgent()),
                     new TracedAgent(new LabelAgent()),
-                    new UnimplementedAgent(counting)
+                    new TracedAgent(new UnimplementedAgent(counting))
                 )
             )
         );
@@ -102,12 +102,8 @@ public final class AllAgents implements DecompilationAgent {
     }
 
     @Override
-    public void handle(final DecompilerState state) {
-        int hash;
-        do {
-            hash = state.hashCode();
-            this.agents.forEach(agent -> agent.handle(state));
-        } while (hash != state.hashCode());
+    public boolean appropriate(final DecompilerState state) {
+        return this.agents.stream().anyMatch(agent -> agent.appropriate(state));
     }
 
     @Override
@@ -118,8 +114,12 @@ public final class AllAgents implements DecompilationAgent {
     }
 
     @Override
-    public boolean appropriate(final DecompilerState always) {
-        return true;
+    public void handle(final DecompilerState state) {
+        while (this.appropriate(state)) {
+            this.agents.stream().filter(agent -> agent.appropriate(state))
+                .findFirst()
+                .ifPresent(agent -> agent.handle(state));
+        }
     }
 
     /**
