@@ -40,7 +40,6 @@ import org.eolang.parser.xmir.Xmir;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.xembly.Directive;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 import org.yaml.snakeyaml.Yaml;
@@ -64,17 +63,20 @@ final class AgentsIT {
     void verifiesAgents(final String yaml) {
         final InstructionPack pack = new InstructionPack(yaml);
         final TracedAgent.Container output = new TracedAgent.Container();
-        final Iterable<Directive> xmir =
-            new Directives().add("program")
-                .add("objects")
-                .append(
-                    new DecompilerMachine(Collections.singletonMap("output", output))
-                        .decompile(pack.instructions())
-
-                ).up().up();
         MatcherAssert.assertThat(
             "Agents should decompile instructions correctly, according to the YAML pack",
-            new Xmir.Default(new XMLDocument(new Xembler(xmir).xmlQuietly())).toEO(),
+            new Xmir.Default(
+                new XMLDocument(
+                    new Xembler(
+                        new Directives().add("program").add("objects")
+                            .append(
+                                new DecompilerMachine(Collections.singletonMap("output", output))
+                                    .decompile(pack.instructions())
+                            )
+                            .up().up()
+                    ).xmlQuietly()
+                )
+            ).toEO(),
             Matchers.equalTo(pack.expected())
         );
         MatcherAssert.assertThat(
@@ -85,41 +87,72 @@ final class AgentsIT {
 
     }
 
+    /**
+     * Instruction pack.
+     * You can find examples of the {@link InstructionPack} right
+     * <a href="./resources/agents">here.</a>
+     * @since 0.4
+     */
     private static final class InstructionPack {
-        private final Scalar<Map<String, Object>> pack;
 
+        /**
+         * Yaml pack.
+         */
+        private final Scalar<? extends Map<String, Object>> pack;
+
+        /**
+         * Constructor.
+         * @param yaml Yaml file content.
+         */
         InstructionPack(final String yaml) {
             this(new Sticky<>(() -> new Yaml().load(yaml)));
         }
 
-        private InstructionPack(final Scalar<Map<String, Object>> pack) {
+        /**
+         * Constructor.
+         * @param pack Yaml pack.
+         */
+        private InstructionPack(final Scalar<? extends Map<String, Object>> pack) {
             this.pack = pack;
         }
 
+        /**
+         * Instructions to decompile.
+         * @return Instructions.
+         */
+        @SuppressWarnings("unchecked")
         Instruction[] instructions() {
-            try {
-                return ((Collection<String>) this.pack.value().get("opcodes"))
-                    .stream()
-                    .map(s -> new OpcodeInstruction(new OpcodeName(s).code()))
-                    .toArray(Instruction[]::new);
-            } catch (final Exception exception) {
-                throw new IllegalStateException("Failed to parse YAML pack", exception);
-            }
+            return ((Collection<String>) this.value("opcodes"))
+                .stream()
+                .map(s -> new OpcodeInstruction(new OpcodeName(s).code()))
+                .toArray(Instruction[]::new);
         }
 
+        /**
+         * Expected agents used to decompile instructions.
+         * @return Agents.
+         */
+        @SuppressWarnings("unchecked")
         List<String> agents() {
-            try {
-                final List<String> agents = (List<String>) this.pack.value().get("agents");
-                return agents;
-            } catch (final Exception exception) {
-                throw new IllegalStateException("Failed to parse YAML pack", exception);
-            }
+            return (List<String>) this.value("agents");
         }
 
+        /**
+         * Expected EO code.
+         * @return EO code.
+         */
         String expected() {
+            return (String) this.value("eo");
+        }
+
+        /**
+         * Get Yaml value by key.
+         * @param key Yaml key.
+         * @return Yaml value.
+         */
+        private Object value(final String key) {
             try {
-                final String strings = (String) this.pack.value().get("eo");
-                return strings;
+                return this.pack.value().get(key);
             } catch (final Exception exception) {
                 throw new IllegalStateException("Failed to parse YAML pack", exception);
             }
