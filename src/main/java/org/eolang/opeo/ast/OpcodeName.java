@@ -110,7 +110,7 @@ public final class OpcodeName {
      * @return Opcode.
      */
     public int code() {
-        return opcode;
+        return this.opcode;
     }
 
     /**

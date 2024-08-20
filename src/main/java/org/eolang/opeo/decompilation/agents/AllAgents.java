@@ -56,6 +56,7 @@ public final class AllAgents implements DecompilationAgent {
     /**
      * Constructor.
      * @param counting Do we put numbers to opcodes?
+     * @param output Where do we save output logs?
      */
     public AllAgents(final boolean counting, final TracedAgent.Output output) {
         this(

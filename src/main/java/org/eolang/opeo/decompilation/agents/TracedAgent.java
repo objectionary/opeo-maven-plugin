@@ -209,7 +209,7 @@ public final class TracedAgent implements DecompilationAgent {
          * Get all agents used.
          * @return All agents used.
          */
-        public List<String> agents() {
+        public List<String> agentsUsed() {
             return this.agents.stream().map(Class::getSimpleName).collect(Collectors.toList());
         }
     }

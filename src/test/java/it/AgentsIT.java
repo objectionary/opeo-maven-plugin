@@ -81,10 +81,9 @@ final class AgentsIT {
         );
         MatcherAssert.assertThat(
             "We expect that agents is used in the same order as expected, but they didn't",
-            output.agents(),
+            output.agentsUsed(),
             Matchers.equalTo(pack.agents())
         );
-
     }
 
     /**
@@ -149,7 +148,9 @@ final class AgentsIT {
          * Get Yaml value by key.
          * @param key Yaml key.
          * @return Yaml value.
+         * @checkstyle IllegalCatchCheck (6 lines)
          */
+        @SuppressWarnings("PMD.AvoidCatchingGenericException")
         private Object value(final String key) {
             try {
                 return this.pack.value().get(key);
@@ -157,6 +158,5 @@ final class AgentsIT {
                 throw new IllegalStateException("Failed to parse YAML pack", exception);
             }
         }
-
     }
 }
