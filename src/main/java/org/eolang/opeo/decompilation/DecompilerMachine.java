@@ -33,6 +33,7 @@ import org.eolang.opeo.Instruction;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.Root;
 import org.eolang.opeo.decompilation.agents.AllAgents;
+import org.eolang.opeo.decompilation.agents.TracedAgent;
 import org.xembly.Directive;
 
 /**
@@ -64,7 +65,7 @@ public final class DecompilerMachine {
      *
      * @param args Arguments provided to decompiler.
      */
-    public DecompilerMachine(final Map<String, String> args) {
+    public DecompilerMachine(final Map<String, Object> args) {
         this(new LocalVariables(), args);
     }
 
@@ -74,10 +75,11 @@ public final class DecompilerMachine {
      * @param locals Local variables.
      * @param arguments Arguments provided to decompiler.
      */
-    public DecompilerMachine(final LocalVariables locals, final Map<String, String> arguments) {
+    public DecompilerMachine(final LocalVariables locals, final Map<String, Object> arguments) {
         this.locals = locals;
         this.agents = new AllAgents(
-            "true".equals(arguments.getOrDefault("counting", "true"))
+            "true".equals(arguments.getOrDefault("counting", "true")),
+            TracedAgent.Output.class.cast(arguments.getOrDefault("output", new TracedAgent.Log()))
         );
     }
 

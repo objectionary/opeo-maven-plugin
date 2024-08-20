@@ -50,44 +50,44 @@ public final class AllAgents implements DecompilationAgent {
      * Constructor.
      */
     public AllAgents() {
-        this(false);
+        this(false, new TracedAgent.Log());
     }
 
     /**
      * Constructor.
      * @param counting Do we put numbers to opcodes?
      */
-    public AllAgents(final boolean counting) {
+    public AllAgents(final boolean counting, final TracedAgent.Output output) {
         this(
             new HashSet<>(
                 Arrays.asList(
-                    new TracedAgent(new ConstAgent()),
-                    new TracedAgent(new AddAgent()),
-                    new TracedAgent(new SubAgent()),
-                    new TracedAgent(new MulAgent()),
-                    new TracedAgent(new IfAgent()),
-                    new TracedAgent(new CastAgent()),
-                    new TracedAgent(new LoadAgent()),
-                    new TracedAgent(new StoreAgent()),
-                    new TracedAgent(new StoreToArrayAgent()),
-                    new TracedAgent(new NewArrayAgent()),
-                    new TracedAgent(new CheckCastAgent()),
-                    new TracedAgent(new NewAgent()),
-                    new TracedAgent(new DupAgent()),
-                    new TracedAgent(new BipushAgent()),
-                    new TracedAgent(new InvokespecialAgent()),
-                    new TracedAgent(new InvokevirtualAgent()),
-                    new TracedAgent(new InvokestaticAgent()),
-                    new TracedAgent(new InvokeinterfaceAgent()),
-                    new TracedAgent(new InvokedynamicAgent()),
-                    new TracedAgent(new GetFieldAgent()),
-                    new TracedAgent(new PutFieldAgent()),
-                    new TracedAgent(new GetStaticAgent()),
-                    new TracedAgent(new LdcAgent()),
-                    new TracedAgent(new PopAgent()),
-                    new TracedAgent(new ReturnAgent()),
-                    new TracedAgent(new LabelAgent()),
-                    new TracedAgent(new UnimplementedAgent(counting))
+                    new TracedAgent(new ConstAgent(), output),
+                    new TracedAgent(new AddAgent(), output),
+                    new TracedAgent(new SubAgent(), output),
+                    new TracedAgent(new MulAgent(), output),
+                    new TracedAgent(new IfAgent(), output),
+                    new TracedAgent(new CastAgent(), output),
+                    new TracedAgent(new LoadAgent(), output),
+                    new TracedAgent(new StoreAgent(), output),
+                    new TracedAgent(new StoreToArrayAgent(), output),
+                    new TracedAgent(new NewArrayAgent(), output),
+                    new TracedAgent(new CheckCastAgent(), output),
+                    new TracedAgent(new NewAgent(), output),
+                    new TracedAgent(new DupAgent(), output),
+                    new TracedAgent(new BipushAgent(), output),
+                    new TracedAgent(new InvokespecialAgent(), output),
+                    new TracedAgent(new InvokevirtualAgent(), output),
+                    new TracedAgent(new InvokestaticAgent(), output),
+                    new TracedAgent(new InvokeinterfaceAgent(), output),
+                    new TracedAgent(new InvokedynamicAgent(), output),
+                    new TracedAgent(new GetFieldAgent(), output),
+                    new TracedAgent(new PutFieldAgent(), output),
+                    new TracedAgent(new GetStaticAgent(), output),
+                    new TracedAgent(new LdcAgent(), output),
+                    new TracedAgent(new PopAgent(), output),
+                    new TracedAgent(new ReturnAgent(), output),
+                    new TracedAgent(new LabelAgent(), output),
+                    new TracedAgent(new UnimplementedAgent(counting), output)
                 )
             )
         );

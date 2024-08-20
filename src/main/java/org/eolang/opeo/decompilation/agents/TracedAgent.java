@@ -116,7 +116,7 @@ public final class TracedAgent implements DecompilationAgent {
      * Target for the output of the traced agent.
      * @since 0.4
      */
-    private interface Output {
+    public interface Output {
 
         /**
          * Write a message.
@@ -154,7 +154,7 @@ public final class TracedAgent implements DecompilationAgent {
         /**
          * Default constructor.
          */
-        Container() {
+        public Container() {
             this(new LinkedList<>());
         }
 
@@ -175,7 +175,7 @@ public final class TracedAgent implements DecompilationAgent {
          * Get all messages.
          * @return All messages.
          */
-        Collection<String> messages() {
+        public Collection<String> messages() {
             return Collections.unmodifiableCollection(this.queue);
         }
     }

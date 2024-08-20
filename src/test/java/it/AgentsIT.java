@@ -25,6 +25,7 @@ package it;
 
 import com.jcabi.xml.XMLDocument;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,6 +37,7 @@ import org.eolang.opeo.Instruction;
 import org.eolang.opeo.OpcodeInstruction;
 import org.eolang.opeo.ast.OpcodeName;
 import org.eolang.opeo.decompilation.DecompilerMachine;
+import org.eolang.opeo.decompilation.agents.TracedAgent;
 import org.eolang.parser.xmir.Xmir;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -63,18 +65,24 @@ final class AgentsIT {
     @ClasspathSource(value = "agents", glob = "**.yaml")
     void verifiesAgents(final String yaml) {
         final InstructionPack pack = new InstructionPack(yaml);
+        final TracedAgent.Container output = new TracedAgent.Container();
         final Iterable<Directive> xmir =
             new Directives().add("program")
                 .add("objects")
-
                 .append(
-                    new DecompilerMachine().decompile(pack.instructions())
+                    new DecompilerMachine(Collections.singletonMap("output", output))
+                        .decompile(pack.instructions())
 
                 ).up().up();
         final String xml = new Xembler(xmir).xmlQuietly();
         final String actual = new Xmir.Default(new XMLDocument(xml)).toEO();
         final String expected = pack.expected();
+        System.out.println("EXPECTED");
         final List<String> expectedAgents = pack.agents();
+        System.out.println(expectedAgents);
+        System.out.println("ACTUAL");
+        System.out.println(output.messages());
+        System.out.println("______");
         MatcherAssert.assertThat(
             "Agents should decompile instructions correctly, according to the YAML pack",
             actual,
