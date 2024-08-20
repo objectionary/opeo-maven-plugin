@@ -70,6 +70,25 @@ public final class OpcodeName {
 
     /**
      * Constructor.
+     * @param name Opcode name.
+     */
+    public OpcodeName(final String name) {
+        this(
+            OpcodeName.NAMES.entrySet()
+                .stream().filter(e -> e.getValue().equals(name))
+                .findFirst()
+                .orElseThrow(
+                    () -> new IllegalArgumentException(
+                        String.format("Opcode name '%s' not found", name)
+                    )
+                )
+                .getKey(),
+            OpcodeName.DEFAULT
+        );
+    }
+
+    /**
+     * Constructor.
      * @param opcode Bytecode operation code.
      * @param counter Opcode counter.
      */
@@ -84,6 +103,14 @@ public final class OpcodeName {
      */
     public String simplified() {
         return OpcodeName.NAMES.getOrDefault(this.opcode, "UNKNOWN");
+    }
+
+    /**
+     * Get opcode.
+     * @return Opcode.
+     */
+    public int code() {
+        return opcode;
     }
 
     /**

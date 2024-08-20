@@ -3,6 +3,13 @@ opcodes:
   - ICONST_2
   - IADD
 agents:
+  - ConstAgent
+  - ConstAgent
   - AddAgent
-eo:
-  1.add 2
+eo: |
+  *
+    int
+      00-00-00-00-00-00-00-01
+    .plus
+      int
+        00-00-00-00-00-00-00-02

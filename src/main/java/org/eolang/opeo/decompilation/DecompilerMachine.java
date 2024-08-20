@@ -55,7 +55,7 @@ public final class DecompilerMachine {
     /**
      * Constructor.
      */
-    DecompilerMachine() {
+    public DecompilerMachine() {
         this(new HashMap<>(0));
     }
 
@@ -64,7 +64,7 @@ public final class DecompilerMachine {
      *
      * @param args Arguments provided to decompiler.
      */
-    DecompilerMachine(final Map<String, String> args) {
+    public DecompilerMachine(final Map<String, String> args) {
         this(new LocalVariables(), args);
     }
 
