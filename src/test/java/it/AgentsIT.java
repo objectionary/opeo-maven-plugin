@@ -47,9 +47,17 @@ import org.yaml.snakeyaml.Yaml;
 
 /**
  * Test pack that checks how separate agents decompile instructions.
+ * @since 0.4
+ * @todo #381:30min Remove `program` and `object` elements.
+ *  We added this elements to the test to make it pass.
+ *  Currently {@link Xmir.Default} does not support the decompilation of partial XMIR documents.
+ *  So, by adding these elements we mimic the full XMIR document.
+ *  When the related issue is fixed, remove these elements.
+ *  You can follow the progress of the issue
+ *  <a href="https://github.com/objectionary/eo/issues/3343">here.</a>
  */
 @SuppressWarnings("JTCOP.RuleCorrectTestName")
-public final class AgentsIT {
+final class AgentsIT {
 
     @ParameterizedTest
     @ClasspathSource(value = "agents", glob = "**.yaml")
@@ -64,7 +72,7 @@ public final class AgentsIT {
 
                 ).up().up();
         final String xml = new Xembler(xmir).xmlQuietly();
-        final String actual = new Xmir.Simplified(new XMLDocument(xml)).toEO();
+        final String actual = new Xmir.Default(new XMLDocument(xml)).toEO();
         final String expected = pack.expected();
         final List<String> expectedAgents = pack.agents();
         MatcherAssert.assertThat(
