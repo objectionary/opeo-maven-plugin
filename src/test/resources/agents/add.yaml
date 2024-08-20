@@ -1,0 +1,8 @@
+opcodes:
+  - ICONST_1
+  - ICONST_2
+  - IADD
+agents:
+  - AddAgent
+eo:
+  1.add 2
