@@ -24,10 +24,13 @@
 package org.eolang.opeo.decompilation.agents;
 
 import com.jcabi.log.Logger;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.eolang.opeo.decompilation.DecompilerState;
 
 /**
@@ -79,6 +82,7 @@ public final class TracedAgent implements DecompilationAgent {
     public void handle(final DecompilerState state) {
         if (this.appropriate(state)) {
             final String name = this.original.getClass().getSimpleName();
+            this.output.register(this.original.getClass());
             this.output.write(
                 String.format(
                     "Stack before %s: [%s]",
@@ -124,6 +128,12 @@ public final class TracedAgent implements DecompilationAgent {
          */
         void write(String message);
 
+        /**
+         * Register an agent that was used.
+         * @param agent Agent class used.
+         */
+        void register(Class<? extends DecompilationAgent> agent);
+
     }
 
     /**
@@ -136,6 +146,11 @@ public final class TracedAgent implements DecompilationAgent {
         @Override
         public void write(final String message) {
             Logger.debug(this, message);
+        }
+
+        @Override
+        public void register(final Class<? extends DecompilationAgent> agent) {
+            Logger.debug(this, "Agent used: %s", agent.getSimpleName());
         }
     }
 
@@ -152,6 +167,11 @@ public final class TracedAgent implements DecompilationAgent {
         private Deque<String> queue;
 
         /**
+         * Agents used.
+         */
+        private List<Class<? extends DecompilationAgent>> agents;
+
+        /**
          * Default constructor.
          */
         public Container() {
@@ -164,11 +184,17 @@ public final class TracedAgent implements DecompilationAgent {
          */
         Container(final Deque<String> queue) {
             this.queue = queue;
+            this.agents = new ArrayList<>(0);
         }
 
         @Override
         public void write(final String message) {
             this.queue.push(message);
+        }
+
+        @Override
+        public void register(final Class<? extends DecompilationAgent> agent) {
+            this.agents.add(agent);
         }
 
         /**
@@ -177,6 +203,14 @@ public final class TracedAgent implements DecompilationAgent {
          */
         public Collection<String> messages() {
             return Collections.unmodifiableCollection(this.queue);
+        }
+
+        /**
+         * Get all agents used.
+         * @return All agents used.
+         */
+        public List<String> agents() {
+            return this.agents.stream().map(Class::getSimpleName).collect(Collectors.toList());
         }
     }
 }

@@ -28,8 +28,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Stream;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.Sticky;
 import org.eolang.jucs.ClasspathSource;
@@ -74,19 +72,15 @@ final class AgentsIT {
                         .decompile(pack.instructions())
 
                 ).up().up();
-        final String xml = new Xembler(xmir).xmlQuietly();
-        final String actual = new Xmir.Default(new XMLDocument(xml)).toEO();
-        final String expected = pack.expected();
-        System.out.println("EXPECTED");
-        final List<String> expectedAgents = pack.agents();
-        System.out.println(expectedAgents);
-        System.out.println("ACTUAL");
-        System.out.println(output.messages());
-        System.out.println("______");
         MatcherAssert.assertThat(
             "Agents should decompile instructions correctly, according to the YAML pack",
-            actual,
-            Matchers.equalTo(expected)
+            new Xmir.Default(new XMLDocument(new Xembler(xmir).xmlQuietly())).toEO(),
+            Matchers.equalTo(pack.expected())
+        );
+        MatcherAssert.assertThat(
+            "We expect that agents is used in the same order as expected, but they didn't",
+            output.agents(),
+            Matchers.equalTo(pack.agents())
         );
 
     }
@@ -104,13 +98,10 @@ final class AgentsIT {
 
         Instruction[] instructions() {
             try {
-                final List<String> opcodes1 = (List<String>) this.pack.value().get("opcodes");
-                final Stream<OpcodeInstruction> opcodes = opcodes1
+                return ((Collection<String>) this.pack.value().get("opcodes"))
                     .stream()
-                    .map(s -> new OpcodeInstruction(new OpcodeName(s).code()));
-                final Instruction[] array = opcodes
+                    .map(s -> new OpcodeInstruction(new OpcodeName(s).code()))
                     .toArray(Instruction[]::new);
-                return array;
             } catch (final Exception exception) {
                 throw new IllegalStateException("Failed to parse YAML pack", exception);
             }
