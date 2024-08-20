@@ -54,6 +54,10 @@ import org.yaml.snakeyaml.Yaml;
  *  When the related issue is fixed, remove these elements.
  *  You can follow the progress of the issue
  *  <a href="https://github.com/objectionary/eo/issues/3343">here.</a>
+ * @todo #381:90min Add More Tests With Instructions That Have Params.
+ *  Currently, we only have tests with instructions that do not have parameters.
+ *  This is an extremely limited number of instructions.
+ *  We need to add more tests with instructions that have parameters.
  */
 @SuppressWarnings("JTCOP.RuleCorrectTestName")
 final class AgentsIT {
