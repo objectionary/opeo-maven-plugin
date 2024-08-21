@@ -24,11 +24,13 @@
 package it;
 
 import com.jcabi.xml.XMLDocument;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.Sticky;
@@ -101,29 +103,18 @@ final class AgentsIT {
     private static final class InstructionPack {
 
         /**
-         * Integer pattern.
+         * The pattern to match instructions.
+         * It matches:
+         * 1. Boolean values. Example: true, false.
+         * 2. Double values. Example: 10.12.
+         * 3. Long values. Example: 100L.
+         * 4. Integer values. Example: 100.
+         * 5. String values. Example: "Hello world!".
+         * 6. Instruction names. Example: LDC.
          */
-        private static final Pattern INTEGER = Pattern.compile("\\d+");
-
-        /**
-         * Boolean pattern.
-         */
-        private static final Pattern BOOLEAN = Pattern.compile("true|false");
-
-        /**
-         * Double pattern.
-         */
-        private static final Pattern DOUBLE = Pattern.compile("\\d+\\.\\d+");
-
-        /**
-         * Long pattern.
-         */
-        private static final Pattern LONG = Pattern.compile("\\d+L");
-
-        /**
-         * String pattern.
-         */
-        private static final Pattern STRING = Pattern.compile("\"*\"");
+        private static final Pattern INSTRUCTION = Pattern.compile(
+            "(\\bfalse|true\\b)|(\\d+\\.\\d+)|(\\d+L)|(\\d+)|\"([^\"]*)\"|(\\S+)"
+        );
 
         /**
          * Yaml pack.
@@ -181,41 +172,26 @@ final class AgentsIT {
          * @return Instruction.
          */
         private Instruction parse(final String instr) {
-            final String[] args = instr.split(" ");
-            final String opcode = args[0];
-            if (args.length > 1) {
-                return new OpcodeInstruction(
-                    new OpcodeName(opcode).code(),
-                    this.typed(Arrays.copyOfRange(args, 1, args.length))
-                );
-            } else {
-                return new OpcodeInstruction(new OpcodeName(opcode).code());
-            }
-        }
-
-        /**
-         * Typed arguments.
-         * @param args Arguments as strings.
-         * @return Typed arguments.
-         */
-        private Object[] typed(final String... args) {
-            return Arrays.stream(args).map(arg -> {
-                if (InstructionPack.INTEGER.matcher(arg).matches()) {
-                    return Integer.parseInt(arg);
-                } else if (InstructionPack.BOOLEAN.matcher(arg).matches()) {
-                    return Boolean.parseBoolean(arg);
-                } else if (InstructionPack.DOUBLE.matcher(arg).matches()) {
-                    return Double.parseDouble(arg);
-                } else if (InstructionPack.LONG.matcher(arg).matches()) {
-                    return Long.parseLong(arg.substring(0, arg.length() - 1));
-                } else if (InstructionPack.STRING.matcher(arg).matches()) {
-                    return arg.substring(1, arg.length() - 1);
+            final Matcher matcher = InstructionPack.INSTRUCTION.matcher(instr);
+            final AtomicInteger opcode = new AtomicInteger();
+            final List<Object> arguments = new ArrayList<>(0);
+            while (matcher.find()) {
+                if (matcher.group(1) != null) {
+                    arguments.add(Boolean.parseBoolean(matcher.group(1)));
+                } else if (matcher.group(2) != null) {
+                    arguments.add(Double.parseDouble(matcher.group(2)));
+                } else if (matcher.group(3) != null) {
+                    arguments.add(Long.parseLong(matcher.group(3)));
+                } else if (matcher.group(4) != null) {
+                    arguments.add(Integer.parseInt(matcher.group(4)));
+                } else if (matcher.group(5) != null) {
+                    final String group = matcher.group(5);
+                    arguments.add(group);
                 } else {
-                    throw new IllegalArgumentException(
-                        String.format("Unknown type of argument: %s", arg)
-                    );
+                    opcode.set(new OpcodeName(matcher.group(6)).code());
                 }
-            }).toArray();
+            }
+            return new OpcodeInstruction(opcode.get(), arguments.toArray());
         }
 
         /**
