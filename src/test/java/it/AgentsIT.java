@@ -24,10 +24,12 @@
 package it;
 
 import com.jcabi.xml.XMLDocument;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.Sticky;
 import org.eolang.jucs.ClasspathSource;
@@ -99,6 +101,31 @@ final class AgentsIT {
     private static final class InstructionPack {
 
         /**
+         * Integer pattern.
+         */
+        private static final Pattern INTEGER = Pattern.compile("\\d+");
+
+        /**
+         * Boolean pattern.
+         */
+        private static final Pattern BOOLEAN = Pattern.compile("true|false");
+
+        /**
+         * Double pattern.
+         */
+        private static final Pattern DOUBLE = Pattern.compile("\\d+\\.\\d+");
+
+        /**
+         * Long pattern.
+         */
+        private static final Pattern LONG = Pattern.compile("\\d+L");
+
+        /**
+         * String pattern.
+         */
+        private static final Pattern STRING = Pattern.compile("\"*\"");
+
+        /**
          * Yaml pack.
          */
         private final Scalar<? extends Map<String, Object>> pack;
@@ -120,18 +147,6 @@ final class AgentsIT {
         }
 
         /**
-         * Instructions to decompile.
-         * @return Instructions.
-         */
-        @SuppressWarnings("unchecked")
-        Instruction[] instructions() {
-            return ((Collection<String>) this.value("opcodes"))
-                .stream()
-                .map(s -> new OpcodeInstruction(new OpcodeName(s).code()))
-                .toArray(Instruction[]::new);
-        }
-
-        /**
          * Expected agents used to decompile instructions.
          * @return Agents.
          */
@@ -146,6 +161,61 @@ final class AgentsIT {
          */
         String expected() {
             return (String) this.value("eo");
+        }
+
+        /**
+         * Instructions to decompile.
+         * @return Instructions.
+         */
+        @SuppressWarnings("unchecked")
+        Instruction[] instructions() {
+            return ((Collection<String>) this.value("opcodes"))
+                .stream()
+                .map(this::parse)
+                .toArray(Instruction[]::new);
+        }
+
+        /**
+         * Parse instruction.
+         * @param instr Instruction as string.
+         * @return Instruction.
+         */
+        private Instruction parse(final String instr) {
+            final String[] args = instr.split(" ");
+            final String opcode = args[0];
+            if (args.length > 1) {
+                return new OpcodeInstruction(
+                    new OpcodeName(opcode).code(),
+                    this.typed(Arrays.copyOfRange(args, 1, args.length))
+                );
+            } else {
+                return new OpcodeInstruction(new OpcodeName(opcode).code());
+            }
+        }
+
+        /**
+         * Typed arguments.
+         * @param args Arguments as strings.
+         * @return Typed arguments.
+         */
+        private Object[] typed(final String... args) {
+            return Arrays.stream(args).map(arg -> {
+                if (InstructionPack.INTEGER.matcher(arg).matches()) {
+                    return Integer.parseInt(arg);
+                } else if (InstructionPack.BOOLEAN.matcher(arg).matches()) {
+                    return Boolean.parseBoolean(arg);
+                } else if (InstructionPack.DOUBLE.matcher(arg).matches()) {
+                    return Double.parseDouble(arg);
+                } else if (InstructionPack.LONG.matcher(arg).matches()) {
+                    return Long.parseLong(arg.substring(0, arg.length() - 1));
+                } else if (InstructionPack.STRING.matcher(arg).matches()) {
+                    return arg.substring(1, arg.length() - 1);
+                } else {
+                    throw new IllegalArgumentException(
+                        String.format("Unknown type of argument: %s", arg)
+                    );
+                }
+            }).toArray();
         }
 
         /**

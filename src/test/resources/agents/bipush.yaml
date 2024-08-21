@@ -3,13 +3,13 @@ opcodes:
   - BIPUSH 20
   - IADD
 agents:
-  - ConstAgent
-  - ConstAgent
+  - BipushAgent
+  - BipushAgent
   - AddAgent
 eo: |
   *
     int
-      00-00-00-00-00-00-00-10
+      00-00-00-00-00-00-00-0A
     .plus
       int
-        00-00-00-00-00-00-00-20
+        00-00-00-00-00-00-00-14
