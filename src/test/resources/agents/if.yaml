@@ -6,7 +6,11 @@ agents:
   - ConstAgent
   - ConstAgent
   - IfAgent
-# @todo
+# @todo #404:30min Strange Output of the IfAgent.
+#  The output of the IfAgent looks strange.
+#  We should investigate if the IfAgent is working correctly.
+#  If it is not working correctly, we should fix it.
+#  Otherwise just remove this puzzle.
 eo: |
   *
     long

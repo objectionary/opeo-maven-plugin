@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,7 +46,6 @@ import org.eolang.parser.xmir.Xmir;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.objectweb.asm.Label;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 import org.yaml.snakeyaml.Yaml;
@@ -179,18 +179,18 @@ final class AgentsIT {
             final AtomicInteger opcode = new AtomicInteger();
             final List<Object> arguments = new ArrayList<>(0);
             while (matcher.find()) {
-                if (matcher.group(1) != null) {
+                if (Objects.nonNull(matcher.group(1))) {
                     arguments.add(Boolean.parseBoolean(matcher.group(1)));
-                } else if (matcher.group(2) != null) {
+                } else if (Objects.nonNull(matcher.group(2))) {
                     arguments.add(Double.parseDouble(matcher.group(2)));
-                } else if (matcher.group(3) != null) {
+                } else if (Objects.nonNull(matcher.group(3))) {
                     arguments.add(Long.parseLong(matcher.group(3)));
-                } else if (matcher.group(4) != null) {
+                } else if (Objects.nonNull(matcher.group(4))) {
                     arguments.add(Integer.parseInt(matcher.group(4)));
-                } else if (matcher.group(5) != null) {
+                } else if (Objects.nonNull(matcher.group(5))) {
                     final String group = matcher.group(5);
                     arguments.add(group);
-                } else if (matcher.group(6) != null) {
+                } else if (Objects.nonNull(matcher.group(6))) {
                     arguments.add(new AllLabels().label(matcher.group(6)));
                 } else {
                     opcode.set(new OpcodeName(matcher.group(7)).code());
