@@ -1,0 +1,15 @@
+opcodes:
+  - BIPUSH 10
+  - BIPUSH 20
+  - IADD
+agents:
+  - ConstAgent
+  - ConstAgent
+  - AddAgent
+eo: |
+  *
+    int
+      00-00-00-00-00-00-00-10
+    .plus
+      int
+        00-00-00-00-00-00-00-20
