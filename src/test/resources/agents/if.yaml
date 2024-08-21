@@ -1,0 +1,20 @@
+opcodes:
+  - LCONST_0
+  - LCONST_1
+  - IF_ICMPGT LABEL:iftrue
+agents:
+  - ConstAgent
+  - ConstAgent
+  - IfAgent
+# @todo
+eo: |
+  *
+    long
+      00-00-00-00-00-00-00-00
+    .gt
+      long
+        00-00-00-00-00-00-00-01
+    .if
+      label
+        69-66-74-72-75-65
+      nop

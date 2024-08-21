@@ -34,6 +34,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.Sticky;
+import org.eolang.jeo.representation.xmir.AllLabels;
 import org.eolang.jucs.ClasspathSource;
 import org.eolang.opeo.Instruction;
 import org.eolang.opeo.OpcodeInstruction;
@@ -44,6 +45,7 @@ import org.eolang.parser.xmir.Xmir;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.objectweb.asm.Label;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 import org.yaml.snakeyaml.Yaml;
@@ -110,10 +112,11 @@ final class AgentsIT {
          * 3. Long values. Example: 100L.
          * 4. Integer values. Example: 100.
          * 5. String values. Example: "Hello world!".
-         * 6. Instruction names. Example: LDC.
+         * 6. Label. Example: LABEL:labelid.
+         * 7. Instruction names. Example: LDC.
          */
         private static final Pattern INSTRUCTION = Pattern.compile(
-            "(\\bfalse|true\\b)|(\\d+\\.\\d+)|(\\d+L)|(\\d+)|\"([^\"]*)\"|(\\S+)"
+            "(\\bfalse|true\\b)|(\\d+\\.\\d+)|(\\d+L)|(\\d+)|\"([^\"]*)\"|\\bLABEL\\b:(\\S+)|(\\S+)"
         );
 
         /**
@@ -187,8 +190,10 @@ final class AgentsIT {
                 } else if (matcher.group(5) != null) {
                     final String group = matcher.group(5);
                     arguments.add(group);
+                } else if (matcher.group(6) != null) {
+                    arguments.add(new AllLabels().label(matcher.group(6)));
                 } else {
-                    opcode.set(new OpcodeName(matcher.group(6)).code());
+                    opcode.set(new OpcodeName(matcher.group(7)).code());
                 }
             }
             return new OpcodeInstruction(opcode.get(), arguments.toArray());
