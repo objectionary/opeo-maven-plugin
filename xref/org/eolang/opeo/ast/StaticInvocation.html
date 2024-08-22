@@ -121,7 +121,7 @@
 <a class="jxr_linenumber" name="L113" href="#L113">113</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>     <strong class="jxr_keyword">public</strong> <a name="StaticInvocation" href="../../../../org/eolang/opeo/ast/StaticInvocation.html#StaticInvocation">StaticInvocation</a>(<strong class="jxr_keyword">final</strong> XmlNode node, <strong class="jxr_keyword">final</strong> List&lt;AstNode&gt; arguments) {
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>         <strong class="jxr_keyword">this</strong>(
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>             <strong class="jxr_keyword">new</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a>(node.firstChild()),
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>             <strong class="jxr_keyword">new</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a>(node.children().collect(Collectors.toList()).get(1)),
 <a class="jxr_linenumber" name="L117" href="#L117">117</a>             StaticInvocation.xowner(node),
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>             arguments
 <a class="jxr_linenumber" name="L119" href="#L119">119</a>         );
@@ -171,8 +171,8 @@
 <a class="jxr_linenumber" name="L163" href="#L163">163</a>         <strong class="jxr_keyword">final</strong> Directives directives = <strong class="jxr_keyword">new</strong> Directives();
 <a class="jxr_linenumber" name="L164" href="#L164">164</a>         directives.add(<span class="jxr_string">"o"</span>)
 <a class="jxr_linenumber" name="L165" href="#L165">165</a>             .attr(<span class="jxr_string">"base"</span>, String.format(<span class="jxr_string">".%s"</span>, <strong class="jxr_keyword">this</strong>.attributes.name()));
-<a class="jxr_linenumber" name="L166" href="#L166">166</a>         directives.append(<strong class="jxr_keyword">this</strong>.attributes.toXmir());
-<a class="jxr_linenumber" name="L167" href="#L167">167</a>         directives.append(<strong class="jxr_keyword">this</strong>.owner.toXmir());
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>         directives.append(<strong class="jxr_keyword">this</strong>.owner.toXmir());
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>         directives.append(<strong class="jxr_keyword">this</strong>.attributes.toXmir());
 <a class="jxr_linenumber" name="L168" href="#L168">168</a>         <strong class="jxr_keyword">this</strong>.args.stream().map(AstNode::toXmir).forEach(directives::append);
 <a class="jxr_linenumber" name="L169" href="#L169">169</a>         <strong class="jxr_keyword">return</strong> directives.up();
 <a class="jxr_linenumber" name="L170" href="#L170">170</a>     }
@@ -205,7 +205,7 @@
 <a class="jxr_linenumber" name="L197" href="#L197">197</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L198" href="#L198">198</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a name="Owner" href="../../../../org/eolang/opeo/ast/Owner.html#Owner">Owner</a> xowner(<strong class="jxr_keyword">final</strong> XmlNode node) {
 <a class="jxr_linenumber" name="L199" href="#L199">199</a>         <strong class="jxr_keyword">return</strong> node.children().collect(Collectors.toList())
-<a class="jxr_linenumber" name="L200" href="#L200">200</a>             .get(1)
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>             .get(0)
 <a class="jxr_linenumber" name="L201" href="#L201">201</a>             .attribute(<span class="jxr_string">"base"</span>).map(Owner::<strong class="jxr_keyword">new</strong>)
 <a class="jxr_linenumber" name="L202" href="#L202">202</a>             .orElseThrow(
 <a class="jxr_linenumber" name="L203" href="#L203">203</a>                 () -&gt; <strong class="jxr_keyword">new</strong> IllegalArgumentException(

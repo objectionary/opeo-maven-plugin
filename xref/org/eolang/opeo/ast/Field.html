@@ -68,8 +68,8 @@
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>      <strong class="jxr_keyword">public</strong> <a name="Field" href="../../../../org/eolang/opeo/ast/Field.html#Field">Field</a>(<strong class="jxr_keyword">final</strong> XmlNode node, <strong class="jxr_keyword">final</strong> <a name="Parser" href="../../../../org/eolang/opeo/compilation/Parser.html#Parser">Parser</a> parser) {
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          <strong class="jxr_keyword">this</strong>(
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>              parser.parse(node.children().collect(Collectors.toList()).get(1)),
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>              <strong class="jxr_keyword">new</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a>(node.firstChild())
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>              parser.parse(node.firstChild()),
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>              <strong class="jxr_keyword">new</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a>(node.children().collect(Collectors.toList()).get(1))
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>          );
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>      }
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  
@@ -88,8 +88,8 @@
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Directives()
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>              .add(<span class="jxr_string">"o"</span>)
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>              .attr(<span class="jxr_string">"base"</span>, String.format(<span class="jxr_string">".%s"</span>, <strong class="jxr_keyword">this</strong>.attributes.name()))
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>              .append(<strong class="jxr_keyword">this</strong>.attributes.toXmir())
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>              .append(<strong class="jxr_keyword">this</strong>.inst.toXmir())
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>              .append(<strong class="jxr_keyword">this</strong>.inst.toXmir())
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>              .append(<strong class="jxr_keyword">this</strong>.attributes.toXmir())
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>              .up();
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>      }
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>  

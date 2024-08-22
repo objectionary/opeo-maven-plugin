@@ -151,9 +151,9 @@
 <a class="jxr_linenumber" name="L143" href="#L143">143</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L144" href="#L144">144</a>     <strong class="jxr_keyword">public</strong> <a name="Super" href="../../../../org/eolang/opeo/ast/Super.html#Super">Super</a>(<strong class="jxr_keyword">final</strong> XmlNode xmir, <strong class="jxr_keyword">final</strong> <a name="Parser" href="../../../../org/eolang/opeo/compilation/Parser.html#Parser">Parser</a> parser) {
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>         <strong class="jxr_keyword">this</strong>(
-<a class="jxr_linenumber" name="L146" href="#L146">146</a>             parser.parse(xmir.children().collect(Collectors.toList()).get(1)),
+<a class="jxr_linenumber" name="L146" href="#L146">146</a>             parser.parse(xmir.children().collect(Collectors.toList()).get(0)),
 <a class="jxr_linenumber" name="L147" href="#L147">147</a>             <strong class="jxr_keyword">new</strong> <a name="Arguments" href="../../../../org/eolang/opeo/ast/Arguments.html#Arguments">Arguments</a>(xmir, parser, 2).toList(),
-<a class="jxr_linenumber" name="L148" href="#L148">148</a>             <strong class="jxr_keyword">new</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a>(xmir.firstChild())
+<a class="jxr_linenumber" name="L148" href="#L148">148</a>             <strong class="jxr_keyword">new</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a>(xmir.children().collect(Collectors.toList()).get(1))
 <a class="jxr_linenumber" name="L149" href="#L149">149</a>         );
 <a class="jxr_linenumber" name="L150" href="#L150">150</a>     }
 <a class="jxr_linenumber" name="L151" href="#L151">151</a> 
@@ -162,8 +162,8 @@
 <a class="jxr_linenumber" name="L154" href="#L154">154</a>         <strong class="jxr_keyword">final</strong> Directives directives = <strong class="jxr_keyword">new</strong> Directives();
 <a class="jxr_linenumber" name="L155" href="#L155">155</a>         directives.add(<span class="jxr_string">"o"</span>)
 <a class="jxr_linenumber" name="L156" href="#L156">156</a>             .attr(<span class="jxr_string">"base"</span>, <span class="jxr_string">".super"</span>)
-<a class="jxr_linenumber" name="L157" href="#L157">157</a>             .append(<strong class="jxr_keyword">this</strong>.attributes.toXmir())
-<a class="jxr_linenumber" name="L158" href="#L158">158</a>             .append(<strong class="jxr_keyword">this</strong>.instance.toXmir());
+<a class="jxr_linenumber" name="L157" href="#L157">157</a>             .append(<strong class="jxr_keyword">this</strong>.instance.toXmir())
+<a class="jxr_linenumber" name="L158" href="#L158">158</a>             .append(<strong class="jxr_keyword">this</strong>.attributes.toXmir());
 <a class="jxr_linenumber" name="L159" href="#L159">159</a>         <strong class="jxr_keyword">this</strong>.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
 <a class="jxr_linenumber" name="L160" href="#L160">160</a>         <strong class="jxr_keyword">return</strong> directives.up();
 <a class="jxr_linenumber" name="L161" href="#L161">161</a>     }

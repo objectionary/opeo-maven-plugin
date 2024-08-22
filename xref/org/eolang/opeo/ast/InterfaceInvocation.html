@@ -98,7 +98,7 @@
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>      <strong class="jxr_keyword">public</strong> <a name="InterfaceInvocation" href="../../../../org/eolang/opeo/ast/InterfaceInvocation.html#InterfaceInvocation">InterfaceInvocation</a>(<strong class="jxr_keyword">final</strong> XmlNode node, <strong class="jxr_keyword">final</strong> <a name="Parser" href="../../../../org/eolang/opeo/compilation/Parser.html#Parser">Parser</a> parser) {
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>          <strong class="jxr_keyword">this</strong>(
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>              InterfaceInvocation.xsource(node, parser),
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>              <strong class="jxr_keyword">new</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a>(node.firstChild()),
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>              <strong class="jxr_keyword">new</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a>(node.children().collect(Collectors.toList()).get(1)),
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>              <strong class="jxr_keyword">new</strong> <a name="Arguments" href="../../../../org/eolang/opeo/ast/Arguments.html#Arguments">Arguments</a>(node, parser, 2).toList()
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>          );
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>      }
@@ -171,8 +171,8 @@
 <a class="jxr_linenumber" name="L163" href="#L163">163</a>         <strong class="jxr_keyword">final</strong> Directives directives = <strong class="jxr_keyword">new</strong> Directives();
 <a class="jxr_linenumber" name="L164" href="#L164">164</a>         directives.add(<span class="jxr_string">"o"</span>)
 <a class="jxr_linenumber" name="L165" href="#L165">165</a>             .attr(<span class="jxr_string">"base"</span>, String.format(<span class="jxr_string">".%s"</span>, <strong class="jxr_keyword">this</strong>.attrs.name()))
-<a class="jxr_linenumber" name="L166" href="#L166">166</a>             .append(<strong class="jxr_keyword">this</strong>.attrs.toXmir())
-<a class="jxr_linenumber" name="L167" href="#L167">167</a>             .append(<strong class="jxr_keyword">this</strong>.source.toXmir());
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>             .append(<strong class="jxr_keyword">this</strong>.source.toXmir())
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>             .append(<strong class="jxr_keyword">this</strong>.attrs.toXmir());
 <a class="jxr_linenumber" name="L168" href="#L168">168</a>         <strong class="jxr_keyword">this</strong>.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
 <a class="jxr_linenumber" name="L169" href="#L169">169</a>         <strong class="jxr_keyword">return</strong> directives.up();
 <a class="jxr_linenumber" name="L170" href="#L170">170</a>     }
@@ -189,7 +189,7 @@
 <a class="jxr_linenumber" name="L181" href="#L181">181</a> <em class="jxr_javadoccomment">     * @return Source.</em>
 <a class="jxr_linenumber" name="L182" href="#L182">182</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L183" href="#L183">183</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a name="AstNode" href="../../../../org/eolang/opeo/ast/AstNode.html#AstNode">AstNode</a> xsource(<strong class="jxr_keyword">final</strong> XmlNode node, <strong class="jxr_keyword">final</strong> <a name="Parser" href="../../../../org/eolang/opeo/compilation/Parser.html#Parser">Parser</a> parser) {
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>         <strong class="jxr_keyword">return</strong> parser.parse(node.children().collect(Collectors.toList()).get(1));
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>         <strong class="jxr_keyword">return</strong> parser.parse(node.children().collect(Collectors.toList()).get(0));
 <a class="jxr_linenumber" name="L185" href="#L185">185</a>     }
 <a class="jxr_linenumber" name="L186" href="#L186">186</a> }
 </pre>

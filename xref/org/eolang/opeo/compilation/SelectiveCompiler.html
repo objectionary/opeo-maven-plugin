@@ -35,7 +35,7 @@
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> java.nio.file.Path;
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> java.util.Arrays;
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> java.util.stream.Collectors;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.decompilation.handlers.RouterHandler;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.decompilation.agents.AllAgents;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.storage.CompilationStorage;
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.storage.Storage;
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.storage.XmirEntry;
@@ -73,7 +73,7 @@
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>      <strong class="jxr_keyword">public</strong> <a name="SelectiveCompiler" href="../../../../org/eolang/opeo/compilation/SelectiveCompiler.html#SelectiveCompiler">SelectiveCompiler</a>(<strong class="jxr_keyword">final</strong> <a name="Storage" href="../../../../org/eolang/opeo/storage/Storage.html#Storage">Storage</a> storage) {
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>          <strong class="jxr_keyword">this</strong>.storage = storage;
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>          <strong class="jxr_keyword">this</strong>.supported = <strong class="jxr_keyword">new</strong> <a name="RouterHandler" href="../../../../org/eolang/opeo/decompilation/handlers/RouterHandler.html#RouterHandler">RouterHandler</a>(false).supportedOpcodes();
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          <strong class="jxr_keyword">this</strong>.supported = <strong class="jxr_keyword">new</strong> <a name="AllAgents" href="../../../../org/eolang/opeo/decompilation/agents/AllAgents.html#AllAgents">AllAgents</a>().supportedOpcodes();
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>      }
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>  
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      @Override

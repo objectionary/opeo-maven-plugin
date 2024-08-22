@@ -35,7 +35,7 @@
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> java.util.List;
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.eolang.jeo.matchers.SameXml;
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.eolang.jeo.representation.xmir.XmlNode;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Add;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Addition;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Attributes;
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.Field;
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.eolang.opeo.ast.FieldAssignment;
@@ -78,7 +78,7 @@
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>      @Test
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">void</strong> convertsAddition() {
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          <strong class="jxr_keyword">final</strong> List&lt;XmlNode&gt; nodes = <strong class="jxr_keyword">new</strong> XmirParser(
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>              <strong class="jxr_keyword">new</strong> Add(<strong class="jxr_keyword">new</strong> Literal(1), <strong class="jxr_keyword">new</strong> Literal(2))
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>              <strong class="jxr_keyword">new</strong> Addition(<strong class="jxr_keyword">new</strong> Literal(1), <strong class="jxr_keyword">new</strong> Literal(2))
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>          ).toJeoNodes();
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>          MatcherAssert.assertThat(
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>              String.format(
@@ -104,12 +104,12 @@
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>          MatcherAssert.assertThat(
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>              <span class="jxr_string">"We expect to retrieve 7 opcodes, but got something else instead"</span>,
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>              <strong class="jxr_keyword">new</strong> XmirParser(
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>                  <strong class="jxr_keyword">new</strong> Add(
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>                     <strong class="jxr_keyword">new</strong> Add(
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>                  <strong class="jxr_keyword">new</strong> Addition(
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>                     <strong class="jxr_keyword">new</strong> Addition(
 <a class="jxr_linenumber" name="L101" href="#L101">101</a>                         <strong class="jxr_keyword">new</strong> Literal(1),
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>                         <strong class="jxr_keyword">new</strong> Literal(2)
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>                     ),
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>                     <strong class="jxr_keyword">new</strong> Add(
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>                     <strong class="jxr_keyword">new</strong> Addition(
 <a class="jxr_linenumber" name="L105" href="#L105">105</a>                         <strong class="jxr_keyword">new</strong> Literal(3),
 <a class="jxr_linenumber" name="L106" href="#L106">106</a>                         <strong class="jxr_keyword">new</strong> Literal(4)
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>                     )

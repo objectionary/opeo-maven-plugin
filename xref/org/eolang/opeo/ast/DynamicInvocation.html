@@ -183,8 +183,8 @@
 <a class="jxr_linenumber" name="L175" href="#L175">175</a>     <strong class="jxr_keyword">public</strong> Iterable&lt;Directive&gt; toXmir() {
 <a class="jxr_linenumber" name="L176" href="#L176">176</a>         <strong class="jxr_keyword">final</strong> Directives directives = <strong class="jxr_keyword">new</strong> Directives().add(<span class="jxr_string">"o"</span>)
 <a class="jxr_linenumber" name="L177" href="#L177">177</a>             .attr(<span class="jxr_string">"base"</span>, String.format(<span class="jxr_string">".%s"</span>, <strong class="jxr_keyword">this</strong>.name))
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>             .append(<strong class="jxr_keyword">this</strong>.attributes.toXmir())
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>             .append(<strong class="jxr_keyword">this</strong>.factory.toXmir());
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>             .append(<strong class="jxr_keyword">this</strong>.factory.toXmir())
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>             .append(<strong class="jxr_keyword">this</strong>.attributes.toXmir());
 <a class="jxr_linenumber" name="L180" href="#L180">180</a>         DynamicInvocation.xmirArgs(<strong class="jxr_keyword">this</strong>.farguments).stream().map(Xmir::toXmir)
 <a class="jxr_linenumber" name="L181" href="#L181">181</a>             .forEach(directives::append);
 <a class="jxr_linenumber" name="L182" href="#L182">182</a>         <strong class="jxr_keyword">this</strong>.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
@@ -233,7 +233,7 @@
 <a class="jxr_linenumber" name="L225" href="#L225">225</a> <em class="jxr_javadoccomment">     * @return Descriptor.</em>
 <a class="jxr_linenumber" name="L226" href="#L226">226</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L227" href="#L227">227</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String xdescriptor(<strong class="jxr_keyword">final</strong> List&lt;XmlNode&gt; children) {
-<a class="jxr_linenumber" name="L228" href="#L228">228</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a>(children.get(0)).descriptor();
+<a class="jxr_linenumber" name="L228" href="#L228">228</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="Attributes" href="../../../../org/eolang/opeo/ast/Attributes.html#Attributes">Attributes</a>(children.get(1)).descriptor();
 <a class="jxr_linenumber" name="L229" href="#L229">229</a>     }
 <a class="jxr_linenumber" name="L230" href="#L230">230</a> 
 <a class="jxr_linenumber" name="L231" href="#L231">231</a>     <em class="jxr_javadoccomment">/**</em>
@@ -242,7 +242,7 @@
 <a class="jxr_linenumber" name="L234" href="#L234">234</a> <em class="jxr_javadoccomment">     * @return Factory method reference.</em>
 <a class="jxr_linenumber" name="L235" href="#L235">235</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L236" href="#L236">236</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a name="Handle" href="../../../../org/eolang/opeo/ast/Handle.html#Handle">Handle</a> xfactory(<strong class="jxr_keyword">final</strong> List&lt;XmlNode&gt; children) {
-<a class="jxr_linenumber" name="L237" href="#L237">237</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="Handle" href="../../../../org/eolang/opeo/ast/Handle.html#Handle">Handle</a>(children.get(1));
+<a class="jxr_linenumber" name="L237" href="#L237">237</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="Handle" href="../../../../org/eolang/opeo/ast/Handle.html#Handle">Handle</a>(children.get(0));
 <a class="jxr_linenumber" name="L238" href="#L238">238</a>     }
 <a class="jxr_linenumber" name="L239" href="#L239">239</a> 
 <a class="jxr_linenumber" name="L240" href="#L240">240</a>     <em class="jxr_javadoccomment">/**</em>
