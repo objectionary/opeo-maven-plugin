@@ -34,19 +34,17 @@ import org.xembly.Directives;
 import org.xembly.Xembler;
 
 /**
- * Test cases for {@link WithoutAliases}
+ * Test cases for {@link WithoutAliases}.
  *
  * @since 0.4
  */
-class WithoutAliasesTest {
+final class WithoutAliasesTest {
 
     @Test
     void removesAllAliases() {
-        final XML program = WithoutAliasesTest.program();
-        System.out.println(program);
         MatcherAssert.assertThat(
             "We expect that all aliases are removed since the program doesn't have labels or opcodes",
-            new WithoutAliases(program).toXml(),
+            new WithoutAliases(WithoutAliasesTest.program()).toXml(),
             Matchers.not(XhtmlMatchers.hasXPath("/program/metas/meta[head='alias']"))
         );
     }
@@ -87,6 +85,23 @@ class WithoutAliasesTest {
                 XhtmlMatchers.hasXPaths(
                     "/program/metas/meta[head='alias' and tail='org.eolang.jeo.label']"
                 )
+            )
+        );
+    }
+
+    @Test
+    void keepsAllAliases() {
+        MatcherAssert.assertThat(
+            "We expect that all aliases are kept since the program has both labels and opcodes",
+            new WithoutAliases(
+                WithoutAliasesTest.program(
+                    WithoutAliasesTest.object("label"),
+                    WithoutAliasesTest.object("opcode")
+                )
+            ).toXml(),
+            XhtmlMatchers.hasXPaths(
+                "/program/metas/meta[head='alias' and tail='org.eolang.jeo.label']",
+                "/program/metas/meta[head='alias' and tail='org.eolang.jeo.opcode']"
             )
         );
     }

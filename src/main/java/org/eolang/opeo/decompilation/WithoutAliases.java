@@ -25,6 +25,8 @@ package org.eolang.opeo.decompilation;
 
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -52,37 +54,34 @@ public final class WithoutAliases {
      * @return Xmir without aliases.
      */
     public XML toXml() {
-        //todo: refactor this ugly method!
-        final boolean hasLabels = !this.original.xpath(".//o[@base='label']/@base").isEmpty();
-        final boolean hasOpcodes = !this.original.xpath(".//o[@base='opcode']/@base").isEmpty();
-        if (hasOpcodes && hasLabels) {
-            return this.original;
-        } else if (hasOpcodes) {
-            return new XMLDocument(
-                new Xembler(
-                    new Directives()
-                        .xpath(
-                            "./program/metas/meta[head='alias' and tail='org.eolang.jeo.label']")
-                        .remove()
-                ).applyQuietly(this.original.node())
-            );
-        } else if (hasLabels) {
-            return new XMLDocument(
-                new Xembler(
-                    new Directives()
-                        .xpath(
-                            "./program/metas/meta[head='alias' and tail='org.eolang.jeo.opcode']")
-                        .remove()
-                ).applyQuietly(this.original.node())
-            );
+        return new XMLDocument(
+            new Xembler(
+                new Directives()
+                    .xpath(
+                        String.format(
+                            "./program/metas/meta[head='alias' and contains(%s,tail)]",
+                            Stream.of(this.alias("label"), this.alias("opcode"))
+                                .filter(alias -> !alias.isEmpty())
+                                .collect(Collectors.joining(", ", "'", "'"))
+                        )
+                    )
+                    .remove()
+            ).applyQuietly(this.original.node())
+        );
+    }
+
+    /**
+     * Alias for an object.
+     * @param object Object.
+     * @return Alias.
+     */
+    private String alias(final String object) {
+        final String result;
+        if (this.original.xpath(String.format(".//o[@base='%s']/@base", object)).isEmpty()) {
+            result = String.format("org.eolang.jeo.%s", object);
         } else {
-            return new XMLDocument(
-                new Xembler(
-                    new Directives()
-                        .xpath("./program/metas/meta[head[text()='alias']]")
-                        .remove()
-                ).applyQuietly(this.original.node())
-            );
+            result = "";
         }
+        return result;
     }
 }
