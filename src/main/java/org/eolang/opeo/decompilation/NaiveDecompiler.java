@@ -93,7 +93,11 @@ public final class NaiveDecompiler implements Decompiler {
      */
     private int decompile(final XmirEntry entry) {
         this.storage.save(
-            entry.transform(xml -> new JeoDecompiler(xml, entry.relative()).decompile())
+            entry.transform(
+                xml -> new WithoutAliases(
+                    new JeoDecompiler(xml, entry.relative()).decompile()
+                ).toXml()
+            )
         );
         return 1;
     }

@@ -25,6 +25,8 @@ package org.eolang.opeo.decompilation;
 
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.xembly.Directives;
 import org.xembly.Xembler;
 
@@ -55,9 +57,31 @@ public final class WithoutAliases {
         return new XMLDocument(
             new Xembler(
                 new Directives()
-                    .xpath("./program/metas/meta[head[text()='alias']]")
+                    .xpath(
+                        String.format(
+                            "./program/metas/meta[head='alias' and contains(%s,tail)]",
+                            Stream.of(this.alias("label"), this.alias("opcode"))
+                                .filter(alias -> !alias.isEmpty())
+                                .collect(Collectors.joining(", ", "'", "'"))
+                        )
+                    )
                     .remove()
             ).applyQuietly(this.original.node())
         );
+    }
+
+    /**
+     * Alias for an object.
+     * @param object Object.
+     * @return Alias.
+     */
+    private String alias(final String object) {
+        final String result;
+        if (this.original.xpath(String.format(".//o[@base='%s']/@base", object)).isEmpty()) {
+            result = String.format("org.eolang.jeo.%s", object);
+        } else {
+            result = "";
+        }
+        return result;
     }
 }
