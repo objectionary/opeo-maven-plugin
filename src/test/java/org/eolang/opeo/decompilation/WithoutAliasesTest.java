@@ -23,7 +23,6 @@
  */
 package org.eolang.opeo.decompilation;
 
-import com.jcabi.matchers.XPathMatcher;
 import com.jcabi.matchers.XhtmlMatchers;
 import com.jcabi.xml.XML;
 import com.jcabi.xml.XMLDocument;
@@ -43,9 +42,11 @@ class WithoutAliasesTest {
 
     @Test
     void removesAllAliases() {
+        final XML program = WithoutAliasesTest.program();
+        System.out.println(program);
         MatcherAssert.assertThat(
             "We expect that all aliases are removed since the program doesn't have labels or opcodes",
-            new WithoutAliases(WithoutAliasesTest.program()).toXml(),
+            new WithoutAliases(program).toXml(),
             Matchers.not(XhtmlMatchers.hasXPath("/program/metas/meta[head='alias']"))
         );
     }
@@ -89,7 +90,6 @@ class WithoutAliasesTest {
             )
         );
     }
-
 
     /**
      * A simple XMIR program that contains aliases and some objects.

@@ -52,12 +52,44 @@ public final class WithoutAliases {
      * @return Xmir without aliases.
      */
     public XML toXml() {
-        return new XMLDocument(
-            new Xembler(
-                new Directives()
-                    .xpath("./program/metas/meta[head[text()='alias']]")
-                    .remove()
-            ).applyQuietly(this.original.node())
-        );
+        System.out.println(this.original.toString());
+        final boolean hasLabels = !this.original.xpath(".//o[@base='label']/@base").isEmpty();
+        final boolean hasOpcodes = !this.original.xpath(".//o[@base='opcode']/@base").isEmpty();
+        if (hasOpcodes && hasLabels) {
+            return this.original;
+        } else if (hasOpcodes) {
+            return new XMLDocument(
+                new Xembler(
+                    new Directives()
+                        .xpath(
+                            "./program/metas/meta[head='alias' and tail='org.eolang.jeo.label']")
+                        .remove()
+                ).applyQuietly(this.original.node())
+            );
+        } else if (hasLabels) {
+            return new XMLDocument(
+                new Xembler(
+                    new Directives()
+                        .xpath(
+                            "./program/metas/meta[head='alias' and tail='org.eolang.jeo.opcode']")
+                        .remove()
+                ).applyQuietly(this.original.node())
+            );
+        } else {
+            return new XMLDocument(
+                new Xembler(
+                    new Directives()
+                        .xpath("./program/metas/meta[head[text()='alias']]")
+                        .remove()
+                ).applyQuietly(this.original.node())
+            );
+        }
+//        return new XMLDocument(
+//            new Xembler(
+//                new Directives()
+//                    .xpath("./program/metas/meta[head[text()='alias']]")
+//                    .remove()
+//            ).applyQuietly(this.original.node())
+//        );
     }
 }
