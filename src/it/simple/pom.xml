@@ -134,13 +134,23 @@ SOFTWARE.
               <goal>exec</goal>
             </goals>
             <configuration>
-            <executable>mvn</executable>
+              <executable>mvn</executable>
               <arguments combine.children="append">
                 <argument>org.eolang:jeo-maven-plugin:${jeo.version}:assemble</argument>
                 <argument>-Djeo.assemble.sourcesDir=${project.build.directory}/generated-sources/opeo-compile-xmir</argument>
                 <argument>-Djeo.assemble.skip.verification=true</argument>
                 <argument>-e</argument>
               </arguments>
+            </configuration>
+          </execution>
+          <execution>
+            <id>run-app</id>
+            <phase>package</phase>
+            <goals>
+              <goal>java</goal>
+            </goals>
+            <configuration>
+              <mainClass>org.eolang.opeo.simple.App</mainClass>
             </configuration>
           </execution>
         </executions>
