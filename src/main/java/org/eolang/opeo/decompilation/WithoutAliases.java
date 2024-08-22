@@ -52,7 +52,7 @@ public final class WithoutAliases {
      * @return Xmir without aliases.
      */
     public XML toXml() {
-        System.out.println(this.original.toString());
+        //todo: refactor this ugly method!
         final boolean hasLabels = !this.original.xpath(".//o[@base='label']/@base").isEmpty();
         final boolean hasOpcodes = !this.original.xpath(".//o[@base='opcode']/@base").isEmpty();
         if (hasOpcodes && hasLabels) {
@@ -84,12 +84,5 @@ public final class WithoutAliases {
                 ).applyQuietly(this.original.node())
             );
         }
-//        return new XMLDocument(
-//            new Xembler(
-//                new Directives()
-//                    .xpath("./program/metas/meta[head[text()='alias']]")
-//                    .remove()
-//            ).applyQuietly(this.original.node())
-//        );
     }
 }
