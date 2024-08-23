@@ -32,7 +32,6 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.eolang.opeo.decompilation.Decompiler;
 import org.eolang.opeo.decompilation.DummyDecompiler;
-import org.eolang.opeo.decompilation.FormattingDecompiler;
 import org.eolang.opeo.decompilation.NaiveDecompiler;
 
 /**
@@ -106,11 +105,8 @@ public final class DecompileMojo extends AbstractMojo {
             decompiler = new DummyDecompiler(this.sourcesDir.toPath(), this.outputDir.toPath());
         } else if (Objects.nonNull(this.modifiedDir)) {
             Logger.info(this, "Use selective decompiler");
-            decompiler = new FormattingDecompiler(
-                new SelectiveDecompiler(
-                    this.sourcesDir.toPath(), this.outputDir.toPath(), this.modifiedDir.toPath()
-                ),
-                this.modifiedDir.toPath()
+            decompiler = new SelectiveDecompiler(
+                this.sourcesDir.toPath(), this.outputDir.toPath(), this.modifiedDir.toPath()
             );
         } else {
             Logger.info(this, "Use naive decompiler");

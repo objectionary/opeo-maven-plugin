@@ -30,11 +30,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.eolang.opeo.decompilation.Decompiler;
-import org.eolang.opeo.decompilation.WithoutAliases;
 import org.eolang.opeo.decompilation.agents.AllAgents;
 import org.eolang.opeo.jeo.JeoDecompiler;
 import org.eolang.opeo.storage.FileStorage;
+import org.eolang.opeo.storage.LowerOpcodesStorage;
 import org.eolang.opeo.storage.Storage;
+import org.eolang.opeo.storage.WithoutAliasesStorage;
 import org.eolang.opeo.storage.XmirEntry;
 
 /**
@@ -86,7 +87,11 @@ public final class SelectiveDecompiler implements Decompiler {
         final Path modified,
         final String... supported
     ) {
-        this(new FileStorage(input, output), new FileStorage(modified, modified), supported);
+        this(
+            new LowerOpcodesStorage(new WithoutAliasesStorage(new FileStorage(input, output))),
+            new LowerOpcodesStorage(new WithoutAliasesStorage(new FileStorage(modified, modified))),
+            supported
+        );
     }
 
     /**
@@ -94,9 +99,7 @@ public final class SelectiveDecompiler implements Decompiler {
      * @param storage Storage from which retrieve the XMIRs and where to save the modified ones.
      * @param modified Storage where to save the modified of each decompiled file.
      */
-    public SelectiveDecompiler(
-        final Storage storage, final Storage modified
-    ) {
+    public SelectiveDecompiler(final Storage storage, final Storage modified) {
         this(storage, modified, new AllAgents().supportedOpcodes());
     }
 
@@ -123,9 +126,7 @@ public final class SelectiveDecompiler implements Decompiler {
                 final Set<String> opcodes = this.unsupported(entry);
                 if (opcodes.isEmpty() && trycatches.isEmpty()) {
                     res = entry.transform(
-                        xml -> new WithoutAliases(
-                            new JeoDecompiler(xml, entry.relative()).decompile()
-                        ).toXml()
+                        xml -> new JeoDecompiler(xml, entry.relative()).decompile()
                     );
                     this.modified.save(res);
                 } else {
