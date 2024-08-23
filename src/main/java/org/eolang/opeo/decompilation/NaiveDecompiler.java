@@ -28,6 +28,7 @@ import java.nio.file.Path;
 import org.eolang.opeo.jeo.JeoDecompiler;
 import org.eolang.opeo.storage.DecompilationStorage;
 import org.eolang.opeo.storage.Storage;
+import org.eolang.opeo.storage.WithoutAliasesStorage;
 import org.eolang.opeo.storage.XmirEntry;
 
 /**
@@ -72,7 +73,7 @@ public final class NaiveDecompiler implements Decompiler {
      * @param storage The storage where the XMIRs are stored.
      */
     private NaiveDecompiler(final Storage storage) {
-        this.storage = storage;
+        this.storage = new WithoutAliasesStorage(storage);
     }
 
     @Override
@@ -93,11 +94,7 @@ public final class NaiveDecompiler implements Decompiler {
      */
     private int decompile(final XmirEntry entry) {
         this.storage.save(
-            entry.transform(
-                xml -> new WithoutAliases(
-                    new JeoDecompiler(xml, entry.relative()).decompile()
-                ).toXml()
-            )
+            entry.transform(xml -> new JeoDecompiler(xml, entry.relative()).decompile())
         );
         return 1;
     }
