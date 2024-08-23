@@ -34,6 +34,7 @@ import org.eolang.opeo.decompilation.WithoutAliases;
 import org.eolang.opeo.decompilation.agents.AllAgents;
 import org.eolang.opeo.jeo.JeoDecompiler;
 import org.eolang.opeo.storage.FileStorage;
+import org.eolang.opeo.storage.LowerOpcodesStorage;
 import org.eolang.opeo.storage.Storage;
 import org.eolang.opeo.storage.WithoutAliasesStorage;
 import org.eolang.opeo.storage.XmirEntry;
@@ -88,8 +89,8 @@ public final class SelectiveDecompiler implements Decompiler {
         final String... supported
     ) {
         this(
-            new WithoutAliasesStorage(new FileStorage(input, output)),
-            new WithoutAliasesStorage(new FileStorage(modified, modified)),
+            new LowerOpcodesStorage(new WithoutAliasesStorage(new FileStorage(input, output))),
+            new LowerOpcodesStorage(new WithoutAliasesStorage(new FileStorage(modified, modified))),
             supported
         );
     }
