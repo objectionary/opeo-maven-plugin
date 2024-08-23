@@ -63,7 +63,7 @@ public final class LowerOpcodesStorage implements Storage {
 
     @Override
     public void save(final XmirEntry xmir) {
-        this.storage.save(xmir.transform(this::lowercase));
+        this.storage.save(xmir.transform(LowerOpcodesStorage::lowercase));
     }
 
     /**
@@ -71,7 +71,7 @@ public final class LowerOpcodesStorage implements Storage {
      * @param xml The XMIR with opcode names.
      * @return The XMIR with lowercase opcode names.
      */
-    private XML lowercase(final XML xml) {
+    private static XML lowercase(final XML xml) {
         return new XMLDocument(
             new Xembler(
                 new Directives()

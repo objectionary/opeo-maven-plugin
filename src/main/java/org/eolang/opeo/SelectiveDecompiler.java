@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.eolang.opeo.decompilation.Decompiler;
-import org.eolang.opeo.decompilation.WithoutAliases;
 import org.eolang.opeo.decompilation.agents.AllAgents;
 import org.eolang.opeo.jeo.JeoDecompiler;
 import org.eolang.opeo.storage.FileStorage;
