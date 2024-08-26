@@ -126,6 +126,25 @@ public final class InterfaceInvocation implements AstNode, Typed {
     }
 
     @Override
+    public Iterable<Directive> toXmir() {
+        if (Objects.isNull(this.source)) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "Source and method must not be null, but they are %s",
+                    this
+                )
+            );
+        }
+        final Directives directives = new Directives();
+        directives.add("o")
+            .attr("base", String.format(".%s", this.attrs.name()))
+            .append(this.source.toXmir())
+            .append(this.attrs.toXmir());
+        this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
+        return directives.up();
+    }
+
+    @Override
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(0);
         res.addAll(this.source.opcodes());
@@ -148,25 +167,6 @@ public final class InterfaceInvocation implements AstNode, Typed {
             )
         );
         return res;
-    }
-
-    @Override
-    public Iterable<Directive> toXmir() {
-        if (Objects.isNull(this.source)) {
-            throw new IllegalArgumentException(
-                String.format(
-                    "Source and method must not be null, but they are %s",
-                    this
-                )
-            );
-        }
-        final Directives directives = new Directives();
-        directives.add("o")
-            .attr("base", String.format(".%s", this.attrs.name()))
-            .append(this.source.toXmir())
-            .append(this.attrs.toXmir());
-        this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
-        return directives.up();
     }
 
     @Override

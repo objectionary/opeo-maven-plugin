@@ -48,7 +48,7 @@ public final class Owner implements Xmir {
      * @param type Owner type.
      */
     public Owner(final String type) {
-        this(Type.getObjectType(type));
+        this(Type.getObjectType(new PrefixedName(type).withoutPrefix()));
     }
 
     /**
@@ -63,7 +63,7 @@ public final class Owner implements Xmir {
     public Iterable<Directive> toXmir() {
         return new Directives()
             .add("o")
-            .attr("base", this.toString())
+            .attr("base", new PrefixedName(this.toString()).withPrefix())
             .up();
     }
 
