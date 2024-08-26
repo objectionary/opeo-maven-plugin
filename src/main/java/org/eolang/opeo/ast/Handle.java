@@ -130,7 +130,7 @@ public final class Handle implements Xmir {
     ) {
         this.tag = tag;
         this.name = name;
-        this.owner = owner;
+        this.owner = new PrefixedName(owner).withoutPrefix();
         this.desc = desc;
         this.itf = itf;
     }
@@ -138,7 +138,13 @@ public final class Handle implements Xmir {
     @Override
     public Iterable<Directive> toXmir() {
         return new Directives().add("o")
-            .attr("base", String.format("%s.%s", this.owner.replace('/', '.'), this.name))
+            .attr(
+                "base",
+                String.format("%s.%s",
+                    new PrefixedName(this.owner.replace('/', '.')).withPrefix(),
+                    this.name
+                )
+            )
             .append(new DirectivesData("", this.tag))
             .append(new DirectivesData("", this.desc))
             .append(new DirectivesData("", this.itf))
