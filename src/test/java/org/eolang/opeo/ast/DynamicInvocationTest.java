@@ -47,14 +47,14 @@ final class DynamicInvocationTest {
     private static final String XMIR = String.join(
         "",
         "<o base='.run'>",
-        "   <o base='java.lang.invoke.LambdaMetafactory.meafactory'>",
+        "   <o base='java.lang.invoke.j$LambdaMetafactory.meafactory'>",
         "      <o base='int' data='bytes' line='74325437'>00 00 00 00 00 00 00 06</o>",
         "      <o base='string' data='bytes' line='981153864'>28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 69 6E 76 6F 6B 65 2F 4D 65 74 68 6F 64 48 61 6E 64 6C 65 73 24 4C 6F 6F 6B 75 70 3B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 69 6E 76 6F 6B 65 2F 4D 65 74 68 6F 64 54 79 70 65 3B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 69 6E 76 6F 6B 65 2F 4D 65 74 68 6F 64 54 79 70 65 3B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 69 6E 76 6F 6B 65 2F 4D 65 74 68 6F 64 48 61 6E 64 6C 65 3B 4C 6A 61 76 61 2F 6C 61 6E 67 2F 69 6E 76 6F 6B 65 2F 4D 65 74 68 6F 64 54 79 70 65 3B 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 69 6E 76 6F 6B 65 2F 43 61 6C 6C 53 69 74 65 3B</o>",
         "      <o base='bool' data='bytes' line='623874038'>00</o>",
         "   </o>",
         "   <o base='string' data='bytes' line='306231171'>64 65 73 63 72 69 70 74 6F 72 3D 28 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 52 75 6E 6E 61 62 6C 65 3B 7C 74 79 70 65 3D 64 79 6E 61 6D 69 63</o>",
         "   <o base='type' data='bytes' line='1809304796'>28 29 56</o>",
-        "   <o base='org.eolang.streams.Lambda.lambda$run$0'>",
+        "   <o base='org.eolang.streams.j$Lambda.lambda$run$0'>",
         "      <o base='int' data='bytes' line='631518845'>00 00 00 00 00 00 00 06</o>",
         "      <o base='string' data='bytes' line='1214403213'>28 29 56</o>",
         "      <o base='bool' data='bytes' line='1030902856'>00</o>",
@@ -73,7 +73,7 @@ final class DynamicInvocationTest {
                     new Handle(
                         6,
                         "meafactory",
-                        "java/lang/invoke/LambdaMetafactory",
+                        "java/lang/invoke/j$LambdaMetafactory",
                         "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;",
                         false
                     ),
@@ -82,7 +82,7 @@ final class DynamicInvocationTest {
                         Type.getType("()V"),
                         new org.objectweb.asm.Handle(
                             6,
-                            "org/eolang/streams/Lambda",
+                            "org/eolang/streams/j$Lambda",
                             "lambda$run$0",
                             "()V",
                             false
