@@ -140,7 +140,8 @@ public final class Handle implements Xmir {
         return new Directives().add("o")
             .attr(
                 "base",
-                String.format("%s.%s",
+                String.format(
+                    "%s.%s",
                     new PrefixedName(this.owner.replace('/', '.')).withPrefix(),
                     this.name
                 )

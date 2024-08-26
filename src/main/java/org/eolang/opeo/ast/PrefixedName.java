@@ -31,6 +31,9 @@ import java.util.regex.Pattern;
  */
 public final class PrefixedName {
 
+    /**
+     * Pattern to remove prefix.
+     */
     private static final Pattern PREFIX = Pattern.compile("j$", Pattern.LITERAL);
 
     /**
@@ -46,9 +49,12 @@ public final class PrefixedName {
         this.original = original;
     }
 
-
+    /**
+     * The class name with prefix.
+     * @return Name with prefix.
+     */
     public String withPrefix() {
-        final String delimiter = delimiter();
+        final String delimiter = this.delimiter();
         final String[] split = this.original.split(String.format("[%s]", delimiter));
         if (split.length < 1) {
             throw new IllegalArgumentException(String.format("Invalid name '%s'", this.original));
@@ -58,8 +64,12 @@ public final class PrefixedName {
         return String.join(delimiter, split);
     }
 
+    /**
+     * Without prefix.
+     * @return Name without prefix.
+     */
     public String withoutPrefix() {
-        final String delimiter = delimiter();
+        final String delimiter = this.delimiter();
         final String[] split = this.original.split(String.format("[%s]", delimiter));
         if (split.length < 1) {
             throw new IllegalArgumentException(String.format("Invalid name '%s'", this.original));
@@ -71,6 +81,10 @@ public final class PrefixedName {
         return String.join(delimiter, split);
     }
 
+    /**
+     * Find delimiter.
+     * @return Delimiter.
+     */
     private String delimiter() {
         final String delimiter;
         if (this.original.contains(".")) {
