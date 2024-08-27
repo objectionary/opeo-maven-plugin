@@ -51,7 +51,7 @@ final class RootTest {
                     "\n",
                     "<o base='tuple'>",
                     "  <o base='string' data='bytes'>57 61 6B 65 20 75 70 2C 20 4E 65 6F 2E 2E 2E</o>",
-                    "  <o base='opcode' name='RETURN-1'>",
+                    "  <o base='opcode' name='return-1'>",
                     "    <o base='int' data='bytes'>00 00 00 00 00 00 00 B1</o>",
                     "  </o>",
                     "  <o base='int' data='bytes'>00 00 00 00 00 00 00 01</o>",
@@ -63,7 +63,7 @@ final class RootTest {
                 XhtmlMatchers.hasXPath("/o[@base='tuple']"),
                 XhtmlMatchers.hasXPath("/o[@base='tuple']/o[@base='string' and @data='bytes']"),
                 XhtmlMatchers.hasXPath(
-                    "/o[@base='tuple']/o[@base='opcode' and contains(@name,'RETURN')]"
+                    "/o[@base='tuple']/o[@base='opcode' and contains(@name,'return')]"
                 ),
                 XhtmlMatchers.hasXPath(
                     "/o[@base='tuple']/o[@base='int' and @data='bytes' and text()='00 00 00 00 00 00 00 01']"

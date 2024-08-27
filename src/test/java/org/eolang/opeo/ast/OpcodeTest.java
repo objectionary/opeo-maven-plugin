@@ -42,7 +42,7 @@ final class OpcodeTest {
      */
     private static final String XMIR = String.join(
         "\n",
-        "<o base='opcode' line='999' name='LDC'>",
+        "<o base='opcode' line='999' name='ldc'>",
         "<o base='int' data='bytes'>00 00 00 00 00 00 00 12</o>",
         "<o base='string' data='bytes'>68 65 6C 6C 6F</o>",
         "</o>"

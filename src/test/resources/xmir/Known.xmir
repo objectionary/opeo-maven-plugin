@@ -39,18 +39,18 @@
             <o base="seq" name="@">
                <o base="tuple" star="">
                   <o base="label" data="bytes">38 63 33 33 31 33 39 37 2D 32 35 39 35 2D 34 66 35 64 2D 38 65 62 30 2D 33 62 30 63 34 62 35 34 36 35 66 32</o>
-                  <o base="opcode" line="999" name="ALOAD">
+                  <o base="opcode" line="999" name="aload">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 19</o>
                      <o base="int" data="bytes">00 00 00 00 00 00 00 00</o>
                   </o>
-                  <o base="opcode" line="999" name="INVOKESPECIAL">
+                  <o base="opcode" line="999" name="invokespecial">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 B7</o>
                      <o base="string" data="bytes">6A 61 76 61 2F 6C 61 6E 67 2F 4F 62 6A 65 63 74</o>
                      <o base="string" data="bytes">3C 69 6E 69 74 3E</o>
                      <o base="string" data="bytes">28 29 56</o>
                      <o base="bool" data="bytes">00</o>
                   </o>
-                  <o base="opcode" line="999" name="RETURN">
+                  <o base="opcode" line="999" name="return">
                      <o base="int" data="bytes">00 00 00 00 00 00 00 B1</o>
                   </o>
                   <o base="label" data="bytes">35 39 66 37 31 33 30 63 2D 32 33 62 37 2D 34 64 37 30 2D 38 30 30 65 2D 32 66 61 34 65 30 63 64 65 38 66 34</o>

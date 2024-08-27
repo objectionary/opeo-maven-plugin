@@ -25,6 +25,7 @@ package org.eolang.opeo.ast;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.objectweb.asm.Opcodes;
@@ -51,6 +52,11 @@ public final class OpcodeName {
     private static final AtomicInteger DEFAULT = new AtomicInteger(0);
 
     /**
+     * Unknown opcode name.
+     */
+    private static final String UNKNOWN = "unknown";
+
+    /**
      * Bytecode operation code.
      */
     private final int opcode;
@@ -75,7 +81,7 @@ public final class OpcodeName {
     public OpcodeName(final String name) {
         this(
             OpcodeName.NAMES.entrySet()
-                .stream().filter(e -> e.getValue().equals(name))
+                .stream().filter(e -> e.getValue().equals(name.toLowerCase(Locale.ROOT)))
                 .findFirst()
                 .orElseThrow(
                     () -> new IllegalArgumentException(
@@ -102,7 +108,7 @@ public final class OpcodeName {
      * @return Simplified opcode name.
      */
     public String simplified() {
-        return OpcodeName.NAMES.getOrDefault(this.opcode, "UNKNOWN");
+        return OpcodeName.NAMES.getOrDefault(this.opcode, OpcodeName.UNKNOWN);
     }
 
     /**
@@ -114,15 +120,6 @@ public final class OpcodeName {
     }
 
     /**
-     * Get string representation of a bytecode.
-     * @return String representation of a bytecode.
-     */
-    String asString() {
-        final String opc = OpcodeName.NAMES.getOrDefault(this.opcode, "UNKNOWN");
-        return String.format("%s-%X", opc, this.counter.incrementAndGet());
-    }
-
-    /**
      * Initialize opcode names.
      * @return Opcode names.
      */
@@ -131,7 +128,7 @@ public final class OpcodeName {
             final Map<Integer, String> res = new HashMap<>();
             for (final Field field : Opcodes.class.getFields()) {
                 if (field.getType() == int.class) {
-                    res.put(field.getInt(Opcodes.class), field.getName());
+                    res.put(field.getInt(Opcodes.class), field.getName().toLowerCase(Locale.ROOT));
                 }
             }
             return res;

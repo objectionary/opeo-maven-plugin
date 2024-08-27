@@ -61,9 +61,9 @@ final class TracedAgentTest {
             output.messages(),
             Matchers.containsInAnyOrder(
                 "Stack before DummyAgent: []",
-                "Instructions before DummyAgent: [LCONST_1 LRETURN]",
+                "Instructions before DummyAgent: [lconst_1 lreturn]",
                 "Stack after DummyAgent: []",
-                "Instructions after DummyAgent: [LCONST_1 LRETURN]"
+                "Instructions after DummyAgent: [lconst_1 lreturn]"
             )
         );
     }

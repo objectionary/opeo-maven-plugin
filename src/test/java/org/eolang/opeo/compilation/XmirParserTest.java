@@ -129,7 +129,7 @@ final class XmirParserTest {
             .descriptor(dscr)
             .owner(owner);
         MatcherAssert.assertThat(
-            "We expect to retrieve exactly 3 opcodes ALOAD, ILOAD and PUTFIELD, but got something else instead",
+            "We expect to retrieve exactly 3 opcodes aload, iload and putfield, but got something else instead",
             new XmirParser(
                 new FieldAssignment(
                     new Field(new This(), attrs),
@@ -150,7 +150,7 @@ final class XmirParserTest {
         final XmlNode node = new XmlNode(
             String.join(
                 "\n",
-                "<o base='opcode' line='999' name='INVOKEDYNAMIC'>",
+                "<o base='opcode' line='999' name='invokedynamic'>",
                 "  <o base='int' data='bytes'>00 00 00 00 00 00 00 BA</o>",
                 "  <o base='string' data='bytes'>61 70 70 6C 79 41 73 49 6E 74</o>",
                 "  <o base='string' data='bytes'>28 29 4C 6A 61 76 61 2F 75 74 69 6C 2F 66 75 6E 63 74 69 6F 6E 2F 54 6F 49 6E 74 46 75 6E 63 74 69 6F 6E 3B</o>",
@@ -174,7 +174,7 @@ final class XmirParserTest {
             )
         );
         MatcherAssert.assertThat(
-            "We expect to retrieve exactly 1 opcode INVOKEDYNAMIC (without changes), but got something else instead",
+            "We expect to retrieve exactly 1 opcode invokedynamic (without changes), but got something else instead",
             new XmirParser(Collections.singletonList(node)).toJeoNodes().get(0).toString(),
             new SameXml(node.toString())
         );

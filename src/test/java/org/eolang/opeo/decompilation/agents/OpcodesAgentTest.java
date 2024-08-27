@@ -61,7 +61,7 @@ final class OpcodesAgentTest {
         MatcherAssert.assertThat(
             "We expect the supported opcodes will be delegated to the original agent",
             new OpcodesAgent(new AddAgent()).supported().names(),
-            Matchers.hasItemInArray("IADD")
+            Matchers.hasItemInArray("iadd")
         );
     }
 }
