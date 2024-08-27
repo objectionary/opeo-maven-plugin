@@ -25,6 +25,8 @@ package org.eolang.streams;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String... args) {
@@ -39,5 +41,11 @@ public class Main {
         System.out.printf("sum=%d time=%d%n", sum, System.currentTimeMillis() - start);
         // Here I test {@link Playground} class.
         System.out.printf("Playground is available %b%n", new Playground(0).isAvailable());
+    }
+
+    public String map(){
+        return Stream.of("a", "b", "c")
+            .map(String::toUpperCase)
+            .collect(Collectors.joining(", "));
     }
 }
