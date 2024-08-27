@@ -27,7 +27,6 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.objectweb.asm.Opcodes;
 
 /**
@@ -47,11 +46,6 @@ public final class OpcodeName {
     private static final Map<Integer, String> NAMES = OpcodeName.init();
 
     /**
-     * Default counter.
-     */
-    private static final AtomicInteger DEFAULT = new AtomicInteger(0);
-
-    /**
      * Unknown opcode name.
      */
     private static final String UNKNOWN = "unknown";
@@ -60,19 +54,6 @@ public final class OpcodeName {
      * Bytecode operation code.
      */
     private final int opcode;
-
-    /**
-     * Opcode counter.
-     */
-    private final AtomicInteger counter;
-
-    /**
-     * Constructor.
-     * @param opcode Bytecode operation code.
-     */
-    public OpcodeName(final int opcode) {
-        this(opcode, OpcodeName.DEFAULT);
-    }
 
     /**
      * Constructor.
@@ -88,19 +69,16 @@ public final class OpcodeName {
                         String.format("Opcode name '%s' not found", name)
                     )
                 )
-                .getKey(),
-            OpcodeName.DEFAULT
+                .getKey()
         );
     }
 
     /**
      * Constructor.
      * @param opcode Bytecode operation code.
-     * @param counter Opcode counter.
      */
-    OpcodeName(final int opcode, final AtomicInteger counter) {
+    OpcodeName(final int opcode) {
         this.opcode = opcode;
-        this.counter = counter;
     }
 
     /**
