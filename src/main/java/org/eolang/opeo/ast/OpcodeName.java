@@ -77,7 +77,7 @@ public final class OpcodeName {
      * Constructor.
      * @param opcode Bytecode operation code.
      */
-    OpcodeName(final int opcode) {
+    public OpcodeName(final int opcode) {
         this.opcode = opcode;
     }
 
