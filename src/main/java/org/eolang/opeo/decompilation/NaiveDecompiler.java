@@ -27,7 +27,6 @@ import com.jcabi.log.Logger;
 import java.nio.file.Path;
 import org.eolang.opeo.jeo.JeoDecompiler;
 import org.eolang.opeo.storage.DecompilationStorage;
-import org.eolang.opeo.storage.LowerOpcodesStorage;
 import org.eolang.opeo.storage.Storage;
 import org.eolang.opeo.storage.WithoutAliasesStorage;
 import org.eolang.opeo.storage.XmirEntry;
@@ -74,7 +73,7 @@ public final class NaiveDecompiler implements Decompiler {
      * @param storage The storage where the XMIRs are stored.
      */
     private NaiveDecompiler(final Storage storage) {
-        this.storage = new LowerOpcodesStorage(new WithoutAliasesStorage(storage));
+        this.storage = new WithoutAliasesStorage(storage);
     }
 
     @Override
