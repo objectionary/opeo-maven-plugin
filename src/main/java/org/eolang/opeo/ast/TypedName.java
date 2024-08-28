@@ -23,6 +23,8 @@
  */
 package org.eolang.opeo.ast;
 
+import org.objectweb.asm.Type;
+
 /**
  * Method name with a type.
  * This class adds a type to a method name.
@@ -40,6 +42,7 @@ public final class TypedName {
      * Original name with or without a type.
      */
     private final String original;
+    private char DELIMITER = '$';
 
     /**
      * Constructor.
@@ -54,7 +57,7 @@ public final class TypedName {
      * @return Name without a type.
      */
     public String withoutType() {
-        return this.original;
+        return this.original.substring(this.original.indexOf(this.DELIMITER) + 1);
     }
 
     /**
@@ -63,6 +66,10 @@ public final class TypedName {
      * @return Name with a type.
      */
     public String withType(final Attributes attributes) {
-        return this.original;
+        return String.join(
+            String.format("%s", this.DELIMITER),
+            Type.getReturnType(attributes.descriptor()).getClassName().replace('.', '_'),
+            this.original
+        );
     }
 }

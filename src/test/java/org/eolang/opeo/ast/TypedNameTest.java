@@ -77,19 +77,19 @@ final class TypedNameTest {
             ),
             Arguments.of(
                 "map",
-                "java_lang_util_Stream$map",
+                "java_util_stream_Stream$map",
                 new Attributes()
                     .descriptor("(Ljava/util/function/Function;)Ljava/util/stream/Stream;")
             ),
             Arguments.of(
                 "filter",
-                "java_lang_util_Stream$filter",
+                "java_util_stream_Stream$filter",
                 new Attributes()
                     .descriptor("(Ljava/util/function/Predicate;)Ljava/util/stream/Stream;")
             ),
             Arguments.of(
                 "collect",
-                "java_lang_util_Stream$collect",
+                "java_lang_Object$collect",
                 new Attributes()
                     .descriptor("(Ljava/util/stream/Collector;)Ljava/lang/Object;")
             )
