@@ -39,10 +39,14 @@ import org.objectweb.asm.Type;
 public final class TypedName {
 
     /**
+     * Delimiter.
+     */
+    private static final char DELIMITER = '$';
+
+    /**
      * Original name with or without a type.
      */
     private final String original;
-    private char DELIMITER = '$';
 
     /**
      * Constructor.
@@ -57,7 +61,7 @@ public final class TypedName {
      * @return Name without a type.
      */
     public String withoutType() {
-        return this.original.substring(this.original.indexOf(this.DELIMITER) + 1);
+        return this.original.substring(this.original.indexOf(TypedName.DELIMITER) + 1);
     }
 
     /**
@@ -72,11 +76,9 @@ public final class TypedName {
                 String.format("Descriptor in attributes '%s' is empty", attributes)
             );
         }
-        final Type type = Type.getReturnType(descriptor);
-        final String className = type.getClassName();
         return String.join(
-            String.format("%s", this.DELIMITER),
-            className.replace('.', '_'),
+            String.format("%s", TypedName.DELIMITER),
+            Type.getReturnType(descriptor).getClassName().replace('.', '_'),
             this.original
         );
     }

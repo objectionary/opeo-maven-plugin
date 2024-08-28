@@ -61,8 +61,11 @@ final class TypedNameTest {
      * Methods that use this test cases:
      * - {@link #appendsType(String, String, Attributes)}
      * - {@link #removesType(String, String)}
+     * Don't remove PMD warning!
+     * This method is used.
      * @return Test cases.
      */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Stream<Arguments> types() {
         return Stream.of(
             Arguments.of(
@@ -95,5 +98,4 @@ final class TypedNameTest {
             )
         );
     }
-
 }
