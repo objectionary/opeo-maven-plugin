@@ -112,7 +112,7 @@ public final class Invocation implements AstNode, Typed {
         final String method,
         final List<AstNode> arguments
     ) {
-        this(source, method, arguments, "V()");
+        this(source, method, arguments, "()V");
     }
 
     /**
@@ -160,8 +160,13 @@ public final class Invocation implements AstNode, Typed {
         }
         final Directives directives = new Directives();
         directives.add("o")
-            .attr("base", String.format(".%s", this.attributes.name()))
-            .append(this.source.toXmir())
+            .attr(
+                "base",
+                String.format(
+                    ".%s",
+                    new TypedName(this.attributes.name()).withType(this.attributes)
+                )
+            ).append(this.source.toXmir())
             .append(this.attributes.toXmir());
         this.arguments.stream().map(AstNode::toXmir)
             .forEach(directives::append);
@@ -196,7 +201,7 @@ public final class Invocation implements AstNode, Typed {
             new Opcode(
                 Opcodes.INVOKEVIRTUAL,
                 owner.replace('.', '/'),
-                this.attributes.name(),
+                new TypedName(this.attributes.name()).withoutType(),
                 this.attributes.descriptor(),
                 this.attributes.interfaced()
             )

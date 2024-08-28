@@ -66,9 +66,17 @@ public final class TypedName {
      * @return Name with a type.
      */
     public String withType(final Attributes attributes) {
+        final String descriptor = attributes.descriptor();
+        if (descriptor.isEmpty()) {
+            throw new IllegalStateException(
+                String.format("Descriptor in attributes '%s' is empty", attributes)
+            );
+        }
+        final Type type = Type.getReturnType(descriptor);
+        final String className = type.getClassName();
         return String.join(
             String.format("%s", this.DELIMITER),
-            Type.getReturnType(attributes.descriptor()).getClassName().replace('.', '_'),
+            className.replace('.', '_'),
             this.original
         );
     }
