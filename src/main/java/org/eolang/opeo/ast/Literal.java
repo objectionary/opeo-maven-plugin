@@ -182,13 +182,7 @@ public final class Literal implements AstNode, Typed {
         } else if (this.ltype.equals(Type.VOID_TYPE)) {
             res = new Opcode(Opcodes.ACONST_NULL);
         } else {
-            throw new IllegalArgumentException(
-                String.format(
-                    "Unsupported literal type %s, value is %s",
-                    this.ltype.getClassName(),
-                    this.lvalue
-                )
-            );
+            res = new Opcode(Opcodes.LDC, this.lvalue);
         }
         return Collections.singletonList(res);
     }

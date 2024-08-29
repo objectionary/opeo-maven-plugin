@@ -24,12 +24,14 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import java.util.stream.Stream;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.xembly.ImpossibleModificationException;
@@ -121,6 +123,34 @@ final class LiteralTest {
             Matchers.contains(
                 new Opcode(Opcodes.ACONST_NULL)
             )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("ldc")
+    void generatesLdcInstruction(final Object value) {
+        final Opcode opcode = (Opcode) new Literal(value).opcodes().get(0);
+        MatcherAssert.assertThat(
+            opcode.opcode(),
+            Matchers.equalTo(Opcodes.LDC)
+        );
+        MatcherAssert.assertThat(
+            opcode.params().get(0),
+            Matchers.equalTo(value)
+        );
+    }
+
+    /**
+     * Test cases for {@link #generatesLdcInstruction(Object)} test.
+     * @return Different values that might be converted to LDC instruction.
+     */
+    private static Stream<Object> ldc() {
+        return Stream.of(
+            "Load string from constant pool",
+            29,
+            29L,
+            29.0f,
+            29.0d
         );
     }
 
