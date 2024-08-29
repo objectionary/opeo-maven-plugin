@@ -23,9 +23,10 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import org.eolang.opeo.ast.Constant;
+import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 /**
  * Ldc instruction handler.
@@ -47,10 +48,33 @@ public final class LdcAgent implements DecompilationAgent {
     public void handle(final DecompilerState state) {
         if (this.appropriate(state)) {
             final Object operand = state.operand(0);
-            state.stack().push(new Constant(operand));
+            state.stack().push(new Literal(operand, this.type(operand)));
             state.popInstruction();
         } else {
             throw new IllegalAgentException(this, state);
+        }
+    }
+
+    private Type type(final Object object) {
+        final Class<?> aClass = object.getClass();
+        if (aClass == Integer.class) {
+            return Type.INT_TYPE;
+        } else if (aClass == Long.class) {
+            return Type.LONG_TYPE;
+        } else if (aClass == Float.class) {
+            return Type.FLOAT_TYPE;
+        } else if (aClass == Double.class) {
+            return Type.DOUBLE_TYPE;
+        } else if (aClass == Short.class) {
+            return Type.SHORT_TYPE;
+        } else if (aClass == Byte.class) {
+            return Type.BYTE_TYPE;
+        } else if (aClass == Character.class) {
+            return Type.CHAR_TYPE;
+        } else if (aClass == Boolean.class) {
+            return Type.BOOLEAN_TYPE;
+        } else {
+            return Type.getType(aClass);
         }
     }
 }

@@ -37,7 +37,6 @@ import org.eolang.opeo.ast.Cast;
 import org.eolang.opeo.ast.CheckCast;
 import org.eolang.opeo.ast.ClassField;
 import org.eolang.opeo.ast.ClassName;
-import org.eolang.opeo.ast.Constant;
 import org.eolang.opeo.ast.Constructor;
 import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.ast.DynamicInvocation;
@@ -138,8 +137,8 @@ final class XmirParser implements Parser {
             result = new Multiplication(node, this::parse);
         } else if (".if".equals(base)) {
             result = new If(node, this::parse);
-        } else if ("load-constant".equals(base)) {
-            result = new Constant(node);
+        } else if (base.startsWith("const-")) {
+            result = new Literal(node);
         } else if (".new-type".equals(base)) {
             result = new NewAddress(node);
         } else if (base.startsWith("ref-")) {

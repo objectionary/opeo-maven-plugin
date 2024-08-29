@@ -25,6 +25,7 @@ package org.eolang.opeo.ast;
 
 import java.util.Collections;
 import java.util.List;
+import lombok.ToString;
 import org.objectweb.asm.Type;
 import org.xembly.Directive;
 
@@ -44,6 +45,7 @@ public interface AstNode extends Xmir {
      * Empty node that does nothing.
      * @since 0.2
      */
+    @ToString
     final class Empty implements AstNode, Typed {
 
         @Override

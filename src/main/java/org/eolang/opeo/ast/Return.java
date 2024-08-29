@@ -26,6 +26,7 @@ package org.eolang.opeo.ast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.ToString;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.Parser;
 import org.objectweb.asm.Opcodes;
@@ -38,6 +39,7 @@ import org.xembly.Directives;
  *
  * @since 0.5
  */
+@ToString
 public final class Return implements AstNode {
 
     /**

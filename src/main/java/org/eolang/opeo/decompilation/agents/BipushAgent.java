@@ -26,6 +26,7 @@ package org.eolang.opeo.decompilation.agents;
 import org.eolang.opeo.ast.Literal;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 /**
  * Bipush instruction handler.
@@ -46,7 +47,7 @@ public final class BipushAgent implements DecompilationAgent {
     @Override
     public void handle(final DecompilerState state) {
         if (this.appropriate(state)) {
-            state.stack().push(new Literal(state.operand(0)));
+            state.stack().push(new Literal(state.operand(0), Type.INT_TYPE));
             state.popInstruction();
         } else {
             throw new IllegalAgentException(this, state);
