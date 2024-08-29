@@ -137,7 +137,9 @@ public final class InterfaceInvocation implements AstNode, Typed {
         }
         final Directives directives = new Directives();
         directives.add("o")
-            .attr("base", String.format(".%s", this.attrs.name()))
+            .attr(
+                "base", String.format(".%s", new TypedName(this.attrs.name()).withType(this.attrs))
+            )
             .append(this.source.toXmir())
             .append(this.attrs.toXmir());
         this.arguments.stream().map(AstNode::toXmir).forEach(directives::append);
@@ -161,7 +163,7 @@ public final class InterfaceInvocation implements AstNode, Typed {
             new Opcode(
                 Opcodes.INVOKEINTERFACE,
                 this.attrs.owner(),
-                this.attrs.name(),
+                new TypedName(this.attrs.name()).withoutType(),
                 this.attrs.descriptor(),
                 this.attrs.interfaced()
             )

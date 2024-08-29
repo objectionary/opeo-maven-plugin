@@ -10,7 +10,7 @@ eo: |
   *
     static-field
       "descriptor=Ljava/io/PrintStream;|name=out|owner=java/lang/System"
-    .println
+    .void$println
       "descriptor=(Ljava/lang/String;)V|interfaced=false|name=println|owner=java/io/PrintStream|type=method"
       load-constant
         "Hello world!"

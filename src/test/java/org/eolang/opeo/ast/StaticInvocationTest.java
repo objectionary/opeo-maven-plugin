@@ -47,8 +47,8 @@ final class StaticInvocationTest {
             ),
             new Xembler(invocation.toXmir()).xml(),
             XhtmlMatchers.hasXPaths(
-                "./o[@base='.get']",
-                "./o[@base='.get']/o[@base='java.lang.j$A']"
+                "./o[@base='.int$get']",
+                "./o[@base='.int$get']/o[@base='java.lang.j$A']"
             )
         );
     }

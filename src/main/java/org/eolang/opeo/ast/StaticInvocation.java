@@ -161,7 +161,13 @@ public final class StaticInvocation implements AstNode, Typed {
     @Override
     public Iterable<Directive> toXmir() {
         final Directives directives = new Directives();
-        directives.add("o").attr("base", String.format(".%s", this.attributes.name()));
+        directives.add("o").attr(
+            "base",
+            String.format(
+                ".%s",
+                new TypedName(this.attributes.name()).withType(this.attributes)
+            )
+        );
         directives.append(this.owner.toXmir());
         directives.append(this.attributes.toXmir());
         this.args.stream().map(AstNode::toXmir).forEach(directives::append);
@@ -176,7 +182,7 @@ public final class StaticInvocation implements AstNode, Typed {
             new Opcode(
                 Opcodes.INVOKESTATIC,
                 this.owner.toString().replace('.', '/'),
-                this.attributes.name(),
+                new TypedName(this.attributes.name()).withoutType(),
                 this.attributes.descriptor(),
                 this.attributes.interfaced()
             )

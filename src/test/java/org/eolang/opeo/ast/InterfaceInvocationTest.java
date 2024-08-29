@@ -42,11 +42,11 @@ final class InterfaceInvocationTest {
      */
     private static final String XMIR = String.join(
         "",
-        "<o base='.foo'>",
+        "<o base='.int$foo'>",
         "   <o base='$'>",
         "      <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 6A 61 76 61 2E 6C 61 6E 67 2E 4F 62 6A 65 63 74</o>",
         "   </o>",
-        "   <o base='string' data='bytes'>6E 61 6D 65 3D 66 6F 6F 7C 74 79 70 65 3D 69 6E 74 65 72 66 61 63 65</o>",
+        "   <o base='string' data='bytes'>64 65 73 63 72 69 70 74 6F 72 3D 28 29 49 7C 6E 61 6D 65 3D 66 6F 6F 7C 74 79 70 65 3D 69 6E 74 65 72 66 61 63 65</o>",
         "</o>"
     );
 
@@ -55,7 +55,7 @@ final class InterfaceInvocationTest {
         final String xml = new Xembler(
             new InterfaceInvocation(
                 new This(),
-                new Attributes("name=foo")
+                new Attributes("name=foo").descriptor("()I")
             ).toXmir()
         ).xml();
         MatcherAssert.assertThat(
@@ -76,7 +76,7 @@ final class InterfaceInvocationTest {
             Matchers.equalTo(
                 new InterfaceInvocation(
                     new This(),
-                    new Attributes("name=foo")
+                    new Attributes("name=foo").descriptor("()I")
                 )
             )
         );
