@@ -36,12 +36,6 @@ import org.xembly.Directives;
 /**
  * Store array element.
  * @since 0.1
- * @todo #329:90min Remove ad-hoc solution with storing array in a field.
- *  In the {@link StoreArray#opcodes()} I added ad-hoc solution to solve the problem with
- *  array elements storage if the array is a field.
- *  See the 'if' statement.
- *  This ad-hoc solution means we have architectural problem with array elements storage opcodes
- *  generation.
  */
 public final class StoreArray implements AstNode, Typed {
 
@@ -111,13 +105,7 @@ public final class StoreArray implements AstNode, Typed {
     @Override
     public List<AstNode> opcodes() {
         final List<AstNode> res = new ArrayList<>(0);
-        if (this.array instanceof FieldRetrieval) {
-            res.addAll(this.array.opcodes());
-        } else if (this.array instanceof LocalVariable) {
-            res.addAll(this.array.opcodes());
-        } else {
-            res.addAll(this.array.opcodes());
-        }
+        res.addAll(this.array.opcodes());
         res.addAll(this.index.opcodes());
         res.addAll(this.value.opcodes());
         res.add(new Opcode(Opcodes.AASTORE));
