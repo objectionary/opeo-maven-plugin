@@ -1,0 +1,16 @@
+opcodes:
+  - GETSTATIC "java/lang/System" "out" "Ljava/io/PrintStream;"
+  - ALOAD 0
+  - INVOKEVIRTUAL "java/io/PrintStream" "println" "(Ljava/lang/Object;)V" false
+agents:
+  - GetStaticAgent
+  - LoadAgent
+  - InvokevirtualAgent
+eo: |
+  *
+    static-field
+      "descriptor=Ljava/io/PrintStream;|name=out|owner=java/lang/System"
+    .void$println
+      "descriptor=(Ljava/lang/Object;)V|interfaced=false|name=println|owner=java/io/PrintStream|type=method"
+      $
+        "descriptor=java.lang.Object"
