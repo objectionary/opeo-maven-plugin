@@ -50,11 +50,11 @@
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String XMIR = String.join(
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>          <span class="jxr_string">""</span>,
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>          <span class="jxr_string">"&lt;o base='.foo'&gt;"</span>,
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>          <span class="jxr_string">"&lt;o base='.int$foo'&gt;"</span>,
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>          <span class="jxr_string">"   &lt;o base='$'&gt;"</span>,
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>          <span class="jxr_string">"      &lt;o base='string' data='bytes'&gt;64 65 73 63 72 69 70 74 6F 72 3D 6A 61 76 61 2E 6C 61 6E 67 2E 4F 62 6A 65 63 74&lt;/o&gt;"</span>,
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>          <span class="jxr_string">"   &lt;/o&gt;"</span>,
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>          <span class="jxr_string">"   &lt;o base='string' data='bytes'&gt;6E 61 6D 65 3D 66 6F 6F 7C 74 79 70 65 3D 69 6E 74 65 72 66 61 63 65&lt;/o&gt;"</span>,
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          <span class="jxr_string">"   &lt;o base='string' data='bytes'&gt;64 65 73 63 72 69 70 74 6F 72 3D 28 29 49 7C 6E 61 6D 65 3D 66 6F 6F 7C 74 79 70 65 3D 69 6E 74 65 72 66 61 63 65&lt;/o&gt;"</span>,
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>          <span class="jxr_string">"&lt;/o&gt;"</span>
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      );
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  
@@ -63,7 +63,7 @@
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>          <strong class="jxr_keyword">final</strong> String xml = <strong class="jxr_keyword">new</strong> Xembler(
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>              <strong class="jxr_keyword">new</strong> InterfaceInvocation(
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>                  <strong class="jxr_keyword">new</strong> This(),
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>                  <strong class="jxr_keyword">new</strong> Attributes(<span class="jxr_string">"name=foo"</span>)
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>                  <strong class="jxr_keyword">new</strong> Attributes(<span class="jxr_string">"name=foo"</span>).descriptor(<span class="jxr_string">"()I"</span>)
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>              ).toXmir()
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>          ).xml();
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>          MatcherAssert.assertThat(
@@ -84,7 +84,7 @@
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>              Matchers.equalTo(
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>                  <strong class="jxr_keyword">new</strong> InterfaceInvocation(
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>                      <strong class="jxr_keyword">new</strong> This(),
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>                      <strong class="jxr_keyword">new</strong> Attributes(<span class="jxr_string">"name=foo"</span>)
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>                      <strong class="jxr_keyword">new</strong> Attributes(<span class="jxr_string">"name=foo"</span>).descriptor(<span class="jxr_string">"()I"</span>)
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>                  )
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>              )
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>          );

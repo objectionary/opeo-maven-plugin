@@ -56,14 +56,14 @@
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String XMIR = String.join(
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>          <span class="jxr_string">""</span>,
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>          <span class="jxr_string">"&lt;o base='.bar'&gt;"</span>,
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          <span class="jxr_string">"&lt;o base='.void$bar'&gt;"</span>,
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>          <span class="jxr_string">"   &lt;o base='.new'&gt;"</span>,
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>          <span class="jxr_string">"      &lt;o base='.new-type'&gt;"</span>,
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>          <span class="jxr_string">"         &lt;o base='string' data='bytes'&gt;66 6F 6F&lt;/o&gt;"</span>,
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>          <span class="jxr_string">"      &lt;/o&gt;"</span>,
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>          <span class="jxr_string">"      &lt;o base='string' data='bytes'/&gt;"</span>,
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>          <span class="jxr_string">"   &lt;/o&gt;"</span>,
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>          <span class="jxr_string">"   &lt;o base='string' data='bytes'&gt;64 65 73 63 72 69 70 74 6F 72 3D 56 28 29 7C 6E 61 6D 65 3D 62 61 72 7C 74 79 70 65 3D 6D 65 74 68 6F 64&lt;/o&gt;"</span>,
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          <span class="jxr_string">"   &lt;o base='string' data='bytes'&gt;64 65 73 63 72 69 70 74 6F 72 3D 28 29 56 7C 6E 61 6D 65 3D 62 61 72 7C 74 79 70 65 3D 6D 65 74 68 6F 64&lt;/o&gt;"</span>,
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>          <span class="jxr_string">"   &lt;o base='string' data='bytes'&gt;62 61 7A&lt;/o&gt;"</span>,
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>          <span class="jxr_string">"&lt;/o&gt;"</span>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>      );
@@ -126,7 +126,7 @@
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>             String.format(<span class="jxr_string">"Can't save descriptor to '.bar' invocation attribute %s"</span>, xml),
 <a class="jxr_linenumber" name="L119" href="#L119">119</a>             xml,
 <a class="jxr_linenumber" name="L120" href="#L120">120</a>             XhtmlMatchers.hasXPaths(
-<a class="jxr_linenumber" name="L121" href="#L121">121</a>                 <span class="jxr_string">"./o[@base='.bar']/o[@base='string' and contains(text(),'28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B')]"</span>
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>                 <span class="jxr_string">"./o[@base='.java_lang_String$bar']/o[@base='string' and contains(text(),'28 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B 29 4C 6A 61 76 61 2F 6C 61 6E 67 2F 53 74 72 69 6E 67 3B')]"</span>
 <a class="jxr_linenumber" name="L122" href="#L122">122</a>             )
 <a class="jxr_linenumber" name="L123" href="#L123">123</a>         );
 <a class="jxr_linenumber" name="L124" href="#L124">124</a>     }

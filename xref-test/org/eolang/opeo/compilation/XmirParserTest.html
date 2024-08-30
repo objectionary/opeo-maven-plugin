@@ -137,7 +137,7 @@
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>             .descriptor(dscr)
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>             .owner(owner);
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>         MatcherAssert.assertThat(
-<a class="jxr_linenumber" name="L132" href="#L132">132</a>             <span class="jxr_string">"We expect to retrieve exactly 3 opcodes ALOAD, ILOAD and PUTFIELD, but got something else instead"</span>,
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>             <span class="jxr_string">"We expect to retrieve exactly 3 opcodes aload, iload and putfield, but got something else instead"</span>,
 <a class="jxr_linenumber" name="L133" href="#L133">133</a>             <strong class="jxr_keyword">new</strong> XmirParser(
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>                 <strong class="jxr_keyword">new</strong> FieldAssignment(
 <a class="jxr_linenumber" name="L135" href="#L135">135</a>                     <strong class="jxr_keyword">new</strong> Field(<strong class="jxr_keyword">new</strong> This(), attrs),
@@ -158,7 +158,7 @@
 <a class="jxr_linenumber" name="L150" href="#L150">150</a>         <strong class="jxr_keyword">final</strong> XmlNode node = <strong class="jxr_keyword">new</strong> XmlNode(
 <a class="jxr_linenumber" name="L151" href="#L151">151</a>             String.join(
 <a class="jxr_linenumber" name="L152" href="#L152">152</a>                 <span class="jxr_string">"\n"</span>,
-<a class="jxr_linenumber" name="L153" href="#L153">153</a>                 <span class="jxr_string">"&lt;o base='opcode' line='999' name='INVOKEDYNAMIC'&gt;"</span>,
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>                 <span class="jxr_string">"&lt;o base='opcode' line='999' name='invokedynamic'&gt;"</span>,
 <a class="jxr_linenumber" name="L154" href="#L154">154</a>                 <span class="jxr_string">"  &lt;o base='int' data='bytes'&gt;00 00 00 00 00 00 00 BA&lt;/o&gt;"</span>,
 <a class="jxr_linenumber" name="L155" href="#L155">155</a>                 <span class="jxr_string">"  &lt;o base='string' data='bytes'&gt;61 70 70 6C 79 41 73 49 6E 74&lt;/o&gt;"</span>,
 <a class="jxr_linenumber" name="L156" href="#L156">156</a>                 <span class="jxr_string">"  &lt;o base='string' data='bytes'&gt;28 29 4C 6A 61 76 61 2F 75 74 69 6C 2F 66 75 6E 63 74 69 6F 6E 2F 54 6F 49 6E 74 46 75 6E 63 74 69 6F 6E 3B&lt;/o&gt;"</span>,
@@ -182,7 +182,7 @@
 <a class="jxr_linenumber" name="L174" href="#L174">174</a>             )
 <a class="jxr_linenumber" name="L175" href="#L175">175</a>         );
 <a class="jxr_linenumber" name="L176" href="#L176">176</a>         MatcherAssert.assertThat(
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>             <span class="jxr_string">"We expect to retrieve exactly 1 opcode INVOKEDYNAMIC (without changes), but got something else instead"</span>,
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>             <span class="jxr_string">"We expect to retrieve exactly 1 opcode invokedynamic (without changes), but got something else instead"</span>,
 <a class="jxr_linenumber" name="L178" href="#L178">178</a>             <strong class="jxr_keyword">new</strong> XmirParser(Collections.singletonList(node)).toJeoNodes().get(0).toString(),
 <a class="jxr_linenumber" name="L179" href="#L179">179</a>             <strong class="jxr_keyword">new</strong> SameXml(node.toString())
 <a class="jxr_linenumber" name="L180" href="#L180">180</a>         );
