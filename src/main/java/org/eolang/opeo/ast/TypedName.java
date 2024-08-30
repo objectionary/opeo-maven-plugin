@@ -23,6 +23,7 @@
  */
 package org.eolang.opeo.ast;
 
+import java.util.regex.Pattern;
 import org.objectweb.asm.Type;
 
 /**
@@ -42,6 +43,11 @@ public final class TypedName {
      * Delimiter.
      */
     private static final char DELIMITER = '$';
+
+    /**
+     * Array pattern.
+     */
+    private static final Pattern ARRAY = Pattern.compile("\\[]");
 
     /**
      * Original name with or without a type.
@@ -78,7 +84,11 @@ public final class TypedName {
         }
         return String.join(
             String.format("%s", TypedName.DELIMITER),
-            Type.getReturnType(descriptor).getClassName().replace('.', '_'),
+            TypedName.ARRAY.matcher(
+                Type.getReturnType(descriptor)
+                    .getClassName()
+                    .replace('.', '_')
+            ).replaceAll("@"),
             this.original
         );
     }
