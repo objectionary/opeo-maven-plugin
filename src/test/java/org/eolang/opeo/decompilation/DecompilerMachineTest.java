@@ -412,7 +412,7 @@ final class DecompilerMachineTest {
                                 )
                                 .owner("java/io/PrintStream")
                                 .interfaced(false),
-                            new Constant("Number is %s"),
+                            new Literal("Number is %s"),
                             new StoreArray(
                                 new Duplicate(
                                     new ArrayConstructor(

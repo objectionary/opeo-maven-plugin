@@ -215,31 +215,24 @@ public final class Literal implements AstNode, Typed {
      */
     private static Opcode opcode(final int value) {
         final Opcode res;
-        switch (value) {
-            case -1:
-                res = new Opcode(Opcodes.ICONST_M1);
-                break;
-            case 0:
-                res = new Opcode(Opcodes.ICONST_0);
-                break;
-            case 1:
-                res = new Opcode(Opcodes.ICONST_1);
-                break;
-            case 2:
-                res = new Opcode(Opcodes.ICONST_2);
-                break;
-            case 3:
-                res = new Opcode(Opcodes.ICONST_3);
-                break;
-            case 4:
-                res = new Opcode(Opcodes.ICONST_4);
-                break;
-            case 5:
-                res = new Opcode(Opcodes.ICONST_5);
-                break;
-            default:
-                res = new Opcode(Opcodes.BIPUSH, value);
-                break;
+        if (value == -1) {
+            res = new Opcode(Opcodes.ICONST_M1);
+        } else if (value == 0) {
+            res = new Opcode(Opcodes.ICONST_0);
+        } else if (value == 1) {
+            res = new Opcode(Opcodes.ICONST_1);
+        } else if (value == 2) {
+            res = new Opcode(Opcodes.ICONST_2);
+        } else if (value == 3) {
+            res = new Opcode(Opcodes.ICONST_3);
+        } else if (value == 4) {
+            res = new Opcode(Opcodes.ICONST_4);
+        } else if (value == 5) {
+            res = new Opcode(Opcodes.ICONST_5);
+        } else if (value < 127 && value > -128) {
+            res = new Opcode(Opcodes.BIPUSH, value);
+        } else {
+            res = new Opcode(Opcodes.LDC, value);
         }
         return res;
     }
