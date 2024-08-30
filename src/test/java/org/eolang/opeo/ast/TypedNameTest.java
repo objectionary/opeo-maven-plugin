@@ -95,6 +95,24 @@ final class TypedNameTest {
                 "java_lang_Object$collect",
                 new Attributes()
                     .descriptor("(Ljava/util/stream/Collector;)Ljava/lang/Object;")
+            ),
+            Arguments.of(
+                "toArray",
+                "java_lang_Object[]$toArray",
+                new Attributes()
+                    .descriptor("()[Ljava/lang/Object;")
+            ),
+            Arguments.of(
+                "copyOf",
+                "java_lang_Object[]$copyOf",
+                new Attributes()
+                    .descriptor("([Ljava/lang/Object;I)[Ljava/lang/Object;")
+            ),
+            Arguments.of(
+                "split",
+                "java_lang_String[]$split",
+                new Attributes()
+                    .descriptor("(Ljava/lang/String;)[Ljava/lang/String;")
             )
         );
     }
