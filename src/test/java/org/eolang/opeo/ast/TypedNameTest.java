@@ -98,19 +98,19 @@ final class TypedNameTest {
             ),
             Arguments.of(
                 "toArray",
-                "java_lang_Object[]$toArray",
+                "java_lang_Object@$toArray",
                 new Attributes()
                     .descriptor("()[Ljava/lang/Object;")
             ),
             Arguments.of(
                 "copyOf",
-                "java_lang_Object[]$copyOf",
+                "java_lang_Object@$copyOf",
                 new Attributes()
                     .descriptor("([Ljava/lang/Object;I)[Ljava/lang/Object;")
             ),
             Arguments.of(
                 "split",
-                "java_lang_String[]$split",
+                "java_lang_String@$split",
                 new Attributes()
                     .descriptor("(Ljava/lang/String;)[Ljava/lang/String;")
             )
