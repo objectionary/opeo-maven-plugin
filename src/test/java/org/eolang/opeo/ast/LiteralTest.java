@@ -131,10 +131,12 @@ final class LiteralTest {
     void generatesLdcInstruction(final Object value) {
         final Opcode opcode = (Opcode) new Literal(value).opcodes().get(0);
         MatcherAssert.assertThat(
+            "We expect the following opcode to be generated: LDC",
             opcode.opcode(),
             Matchers.equalTo(Opcodes.LDC)
         );
         MatcherAssert.assertThat(
+            "We expect the following value to be passed to the LDC instruction as the first parameter",
             opcode.params().get(0),
             Matchers.equalTo(value)
         );

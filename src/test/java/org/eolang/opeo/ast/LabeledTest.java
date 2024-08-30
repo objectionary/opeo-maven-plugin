@@ -50,7 +50,7 @@ final class LabeledTest {
         MatcherAssert.assertThat(
             "Wrong XMIR is generated for labeled constant",
             new Xembler(
-                new Labeled(new Constant(1), new Label("1")).toXmir()
+                new Labeled(new Literal(1), new Label("1")).toXmir()
             ).xml(),
             new SameXml(new XMLDocument(LabeledTest.XMIR))
         );
@@ -62,7 +62,7 @@ final class LabeledTest {
             "Wrong labeled constant were generated from XMIR",
             new Labeled(new XmlNode(LabeledTest.XMIR), node -> new Constant(1)),
             Matchers.equalTo(
-                new Labeled(new Constant(1), new Label("1"))
+                new Labeled(new Literal(1), new Label("1"))
             )
         );
     }
@@ -72,7 +72,7 @@ final class LabeledTest {
         final Label label = new Label("1");
         MatcherAssert.assertThat(
             "Wrong opcodes are generated for labeled constant",
-            new Labeled(new Constant(1), label).opcodes(),
+            new Labeled(new Literal(1), label).opcodes(),
             Matchers.contains(
                 new Opcode(Opcodes.LDC, 1),
                 label
