@@ -24,12 +24,15 @@
 package org.eolang.opeo.ast;
 
 import com.jcabi.matchers.XhtmlMatchers;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 import org.eolang.jeo.representation.xmir.XmlNode;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.objectweb.asm.Opcodes;
@@ -43,6 +46,8 @@ import org.xembly.Xembler;
  * @since 0.1
  */
 final class LiteralTest {
+
+    private static final Object[] EMPTY = {};
 
     @Test
     void transformsToXmir() throws ImpossibleModificationException {
@@ -199,6 +204,76 @@ final class LiteralTest {
             29L,
             29.0f,
             29.0d
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("opcodes")
+    void generatesCorrectOpcodesForDifferentTypes(
+        final Literal constant, final int expected, Object[] params
+    ) {
+        final Opcode opcode = (Opcode) constant.opcodes().get(0);
+        MatcherAssert.assertThat(
+            String.format(
+                "We expect that '%s' opcode will be generated for '%s', but was '%s'",
+                new OpcodeName(expected).simplified(),
+                constant,
+                new OpcodeName(opcode.opcode()).simplified()
+            ),
+            opcode.opcode(),
+            Matchers.equalTo(expected)
+        );
+        final List<Object> all = opcode.params();
+        for (int index = 0; index < params.length; ++index) {
+            final Object act = all.get(index);
+            final Object expect = params[index];
+            MatcherAssert.assertThat(
+                String.format(
+                    "We expect that '%s' (id='%d) parameter will be generated, but was '%s'",
+                    expect,
+                    index,
+                    act
+                ),
+                act,
+                Matchers.equalTo(expect)
+            );
+        }
+    }
+
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    private static Stream<Arguments> opcodes() {
+        return Stream.of(
+            Arguments.of(new Literal(-1), Opcodes.ICONST_M1, LiteralTest.EMPTY),
+            Arguments.of(new Literal(0), Opcodes.ICONST_0, LiteralTest.EMPTY),
+            Arguments.of(new Literal(1), Opcodes.ICONST_1, LiteralTest.EMPTY),
+            Arguments.of(new Literal(2), Opcodes.ICONST_2, LiteralTest.EMPTY),
+            Arguments.of(new Literal(3), Opcodes.ICONST_3, LiteralTest.EMPTY),
+            Arguments.of(new Literal(4), Opcodes.ICONST_4, LiteralTest.EMPTY),
+            Arguments.of(new Literal(5), Opcodes.ICONST_5, LiteralTest.EMPTY),
+            Arguments.of(new Literal(0L), Opcodes.LCONST_0, LiteralTest.EMPTY),
+            Arguments.of(new Literal(1L), Opcodes.LCONST_1, LiteralTest.EMPTY),
+            Arguments.of(new Literal(0.0f), Opcodes.FCONST_0, LiteralTest.EMPTY),
+            Arguments.of(new Literal(1.0f), Opcodes.FCONST_1, LiteralTest.EMPTY),
+            Arguments.of(new Literal(2.0f), Opcodes.FCONST_2, LiteralTest.EMPTY),
+            Arguments.of(new Literal(0.0d), Opcodes.DCONST_0, LiteralTest.EMPTY),
+            Arguments.of(new Literal(1.0d), Opcodes.DCONST_1, LiteralTest.EMPTY),
+            Arguments.of(new Literal(-128), Opcodes.BIPUSH, new Object[]{-128}),
+            Arguments.of(new Literal(-42), Opcodes.BIPUSH, new Object[]{-42}),
+            Arguments.of(new Literal(42), Opcodes.BIPUSH, new Object[]{42}),
+            Arguments.of(new Literal(127), Opcodes.BIPUSH, new Object[]{127}),
+            Arguments.of(new Literal((short) 128), Opcodes.SIPUSH, new Object[]{(short) 128}),
+            Arguments.of(new Literal((short) -129), Opcodes.SIPUSH, new Object[]{(short) -129}),
+            Arguments.of(new Literal((short) 32767), Opcodes.SIPUSH, new Object[]{(short) 32767}),
+            Arguments.of(new Literal((short) -32768), Opcodes.SIPUSH, new Object[]{(short) -32768}),
+            Arguments.of(new Literal('a'), Opcodes.BIPUSH, new Object[]{'a'}),
+            Arguments.of(new Literal('b'), Opcodes.BIPUSH, new Object[]{'b'}),
+            Arguments.of(new Literal('c'), Opcodes.BIPUSH, new Object[]{'c'}),
+            Arguments.of(new Literal("Hello!"), Opcodes.LDC, new Object[]{"Hello!"}),
+            Arguments.of(new Literal(100.0f), Opcodes.LDC, new Object[]{100f}),
+            Arguments.of(new Literal(100.0d), Opcodes.LDC, new Object[]{100d}),
+            Arguments.of(new Literal(100L), Opcodes.LDC, new Object[]{100L}),
+            Arguments.of(new Literal(true), Opcodes.ICONST_1, LiteralTest.EMPTY),
+            Arguments.of(new Literal(false), Opcodes.ICONST_0, LiteralTest.EMPTY)
         );
     }
 }

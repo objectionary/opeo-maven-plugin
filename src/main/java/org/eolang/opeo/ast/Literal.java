@@ -217,7 +217,7 @@ public final class Literal implements AstNode, Typed {
             res = new Opcode(Opcodes.ICONST_4);
         } else if (value == 5) {
             res = new Opcode(Opcodes.ICONST_5);
-        } else if (value < 127 && value > -128) {
+        } else if (value <= 127 && value >= -128) {
             res = new Opcode(Opcodes.BIPUSH, value);
         } else {
             res = new Opcode(Opcodes.LDC, value);
