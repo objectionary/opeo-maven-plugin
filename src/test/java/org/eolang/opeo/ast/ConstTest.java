@@ -44,7 +44,7 @@ import org.xembly.Xembler;
  * Test case for {@link Const}.
  * @since 0.1
  */
-final class ConstantTest {
+final class ConstTest {
 
     private static final Object[] EMPTY = {};
 
@@ -209,7 +209,7 @@ final class ConstantTest {
     @ParameterizedTest
     @MethodSource("opcodes")
     void generatesCorrectOpcodesForDifferentTypes(
-        final Const constant, final int expected, Object[] params
+        final Const constant, final int expected, final Object[] params
     ) {
         final Opcode opcode = (Opcode) constant.opcodes().get(0);
         MatcherAssert.assertThat(
@@ -242,20 +242,20 @@ final class ConstantTest {
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Stream<Arguments> opcodes() {
         return Stream.of(
-            Arguments.of(new Const(-1), Opcodes.ICONST_M1, ConstantTest.EMPTY),
-            Arguments.of(new Const(0), Opcodes.ICONST_0, ConstantTest.EMPTY),
-            Arguments.of(new Const(1), Opcodes.ICONST_1, ConstantTest.EMPTY),
-            Arguments.of(new Const(2), Opcodes.ICONST_2, ConstantTest.EMPTY),
-            Arguments.of(new Const(3), Opcodes.ICONST_3, ConstantTest.EMPTY),
-            Arguments.of(new Const(4), Opcodes.ICONST_4, ConstantTest.EMPTY),
-            Arguments.of(new Const(5), Opcodes.ICONST_5, ConstantTest.EMPTY),
-            Arguments.of(new Const(0L), Opcodes.LCONST_0, ConstantTest.EMPTY),
-            Arguments.of(new Const(1L), Opcodes.LCONST_1, ConstantTest.EMPTY),
-            Arguments.of(new Const(0.0f), Opcodes.FCONST_0, ConstantTest.EMPTY),
-            Arguments.of(new Const(1.0f), Opcodes.FCONST_1, ConstantTest.EMPTY),
-            Arguments.of(new Const(2.0f), Opcodes.FCONST_2, ConstantTest.EMPTY),
-            Arguments.of(new Const(0.0d), Opcodes.DCONST_0, ConstantTest.EMPTY),
-            Arguments.of(new Const(1.0d), Opcodes.DCONST_1, ConstantTest.EMPTY),
+            Arguments.of(new Const(-1), Opcodes.ICONST_M1, ConstTest.EMPTY),
+            Arguments.of(new Const(0), Opcodes.ICONST_0, ConstTest.EMPTY),
+            Arguments.of(new Const(1), Opcodes.ICONST_1, ConstTest.EMPTY),
+            Arguments.of(new Const(2), Opcodes.ICONST_2, ConstTest.EMPTY),
+            Arguments.of(new Const(3), Opcodes.ICONST_3, ConstTest.EMPTY),
+            Arguments.of(new Const(4), Opcodes.ICONST_4, ConstTest.EMPTY),
+            Arguments.of(new Const(5), Opcodes.ICONST_5, ConstTest.EMPTY),
+            Arguments.of(new Const(0L), Opcodes.LCONST_0, ConstTest.EMPTY),
+            Arguments.of(new Const(1L), Opcodes.LCONST_1, ConstTest.EMPTY),
+            Arguments.of(new Const(0.0f), Opcodes.FCONST_0, ConstTest.EMPTY),
+            Arguments.of(new Const(1.0f), Opcodes.FCONST_1, ConstTest.EMPTY),
+            Arguments.of(new Const(2.0f), Opcodes.FCONST_2, ConstTest.EMPTY),
+            Arguments.of(new Const(0.0d), Opcodes.DCONST_0, ConstTest.EMPTY),
+            Arguments.of(new Const(1.0d), Opcodes.DCONST_1, ConstTest.EMPTY),
             Arguments.of(new Const(-128), Opcodes.BIPUSH, new Object[]{-128}),
             Arguments.of(new Const(-42), Opcodes.BIPUSH, new Object[]{-42}),
             Arguments.of(new Const(42), Opcodes.BIPUSH, new Object[]{42}),
@@ -271,8 +271,8 @@ final class ConstantTest {
             Arguments.of(new Const(100.0f), Opcodes.LDC, new Object[]{100f}),
             Arguments.of(new Const(100.0d), Opcodes.LDC, new Object[]{100d}),
             Arguments.of(new Const(100L), Opcodes.LDC, new Object[]{100L}),
-            Arguments.of(new Const(true), Opcodes.ICONST_1, ConstantTest.EMPTY),
-            Arguments.of(new Const(false), Opcodes.ICONST_0, ConstantTest.EMPTY)
+            Arguments.of(new Const(true), Opcodes.ICONST_1, ConstTest.EMPTY),
+            Arguments.of(new Const(false), Opcodes.ICONST_0, ConstTest.EMPTY)
         );
     }
 }
