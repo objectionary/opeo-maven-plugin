@@ -48,33 +48,41 @@ public final class LdcAgent implements DecompilationAgent {
     public void handle(final DecompilerState state) {
         if (this.appropriate(state)) {
             final Object operand = state.operand(0);
-            state.stack().push(new Literal(operand, this.type(operand)));
+            state.stack().push(new Literal(operand, LdcAgent.type(operand)));
             state.popInstruction();
         } else {
             throw new IllegalAgentException(this, state);
         }
     }
 
-    private Type type(final Object object) {
-        final Class<?> aClass = object.getClass();
-        if (aClass == Integer.class) {
-            return Type.INT_TYPE;
-        } else if (aClass == Long.class) {
-            return Type.LONG_TYPE;
-        } else if (aClass == Float.class) {
-            return Type.FLOAT_TYPE;
-        } else if (aClass == Double.class) {
-            return Type.DOUBLE_TYPE;
-        } else if (aClass == Short.class) {
-            return Type.SHORT_TYPE;
-        } else if (aClass == Byte.class) {
-            return Type.BYTE_TYPE;
-        } else if (aClass == Character.class) {
-            return Type.CHAR_TYPE;
-        } else if (aClass == Boolean.class) {
-            return Type.BOOLEAN_TYPE;
+    /**
+     * Determine value type.
+     * @param object Object value.
+     * @return Type.
+     * @todo #275:30min WTF?
+     */
+    private static Type type(final Object object) {
+        final Class<?> clazz = object.getClass();
+        final Type result;
+        if (clazz == Integer.class) {
+            result = Type.INT_TYPE;
+        } else if (clazz == Long.class) {
+            result = Type.LONG_TYPE;
+        } else if (clazz == Float.class) {
+            result = Type.FLOAT_TYPE;
+        } else if (clazz == Double.class) {
+            result = Type.DOUBLE_TYPE;
+        } else if (clazz == Short.class) {
+            result = Type.SHORT_TYPE;
+        } else if (clazz == Byte.class) {
+            result = Type.BYTE_TYPE;
+        } else if (clazz == Character.class) {
+            result = Type.CHAR_TYPE;
+        } else if (clazz == Boolean.class) {
+            result = Type.BOOLEAN_TYPE;
         } else {
-            return Type.getType(aClass);
+            result = Type.getType(clazz);
         }
+        return result;
     }
 }

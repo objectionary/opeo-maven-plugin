@@ -155,19 +155,7 @@ public final class Literal implements AstNode, Typed {
 
     @Override
     public Iterable<Directive> toXmir() {
-        if (this.primitve()) {
-            return new DirectivesData(this.lvalue);
-        } else {
-            return new DirectivesBoxedData(this.lvalue);
-        }
-    }
-
-    private boolean primitve() {
-        return this.ltype.equals(Type.INT_TYPE) || this.ltype.equals(
-            Type.BOOLEAN_TYPE) || this.ltype.equals(Type.BYTE_TYPE) || this.ltype.equals(
-            Type.SHORT_TYPE) || this.ltype.equals(Type.LONG_TYPE) || this.ltype.equals(
-            Type.FLOAT_TYPE) || this.ltype.equals(Type.DOUBLE_TYPE) || this.ltype.equals(
-            Type.getType(String.class)) || this.ltype.equals(Type.getType(Type.class));
+        return new DirectivesData(this.lvalue);
     }
 
     @Override
@@ -413,30 +401,6 @@ public final class Literal implements AstNode, Typed {
                 break;
             case "short":
                 result = Type.SHORT_TYPE;
-                break;
-            case "const-int":
-                result = Type.getType(Integer.class);
-                break;
-            case "const-long":
-                result = Type.getType(Long.class);
-                break;
-            case "const-float":
-                result = Type.getType(Float.class);
-                break;
-            case "const-double":
-                result = Type.getType(Double.class);
-                break;
-            case "const-char":
-                result = Type.getType(Character.class);
-                break;
-            case "const-boolean":
-                result = Type.getType(Boolean.class);
-                break;
-            case "const-byte":
-                result = Type.getType(Byte.class);
-                break;
-            case "const-short":
-                result = Type.getType(Short.class);
                 break;
             default:
                 throw new IllegalStateException(

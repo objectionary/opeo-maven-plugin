@@ -140,20 +140,6 @@ final class LiteralTest {
         );
     }
 
-    /**
-     * Test cases for {@link #generatesLdcInstruction(Object)} test.
-     * @return Different values that might be converted to LDC instruction.
-     */
-    private static Stream<Object> ldc() {
-        return Stream.of(
-            "Load string from constant pool",
-            29,
-            29L,
-            29.0f,
-            29.0d
-        );
-    }
-
     @ParameterizedTest
     @CsvSource({
         "FF FF FF FF FF FF FF FF, 2, ICONST_M1",
@@ -196,6 +182,21 @@ final class LiteralTest {
             ),
             actual,
             Matchers.equalTo(new Opcode(opcode))
+        );
+    }
+
+    /**
+     * Test cases for {@link #generatesLdcInstruction(Object)} test.
+     * @return Different values that might be converted to LDC instruction.
+     */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    private static Stream<Object> ldc() {
+        return Stream.of(
+            "Load string from constant pool",
+            29,
+            29L,
+            29.0f,
+            29.0d
         );
     }
 }

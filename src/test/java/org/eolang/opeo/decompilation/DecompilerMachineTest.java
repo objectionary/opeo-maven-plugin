@@ -34,7 +34,6 @@ import org.eolang.opeo.ast.ArrayConstructor;
 import org.eolang.opeo.ast.AstNode;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.ClassField;
-import org.eolang.opeo.ast.Constant;
 import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
