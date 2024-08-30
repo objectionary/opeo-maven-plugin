@@ -191,25 +191,10 @@ final class ConstTest {
         );
     }
 
-    /**
-     * Test cases for {@link #generatesLdcInstruction(Object)} test.
-     * @return Different values that might be converted to LDC instruction.
-     */
-    @SuppressWarnings("PMD.UnusedPrivateMethod")
-    private static Stream<Object> ldc() {
-        return Stream.of(
-            "Load string from constant pool",
-            29,
-            29L,
-            29.0f,
-            29.0d
-        );
-    }
-
     @ParameterizedTest
     @MethodSource("opcodes")
     void generatesCorrectOpcodesForDifferentTypes(
-        final Const constant, final int expected, final Object[] params
+        final Const constant, final int expected, final Object... params
     ) {
         final Opcode opcode = (Opcode) constant.opcodes().get(0);
         MatcherAssert.assertThat(
@@ -239,6 +224,10 @@ final class ConstTest {
         }
     }
 
+    /**
+     * Test cases for {@link #generatesCorrectOpcodesForDifferentTypes(Const, int, Object[])} test.
+     * @return Different values that might be converted to opcodes.
+     */
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Stream<Arguments> opcodes() {
         return Stream.of(
@@ -273,6 +262,21 @@ final class ConstTest {
             Arguments.of(new Const(100L), Opcodes.LDC, new Object[]{100L}),
             Arguments.of(new Const(true), Opcodes.ICONST_1, ConstTest.EMPTY),
             Arguments.of(new Const(false), Opcodes.ICONST_0, ConstTest.EMPTY)
+        );
+    }
+
+    /**
+     * Test cases for {@link #generatesLdcInstruction(Object)} test.
+     * @return Different values that might be converted to LDC instruction.
+     */
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
+    private static Stream<Object> ldc() {
+        return Stream.of(
+            "Load string from constant pool",
+            29,
+            29L,
+            29.0f,
+            29.0d
         );
     }
 }

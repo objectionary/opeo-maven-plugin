@@ -56,13 +56,14 @@ public final class LdcAgent implements DecompilationAgent {
     }
 
     /**
-     * Determine value type.
-     * @param object Object value.
+     * Determine the value type.
+     * Since Java doesn't allow using primitive types for Object, we need to
+     * determine the type of the value.
+     * @param value Object value.
      * @return Type.
-     * @todo #275:30min WTF?
      */
-    private static Type type(final Object object) {
-        final Class<?> clazz = object.getClass();
+    private static Type type(final Object value) {
+        final Class<?> clazz = value.getClass();
         final Type result;
         if (clazz == Integer.class) {
             result = Type.INT_TYPE;
