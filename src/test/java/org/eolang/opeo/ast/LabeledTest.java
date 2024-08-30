@@ -43,7 +43,7 @@ final class LabeledTest {
      * Example of XMIR representation of labeled constant.
      */
     private static final String XMIR =
-        "<o base='labeled'><o base='load-constant'><o base='int' data='bytes'>00 00 00 00 00 00 00 01</o></o><o base='label' data='bytes'>01</o></o>";
+        "<o base='labeled'><o base='int' data='bytes'>00 00 00 00 00 00 00 01</o><o base='label' data='bytes'>01</o></o>";
 
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
@@ -60,7 +60,7 @@ final class LabeledTest {
     void convertsFromXmir() {
         MatcherAssert.assertThat(
             "Wrong labeled constant were generated from XMIR",
-            new Labeled(new XmlNode(LabeledTest.XMIR), node -> new Constant(1)),
+            new Labeled(new XmlNode(LabeledTest.XMIR), node -> new Literal(1)),
             Matchers.equalTo(
                 new Labeled(new Literal(1), new Label("1"))
             )
@@ -74,7 +74,7 @@ final class LabeledTest {
             "Wrong opcodes are generated for labeled constant",
             new Labeled(new Literal(1), label).opcodes(),
             Matchers.contains(
-                new Opcode(Opcodes.LDC, 1),
+                new Opcode(Opcodes.ICONST_1),
                 label
             )
         );
