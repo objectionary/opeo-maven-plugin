@@ -46,6 +46,9 @@ import org.xembly.Xembler;
  */
 final class ConstTest {
 
+    /**
+     * Empty array of objects.
+     */
     private static final Object[] EMPTY = {};
 
     @Test
