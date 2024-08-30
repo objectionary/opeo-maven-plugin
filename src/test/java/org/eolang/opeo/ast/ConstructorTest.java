@@ -63,9 +63,9 @@ final class ConstructorTest {
             new Xembler(
                 new Constructor(
                     "A",
-                    new Literal("first"),
-                    new Literal("second"),
-                    new Literal(3)
+                    new Constant("first"),
+                    new Constant("second"),
+                    new Constant(3)
                 ).toXmir(),
                 new Transformers.Node()
             ).xml(),
@@ -86,7 +86,7 @@ final class ConstructorTest {
                 new Constructor(
                     "A",
                     new Attributes().descriptor("(Ljava/lang/String;)V"),
-                    new Literal("first")
+                    new Constant("first")
                 ).toXmir()
             ).xml(),
             new SameXml(
@@ -113,15 +113,15 @@ final class ConstructorTest {
                     if (node.equals(
                         new XmlNode("<o base='string' data='bytes'>66 69 72 73 74</o>")
                     )) {
-                        result = new Literal("first");
+                        result = new Constant("first");
                     } else if (node.equals(
                         new XmlNode("<o base='string' data='bytes'>73 65 63 6F 6E 64</o>")
                     )) {
-                        result = new Literal("second");
+                        result = new Constant("second");
                     } else if (node.equals(
                         new XmlNode("<o base='int' data='bytes'>00 00 00 00 00 00 00 03</o>")
                     )) {
-                        result = new Literal(3);
+                        result = new Constant(3);
                     } else if (node.equals(
                         new XmlNode(
                             "<o base='.new-type'><o base='string' data='bytes'>41</o></o>"
@@ -142,9 +142,9 @@ final class ConstructorTest {
                     new Attributes()
                         .descriptor("(Ljava/lang/String;Ljava/lang/String;I)V")
                         .interfaced(false),
-                    new Literal("first"),
-                    new Literal("second"),
-                    new Literal(3)
+                    new Constant("first"),
+                    new Constant("second"),
+                    new Constant(3)
                 )
             )
         );

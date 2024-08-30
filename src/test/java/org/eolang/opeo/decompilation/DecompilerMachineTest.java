@@ -38,7 +38,7 @@ import org.eolang.opeo.ast.Duplicate;
 import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
 import org.eolang.opeo.ast.Invocation;
-import org.eolang.opeo.ast.Literal;
+import org.eolang.opeo.ast.Constant;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Owner;
 import org.eolang.opeo.ast.Popped;
@@ -261,7 +261,7 @@ final class DecompilerMachineTest {
                 new Xembler(
                     new Root(
                         new ArrayConstructor(
-                            new Addition(new Literal(2), new Literal(3)),
+                            new Addition(new Constant(2), new Constant(3)),
                             type
                         )
                     ).toXmir()
@@ -273,7 +273,7 @@ final class DecompilerMachineTest {
     @Test
     void decompilesArrayInsertion() throws ImpossibleModificationException {
         final String type = "java/lang/Object";
-        final Duplicate ref = new Duplicate(new ArrayConstructor(new Literal(2), type));
+        final Duplicate ref = new Duplicate(new ArrayConstructor(new Constant(2), type));
         MatcherAssert.assertThat(
             "Can't decompile array insertion",
             new Xembler(
@@ -293,7 +293,7 @@ final class DecompilerMachineTest {
                         new Root(
                             new StoreArray(
                                 ref,
-                                new Literal(0),
+                                new Constant(0),
                                 new This()
                             )
                         ).toXmir()
@@ -325,7 +325,7 @@ final class DecompilerMachineTest {
                         new LocalVariable(2, Type.INT_TYPE),
                         new Addition(
                             new LocalVariable(2, Type.INT_TYPE),
-                            new Literal(2)
+                            new Constant(2)
                         )
                     )
                 )
@@ -411,15 +411,15 @@ final class DecompilerMachineTest {
                                 )
                                 .owner("java/io/PrintStream")
                                 .interfaced(false),
-                            new Literal("Number is %s"),
+                            new Constant("Number is %s"),
                             new StoreArray(
                                 new Duplicate(
                                     new ArrayConstructor(
-                                        new Literal(1),
+                                        new Constant(1),
                                         type
                                     )
                                 ),
-                                new Literal(0),
+                                new Constant(0),
                                 new StaticInvocation(
                                     new Attributes()
                                         .owner("java/lang/Integer")
@@ -427,7 +427,7 @@ final class DecompilerMachineTest {
                                         .descriptor("(I)Ljava/lang/Integer;")
                                         .interfaced(false),
                                     new Owner("java/lang/Integer"),
-                                    new Literal(2)
+                                    new Constant(2)
                                 )
                             )
                         )

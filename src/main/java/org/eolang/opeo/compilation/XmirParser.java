@@ -47,7 +47,7 @@ import org.eolang.opeo.ast.InterfaceInvocation;
 import org.eolang.opeo.ast.Invocation;
 import org.eolang.opeo.ast.Label;
 import org.eolang.opeo.ast.Labeled;
-import org.eolang.opeo.ast.Literal;
+import org.eolang.opeo.ast.Constant;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Multiplication;
 import org.eolang.opeo.ast.NewAddress;
@@ -138,7 +138,7 @@ final class XmirParser implements Parser {
         } else if (".if".equals(base)) {
             result = new If(node, this::parse);
         } else if (base.startsWith("const-")) {
-            result = new Literal(node);
+            result = new Constant(node);
         } else if (".new-type".equals(base)) {
             result = new NewAddress(node);
         } else if (base.startsWith("ref-")) {
@@ -170,15 +170,15 @@ final class XmirParser implements Parser {
         } else if ("label".equals(base)) {
             result = new Label(node);
         } else if ("float".equals(base)) {
-            result = new Literal(node);
+            result = new Constant(node);
         } else if ("int".equals(base)) {
-            result = new Literal(node);
+            result = new Constant(node);
         } else if ("string".equals(base)) {
-            result = new Literal(node);
+            result = new Constant(node);
         } else if ("double".equals(base)) {
-            result = new Literal(node);
+            result = new Constant(node);
         } else if ("long".equals(base)) {
-            result = new Literal(node);
+            result = new Constant(node);
         } else if ("type".equals(base)) {
             result = new ClassName(node);
         } else if (".super".equals(base)) {

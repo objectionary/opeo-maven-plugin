@@ -31,7 +31,7 @@ import org.eolang.opeo.ast.Addition;
 import org.eolang.opeo.ast.Attributes;
 import org.eolang.opeo.ast.Field;
 import org.eolang.opeo.ast.FieldAssignment;
-import org.eolang.opeo.ast.Literal;
+import org.eolang.opeo.ast.Constant;
 import org.eolang.opeo.ast.LocalVariable;
 import org.eolang.opeo.ast.Opcode;
 import org.eolang.opeo.ast.This;
@@ -70,7 +70,7 @@ final class XmirParserTest {
     @Test
     void convertsAddition() {
         final List<XmlNode> nodes = new XmirParser(
-            new Addition(new Literal(1), new Literal(2))
+            new Addition(new Constant(1), new Constant(2))
         ).toJeoNodes();
         MatcherAssert.assertThat(
             String.format(
@@ -98,12 +98,12 @@ final class XmirParserTest {
             new XmirParser(
                 new Addition(
                     new Addition(
-                        new Literal(1),
-                        new Literal(2)
+                        new Constant(1),
+                        new Constant(2)
                     ),
                     new Addition(
-                        new Literal(3),
-                        new Literal(4)
+                        new Constant(3),
+                        new Constant(4)
                     )
                 )
             ).toJeoNodes(),

@@ -61,7 +61,7 @@ final class IfTest {
             "Can convert 'if' statement to correct XMIR",
             new Xembler(
                 new If(
-                    new Literal(1), new Literal(2), new Label("FF")
+                    new Constant(1), new Constant(2), new Label("FF")
                 ).toXmir()
             ).xml(),
             new SameXml(IfTest.XMIR)
@@ -77,17 +77,17 @@ final class IfTest {
                 xml -> {
                     final AstNode result;
                     if (xml.text().contains("1")) {
-                        result = new Literal(1);
+                        result = new Constant(1);
                     } else {
-                        result = new Literal(2);
+                        result = new Constant(2);
                     }
                     return result;
                 }
             ),
             Matchers.equalTo(
                 new If(
-                    new Literal(1),
-                    new Literal(2),
+                    new Constant(1),
+                    new Constant(2),
                     new Label("C3 BF")
                 )
             )
@@ -100,8 +100,8 @@ final class IfTest {
         MatcherAssert.assertThat(
             "Can convert 'if' statement to opcodes",
             new If(
-                new Literal(1),
-                new Literal(2),
+                new Constant(1),
+                new Constant(2),
                 label
             ).opcodes(),
             Matchers.hasItems(

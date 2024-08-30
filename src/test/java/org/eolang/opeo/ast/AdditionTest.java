@@ -41,7 +41,7 @@ final class AdditionTest {
 
     @Test
     void convertsToXmir() throws ImpossibleModificationException {
-        final String res = new Xembler(new Addition(new Literal(1), new Literal(2)).toXmir()).xml();
+        final String res = new Xembler(new Addition(new Constant(1), new Constant(2)).toXmir()).xml();
         MatcherAssert.assertThat(
             String.format(
                 "Can't convert to correct XMIR, result is : %n%s%n",
@@ -60,42 +60,42 @@ final class AdditionTest {
     void determinesPrimitiveTypesCorrectly() {
         MatcherAssert.assertThat(
             "Can't determine the type of Add with two integer literals",
-            new Addition(new Literal(1), new Literal(2)).type(),
+            new Addition(new Constant(1), new Constant(2)).type(),
             Matchers.equalTo(Type.INT_TYPE)
         );
         MatcherAssert.assertThat(
             "Can't determine the type of Add with two long literals",
-            new Addition(new Literal(1L), new Literal(2L)).type(),
+            new Addition(new Constant(1L), new Constant(2L)).type(),
             Matchers.equalTo(Type.LONG_TYPE)
         );
         MatcherAssert.assertThat(
             "Can't determine the type of Add with two float literals",
-            new Addition(new Literal(1.0f), new Literal(2.0f)).type(),
+            new Addition(new Constant(1.0f), new Constant(2.0f)).type(),
             Matchers.equalTo(Type.FLOAT_TYPE)
         );
         MatcherAssert.assertThat(
             "Can't determine the type of Add with two double literals",
-            new Addition(new Literal(1.0), new Literal(2.0)).type(),
+            new Addition(new Constant(1.0), new Constant(2.0)).type(),
             Matchers.equalTo(Type.DOUBLE_TYPE)
         );
         MatcherAssert.assertThat(
             "Can't determine the type of Add with two integer and long literals",
-            new Addition(new Literal(1), new Literal(2L)).type(),
+            new Addition(new Constant(1), new Constant(2L)).type(),
             Matchers.equalTo(Type.LONG_TYPE)
         );
         MatcherAssert.assertThat(
             "Can't determine the type of Add with two integer and float literals",
-            new Addition(new Literal(1), new Literal(2.0f)).type(),
+            new Addition(new Constant(1), new Constant(2.0f)).type(),
             Matchers.equalTo(Type.FLOAT_TYPE)
         );
         MatcherAssert.assertThat(
             "Can't determine the type of Add with two integer and double literals",
-            new Addition(new Literal(1), new Literal(2.0)).type(),
+            new Addition(new Constant(1), new Constant(2.0)).type(),
             Matchers.equalTo(Type.DOUBLE_TYPE)
         );
         MatcherAssert.assertThat(
             "Can't determine the type of Add with two long and float literals",
-            new Addition(new Literal(1L), new Literal(2.0f)).type(),
+            new Addition(new Constant(1L), new Constant(2.0f)).type(),
             Matchers.equalTo(Type.FLOAT_TYPE)
         );
     }
@@ -106,8 +106,8 @@ final class AdditionTest {
             "Can't retrieve opcodes from Add with two literals",
             new OpcodeNodes(
                 new Addition(
-                    new Literal(1),
-                    new Literal(2)
+                    new Constant(1),
+                    new Constant(2)
                 )
             ).opcodes(),
             new HasInstructions(
@@ -124,8 +124,8 @@ final class AdditionTest {
             "Can't retrieve opcodes from Add with two literals of different types",
             new OpcodeNodes(
                 new Addition(
-                    new Literal(1L),
-                    new Literal(1)
+                    new Constant(1L),
+                    new Constant(1)
                 )
             ).opcodes(),
             new HasInstructions(
@@ -142,8 +142,8 @@ final class AdditionTest {
             "Can't retrieve opcodes from Add with where one of the operands is double",
             new OpcodeNodes(
                 new Addition(
-                    new Literal(1.0),
-                    new Literal(1)
+                    new Constant(1.0),
+                    new Constant(1)
                 )
             ).opcodes(),
             new HasInstructions(

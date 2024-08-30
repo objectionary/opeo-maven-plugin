@@ -36,14 +36,14 @@ import org.objectweb.asm.Type;
 import org.xembly.Directive;
 
 /**
- * Literal output.
+ * Constant node.
  * @since 0.1
  * @checkstyle CyclomaticComplexityCheck (500 lines)
  */
 @ToString
 @EqualsAndHashCode
 @SuppressWarnings({"PMD.GodClass", "PMD.TooManyMethods"})
-public final class Literal implements AstNode, Typed {
+public final class Constant implements AstNode, Typed {
 
     /**
      * Literal value.
@@ -59,7 +59,7 @@ public final class Literal implements AstNode, Typed {
      * Constructor.
      * Null literal.
      */
-    public Literal() {
+    public Constant() {
         this(null, Type.VOID_TYPE);
     }
 
@@ -67,7 +67,7 @@ public final class Literal implements AstNode, Typed {
      * Constructor.
      * @param value Char literal value.
      */
-    public Literal(final char value) {
+    public Constant(final char value) {
         this(value, Type.CHAR_TYPE);
     }
 
@@ -75,7 +75,7 @@ public final class Literal implements AstNode, Typed {
      * Constructor.
      * @param value Boolean literal value.
      */
-    public Literal(final boolean value) {
+    public Constant(final boolean value) {
         this(value, Type.BOOLEAN_TYPE);
     }
 
@@ -83,7 +83,7 @@ public final class Literal implements AstNode, Typed {
      * Constructor.
      * @param value Byte literal value.
      */
-    public Literal(final byte value) {
+    public Constant(final byte value) {
         this(value, Type.BYTE_TYPE);
     }
 
@@ -91,7 +91,7 @@ public final class Literal implements AstNode, Typed {
      * Constructor.
      * @param value Short literal value.
      */
-    public Literal(final short value) {
+    public Constant(final short value) {
         this(value, Type.SHORT_TYPE);
     }
 
@@ -99,7 +99,7 @@ public final class Literal implements AstNode, Typed {
      * Constructor.
      * @param value Integer literal value.
      */
-    public Literal(final int value) {
+    public Constant(final int value) {
         this(value, Type.INT_TYPE);
     }
 
@@ -107,7 +107,7 @@ public final class Literal implements AstNode, Typed {
      * Constructor.
      * @param value Long literal value.
      */
-    public Literal(final long value) {
+    public Constant(final long value) {
         this(value, Type.LONG_TYPE);
     }
 
@@ -115,7 +115,7 @@ public final class Literal implements AstNode, Typed {
      * Constructor.
      * @param value Float literal value.
      */
-    public Literal(final float value) {
+    public Constant(final float value) {
         this(value, Type.FLOAT_TYPE);
     }
 
@@ -123,7 +123,7 @@ public final class Literal implements AstNode, Typed {
      * Constructor.
      * @param value Double literal value.
      */
-    public Literal(final double value) {
+    public Constant(final double value) {
         this(value, Type.DOUBLE_TYPE);
     }
 
@@ -131,15 +131,15 @@ public final class Literal implements AstNode, Typed {
      * Constructor.
      * @param node XML node.
      */
-    public Literal(final XmlNode node) {
-        this(Literal.xvalue(node), Literal.xtype(node));
+    public Constant(final XmlNode node) {
+        this(Constant.xvalue(node), Constant.xtype(node));
     }
 
     /**
      * Constructor.
      * @param value Literal value.
      */
-    public Literal(final Object value) {
+    public Constant(final Object value) {
         this(value, Type.getType(value.getClass()));
     }
 
@@ -148,7 +148,7 @@ public final class Literal implements AstNode, Typed {
      * @param value Literal value.
      * @param type Literal type.
      */
-    public Literal(final Object value, final Type type) {
+    public Constant(final Object value, final Type type) {
         this.lvalue = value;
         this.ltype = type;
     }
@@ -162,21 +162,21 @@ public final class Literal implements AstNode, Typed {
     public List<AstNode> opcodes() {
         final Opcode res;
         if (this.ltype.equals(Type.CHAR_TYPE)) {
-            res = Literal.opcode((char) this.lvalue);
+            res = Constant.opcode((char) this.lvalue);
         } else if (this.ltype.equals(Type.BOOLEAN_TYPE)) {
-            res = Literal.opcode((boolean) this.lvalue);
+            res = Constant.opcode((boolean) this.lvalue);
         } else if (this.ltype.equals(Type.BYTE_TYPE)) {
             res = new Opcode(Opcodes.BIPUSH, this.lvalue);
         } else if (this.ltype.equals(Type.SHORT_TYPE)) {
             res = new Opcode(Opcodes.SIPUSH, this.lvalue);
         } else if (this.ltype.equals(Type.INT_TYPE)) {
-            res = Literal.opcode((int) this.lvalue);
+            res = Constant.opcode((int) this.lvalue);
         } else if (this.ltype.equals(Type.LONG_TYPE)) {
-            res = Literal.opcode((long) this.lvalue);
+            res = Constant.opcode((long) this.lvalue);
         } else if (this.ltype.equals(Type.FLOAT_TYPE)) {
-            res = Literal.opcode((float) this.lvalue);
+            res = Constant.opcode((float) this.lvalue);
         } else if (this.ltype.equals(Type.DOUBLE_TYPE)) {
-            res = Literal.opcode((double) this.lvalue);
+            res = Constant.opcode((double) this.lvalue);
         } else if (this.ltype.equals(Type.getType(String.class))) {
             res = new Opcode(Opcodes.LDC, this.lvalue);
         } else if (this.ltype.equals(Type.VOID_TYPE)) {
@@ -309,13 +309,13 @@ public final class Literal implements AstNode, Typed {
      */
     private static Object xvalue(final XmlNode node) {
         final Object result;
-        final Type type = Literal.xtype(node);
+        final Type type = Constant.xtype(node);
         if (type.equals(Type.INT_TYPE)) {
-            result = Literal.parseInt(node.text());
+            result = Constant.parseInt(node.text());
         } else if (type.equals(Type.BOOLEAN_TYPE)) {
             result = new HexString(node.text()).decodeAsBoolean();
         } else if (type.equals(Type.LONG_TYPE)) {
-            result = Literal.parseLong(node.text());
+            result = Constant.parseLong(node.text());
         } else if (type.equals(Type.DOUBLE_TYPE)) {
             result = new HexString(node.text()).decodeAsDouble();
         } else if (type.equals(Type.FLOAT_TYPE)) {
@@ -332,7 +332,7 @@ public final class Literal implements AstNode, Typed {
      * @return Integer.
      */
     private static int parseInt(final String hex) {
-        return ByteBuffer.wrap(Literal.parseBytes(hex), 4, 4).getInt();
+        return ByteBuffer.wrap(Constant.parseBytes(hex), 4, 4).getInt();
     }
 
     /**
@@ -341,7 +341,7 @@ public final class Literal implements AstNode, Typed {
      * @return Long.
      */
     private static long parseLong(final String hex) {
-        return ByteBuffer.wrap(Literal.parseBytes(hex)).getLong();
+        return ByteBuffer.wrap(Constant.parseBytes(hex)).getLong();
     }
 
     /**

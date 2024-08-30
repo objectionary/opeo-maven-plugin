@@ -47,8 +47,8 @@ final class SubstractionTest {
             "Can't convert Substraction with two literals to XMIR",
             new Xembler(
                 new Substraction(
-                    new Literal(1),
-                    new Literal(2)
+                    new Constant(1),
+                    new Constant(2)
                 ).toXmir()
             ).xml(),
             XhtmlMatchers.hasXPaths(
@@ -63,42 +63,42 @@ final class SubstractionTest {
     void determinesPrimitiveTypesCorrectly() {
         MatcherAssert.assertThat(
             "Can't determine the type of Substraction with two integer literals",
-            new Substraction(new Literal(1), new Literal(2)).type(),
+            new Substraction(new Constant(1), new Constant(2)).type(),
             Matchers.equalTo(Type.INT_TYPE)
         );
         MatcherAssert.assertThat(
             "Can't determine the type of Substraction with two long literals",
-            new Substraction(new Literal(1L), new Literal(2L)).type(),
+            new Substraction(new Constant(1L), new Constant(2L)).type(),
             Matchers.equalTo(Type.LONG_TYPE)
         );
         MatcherAssert.assertThat(
             "Can't determine the type of Substraction with two float literals",
-            new Substraction(new Literal(1.0f), new Literal(2.0f)).type(),
+            new Substraction(new Constant(1.0f), new Constant(2.0f)).type(),
             Matchers.equalTo(Type.FLOAT_TYPE)
         );
         MatcherAssert.assertThat(
             "Can't determine the type of Substraction with two double literals",
-            new Substraction(new Literal(1.0), new Literal(2.0)).type(),
+            new Substraction(new Constant(1.0), new Constant(2.0)).type(),
             Matchers.equalTo(Type.DOUBLE_TYPE)
         );
         MatcherAssert.assertThat(
             "Can't determine the type of Substraction with two integer and long literals",
-            new Substraction(new Literal(1), new Literal(2L)).type(),
+            new Substraction(new Constant(1), new Constant(2L)).type(),
             Matchers.equalTo(Type.LONG_TYPE)
         );
         MatcherAssert.assertThat(
             "Can't determine the type of Substraction with two integer and float literals",
-            new Substraction(new Literal(1), new Literal(2.0f)).type(),
+            new Substraction(new Constant(1), new Constant(2.0f)).type(),
             Matchers.equalTo(Type.FLOAT_TYPE)
         );
         MatcherAssert.assertThat(
             "Can't determine the type of Substraction with two integer and double literals",
-            new Substraction(new Literal(1), new Literal(2.0)).type(),
+            new Substraction(new Constant(1), new Constant(2.0)).type(),
             Matchers.equalTo(Type.DOUBLE_TYPE)
         );
         MatcherAssert.assertThat(
             "Can't determine the type of Substraction with two long and float literals",
-            new Substraction(new Literal(1L), new Literal(2.0f)).type(),
+            new Substraction(new Constant(1L), new Constant(2.0f)).type(),
             Matchers.equalTo(Type.FLOAT_TYPE)
         );
     }
@@ -109,8 +109,8 @@ final class SubstractionTest {
             "Can't retrieve opcodes from Substraction with two literals",
             new OpcodeNodes(
                 new Substraction(
-                    new Literal(1),
-                    new Literal(2)
+                    new Constant(1),
+                    new Constant(2)
                 )
             ).opcodes(),
             new HasInstructions(
@@ -127,8 +127,8 @@ final class SubstractionTest {
             "Can't retrieve opcodes from Substraction with two literals of different types",
             new OpcodeNodes(
                 new Substraction(
-                    new Literal(1L),
-                    new Literal(1)
+                    new Constant(1L),
+                    new Constant(1)
                 )
             ).opcodes(),
             new HasInstructions(
