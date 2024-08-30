@@ -24,7 +24,7 @@
 package org.eolang.opeo.decompilation.agents;
 
 import org.eolang.opeo.ast.AstNode;
-import org.eolang.opeo.ast.Constant;
+import org.eolang.opeo.ast.Const;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 
@@ -120,10 +120,10 @@ public final class ConstAgent implements DecompilationAgent {
         final AstNode res;
         switch (opcode) {
             case Opcodes.DCONST_0:
-                res = new Constant(0.0);
+                res = new Const(0.0);
                 break;
             case Opcodes.DCONST_1:
-                res = new Constant(1.0);
+                res = new Const(1.0);
                 break;
             default:
                 throw new UnsupportedOperationException(
@@ -145,13 +145,13 @@ public final class ConstAgent implements DecompilationAgent {
         final AstNode res;
         switch (opcode) {
             case Opcodes.FCONST_0:
-                res = new Constant(0.0f);
+                res = new Const(0.0f);
                 break;
             case Opcodes.FCONST_1:
-                res = new Constant(1.0f);
+                res = new Const(1.0f);
                 break;
             case Opcodes.FCONST_2:
-                res = new Constant(2.0f);
+                res = new Const(2.0f);
                 break;
             default:
                 throw new UnsupportedOperationException(
@@ -173,10 +173,10 @@ public final class ConstAgent implements DecompilationAgent {
         final AstNode res;
         switch (opcode) {
             case Opcodes.LCONST_0:
-                res = new Constant(0L);
+                res = new Const(0L);
                 break;
             case Opcodes.LCONST_1:
-                res = new Constant(1L);
+                res = new Const(1L);
                 break;
             default:
                 throw new UnsupportedOperationException(
@@ -198,25 +198,25 @@ public final class ConstAgent implements DecompilationAgent {
         final AstNode res;
         switch (opcode) {
             case Opcodes.ICONST_M1:
-                res = new Constant(-1);
+                res = new Const(-1);
                 break;
             case Opcodes.ICONST_0:
-                res = new Constant(0);
+                res = new Const(0);
                 break;
             case Opcodes.ICONST_1:
-                res = new Constant(1);
+                res = new Const(1);
                 break;
             case Opcodes.ICONST_2:
-                res = new Constant(2);
+                res = new Const(2);
                 break;
             case Opcodes.ICONST_3:
-                res = new Constant(3);
+                res = new Const(3);
                 break;
             case Opcodes.ICONST_4:
-                res = new Constant(4);
+                res = new Const(4);
                 break;
             case Opcodes.ICONST_5:
-                res = new Constant(5);
+                res = new Const(5);
                 break;
             default:
                 throw new UnsupportedOperationException(

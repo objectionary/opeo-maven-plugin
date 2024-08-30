@@ -80,7 +80,7 @@ final class SuperTest {
     void convertsToXmirWithCustomDescriptor() throws ImpossibleModificationException {
         final String descriptor = "(I)V";
         final String xmir = new Xembler(
-            new Super(new This(), descriptor, new Constant(10)).toXmir()
+            new Super(new This(), descriptor, new Const(10)).toXmir()
         ).xml();
         MatcherAssert.assertThat(
             String.format(
@@ -97,7 +97,7 @@ final class SuperTest {
         MatcherAssert.assertThat(
             "Can't convert 'super' statement to opcodes with correct arguments",
             new OpcodeNodes(
-                new Super(new This(), "(I)V", new Constant(1))
+                new Super(new This(), "(I)V", new Const(1))
             ).opcodes(),
             new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.ALOAD, 0),
@@ -138,7 +138,7 @@ final class SuperTest {
         MatcherAssert.assertThat(
             "Can't convert 'super' statement to opcodes with multiple arguments",
             new OpcodeNodes(
-                new Super(new This(), "(II)V", new Constant(1), new Constant(2))
+                new Super(new This(), "(II)V", new Const(1), new Const(2))
             ).opcodes(),
             new HasInstructions(
                 new HasInstructions.Instruction(Opcodes.ALOAD, 0),

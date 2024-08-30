@@ -23,7 +23,7 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import org.eolang.opeo.ast.Constant;
+import org.eolang.opeo.ast.Const;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -48,7 +48,7 @@ public final class LdcAgent implements DecompilationAgent {
     public void handle(final DecompilerState state) {
         if (this.appropriate(state)) {
             final Object operand = state.operand(0);
-            state.stack().push(new Constant(operand, LdcAgent.type(operand)));
+            state.stack().push(new Const(operand, LdcAgent.type(operand)));
             state.popInstruction();
         } else {
             throw new IllegalAgentException(this, state);

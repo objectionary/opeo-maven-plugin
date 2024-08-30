@@ -59,13 +59,13 @@ final class ArrayConstructorTest {
             "Can't create array constructor from XMIR",
             new ArrayConstructor(
                 new XmlNode(ArrayConstructorTest.XMIR),
-                node -> new Addition(new Constant(1), new Constant(2))
+                node -> new Addition(new Const(1), new Const(2))
             ),
             Matchers.equalTo(
                 new ArrayConstructor(
                     new Addition(
-                        new Constant(1),
-                        new Constant(2)
+                        new Const(1),
+                        new Const(2)
                     ),
                     "java/lang/Integer"
                 )
@@ -77,7 +77,7 @@ final class ArrayConstructorTest {
     void compilesSimpleArrayCreation() {
         final int size = 10;
         final String type = "java/lang/Integer";
-        final ArrayConstructor constructor = new ArrayConstructor(new Constant(size), type);
+        final ArrayConstructor constructor = new ArrayConstructor(new Const(size), type);
         MatcherAssert.assertThat(
             "Can't compile array constructor with defined length",
             new OpcodeNodes(constructor).opcodes(),
@@ -95,7 +95,7 @@ final class ArrayConstructorTest {
             "Can't compile array constructor with complex undefined length",
             new OpcodeNodes(
                 new ArrayConstructor(
-                    new Addition(new Constant(1), new Constant(2)),
+                    new Addition(new Const(1), new Const(2)),
                     type
                 )
             ).opcodes(),
@@ -113,7 +113,7 @@ final class ArrayConstructorTest {
         final String type = "java/lang/Integer";
         final String xmir = new Xembler(
             new ArrayConstructor(
-                new Addition(new Constant(1), new Constant(2)),
+                new Addition(new Const(1), new Const(2)),
                 type
             ).toXmir()
         ).xml();

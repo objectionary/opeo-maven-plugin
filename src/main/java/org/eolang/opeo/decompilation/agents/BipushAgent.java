@@ -23,7 +23,7 @@
  */
 package org.eolang.opeo.decompilation.agents;
 
-import org.eolang.opeo.ast.Constant;
+import org.eolang.opeo.ast.Const;
 import org.eolang.opeo.decompilation.DecompilerState;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
@@ -47,7 +47,7 @@ public final class BipushAgent implements DecompilationAgent {
     @Override
     public void handle(final DecompilerState state) {
         if (this.appropriate(state)) {
-            state.stack().push(new Constant(state.operand(0), Type.INT_TYPE));
+            state.stack().push(new Const(state.operand(0), Type.INT_TYPE));
             state.popInstruction();
         } else {
             throw new IllegalAgentException(this, state);

@@ -43,7 +43,7 @@ import org.xembly.Directive;
 @ToString
 @EqualsAndHashCode
 @SuppressWarnings({"PMD.GodClass", "PMD.TooManyMethods"})
-public final class Constant implements AstNode, Typed {
+public final class Const implements AstNode, Typed {
 
     /**
      * Literal value.
@@ -59,7 +59,7 @@ public final class Constant implements AstNode, Typed {
      * Constructor.
      * Null literal.
      */
-    public Constant() {
+    public Const() {
         this(null, Type.VOID_TYPE);
     }
 
@@ -67,7 +67,7 @@ public final class Constant implements AstNode, Typed {
      * Constructor.
      * @param value Char literal value.
      */
-    public Constant(final char value) {
+    public Const(final char value) {
         this(value, Type.CHAR_TYPE);
     }
 
@@ -75,7 +75,7 @@ public final class Constant implements AstNode, Typed {
      * Constructor.
      * @param value Boolean literal value.
      */
-    public Constant(final boolean value) {
+    public Const(final boolean value) {
         this(value, Type.BOOLEAN_TYPE);
     }
 
@@ -83,7 +83,7 @@ public final class Constant implements AstNode, Typed {
      * Constructor.
      * @param value Byte literal value.
      */
-    public Constant(final byte value) {
+    public Const(final byte value) {
         this(value, Type.BYTE_TYPE);
     }
 
@@ -91,7 +91,7 @@ public final class Constant implements AstNode, Typed {
      * Constructor.
      * @param value Short literal value.
      */
-    public Constant(final short value) {
+    public Const(final short value) {
         this(value, Type.SHORT_TYPE);
     }
 
@@ -99,7 +99,7 @@ public final class Constant implements AstNode, Typed {
      * Constructor.
      * @param value Integer literal value.
      */
-    public Constant(final int value) {
+    public Const(final int value) {
         this(value, Type.INT_TYPE);
     }
 
@@ -107,7 +107,7 @@ public final class Constant implements AstNode, Typed {
      * Constructor.
      * @param value Long literal value.
      */
-    public Constant(final long value) {
+    public Const(final long value) {
         this(value, Type.LONG_TYPE);
     }
 
@@ -115,7 +115,7 @@ public final class Constant implements AstNode, Typed {
      * Constructor.
      * @param value Float literal value.
      */
-    public Constant(final float value) {
+    public Const(final float value) {
         this(value, Type.FLOAT_TYPE);
     }
 
@@ -123,7 +123,7 @@ public final class Constant implements AstNode, Typed {
      * Constructor.
      * @param value Double literal value.
      */
-    public Constant(final double value) {
+    public Const(final double value) {
         this(value, Type.DOUBLE_TYPE);
     }
 
@@ -131,15 +131,15 @@ public final class Constant implements AstNode, Typed {
      * Constructor.
      * @param node XML node.
      */
-    public Constant(final XmlNode node) {
-        this(Constant.xvalue(node), Constant.xtype(node));
+    public Const(final XmlNode node) {
+        this(Const.xvalue(node), Const.xtype(node));
     }
 
     /**
      * Constructor.
      * @param value Literal value.
      */
-    public Constant(final Object value) {
+    public Const(final Object value) {
         this(value, Type.getType(value.getClass()));
     }
 
@@ -148,7 +148,7 @@ public final class Constant implements AstNode, Typed {
      * @param value Literal value.
      * @param type Literal type.
      */
-    public Constant(final Object value, final Type type) {
+    public Const(final Object value, final Type type) {
         this.lvalue = value;
         this.ltype = type;
     }
@@ -162,21 +162,21 @@ public final class Constant implements AstNode, Typed {
     public List<AstNode> opcodes() {
         final Opcode res;
         if (this.ltype.equals(Type.CHAR_TYPE)) {
-            res = Constant.opcode((char) this.lvalue);
+            res = Const.opcode((char) this.lvalue);
         } else if (this.ltype.equals(Type.BOOLEAN_TYPE)) {
-            res = Constant.opcode((boolean) this.lvalue);
+            res = Const.opcode((boolean) this.lvalue);
         } else if (this.ltype.equals(Type.BYTE_TYPE)) {
             res = new Opcode(Opcodes.BIPUSH, this.lvalue);
         } else if (this.ltype.equals(Type.SHORT_TYPE)) {
             res = new Opcode(Opcodes.SIPUSH, this.lvalue);
         } else if (this.ltype.equals(Type.INT_TYPE)) {
-            res = Constant.opcode((int) this.lvalue);
+            res = Const.opcode((int) this.lvalue);
         } else if (this.ltype.equals(Type.LONG_TYPE)) {
-            res = Constant.opcode((long) this.lvalue);
+            res = Const.opcode((long) this.lvalue);
         } else if (this.ltype.equals(Type.FLOAT_TYPE)) {
-            res = Constant.opcode((float) this.lvalue);
+            res = Const.opcode((float) this.lvalue);
         } else if (this.ltype.equals(Type.DOUBLE_TYPE)) {
-            res = Constant.opcode((double) this.lvalue);
+            res = Const.opcode((double) this.lvalue);
         } else if (this.ltype.equals(Type.getType(String.class))) {
             res = new Opcode(Opcodes.LDC, this.lvalue);
         } else if (this.ltype.equals(Type.VOID_TYPE)) {
@@ -309,13 +309,13 @@ public final class Constant implements AstNode, Typed {
      */
     private static Object xvalue(final XmlNode node) {
         final Object result;
-        final Type type = Constant.xtype(node);
+        final Type type = Const.xtype(node);
         if (type.equals(Type.INT_TYPE)) {
-            result = Constant.parseInt(node.text());
+            result = Const.parseInt(node.text());
         } else if (type.equals(Type.BOOLEAN_TYPE)) {
             result = new HexString(node.text()).decodeAsBoolean();
         } else if (type.equals(Type.LONG_TYPE)) {
-            result = Constant.parseLong(node.text());
+            result = Const.parseLong(node.text());
         } else if (type.equals(Type.DOUBLE_TYPE)) {
             result = new HexString(node.text()).decodeAsDouble();
         } else if (type.equals(Type.FLOAT_TYPE)) {
@@ -332,7 +332,7 @@ public final class Constant implements AstNode, Typed {
      * @return Integer.
      */
     private static int parseInt(final String hex) {
-        return ByteBuffer.wrap(Constant.parseBytes(hex), 4, 4).getInt();
+        return ByteBuffer.wrap(Const.parseBytes(hex), 4, 4).getInt();
     }
 
     /**
@@ -341,7 +341,7 @@ public final class Constant implements AstNode, Typed {
      * @return Long.
      */
     private static long parseLong(final String hex) {
-        return ByteBuffer.wrap(Constant.parseBytes(hex)).getLong();
+        return ByteBuffer.wrap(Const.parseBytes(hex)).getLong();
     }
 
     /**

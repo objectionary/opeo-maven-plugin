@@ -41,7 +41,7 @@ import org.xembly.Transformers;
 import org.xembly.Xembler;
 
 /**
- * Test case for {@link Constant}.
+ * Test case for {@link Const}.
  * @since 0.1
  */
 final class ConstantTest {
@@ -52,7 +52,7 @@ final class ConstantTest {
     void transformsToXmir() throws ImpossibleModificationException {
         MatcherAssert.assertThat(
             "We expect the following XML to be generated: <o base='string' data='bytes'>4E 65 6F</o>",
-            new Xembler(new Constant("Neo").toXmir(), new Transformers.Node()).xml(),
+            new Xembler(new Const("Neo").toXmir(), new Transformers.Node()).xml(),
             XhtmlMatchers.hasXPath(
                 "/o[@base='string' and @data='bytes' and text()='4E 65 6F']/text()"
             )
@@ -63,47 +63,47 @@ final class ConstantTest {
     void dereminesType() {
         MatcherAssert.assertThat(
             "We expect the type to be determined as string",
-            new Constant("Neo").type(),
+            new Const("Neo").type(),
             Matchers.equalTo(Type.getType(String.class))
         );
         MatcherAssert.assertThat(
             "We expect the type to be determined as int",
-            new Constant(1).type(),
+            new Const(1).type(),
             Matchers.equalTo(Type.INT_TYPE)
         );
         MatcherAssert.assertThat(
             "We expect the type to be determined as char",
-            new Constant('a').type(),
+            new Const('a').type(),
             Matchers.equalTo(Type.CHAR_TYPE)
         );
         MatcherAssert.assertThat(
             "We expect the type to be determined as long",
-            new Constant(1L).type(),
+            new Const(1L).type(),
             Matchers.equalTo(Type.LONG_TYPE)
         );
         MatcherAssert.assertThat(
             "We expect the type to be determined as float",
-            new Constant(1.0f).type(),
+            new Const(1.0f).type(),
             Matchers.equalTo(Type.FLOAT_TYPE)
         );
         MatcherAssert.assertThat(
             "We expect the type to be determined as double",
-            new Constant(1.0d).type(),
+            new Const(1.0d).type(),
             Matchers.equalTo(Type.DOUBLE_TYPE)
         );
         MatcherAssert.assertThat(
             "We expect the type to be determined as boolean",
-            new Constant(true).type(),
+            new Const(true).type(),
             Matchers.equalTo(Type.BOOLEAN_TYPE)
         );
         MatcherAssert.assertThat(
             "We expect the type to be determined as byte",
-            new Constant((byte) 1).type(),
+            new Const((byte) 1).type(),
             Matchers.equalTo(Type.BYTE_TYPE)
         );
         MatcherAssert.assertThat(
             "We expect the type to be determined as short",
-            new Constant((short) 1).type(),
+            new Const((short) 1).type(),
             Matchers.equalTo(Type.SHORT_TYPE)
         );
     }
@@ -112,7 +112,7 @@ final class ConstantTest {
     void convertsToOpcodesForBipush() {
         MatcherAssert.assertThat(
             "We expect the following opcodes to be generated: bipush 10",
-            new Constant(10).opcodes(),
+            new Const(10).opcodes(),
             Matchers.contains(
                 new Opcode(Opcodes.BIPUSH, 10)
             )
@@ -123,7 +123,7 @@ final class ConstantTest {
     void convertsToOpcodesForNull() {
         MatcherAssert.assertThat(
             "We expect the following opcodes to be generated: aconst_null",
-            new Constant().opcodes(),
+            new Const().opcodes(),
             Matchers.contains(
                 new Opcode(Opcodes.ACONST_NULL)
             )
@@ -133,7 +133,7 @@ final class ConstantTest {
     @ParameterizedTest
     @MethodSource("ldc")
     void generatesLdcInstruction(final Object value) {
-        final Opcode opcode = (Opcode) new Constant(value).opcodes().get(0);
+        final Opcode opcode = (Opcode) new Const(value).opcodes().get(0);
         MatcherAssert.assertThat(
             "We expect the following opcode to be generated: LDC",
             opcode.opcode(),
@@ -157,7 +157,7 @@ final class ConstantTest {
         "00 00 00 00 00 00 00 05, 8, ICONST_5"
     })
     void constructsIntFromXmir(final String input, final int opcode, final String expected) {
-        final AstNode actual = new Constant(
+        final AstNode actual = new Const(
             new XmlNode(String.format("<o base='int' data='bytes'>%s</o>", input))
         ).opcodes().get(0);
         MatcherAssert.assertThat(
@@ -177,7 +177,7 @@ final class ConstantTest {
         "00 00 00 00 00 00 00 01, 10, LCONST_1"
     })
     void constructsLongFromXmir(final String input, final int opcode, final String expected) {
-        final AstNode actual = new Constant(
+        final AstNode actual = new Const(
             new XmlNode(String.format("<o base='long' data='bytes'>%s</o>", input))
         ).opcodes().get(0);
         MatcherAssert.assertThat(
@@ -209,7 +209,7 @@ final class ConstantTest {
     @ParameterizedTest
     @MethodSource("opcodes")
     void generatesCorrectOpcodesForDifferentTypes(
-        final Constant constant, final int expected, Object[] params
+        final Const constant, final int expected, Object[] params
     ) {
         final Opcode opcode = (Opcode) constant.opcodes().get(0);
         MatcherAssert.assertThat(
@@ -242,37 +242,37 @@ final class ConstantTest {
     @SuppressWarnings("PMD.UnusedPrivateMethod")
     private static Stream<Arguments> opcodes() {
         return Stream.of(
-            Arguments.of(new Constant(-1), Opcodes.ICONST_M1, ConstantTest.EMPTY),
-            Arguments.of(new Constant(0), Opcodes.ICONST_0, ConstantTest.EMPTY),
-            Arguments.of(new Constant(1), Opcodes.ICONST_1, ConstantTest.EMPTY),
-            Arguments.of(new Constant(2), Opcodes.ICONST_2, ConstantTest.EMPTY),
-            Arguments.of(new Constant(3), Opcodes.ICONST_3, ConstantTest.EMPTY),
-            Arguments.of(new Constant(4), Opcodes.ICONST_4, ConstantTest.EMPTY),
-            Arguments.of(new Constant(5), Opcodes.ICONST_5, ConstantTest.EMPTY),
-            Arguments.of(new Constant(0L), Opcodes.LCONST_0, ConstantTest.EMPTY),
-            Arguments.of(new Constant(1L), Opcodes.LCONST_1, ConstantTest.EMPTY),
-            Arguments.of(new Constant(0.0f), Opcodes.FCONST_0, ConstantTest.EMPTY),
-            Arguments.of(new Constant(1.0f), Opcodes.FCONST_1, ConstantTest.EMPTY),
-            Arguments.of(new Constant(2.0f), Opcodes.FCONST_2, ConstantTest.EMPTY),
-            Arguments.of(new Constant(0.0d), Opcodes.DCONST_0, ConstantTest.EMPTY),
-            Arguments.of(new Constant(1.0d), Opcodes.DCONST_1, ConstantTest.EMPTY),
-            Arguments.of(new Constant(-128), Opcodes.BIPUSH, new Object[]{-128}),
-            Arguments.of(new Constant(-42), Opcodes.BIPUSH, new Object[]{-42}),
-            Arguments.of(new Constant(42), Opcodes.BIPUSH, new Object[]{42}),
-            Arguments.of(new Constant(127), Opcodes.BIPUSH, new Object[]{127}),
-            Arguments.of(new Constant((short) 128), Opcodes.SIPUSH, new Object[]{(short) 128}),
-            Arguments.of(new Constant((short) -129), Opcodes.SIPUSH, new Object[]{(short) -129}),
-            Arguments.of(new Constant((short) 32767), Opcodes.SIPUSH, new Object[]{(short) 32767}),
-            Arguments.of(new Constant((short) -32768), Opcodes.SIPUSH, new Object[]{(short) -32768}),
-            Arguments.of(new Constant('a'), Opcodes.BIPUSH, new Object[]{'a'}),
-            Arguments.of(new Constant('b'), Opcodes.BIPUSH, new Object[]{'b'}),
-            Arguments.of(new Constant('c'), Opcodes.BIPUSH, new Object[]{'c'}),
-            Arguments.of(new Constant("Hello!"), Opcodes.LDC, new Object[]{"Hello!"}),
-            Arguments.of(new Constant(100.0f), Opcodes.LDC, new Object[]{100f}),
-            Arguments.of(new Constant(100.0d), Opcodes.LDC, new Object[]{100d}),
-            Arguments.of(new Constant(100L), Opcodes.LDC, new Object[]{100L}),
-            Arguments.of(new Constant(true), Opcodes.ICONST_1, ConstantTest.EMPTY),
-            Arguments.of(new Constant(false), Opcodes.ICONST_0, ConstantTest.EMPTY)
+            Arguments.of(new Const(-1), Opcodes.ICONST_M1, ConstantTest.EMPTY),
+            Arguments.of(new Const(0), Opcodes.ICONST_0, ConstantTest.EMPTY),
+            Arguments.of(new Const(1), Opcodes.ICONST_1, ConstantTest.EMPTY),
+            Arguments.of(new Const(2), Opcodes.ICONST_2, ConstantTest.EMPTY),
+            Arguments.of(new Const(3), Opcodes.ICONST_3, ConstantTest.EMPTY),
+            Arguments.of(new Const(4), Opcodes.ICONST_4, ConstantTest.EMPTY),
+            Arguments.of(new Const(5), Opcodes.ICONST_5, ConstantTest.EMPTY),
+            Arguments.of(new Const(0L), Opcodes.LCONST_0, ConstantTest.EMPTY),
+            Arguments.of(new Const(1L), Opcodes.LCONST_1, ConstantTest.EMPTY),
+            Arguments.of(new Const(0.0f), Opcodes.FCONST_0, ConstantTest.EMPTY),
+            Arguments.of(new Const(1.0f), Opcodes.FCONST_1, ConstantTest.EMPTY),
+            Arguments.of(new Const(2.0f), Opcodes.FCONST_2, ConstantTest.EMPTY),
+            Arguments.of(new Const(0.0d), Opcodes.DCONST_0, ConstantTest.EMPTY),
+            Arguments.of(new Const(1.0d), Opcodes.DCONST_1, ConstantTest.EMPTY),
+            Arguments.of(new Const(-128), Opcodes.BIPUSH, new Object[]{-128}),
+            Arguments.of(new Const(-42), Opcodes.BIPUSH, new Object[]{-42}),
+            Arguments.of(new Const(42), Opcodes.BIPUSH, new Object[]{42}),
+            Arguments.of(new Const(127), Opcodes.BIPUSH, new Object[]{127}),
+            Arguments.of(new Const((short) 128), Opcodes.SIPUSH, new Object[]{(short) 128}),
+            Arguments.of(new Const((short) -129), Opcodes.SIPUSH, new Object[]{(short) -129}),
+            Arguments.of(new Const((short) 32_767), Opcodes.SIPUSH, new Object[]{(short) 32_767}),
+            Arguments.of(new Const((short) -32_768), Opcodes.SIPUSH, new Object[]{(short) -32_768}),
+            Arguments.of(new Const('a'), Opcodes.BIPUSH, new Object[]{'a'}),
+            Arguments.of(new Const('b'), Opcodes.BIPUSH, new Object[]{'b'}),
+            Arguments.of(new Const('c'), Opcodes.BIPUSH, new Object[]{'c'}),
+            Arguments.of(new Const("Hello!"), Opcodes.LDC, new Object[]{"Hello!"}),
+            Arguments.of(new Const(100.0f), Opcodes.LDC, new Object[]{100f}),
+            Arguments.of(new Const(100.0d), Opcodes.LDC, new Object[]{100d}),
+            Arguments.of(new Const(100L), Opcodes.LDC, new Object[]{100L}),
+            Arguments.of(new Const(true), Opcodes.ICONST_1, ConstantTest.EMPTY),
+            Arguments.of(new Const(false), Opcodes.ICONST_0, ConstantTest.EMPTY)
         );
     }
 }

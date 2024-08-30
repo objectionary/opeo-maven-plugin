@@ -57,8 +57,8 @@ final class CastTest {
         );
         MatcherAssert.assertThat(
             "Can't create correct Cast from XMIR",
-            new Cast(node, Constant::new),
-            Matchers.equalTo(new Cast(Type.INT_TYPE, new Constant(1)))
+            new Cast(node, Const::new),
+            Matchers.equalTo(new Cast(Type.INT_TYPE, new Const(1)))
         );
     }
 
@@ -66,7 +66,7 @@ final class CastTest {
     void convertsToXmir() throws ImpossibleModificationException {
         MatcherAssert.assertThat(
             "Can't convert Cast to XMIR",
-            new Xembler(new Cast(Type.INT_TYPE, new Constant(1)).toXmir()).xml(),
+            new Xembler(new Cast(Type.INT_TYPE, new Const(1)).toXmir()).xml(),
             XhtmlMatchers.hasXPaths(
                 "/o[@base='cast']",
                 "/o[@base='cast']/o[@base='int' and contains(text(), '1')]",
@@ -80,7 +80,7 @@ final class CastTest {
     void detectsType(final Type type) {
         MatcherAssert.assertThat(
             String.format("Can't detect type of casted value, should be %s", type),
-            new Cast(type, new Constant(1)).type(),
+            new Cast(type, new Const(1)).type(),
             Matchers.equalTo(type)
         );
     }
@@ -105,21 +105,21 @@ final class CastTest {
      */
     static Stream<Arguments> conversions() {
         return Stream.of(
-            Arguments.of(Type.LONG_TYPE, new Constant(1), Opcodes.I2L),
-            Arguments.of(Type.FLOAT_TYPE, new Constant(1), Opcodes.I2F),
-            Arguments.of(Type.DOUBLE_TYPE, new Constant(1), Opcodes.I2D),
-            Arguments.of(Type.INT_TYPE, new Constant(1L), Opcodes.L2I),
-            Arguments.of(Type.FLOAT_TYPE, new Constant(1L), Opcodes.L2F),
-            Arguments.of(Type.DOUBLE_TYPE, new Constant(1L), Opcodes.L2D),
-            Arguments.of(Type.INT_TYPE, new Constant(1.0f), Opcodes.F2I),
-            Arguments.of(Type.LONG_TYPE, new Constant(1.0f), Opcodes.F2L),
-            Arguments.of(Type.DOUBLE_TYPE, new Constant(1.0f), Opcodes.F2D),
-            Arguments.of(Type.INT_TYPE, new Constant(1.0), Opcodes.D2I),
-            Arguments.of(Type.LONG_TYPE, new Constant(1.0), Opcodes.D2L),
-            Arguments.of(Type.FLOAT_TYPE, new Constant(1.0), Opcodes.D2F),
-            Arguments.of(Type.BYTE_TYPE, new Constant(1), Opcodes.I2B),
-            Arguments.of(Type.CHAR_TYPE, new Constant(1), Opcodes.I2C),
-            Arguments.of(Type.SHORT_TYPE, new Constant(1), Opcodes.I2S)
+            Arguments.of(Type.LONG_TYPE, new Const(1), Opcodes.I2L),
+            Arguments.of(Type.FLOAT_TYPE, new Const(1), Opcodes.I2F),
+            Arguments.of(Type.DOUBLE_TYPE, new Const(1), Opcodes.I2D),
+            Arguments.of(Type.INT_TYPE, new Const(1L), Opcodes.L2I),
+            Arguments.of(Type.FLOAT_TYPE, new Const(1L), Opcodes.L2F),
+            Arguments.of(Type.DOUBLE_TYPE, new Const(1L), Opcodes.L2D),
+            Arguments.of(Type.INT_TYPE, new Const(1.0f), Opcodes.F2I),
+            Arguments.of(Type.LONG_TYPE, new Const(1.0f), Opcodes.F2L),
+            Arguments.of(Type.DOUBLE_TYPE, new Const(1.0f), Opcodes.F2D),
+            Arguments.of(Type.INT_TYPE, new Const(1.0), Opcodes.D2I),
+            Arguments.of(Type.LONG_TYPE, new Const(1.0), Opcodes.D2L),
+            Arguments.of(Type.FLOAT_TYPE, new Const(1.0), Opcodes.D2F),
+            Arguments.of(Type.BYTE_TYPE, new Const(1), Opcodes.I2B),
+            Arguments.of(Type.CHAR_TYPE, new Const(1), Opcodes.I2C),
+            Arguments.of(Type.SHORT_TYPE, new Const(1), Opcodes.I2S)
         );
     }
 

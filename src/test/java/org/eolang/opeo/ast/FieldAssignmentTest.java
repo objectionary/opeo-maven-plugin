@@ -62,7 +62,7 @@ final class FieldAssignmentTest {
             node -> {
                 final AstNode result;
                 if (node.hasAttribute("base", "int")) {
-                    result = new Constant(node);
+                    result = new Const(node);
                 } else {
                     result = new This(node);
                 }
@@ -75,7 +75,7 @@ final class FieldAssignmentTest {
             Matchers.equalTo(
                 new FieldAssignment(
                     new Field(new This(), new Attributes("name", "bar")),
-                    new Constant(3)
+                    new Const(3)
                 )
             )
         );
@@ -86,7 +86,7 @@ final class FieldAssignmentTest {
         final String xmir = new Xembler(
             new FieldAssignment(
                 new Field(new This(), new Attributes("name", "bar")),
-                new Constant(3)
+                new Const(3)
             ).toXmir()
         ).xml();
         MatcherAssert.assertThat(
@@ -115,7 +115,7 @@ final class FieldAssignmentTest {
                             .owner(owner)
                             .descriptor(descriptor)
                     ),
-                    new Constant(1)
+                    new Const(1)
                 )
             ).opcodes(),
             new HasInstructions(

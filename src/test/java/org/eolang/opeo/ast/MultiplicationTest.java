@@ -45,8 +45,8 @@ final class MultiplicationTest {
     void convertsToXmir() throws ImpossibleModificationException {
         final String xmir = new Xembler(
             new Multiplication(
-                new Constant(3),
-                new Constant(4)
+                new Const(3),
+                new Const(4)
             ).toXmir()
         ).xml();
         MatcherAssert.assertThat(
@@ -93,23 +93,23 @@ final class MultiplicationTest {
     private static Stream<org.junit.jupiter.params.provider.Arguments> multiplications() {
         return Stream.of(
             org.junit.jupiter.params.provider.Arguments.of(
-                new Constant(1),
-                new Constant(2),
+                new Const(1),
+                new Const(2),
                 Opcodes.IMUL
             ),
             org.junit.jupiter.params.provider.Arguments.of(
-                new Constant(3L),
-                new Constant(4L),
+                new Const(3L),
+                new Const(4L),
                 Opcodes.LMUL
             ),
             org.junit.jupiter.params.provider.Arguments.of(
-                new Constant(5.0f),
-                new Constant(6.0f),
+                new Const(5.0f),
+                new Const(6.0f),
                 Opcodes.FMUL
             ),
             org.junit.jupiter.params.provider.Arguments.of(
-                new Constant(7.0),
-                new Constant(8.0),
+                new Const(7.0),
+                new Const(8.0),
                 Opcodes.DMUL
             )
         );

@@ -69,7 +69,7 @@ final class InvocationTest {
                 node -> {
                     final AstNode result;
                     if (node.attribute("base").map("string"::equals).orElse(false)) {
-                        result = new Constant(node);
+                        result = new Const(node);
                     } else {
                         result = new Constructor("foo");
                     }
@@ -80,7 +80,7 @@ final class InvocationTest {
                 new Invocation(
                     new Constructor("foo"),
                     "bar",
-                    new Constant("baz")
+                    new Const("baz")
                 )
             )
         );
@@ -94,7 +94,7 @@ final class InvocationTest {
                 new Invocation(
                     new Constructor("foo"),
                     "bar",
-                    new Constant("baz")
+                    new Const("baz")
                 ).toXmir(),
                 new Transformers.Node()
             ).xml(),
@@ -110,7 +110,7 @@ final class InvocationTest {
                 new Attributes().name("bar")
                     .descriptor("(Ljava/lang/String;)Ljava/lang/String;")
                     .owner("some/Owner"),
-                new Constant("baz")
+                new Const("baz")
             ).toXmir(),
             new Transformers.Node()
         ).xmlQuietly();
@@ -134,7 +134,7 @@ final class InvocationTest {
                 new Invocation(
                     new This(),
                     new Attributes().descriptor(descriptor).interfaced(false).name(name),
-                    new Constant(constant)
+                    new Const(constant)
                 )
             ).opcodes(),
             new HasInstructions(

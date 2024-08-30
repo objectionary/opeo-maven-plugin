@@ -41,9 +41,9 @@ final class RootTest {
     @Test
     void combinesAllChildElementsIntoSingleXmir() throws ImpossibleModificationException {
         final Root root = new Root();
-        root.append(new Constant("Wake up, Neo..."));
+        root.append(new Const("Wake up, Neo..."));
         root.append(new Opcode(Opcodes.RETURN));
-        root.append(new Constant(1));
+        root.append(new Const(1));
         MatcherAssert.assertThat(
             String.format(
                 "We expected to get the following XMIR:%n%s%n",

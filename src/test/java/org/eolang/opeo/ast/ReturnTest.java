@@ -48,9 +48,9 @@ final class ReturnTest {
         );
         final AstNode result;
         if (base.startsWith("int")) {
-            result = new Constant(42);
+            result = new Const(42);
         } else if (base.startsWith("string")) {
-            result = new Constant("foo");
+            result = new Const("foo");
         } else {
             throw new IllegalArgumentException(String.format("Unknown base: %s", base));
         }
@@ -70,7 +70,7 @@ final class ReturnTest {
     void convertsIntReturnToXml() throws ImpossibleModificationException {
         MatcherAssert.assertThat(
             "Can't convert typed return with int to XML",
-            new Xembler(new Return(new Constant(42)).toXmir()).xml(),
+            new Xembler(new Return(new Const(42)).toXmir()).xml(),
             new SameXml(
                 "<o base='return'><o base='int' data='bytes'>00 00 00 00 00 00 00 2A</o></o>"
             )
@@ -81,7 +81,7 @@ final class ReturnTest {
     void convertsStringReturnToXml() throws ImpossibleModificationException {
         MatcherAssert.assertThat(
             "Can't convert typed return with string to XML",
-            new Xembler(new Return(new Constant("foo")).toXmir()).xml(),
+            new Xembler(new Return(new Const("foo")).toXmir()).xml(),
             new SameXml(
                 "<o base='return'><o base='string' data='bytes'>66 6F 6F</o></o>"
             )

@@ -57,7 +57,7 @@ final class DuplicateTest {
     /**
      * Literal itself.
      */
-    private static final AstNode LITERAL = new Constant(1);
+    private static final AstNode LITERAL = new Const(1);
 
     @Test
     void transformsToXmirOnce() {

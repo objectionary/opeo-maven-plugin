@@ -61,7 +61,7 @@ final class VariableAssignmentTest {
                 node -> {
                     final AstNode result;
                     if (node.hasAttribute("base", "int")) {
-                        result = new Constant(2);
+                        result = new Const(2);
                     } else {
                         result = new LocalVariable(node);
                     }
@@ -71,7 +71,7 @@ final class VariableAssignmentTest {
             Matchers.equalTo(
                 new VariableAssignment(
                     new LocalVariable(1, Type.DOUBLE_TYPE),
-                    new Constant(2)
+                    new Const(2)
                 )
             )
         );
@@ -82,7 +82,7 @@ final class VariableAssignmentTest {
         final String xml = new Xembler(
             new VariableAssignment(
                 new LocalVariable(1, Type.DOUBLE_TYPE),
-                new Constant(2)
+                new Const(2)
             ).toXmir(),
             new Transformers.Node()
         ).xml();

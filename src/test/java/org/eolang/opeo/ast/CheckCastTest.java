@@ -57,7 +57,7 @@ final class CheckCastTest {
             new Xembler(
                 new CheckCast(
                     Type.LONG_TYPE,
-                    new Constant(3)
+                    new Const(3)
                 ).toXmir()
             ).xml(),
             new SameXml(CheckCastTest.XMIR)
@@ -68,7 +68,7 @@ final class CheckCastTest {
     void createsCheckCastFromXmir() {
         MatcherAssert.assertThat(
             "Can't parse CheckCast type from XMIR",
-            new CheckCast(new XmlNode(CheckCastTest.XMIR), n -> new Constant(3)).type(),
+            new CheckCast(new XmlNode(CheckCastTest.XMIR), n -> new Const(3)).type(),
             Matchers.equalTo(Type.LONG_TYPE)
         );
     }
@@ -78,7 +78,7 @@ final class CheckCastTest {
         final Type type = Type.INT_TYPE;
         MatcherAssert.assertThat(
             "Can't transform CheckCast to opcodes",
-            new CheckCast(type, new Constant((byte) 3)).opcodes(),
+            new CheckCast(type, new Const((byte) 3)).opcodes(),
             Matchers.hasItems(
                 new Opcode(Opcodes.BIPUSH, (byte) 3),
                 new Opcode(Opcodes.CHECKCAST, type.getDescriptor())
