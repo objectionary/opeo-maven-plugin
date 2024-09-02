@@ -50,6 +50,15 @@ final class WithoutAliasesTest {
     }
 
     @Test
+    void keepsPackage() {
+        MatcherAssert.assertThat(
+            "We expect that package is kept, even if the program doesn't have labels or opcodes",
+            new WithoutAliases(WithoutAliasesTest.program()).toXml(),
+            XhtmlMatchers.hasXPath("/program/metas/meta[head='package']")
+        );
+    }
+
+    @Test
     void removesOnlyLabelAlias() {
         MatcherAssert.assertThat(
             "We expect that only the label alias is removed since the program has an object",
@@ -117,6 +126,14 @@ final class WithoutAliasesTest {
                 new Directives()
                     .add("program")
                     .add("metas")
+                    .append(
+                        new Directives()
+                            .add("meta")
+                            .add("head").set("package").up()
+                            .add("tail").set("org.eolang.opeo").up()
+                            .add("part").set("org.eolang.opeo").up()
+                            .up()
+                    )
                     .append(WithoutAliasesTest.alias("org.eolang.jeo.label"))
                     .append(WithoutAliasesTest.alias("org.eolang.jeo.opcode"))
                     .up()
