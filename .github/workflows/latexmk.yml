@@ -5,7 +5,7 @@ jobs:
   latexmk:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: sudo apt-get install -y python3-pygments && sudo pip3 install pygments
       - run: sudo apt-get -y install ghostscript
       - uses: yegor256/latexmk-action@0.13.0
