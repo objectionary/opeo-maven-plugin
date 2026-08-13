@@ -31,6 +31,7 @@ import org.eolang.jeo.representation.xmir.XmlNode;
 import org.eolang.opeo.compilation.HasInstructions;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -79,6 +80,15 @@ final class LocalVariableTest {
             "Can't correctly create variable from XMIR. We expect the variable to be equal to the original, but it wasn't",
             new LocalVariable(new XmlNode(new Xembler(original.toXmir()).xml())),
             Matchers.equalTo(original)
+        );
+    }
+
+    @Test
+    void rejectsAMalformedVariableIdentifierWithACleanException() {
+        Assertions.assertThrows(
+            IllegalArgumentException.class,
+            () -> new LocalVariable(new XmlNode("<o base='local-abc'/>")),
+            "A malformed numeric suffix must raise a clean IllegalArgumentException"
         );
     }
 
