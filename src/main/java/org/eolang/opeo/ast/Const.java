@@ -354,7 +354,17 @@ public final class Const implements AstNode, Typed {
         final int length = split.length;
         final byte[] res = new byte[length];
         for (int index = 0; index < length; ++index) {
-            res[index] = (byte) Integer.parseInt(split[index], 16);
+            try {
+                res[index] = (byte) Integer.parseInt(split[index], 16);
+            } catch (final NumberFormatException cause) {
+                throw new IllegalArgumentException(
+                    String.format(
+                        "Can't parse '%s' as a hex byte in constant node text '%s'",
+                        split[index], hex
+                    ),
+                    cause
+                );
+            }
         }
         return res;
     }
