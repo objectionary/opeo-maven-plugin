@@ -150,15 +150,24 @@ public final class LocalVariable implements AstNode, Typed {
      * @return The identifier.
      */
     private static int videntifier(final XmlNode node) {
-        return Integer.parseInt(
-            node.attribute("base").orElseThrow(
-                () -> new IllegalArgumentException(
-                    String.format(
-                        "Can't recognize variable node: %n%s%nWe expected to find 'base' attribute",
-                        node
-                    )
+        final String suffix = node.attribute("base").orElseThrow(
+            () -> new IllegalArgumentException(
+                String.format(
+                    "Can't recognize variable node: %n%s%nWe expected to find 'base' attribute",
+                    node
                 )
-            ).substring(LocalVariable.PREFIX.length())
-        );
+            )
+        ).substring(LocalVariable.PREFIX.length());
+        try {
+            return Integer.parseInt(suffix);
+        } catch (final NumberFormatException cause) {
+            throw new IllegalArgumentException(
+                String.format(
+                    "Can't recognize variable node: %n%s%nThe numeric suffix '%s' after '%s' is not a valid integer",
+                    node, suffix, LocalVariable.PREFIX
+                ),
+                cause
+            );
+        }
     }
 }
